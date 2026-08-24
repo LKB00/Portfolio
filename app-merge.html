@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#14130E":"#F8F6F0";d.style.colorScheme=t==="dark"?"dark":"light"})();</script>
+<style>
+img{max-width:100%;height:auto}
+img[src$=".png"],img[src$=".jpg"],img[src$=".jpeg"]{image-rendering:-webkit-optimize-contrast}
+:root{--imgpad:24px}
+@media (max-width:640px){:root{--imgpad:16px}}
+:root{--imgmax:78svh}
+@supports not (height:1svh){:root{--imgmax:74vh}}
+/* ONE container per image, zero padding: the image fills it edge to edge and the radius clips the corners.
+   No fill — the container's height comes from the image, so no background can ever show around it. */
+[data-imgbox]{box-sizing:border-box;padding:0;display:block;width:100%;max-width:100%;margin:0;
+  background:transparent;border:0;border-radius:14px;box-shadow:var(--sh);overflow:hidden;line-height:0}
+[data-imgbox]>img{display:block;margin:0;width:100%;height:auto;max-width:100%}
+[data-imgbox]>image-slot,[data-imgbox]>.sc-host{display:block;width:100%;height:100%;margin:0}
+[data-imgbox]>img{display:block;margin:0;max-width:100%;max-height:min(100%,var(--imgmax));width:auto;height:auto;object-fit:contain}
+[data-imgbox]>image-slot,[data-imgbox]>.sc-host{width:100%;height:100%;margin:0}
+/* portrait frames: height drives the box so it shrinks on BOTH axes instead of leaving side gaps */
+/* portrait frames would overflow the screen at full column width, so height leads and the ratio sets the width */
+[data-imgbox][data-tall]{height:var(--imgmax);width:auto;justify-self:start;align-self:center}
+[data-zoomrow] [data-imgbox][data-tall]{justify-self:end}
+[data-imgbox][data-tall]>img{width:auto;height:100%}
+[data-imgbox]>img{object-fit:cover}
+/* opt-out for embedded components: fixed intrinsic height, must not be clamped or clipped */
+[data-imgbox][data-nocap]{max-height:none;overflow:visible}
+[data-imgbox][data-nocap]>.sc-host{height:auto}
+/* the side-by-side pair shares one cap so both are the same height and the row fits with its caption */
+[data-zoomrow] [data-imgbox]{max-height:62svh}
+[data-zoomrow] [data-imgbox][data-tall]{height:62svh}
+html{background-color:#F8F6F0;scrollbar-gutter:stable;color-scheme:light}html[data-theme="dark"]{background-color:#14130E;color-scheme:dark}@view-transition{navigation:auto}</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin="">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,1,2&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>(function(){var d=document.documentElement;var done=false;var ready=function(){if(done)return;done=true;d.classList.add("pf-ready")};var afterFonts=function(){var f=(document.fonts&&document.fonts.ready)||Promise.resolve();f.then(function(){requestAnimationFrame(function(){requestAnimationFrame(ready)})})};window.__pfShow=afterFonts;setTimeout(ready,1500);window.addEventListener("load",afterFonts);window.addEventListener("pageshow",function(e){if(e.persisted)ready()})})();</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{var t=localStorage.getItem("portfolio-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>
+:root{
+  --bg:#F8F6F0; --ink:#14140F; --muted:#6B675E; --faint:#948F81;
+  --line:#DEDACC; --card:#FFFFFF; --grid:rgba(30,26,14,.055);
+  --tint:#EFEBDE; --accent:#0E6B42;
+  --good:#0E6B42; --warn:#C7381A;
+  --note1:#F6E3D9; --note2:#EDE7D7; --note3:#DFE8DD; --noteInk:#181812;
+  --a2:#C7381A; --a3:#0E6B42;
+  --pad:clamp(18px,8vw,168px);
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --grad:linear-gradient(100deg,#0E6B42,#0E6B42);
+  --gradCta:linear-gradient(100deg,#14140F,#14140F);
+  --tintB:rgba(199,56,26,.045);
+  --w1:rgba(199,56,26,.10); --w2:rgba(14,107,66,.10); --w3:rgba(160,132,42,.10);
+  --orbA:transparent; --orbB:transparent; --orbC:transparent;
+  --sh:0 0 0 1px var(--line),0 1px 2px rgba(30,26,14,.025);
+  --shUp:0 0 0 1.5px var(--ink),0 8px 22px rgba(30,26,14,.07);
+}
+:root[data-theme="dark"]{
+  --bg:#14130E; --ink:#F4F1E6; --muted:#A19C8E; --faint:#7C7768;
+  --line:#2C2A22; --card:#1B1A14; --grid:rgba(244,241,230,.045);
+  --tint:#242219; --accent:#5FBF8B;
+  --good:#5FBF8B; --warn:#E97550;
+  --note1:#3A2A20; --note2:#2E2A1C; --note3:#1F2E23; --noteInk:#F4F1E6;
+  --a2:#E97550; --a3:#5FBF8B;
+  --pad:clamp(18px,8vw,168px);
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --grad:linear-gradient(100deg,#5FBF8B,#5FBF8B);
+  --gradCta:linear-gradient(100deg,#F4F1E6,#F4F1E6);
+  --tintB:rgba(233,117,80,.07);
+  --w1:rgba(233,117,80,.14); --w2:rgba(95,191,139,.14); --w3:rgba(214,186,96,.12);
+  --orbA:transparent; --orbB:transparent; --orbC:transparent;
+  --sh:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.2);
+  --shUp:0 0 0 1.5px var(--accent),0 8px 22px rgba(0,0,0,.35);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Satoshi',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;transition:background .4s ease,color .4s ease}
+*{box-sizing:border-box}
+button,input,select,textarea,image-slot{font-family:'Satoshi',Helvetica,Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}
+:root{--navOn:#0B5637;--navOff:#666D74}
+:root[data-theme="dark"]{--navOn:#8FDCB2;--navOff:#8B9298}
+a:hover{color:var(--ink)}
+[data-mrow]{transition:background .2s ease}
+[data-mrow]:active{background:var(--tint,#EFEBDE)}
+[data-mrow] [data-mlabel]{color:var(--navOff)}
+[data-mrow][data-mcurrent] [data-mlabel]{color:var(--navOn)}
+
+:root[data-theme="dark"] [data-facemark] img{filter:invert(1)}
+::selection{background:var(--accent);color:#fff}
+@keyframes mergeBefore{0%,17%{opacity:1;transform:translateX(0) scale(1)}33%,50%{opacity:1;transform:translateX(-17%) scale(.8)}64%{opacity:0;transform:translateX(-7%) scale(.9)}88%{opacity:0;transform:translateX(0) scale(1)}100%{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes mergeAfter{0%,17%{opacity:0;transform:translateX(17%) scale(.8)}33%,50%{opacity:1;transform:translateX(17%) scale(.8)}66%,90%{opacity:1;transform:translateX(0) scale(1)}97%,100%{opacity:0;transform:translateX(17%) scale(.8)}}
+@keyframes mergeSeam{0%,26%{opacity:0}36%,50%{opacity:.9}62%,100%{opacity:0}}
+@keyframes mergeLabelA{0%,17%{opacity:1}52%{opacity:1}62%,100%{opacity:0}}
+@keyframes mergeLabelB{0%,50%{opacity:0}66%,90%{opacity:1}97%,100%{opacity:0}}
+[data-ablayer]{transform-origin:center;will-change:transform,opacity}
+[data-abbefore]{animation:mergeBefore 9s cubic-bezier(.4,.02,.3,1) infinite}
+[data-abafter]{animation:mergeAfter 9s cubic-bezier(.4,.02,.3,1) infinite}
+[data-abline]{animation:mergeSeam 9s ease infinite}
+[data-ablabel="before"]{animation:mergeLabelA 9s ease infinite}
+[data-ablabel="after"]{animation:mergeLabelB 9s ease infinite}
+@media (prefers-reduced-motion:reduce){[data-abbefore],[data-abafter],[data-abline],[data-ablabel]{animation:none!important}[data-abbefore]{opacity:0!important}[data-abafter],[data-ablabel="after"]{opacity:1!important}}
+
+header{transition:max-width .42s cubic-bezier(.3,.8,.3,1)}
+header[data-scrolled]{max-width:min(470px,78%)!important}
+header[data-scrolled] [data-navpill]{padding:6px 8px 6px 14px!important;background:color-mix(in srgb,var(--card,#fff) 78%,transparent)!important}
+html.pf-ready header[data-scrolled] [data-navpill]{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+@media (max-width:760px){[data-pk]{display:none!important}}
+section[id]{scroll-margin-top:104px;position:relative;z-index:1}
+@media (max-width:760px){
+  header nav a,footer a,[data-crumb]{min-height:44px;display:inline-flex;align-items:center}
+  header nav button{min-width:44px;min-height:44px;border-radius:10px!important}
+  header a[href$="resume.pdf"]{min-height:44px;display:inline-flex;align-items:center}
+  a[href$=".html"]{min-height:44px}
+}
+[data-figbleed]{margin-left:calc(-53.125% - clamp(24px,4vw,64px))}
+[data-figfull]{margin-left:calc(-53.125% - clamp(24px,4vw,64px));width:calc(153.125% + clamp(24px,4vw,64px))}
+@media (max-width:860px){
+  [data-sebishot]{height:auto}
+  [data-sebishot]>img{height:auto}
+  [data-2col]{grid-template-columns:minmax(0,1fr)!important;align-items:start!important}
+  [data-zoomrow]{grid-template-columns:minmax(0,1fr)!important;gap:clamp(18px,4vw,28px)}
+  [data-zoomlink]{display:none}
+  [data-figbleed]{margin-left:0}
+  [data-figfull]{margin-left:0;width:100%}
+}
+@media (max-width:640px){
+  #top{padding-top:44px!important}
+  h1{font-size:clamp(30px,9vw,42px)!important;letter-spacing:-.03em!important}
+  header nav{gap:12px!important}
+  header nav a,header nav button{font-size:12.5px!important}
+}
+image-slot{aspect-ratio:auto!important;width:100%!important;height:100%!important;display:block!important}
+
+@media (hover:hover) and (pointer:fine){
+  html[data-cursor] , html[data-cursor] * {cursor:none!important}
+  #lkb-cur{position:fixed;top:0;left:0;z-index:999;pointer-events:none;will-change:transform}
+  #lkb-cur .caret{display:block;margin:-3px 0 0 -3px;color:#2E2E30;filter:drop-shadow(0 2px 4px rgba(0,0,0,.22));transition:opacity .18s ease}
+  #lkb-cur .tag{position:absolute;left:20px;top:22px;border-radius:999px;background:var(--accent,#0E6B42);color:#fff;box-shadow:0 3px 10px rgba(20,24,45,.20);
+    font-family:var(--mono);font-size:11px;letter-spacing:.02em;padding:5px 12px;font-weight:500;
+    white-space:nowrap;opacity:0;transform:translateY(-3px);transition:opacity .18s ease,transform .18s ease}
+  #lkb-cur[data-on] .tag{opacity:1;transform:none}
+  #lkb-dot{display:none}
+}
+[data-burger] span span{transition:transform .28s cubic-bezier(.3,.8,.3,1),opacity .18s ease}
+[data-burger][aria-expanded="true"] span span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+[data-burger][aria-expanded="true"] span span:nth-child(2){opacity:0;transform:scaleX(.4)}
+[data-burger][aria-expanded="true"] span span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@keyframes pfMenuIn{from{opacity:0;transform:translateY(-7px) scale(.985)}to{opacity:1;transform:none}}
+[data-mobilemenu]{animation:pfMenuIn .24s cubic-bezier(.3,.8,.3,1)}
+/* ---- responsive pass ---- */
+@media (max-width:640px){
+  #top{padding-top:44px!important}
+  section{padding-bottom:clamp(72px,16vw,120px)!important}
+}
+
+@media (max-width:760px){
+  header > div{padding:9px 9px 9px 14px!important;gap:10px!important}
+  header > div{flex-wrap:nowrap!important}
+  header > div > a{min-width:0;white-space:nowrap}
+  [data-logoname]{display:none!important}
+  header > div > a > span:first-of-type{width:44px!important;height:44px!important;border-radius:12px!important;font-size:15px!important}
+  header nav{flex-wrap:nowrap!important;gap:10px!important}
+  [data-crumb]{font-size:10.5px!important;max-width:30vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  header nav a,header nav button{font-size:12.5px!important}
+  header nav a[href$="resume.pdf"]{padding:9px 14px!important}
+}
+@media (max-width:520px){
+  h1{letter-spacing:-.03em!important}
+  h2,h3{text-wrap:pretty}
+  [data-cta] a,[data-cta] > a{flex:1 1 100%!important;justify-content:center!important;padding:15px 18px!important}
+  figure,blockquote{overflow-wrap:anywhere}
+  footer{flex-direction:column!important;gap:12px!important}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  [data-blink]{animation:none!important}
+}
+
+@media (max-width:640px){
+  [data-logoname]{display:none!important}
+  header nav a{display:none!important}
+  header nav button{min-width:44px!important;min-height:44px!important}
+  [data-burger]{display:grid!important}
+}
+@media (min-width:641px){[data-mobilenav]{display:none!important}}
+[data-burger] [data-bicon]{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .15s ease}
+[data-burger] [data-bx]{opacity:0}
+[data-burger][aria-expanded="true"] [data-bbars]{opacity:0}
+[data-burger][aria-expanded="true"] [data-bx]{opacity:1}
+html.mnav-open [data-pen-ui],html.mnav-open [data-progress],html.mnav-open [data-ruler]{display:none!important}
+@keyframes mNavIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+[data-mobilenav] [data-mrow],[data-mobilenav] [data-mfoot]{animation:mNavIn .34s cubic-bezier(.3,.8,.3,1) both}
+[data-mlinks] [data-mrow]:nth-child(1){animation-delay:0ms}
+[data-mlinks] [data-mrow]:nth-child(2){animation-delay:60ms}
+[data-mlinks] [data-mrow]:nth-child(3){animation-delay:120ms}
+[data-mobilenav] [data-mfoot]{animation-delay:180ms}
+@media (prefers-reduced-motion:reduce){[data-mobilenav] [data-mrow],[data-mobilenav] [data-mfoot]{animation:none!important}}
+</style>
+<script src="./image-slot.js"></script>
+<script src="./assets/merge-illo-parts.js"></script>
+<script src="./assets/merge-illo-bg.js"></script>
+<script type="speculationrules">{"prerender":[{"source":"list","urls":["index.html","app-merge.html","rise-portal.html","about.html","core-design-system.html"]}]}</script>
+</helmet>
+
+<div style="min-height:100vh;color:var(--ink,#14140F);background-color:var(--bg,#F8F6F0);background-image:linear-gradient(var(--grid,rgba(30,26,14,.055)) 1px,transparent 1px),linear-gradient(90deg,var(--grid,rgba(30,26,14,.055)) 1px,transparent 1px);background-size:64px 64px;padding:0 clamp(18px,8vw,168px)">
+
+  
+  <div data-progress="" style="position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;background:var(--accent,#0E6B42);z-index:80;opacity:.85"></div>
+
+  <header style="position:sticky;top:16px;z-index:40;width:100%;max-width:min(560px,100%);margin:0 auto;padding-top:16px">
+    <div data-navpill="" style="position:relative;z-index:2;display:flex;align-items:center;gap:20px;flex-wrap:nowrap;padding:10px 10px 10px 18px;background:color-mix(in srgb,var(--card,#fff) 62%,transparent);backdrop-filter:blur(18px) saturate(1.7);-webkit-backdrop-filter:blur(18px) saturate(1.7);border-radius:14px;box-shadow:0 3px 10px rgba(30,26,14,.035);transition:background .35s ease"><span data-navframe="" aria-hidden="true" style="position:absolute;left:0;top:0;width:0;height:0;opacity:0;pointer-events:none;background:color-mix(in srgb,var(--accent,#0E6B42) 9%,transparent);border-radius:9px;transition:transform .35s cubic-bezier(.3,.8,.3,1),width .35s cubic-bezier(.3,.8,.3,1),height .35s cubic-bezier(.3,.8,.3,1),opacity .25s ease"></span>
+      <a href="index.html" style="display:flex;align-items:center;gap:12px;color:var(--ink,#14140F);font-weight:500;font-size:15px;letter-spacing:-.01em;transition:color .25s ease" style-hover="color:var(--accent,#0E6B42)">
+        <span aria-hidden="true" data-facemark="" style="flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px"><img src="assets/lokesh-face.png" alt="" width="34" height="34" decoding="async" style="display:block;width:34px;height:34px;object-fit:contain"></span>
+      </a>
+      <span data-crumb="" style="font-family:var(--mono);font-size:11px;color:var(--faint,#948F81)">/ App Merge</span>
+      <div style="flex:1;min-width:8px"></div>
+      <nav style="display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);font-size:13.5px;font-weight:500;letter-spacing:-.01em">
+        <a data-navlink="" data-tag="01" href="index.html" style="color:var(--navOff);transition:color .25s ease" style-hover="color:var(--ink,#14140F)">Home</a>
+        <a data-navlink="" data-tag="02" href="about.html" style="color:var(--navOff);transition:color .25s ease" style-hover="color:var(--ink,#14140F)">About</a>
+        <a data-navlink="" data-tag="03" href="index.html#contact" style="color:var(--navOff);transition:color .25s ease" style-hover="color:var(--ink,#14140F)">Contact</a>
+        <button data-cursor-label="theme" onClick="{{ toggleTheme }}" aria-label="Toggle colour theme" style="width:34px;height:34px;border:0;background:var(--tint,#EFEBDE);border-radius:8px;color:var(--muted,#6B675E);cursor:pointer;font-size:11px;display:grid;place-items:center;transition:background .25s ease,color .25s ease" style-hover="background:var(--ink,#14140F);color:var(--card,#fff)"><span style="display:{{ sunDisp }};line-height:0" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span><span style="display:{{ moonDisp }};line-height:0" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span></button>
+        <a href="resume.pdf" target="_blank" rel="noreferrer" data-cv="" style="display:inline-flex;align-items:center;padding:10px 18px;background:var(--ink,#14140F);border-radius:10px;color:var(--card,#fff);font-size:13px;transition:background .25s ease,color .25s ease" style-hover="background:var(--accent,#0E6B42);color:var(--bg,#F8F6F0)"><span data-cvword="">Resume</span> <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;vertical-align:-2px;margin-left:2px"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a><button data-burger="" data-cursor-label="menu" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="display:none;width:44px;height:44px;border:0;background:var(--tint,#EFEBDE);border-radius:12px;color:var(--ink,#14140F);cursor:pointer;place-items:center;position:relative"><span data-bicon="" data-bbars="" aria-hidden="true"><span style="display:flex;flex-direction:column;gap:4px"><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span></span></span><span data-bicon="" data-bx="" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button></nav>
+    </div>
+  
+    
+  
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div data-mobilenav="" style="position:fixed;inset:0;z-index:1;background:var(--bg,#F8F6F0);display:flex;flex-direction:column;min-height:100dvh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:86px 0 0">
+        <div data-mlinks="" style="display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(24px,8vh,80px);padding:0 var(--pad,clamp(18px,8vw,168px))">
+        <a data-mrow="" href="index.html" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
+          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">Home</span>
+          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+        <a data-mrow="" href="about.html" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
+          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">About</span>
+          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+        <a data-mrow="" href="index.html#contact" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
+          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">Contact</span>
+          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+        </div>
+        <div data-mfoot="" style="margin-top:auto;display:flex;flex-direction:column;gap:16px;padding:36px var(--pad,clamp(18px,8vw,168px)) calc(env(safe-area-inset-bottom, 0px) + 30px)">
+          <span style="display:inline-flex;align-items:center;gap:8px;width:fit-content;padding:6px 13px 6px 11px;border-radius:999px;background:rgba(14,107,66,.10);font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent,#0E6B42)"><span aria-hidden="true" style="width:8px;height:8px;border-radius:50%;background:currentColor"></span>open to full-time roles · available immediately</span>
+          <a href="mailto:hi.lokeshux@gmail.com" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;min-height:48px;font-size:clamp(23px,6.4vw,28px);line-height:1.2;letter-spacing:-.02em;font-weight:500;color:var(--ink,#14140F)">hi.lokeshux@gmail.com</a>
+          <a href="resume.pdf" target="_blank" rel="noreferrer" onClick="{{ closeMenu }}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:12px;background:var(--ink,#14140F);color:var(--card,#fff);font-size:15px;font-weight:500">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+        </div>
+      </div>
+    </sc-if>
+  </header>
+
+  <section id="top" style="max-width:1060px;margin:0 auto;padding:clamp(56px,8vw,112px) 0 clamp(40px,5vw,64px)">
+    <p data-reveal="" style="margin:0 0 clamp(20px,3vw,30px);font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">Fintech · 200,000+ users · Nov 2024 – Aug 2025</p>
+    <h1 data-reveal="" style="margin:0;max-width:22ch;font-size:clamp(34px,5.6vw,72px);line-height:1.02;letter-spacing:-.035em;font-weight:700;text-wrap:balance">Two apps. One portfolio. No way to see it.</h1>
+    <p data-reveal="" style="max-width:64ch;margin:clamp(24px,3.4vw,36px) 0 0;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Rupeezy had two apps. Stocks and F&amp;O lived in Rupeezy Trade; mutual funds lived in Rupeezy Invest. A user who held both had two logins and two partial views of their own money — the mutual fund app couldn’t show their equity holdings, and the trading app couldn’t show their funds. To answer “how am I doing?”, they had to open both and add it up themselves. The banner at the bottom of that screen is Rupeezy’s own mutual fund app — the most valuable slot on our trading home screen, spent telling people to go download something else.</p>
+    <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr));gap:clamp(16px,3vw,36px);margin-top:clamp(30px,4vw,50px)">
+      <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+        <div>
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint,#948F81)">{{ f.label }}</div>
+          <div style="margin-top:9px;font-size:clamp(15px,1.6vw,17px);line-height:1.5">{{ f.value }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(72px,10vw,120px)">
+    <div data-reveal="" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin:0 0 10px">
+      <span style="font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted,#6B675E)">Before</span>
+      <span style="font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent,#0E6B42);font-weight:700">After</span>
+    </div>
+    <div data-reveal="" data-ba2="" style="position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;box-shadow:var(--sh);touch-action:none;user-select:none;cursor:ew-resize">
+      <div style="position:absolute;inset:0;background:var(--tint,#EFEBDE)">
+        <img src="assets/merge-before-2400.png" srcset="assets/merge-before-1600.png 1600w, assets/merge-before-2400.png 2400w, assets/merge-before-4000.png 4000w" sizes="(max-width:1100px) 100vw, 1060px" data-noparallax="" decoding="async" fetchpriority="high" width="2400" height="1350" alt="Before the merge — four screens of Rupeezy Trade, with mutual funds appearing only as a banner for a separate app" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+      <div data-ba2-after="" style="position:absolute;inset:0;clip-path:inset(0 0 0 42%)">
+        <div style="position:absolute;inset:0;background:var(--tint,#EFEBDE)">
+          <img src="assets/merge-after-2400.png" srcset="assets/merge-after-1600.png 1600w, assets/merge-after-2400.png 2400w, assets/merge-after-4000.png 4000w" sizes="(max-width:1100px) 100vw, 1060px" data-noparallax="" decoding="async" fetchpriority="high" width="2400" height="1350" alt="After the merge — four screens of the merged app, with stocks, F&amp;O and mutual funds as peers under one portfolio" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+      </div>
+      <div data-ba2-handle="" style="position:absolute;top:0;bottom:0;left:42%;width:2px;background:var(--bg,#F8F6F0);pointer-events:none;display:flex;align-items:center;justify-content:center;z-index:4">
+        <span style="width:38px;height:38px;border-radius:999px;background:var(--bg,#F8F6F0);color:var(--ink,#14140F);box-shadow:0 6px 18px rgba(20,20,15,.22);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px">↔</span>
+      </div>
+    </div>
+    <p data-reveal="" style="margin:16px 0 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted,#6B675E)">Move your cursor across to compare — before and after the merge.</p>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(72px,10vw,120px)">
+    <div data-reveal="" style="display:grid">
+      <div style="max-width:62ch;display:flex;flex-direction:column;gap:clamp(18px,2.4vw,26px)">
+      <p style="margin:0;font-size:clamp(19px,2.4vw,28px);line-height:1.3;letter-spacing:-.025em">That slot was the most valuable space in the app.</p>
+      <p style="margin:0;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Rupeezy <em>had</em> a mutual fund product. It lived in a different app, and there was no way to sell it from inside this one. So the most valuable space on our home screen was spent pushing users out of the app they were already in — and whatever they bought over there never showed up here.</p>
+      <p style="margin:0;font-size:clamp(16px,1.8vw,20px);line-height:1.5;color:var(--ink,#14140F)">That banner is the entire business problem, sitting in production, in our own app.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(72px,10vw,120px)">
+    <div data-reveal="" data-zoomrow="" style="display:grid;grid-template-columns:max-content clamp(30px,5vw,68px) minmax(0,1fr);align-items:center">
+      <div data-imgbox="" data-ratio="" data-tall="" style="aspect-ratio:405/720;position:relative">
+        <image-slot id="am2-trade-home-full" shape="rect" fit="contain" placeholder="Rupeezy Trade home screen, full phone, cropped to the screen edges (no purple background) — upload ≥760px wide (2× of ~380px display)"></image-slot>
+      </div>
+      <div data-zoomlink="" aria-hidden="true" style="position:relative;align-self:stretch">
+        <div style="position:absolute;left:0;right:0;top:50%;height:30%">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+            <path d="M0 100 C 42 100, 58 0, 100 0" fill="none" stroke="var(--faint,#948F81)" stroke-width="1" stroke-opacity=".7" vector-effect="non-scaling-stroke"></path>
+          </svg>
+        </div>
+        <span style="position:absolute;left:-2.5px;top:80%;width:5px;height:5px;margin-top:-2.5px;border-radius:999px;background:var(--faint,#948F81)"></span>
+      </div>
+      <div data-imgbox="" data-ratio="" style="aspect-ratio:686/168;position:relative">
+        <image-slot id="am2-banner-crop" shape="rect" fit="contain" placeholder="Tight crop of just the mutual fund app banner from that home screen — upload ≥1050px wide (2× of ~525px display)"></image-slot>
+      </div>
+    </div>
+    <p data-reveal="" style="margin:clamp(18px,2.4vw,26px) 0 0;max-width:74ch;font-family:var(--mono);font-size:11.5px;line-height:1.85;letter-spacing:.02em;color:var(--muted,#6B675E)">Rupeezy Trade’s home screen before the merge, promoting Rupeezy’s own mutual fund app — a separate download for the other half of your portfolio. The banner’s position wasn’t fixed; it moved up or down depending on what else needed space. Mutual funds competed for slots on the trading app’s home screen like an unrelated product. After the merge, they stopped being a banner and became a tab.</p>
+  </section><section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">01 — Context</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Two apps</h2>
+        <p style="margin:16px 0 0;font-size:15px;line-height:1.6;color:var(--muted,#6B675E)">A stockbroker founded in 2003, digital since 2017. Around 125 people.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,28px)">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:clamp(14px,2vw,20px)">
+          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:22px">
+            <div style="font-family:var(--mono);font-size:11px;color:var(--accent,#0E6B42);letter-spacing:.06em">RUPEEZY TRADE</div>
+            <p style="margin:10px 0 0;font-size:15px;line-height:1.5">Stocks and F&amp;O. <span style="color:var(--ink,#14140F);font-weight:500">97% of company revenue.</span> <span style="color:var(--muted,#6B675E)">I owned this product end to end.</span></p>
+          </div>
+          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:22px">
+            <div style="font-family:var(--mono);font-size:11px;color:var(--accent,#0E6B42);letter-spacing:.06em">RUPEEZY INVEST</div>
+            <p style="margin:10px 0 0;font-size:15px;line-height:1.5">Mutual funds. <span style="color:var(--muted,#6B675E)">Much smaller.</span></p>
+          </div>
+        </div>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">The split cost us three things. A mutual fund investor couldn’t buy a stock and a trader couldn’t start an SIP, so there was no cross-sell in either direction. Every compliance change and every campaign had to be built twice. And <span style="color:var(--ink,#14140F)">97% of revenue sitting in one product line isn’t concentration — it’s a single point of failure.</span></p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Everyone knew this. Merging had been discussed for a long time. Nothing forced it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">02 — The forcing function</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Then something forced it</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
+        <div style="display:flex;flex-direction:column;gap:0">
+          <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:clamp(14px,2.4vw,26px);align-items:start;padding:clamp(16px,2vw,20px) 0;border-top:1px solid var(--tint,#EFEBDE)">
+              <span style="font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent,#0E6B42);padding-top:3px">{{ t.when }}</span>
+              <span style="font-size:clamp(15.5px,1.7vw,18px);line-height:1.6">{{ t.what }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <figure data-reveal="" data-exhibit="" data-figfull="" style="margin:0;display:flex;flex-direction:column;gap:14px">
+          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(20px,2.8vw,34px)">
+            <div data-exgrid="" style="display:grid;grid-template-columns:minmax(0,45fr) minmax(0,55fr);gap:clamp(20px,2.8vw,34px);align-items:stretch">
+              <div data-exleft="" style="display:flex;align-items:flex-start">
+                <img src="assets/sebi-tweet.png" width="1130" height="742" loading="lazy" decoding="async" data-noparallax="" alt="Tweet from Nithin Kamath estimating the impact of SEBI's derivatives changes at about 60% of overall F&amp;O trades" style="display:block;width:100%;height:auto;border-radius:8px">
+              </div>
+              <div data-exright="" style="display:flex;flex-direction:column;justify-content:space-between;gap:clamp(16px,2.2vw,26px);padding-left:0">
+                <img src="assets/sebi-news-1.png" width="1360" height="278" loading="lazy" decoding="async" data-noparallax="" alt="Business Today headline: how SEBI's F&amp;O curbs may impact the stock market, retail investors and brokers" style="display:block;width:100%;height:auto;border-radius:8px">
+                <img src="assets/sebi-news-2.png" width="1360" height="300" loading="lazy" decoding="async" data-noparallax="" alt="Economic Times headline: F&amp;O activity down up to 30% over SEBI regulations, more dip likely in 2025" style="display:block;width:100%;height:auto;border-radius:8px">
+              </div>
+            </div>
+          </div>
+          <figcaption style="margin:0;font-family:var(--mono);font-size:12px;line-height:1.6;letter-spacing:.02em;color:var(--muted,#6B675E)">October 2024 — SEBI’s derivatives rules, and what the industry expected. Zerodha’s founder estimated ~60% impact on overall F&amp;O trades. Our F&amp;O concentration meant we were hit harder: trading revenue fell roughly 75% by March.</figcaption>
+        </figure>
+        <div style="background:var(--note1,#F6E3D9);color:var(--noteInk,#181812);border-radius:14px;box-shadow:var(--sh);padding:clamp(26px,4.5vw,56px)">
+          <p style="margin:0;font-size:clamp(19px,2.5vw,30px);line-height:1.35;letter-spacing:-.02em">Trading revenue was down roughly 75%.</p>
+        </div>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">We were hit harder than the industry estimate because our business was concentrated in exactly the segment the regulation targeted.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">The merge stopped being a growth idea. <span style="color:var(--ink,#14140F)">Mutual funds were no longer additional revenue — they were the only other business we had.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">03 — Phase 1</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">The version I shipped and didn’t believe in</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">The first meeting decided the direction: fold Invest into Trade, because Trade had the users and the revenue.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">For how the two would coexist, the reference was consumer apps already running multiple products — Swiggy switching between food and Instamart. A switch that changes the entire app context.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">The reasoning was speed, and <span style="color:var(--ink,#14140F)">the reasoning was correct.</span> The regulation had landed. Shipping in weeks mattered more than shipping the ideal thing in months.</p>
+        <p style="margin:0;max-width:62ch;font-size:clamp(16px,1.8vw,20px);line-height:1.5;color:var(--ink,#14140F)">Where the switch lived was my call. I ran three iterations.</p>
+        <div data-imgbox="" data-ratio="" style="position:relative">
+          <img src="assets/am-entry-points-v2.svg" width="3200" height="1800" loading="lazy" decoding="async" data-noparallax="" alt="Three entry point explorations, side by side: top navigation, floating button on Home, and bottom navigation">
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:clamp(16px,2.4vw,22px)">
+          <sc-for list="{{ entryOptions }}" as="o" hint-placeholder-count="3">
+            <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(20px,2.6vw,26px);display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <h3 style="margin:0;font-size:clamp(16px,1.8vw,19px);font-weight:700;letter-spacing:-.02em">{{ o.title }}</h3>
+                <span style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;background:{{ o.tagBg }};color:{{ o.tagInk }}">{{ o.tag }}</span>
+              </div>
+              <p style="margin:0;font-size:15px;line-height:1.55;color:var(--muted,#6B675E)">{{ o.why }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;padding:clamp(22px,3vw,30px);background:var(--tint,#EFEBDE);border-radius:8px">
+          <p style="margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,#6B675E)">Phase 1 shipped 15 January 2025</p>
+          <p style="margin:0;font-size:clamp(17px,2vw,22px);line-height:1.4;letter-spacing:-.02em;color:var(--ink,#14140F)">I didn’t believe in it.</p>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:var(--muted,#6B675E)">Not the execution — that was fine, and it was fast. I didn’t believe in the model underneath it, and shipping it meant committing the product to that model.</p>
+        </div>
+        <p style="margin:0;max-width:62ch;font-size:clamp(17px,2vw,22px);line-height:1.4;letter-spacing:-.02em;color:var(--ink,#14140F)">So I shipped it anyway, and kept building the version I thought was right.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Refusing would have been precious. The business needed something in January. Treating January as final would have been worse.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">04 — The argument</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Why a switch is wrong for a broker</h2>
+        <p style="margin:16px 0 0;font-size:15px;line-height:1.6;color:var(--muted,#6B675E)">The mode-switch pattern was the obvious answer. It was also the wrong one.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,28px)">
+        <p style="margin:0;max-width:62ch;font-size:clamp(19px,2.4vw,28px);line-height:1.3;letter-spacing:-.025em">A mode switch works when the two modes are genuinely different jobs.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Ordering dinner and buying groceries are different jobs. Different intent, different session. Switching the whole app makes sense, because you actually stopped doing one thing and started another.</p>
+        <p style="margin:0;max-width:62ch;font-size:clamp(17px,2vw,22px);line-height:1.4;letter-spacing:-.02em;color:var(--ink,#14140F)">Stocks and mutual funds are not different jobs. They’re two ways of doing the same thing: putting money somewhere and watching what it does.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">The portfolio makes it obvious. If I want to check my portfolio, I want <span style="color:var(--ink,#14140F)">my portfolio</span> — my stocks and my mutual funds are both my money. Under a switch, moving from one to the other means changing the entire application. The navigation shifts. The product becomes a different product. For what should be the smallest possible movement between two views of the same thing.</p>
+        <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(20px,2.6vw,26px)">
+          <p style="margin:0;font-size:clamp(15.5px,1.7vw,18px);line-height:1.55">A switch makes <em>product</em> the primary axis and <em>task</em> the secondary one. <span style="color:var(--warn,#C7381A)">For a broker, that’s backwards.</span></p>
+        </div>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">And it doesn’t grow. A switch is binary. Commodities were already being discussed. Every product after the second one is either a new mode, or a switch that quietly turns into a menu.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">05 — The model</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">What doesn’t change</h2>
+        <p style="margin:16px 0 0;font-size:15px;line-height:1.6;color:var(--muted,#6B675E)">Not <em>what makes these products different</em> — what stays the same across all of them.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
+        <div>
+          <figure style="margin:0;display:flex;flex-direction:column;gap:14px">
+      <div style="border-radius:14px;box-shadow:var(--sh);background:var(--card,#fff);padding:clamp(18px,2.4vw,30px)"><svg viewBox="0 0 1000 512" role="img" aria-label="The five-stage investment journey — search, evaluate, act, track, adjust, and around again — sits on one plane and maps onto three fixed navigation items on the plane below: Explore, Orders and Portfolio. The same structure holds for every asset class." style="display:block;width:100%;height:auto"><text x="22" y="22" font-family="var(--mono)" font-size="14.5" letter-spacing="2.3" fill="var(--accent,#2F7A4F)" font-weight="700">THE JOURNEY IS THE SAME. ONLY THE PRODUCT CHANGES.</text><text x="22" y="56" font-family="var(--mono)" font-size="14" letter-spacing="1.9" fill="var(--muted,#6B675E)" font-weight="600">THE JOURNEY</text><rect x="22" y="64" width="956" height="176" rx="12" fill="var(--ink,#14140F)" opacity=".07"></rect><rect x="40" y="84" width="160" height="94" rx="12" fill="var(--accent,#2F7A4F)" fill-opacity=".05" stroke="var(--ink,#14140F)" stroke-opacity=".4" stroke-width="1.5"></rect><text x="120" y="120" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="21" font-weight="500" fill="var(--ink,#14140F)">Search</text><text x="120" y="149" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="15" fill="var(--muted,#6B675E)">find something</text><path d="M206 131H217" stroke="var(--ink,#14140F)" stroke-opacity=".5" stroke-width="1.8" stroke-linecap="round"></path><path d="M216 126L224 131L216 136Z" fill="var(--ink,#14140F)" fill-opacity=".5"></path><rect x="230" y="84" width="160" height="94" rx="12" fill="var(--accent,#2F7A4F)" fill-opacity=".05" stroke="var(--ink,#14140F)" stroke-opacity=".4" stroke-width="1.5"></rect><text x="310" y="120" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="21" font-weight="500" fill="var(--ink,#14140F)">Evaluate</text><text x="310" y="149" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="15" fill="var(--muted,#6B675E)">compare it</text><path d="M396 131H407" stroke="var(--ink,#14140F)" stroke-opacity=".5" stroke-width="1.8" stroke-linecap="round"></path><path d="M406 126L414 131L406 136Z" fill="var(--ink,#14140F)" fill-opacity=".5"></path><rect x="420" y="84" width="160" height="94" rx="12" fill="var(--accent,#2F7A4F)" fill-opacity=".05" stroke="var(--ink,#14140F)" stroke-opacity=".4" stroke-width="1.5"></rect><text x="500" y="120" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="21" font-weight="500" fill="var(--ink,#14140F)">Act</text><text x="500" y="149" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="15" fill="var(--muted,#6B675E)">buy or save it</text><path d="M586 131H597" stroke="var(--ink,#14140F)" stroke-opacity=".5" stroke-width="1.8" stroke-linecap="round"></path><path d="M596 126L604 131L596 136Z" fill="var(--ink,#14140F)" fill-opacity=".5"></path><rect x="610" y="84" width="160" height="94" rx="12" fill="var(--accent,#2F7A4F)" fill-opacity=".05" stroke="var(--ink,#14140F)" stroke-opacity=".4" stroke-width="1.5"></rect><text x="690" y="120" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="21" font-weight="500" fill="var(--ink,#14140F)">Track</text><text x="690" y="149" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="15" fill="var(--muted,#6B675E)">watch what you own</text><path d="M776 131H787" stroke="var(--ink,#14140F)" stroke-opacity=".5" stroke-width="1.8" stroke-linecap="round"></path><path d="M786 126L794 131L786 136Z" fill="var(--ink,#14140F)" fill-opacity=".5"></path><rect x="800" y="84" width="160" height="94" rx="12" fill="var(--accent,#2F7A4F)" fill-opacity=".05" stroke="var(--ink,#14140F)" stroke-opacity=".4" stroke-width="1.5"></rect><text x="880" y="120" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="21" font-weight="500" fill="var(--ink,#14140F)">Adjust</text><text x="880" y="149" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="15" fill="var(--muted,#6B675E)">sell, hold, or reinvest</text><path d="M960 178C960 200 948 210 928 210H890" stroke="var(--muted,#6B675E)" stroke-width="1.7" stroke-dasharray="7 6" stroke-linecap="round" fill="none"></path><path d="M870 210H700" stroke="var(--muted,#6B675E)" stroke-width="1.7" stroke-dasharray="7 6" stroke-linecap="round" fill="none"></path><path d="M680 210H510" stroke="var(--muted,#6B675E)" stroke-width="1.7" stroke-dasharray="7 6" stroke-linecap="round" fill="none"></path><path d="M490 210H320" stroke="var(--muted,#6B675E)" stroke-width="1.7" stroke-dasharray="7 6" stroke-linecap="round" fill="none"></path><path d="M300 210H130" stroke="var(--muted,#6B675E)" stroke-width="1.7" stroke-dasharray="7 6" stroke-linecap="round" fill="none"></path><path d="M110 210H72C52 210 40 200 40 178" stroke="var(--muted,#6B675E)" stroke-width="1.7" stroke-dasharray="7 6" stroke-linecap="round" fill="none"></path><path d="M34.5 187L40 177L45.5 187Z" fill="var(--muted,#6B675E)"></path><text x="405" y="234" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="17" fill="var(--muted,#6B675E)">and around again</text><path d="M120 178V246A8 8 0 0 0 128 254H302A8 8 0 0 1 310 246V178" fill="none" stroke="var(--accent,#2F7A4F)" stroke-width="2.5" stroke-linecap="round"></path><path d="M690 178V246A8 8 0 0 0 698 254H872A8 8 0 0 1 880 246V178" fill="none" stroke="var(--accent,#2F7A4F)" stroke-width="2.5" stroke-linecap="round"></path><path d="M215 254V298" stroke="var(--accent,#2F7A4F)" stroke-width="2.5" stroke-linecap="round"></path><path d="M209 298L215 307L221 298Z" fill="var(--accent,#2F7A4F)"></path><path d="M500 178V298" stroke="var(--accent,#2F7A4F)" stroke-width="2.5" stroke-linecap="round"></path><path d="M494 298L500 307L506 298Z" fill="var(--accent,#2F7A4F)"></path><path d="M785 254V298" stroke="var(--accent,#2F7A4F)" stroke-width="2.5" stroke-linecap="round"></path><path d="M779 298L785 307L791 298Z" fill="var(--accent,#2F7A4F)"></path><text x="22" y="290" font-family="var(--mono)" font-size="14" letter-spacing="1.9" fill="var(--muted,#6B675E)" font-weight="600">THE INTERFACE</text><rect x="22" y="298" width="956" height="116" rx="12" fill="var(--accent,#2F7A4F)" opacity=".075"></rect><rect x="120" y="312" width="190" height="60" rx="12" fill="var(--accent,#2F7A4F)"></rect><text x="215" y="349" text-anchor="middle" font-family="var(--mono)" font-size="17" letter-spacing="1.2" fill="var(--card,#FFFFFF)" font-weight="600">Explore</text><rect x="405" y="312" width="190" height="60" rx="12" fill="var(--accent,#2F7A4F)"></rect><text x="500" y="349" text-anchor="middle" font-family="var(--mono)" font-size="17" letter-spacing="1.2" fill="var(--card,#FFFFFF)" font-weight="600">Orders</text><rect x="690" y="312" width="190" height="60" rx="12" fill="var(--accent,#2F7A4F)"></rect><text x="785" y="349" text-anchor="middle" font-family="var(--mono)" font-size="17" letter-spacing="1.2" fill="var(--card,#FFFFFF)" font-weight="600">Portfolio</text><text x="500" y="397" text-anchor="middle" font-family="var(--mono)" font-size="14" letter-spacing="2" fill="var(--muted,#6B675E)">BOTTOM NAVIGATION — FIXED</text><path d="M22 442H978" stroke="var(--ink,#14140F)" stroke-width="1" opacity=".14"></path><text x="22" y="481" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="19" fill="var(--ink,#14140F)">The same for</text><rect x="160" y="458" width="88" height="36" rx="18" fill="var(--accent,#2F7A4F)" opacity=".07"></rect><rect x="160" y="458" width="88" height="36" rx="18" fill="none" stroke="var(--ink,#14140F)" stroke-width="1.5" opacity=".8"></rect><text x="204" y="481.5" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="16" fill="var(--ink,#14140F)">stocks</text><rect x="261" y="458" width="74" height="36" rx="18" fill="var(--accent,#2F7A4F)" opacity=".07"></rect><rect x="261" y="458" width="74" height="36" rx="18" fill="none" stroke="var(--ink,#14140F)" stroke-width="1.5" opacity=".8"></rect><text x="298" y="481.5" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="16" fill="var(--ink,#14140F)">F&amp;O</text><rect x="348" y="458" width="132" height="36" rx="18" fill="var(--accent,#2F7A4F)" opacity=".07"></rect><rect x="348" y="458" width="132" height="36" rx="18" fill="none" stroke="var(--ink,#14140F)" stroke-width="1.5" opacity=".8"></rect><text x="414" y="481.5" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="16" fill="var(--ink,#14140F)">mutual funds</text><rect x="493" y="458" width="128" height="36" rx="18" fill="var(--accent,#2F7A4F)" opacity=".07"></rect><rect x="493" y="458" width="128" height="36" rx="18" fill="none" stroke="var(--ink,#14140F)" stroke-width="1.5" opacity=".8"></rect><text x="557" y="481.5" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="16" fill="var(--ink,#14140F)">commodities</text><rect x="634" y="458" width="70" height="36" rx="18" fill="none" stroke="var(--muted,#6B675E)" stroke-width="1.5" stroke-dasharray="6 5"></rect><text x="669" y="481.5" text-anchor="middle" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="16" fill="var(--muted,#6B675E)">next</text></svg></div>
+      <figcaption style="margin:0;font-family:var(--mono);font-size:12px;line-height:1.6;letter-spacing:.02em;color:var(--muted,#6B675E)">Five journey stages, three navigation items — because Search and Evaluate are one place, and Track and Adjust are another.</figcaption>
+    </figure>
+        </div>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Explore to find something. Evaluate it. Act — buy it, or save it. Track what you own. Adjust. Stocks, mutual funds, F&amp;O, commodities, anything the business adds in five years — <span style="color:var(--ink,#14140F)">that sequence never changes.</span> Only the asset class changes.</p>
+        <div style="background:var(--note1,#F6E3D9);color:var(--noteInk,#181812);border-radius:14px;box-shadow:var(--sh);padding:clamp(26px,4.5vw,56px)">
+          <p style="margin:0;font-size:clamp(19px,2.5vw,30px);line-height:1.35;letter-spacing:-.02em">The journey is invariant. The product is variable. So use two axes, not one.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:clamp(16px,2.4vw,22px)">
+          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(20px,2.6vw,26px)">
+            <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint,#948F81)">Bottom navigation — the journey</div>
+            <p style="margin:12px 0 0;font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--ink,#14140F)">Home · Explore · Tools · Orders · Portfolio</p>
+          </div>
+          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(20px,2.6vw,26px)">
+            <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint,#948F81)">Top tabs — the product</div>
+            <p style="margin:12px 0 0;font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--ink,#14140F)">Stocks · F&amp;O · Mutual Funds · <span style="color:var(--faint,#948F81)">and whatever’s next</span></p>
+          </div>
+        </div>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Whichever axis you’re on stays fixed while the other varies.</p>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:14px">
+          <div data-imgbox="" data-nocap="" style="position:relative">
+            <dc-import name="FixedAndVariable" hint-size="100%,860px"></dc-import>
+          </div>
+          <figcaption style="margin:0;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:var(--muted,#6B675E)">Whichever axis you arrive on holds still; the other one varies. Both directions use the same three places.</figcaption>
+        </figure>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">In <span style="color:var(--ink,#14140F)">Portfolio</span>, that’s fixed — the tabs move me between stock and mutual fund holdings without leaving Portfolio.</p>
+          <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">In <span style="color:var(--ink,#14140F)">Stocks</span>, that’s fixed — the bottom nav moves me through explore, order and portfolio without leaving stocks.</p>
+          <p style="margin:0;max-width:62ch;font-size:clamp(16px,1.8vw,20px);line-height:1.5;color:var(--ink,#14140F)">One structure, read two ways, depending on what you came to do.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">06 — Home</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Home is the exception</h2>
+        <p style="margin:16px 0 0;font-size:15px;line-height:1.6;color:var(--muted,#6B675E)">Every other screen is scoped to one product. This one deliberately isn’t.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,28px)">
+        <p style="margin:0;max-width:62ch;font-size:clamp(19px,2.4vw,28px);line-height:1.3;letter-spacing:-.025em">Home has no product tabs at all.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">It’s the one consolidated screen, because it’s where cross-sell has to happen. Overall portfolio at the top — everything the user holds, across every product. Then expert picks. IPO Live and NFO Live side by side, new stock listings and new fund offers given equal weight. Monthly performers, movers, gainers, losers. Mutual fund categories a first-time investor actually recognises — hybrid, ELSS, invest with ₹100. Indices and news.</p>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:14px">
+          <div data-imgbox="" data-ratio="" data-tall="" style="aspect-ratio:750/1624;position:relative">
+            <img src="assets/am-home-after.png" width="750" height="1624" loading="lazy" decoding="async" data-noparallax="" alt="The merged Home screen: one Overall Portfolio card showing current value, overall return and 1D change, with IPO and NFO entry points, expert picks, monthly performers, and the five-slot bottom navigation">
+          </div>
+          <figcaption style="margin:0;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:var(--muted,#6B675E)">One portfolio number at the top, products as peers underneath — no tabs, no switch.</figcaption>
+        </figure>
+        <p style="margin:0;max-width:62ch;font-size:clamp(17px,2vw,22px);line-height:1.4;letter-spacing:-.02em;color:var(--ink,#14140F)">This was the first time a Rupeezy user could see everything they owned in one number.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">A trader opening this screen sees mutual funds sitting next to the stocks they came for. Not as an ad. As part of the same product.</p>
+        <p style="margin:0;max-width:62ch;font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--accent,#0E6B42)">The banner is gone, because the product it pointed to is now on this screen.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <p data-reveal="" style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">07 — Detail</p>
+    <h2 data-reveal="" style="margin:0 0 clamp(26px,3.4vw,42px);font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">The decisions underneath</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:clamp(16px,2.4vw,22px)">
+      <sc-for list="{{ decisions }}" as="d" hint-placeholder-count="4">
+        <div data-reveal="" style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(22px,2.8vw,30px);display:flex;flex-direction:column;gap:12px">
+          <h3 style="margin:0;font-size:clamp(16px,1.8vw,19px);font-weight:700;letter-spacing:-.02em;line-height:1.3">{{ d.title }}</h3>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:var(--muted,#6B675E)">{{ d.note }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">08 — Language</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">The architecture changed the language</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:14px">
+          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(18px,2.4vw,30px)"><svg viewBox="0 0 650 340" role="img" aria-label="The five navigation slots from each app, and what each became in the merged product." style="display:block;width:100%;height:auto">
+    <text x="2" y="26" font-family="var(--mono)" font-size="11" letter-spacing="1.3" fill="var(--muted,#6B675E)">RUPEEZY TRADE</text>
+    <text x="108" y="26" font-family="var(--mono)" font-size="11" letter-spacing="1.3" fill="var(--muted,#6B675E)">RUPEEZY INVEST</text>
+    <text x="216" y="26" font-family="var(--mono)" font-size="11" letter-spacing="1.3" fill="var(--accent,#0E6B42)" font-weight="700">MERGED</text>
+    <line x1="2" y1="40" x2="648" y2="40" stroke="var(--line,#DEDACC)" stroke-width="1"></line>
+    <text x="2" y="74" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="400" fill="var(--muted,#6B675E)">Home</text>
+    <text x="92" y="74" font-family="var(--mono)" font-size="12" fill="var(--muted,#6B675E)">+</text>
+    <text x="108" y="74" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="400" fill="var(--muted,#6B675E)">Home</text>
+    <text x="196" y="74" font-family="var(--mono)" font-size="13" fill="var(--muted,#6B675E)">→</text>
+    <text x="216" y="74" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="400" fill="var(--muted,#6B675E)">Home</text>
+    <text x="310" y="74" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="12.5" fill="var(--muted,#6B675E)"><tspan x="310" dy="0">rebuilt as the cross-sell surface</tspan></text>
+    <line x1="2" y1="90" x2="648" y2="90" stroke="var(--line,#DEDACC)" stroke-width="1" stroke-opacity=".55"></line>
+    <text x="2" y="120" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="600" fill="var(--ink,#14140F)">Watchlist</text>
+    <text x="92" y="120" font-family="var(--mono)" font-size="12" fill="var(--muted,#6B675E)">+</text>
+    <text x="108" y="120" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="600" fill="var(--ink,#14140F)">Explore</text>
+    <text x="196" y="120" font-family="var(--mono)" font-size="13" fill="var(--accent,#0E6B42)">→</text>
+    <text x="216" y="120" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="var(--accent,#0E6B42)">Explore</text>
+    <text x="310" y="114" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="12.5" fill="var(--muted,#6B675E)"><tspan x="310" dy="0">search + watchlist in one place;</tspan><tspan x="310" dy="15">fund investors browse, they don’t watch</tspan></text>
+    <line x1="2" y1="136" x2="648" y2="136" stroke="var(--line,#DEDACC)" stroke-width="1" stroke-opacity=".55"></line>
+    <text x="2" y="166" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="600" fill="var(--ink,#14140F)">Tools</text>
+    <text x="92" y="166" font-family="var(--mono)" font-size="12" fill="var(--muted,#6B675E)">+</text>
+    <text x="108" y="166" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="600" fill="var(--ink,#14140F)">MF Lab</text>
+    <text x="196" y="166" font-family="var(--mono)" font-size="13" fill="var(--accent,#0E6B42)">→</text>
+    <text x="216" y="166" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="var(--accent,#0E6B42)">Tools</text>
+    <text x="310" y="166" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="12.5" fill="var(--muted,#6B675E)"><tspan x="310" dy="0">MF Lab became a tool, not a tab</tspan></text>
+    <line x1="2" y1="182" x2="648" y2="182" stroke="var(--line,#DEDACC)" stroke-width="1" stroke-opacity=".55"></line>
+    <text x="2" y="212" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="600" fill="var(--ink,#14140F)">Orders</text>
+    <text x="92" y="212" font-family="var(--mono)" font-size="12" fill="var(--muted,#6B675E)">+</text>
+    <text x="108" y="212" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="600" fill="var(--ink,#14140F)">Profile</text>
+    <text x="196" y="212" font-family="var(--mono)" font-size="13" fill="var(--accent,#0E6B42)">→</text>
+    <text x="216" y="212" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="var(--accent,#0E6B42)">Orders</text>
+    <text x="310" y="206" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="12.5" fill="var(--muted,#6B675E)"><tspan x="310" dy="0">not a merge — Profile lost its slot</tspan><tspan x="310" dy="15">and moved to the header</tspan></text>
+    <line x1="2" y1="228" x2="648" y2="228" stroke="var(--line,#DEDACC)" stroke-width="1" stroke-opacity=".55"></line>
+    <text x="2" y="258" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="400" fill="var(--muted,#6B675E)">Portfolio</text>
+    <text x="92" y="258" font-family="var(--mono)" font-size="12" fill="var(--muted,#6B675E)">+</text>
+    <text x="108" y="258" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="400" fill="var(--muted,#6B675E)">Portfolio</text>
+    <text x="196" y="258" font-family="var(--mono)" font-size="13" fill="var(--muted,#6B675E)">→</text>
+    <text x="216" y="258" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="400" fill="var(--muted,#6B675E)">Portfolio</text>
+    <text x="310" y="258" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="12.5" fill="var(--muted,#6B675E)"><tspan x="310" dy="0">same name, now one number</tspan></text>
+    <line x1="2" y1="296" x2="648" y2="296" stroke="var(--line,#DEDACC)" stroke-width="1"></line>
+    <text x="2" y="322" font-family="'Satoshi',Helvetica,Arial,sans-serif" font-size="13.5" fill="var(--ink,#14140F)">Ten slots became five. The only item with nowhere to go was Profile — so it left the bar entirely.</text>
+  </svg></div>
+          <figcaption style="margin:0;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:var(--muted,#6B675E)">Both apps had five navigation slots, but different contents. Merging them meant deciding what each slot should hold — Watchlist and Explore collapsed into one, MF Lab became a tool rather than a tab, and Profile lost its place in the bar entirely.</figcaption>
+        </figure>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:clamp(14px,2vw,20px)">
+          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(20px,2.6vw,26px)">
+            <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted,#6B675E)">Old</div>
+            <p style="margin:12px 0 0;font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--muted,#6B675E)">Home · <span style="color:var(--ink,#14140F);font-weight:500">Watchlist</span> · Tools · Order · <span style="color:var(--ink,#14140F);font-weight:500">Position</span></p>
+          </div>
+          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(20px,2.6vw,26px)">
+            <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted,#6B675E)">New</div>
+            <p style="margin:12px 0 0;font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--muted,#6B675E)">Home · <span style="color:var(--accent,#0E6B42);font-weight:500">Explore</span> · Tools · Orders · <span style="color:var(--accent,#0E6B42);font-weight:500">Portfolio</span></p>
+          </div>
+        </div>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Two of those aren’t renames.</p>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)"><span style="color:var(--ink,#14140F);font-weight:500">“Position” is F&amp;O vocabulary.</span> You hold a position in derivatives, and you close it. A mutual fund investor doesn’t hold positions — they hold investments, for years.</p>
+          <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)"><span style="color:var(--ink,#14140F);font-weight:500">“Watchlist” is a trader’s habit.</span> You watch a stock because you’re waiting on a price. Fund investors don’t watch and wait; they browse categories and compare.</p>
+        </div>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Navigation written for traders would have quietly told every mutual fund investor this app wasn’t built for them.</p>
+        <div style="background:var(--tint,#EFEBDE);border-radius:8px;padding:clamp(22px,3vw,32px)">
+          <p style="margin:0;max-width:48ch;font-size:clamp(17px,2vw,23px);line-height:1.4;letter-spacing:-.02em">Structure decides language. I didn’t set out to rename the navigation — the architecture made it necessary.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">09 — Migration</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Moving the people</h2>
+        <p style="margin:16px 0 0;font-size:15px;line-height:1.6;color:var(--muted,#6B675E)">Architecture solves the product. It doesn’t move anyone.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">One constraint made migration possible: <span style="color:var(--ink,#14140F)">KYC was already unified across both apps.</span> A user verified in Invest was already verified in Trade. Accounts linked automatically — no re-verification, no documents, no starting over. In a regulated product, that’s the difference between a migration and an abandonment.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:clamp(16px,2.4vw,24px)">
+          <sc-for list="{{ stages }}" as="st" hint-placeholder-count="3">
+            <div style="border-top:1px solid var(--tint,#EFEBDE);padding-top:18px">
+              <div style="font-family:var(--mono);font-size:11px;color:var(--accent,#0E6B42);letter-spacing:.1em">{{ st.n }}</div>
+              <p style="margin:12px 0 0;font-size:15px;line-height:1.55">{{ st.text }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <figure style="margin:clamp(20px,3vw,34px) auto;width:375px;max-width:100%;display:flex;flex-direction:column;gap:14px">
+          <div style="aspect-ratio:375/812;position:relative">
+            <x-import component-from-global-scope="MergeIllo" from="./assets/merge-illo.js" chip-color="#4683FC" hint-size="100%,100%"></x-import>
+          </div>
+          <figcaption style="margin:0;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:var(--muted,#6B675E)">Stage one, inside Rupeezy Invest — dismissible. Later it lost the close button; later still, the app left the stores.</figcaption>
+        </figure>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">The escalation was deliberate. Early on, it’s information and the user keeps control of their screen. Later, it <em>is</em> the app. We didn’t want to trap anyone at the start. We did need everyone moved by the end.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">10 — Buy-in</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Getting it approved</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,26px)">
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">I explained the two-axis model in a meeting. It didn’t land.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Talking about navigation models in the abstract rarely does — the difference between “a switch” and “two axes” is hard to hear and easy to see.</p>
+        <p style="margin:0;max-width:62ch;font-size:clamp(16px,1.8vw,20px);line-height:1.5;color:var(--ink,#14140F)">So over a weekend I built it. Real screens, clickable, showing what it feels like to move between portfolio views without the app changing underneath you.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">The initial preference was still the simpler option — it was already built and already shipped. I walked through why mode-switching is wrong for a broker, why two axes scale as products get added, and why this protects existing fund investors instead of absorbing them.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">Everyone agreed. We went ahead with it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">11 — Outcome</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">What shipped</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,26px)">
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">The two-axis navigation is live in Rupeezy today, across <span style="color:var(--ink,#14140F)">stocks, F&amp;O and commodities.</span></p>
+        <p style="margin:0;max-width:62ch;font-size:clamp(17px,2vw,23px);line-height:1.4;letter-spacing:-.02em">Mutual funds are still separate.</p>
+        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">I left in August 2025 while it was in development, so I don’t know why — sequencing, compliance, or a decision the team made after I’d gone.</p>
+        <div style="background:var(--tint,#EFEBDE);border-radius:8px;padding:clamp(22px,3vw,32px)">
+          <p style="margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint,#948F81)">The honest outcome</p>
+          <p style="margin:0;max-width:56ch;font-size:clamp(15.5px,1.7vw,18px);line-height:1.6">The architecture I argued for is in production and carrying the products it was built to scale across. The merge it was designed to enable hasn’t fully happened.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
+    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+      <div>
+        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">12 — Reflection</p>
+        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">What I’d do differently</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(24px,3vw,34px)">
+        <sc-for list="{{ nextTime }}" as="n" hint-placeholder-count="3">
+          <div>
+            <h3 style="margin:0 0 10px;font-size:clamp(17px,1.9vw,20px);font-weight:700;letter-spacing:-.02em">{{ n.title }}</h3>
+            <p style="margin:0;max-width:60ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">{{ n.note }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1060px;margin:0 auto">
+    <div data-reveal="" style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(30px,6vw,88px)">
+      <p style="margin:0 0 22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">Next case study — 02</p><h2 style="margin:0;font-size:clamp(26px,4.2vw,52px);line-height:1.06;letter-spacing:-.03em;font-weight:700;max-width:22ch;text-wrap:balance">A partner platform that shipped in six weeks and lifted conversion 2.4×.</h2><p style="margin:clamp(14px,1.8vw,20px) 0 0;max-width:52ch;font-size:clamp(15px,1.6vw,17px);line-height:1.65;color:var(--muted,#6B675E)">Rise Portal — a B2B referral product for Rupeezy’s digital partners, built from nothing while the numbers had to be chased down by hand.</p><div data-cta="" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:clamp(28px,4vw,42px)"><a href="rise-portal.html" style="display:inline-flex;align-items:center;gap:12px;padding:15px 26px;background:var(--ink,#14140F);border-radius:10px;color:var(--card,#fff);font-size:15px;font-weight:500">Read Rise Portal <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto"><path d="M2.5 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a><a href="index.html#work" style="display:inline-flex;align-items:center;padding:15px 26px;background:var(--tint,#EFEBDE);border-radius:8px;color:var(--ink,#14140F);font-size:15px;font-weight:500">All work</a><a href="mailto:lokeshux@gmail.com" style="display:inline-flex;align-items:center;padding:15px 26px;background:var(--tint,#EFEBDE);border-radius:8px;color:var(--ink,#14140F);font-size:15px;font-weight:500">Email</a></div>
+    </div>
+    <footer style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:clamp(32px,4.5vw,52px) 0;font-family:var(--mono);font-size:11px;color:var(--muted,#6B675E)">
+      <span>© 2026 Lokesh Bhatia — Bengaluru, IN</span>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">LinkedIn</a>
+        <a href="https://www.behance.net/lokeshbhatia" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">Behance</a>
+        <a href="https://www.figma.com/@lkb" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">Figma</a>
+      </div>
+    </footer>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;customCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Interaction&quot;}}">
+class Component extends DCLogic {
+  state = { theme: "light" };
+
+  componentDidUpdate(prev) {
+    if (prev.customCursor !== this.props.customCursor) {
+      this.setCursorEnabled(this.props.customCursor !== false);
+    }
+  }
+
+  componentDidMount() {
+    const saved = localStorage.getItem("portfolio-theme");
+    const theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    this.applyTheme(theme);
+    this.observe();
+    this.bindScroll();
+    this.initCursor();
+    this.setCursorEnabled(this.props.customCursor !== false);
+    this.bindNav();
+    this.initNavFx();
+    this.initFx2();
+    this.initBA();
+    if (!this._menuDismiss) {
+      this._menuDismiss = true;
+      document.addEventListener("click", (e) => { if (this.state.menu && !e.target.closest("header")) this.setState({ menu: false }); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && this.state.menu) this.setState({ menu: false }); });
+    }
+    if (window.__pfShow) window.__pfShow();
+  }
+
+  componentDidUpdate() { this.observe(); }
+
+  componentWillUnmount() {
+  }
+
+  applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("portfolio-theme", theme);
+    this.setState({ theme });
+  }
+
+
+  initFx2() {
+    if (this._fx2) return;
+    this._fx2 = true;
+    const reduced = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    const els = Array.from(document.querySelectorAll("[data-count]"));
+    if (!els.length || !("IntersectionObserver" in window)) return;
+    const parse = (s) => { const m = /^([^\d]*)([\d.]+)(.*)$/.exec(s.trim()); return m && { pre: m[1], val: parseFloat(m[2]), dec: (m[2].split(".")[1] || "").length, suf: m[3], full: s }; };
+    const io = new IntersectionObserver((ents) => {
+      ents.forEach((en) => {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        const p = parse(en.target.textContent);
+        if (!p || reduced) return;
+        const t0 = performance.now(), dur = 1300;
+        const step = (now) => {
+          const k = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
+          if (k < 1) {
+            const dec = Math.max(p.dec, p.val < 10 ? 1 : 0);
+            en.target.textContent = p.pre + (p.val * e).toFixed(dec) + p.suf;
+            requestAnimationFrame(step);
+          } else en.target.textContent = p.full;
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.5 });
+    els.forEach((el) => io.observe(el));
+  }
+
+  initNavFx() {
+    if (this._navFx) return;
+    this._navFx = true;
+    const header = document.querySelector("header");
+    const pill = document.querySelector("[data-navpill]");
+    const glide = document.querySelector("[data-navframe]");
+    if (!pill || !glide) return;
+    const links = Array.from(pill.querySelectorAll("[data-navlink]"));
+    let active = null, hovered = null;
+    let placed = false;
+    const place = (el, subtle) => {
+      const pr = pill.getBoundingClientRect(), r = el.getBoundingClientRect();
+      if (!placed) { placed = true; glide.style.transition = "none"; requestAnimationFrame(() => { glide.style.transition = "transform .35s cubic-bezier(.3,.8,.3,1),width .35s cubic-bezier(.3,.8,.3,1),height .35s cubic-bezier(.3,.8,.3,1),opacity .25s ease"; }); }
+      glide.style.opacity = subtle ? ".65" : "1";
+      glide.style.transform = "translate(" + (r.left - pr.left - 11) + "px," + (r.top - pr.top - 7) + "px)";
+      glide.style.width = (r.width + 22) + "px";
+      glide.style.height = (r.height + 14) + "px";
+    };
+    const settle = () => { if (hovered) place(hovered); else glide.style.opacity = "0"; };
+    if (window.matchMedia("(hover:hover)").matches) {
+      links.forEach((l) => {
+        l.addEventListener("mouseenter", () => { hovered = l; place(l); });
+        l.addEventListener("mouseleave", () => { hovered = null; settle(); });
+        l.addEventListener("focus", () => { hovered = l; place(l); });
+        l.addEventListener("blur", () => { hovered = null; settle(); });
+      });
+    }
+    window.addEventListener("resize", () => { if (glide.style.opacity && glide.style.opacity !== "0") settle(); });
+    const secs = ["work", "impact", "ai", "experience", "contact"];
+    let lastSec = null;
+    window.__pfNavTick = () => {
+      const y = window.scrollY;
+      if (header) { if (y > 70) header.setAttribute("data-scrolled", ""); else header.removeAttribute("data-scrolled"); }
+      let cur = "top";
+      for (const id of secs) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < window.innerHeight * 0.38) cur = id;
+      }
+      if (cur !== lastSec) {
+        lastSec = cur;
+        active = links.find((l) => (l.getAttribute("href") || "") === "#" + cur) || links.find((l) => l.hasAttribute("data-navcurrent")) || links.find((l) => /^(#top|Portfolio\.dc\.html)$/.test(l.getAttribute("href") || "")) || null;
+        links.forEach((l) => {
+          const on = l === active;
+          l.style.color = on ? "var(--navOn)" : "var(--navOff)";
+          if (on) l.setAttribute("aria-current", "true"); else l.removeAttribute("aria-current");
+        });
+        if (!hovered) settle();
+      }
+    };
+    window.__pfNavTick();
+  }
+
+  bindNav() {
+    if (this._navBound) return;
+    this._navBound = true;
+    const seen = new Set();
+    const prefetch = (e) => {
+      const a = e.target && e.target.closest && e.target.closest("a");
+      if (!a || a.getAttribute("target") === "_blank") return;
+      const href = a.getAttribute("href") || "";
+      if (!/\.dc\.html/.test(href) || seen.has(href)) return;
+      seen.add(href);
+      const l = document.createElement("link");
+      l.rel = "prefetch"; l.href = href; l.as = "document";
+      document.head.appendChild(l);
+    };
+    document.addEventListener("pointerenter", prefetch, true);
+    document.addEventListener("focusin", prefetch);
+  }
+
+  setCursorEnabled(on) {
+    const root = document.documentElement;
+    const cur = document.getElementById("lkb-cur");
+    const dot = document.getElementById("lkb-dot");
+    if (on) {
+      this._armed = true;
+      if (cur) cur.style.display = "";
+      if (dot) dot.style.display = "";
+      // only blank the native cursor once the caret is tracking a real pointer position
+      if (this._moved) { root.setAttribute("data-cursor", ""); if (cur) cur.style.opacity = "1"; }
+      else root.removeAttribute("data-cursor");
+    } else {
+      this._armed = false;
+      this._moved = false;
+      root.removeAttribute("data-cursor");
+      if (cur) { cur.style.display = "none"; cur.style.opacity = "0"; cur.removeAttribute("data-on"); }
+      if (dot) { dot.style.display = "none"; dot.removeAttribute("data-on"); }
+    }
+  }
+
+  initBA() {
+    if (this._ba) return;
+    const wrap = document.querySelector("[data-ba2]");
+    if (!wrap) return;
+    const after = wrap.querySelector("[data-ba2-after]");
+    const handle = wrap.querySelector("[data-ba2-handle]");
+    if (!after || !handle) return;
+    this._ba = true;
+
+    const REST = 42;
+    const hoverable = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+    let pct = REST, target = REST, eased = false;
+
+    const paint = () => {
+      after.style.clipPath = "inset(0 0 0 " + pct.toFixed(2) + "%)";
+      handle.style.left = pct.toFixed(2) + "%";
+    };
+    const setTransition = (on) => {
+      const t = on ? "clip-path .5s cubic-bezier(.16,1,.3,1)" : "none";
+      after.style.transition = t;
+      handle.style.transition = on ? "left .5s cubic-bezier(.16,1,.3,1)" : "none";
+    };
+    const fromX = (clientX) => {
+      const r = wrap.getBoundingClientRect();
+      if (!r.width) return target;
+      return Math.min(96, Math.max(4, ((clientX - r.left) / r.width) * 100));
+    };
+    // pointermove is already coalesced to one event per frame, so paint straight away
+    const track = (clientX) => {
+      if (eased) { setTransition(false); eased = false; }
+      pct = target = fromX(clientX);
+      paint();
+    };
+    const rest = () => {
+      setTransition(true); eased = true;
+      pct = target = REST;
+      paint();
+    };
+
+    if (hoverable) {
+      // hover-follow: no press needed
+      wrap.style.cursor = "";
+      wrap.addEventListener("pointerenter", (e) => { setTransition(false); eased = false; track(e.clientX); });
+      wrap.addEventListener("pointermove", (e) => track(e.clientX));
+      wrap.addEventListener("pointerleave", rest);
+    } else {
+      // touch / coarse pointer: keep drag
+      let dragging = false;
+      wrap.addEventListener("pointerdown", (e) => {
+        dragging = true;
+        if (wrap.setPointerCapture) { try { wrap.setPointerCapture(e.pointerId); } catch (err) {} }
+        setTransition(false); eased = false; track(e.clientX);
+      });
+      wrap.addEventListener("pointermove", (e) => { if (dragging) track(e.clientX); });
+      const stop = () => { dragging = false; };
+      wrap.addEventListener("pointerup", stop);
+      wrap.addEventListener("pointercancel", stop);
+    }
+
+    wrap.setAttribute("tabindex", "0");
+    wrap.setAttribute("role", "slider");
+    wrap.setAttribute("aria-label", "Move the pointer across to compare the app before and after the merge");
+    wrap.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      setTransition(true); eased = true;
+      target = pct = Math.min(96, Math.max(4, pct + (e.key === "ArrowRight" ? 4 : -4)));
+      paint();
+    });
+    paint();
+  }
+
+  initCursor() {
+    if (this._cursor) { this._cursorActive = (on) => this.setCursorEnabled(on); return; }
+    if (!window.matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+    this._cursor = true;
+    const dot = document.createElement("div");
+    dot.id = "lkb-dot";
+    const cur = document.createElement("div");
+    cur.id = "lkb-cur";
+    cur.style.opacity = "0";
+    cur.innerHTML = '<svg class="caret" width="27" height="27" viewBox="0 0 27 27" fill="none" aria-hidden="true">' +
+      '<path d="M4.2 3.4L23 12.4L14 14.6L10.4 23.2Z" fill="currentColor" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"></path></svg>' +
+      '<span class="tag"></span>';
+    document.body.append(dot, cur);
+    let tx = -100, ty = -100, dx = -100, dy = -100;
+    const move = (e) => {
+      if (this.props.customCursor === false || this._armed === false) return;
+      tx = e.clientX; ty = e.clientY;
+      cur.style.transform = "translate(" + tx + "px," + ty + "px)";
+      if (!this._moved) {
+        this._moved = true; dx = tx; dy = ty;
+        dot.setAttribute("data-on", "");
+        cur.style.opacity = "1";
+        document.documentElement.setAttribute("data-cursor", "");
+      }
+      const hit = e.target.closest && e.target.closest("a,button,image-slot");
+      let label = "";
+      if (hit) {
+        const href = hit.getAttribute("href") || "";
+        label = hit.dataset.cursorLabel ||
+          (hit.tagName === "IMAGE-SLOT" ? "drop image" :
+           hit.tagName === "BUTTON" ? "click" :
+           href.startsWith("mailto:") ? "email" :
+           /linkedin/.test(href) ? "linkedin" :
+           /behance/.test(href) ? "behance" :
+           /figma/.test(href) ? "figma" :
+           /resume\.pdf/.test(href) ? "download cv" :
+           /about\.dc\.html/i.test(href) ? "about me" :
+           /app-merge\.dc\.html|rise-portal\.dc\.html|core-design-system\.dc\.html/i.test(href) ? "case study" :
+           /(^|\/)index\.dc\.html/i.test(href) ? "home" :
+           href.startsWith("#") ? "jump" : "open");
+      }
+      if (label) { cur.querySelector(".tag").textContent = label; cur.setAttribute("data-on", ""); dot.style.width = dot.style.height = "40px"; dot.style.margin = "-20px 0 0 -20px"; }
+      else { cur.removeAttribute("data-on"); dot.style.width = dot.style.height = "26px"; dot.style.margin = "-13px 0 0 -13px"; }
+    };
+    const setActive = (on) => this.setCursorEnabled(on);
+    this._cursorActive = setActive;
+    const editing = () => !!(
+      document.querySelector("[contenteditable='true'],[contenteditable='']") ||
+      (document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) ||
+      document.documentElement.hasAttribute("data-om-editing") ||
+      document.body.hasAttribute("data-om-editing")
+    );
+    const sync = () => setActive(this.props.customCursor !== false && !editing());
+    document.addEventListener("focusin", sync);
+    document.addEventListener("focusout", () => setTimeout(sync, 0));
+    new MutationObserver(sync).observe(document.documentElement, {
+      attributes: true, subtree: true, attributeFilter: ["contenteditable", "data-om-editing"]
+    });
+    window.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerleave", () => {
+      this._moved = false;
+      dot.removeAttribute("data-on");
+      cur.style.opacity = "0";
+      document.documentElement.removeAttribute("data-cursor");
+    });
+    // safety net: if the caret is ever hidden while cursor:none is live, give the pointer back
+    window.addEventListener("blur", () => { document.documentElement.removeAttribute("data-cursor"); this._moved = false; });
+    const loop = () => {
+      dx += (tx - dx) * 0.16; dy += (ty - dy) * 0.16;
+      dot.style.transform = "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px)";
+      requestAnimationFrame(loop);
+    };
+    loop();
+  }
+
+  bindScroll() {
+    if (window.__pfScrollBound) return;
+    window.__pfScrollBound = true;
+    let frame = null;
+    this._onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = null;
+        const bar = document.querySelector("[data-progress]");
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(window.scrollY / max, 1) : 0) + ")";
+        this.sweepReveal();
+        if (window.__pfNavTick) window.__pfNavTick();
+      });
+    };
+    window.addEventListener("scroll", this._onScroll, { passive: true });
+    this._onScroll();
+  }
+
+  sweepReveal() {
+    const vh = window.innerHeight;
+    document.querySelectorAll("[data-revealed]").forEach((el) => {
+      if (el.style.opacity !== "0") return;
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.93 && r.bottom > 0) { el.style.transitionDelay = "0ms"; el.style.opacity = "1"; el.style.transform = "none"; el.style.filter = "blur(0px)"; }
+    });
+    if (this._reduced) return;
+    // images render at 1:1 — no parallax scale, which would upscale past natural resolution
+    document.querySelectorAll("img[style*='scale(1.115)']").forEach((im) => { im.style.transform = "none"; });
+  }
+
+  observe() {
+    if (!("IntersectionObserver" in window)) return;
+    this._reduced = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    const cv = "cubic-bezier(.16,1,.3,1)";
+    const hide = (el) => {
+      el.style.transition = "none";
+      el.style.opacity = "0";
+      el.style.transform = "translateY(32px) scale(.99)";
+      el.style.filter = "blur(10px)";
+      void el.offsetWidth;
+      el.style.transition = "opacity .9s " + cv + ", transform .95s " + cv + ", filter .75s " + cv;
+    };
+    this._io = this._io || new IntersectionObserver((entries) => {
+      let k = 0;
+      entries.forEach((e) => {
+        const el = e.target;
+        if (e.isIntersecting) {
+          if (el.style.opacity === "0") {
+            el.style.transitionDelay = Math.min(k++ * 85, 420) + "ms";
+            el.style.opacity = "1";
+            el.style.transform = "none";
+            el.style.filter = "blur(0px)";
+          }
+        } else if (el.style.opacity !== "0") {
+          const r = e.boundingClientRect;
+          if (r.top > window.innerHeight + 40 || r.bottom < -40) { el.style.transitionDelay = "0ms"; hide(el); }
+        }
+      });
+      // threshold 0 matters on mobile: stacked sections can be taller than 12x the viewport,
+      // where max intersectionRatio never reaches 0.08 and the reveal would never fire
+    }, { threshold: [0, 0.08], rootMargin: "0px 0px -7% 0px" });
+    this._seen = this._seen || new WeakSet();
+    if (this._instant === undefined) {
+      const nav = performance.getEntriesByType("navigation")[0];
+      this._instant = (nav && nav.type === "back_forward") || (document.referrer && document.referrer.indexOf(location.host) > -1);
+    }
+    const vh0 = window.innerHeight;
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      if (this._seen.has(el)) return;
+      this._seen.add(el);
+      el.setAttribute("data-revealed", "");
+      if (this._reduced) { el.style.opacity = "1"; return; }
+      el.style.willChange = "opacity, transform, filter";
+      let r = null;
+      if (this._instant && performance.now() < 3000) r = el.getBoundingClientRect();
+      if (r && r.top < vh0 && r.bottom > 0) {
+        el.style.transition = "opacity .9s " + cv + ", transform .95s " + cv + ", filter .75s " + cv;
+        el.style.opacity = "1";
+      } else hide(el);
+      this._io.observe(el);
+    });
+    clearTimeout(this._revealSafety);
+    this._revealSafety = setTimeout(() => this.sweepReveal(), 1200);
+    if (!this._sweepOnScroll) {
+      this._sweepOnScroll = true;
+      addEventListener("scroll", () => {
+        if (this._sweepQueued) return;
+        this._sweepQueued = true;
+        requestAnimationFrame(() => { this._sweepQueued = false; this.sweepReveal(); });
+      }, { passive: true });
+    }
+  }
+
+  renderVals() {
+    const __menu = {
+      menuOpen: !!this.state.menu,
+      toggleMenu: () => this.setState((s) => { const n = !s.menu; document.body.style.overflow = n ? "hidden" : ""; document.documentElement.classList.toggle("mnav-open", n); return { menu: n }; }),
+      closeMenu: () => { document.body.style.overflow = ""; document.documentElement.classList.remove("mnav-open"); this.setState({ menu: false }); }
+    };
+    const dark = this.state.theme === "dark";
+    return {
+      ...__menu,
+      sunDisp: dark ? "none" : "block",
+      moonDisp: dark ? "block" : "none",
+      toggleTheme: () => this.applyTheme(dark ? "light" : "dark"),
+      facts: [
+        { label: "Company", value: "Rupeezy — stockbroker, Bengaluru" },
+        { label: "Role", value: "Product Designer (sole designer)" },
+        { label: "Team", value: "1 PM, 7 engineers" },
+        { label: "When", value: "Nov 2024 – Aug 2025" }
+      ],
+      timeline: [
+        { when: "October 2024", what: "SEBI announced new derivatives rules — larger contract sizes, higher premiums — designed to push small retail traders out of F&O. Industry commentary expected brokers to lose around 60% of revenue." },
+        { when: "February 2025", what: "The rules took effect." },
+        { when: "March 2025", what: "I pulled our numbers in Firebase and compared them against the months before." }
+      ],
+      entryOptions: [
+        { title: "Top navigation", tag: "rejected", tagBg: "var(--tint,#EFEBDE)", tagInk: "var(--muted,#6B675E)", why: "The top of a trading screen is already carrying indices, search, notifications. Adding a mode switch meant redesigning screens we weren’t otherwise touching." },
+        { title: "Floating button on Home", tag: "rejected", tagBg: "var(--tint,#EFEBDE)", tagInk: "var(--muted,#6B675E)", why: "It can only live on one screen. A user three levels deep in a stock page would have to navigate all the way back out just to change products." },
+        { title: "Bottom navigation", tag: "chosen", tagBg: "var(--good,#0E6B42)", tagInk: "#fff", why: "Present on every screen, and it disturbed the least." }
+      ],
+      decisions: [
+        { title: "Portfolio aggregates at the top, separates in detail.", note: "Stock holdings and fund holdings are different objects — quantity and day change versus units and NAV. Forcing them into one table serves neither. So they only combine on Home, and only as totals. In Portfolio, one asset class at a time, each keeping the layout that suits it." },
+        { title: "Tabs persist across sessions.", note: "Someone who only holds mutual funds isn’t asked to re-select mutual funds every time they open the app." },
+        { title: "Tools stayed shared.", note: "Basket orders, alerts, global markets, strategies — and MF Lab for comparing funds. It was never stock-only, so it didn’t need tabs." },
+        { title: "The top bar scrolls. The bottom bar doesn’t.", note: "Today three tabs fit comfortably. When commodities arrive, the bar extends instead of breaking. Bottom navigation is a fixed, learned pattern and a scrolling one would be worse than useless. The axis that grows is the one that can grow." }
+      ],
+      stages: [
+        { n: "01", text: "A banner in Rupeezy Invest announcing the move — dismissible." },
+        { n: "02", text: "The same banner, no longer dismissible." },
+        { n: "03", text: "The app removed from the stores." }
+      ],
+      nextTime: [
+        { title: "I didn’t test it with users.", note: "Rupeezy had no research function, and after the regulation hit we moved as fast as we could. This was validated through stakeholder review and reasoning — not by anyone using it. For a navigation change touching every screen and 200,000+ users, that isn’t enough. Five people per type would have been cheap. I’d insist now." },
+        { title: "I didn’t agree a metric before shipping.", note: "Rupeezy didn’t do post-release analysis; we shipped and moved on. So I can’t tell you whether cross-sell improved, because nobody decided in advance what we’d look at. Every number I have from that time exists because I went and pulled it myself." },
+        { title: "The default tab is the majority answer, not the right one.", note: "New users land on Stocks, because most of our users are traders. Which means a mutual fund investor’s first screen is full of a product they didn’t come for — the exact user the merge was meant to attract. I’d want to route on something: acquisition source, campaign, a first-run question. Defaulting to the majority was safe. It wasn’t correct." }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

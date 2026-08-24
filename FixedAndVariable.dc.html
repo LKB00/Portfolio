@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  html, body { margin: 0; background: transparent; }
+  a { color: #0F8A5F; }
+  a:hover { color: #0B6E4C; }
+  /* narrow screens: shrink the whole phone so it stays fully visible and centred
+     (highlights are scale-aware — they read frame.width/375) */
+  @media (max-width: 430px) {
+    [data-phonebox] { width: 255px !important; height: 552px !important; }
+    [data-phonebox] > div { transform: scale(0.68) !important; }
+  }
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height: clamp(660px, 92vw, 800px); width: 100%; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(24px, 6vw, 48px) clamp(8px, 4vw, 24px); box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;">
+
+  <div data-phonebox="" style="width: 300px; height: 650px; position: relative; flex: none; max-width: 100%;">
+    <div ref="{{ frameRef }}" style="position: absolute; top: 0; left: 0; width: 375px; height: 812px; transform: scale(0.8); transform-origin: top left; background: #FFFFFF; border-radius: 40px; overflow: hidden; box-shadow: 0 24px 60px rgba(16, 24, 40, 0.14), 0 2px 6px rgba(16, 24, 40, 0.06);">
+
+      <div style="height: 54px; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 30px 6px; box-sizing: border-box;">
+        <div style="font-size: 15px; font-weight: 600; color: #101828; letter-spacing: 0.01em;">9:41</div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="#101828"><rect x="0" y="7" width="3" height="4" rx="1"></rect><rect x="4.6" y="5" width="3" height="6" rx="1"></rect><rect x="9.2" y="2.6" width="3" height="8.4" rx="1"></rect><rect x="13.8" y="0" width="3" height="11" rx="1"></rect></svg>
+          <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="#101828" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.4C3 1.6 5.4 0.8 8 0.8s5 0.8 7 2.6"></path><path d="M3.4 6.2C4.7 5 6.3 4.4 8 4.4s3.3 0.6 4.6 1.8"></path><path d="M6 9c0.6-0.6 1.3-0.9 2-0.9s1.4 0.3 2 0.9"></path></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.7" y="0.7" width="21" height="10.6" rx="3" stroke="#101828" stroke-opacity="0.35"></rect><rect x="2.4" y="2.4" width="17.6" height="7.2" rx="1.8" fill="#101828"></rect><path d="M23.2 4.2v3.6c1-0.4 1.4-1 1.4-1.8s-0.4-1.4-1.4-1.8z" fill="#101828" fill-opacity="0.4"></path></svg>
+        </div>
+      </div>
+
+      <div style="height: 62px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; box-sizing: border-box;">
+        <div style="width: 38px; height: 38px; border-radius: 50%; background: #17B4E8; color: #FFFFFF; font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center;">L</div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#101828" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.6" cy="10.6" r="6.9"></circle><path d="M15.7 15.7 20.4 20.4"></path></svg>
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#101828" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.6a5.4 5.4 0 0 0-5.4 5.4c0 3.6-1.4 5-2 5.6h14.8c-.6-.6-2-2-2-5.6A5.4 5.4 0 0 0 12 3.6Z"></path><path d="M10.2 18.2a2 2 0 0 0 3.6 0"></path></svg>
+        </div>
+      </div>
+
+      <div data-anchor="tabs" style="display: flex; align-items: stretch; padding: 0 14px; border-bottom: 1px solid #EEF0F3; box-sizing: border-box;">
+        <div data-hl="tab-stocks" style="{{ tabStocksStyle }}">Stocks</div>
+        <div data-hl="tab-fno" style="{{ tabFnoStyle }}">F&amp;O</div>
+        <div data-hl="tab-mf" style="{{ tabMfStyle }}">Mutual Funds</div>
+        <div data-hl="tab-new" style="{{ tabNewStyle }}">New</div>
+      </div>
+
+      <div data-anchor="nav" style="position: absolute; left: 0; right: 0; bottom: 0; border-top: 1px solid #EEF0F3; background: #FFFFFF; padding: 10px 8px 0; box-sizing: border-box;">
+        <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+          <div data-hl="nav-home" style="{{ navHomeStyle }}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.8 10.4 12 4.2l8.2 6.2v7.9a1.9 1.9 0 0 1-1.9 1.9H5.7a1.9 1.9 0 0 1-1.9-1.9v-7.9Z"></path></svg>
+            <div style="font-size: 11.5px;">Home</div>
+          </div>
+          <div data-hl="nav-explore" style="{{ navExploreStyle }}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"></circle><path d="M14.9 9.1l-2.2 4.4-4.4 2.2 2.2-4.4 4.4-2.2Z"></path></svg>
+            <div style="font-size: 11.5px;">Explore</div>
+          </div>
+          <div data-hl="nav-tools" style="{{ navToolsStyle }}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="2.2"></rect><rect x="13" y="4" width="7" height="7" rx="2.2"></rect><rect x="4" y="13" width="7" height="7" rx="2.2"></rect><rect x="13" y="13" width="7" height="7" rx="2.2"></rect></svg>
+            <div style="font-size: 11.5px;">Tools</div>
+          </div>
+          <div data-hl="nav-orders" style="{{ navOrdersStyle }}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4.4" y="3.6" width="15.2" height="16.8" rx="2.6"></rect><path d="M8.6 9h6.8M8.6 12.8h6.8M8.6 16.6h4"></path></svg>
+            <div style="font-size: 11.5px;">Orders</div>
+          </div>
+          <div data-hl="nav-portfolio" style="{{ navPortfolioStyle }}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="7.4" width="16.8" height="12.6" rx="2.6"></rect><path d="M8.9 7.4V6.3a2.1 2.1 0 0 1 2.1-2.1h2a2.1 2.1 0 0 1 2.1 2.1v1.1"></path></svg>
+            <div style="font-size: 11.5px;">Portfolio</div>
+          </div>
+        </div>
+        <div style="height: 26px; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 132px; height: 5px; border-radius: 3px; background: #101828;"></div>
+        </div>
+      </div>
+
+      <div style="{{ p1FixedLens }}">
+        <div style="{{ p1FixedLensInner }}">
+          <div style="{{ navCopyStyle }}">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+              <div style="{{ navHomeStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.8 10.4 12 4.2l8.2 6.2v7.9a1.9 1.9 0 0 1-1.9 1.9H5.7a1.9 1.9 0 0 1-1.9-1.9v-7.9Z"></path></svg>
+                <div style="font-size: 11.5px;">Home</div>
+              </div>
+              <div style="{{ navExploreStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"></circle><path d="M14.9 9.1l-2.2 4.4-4.4 2.2 2.2-4.4 4.4-2.2Z"></path></svg>
+                <div style="font-size: 11.5px;">Explore</div>
+              </div>
+              <div style="{{ navToolsStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="2.2"></rect><rect x="13" y="4" width="7" height="7" rx="2.2"></rect><rect x="4" y="13" width="7" height="7" rx="2.2"></rect><rect x="13" y="13" width="7" height="7" rx="2.2"></rect></svg>
+                <div style="font-size: 11.5px;">Tools</div>
+              </div>
+              <div style="{{ navOrdersStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4.4" y="3.6" width="15.2" height="16.8" rx="2.6"></rect><path d="M8.6 9h6.8M8.6 12.8h6.8M8.6 16.6h4"></path></svg>
+                <div style="font-size: 11.5px;">Orders</div>
+              </div>
+              <div style="{{ navPortfolioStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="7.4" width="16.8" height="12.6" rx="2.6"></rect><path d="M8.9 7.4V6.3a2.1 2.1 0 0 1 2.1-2.1h2a2.1 2.1 0 0 1 2.1 2.1v1.1"></path></svg>
+                <div style="font-size: 11.5px;">Portfolio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="{{ p2VarLens }}">
+        <div style="{{ p2VarLensInner }}">
+          <div style="{{ navCopyStyle }}">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+              <div style="{{ navHomeStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.8 10.4 12 4.2l8.2 6.2v7.9a1.9 1.9 0 0 1-1.9 1.9H5.7a1.9 1.9 0 0 1-1.9-1.9v-7.9Z"></path></svg>
+                <div style="font-size: 11.5px;">Home</div>
+              </div>
+              <div style="{{ navExploreStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"></circle><path d="M14.9 9.1l-2.2 4.4-4.4 2.2 2.2-4.4 4.4-2.2Z"></path></svg>
+                <div style="font-size: 11.5px;">Explore</div>
+              </div>
+              <div style="{{ navToolsStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="2.2"></rect><rect x="13" y="4" width="7" height="7" rx="2.2"></rect><rect x="4" y="13" width="7" height="7" rx="2.2"></rect><rect x="13" y="13" width="7" height="7" rx="2.2"></rect></svg>
+                <div style="font-size: 11.5px;">Tools</div>
+              </div>
+              <div style="{{ navOrdersStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4.4" y="3.6" width="15.2" height="16.8" rx="2.6"></rect><path d="M8.6 9h6.8M8.6 12.8h6.8M8.6 16.6h4"></path></svg>
+                <div style="font-size: 11.5px;">Orders</div>
+              </div>
+              <div style="{{ navPortfolioStyle }}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="7.4" width="16.8" height="12.6" rx="2.6"></rect><path d="M8.9 7.4V6.3a2.1 2.1 0 0 1 2.1-2.1h2a2.1 2.1 0 0 1 2.1 2.1v1.1"></path></svg>
+                <div style="font-size: 11.5px;">Portfolio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="{{ p1VarLens }}">
+        <div style="{{ p1VarLensInner }}">
+          <div style="{{ tabsCopyStyle }}">
+            <div style="display: flex; align-items: stretch; padding: 0 14px; box-sizing: border-box;">
+              <div style="{{ tabStocksStyle }}">Stocks</div>
+              <div style="{{ tabFnoStyle }}">F&amp;O</div>
+              <div style="{{ tabMfStyle }}">Mutual Funds</div>
+              <div style="{{ tabNewStyle }}">New</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="{{ p2FixedLens }}">
+        <div style="{{ p2FixedLensInner }}">
+          <div style="{{ tabsCopyStyle }}">
+            <div style="display: flex; align-items: stretch; padding: 0 14px; box-sizing: border-box;">
+              <div style="{{ tabStocksStyle }}">Stocks</div>
+              <div style="{{ tabFnoStyle }}">F&amp;O</div>
+              <div style="{{ tabMfStyle }}">Mutual Funds</div>
+              <div style="{{ tabNewStyle }}">New</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="{{ p1FixedLabel }}">FIXED</div>
+      <div style="{{ p1VarLabel }}">VARIABLE</div>
+      <div style="{{ p2FixedLabel }}">FIXED</div>
+      <div style="{{ p2VarLabel }}">VARIABLE</div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;accentColor&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#0F8A5F&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#0F8A5F&quot;, &quot;#12A150&quot;, &quot;#0E7490&quot;, &quot;#B45309&quot;] },
+  &quot;zoom&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1.3, &quot;min&quot;: 1.15, &quot;max&quot;: 1.8, &quot;step&quot;: 0.05, &quot;unit&quot;: &quot;×&quot;, &quot;tsType&quot;: &quot;number&quot; },
+  &quot;stepSeconds&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0.8, &quot;min&quot;: 0.4, &quot;max&quot;: 1.6, &quot;step&quot;: 0.1, &quot;unit&quot;: &quot;s&quot;, &quot;tsType&quot;: &quot;number&quot; },
+  &quot;loop&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; }
+}">
+class Component extends DCLogic {
+  state = { rects: null, still: false, tick: 0 };
+
+  constructor(props) {
+    super(props);
+    this.frameRef = (el) => { this.frame = el; };
+    this.rootRef = (el) => { this.root = el; };
+  }
+
+  componentDidMount() {
+    this.measure();
+    this.onResize = () => this.measure();
+    window.addEventListener('resize', this.onResize);
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { this.setState({ still: true }); return; }
+
+    this.start = () => {
+      if (this.io) this.io.disconnect();
+      if (!window.__fvT0) window.__fvT0 = Date.now();
+      clearInterval(this.iv);
+      this.iv = setInterval(() => this.setState((s) => ({ tick: s.tick + 1 })), 60);
+    };
+    if (window.__fvT0) { this.start(); return; }
+    if (typeof IntersectionObserver === 'undefined') { this.start(); return; }
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting || e.intersectionRatio > 0) this.start(); });
+    }, { threshold: [0, 0.25] });
+    if (this.root) {
+      this.io.observe(this.root);
+      const r = this.root.getBoundingClientRect();
+      if (r.top < (window.innerHeight || 0) * 0.9 && r.bottom > 0) this.start();
+    }
+    this.fallback = setTimeout(() => this.start(), 1500);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.fallback);
+    clearInterval(this.iv);
+    this.iv = null;
+    window.removeEventListener('resize', this.onResize);
+    if (this.io) this.io.disconnect();
+  }
+
+  measure() {
+    const frame = this.frame;
+    if (!frame) return;
+    const fr = frame.getBoundingClientRect();
+    const scale = fr.width / 375 || 1;
+    const rects = {};
+    frame.querySelectorAll('[data-hl],[data-anchor]').forEach((el) => {
+      const r = el.getBoundingClientRect();
+      const key = el.dataset.hl || ('anchor-' + el.dataset.anchor);
+      rects[key] = {
+        x: (r.left - fr.left) / scale,
+        y: (r.top - fr.top) / scale,
+        w: r.width / scale,
+        h: r.height / scale
+      };
+    });
+    this.setState({ rects });
+  }
+
+  step() { return Math.min(1.6, Math.max(0.4, this.props.stepSeconds ?? 0.8)); }
+  zoom() { return Math.min(2, Math.max(1.15, this.props.zoom ?? 1.3)); }
+
+  cues() {
+    const s = this.step();
+    const v1 = 0.95;
+    const end1 = v1 + 3 * s + 0.5;
+    const p2 = end1 + 0.35;
+    const v2 = p2 + 0.75;
+    const end2 = v2 + 3 * s + 0.5;
+    const total = end2 + 1.1;
+    return { s: s, v1: v1, end1: end1, p2: p2, v2: v2, end2: end2, hold: total - 0.4, total: total };
+  }
+
+  frameAt(e) {
+    const c = this.cues();
+    const s = c.s;
+    let p1Var = 'tab-stocks';
+    if (e >= c.v1 + 2 * s) p1Var = 'tab-mf';
+    else if (e >= c.v1 + s) p1Var = 'tab-fno';
+    let p2Var = 'nav-explore';
+    if (e >= c.v2 + 2 * s) p2Var = 'nav-portfolio';
+    else if (e >= c.v2 + s) p2Var = 'nav-orders';
+
+    let activeTab = 'tab-stocks';
+    let activeNav = 'nav-home';
+    if (e >= 0.2 && e < c.p2) activeNav = 'nav-portfolio';
+    if (e >= c.v1 && e < c.p2) activeTab = p1Var;
+    if (e >= c.v2) activeNav = p2Var;
+
+    return {
+      p1Fixed: e >= 0.2 && e < c.end1,
+      p1Var: e >= c.v1 && e < c.end1,
+      p1VarKey: p1Var,
+      p1VarLabel: e >= 0.65 && e < c.end1,
+      p2Fixed: e >= c.p2 && e < c.hold,
+      p2Var: e >= c.v2 && e < c.hold,
+      p2VarKey: p2Var,
+      p2VarLabel: e >= c.p2 + 0.45 && e < c.hold,
+      activeTab: activeTab,
+      activeNav: activeNav
+    };
+  }
+
+  clock() {
+    if (this.state.still) return null;
+    const t0 = window.__fvT0;
+    if (!t0) return null;
+    const c = this.cues();
+    const raw = (Date.now() - t0) / 1000;
+    const loop = this.props.loop ?? true;
+    return loop ? raw % c.total : Math.min(raw, c.total);
+  }
+
+  lensGeom(key) {
+    const r = this.state.rects && key ? this.state.rects[key] : null;
+    if (!r) return null;
+    const tab = key.indexOf('tab-') === 0;
+    const padX = tab ? 13 : 11;
+    const padY = tab ? 7 : 8;
+    return {
+      left: r.x - padX,
+      top: r.y - padY,
+      w: r.w + padX * 2,
+      h: r.h + padY * 2,
+      cx: r.x + r.w / 2,
+      cy: r.y + r.h / 2
+    };
+  }
+
+  lensStyle(key, on) {
+    const accent = this.props.accentColor ?? '#0F8A5F';
+    const g = this.lensGeom(key);
+    const ease = 'cubic-bezier(.6,.02,.24,1)';
+    const base = {
+      position: 'absolute',
+      pointerEvents: 'none',
+      boxSizing: 'border-box',
+      overflow: 'hidden',
+      background: '#FFFFFF',
+      border: '1px solid ' + this.hexA(accent, 0.42),
+      borderRadius: '14px',
+      boxShadow: '0 6px 20px rgba(16, 24, 40, 0.09)',
+      opacity: g && on ? 1 : 0,
+      transform: g && on ? 'scale(1)' : 'scale(0.97)',
+      transition: 'left .55s ' + ease + ', top .55s ' + ease + ', width .55s ' + ease + ', height .55s ' + ease + ', opacity .45s ease, transform .45s ' + ease
+    };
+    if (!g) return Object.assign(base, { left: 0, top: 0, width: 0, height: 0 });
+    return Object.assign(base, {
+      left: g.left + 'px',
+      top: g.top + 'px',
+      width: g.w + 'px',
+      height: g.h + 'px'
+    });
+  }
+
+  lensInnerStyle(key) {
+    const g = this.lensGeom(key);
+    const z = this.zoom();
+    const base = {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      width: '375px',
+      height: '812px',
+      transition: 'transform .55s cubic-bezier(.6,.02,.24,1)'
+    };
+    if (!g) return base;
+    return Object.assign(base, {
+      transformOrigin: g.cx + 'px ' + g.cy + 'px',
+      transform: 'translate(' + (g.w / 2 - g.cx) + 'px, ' + (g.h / 2 - g.cy) + 'px) scale(' + z + ')'
+    });
+  }
+
+  labelStyle(slot, on) {
+    const accent = this.props.accentColor ?? '#0F8A5F';
+    const rects = this.state.rects;
+    const tabs = rects && rects['anchor-tabs'];
+    const nav = rects && rects['anchor-nav'];
+    let top = 0;
+    if (slot === 'top' && tabs) top = tabs.y + tabs.h + 30;
+    if (slot === 'bottom' && nav) top = nav.y - 44;
+    const show = !!rects && on;
+    return {
+      position: 'absolute',
+      left: '28px',
+      top: top + 'px',
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+      fontSize: '12px',
+      fontWeight: 600,
+      letterSpacing: '0.18em',
+      color: accent,
+      opacity: show ? 1 : 0,
+      transform: show ? 'translateY(0)' : 'translateY(4px)',
+      transition: 'opacity .5s ease, transform .5s cubic-bezier(.6,.02,.24,1)',
+      pointerEvents: 'none'
+    };
+  }
+
+  hexA(hex, a) {
+    const h = String(hex).replace('#', '');
+    const f = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+    const n = parseInt(f, 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+
+  tabStyle(active) {
+    return {
+      padding: '10px 12px 14px',
+      fontSize: '16px',
+      fontWeight: active ? 600 : 500,
+      color: active ? '#101828' : '#98A2B3',
+      borderBottom: '2.5px solid ' + (active ? '#101828' : 'transparent'),
+      marginBottom: '-1px',
+      whiteSpace: 'nowrap',
+      transition: 'color .35s ease, border-color .35s ease'
+    };
+  }
+
+  navStyle(active) {
+    return {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '5px',
+      padding: '4px 0',
+      color: active ? '#101828' : '#98A2B3',
+      fontWeight: active ? 600 : 500,
+      transition: 'color .35s ease'
+    };
+  }
+
+  renderVals() {
+    const rects = this.state.rects;
+    const tabs = rects && rects['anchor-tabs'];
+    const nav = rects && rects['anchor-nav'];
+    const e = this.clock();
+    const f = this.state.still
+      ? {
+          p1Fixed: true, p1Var: true, p1VarKey: 'tab-stocks', p1VarLabel: true,
+          p2Fixed: false, p2Var: false, p2VarKey: 'nav-explore', p2VarLabel: false,
+          activeTab: 'tab-stocks', activeNav: 'nav-portfolio'
+        }
+      : this.frameAt(e == null ? 0.5 : e);
+
+    return {
+      rootRef: this.rootRef,
+      frameRef: this.frameRef,
+      tabStocksStyle: this.tabStyle(f.activeTab === 'tab-stocks'),
+      tabFnoStyle: this.tabStyle(f.activeTab === 'tab-fno'),
+      tabMfStyle: this.tabStyle(f.activeTab === 'tab-mf'),
+      tabNewStyle: this.tabStyle(f.activeTab === 'tab-new'),
+      navHomeStyle: this.navStyle(f.activeNav === 'nav-home'),
+      navExploreStyle: this.navStyle(f.activeNav === 'nav-explore'),
+      navToolsStyle: this.navStyle(f.activeNav === 'nav-tools'),
+      navOrdersStyle: this.navStyle(f.activeNav === 'nav-orders'),
+      navPortfolioStyle: this.navStyle(f.activeNav === 'nav-portfolio'),
+      tabsCopyStyle: {
+        position: 'absolute',
+        left: 0,
+        top: (tabs ? tabs.y : 0) + 'px',
+        width: '375px',
+        background: '#FFFFFF'
+      },
+      navCopyStyle: {
+        position: 'absolute',
+        left: 0,
+        top: (nav ? nav.y : 0) + 'px',
+        width: '375px',
+        padding: '10px 8px 0',
+        boxSizing: 'border-box',
+        background: '#FFFFFF'
+      },
+      p1FixedLens: this.lensStyle('nav-portfolio', f.p1Fixed),
+      p1FixedLensInner: this.lensInnerStyle('nav-portfolio'),
+      p1VarLens: this.lensStyle(f.p1VarKey, f.p1Var),
+      p1VarLensInner: this.lensInnerStyle(f.p1VarKey),
+      p2FixedLens: this.lensStyle('tab-stocks', f.p2Fixed),
+      p2FixedLensInner: this.lensInnerStyle('tab-stocks'),
+      p2VarLens: this.lensStyle(f.p2VarKey, f.p2Var),
+      p2VarLensInner: this.lensInnerStyle(f.p2VarKey),
+      p1FixedLabel: this.labelStyle('bottom', f.p1Fixed),
+      p1VarLabel: this.labelStyle('top', f.p1VarLabel),
+      p2FixedLabel: this.labelStyle('top', f.p2Fixed),
+      p2VarLabel: this.labelStyle('bottom', f.p2VarLabel)
+    };
+  }
+}
+</script>
+</body>
+</html>
