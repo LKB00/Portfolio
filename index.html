@@ -255,31 +255,27 @@ img.bg.loaded{opacity:1}
 
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
 
-#noticeBanner{--nb-bg:#141619;--nb-ink:#EDEFF2;--nb-muted:#9AA0A6;--nb-line:#24262A;--nb-tint:#1A1D21;--nb-sh:rgba(0,0,0,.55);position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:720px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--nb-bg);border:1px solid var(--nb-line);border-radius:4px;box-shadow:0 24px 70px -30px var(--nb-sh);opacity:0;transform:translateY(12px);transition:opacity .24s ease-out,transform .24s ease-out}
-:root[data-theme="dark"] #noticeBanner{--nb-bg:#FFFFFF;--nb-ink:#1B1D21;--nb-muted:#5B6068;--nb-line:#E3E6E9;--nb-tint:#EDF0F3;--nb-sh:rgba(27,29,33,.28)}
-#noticeBanner.show{opacity:1;transform:translateY(0)}
-#noticeBanner.hide{opacity:0;transform:translateY(12px);transition:opacity .16s ease-in,transform .16s ease-in}
+#noticeBanner{--nb-bg:#0E4A47;--nb-ink:#F3F7F5;--nb-muted:#AFC9C5;--nb-line:#17605C;--nb-btn:#F5F1E8;--nb-btnInk:#0B3B39;position:fixed;left:16px;right:16px;bottom:16px;z-index:60;width:auto;max-width:880px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--nb-bg);border:1px solid var(--nb-line);border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.22),0 16px 40px rgba(0,0,0,.30);opacity:0;transform:translateY(12px);transition:opacity .24s ease-out,transform .24s ease-out;pointer-events:none}
+:root[data-theme="dark"] #noticeBanner{box-shadow:0 0 0 1px rgba(255,255,255,.10),0 2px 8px rgba(0,0,0,.5),0 16px 40px rgba(0,0,0,.6)}
+#noticeBanner.show{opacity:1;transform:translateY(0);pointer-events:auto}
+#noticeBanner.hide{opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .16s ease-in,transform .16s ease-in}
 @media (prefers-reduced-motion:reduce){#noticeBanner{transition:none!important;transform:none!important}}
-#noticeBanner .notice-photo{flex:none;width:64px;height:64px;border-radius:4px;object-fit:cover}
+#noticeBanner .notice-photo{flex:none;width:64px;height:64px;border-radius:4px;object-fit:contain;background:var(--nb-btn);padding:6px;box-sizing:border-box}
 #noticeBanner .notice-text{flex:1;min-width:0}
-#noticeBanner .notice-text h3{margin:0;font-size:var(--t-body);font-weight:500;color:var(--nb-ink)}
-#noticeBanner .notice-text p{margin:4px 0 0;font-size:var(--t-mono);line-height:var(--lh-body);color:var(--nb-muted)}
+#noticeBanner .notice-text h3{margin:0;font-size:var(--t-body-lg);font-weight:500;color:var(--nb-ink)}
+#noticeBanner .notice-text p{margin:4px 0 0;font-size:var(--t-small);font-weight:400;line-height:var(--lh-body);color:var(--nb-muted)}
 #noticeBanner .notice-actions{flex:none;display:flex;align-items:center;gap:8px}
 #noticeBanner .notice-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:4px;font-size:var(--t-mono);font-weight:500;white-space:nowrap;cursor:pointer;border:0}
-#noticeBanner .notice-btn.primary{background:var(--accent);color:var(--onAccent)}
+#noticeBanner .notice-btn.primary{background:var(--nb-btn);color:var(--nb-btnInk)}
 #noticeBanner .notice-btn.primary:hover{opacity:.9}
 @media (max-width:700px){
-  #noticeBanner{left:0;right:0;bottom:0;top:auto;max-width:none;margin:0;border-radius:4px 4px 0 0;border-left:0;border-right:0;border-bottom:0;flex-direction:column;align-items:stretch;padding:0 0 24px;padding-bottom:calc(24px + env(safe-area-inset-bottom))}
-  #noticeBanner .notice-photo{width:100%;height:140px;border-radius:4px 4px 0 0;margin:0 0 24px}
+  #noticeBanner{left:0;right:0;bottom:0;top:auto;max-width:none;margin:0;max-width:none;border-radius:4px 4px 0 0;border-left:0;border-right:0;border-bottom:0;flex-direction:column;align-items:stretch;padding:0 0 24px;padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+  #noticeBanner .notice-photo{width:auto;max-width:calc(100% - 48px);height:140px;border-radius:4px;margin:24px auto;padding:12px 24px;object-fit:contain;background:var(--nb-btn);box-sizing:border-box}
   #noticeBanner .notice-text{padding:0 24px}
   #noticeBanner .notice-actions{width:auto;margin:16px 24px 0;padding:0}
   #noticeBanner .notice-btn{width:100%}
 }
 </style>
-<script defer src="./analytics.js"></script>
-<script defer src="./analytics.js"></script>
-<script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76"></script>
-<script defer src="./analytics.js"></script>
 </head>
 <body>
 <div id="loader">
@@ -555,11 +551,13 @@ img.bg.loaded{opacity:1}
 
   // intro loader — only on first landing / a full reload, not on repeat navigation within the session
   var loader = document.getElementById("loader");
-  if (sessionStorage.getItem("pfLoaderShown")){
+  var fromInside = false;
+  try { fromInside = !!document.referrer && new URL(document.referrer).origin === location.origin && new URL(document.referrer).pathname !== location.pathname; } catch(e){}
+  if (fromInside){
     loader.classList.add("hide");
     loader.style.transition = "none";
   } else {
-    function hideLoader(){ loader.classList.add("hide"); sessionStorage.setItem("pfLoaderShown", "1"); }
+    function hideLoader(){ loader.classList.add("hide"); }
     window.addEventListener("load", function(){ setTimeout(hideLoader, 3400); });
     setTimeout(hideLoader, 4200);
   }
@@ -635,12 +633,12 @@ img.bg.loaded{opacity:1}
   });
 
   // site notice banner
-  document.body.insertAdjacentHTML("beforeend", '<div id="noticeBanner" role="status"><img class="notice-photo" src="./assets/notice-banner-photo.png?v=2" alt=""><div class="notice-text"><h3>Still building this one website!</h3><p>I\'d rather ship it rough than leave it sitting in Figma.</p></div><div class="notice-actions"><button type="button" class="notice-btn primary" id="noticeDismiss">That\'s fine</button></div></div>');
+  document.body.insertAdjacentHTML("beforeend", '<div id="noticeBanner" role="status"><img class="notice-photo" src="./assets/notice-banner-illustration.svg" alt=""><div class="notice-text"><h3>Still putting this together</h3><p>Bear with me if something looks off.</p></div><div class="notice-actions"><button type="button" class="notice-btn primary" id="noticeDismiss">That\'s fine</button></div></div>');
   (function(){
     var KEY = "pfSiteNoticeDismissed";
     var dismissed = false;
     try { dismissed = sessionStorage.getItem(KEY) === "1"; } catch(e) {}
-    if (dismissed) return;
+    if (dismissed) { var stale = document.getElementById("noticeBanner"); if (stale) stale.remove(); return; }
     var banner = document.getElementById("noticeBanner");
     var dismissBtn = document.getElementById("noticeDismiss");
     if (!banner || !dismissBtn) return;
@@ -652,7 +650,17 @@ img.bg.loaded{opacity:1}
       setTimeout(function(){ banner.remove(); }, reduced ? 0 : 160);
     }
     dismissBtn.addEventListener("click", dismiss);
-    setTimeout(function(){ banner.classList.add("show"); }, 1500);
+    // 8s counted from when the intro loader finishes and the page is visible
+    var start = function(){ setTimeout(function(){ banner.classList.add("show"); }, 2000); };
+    var ldr = document.getElementById("loader");
+    if (!ldr || ldr.classList.contains("hide")) start();
+    else {
+      var fired = false;
+      var go = function(){ if (fired) return; fired = true; obs.disconnect(); start(); };
+      var obs = new MutationObserver(function(){ if (ldr.classList.contains("hide")) go(); });
+      obs.observe(ldr, { attributes: true, attributeFilter: ["class"] });
+      setTimeout(go, 5000);
+    }
   })();
 })();
 
