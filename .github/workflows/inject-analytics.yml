@@ -1,0 +1,82 @@
+name: Inject analytics tags
+
+# Runs on every push to main. Adds the two tracking script tags to any
+# HTML file that is missing them, then commits the fix back.
+# Safe to run repeatedly: files that already have the tags are skipped.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # lets you run it by hand from the Actions tab
+
+permissions:
+  contents: write           # needed to commit the fix back
+
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Add missing script tags
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+
+          UMAMI_ID = "6628228e-bca8-419e-97e3-35ef9f9e78f0"
+
+          TAGS = (
+              '<script defer src="https://cloud.umami.is/script.js" '
+              f'data-website-id="{UMAMI_ID}"></script>\n'
+              '<script defer src="./analytics.js"></script>\n'
+          )
+
+          folder = pathlib.Path("Portfolio")
+          if not folder.is_dir():
+              print("No Portfolio folder found. Nothing to do.")
+              sys.exit(0)
+
+          changed = []
+
+          for f in sorted(folder.glob("*.html")):
+              html = f.read_text(encoding="utf-8", errors="ignore")
+
+              # Skip files that already have the Umami tag.
+              if "cloud.umami.is" in html:
+                  print(f"skip     {f.name}  (already tagged)")
+                  continue
+
+              # Skip redirect stubs — a visitor leaves before anything loads.
+              if 'http-equiv="refresh"' in html or "location.replace(" in html:
+                  print(f"skip     {f.name}  (redirect stub)")
+                  continue
+
+              # Insert just before </head>, matching whatever case is used.
+              m = re.search(r"</head\s*>", html, flags=re.IGNORECASE)
+              if not m:
+                  print(f"WARNING  {f.name}  has no </head> — left untouched")
+                  continue
+
+              html = html[:m.start()] + TAGS + html[m.start():]
+              f.write_text(html, encoding="utf-8")
+              changed.append(f.name)
+              print(f"injected {f.name}")
+
+          if changed:
+              print("\nUpdated:", ", ".join(changed))
+          else:
+              print("\nAll pages already tagged. Nothing changed.")
+          PY
+
+      - name: Commit the fix if anything changed
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: add missing analytics tags"
+          git push
