@@ -1,16 +1,17 @@
 name: Inject analytics tags
 
-# Runs on every push to main. Adds the two tracking script tags to any
-# HTML file that is missing them, then commits the fix back.
-# Safe to run repeatedly: files that already have the tags are skipped.
+# Keeps the tracking tags correct on every HTML page.
+# - Removes any old Umami Cloud tag left behind
+# - Adds the self-hosted tag if it is missing
+# Safe to run repeatedly.
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:        # lets you run it by hand from the Actions tab
+  workflow_dispatch:
 
 permissions:
-  contents: write           # needed to commit the fix back
+  contents: write
 
 jobs:
   inject:
@@ -19,15 +20,16 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
-      - name: Add missing script tags
+      - name: Fix script tags
         run: |
           python3 - <<'PY'
           import pathlib, re, sys
 
-          UMAMI_ID = "6628228e-bca8-419e-97e3-35ef9f9e78f0"
+          UMAMI_HOST = "umami-git-master-lkb2.vercel.app"
+          UMAMI_ID   = "5a59e8a0-e996-42f4-a248-fcf582413c76"
 
           TAGS = (
-              '<script defer src="https://cloud.umami.is/script.js" '
+              f'<script defer src="https://{UMAMI_HOST}/script.js" '
               f'data-website-id="{UMAMI_ID}"></script>\n'
               '<script defer src="./analytics.js"></script>\n'
           )
@@ -41,35 +43,40 @@ jobs:
 
           for f in sorted(folder.glob("*.html")):
               html = f.read_text(encoding="utf-8", errors="ignore")
+              before = html
 
-              # Skip files that already have the Umami tag.
-              if "cloud.umami.is" in html:
-                  print(f"skip     {f.name}  (already tagged)")
-                  continue
-
-              # Skip redirect stubs — a visitor leaves before anything loads.
+              # Skip redirect stubs — visitors leave before anything loads.
               if 'http-equiv="refresh"' in html or "location.replace(" in html:
                   print(f"skip     {f.name}  (redirect stub)")
                   continue
 
-              # Insert just before </head>, matching whatever case is used.
-              m = re.search(r"</head\s*>", html, flags=re.IGNORECASE)
-              if not m:
-                  print(f"WARNING  {f.name}  has no </head> — left untouched")
-                  continue
+              # 1. Strip any old Umami Cloud tag.
+              html = re.sub(
+                  r'\s*<script[^>]*cloud\.umami\.is[^>]*>\s*</script>',
+                  '', html, flags=re.IGNORECASE)
 
-              html = html[:m.start()] + TAGS + html[m.start():]
-              f.write_text(html, encoding="utf-8")
-              changed.append(f.name)
-              print(f"injected {f.name}")
+              # 2. Add the current tags if the host is not already there.
+              if UMAMI_HOST not in html:
+                  m = re.search(r"</head\s*>", html, flags=re.IGNORECASE)
+                  if not m:
+                      print(f"WARNING  {f.name}  has no </head> — left untouched")
+                      continue
+                  html = html[:m.start()] + TAGS + html[m.start():]
+
+              if html != before:
+                  f.write_text(html, encoding="utf-8")
+                  changed.append(f.name)
+                  print(f"fixed    {f.name}")
+              else:
+                  print(f"ok       {f.name}")
 
           if changed:
               print("\nUpdated:", ", ".join(changed))
           else:
-              print("\nAll pages already tagged. Nothing changed.")
+              print("\nAll pages already correct.")
           PY
 
-      - name: Commit the fix if anything changed
+      - name: Commit if anything changed
         run: |
           if [ -z "$(git status --porcelain)" ]; then
             echo "Nothing to commit."
@@ -78,5 +85,5 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "chore: add missing analytics tags"
+          git commit -m "chore: point analytics at self-hosted umami"
           git push
