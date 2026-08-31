@@ -1,9 +1,7 @@
 name: Inject analytics tags
 
-# Keeps the tracking tags correct on every HTML page.
-# - Removes any old Umami Cloud tag left behind
-# - Adds the self-hosted tag if it is missing
-# Safe to run repeatedly.
+# Finds every .html file in the repo, removes any old Umami Cloud tag,
+# and adds the self-hosted tag if missing. No folder name assumptions.
 
 on:
   push:
@@ -23,7 +21,7 @@ jobs:
       - name: Fix script tags
         run: |
           python3 - <<'PY'
-          import pathlib, re, sys
+          import pathlib, re
 
           UMAMI_HOST = "umami-git-master-lkb2.vercel.app"
           UMAMI_ID   = "5a59e8a0-e996-42f4-a248-fcf582413c76"
@@ -34,46 +32,50 @@ jobs:
               '<script defer src="./analytics.js"></script>\n'
           )
 
-          folder = pathlib.Path("Portfolio")
-          if not folder.is_dir():
-              print("No Portfolio folder found. Nothing to do.")
-              sys.exit(0)
+          root = pathlib.Path(".")
+
+          print("--- what is actually here ---")
+          for p in sorted(root.iterdir()):
+              print(("DIR  " if p.is_dir() else "FILE ") + p.name)
+          print("-----------------------------\n")
+
+          files = [f for f in sorted(root.rglob("*.html"))
+                   if ".github" not in f.parts and "node_modules" not in f.parts]
+
+          if not files:
+              print("No .html files found anywhere in the repo.")
 
           changed = []
 
-          for f in sorted(folder.glob("*.html")):
+          for f in files:
               html = f.read_text(encoding="utf-8", errors="ignore")
               before = html
 
-              # Skip redirect stubs — visitors leave before anything loads.
               if 'http-equiv="refresh"' in html or "location.replace(" in html:
-                  print(f"skip     {f.name}  (redirect stub)")
+                  print(f"skip     {f}  (redirect stub)")
                   continue
 
-              # 1. Strip any old Umami Cloud tag.
+              # remove any old cloud tag
               html = re.sub(
                   r'\s*<script[^>]*cloud\.umami\.is[^>]*>\s*</script>',
                   '', html, flags=re.IGNORECASE)
 
-              # 2. Add the current tags if the host is not already there.
+              # add current tags if missing
               if UMAMI_HOST not in html:
                   m = re.search(r"</head\s*>", html, flags=re.IGNORECASE)
                   if not m:
-                      print(f"WARNING  {f.name}  has no </head> — left untouched")
+                      print(f"WARNING  {f}  has no </head> — left untouched")
                       continue
                   html = html[:m.start()] + TAGS + html[m.start():]
 
               if html != before:
                   f.write_text(html, encoding="utf-8")
-                  changed.append(f.name)
-                  print(f"fixed    {f.name}")
+                  changed.append(str(f))
+                  print(f"fixed    {f}")
               else:
-                  print(f"ok       {f.name}")
+                  print(f"ok       {f}")
 
-          if changed:
-              print("\nUpdated:", ", ".join(changed))
-          else:
-              print("\nAll pages already correct.")
+          print("\nUpdated:", ", ".join(changed) if changed else "nothing")
           PY
 
       - name: Commit if anything changed
