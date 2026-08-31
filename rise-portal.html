@@ -1,898 +1,736 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#14130E":"#F8F6F0";d.style.colorScheme=t==="dark"?"dark":"light"})();</script>
-<style>
-img{max-width:100%;height:auto}
-img[src$=".png"],img[src$=".jpg"],img[src$=".jpeg"]{image-rendering:-webkit-optimize-contrast}
-:root{--imgpad:24px}
-@media (max-width:640px){:root{--imgpad:16px}}
-:root{--imgmax:78svh}
-@supports not (height:1svh){:root{--imgmax:74vh}}
-/* ONE container per image, zero padding: the image fills it edge to edge and the radius clips the corners.
-   No fill — the container's height comes from the image, so no background can ever show around it. */
-[data-imgbox]{box-sizing:border-box;padding:0;display:block;width:100%;max-width:100%;margin:0;
-  background:transparent;border:0;border-radius:14px;box-shadow:var(--sh);overflow:hidden;line-height:0}
-[data-imgbox]>img{display:block;margin:0;width:100%;height:auto;max-width:100%}
-[data-imgbox]>image-slot,[data-imgbox]>.sc-host{display:block;width:100%;height:100%;margin:0}
-[data-imgbox]>img{display:block;margin:0;max-width:100%;max-height:min(100%,var(--imgmax));width:auto;height:auto;object-fit:contain}
-[data-imgbox]>image-slot,[data-imgbox]>.sc-host{width:100%;height:100%;margin:0}
-/* portrait frames: height drives the box so it shrinks on BOTH axes instead of leaving side gaps */
-/* portrait frames would overflow the screen at full column width, so height leads and the ratio sets the width */
-[data-imgbox][data-tall]{height:var(--imgmax);width:auto;justify-self:center;align-self:center}
-[data-zoomrow] [data-imgbox][data-tall]{justify-self:end}
-[data-imgbox][data-tall]>img{width:auto;height:100%}
-[data-imgbox]>img{object-fit:cover}
-/* opt-out for embedded components: fixed intrinsic height, must not be clamped or clipped */
-[data-imgbox][data-nocap]{max-height:none;overflow:visible}
-[data-imgbox][data-nocap]>.sc-host{height:auto}
-html{background-color:#F8F6F0;scrollbar-gutter:stable;color-scheme:light}html[data-theme="dark"]{background-color:#14130E;color-scheme:dark}@view-transition{navigation:auto}</style>
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0A0A0A":"#F7F8F9";})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="./favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="./favicon-96.png" sizes="96x96">
-<link rel="apple-touch-icon" href="./apple-touch-icon.png">
-<link rel="manifest" href="./site.webmanifest">
-<meta name="theme-color" content="#F8F6F0" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#14130E" media="(prefers-color-scheme: dark)">
-<title>Rise Portal — Lokesh Bhatia</title>
-<meta name="description" content="Designing trust, visibility and transparency for the ~100 partners behind 35% of Rupeezy&#x27;s revenue. A B2B partner platform built from scratch.">
+<title>Rise Portal: the first product Rupeezy’s partners ever had — Lokesh Bhatia</title>
+<meta name="description" content="A B2B platform for the partners behind 35% of company revenue, who couldn't verify their own payouts.">
 <link rel="canonical" href="https://lokeshbhatia.com/rise-portal.html">
-
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
-<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Rise Portal: the first product Rupeezy’s partners ever had — Lokesh Bhatia">
+<meta property="og:description" content="A B2B platform for the partners behind 35% of company revenue, who couldn't verify their own payouts.">
 <meta property="og:url" content="https://lokeshbhatia.com/rise-portal.html">
-<meta property="og:title" content="Rise Portal — Lokesh Bhatia">
-<meta property="og:description" content="Designing trust, visibility and transparency for the ~100 partners behind 35% of Rupeezy&#x27;s revenue. A B2B partner platform built from scratch.">
-<meta property="og:image" content="https://lokeshbhatia.com/og-rise-portal.png">
-<meta property="og:image:secure_url" content="https://lokeshbhatia.com/og-rise-portal.png">
-<meta property="og:image:type" content="image/png">
+<meta property="og:image" content="https://lokeshbhatia.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Case study: Rise Portal, a B2B partner platform">
-
+<meta property="og:image:alt" content="Rise Portal — Lokesh Bhatia">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Rise Portal — Lokesh Bhatia">
-<meta name="twitter:description" content="Designing trust, visibility and transparency for the ~100 partners behind 35% of Rupeezy&#x27;s revenue. A B2B partner platform built from scratch.">
-<meta name="twitter:image" content="https://lokeshbhatia.com/og-rise-portal.png">
-<meta name="twitter:image:alt" content="Case study: Rise Portal, a B2B partner platform">
+<meta name="twitter:title" content="Rise Portal: the first product Rupeezy’s partners ever had — Lokesh Bhatia">
+<meta name="twitter:description" content="A B2B platform for the partners behind 35% of company revenue, who couldn't verify their own payouts.">
+<meta name="twitter:image" content="https://lokeshbhatia.com/og-image.png">
+<link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com">
-<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin="">
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,1,2&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<script>(function(){var d=document.documentElement;var done=false;var ready=function(){if(done)return;done=true;d.classList.add("pf-ready")};var afterFonts=function(){var f=(document.fonts&&document.fonts.ready)||Promise.resolve();f.then(function(){requestAnimationFrame(function(){requestAnimationFrame(ready)})})};window.__pfShow=afterFonts;setTimeout(ready,1500);window.addEventListener("load",afterFonts);window.addEventListener("pageshow",function(e){if(e.persisted)ready()})})();</script>
-<script src="./support.js"></script>
-<script defer src="https://cloud.umami.is/script.js" data-website-id="6628228e-bca8-419e-97e3-35ef9f9e78f0"></script>
-<script defer src="./analytics.js"></script>
-   
-</head>
-<body>
-<x-dc>
-<helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script>try{var t=localStorage.getItem("portfolio-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F8F6F0; --ink:#14140F; --muted:#6B675E; --faint:#948F81;
-  --line:#DEDACC; --card:#FFFFFF; --grid:rgba(30,26,14,.055);
-  --tint:#EFEBDE; --accent:#0E6B42;
-  --good:#0E6B42; --warn:#C7381A;
-  --note1:#F6E3D9; --note2:#EDE7D7; --note3:#DFE8DD; --noteInk:#181812;
-  --a2:#C7381A; --a3:#0E6B42;
-  --pad:clamp(18px,8vw,168px);
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --grad:linear-gradient(100deg,#0E6B42,#0E6B42);
-  --gradCta:linear-gradient(100deg,#14140F,#14140F);
-  --tintB:rgba(199,56,26,.045);
-  --w1:rgba(199,56,26,.10); --w2:rgba(14,107,66,.10); --w3:rgba(160,132,42,.10);
-  --orbA:transparent; --orbB:transparent; --orbC:transparent;
-  --sh:0 0 0 1px var(--line),0 1px 2px rgba(30,26,14,.025);
-  --shUp:0 0 0 1.5px var(--ink),0 8px 22px rgba(30,26,14,.07);
+  --t-h1:clamp(30px,4.4vw,54px); --t-h2:clamp(24px,3vw,38px);
+  --t-body-lg:clamp(18px,2vw,22px); --t-body:16px; --t-small:14px; --t-btn:16px;
+  --t-mono-lg:13px; --t-mono:12px; --t-mono-sm:11px;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-9:96px;
+  --lh-display:1.02; --lh-head:1.12; --lh-snug:1.3; --lh-body:1.6;
+  --tr-display:-.022em; --tr-head:-.02em; --tr-label:.1em; --tr-mono:.02em;
+  --pad:clamp(28px,8vw,140px); --secY:clamp(72px,10vw,140px);
+  --bg:#F7F8F9; --ink:#1B1D21; --muted:#5B6068; --faint:#6B7076;
+  --line:#E3E6E9; --card:#FFFFFF; --tint:#EDF0F3;
+  --note1:#EDF0F3; --note2:#EDEFF2; --note3:#E9ECEF; --noteInk:#1B1D21;
+  --accent:#3F3AA8; --accentLine:#3F3AA8; --onAccent:#FFFFFF; --markWash:rgba(63,58,168,.20);
+  --frameSh:rgba(27,29,33,.28); --navOn:var(--accent); --navOff:#5B6068;
+  --mono:'Switzer',Helvetica,Arial,sans-serif;
+  --frameBar:#F1F3F6; --framePill:#E3E6EB; --frameUrl:#5F6570; --frameIcon:#878E9B; --frameEdge2:rgba(18,24,38,.07);
 }
 :root[data-theme="dark"]{
-  --bg:#14130E; --ink:#F4F1E6; --muted:#A19C8E; --faint:#7C7768;
-  --line:#2C2A22; --card:#1B1A14; --grid:rgba(244,241,230,.045);
-  --tint:#242219; --accent:#5FBF8B;
-  --good:#5FBF8B; --warn:#E97550;
-  --note1:#3A2A20; --note2:#2E2A1C; --note3:#1F2E23; --noteInk:#F4F1E6;
-  --a2:#E97550; --a3:#5FBF8B;
-  --pad:clamp(18px,8vw,168px);
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --grad:linear-gradient(100deg,#5FBF8B,#5FBF8B);
-  --gradCta:linear-gradient(100deg,#F4F1E6,#F4F1E6);
-  --tintB:rgba(233,117,80,.07);
-  --w1:rgba(233,117,80,.14); --w2:rgba(95,191,139,.14); --w3:rgba(214,186,96,.12);
-  --orbA:transparent; --orbB:transparent; --orbC:transparent;
-  --sh:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.2);
-  --shUp:0 0 0 1.5px var(--accent),0 8px 22px rgba(0,0,0,.35);
+  --bg:#0A0A0A; --ink:#EDEFF2; --muted:#9AA0A6; --faint:#8A9095;
+  --line:#24262A; --card:#141619; --tint:#1A1D21;
+  --note1:#171A1D; --note2:#16181B; --note3:#15181A; --noteInk:#EDEFF2;
+  --accent:#A5A0F5; --accentLine:#A5A0F5; --onAccent:#14140F; --markWash:rgba(165,160,245,.30);
+  --frameSh:rgba(0,0,0,.55); --navOff:#9AA0A6;
+  --frameBar:#292C31; --framePill:#373B43; --frameUrl:#98A0AE; --frameIcon:#828A97; --frameEdge2:rgba(0,0,0,.28);
 }
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Satoshi',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;transition:background .4s ease,color .4s ease}
 *{box-sizing:border-box}
-button,input,select,textarea,image-slot{font-family:'Satoshi',Helvetica,Arial,sans-serif}
+html{scroll-behavior:smooth;background:var(--bg);color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Switzer',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto}
 a{color:var(--accent);text-decoration:none}
-:root{--navOn:#0B5637;--navOff:#666D74}
-:root[data-theme="dark"]{--navOn:#8FDCB2;--navOff:#8B9298}
 a:hover{color:var(--ink)}
-[data-mrow]{transition:background .2s ease}
-[data-mrow]:active{background:var(--tint,#EFEBDE)}
-[data-mrow] [data-mlabel]{color:var(--navOff)}
-[data-mrow][data-mcurrent] [data-mlabel]{color:var(--navOn)}
+button{font-family:inherit}
+em{font-style:italic}
+.wrap{padding:0 var(--pad);position:relative}
+.emph{font-weight:500;color:var(--ink)}
+section{padding-bottom:var(--secY)}
+header{position:sticky;top:16px;z-index:40;width:100%;max-width:min(880px,100%);margin:0 auto;padding-top:var(--s-4);transition:max-width .35s ease}
+header.scrolled{max-width:min(320px,92%)}
+header:not(.scrolled) .navpill{background:transparent;backdrop-filter:none;box-shadow:none;padding-left:0;padding-right:0;justify-content:space-between}
+.navpill{position:relative;display:flex;align-items:center;gap:var(--s-5);padding:var(--s-3) var(--s-3) var(--s-3) var(--s-4);background:color-mix(in srgb,var(--card) 62%,transparent);backdrop-filter:blur(18px) saturate(1.7);border-radius:6px;transition:background .3s ease,padding .3s ease}
+header.scrolled .navpill{background:color-mix(in srgb,var(--card) 58%,transparent);backdrop-filter:blur(20px) saturate(1.8);box-shadow:0 10px 26px -14px var(--frameSh);padding:var(--s-2) var(--s-3)}
+header.scrolled .facemark{width:26px;height:26px}
+header.scrolled .facemark img{width:26px;height:26px}
+.facemark{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px}
+.facemark img{display:block;object-fit:contain}
+:root[data-theme="dark"] .facemark img{filter:invert(1)}
+.crumb{font-family:var(--mono);font-size:var(--t-mono);line-height:1;display:inline-flex;align-items:center;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:22ch;transition:opacity .28s ease,max-width .38s ease}
+header.scrolled .crumb{opacity:0;max-width:0}
+nav.navlinks{display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);font-size:var(--t-small);font-weight:500}
+.navlink{display:inline-flex;align-items:center;justify-content:center;color:var(--navOff)}
+.navlink:hover{color:var(--ink)}
+header.scrolled .navtext{display:none}
+.navicon{display:none;line-height:0}
+header.scrolled .navicon{display:grid;place-items:center}
+.navdiv{flex:0 0 auto;width:1px;height:18px;background:color-mix(in srgb,var(--line) 78%,var(--muted))}
+.themebtn{border:0;background:transparent;padding:0;height:17px;color:var(--navOff);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.themebtn:hover{color:var(--ink)}
+html:not([data-theme="dark"]) .icon-moon{display:none}
+html[data-theme="dark"] .icon-sun{display:none}
+.burger{display:none;width:44px;height:44px;border:0;background:var(--tint);border-radius:4px;color:var(--ink);cursor:pointer;place-items:center;position:relative}
+.burger span.bars{display:flex;flex-direction:column;gap:var(--s-1)}
+.burger span.bars span{width:18px;height:2px;background:currentColor;border-radius:2px;display:block}
+.burger[aria-expanded="true"] .bicon-bars{display:none}
+.burger[aria-expanded="true"] .bicon-x{display:grid;place-items:center}
+@media (max-width:640px){nav.navlinks a{display:none}.navdiv{display:none}.burger{display:grid}}
+.mobilenav{position:fixed;inset:0;z-index:35;background:var(--bg);display:none;flex-direction:column;min-height:100dvh;overflow-y:auto;padding:0}
+.mobilenav.open{display:flex}
+.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(76px,11vh,100px);padding:0 var(--pad)}
+.mrow{display:flex;align-items:center;gap:var(--s-4);min-height:84px;padding:var(--s-4) 0;color:var(--ink);box-shadow:inset 0 -1px 0 var(--line)}
+.mrow.current{color:var(--accent)}
+.mrow.current .mlabel{color:var(--accent)}
+.mrow.current svg{color:var(--accent);opacity:.6}
+.mrow .mlabel{flex:1;font-size:34px;line-height:1;letter-spacing:var(--tr-display)}
+.mrow svg{flex:0 0 auto;color:var(--faint)}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:var(--s-4);padding:36px var(--pad) 30px}
+.availbadge{position:relative;width:130px;height:130px;flex:none;border-radius:50%;display:grid;place-items:center}
+.availring{animation:spin 16s linear infinite;transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mailbtn{display:inline-flex;align-items:center;min-height:48px;padding:0;border:0;background:transparent;font-size:var(--t-body-lg);font-weight:500;color:var(--accent);cursor:pointer}
+.mresume{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;border-radius:4px;background:var(--ink);color:var(--card);font-size:var(--t-btn);font-weight:500}
+.mresume:hover{background:var(--accent);color:var(--onAccent)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:var(--s-3);padding:14px 20px;border-radius:4px;background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 18px 40px -20px rgba(16,16,24,.32);white-space:nowrap}
+.toast.show{display:inline-flex}
 
-:root[data-theme="dark"] [data-facemark] img{filter:invert(1)}
-::selection{background:var(--accent);color:#fff}
+.totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;width:56px;height:56px;padding:0;border:1px solid var(--accentLine);border-radius:50%;background:var(--bg);color:var(--accent);cursor:pointer;display:grid;place-items:center;opacity:0;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1)}
+.totop.show{opacity:1;transform:scale(1);pointer-events:auto}
+@media (max-width:640px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg{width:14px;height:14px}}
 
-image-slot{aspect-ratio:auto!important;width:100%!important;height:100%!important;display:block!important}
-header{transition:max-width .42s cubic-bezier(.3,.8,.3,1)}
-header[data-scrolled]{max-width:min(470px,78%)!important}
-header[data-scrolled] [data-navpill]{padding:6px 8px 6px 14px!important;background:color-mix(in srgb,var(--card,#fff) 78%,transparent)!important}
-html.pf-ready header[data-scrolled] [data-navpill]{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-@media (max-width:760px){[data-pk]{display:none!important}}
-section[id]{scroll-margin-top:104px;position:relative;z-index:1}
-@media (max-width:760px){
-  header nav a,footer a,[data-crumb]{min-height:44px;display:inline-flex;align-items:center}
-  header nav button{min-width:44px;min-height:44px;border-radius:10px!important}
-  header a[href$="resume.pdf"]{min-height:44px;display:inline-flex;align-items:center}
-  a[href$=".html"]{min-height:44px}
-}
-@media (max-width:860px){
-  [data-2col]{grid-template-columns:minmax(0,1fr)!important;align-items:start!important}
-}
-@media (max-width:640px){
-  #top{padding-top:44px!important}
-  h1{font-size:clamp(30px,9vw,42px)!important;letter-spacing:-.03em!important}
-  header nav{gap:12px!important}
-  header nav a,header nav button{font-size:12.5px!important}
-}
-
+#top{max-width:880px;margin:0 auto;padding:clamp(56px,8vw,112px) 0 clamp(40px,5vw,64px);text-align:left}
+h1{margin:0;font-size:var(--t-h1);line-height:var(--lh-display);letter-spacing:var(--tr-display);font-weight:400}
+.subline{margin:clamp(18px,2.4vw,26px) 0 0;font-family:var(--mono);font-size:var(--t-mono-lg);letter-spacing:var(--tr-mono);color:var(--muted)}
+.resultstrip{margin:clamp(30px,4vw,48px) 0 0;padding:clamp(22px,3vw,32px) 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(22px,3.4vw,44px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.resultstrip .big{font-size:clamp(34px,5vw,56px);line-height:1;letter-spacing:var(--tr-display);font-weight:400;color:var(--accent)}
+.resultstrip .lbl{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink);margin-top:var(--s-2)}
+.resultstrip .note{font-size:var(--t-small);line-height:var(--lh-body);color:var(--muted);margin-top:var(--s-2)}
+@media (max-width:560px){.resultstrip{grid-template-columns:minmax(0,1fr);gap:clamp(20px,5vw,28px)}}
+.shotframe{position:relative;border-radius:4px;overflow:hidden;padding:clamp(16px,7%,84px)}
+.shotframe img.bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06)}
+.safari{position:relative;z-index:1;display:block;width:100%;container-type:inline-size;line-height:0;border-radius:4px;overflow:hidden;box-shadow:0 8px 20px -14px rgba(0,0,0,.28)}
+.safari-bar{display:flex;align-items:center;gap:clamp(9px,1.55cqw,14px);position:relative;height:clamp(26px,4.2cqw,38px);padding:0 clamp(9px,1.55cqw,14px);background:var(--frameBar);border-bottom:.5px solid var(--frameEdge2)}
+.safari-dots{display:flex;align-items:center;gap:clamp(5.5px,.9cqw,8px);flex:0 0 auto}
+.safari-dots i{display:block;width:clamp(8px,1.33cqw,12px);height:clamp(8px,1.33cqw,12px);border-radius:999px}
+.safari-dots i:nth-child(1){background:#FF5F57}
+.safari-dots i:nth-child(2){background:#FEBC2E}
+.safari-dots i:nth-child(3){background:#28C840}
+.safari-pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;gap:4px;min-width:150px;height:clamp(16px,2.7cqw,24px);padding:0 clamp(8px,1.4cqw,13px);border-radius:999px;background:var(--framePill);color:var(--frameUrl);font-family:var(--mono);font-size:clamp(8px,1.18cqw,12px);white-space:nowrap}
+.safari-imgbox{position:relative;aspect-ratio:16/9}
+.safari-imgbox img{width:100%;height:100%;object-fit:cover;display:block}
+.safari-imgbox iframe{display:block;width:100%;height:100%;border:0;background:transparent}
+figcaption{font-family:var(--mono);font-size:var(--t-mono);line-height:var(--lh-body);letter-spacing:var(--tr-mono);color:var(--faint)}
+.shortver{background:var(--tint);border-radius:4px;box-shadow:inset 0 0 0 1px var(--line);padding:clamp(26px,3.6vw,48px)}
+.shortver .lbl{margin:0 0 clamp(16px,2vw,22px);font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
+.shortver p{margin:0;font-size:var(--t-body-lg);line-height:var(--lh-body);color:var(--ink)}
+.shortver p + p{margin-top:clamp(14px,1.8vw,20px)}
+.section{max-width:880px;margin:0 auto;text-align:left}
+.eyebrow{margin:0 0 var(--s-4);font-size:var(--t-body);color:var(--muted);font-weight:500}
+h2{margin:0;font-size:var(--t-h2);line-height:var(--lh-head);letter-spacing:var(--tr-display);font-weight:400}
+h3{margin:0;font-size:clamp(21px,2.6vw,32px);line-height:var(--lh-head);letter-spacing:var(--tr-display);font-weight:400}
+.body-col{display:flex;flex-direction:column;gap:clamp(22px,3vw,30px);width:100%}
+.body-col p{margin:0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(20px,3vw,34px);align-items:start}
+.modelgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:clamp(12px,1.8vw,16px)}
+.modelgrid .card,.qrow .card{background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(16px,2vw,22px)}
+.modelgrid .card .n{font-family:var(--mono);font-size:var(--t-mono);color:var(--accent);letter-spacing:var(--tr-label)}
+.modelgrid .card p{margin:var(--s-3) 0 0;font-size:var(--t-btn);line-height:var(--lh-body);color:var(--ink)}
+.qrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.2vw,24px)}
+.qrow .card{padding:clamp(22px,2.8vw,34px);display:flex;flex-direction:column;gap:var(--s-4)}
+.qrow .card span:first-child{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.qrow .card span:last-child{font-size:clamp(19px,2.2vw,26px);line-height:var(--lh-snug);letter-spacing:var(--tr-head);color:var(--ink)}
+@media (max-width:640px){.qrow{grid-template-columns:minmax(0,1fr)}}
+blockquote.pq{margin:clamp(10px,1.6vw,18px) 0;width:100%;padding:0 0 0 clamp(18px,2.4vw,30px);border-left:2px solid var(--accentLine)}
+blockquote.pq.big{margin:clamp(38px,5.2vw,68px) 0}
+blockquote.pq p{margin:0;font-style:italic;font-size:clamp(19px,2.2vw,27px);line-height:var(--lh-snug);letter-spacing:var(--tr-head);color:var(--ink)}
+blockquote.pq cite{display:block;margin:clamp(14px,1.8vw,20px) 0 0;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint);font-style:normal}
+figure.quotebox{margin:0;background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(22px,2.8vw,34px);display:flex;flex-direction:column;gap:var(--s-4)}
+figure.quotebox blockquote{margin:0;font-size:clamp(18px,2.2vw,24px);line-height:var(--lh-body);letter-spacing:var(--tr-head)}
+.notebox{background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(24px,3vw,38px);display:flex;flex-direction:column;gap:var(--s-4)}
+.notebox span{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.notebox p{margin:0;font-size:clamp(17px,2vw,21px);line-height:var(--lh-body);letter-spacing:var(--tr-head);color:var(--ink)}
+.bigblock{border-radius:4px;padding:clamp(34px,7vw,96px);box-shadow:none}
+.bigblock .lbl{margin:0 0 var(--s-5);font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.bigblock p{margin:0;font-size:clamp(18px,2.2vw,26px);line-height:var(--lh-snug);letter-spacing:var(--tr-head)}
+.bigblock .huge{font-size:clamp(28px,5.4vw,64px);line-height:var(--lh-display);letter-spacing:var(--tr-display);font-weight:400}
+.elgrid{display:grid;grid-template-columns:minmax(0,54fr) minmax(0,46fr);gap:clamp(24px,3.4vw,44px);align-items:start}
+@media (max-width:760px){.elgrid{grid-template-columns:minmax(0,1fr)}}
+.imgbox{position:relative;aspect-ratio:16/9;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+.imgbox img{width:100%;height:100%;object-fit:cover;display:block}
+.finalgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(20px,3vw,34px);align-items:center}
+.finalgrid .notes{display:flex;flex-direction:column;gap:var(--s-3);margin-top:var(--s-5)}
+.finalgrid .notes .row{display:grid;grid-template-columns:20px 1fr;gap:var(--s-3);align-items:start}
+.finalgrid .notes .row span:first-child{font-family:var(--mono);font-size:var(--t-mono);color:var(--accent)}
+.finalgrid .notes .row span:last-child{font-size:var(--t-btn);line-height:var(--lh-body)}
+.finalnum{margin:0 0 var(--s-3);font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--accent)}
+.finalbody{margin:var(--s-4) 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+.resultsgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:clamp(14px,2vw,20px)}
+.resultsgrid .card{background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(18px,2.2vw,26px)}
+.resultsgrid .card .val{font-size:clamp(30px,3.8vw,44px);letter-spacing:var(--tr-display);font-weight:400;line-height:1}
+.resultsgrid .card h3{margin:var(--s-4) 0 var(--s-2);font-size:var(--t-body);font-weight:500;letter-spacing:var(--tr-head)}
+.resultsgrid .card p{margin:0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+.pcband{position:relative;width:100%;height:660px;overflow:hidden;border-radius:4px;touch-action:pan-y}
+.pcband img.bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06)}
+#pcBandInner{position:relative;width:100%;height:100%;overflow:hidden;z-index:1}
+#pcBandInner img{position:absolute;left:50%;top:50%;opacity:0;object-fit:cover;pointer-events:none;will-change:transform,opacity;user-select:none}
+#pcFrame{z-index:5000}
+#contact{max-width:880px;margin:0 auto;padding:0}
+#contact footer{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;padding:clamp(56px,6vw,84px) clamp(20px,6vw,40px) clamp(52px,5.5vw,72px);background:var(--tint);width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box}
+#contact h2{margin:0;font-size:var(--t-h2);line-height:var(--lh-head);letter-spacing:var(--tr-head);font-weight:400}
+#contact p{margin:12px 0 0;font-size:var(--t-body);color:var(--muted)}
+.social{display:flex;gap:clamp(8px,1.4vw,18px);flex-wrap:wrap;justify-content:center;margin-top:28px}
+.social a{display:grid;place-items:center;width:48px;height:48px;border-radius:4px;color:var(--faint)}
+.social a:hover{color:var(--ink);background:var(--tint)}
+[data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+[data-reveal].shown{opacity:1;transform:none}
 @media (hover:hover) and (pointer:fine){
-  html[data-cursor] , html[data-cursor] * {cursor:none!important}
-  #lkb-cur{position:fixed;top:0;left:0;z-index:999;pointer-events:none;will-change:transform}
-  #lkb-cur .caret{display:block;margin:-3px 0 0 -3px;color:#2E2E30;filter:drop-shadow(0 2px 4px rgba(0,0,0,.22));transition:opacity .18s ease}
-  #lkb-cur .tag{position:absolute;left:20px;top:22px;border-radius:999px;background:var(--accent,#0E6B42);color:#fff;box-shadow:0 3px 10px rgba(20,24,45,.20);
-    font-family:var(--mono);font-size:11px;letter-spacing:.02em;padding:5px 12px;font-weight:500;
-    white-space:nowrap;opacity:0;transform:translateY(-3px);transition:opacity .18s ease,transform .18s ease}
-  #lkb-cur[data-on] .tag{opacity:1;transform:none}
-  #lkb-dot{display:none}
+html.pf-cursor{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%233F3AA8' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
+html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%23A5A0F5' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
 }
-[data-burger] span span{transition:transform .28s cubic-bezier(.3,.8,.3,1),opacity .18s ease}
-[data-burger][aria-expanded="true"] span span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-[data-burger][aria-expanded="true"] span span:nth-child(2){opacity:0;transform:scaleX(.4)}
-[data-burger][aria-expanded="true"] span span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-@keyframes pfMenuIn{from{opacity:0;transform:translateY(-7px) scale(.985)}to{opacity:1;transform:none}}
-[data-mobilemenu]{animation:pfMenuIn .24s cubic-bezier(.3,.8,.3,1)}
-/* ---- responsive pass ---- */
-@media (max-width:640px){
-  #top{padding-top:44px!important}
-  section{padding-bottom:clamp(72px,16vw,120px)!important}
-}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important}}
 
-@media (max-width:760px){
-  header > div{padding:9px 9px 9px 14px!important;gap:10px!important}
-  header > div{flex-wrap:nowrap!important}
-  header > div > a{min-width:0;white-space:nowrap}
-  [data-logoname]{display:none!important}
-  header > div > a > span:first-of-type{width:44px!important;height:44px!important;border-radius:12px!important;font-size:15px!important}
-  header nav{flex-wrap:nowrap!important;gap:10px!important}
-  [data-crumb]{font-size:10.5px!important;max-width:30vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  header nav a,header nav button{font-size:12.5px!important}
-  header nav a[href$="resume.pdf"]{padding:9px 14px!important}
-}
-@media (max-width:520px){
-  h1{letter-spacing:-.03em!important}
-  h2,h3{text-wrap:pretty}
-  [data-cta] a,[data-cta] > a{flex:1 1 100%!important;justify-content:center!important;padding:15px 18px!important}
-  figure,blockquote{overflow-wrap:anywhere}
-  footer{flex-direction:column!important;gap:12px!important}
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  [data-blink]{animation:none!important}
-}
+img.bg{opacity:0;transition:opacity .5s ease}
+img.bg.loaded{opacity:1}
 
-@media (max-width:640px){
-  [data-logoname]{display:none!important}
-  header nav a{display:none!important}
-  header nav button{min-width:44px!important;min-height:44px!important}
-  [data-burger]{display:grid!important}
-}
-@media (min-width:641px){[data-mobilenav]{display:none!important}}
-[data-burger] [data-bicon]{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .15s ease}
-[data-burger] [data-bx]{opacity:0}
-[data-burger][aria-expanded="true"] [data-bbars]{opacity:0}
-[data-burger][aria-expanded="true"] [data-bx]{opacity:1}
-html.mnav-open [data-pen-ui],html.mnav-open [data-progress],html.mnav-open [data-ruler]{display:none!important}
-@keyframes mNavIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-[data-mobilenav] [data-mrow],[data-mobilenav] [data-mfoot]{animation:mNavIn .34s cubic-bezier(.3,.8,.3,1) both}
-[data-mlinks] [data-mrow]:nth-child(1){animation-delay:0ms}
-[data-mlinks] [data-mrow]:nth-child(2){animation-delay:60ms}
-[data-mlinks] [data-mrow]:nth-child(3){animation-delay:120ms}
-[data-mobilenav] [data-mfoot]{animation-delay:180ms}
-@media (prefers-reduced-motion:reduce){[data-mobilenav] [data-mrow],[data-mobilenav] [data-mfoot]{animation:none!important}}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
+
 </style>
-<script src="./image-slot.js"></script>
-<script type="speculationrules">{"prerender":[{"source":"list","urls":["index.html","app-merge.html","rise-portal.html","about.html","core-design-system.html"]}]}</script>
-</helmet>
-
-<div style="min-height:100vh;color:var(--ink,#14140F);background-color:var(--bg,#F8F6F0);background-image:linear-gradient(var(--grid,rgba(30,26,14,.055)) 1px,transparent 1px),linear-gradient(90deg,var(--grid,rgba(30,26,14,.055)) 1px,transparent 1px);background-size:64px 64px;padding:0 clamp(18px,8vw,168px)">
-
+</head>
+<body>
+<div class="wrap">
+  <button type="button" class="totop" id="totop" aria-label="Back to top">
+    <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </button>
   
-  <div data-progress="" style="position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;background:var(--accent,#0E6B42);z-index:80;opacity:.85"></div>
-
-  <header style="position:sticky;top:16px;z-index:40;width:100%;max-width:min(560px,100%);margin:0 auto;padding-top:16px">
-    <div data-navpill="" style="position:relative;z-index:2;display:flex;align-items:center;gap:20px;flex-wrap:nowrap;padding:10px 10px 10px 18px;background:color-mix(in srgb,var(--card,#fff) 62%,transparent);backdrop-filter:blur(18px) saturate(1.7);-webkit-backdrop-filter:blur(18px) saturate(1.7);border-radius:14px;box-shadow:0 3px 10px rgba(30,26,14,.035);transition:background .35s ease"><span data-navframe="" aria-hidden="true" style="position:absolute;left:0;top:0;width:0;height:0;opacity:0;pointer-events:none;background:color-mix(in srgb,var(--accent,#0E6B42) 9%,transparent);border-radius:9px;transition:transform .35s cubic-bezier(.3,.8,.3,1),width .35s cubic-bezier(.3,.8,.3,1),height .35s cubic-bezier(.3,.8,.3,1),opacity .25s ease"></span>
-      <a href="index.html" style="display:flex;align-items:center;gap:12px;color:var(--ink,#14140F);font-weight:500;font-size:15px;letter-spacing:-.01em;transition:color .25s ease" style-hover="color:var(--accent,#0E6B42)">
-        <span aria-hidden="true" data-facemark="" style="flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px"><img src="assets/lokesh-face.png" alt="" width="34" height="34" decoding="async" style="display:block;width:34px;height:34px;object-fit:contain"></span>
-      </a>
-      <span data-crumb="" style="font-family:var(--mono);font-size:11px;color:var(--faint,#948F81)">/ Rise Portal</span>
+  <header id="siteHeader">
+    <div class="navpill">
+      <a href="./index.html" class="facemark" style="color:var(--ink)"><img src="./assets/lokesh-face.png" alt="Lokesh Bhatia" width="34" height="34" loading="eager"></a>
+      <span class="crumb">/ Rise Portal</span>
       <div style="flex:1;min-width:8px"></div>
-      <nav style="display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);font-size:13.5px;font-weight:500;letter-spacing:-.01em">
-        <a data-navlink="" data-tag="01" href="index.html" style="color:var(--navOff);transition:color .25s ease" style-hover="color:var(--ink,#14140F)">Home</a>
-        <a data-navlink="" data-tag="02" href="about.html" style="color:var(--navOff);transition:color .25s ease" style-hover="color:var(--ink,#14140F)">About</a>
-        <a data-navlink="" data-tag="03" href="index.html#contact" style="color:var(--navOff);transition:color .25s ease" style-hover="color:var(--ink,#14140F)">Contact</a>
-        <button data-cursor-label="theme" onClick="{{ toggleTheme }}" aria-label="Toggle colour theme" style="width:34px;height:34px;border:0;background:var(--tint,#EFEBDE);border-radius:8px;color:var(--muted,#6B675E);cursor:pointer;font-size:11px;display:grid;place-items:center;transition:background .25s ease,color .25s ease" style-hover="background:var(--ink,#14140F);color:var(--card,#fff)"><span style="display:{{ sunDisp }};line-height:0" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span><span style="display:{{ moonDisp }};line-height:0" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span></button>
-        <a href="resume.pdf" target="_blank" rel="noreferrer" data-cv="" style="display:inline-flex;align-items:center;padding:10px 18px;background:var(--ink,#14140F);border-radius:10px;color:var(--card,#fff);font-size:13px;transition:background .25s ease,color .25s ease" style-hover="background:var(--accent,#0E6B42);color:var(--bg,#F8F6F0)"><span data-cvword="">Resume</span> <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;vertical-align:-2px;margin-left:2px"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a><button data-burger="" data-cursor-label="menu" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="display:none;width:44px;height:44px;border:0;background:var(--tint,#EFEBDE);border-radius:12px;color:var(--ink,#14140F);cursor:pointer;place-items:center;position:relative"><span data-bicon="" data-bbars="" aria-hidden="true"><span style="display:flex;flex-direction:column;gap:4px"><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span></span></span><span data-bicon="" data-bx="" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button></nav>
+      <nav class="navlinks">
+        <a class="navlink" href="./index.html" aria-label="Home"><span class="navtext">Home</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M2.4 7 8 2.6 13.6 7v6a.9.9 0 0 1-.9.9h-3v-4h-3.4v4h-3a.9.9 0 0 1-.9-.9z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        <a class="navlink" href="./about.html" aria-label="About"><span class="navtext">About</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.6" r="2.5" stroke="currentColor" stroke-width="1.4"></circle><path d="M2.9 13.4c.5-2.5 2.6-4 5.1-4s4.6 1.5 5.1 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg></span></a>
+        <a class="navlink" href="./resume.pdf" target="_blank" rel="noreferrer" aria-label="Resume"><span class="navtext">Resume</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M4 2.4h4.6L12 5.8v7.8H4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path><path d="M8.4 2.6v3.2H11.8M6 8.6h4M6 10.9h2.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg></span></a>
+        <span class="navdiv" aria-hidden="true"></span>
+        <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme">
+          <span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          <span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span>
+        </button>
+        <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false">
+          <span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span>
+          <span class="bicon-x bicon" aria-hidden="true" style="display:none"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span>
+        </button>
+      </nav>
     </div>
-  
-    
-  
-    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-      <div data-mobilenav="" style="position:fixed;inset:0;z-index:1;background:var(--bg,#F8F6F0);display:flex;flex-direction:column;min-height:100dvh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:86px 0 0">
-        <div data-mlinks="" style="display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(24px,8vh,80px);padding:0 var(--pad,clamp(18px,8vw,168px))">
-        <a data-mrow="" href="index.html" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
-          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">Home</span>
-          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </a>
-        <a data-mrow="" href="about.html" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
-          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">About</span>
-          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </a>
-        <a data-mrow="" href="index.html#contact" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
-          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">Contact</span>
-          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </a>
-        </div>
-        <div data-mfoot="" style="margin-top:auto;display:flex;flex-direction:column;gap:16px;padding:36px var(--pad,clamp(18px,8vw,168px)) calc(env(safe-area-inset-bottom, 0px) + 30px)">
-          <span style="display:inline-flex;align-items:center;gap:8px;width:fit-content;padding:6px 13px 6px 11px;border-radius:999px;background:rgba(14,107,66,.10);font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent,#0E6B42)"><span aria-hidden="true" style="width:8px;height:8px;border-radius:50%;background:currentColor"></span>open to full-time roles · available immediately</span>
-          <a href="mailto:hi.lokeshux@gmail.com" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;min-height:48px;font-size:clamp(23px,6.4vw,28px);line-height:1.2;letter-spacing:-.02em;font-weight:500;color:var(--ink,#14140F)">hi.lokeshux@gmail.com</a>
-          <a href="resume.pdf" target="_blank" rel="noreferrer" onClick="{{ closeMenu }}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:12px;background:var(--ink,#14140F);color:var(--card,#fff);font-size:15px;font-weight:500">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-        </div>
+    <div class="mobilenav" id="mobileNav">
+      <div class="mlinks">
+        <a class="mrow" href="./index.html"><span class="mlabel">Home</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+        <a class="mrow" href="./about.html"><span class="mlabel">About</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
       </div>
-    </sc-if>
+      <div class="mfoot">
+        <div class="availbadge" role="img" aria-label="Open to work — available now">
+          <svg class="availring" viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><defs><path id="rpAvailPath" d="M46,46 m-33,0 a33,33 0 1,1 66,0 a33,33 0 1,1 -66,0"></path></defs><text style="font-family:var(--mono);font-size:8.2px;letter-spacing:.1em;text-transform:uppercase;fill:var(--accent)"><textPath href="#rpAvailPath" startOffset="0">OPEN TO WORK · AVAILABLE NOW · </textPath></text></svg>
+          <svg viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><circle cx="46" cy="46" r="25.5" fill="none" stroke="var(--accent)" stroke-opacity=".45" stroke-width="1"></circle></svg>
+          <span aria-hidden="true" style="position:relative;font-size:16px;color:var(--accent)">✦</span>
+        </div>
+        <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
+        <a class="mresume" href="./resume.pdf" target="_blank" rel="noreferrer">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      </div>
+    </div>
   </header>
 
-  <section id="top" style="max-width:1060px;margin:0 auto;padding:clamp(56px,8vw,112px) 0 clamp(40px,5vw,64px)">
-    <p data-reveal="" style="margin:0 0 clamp(18px,2.4vw,26px);font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">Rise Portal · Rupeezy · 2024 · My first project at the company</p>
-    <h1 data-reveal="" style="margin:0;max-width:16ch;font-size:clamp(34px,5.6vw,72px);line-height:1.02;letter-spacing:-.035em;font-weight:700;text-wrap:balance">Refer more. Earn less. No way to find out why.</h1>
-    <p data-reveal="" style="max-width:58ch;margin:clamp(24px,3.4vw,36px) 0 0;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(17px,2vw,22px);line-height:1.6">
-      Designing trust, visibility and transparency for the partners behind <span style="color:var(--accent,#0E6B42);font-weight:500">35% of company revenue</span>.
-    </p>
-    <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr));gap:clamp(16px,3vw,36px);margin-top:clamp(30px,4vw,50px)">
-      <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
-        <div>
-          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint,#948F81)">{{ f.label }}</div>
-          <div style="margin-top:9px;font-size:clamp(15px,1.6vw,17px);line-height:1.5">{{ f.value }}</div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
+
+  <section id="top">
+    <h1 data-reveal>Rise Portal: the first product Rupeezy’s partners ever had</h1>
+    <p class="subline" data-reveal>Sole designer · 1 PM · Responsive web · Rupeezy, 2024</p>
+    <div class="resultstrip" data-reveal>
+      <div><div class="big">2.4×</div><div class="lbl">Lead-to-client conversion</div><div class="note">Business team, two months post-launch</div></div>
+      <div><div class="big">48%</div><div class="lbl">Fewer partner support tickets</div><div class="note">Reported by the support team</div></div>
+      <div><div style="font-size:clamp(17px,1.9vw,22px);line-height:var(--lh-snug);letter-spacing:var(--tr-head);color:var(--ink)">Built from nothing</div><div class="lbl">What it replaced</div><div class="note">Spreadsheets and phone calls. No product existed.</div></div>
+    </div>
+    <div data-reveal style="margin-top:clamp(34px,4.6vw,58px)">
+      <div class="shotframe">
+        <img class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="lazy">
+        <div class="safari">
+          <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+          <div class="safari-imgbox"><iframe src="./assets/rp-refer-animation.html" loading="eager" scrolling="no" title="Rise Portal — the refer modal, animated"></iframe></div>
         </div>
-      </sc-for>
+      </div>
     </div>
   </section>
 
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,150px)">
-    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
-      <div>
-        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">01 — The problem</p>
-        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">The phone call that happened a hundred times a day</h2>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          Rupeezy’s digital partners are experienced traders and financial content creators — people with an audience that trusts them on money. Around <span style="color:var(--ink,#14140F)">100 partners</span> worked this way. Together, they drove roughly <span style="color:var(--ink,#14140F)">35% of Rupeezy’s revenue</span>. And the entire relationship ran on spreadsheets and phone calls.
-        </p>
+  <section class="section">
+    <div class="shortver" data-reveal>
+      <p class="lbl">The short version</p>
+      <p><span class="emph">Around 100 digital partners</span> drove <span class="emph">35% of Rupeezy’s revenue</span>. The entire relationship ran on spreadsheets and phone calls.</p>
+      <p>A partner could refer more people one month and earn less, with no way to find out why. Their income was calculated somewhere they couldn’t see.</p>
+      <p>I designed the portal that made the funnel and the payout calculation visible. Lead-to-client conversion rose <strong style="font-weight:500">2.4×</strong>, and partner support tickets fell <strong style="font-weight:500">48%</strong>.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid2" data-reveal>
+      <div><p class="eyebrow">01 — The problem</p><h2>The phone call that happened a hundred times a day</h2></div>
+      <div class="body-col">
+        <p>Rupeezy’s digital partners are experienced traders and financial content creators — people with an audience that trusts them on money. Around <span style="color:var(--ink)">100 of them drove roughly 35% of company revenue</span>, and the entire relationship ran on spreadsheets and phone calls.</p>
         <div>
-          <p style="margin:0 0 18px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint,#948F81)">How the model works</p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:clamp(12px,1.8vw,16px)">
-            <sc-for list="{{ model }}" as="m" hint-placeholder-count="4">
-              <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:18px">
-                <div style="font-family:var(--mono);font-size:11px;color:var(--accent,#0E6B42);letter-spacing:.08em">{{ m.n }}</div>
-                <p style="margin:10px 0 0;font-size:15px;line-height:1.5">{{ m.text }}</p>
-              </div>
-            </sc-for>
+          <p style="margin:0 0 var(--s-4);font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)">How the model works</p>
+          <div class="modelgrid">
+            <div class="card"><div class="n">01</div><p>Partner shares their referral link</p></div>
+            <div class="card"><div class="n">02</div><p>Someone enters their mobile number — a lead</p></div>
+            <div class="card"><div class="n">03</div><p>The lead completes KYC and becomes a client</p></div>
+            <div class="card"><div class="n">04</div><p>The client trades; the partner earns a share of the brokerage — typically around 40%.</p></div>
           </div>
+          <p style="margin:var(--s-4) 0 0;font-family:var(--mono);font-size:var(--t-mono);line-height:var(--lh-body);letter-spacing:var(--tr-mono);color:var(--faint)">The share varied by partner. Payouts landed on the 15th of every month.</p>
         </div>
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          A partner wanting to know how many of their leads had converted would call their relationship manager. The manager would open a spreadsheet, check manually, and read the numbers back. A hundred partners, referring people daily, each entitled to ask at any time. Payouts landed on the 15th of every month, calculated somewhere the partner couldn’t see. Now imagine the partner’s side of it.
-        </p>
-        <figure style="margin:0;background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(24px,3vw,32px);display:flex;flex-direction:column;gap:14px">
-          <blockquote style="margin:0;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(18px,2.2vw,24px);line-height:1.45;letter-spacing:-.01em">“Last month I referred 100 people and earned X. This month I referred 200 — and earned less. Why?”</blockquote>
-          <figcaption style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint,#948F81)">The partner’s side of it</figcaption>
+        <p>A partner wanting to know how many leads had converted called their relationship manager, who opened a spreadsheet and read the numbers back. A hundred partners, referring people daily, each entitled to ask at any time.</p>
+        <figure class="quotebox">
+          <blockquote>“Last month I referred 100 people and earned X. This month I referred 200 — and earned less. Why?”</blockquote>
+          <figcaption>The partner’s side of it</figcaption>
         </figure>
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          There’s a legitimate answer — earnings depend on how many leads completed KYC, how many clients actually traded, and how much. But the partner can’t see any of that. All they can see is that they did more and got less. When a third of your revenue flows through people who can’t verify their own income, you don’t have a reporting gap.
-        </p>
+        <p>There’s a legitimate answer — earnings depend on how many leads completed KYC, how many clients traded, and how much. <span style="color:var(--ink)">The partner can’t see any of it. All they can see is that they did more and got less.</span></p>
       </div>
     </div>
   </section>
 
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,150px)">
-    <div data-reveal="" style="background:var(--note1,#F6E3D9);color:var(--noteInk,#181812);border-radius:14px;padding:clamp(34px,7vw,96px);box-shadow:var(--sh);text-align:center">
-      <p style="margin:0 0 20px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.6">Not a reporting gap</p>
-      <p style="margin:0;font-size:clamp(28px,5.4vw,64px);line-height:1.05;letter-spacing:-.03em;font-weight:700;text-wrap:balance">You have a trust problem.</p>
+  <section class="section">
+    <div class="bigblock" style="background:var(--note1);color:var(--noteInk)" data-reveal>
+      <p class="lbl">Not a reporting gap</p>
+      <p style="margin:0 0 clamp(16px,2.4vw,28px)">When a third of your revenue flows through people who can’t verify their own income, you don’t have a reporting gap.</p>
+      <p class="huge">You have a trust problem.</p>
     </div>
   </section>
 
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,150px)">
-    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
+  <section class="section">
+    <div class="grid2" data-reveal>
+      <div><p class="eyebrow">02 — Groundwork</p><h2>Learning a business I’d never seen</h2></div>
+      <div class="body-col">
+        <p>This was my first project at Rupeezy. The PRD landed full of words I didn’t know — digital partners, brokerage share, payout cycles, lead-to-client conversion.</p>
+        <p>So before designing anything, I learned the machine. I sat with the PM to understand how the partner business worked and where the money moved, and with the support team to go through what partners actually asked.</p>
+        <p style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-mono);color:var(--faint)">The support team had heard the same thing for months.</p>
+        <blockquote class="pq big">
+          <p>“I onboard 15–20 users every week, but I have no idea how they’re performing.”</p>
+          <cite>— Mukesh Nangia, Business Development Manager, Rupeezy</cite>
+        </blockquote>
+        <div class="qrow">
+          <div class="card"><span>Question one</span><span>“How many of my leads converted?”</span></div>
+          <div class="card"><span>Question two</span><span>“How much will I earn this cycle?”</span></div>
+        </div>
+        <p>Every screen I designed answers one of these two.</p>
+        <div class="notebox"><span>The honest limitation</span><p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)"><span style="color:var(--ink)">I never spoke to a digital partner directly.</span> What I had was the next best thing — the people who answered their calls every day. I come back to this at the end.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="eyebrow" data-reveal>03 — The design</p>
+    <h2 data-reveal>Four screens, one job: answer before they ask.</h2>
+    <p data-reveal style="margin:clamp(18px,2.4vw,26px) 0 0;max-width:64ch;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)">Rise Portal shipped as responsive web and I designed both ends — the same four sections in a bottom navigation on mobile, with charts and tables restacked for one thumb.</p>
+  </section>
+
+  <section class="section">
+    <div class="finalgrid" data-reveal>
       <div>
-        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">02 — Groundwork</p>
-        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Learning a business I’d never seen</h2>
+        <p class="finalnum">3.1</p>
+        <h3>The dashboard</h3>
+        <p class="finalbody">Earnings three ways — current cycle, last payout, all-time — with a daily chart, so a partner sees the shape of it and not just the total. Below that, the funnel: total leads, then the three states a lead can be in.</p>
+        <div class="notes">
+          <div class="row"><span>—</span><span>The funnel is the answer to “why did I earn less” — partners watch their own referrals move and see where the drop happens.</span></div>
+          <div class="row"><span>—</span><span>The referral link always at hand, with a checkbox: “Do you want to show your name to referred clients?” Transparency runs in both directions.</span></div>
+        </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,32px)">
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          This was my first project at Rupeezy. A PRD landed from the PM, and it was full of words I didn’t know — digital partners, brokerage share, payout cycles, lead-to-client conversion. So before designing anything, I learned the machine: I sat with the PM to understand how the partner business worked and where the money moved, and with the support team to go through what partners actually asked — the daily queries, the repeated questions, the complaints. Two questions dominated everything:
-        </p>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <sc-for list="{{ questions }}" as="q" hint-placeholder-count="2">
-            <div style="display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;background:var(--tint,#EFEBDE);border-radius:8px;padding:18px 20px">
-              <span style="font-family:var(--mono);font-size:11px;color:var(--accent,#0E6B42);padding-top:3px">{{ q.n }}</span>
-              <span style="font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.8vw,19px);line-height:1.5">“{{ q.text }}”</span>
+      <div>
+        <div class="shotframe"><img class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="lazy">
+          <div class="safari">
+            <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+            <div class="safari-imgbox"><img src="./assets/rp-hero.webp" alt="Rise Portal Dashboard, desktop" loading="lazy"></div>
+          </div>
+        </div>
+        <p style="margin:var(--s-4) 0 0"><figcaption>The dashboard — earnings three ways, the funnel in plain sight.</figcaption></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="finalgrid" data-reveal>
+      <div>
+        <p class="finalnum">3.2</p>
+        <h3>Earnings</h3>
+        <p class="finalbody">Earnings plotted against total clients and against traded clients, so a partner can see which of their clients actually generate revenue. Below it, full payout history — bank account, cycle, amount, deductions, date.</p>
+        <div class="notes">
+          <div class="row"><span>—</span><span>Deductions are shown explicitly, as a line item, not netted off silently.</span></div>
+          <div class="row"><span>—</span><span>A payout can be traced back to the clients who generated it.</span></div>
+        </div>
+        <div class="notebox" style="margin-top:clamp(20px,2.6vw,30px)"><span>The whole point</span><p>Nothing about the money is computed out of sight.</p></div>
+      </div>
+      <div>
+        <div class="shotframe"><img class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="lazy">
+          <div class="safari">
+            <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+            <div class="safari-imgbox"><img src="./assets/rp-earnings.webp" alt="Rise Portal Earnings page, with payout history table" loading="lazy"></div>
+          </div>
+        </div>
+        <p style="margin:var(--s-4) 0 0"><figcaption>Earnings — deductions shown explicitly, nothing hidden.</figcaption></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="finalgrid" data-reveal>
+      <div>
+        <p class="finalnum">3.3</p>
+        <h3>Clients</h3>
+        <p class="finalbody">Every client with their last-traded date, split into active and inactive.</p>
+        <div class="notes">
+          <div class="row"><span>—</span><span>Active and inactive as the primary split — not signup date, not alphabet.</span></div>
+          <div class="row"><span>—</span><span>Last-traded date makes “who do I call today” a one-glance decision.</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="shotframe"><img class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="lazy">
+          <div class="safari">
+            <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+            <div class="safari-imgbox"><img src="./assets/rp-funnel.webp" alt="Rise Portal Clients page" loading="lazy"></div>
+          </div>
+        </div>
+        <p style="margin:var(--s-4) 0 0"><figcaption>Clients — the list that became a call sheet.</figcaption></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <figure style="margin:0;display:flex;flex-direction:column;gap:var(--s-4)" data-reveal>
+      <div class="pcband" id="pcBand">
+        <img class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="lazy">
+        <div id="pcBandInner">
+          <img id="pcs1" src="./assets/rp-screen-1.png" alt="Refer & Earn sheet">
+          <img id="pcs2" src="./assets/rp-screen-2.png" alt="Contact Us sheet">
+          <img id="pcs3" src="./assets/rp-screen-3.png" alt="Dashboard — earnings overview">
+          <img id="pcs4" src="./assets/rp-screen-4.png" alt="Earnings page">
+          <img id="pcs5" src="./assets/rp-screen-5.png" alt="My Clients page">
+          <img id="pcs6" src="./assets/rp-screen-6.png" alt="Updates — payout eligibility messages">
+          <img id="pcs7" src="./assets/rp-screen-7.png" alt="My Partner — referring a sub-partner">
+          <img id="pcFrame" src="./assets/rp-phone-frame.png" alt="">
+        </div>
+      </div>
+      <figcaption>The same four sections, restacked for one hand.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section">
+    <div class="grid2" data-reveal>
+      <div><p class="eyebrow">04 — The mechanism</p><h2>The mechanism nobody was paying for</h2></div>
+      <div class="body-col">
+        <p>A partner sees a lead stuck at “account processing.” That lead is money sitting one step away from becoming a client. So the partner calls them — <em>is something wrong with the registration? Can I help?</em> That call used to be Rupeezy’s job. Support teams chase stuck registrations everywhere. But the partner’s call works better, because the lead already knows and trusts the person who referred them.</p>
+        <p>Same with the inactive clients list. An inactive client earns the partner nothing, so partners nudge them back to trading — because their income depends on it.</p>
+        <p>Nobody instructed partners to do any of this. <span style="color:var(--ink)">The product made their pipeline visible, and self-interest did the rest.</span></p>
+        <div class="notebox"><span>What it actually built</span><p style="font-size:clamp(17px,2vw,21px)">Rise Portal turned 100 partners into a distributed sales and support layer — one that costs nothing, and converts better than a cold call from an unknown number.</p></div>
+        <p>I found out about this after launch, from the business team. <span style="color:var(--ink)">I designed the visibility. The behaviour was theirs.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="bigblock" style="background:var(--note3);color:var(--noteInk)" data-reveal>
+      <p class="lbl">The outcome</p>
+      <p style="font-size:clamp(26px,4.6vw,56px);line-height:var(--lh-head)">The biggest outcome wasn’t a screen. It was a behaviour.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid2" data-reveal>
+      <div><p class="eyebrow">05 — Constraint</p><h2>Designing inside compliance</h2></div>
+      <div class="body-col">
+        <p>The mechanism in the last section depends on partners contacting their own referrals. <span style="color:var(--ink)">As a regulated broker, we cannot expose client phone numbers — not to partners, not to anyone.</span></p>
+        <p>The answer came from how partners actually work. Most collect contact details themselves when they refer someone, through their own forms and conversations. What they need from the portal isn’t the number — it’s the <span style="color:var(--ink)">match</span>.</p>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:var(--s-4)">
+          <div class="shotframe"><img class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="lazy">
+            <div class="safari">
+              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+              <div class="safari-imgbox"><img src="./assets/rp-masked-number.webp" alt="Masked phone number column on the Clients screen" loading="lazy"></div>
             </div>
-          </sc-for>
-        </div>
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          I never spoke to a digital partner directly — I’ll come back to that at the end, because it’s the honest limitation of this project. What I had was the next best thing: the people who answered their calls every day.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(48px,6vw,80px)">
-    <p data-reveal="" style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">03 — The design</p>
-    <h2 data-reveal="" style="margin:0;max-width:22ch;font-size:clamp(26px,3.8vw,46px);line-height:1.08;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Make the funnel visible</h2>
-  </section>
-
-  <sc-for list="{{ finals }}" as="fin" hint-placeholder-count="2">
-    <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,140px)">
-      <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,64px);align-items:center">
-        <div>
-          <h3 style="margin:0;font-size:clamp(21px,2.6vw,32px);line-height:1.14;letter-spacing:-.03em;font-weight:700;text-wrap:balance">{{ fin.title }}</h3>
-          <p style="margin:16px 0 0;max-width:52ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">{{ fin.body }}</p>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-top:22px">
-            <sc-for list="{{ fin.notes }}" as="nt" hint-placeholder-count="2">
-              <div style="display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:start">
-                <span style="font-family:var(--mono);font-size:11px;color:var(--accent,#0E6B42);padding-top:4px">—</span>
-                <span style="font-size:15px;line-height:1.55">{{ nt }}</span>
-              </div>
-            </sc-for>
           </div>
-        </div>
-        <div>
-          <div data-imgbox="" data-ratio="" style="position:relative;aspect-ratio:16/11">
-            <image-slot id="{{ fin.slot }}" shape="rect" fit="contain" placeholder="{{ fin.shot }}"></image-slot>
-          </div>
-          <p style="margin:14px 0 0;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--faint,#948F81)">{{ fin.caption }}</p>
-        </div>
-      </div>
-    </section>
-  </sc-for>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(60px,8vw,100px)">
-    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
-      <div>
-        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">04 — The mechanism</p>
-        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">The mechanism nobody was paying for</h2>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          A partner sees a lead stuck at “account processing.” That lead is money sitting one step away from becoming a client. So the partner calls them — <em>is something wrong with the registration? Can I help?</em> That call used to be Rupeezy’s job. Support teams chase stuck registrations everywhere. But the partner’s call works better, because the lead already knows and trusts the person who referred them — that’s why they clicked the link in the first place.
-        </p>
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          Same with the inactive clients list. An inactive client earns the partner nothing, so partners re-engage them — nudge them back to trading — because their income depends on it. Nobody instructed partners to do follow-up. The product made their pipeline visible, and self-interest did the rest: Rise Portal quietly turned 100 partners into a distributed sales and support layer — one that costs nothing and converts better than cold calls from an unknown number.
-        </p>
-        <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(20px,2.6vw,28px)">
-          <p style="margin:0;font-size:clamp(17px,2vw,21px);line-height:1.45;letter-spacing:-.02em">The biggest outcome wasn’t a screen. It was a behaviour.</p>
-        </div>
+          <figcaption><span style="font-family:var(--mono);color:var(--ink)">XXXXXX7890</span> — enough to match a record the partner already has, and nothing more.</figcaption>
+        </figure>
+        <div class="notebox"><span>The principle</span><p style="font-size:clamp(17px,2vw,21px)">I didn’t design against the constraint. I designed the smallest sufficient signal around it — a name, the masked digits, a status, so a partner can connect what they see here to the records they already hold.</p></div>
       </div>
     </div>
   </section>
 
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,150px)">
-    <div data-reveal="" style="background:var(--note3,#DFE8DD);color:var(--noteInk,#181812);border-radius:14px;padding:clamp(34px,7vw,96px);box-shadow:var(--sh);text-align:center">
-      <p style="margin:0 0 20px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.6">Why it worked</p>
-      <p style="margin:0;font-size:clamp(26px,4.6vw,56px);line-height:1.08;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Every lead a partner can see is a phone call we no longer have to make.</p>
-    </div>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,150px)">
-    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
-      <div>
-        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">05 — Constraint</p>
-        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Designing inside compliance</h2>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          As a regulated broker, we cannot expose client phone numbers — not to partners, not to anyone. Numbers render masked: <span style="font-family:var(--mono);color:var(--ink,#14140F)">XXXXXX7890</span>. Which creates a tension, because the whole mechanism above depends on partners being able to contact their own referrals.
-        </p>
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          The resolution came from how partners actually work. These are people running a business — most collect contact details themselves when they refer someone, through their own forms and conversations. What they need from the portal isn’t the number. It’s the <span style="color:var(--ink,#14140F)">match</span>: a name, the masked digits, and the status, so they can connect what they see in the portal to the records they already hold. We didn’t fight the constraint. We designed the smallest sufficient signal around it.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(60px,8vw,100px)">
-    <p data-reveal="" style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">06 — Eligibility</p>
-    <h2 data-reveal="" style="margin:0 0 clamp(24px,3.4vw,40px);max-width:26ch;font-size:clamp(26px,3.8vw,46px);line-height:1.08;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Making “X AND (Y OR Z)” readable in a glance</h2>
-    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,4vw,64px);align-items:center">
-      <div style="display:flex;flex-direction:column;gap:clamp(18px,2.4vw,26px)">
-        <p style="margin:0;max-width:56ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          Partners don’t automatically get paid every cycle. The business set a compound rule — to keep partners driving real trading activity rather than collecting signups. The rule wasn’t mine. My problem was making it legible: partners needed to read their own status in a glance, not parse a logic expression.
-        </p>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <div style="flex:1 1 140px;background:var(--tint,#EFEBDE);border-radius:8px;padding:16px 18px">
-            <div style="font-size:clamp(20px,2.2vw,26px);font-weight:700;letter-spacing:-.02em">7/10</div>
-            <div style="margin-top:6px;font-size:13px;line-height:1.45;color:var(--muted,#6B675E)">active clients — mandatory</div>
-          </div>
-          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--warn,#C7381A)">AND</div>
-          <div style="flex:1 1 140px;background:var(--tint,#EFEBDE);border-radius:8px;padding:16px 18px">
-            <div style="font-size:clamp(20px,2.2vw,26px);font-weight:700;letter-spacing:-.02em">25%/30%</div>
-            <div style="margin-top:6px;font-size:13px;line-height:1.45;color:var(--muted,#6B675E)">of total clients active</div>
-          </div>
-          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent,#0E6B42)">OR</div>
-          <div style="flex:1 1 140px;background:var(--tint,#EFEBDE);border-radius:8px;padding:16px 18px">
-            <div style="font-size:clamp(20px,2.2vw,26px);font-weight:700;letter-spacing:-.02em">3/5</div>
-            <div style="margin-top:6px;font-size:13px;line-height:1.45;color:var(--muted,#6B675E)">new clients this cycle</div>
-          </div>
+  <section class="section">
+    <p class="eyebrow" data-reveal>06 — Eligibility</p>
+    <h2 data-reveal style="margin-bottom:clamp(30px,4.2vw,52px)">Making “X AND (Y OR Z)” readable in a glance</h2>
+    <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,28px)" data-reveal>
+      <div><p style="margin:0 0 var(--s-3);font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--accent)">6.1</p><h3>Making the rule readable</h3></div>
+      <div class="elgrid">
+        <div class="body-col">
+          <p>Partners don’t automatically get paid every cycle. The business set a compound rule to keep partners driving real trading activity rather than collecting signups.</p>
+          <p><span style="color:var(--ink)">The rule wasn’t mine.</span> My problem was making it legible — partners needed to read their own status in a glance, not parse a logic expression.</p>
         </div>
-        <p style="margin:0;max-width:56ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          The card shows each condition as its own fraction, the AND/OR relationship visible between them, and a plain-language warning when the partner is short: “Currently, you’re not eligible for payout.” A partner three clients short can see precisely which lever to pull.
-        </p>
+        <div></div>
       </div>
-      <div>
-        <div data-imgbox="" data-ratio="" style="position:relative;aspect-ratio:4/3">
-          <image-slot id="rp-eligibility" shape="rect" fit="contain" placeholder="VISUAL 4 — the Payout Eligibility card, cropped — upload ≥1000px wide (2× of ~500px display)"></image-slot>
+      <div class="elgrid" style="margin-top:clamp(20px,2.6vw,28px)">
+        <div class="body-col">
+          <blockquote class="pq">
+            <p>“The eligibility card is the one place in the product that delivers bad news. A message saying only ‘you’re not eligible for payout’ would produce exactly the phone call the whole product was built to remove — a partner reading it would call their relationship manager to ask why, and whether it’s permanent.”</p>
+            <cite>— Kunal, Product Manager, Rise Portal</cite>
+          </blockquote>
         </div>
-        <p style="margin:14px 0 0;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--faint,#948F81)">Eligibility as fractions — every condition its own lever.</p>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:var(--s-4)">
+          <div class="shotframe"><img class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="lazy"><div class="imgbox" style="position:relative;z-index:1"><img src="./assets/rp-eligibility.webp" alt="Payout Eligibility card, cropped"></div></div>
+          <figcaption>Eligibility as fractions — every condition its own lever.</figcaption>
+        </figure>
       </div>
+      <p>Each condition became its own fraction, with the AND/OR relationship visible between them, and a plain-language warning when a partner falls short. Someone three clients short can see precisely which lever to pull.</p>
     </div>
-    <p data-reveal="" style="margin:clamp(28px,4vw,44px) 0 0;max-width:72ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-      Where this card sat caused the one real disagreement of the project. The business team wanted eligibility at the top of the dashboard — it decides whether a partner gets paid, so surely it’s the most important thing on the page. I argued placement should follow frequency, not importance: eligibility is one-time information — a partner needs it while working toward the threshold, and stops looking at it once they’ve met it. Earnings and clients are what a partner checks every single visit. Prime position went to the daily information; eligibility went bottom-right — visible, not dominant. I also considered hiding the card entirely once a partner qualified, and rejected it: a dashboard that rearranges itself depending on state is worse than one stable layout.
-    </p>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,150px)">
-    <div data-reveal="" style="background:var(--note2,#EDE7D7);color:var(--noteInk,#181812);border-radius:14px;padding:clamp(34px,7vw,96px);box-shadow:var(--sh);text-align:center">
-      <p style="margin:0 0 20px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.6">Design principle</p>
-      <p style="margin:0;font-size:clamp(26px,4.6vw,56px);line-height:1.08;letter-spacing:-.03em;font-weight:700;text-wrap:balance">Important and frequent are not the same thing. Layout should follow frequency.</p>
-    </div>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,150px)">
-    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
-      <div>
-        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">07 — Responsive</p>
-        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">One product, two screens</h2>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          Rise Portal shipped as responsive web, and I designed both ends of it. Partners check earnings from wherever they are — the mobile layout keeps the same four sections (Dashboard, Earnings, Clients, Updates) in a bottom navigation, with the charts and tables restacked for one hand and one thumb.
-        </p>
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:var(--muted,#6B675E)">
-          Updates carries the messages that used to be phone calls — payout eligibility warnings, cycle information, service notices — filterable by type. The channel that used to interrupt a relationship manager’s day became a feed the partner checks on their own time.
-        </p>
-      </div>
-    </div>
-    <div data-reveal="" data-imgbox="" data-ratio="" style="position:relative;aspect-ratio:16/8;margin-top:clamp(24px,3.4vw,40px)">
-      <image-slot id="rp-responsive" shape="rect" fit="contain" placeholder="VISUAL 5 — desktop and mobile side by side — upload ≥2120px wide (2× of ~1060px display)"></image-slot>
-    </div>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(80px,11vw,150px)">
-    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
-      <div>
-        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">08 — Results</p>
-        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">What happened</h2>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,32px)">
-        <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-          <div style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(24px,3vw,34px)">
-            <div style="font-size:clamp(30px,3.8vw,44px);letter-spacing:-.035em;font-weight:700;line-height:1" data-count="">{{ r.value }}</div>
-            <h3 style="margin:14px 0 8px;font-size:clamp(16.5px,1.8vw,19px);font-weight:700;letter-spacing:-.02em">{{ r.title }}</h3>
-            <p style="margin:0;max-width:56ch;font-size:15px;line-height:1.6;color:var(--muted,#6B675E)">{{ r.note }}</p>
-          </div>
-        </sc-for>
-        <p style="margin:0;max-width:66ch;font-family:var(--mono);font-size:11px;line-height:1.85;color:var(--faint,#948F81)">
-          One caveat I attach to my own numbers: Rise Portal was isolated to digital partners, and the commission structure didn’t change in that window — but I’d still want to verify nothing moved on the payout side before claiming clean causality. I didn’t own the analytics; I’m reporting what the teams closest to the data reported.
-        </p>
+    <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,28px);margin-top:clamp(46px,6vw,86px)" data-reveal>
+      <div><p style="margin:0 0 var(--s-3);font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--accent)">6.2</p><h3>Where the card sat</h3></div>
+      <p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)"><span style="color:var(--ink)">Where this card sat caused the one real disagreement of the project.</span></p>
+      <p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)">The business wanted eligibility at the top of the dashboard — it decides whether a partner gets paid, so surely it’s the most important thing on the page.</p>
+      <p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)">I argued the opposite. Eligibility is one-time information: a partner needs it while working toward the threshold, and stops looking once they’ve met it. Earnings and clients are what they check every visit. <span style="color:var(--ink)">It went bottom-right — visible, not dominant.</span></p>
+      <p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)">I also considered hiding the card once a partner qualified, and rejected it. A dashboard that rearranges itself depending on state is worse than one stable layout.</p>
+      <div class="bigblock" style="background:var(--note2);color:var(--noteInk);margin-top:clamp(10px,1.6vw,18px)">
+        <p class="lbl">Design principle</p>
+        <p style="font-size:clamp(26px,4.6vw,56px);line-height:var(--lh-head)">Important and frequent are not the same thing. Layout should follow frequency.</p>
       </div>
     </div>
   </section>
 
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(72px,10vw,130px)">
-    <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(24px,4vw,64px);align-items:start">
-      <div>
-        <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">09 — Honesty</p>
-        <h2 style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.03em;font-weight:700;text-wrap:balance">The part a portfolio usually hides</h2>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)">
-        <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(16px,1.8vw,20px);line-height:1.7">
-          Three things were true about this project that case studies don’t usually admit.
-        </p>
-        <div>
-          <h3 style="margin:0 0 10px;font-size:clamp(17px,1.9vw,20px);font-weight:700;letter-spacing:-.02em">I never spoke to a digital partner.</h3>
-          <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(15px,1.6vw,17px);line-height:1.6;color:var(--muted,#6B675E)">Everything I knew about them arrived second-hand — through the PM, and through the support team who answered their calls every day. It was fast, and it was enough to ship. But every insight passed through someone else’s summary first. The follow-up behaviour I described above, I learned about after launch. Five direct conversations before designing might have surfaced it early enough to build the product for that behaviour, instead of merely enabling it and finding out later.</p>
+  <section class="section">
+    <div class="grid2" data-reveal>
+      <div><p class="eyebrow">07 — Results</p><h2>What happened</h2></div>
+      <div class="body-col">
+        <div class="resultsgrid">
+          <div class="card"><div class="val">2.4x</div><h3>Lead-to-client conversion</h3><p>In the two months after launch — reported by the business team from the partner dashboard.</p></div>
+          <div class="card"><div class="val">48%</div><h3>Fewer partner support tickets</h3><p>Earnings and lead-status queries — the two questions that dominated call logs — became self-serve. Reported by the support team and the partner relationship managers.</p></div>
+          <div class="card"><div class="val">1st</div><h3>The portal became a sales asset</h3><p>When onboarding new digital partners, the business finally had something to show — this is exactly how transparent your earnings will be. To our knowledge, no competitor offered partners anything comparable at the time.</p></div>
         </div>
-        <div>
-          <h3 style="margin:0 0 10px;font-size:clamp(17px,1.9vw,20px);font-weight:700;letter-spacing:-.02em">The numbers came from my own curiosity, not from a plan.</h3>
-          <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(15px,1.6vw,17px);line-height:1.6;color:var(--muted,#6B675E)">Rupeezy didn’t do post-release analysis; nobody agreed upfront what this product was supposed to move. The 2.4x and the 48% exist because I went and asked the business and support teams myself. I stand behind how I got them — but a metric you chase down afterwards is a weaker thing than a metric you committed to in advance.</p>
-        </div>
-        <div>
-          <h3 style="margin:0 0 10px;font-size:clamp(17px,1.9vw,20px);font-weight:700;letter-spacing:-.02em">I won the placement argument with reasoning alone.</h3>
-          <p style="margin:0;max-width:62ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(15px,1.6vw,17px);line-height:1.6;color:var(--muted,#6B675E)">I’d rather have won it with five partners’ behaviour on a screen recording.</p>
+        <div class="notebox"><span>The caveat on these numbers</span><p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)">Rise Portal was isolated to digital partners and the commission structure didn’t change in that window, but I’d want to verify nothing moved on the payout side before claiming clean causality. <span style="color:var(--ink)">I didn’t own the analytics — I’m reporting what the teams closest to the data reported.</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid2" data-reveal>
+      <div><p class="eyebrow">08 — Honesty</p><h2>What I’d do differently</h2></div>
+      <div class="body-col" style="gap:clamp(18px,2.4vw,26px)">
+        <p style="color:var(--ink)">Three things were true about this project.</p>
+        <div class="notebox"><span>No direct contact</span><p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)">I never spoke to a digital partner. Everything I knew arrived second-hand, through the PM and the support team who answered their calls. Five conversations before designing might have surfaced the follow-up behaviour early enough to build for it, rather than enabling it and finding out afterwards.</p></div>
+        <div class="notebox"><span>No plan for the numbers</span><p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)">Rupeezy didn’t do post-release analysis, and nobody agreed upfront what this product was supposed to move. The 2.4× and the 48% exist because I went and asked the business and support teams myself. A metric you chase down afterwards is a weaker thing than one you committed to in advance.</p></div>
+        <div class="notebox"><span>No evidence, only reasoning</span><p style="color:var(--muted);font-size:var(--t-body);line-height:var(--lh-body)">I won the placement argument by making a case about frequency and importance. I was right, and I had nothing to show. Five partners’ behaviour on a screen recording would have settled it in a minute instead of a meeting — and would have told me whether I was right for the reason I thought.</p></div>
+        <div class="bigblock" style="background:var(--note2);color:var(--noteInk);margin-top:clamp(14px,2vw,22px)">
+          <span style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">What I took from it</span>
+          <p style="margin-top:var(--s-5);font-size:clamp(19px,2.4vw,30px);line-height:var(--lh-snug)">Shipping isn’t the finish line. The first thing I’d change anywhere I work next is agreeing what a feature should move before design starts — so there’s something to learn from afterwards.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section style="max-width:1060px;margin:0 auto">
-    <div data-reveal="" style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(30px,6vw,88px)">
-      <p style="margin:0 0 22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">Next case study — 03</p><h2 style="margin:0;font-size:clamp(26px,4.2vw,52px);line-height:1.06;letter-spacing:-.03em;font-weight:700;max-width:22ch;text-wrap:balance">One button, 200 variants — the system underneath both products.</h2><p style="margin:clamp(14px,1.8vw,20px) 0 0;max-width:52ch;font-size:clamp(15px,1.6vw,17px);line-height:1.65;color:var(--muted,#6B675E)">Core — the design system that let four designers and seven engineers ship the same button the same way, twice.</p><div data-cta="" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:clamp(28px,4vw,42px)"><a href="core-design-system.html" style="display:inline-flex;align-items:center;gap:12px;padding:15px 26px;background:var(--ink,#14140F);border-radius:10px;color:var(--card,#fff);font-size:15px;font-weight:500">Read Core <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto"><path d="M2.5 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a><a href="index.html#work" style="display:inline-flex;align-items:center;padding:15px 26px;background:var(--tint,#EFEBDE);border-radius:8px;color:var(--ink,#14140F);font-size:15px;font-weight:500">All work</a><a href="mailto:lokeshux@gmail.com" style="display:inline-flex;align-items:center;padding:15px 26px;background:var(--tint,#EFEBDE);border-radius:8px;color:var(--ink,#14140F);font-size:15px;font-weight:500">Email</a></div>
-    </div>
-    <footer style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:clamp(32px,4.5vw,52px) 0;font-family:var(--mono);font-size:11px;color:var(--muted,#6B675E)">
-      <span>© 2026 Lokesh Bhatia — Bengaluru, IN</span>
-      <div style="display:flex;gap:20px;flex-wrap:wrap">
-        <a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">LinkedIn</a>
-        <a href="https://www.behance.net/lokeshbhatia" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">Behance</a>
-        <a href="https://www.figma.com/@lkb" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">Figma</a>
+  <section id="contact">
+    <footer>
+      <h2>That’s Rise Portal, including the parts that didn’t go well.</h2>
+      <p>If you want the version with the arguments I lost in more detail, ask me.</p>
+      <div class="social">
+        <a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="translate(12 12) scale(1.9) translate(-12 -12)" stroke-width="0.95"><path d="M8 11v5"></path><path d="M8 8v.01"></path><path d="M12 16v-5"></path><path d="M16 16v-3a2 2 0 1 0 -4 0"></path></g></svg></a>
+        <a href="https://www.behance.net/lokeshbhatia" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-12h4.5a3 3 0 0 1 0 6a3 3 0 0 1 0 6h-4.5"></path><path d="M3 12l4.5 0"></path><path d="M14 13h7a3.5 3.5 0 0 0 -7 0v2a3.5 3.5 0 0 0 6.64 1"></path><path d="M16 6l3 0"></path></svg></a>
+        <a href="https://www.figma.com/@lkb" target="_blank" rel="noreferrer" aria-label="Figma" title="Figma"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M6 6a3 3 0 0 1 3 -3h6a3 3 0 0 1 3 3a3 3 0 0 1 -3 3h-6a3 3 0 0 1 -3 -3"></path><path d="M9 9a3 3 0 0 0 0 6h3m-3 0a3 3 0 1 0 3 3v-15"></path></svg></a>
       </div>
     </footer>
   </section>
 </div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280}}">
-class Component extends DCLogic {
-  state = { theme: "light" };
+<script>
+(function(){
+  "use strict";
+  var doc = document.documentElement;
+  function applyTheme(t){ doc.setAttribute("data-theme", t); doc.style.removeProperty("background-color"); try{ localStorage.setItem("portfolio-theme", t); }catch(e){} }
+  try{ applyTheme(localStorage.getItem("portfolio-theme") || "light"); }catch(e){ applyTheme("light"); }
+  document.getElementById("themeToggle").addEventListener("click", function(){
+    applyTheme(doc.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
 
-  componentDidMount() {
-    const saved = localStorage.getItem("portfolio-theme");
-    const theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    this.applyTheme(theme);
-    this.observe();
-    this.bindScroll();
-    this.initCursor();
-    this.bindNav();
-    this.initNavFx();
-    this.initFx2();
-    if (!this._menuDismiss) {
-      this._menuDismiss = true;
-      document.addEventListener("click", (e) => { if (this.state.menu && !e.target.closest("header")) this.setState({ menu: false }); });
-      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && this.state.menu) this.setState({ menu: false }); });
+  var header = document.getElementById("siteHeader");
+  function onScroll(){ if (window.scrollY > 70) header.classList.add("scrolled"); else header.classList.remove("scrolled"); }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  var burger = document.getElementById("burgerBtn");
+  var mobileNav = document.getElementById("mobileNav");
+  function closeMenu(){
+    mobileNav.classList.remove("open");
+    burger.setAttribute("aria-expanded", "false");
+    burger.querySelector(".bicon-bars").style.display = "";
+    burger.querySelector(".bicon-x").style.display = "none";
+  }
+  function toggleMenu(){
+    var open = mobileNav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.querySelector(".bicon-bars").style.display = open ? "none" : "";
+    burger.querySelector(".bicon-x").style.display = open ? "grid" : "none";
+  }
+  burger.addEventListener("click", toggleMenu);
+  mobileNav.querySelectorAll(".mresume").forEach(function(el){ el.addEventListener("click", closeMenu); });
+  // mark current page + let nav links navigate immediately (no close animation first, avoids a visible flash)
+  var here = location.pathname.split("/").pop() || "index.html";
+  mobileNav.querySelectorAll(".mrow").forEach(function(el){
+    var target = el.getAttribute("href").split("#")[0].split("/").pop();
+    if (target === here) el.classList.add("current");
+  });
+
+  var toast = document.getElementById("toast");
+  var toastTimer;
+  function copyEmail(){
+    var email = "hi.lokeshux@gmail.com";
+    function done(){
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 2000);
     }
-    if (window.__pfShow) window.__pfShow();
+    if (navigator.clipboard) navigator.clipboard.writeText(email).then(done, done);
+    else done();
   }
+  document.querySelectorAll(".copyEmailBtn").forEach(function(btn){ btn.addEventListener("click", copyEmail); });
 
-  componentDidUpdate() { this.observe(); }
-
-  componentWillUnmount() {
+  if ("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add("shown"); io.unobserve(en.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll("[data-reveal]").forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll("[data-reveal]").forEach(function(el){ el.classList.add("shown"); });
   }
+  // safety net: if the observer stalls or never fires, content must not stay invisible
+  setTimeout(function(){ document.querySelectorAll("[data-reveal]").forEach(function(el){ el.classList.add("shown"); }); }, 900);
 
-  applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("portfolio-theme", theme);
-    this.setState({ theme });
-  }
+  if (matchMedia("(hover:hover) and (pointer:fine)").matches){ doc.classList.add("pf-cursor"); }
 
-  initFx2() {
-    if (this._fx2) return;
-    this._fx2 = true;
-    const reduced = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-    const els = Array.from(document.querySelectorAll("[data-count]"));
-    if (!els.length || !("IntersectionObserver" in window)) return;
-    const parse = (s) => { const m = /^([^\d]*)([\d.]+)(.*)$/.exec(s.trim()); return m && { pre: m[1], val: parseFloat(m[2]), dec: (m[2].split(".")[1] || "").length, suf: m[3], full: s }; };
-    const io = new IntersectionObserver((ents) => {
-      ents.forEach((en) => {
-        if (!en.isIntersecting) return;
-        io.unobserve(en.target);
-        const p = parse(en.target.textContent);
-        if (!p || reduced) return;
-        const t0 = performance.now(), dur = 1300;
-        const step = (now) => {
-          const k = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
-          if (k < 1) {
-            const dec = Math.max(p.dec, p.val < 10 ? 1 : 0);
-            en.target.textContent = p.pre + (p.val * e).toFixed(dec) + p.suf;
-            requestAnimationFrame(step);
-          } else en.target.textContent = p.full;
-        };
-        requestAnimationFrame(step);
-      });
-    }, { threshold: 0.5 });
-    els.forEach((el) => io.observe(el));
-  }
-
-  initNavFx() {
-    if (this._navFx) return;
-    this._navFx = true;
-    const header = document.querySelector("header");
-    const pill = document.querySelector("[data-navpill]");
-    const glide = document.querySelector("[data-navframe]");
-    if (!pill || !glide) return;
-    const links = Array.from(pill.querySelectorAll("[data-navlink]"));
-    let active = null, hovered = null;
-    let placed = false;
-    const place = (el, subtle) => {
-      const pr = pill.getBoundingClientRect(), r = el.getBoundingClientRect();
-      if (!placed) { placed = true; glide.style.transition = "none"; requestAnimationFrame(() => { glide.style.transition = "transform .35s cubic-bezier(.3,.8,.3,1),width .35s cubic-bezier(.3,.8,.3,1),height .35s cubic-bezier(.3,.8,.3,1),opacity .25s ease"; }); }
-      glide.style.opacity = subtle ? ".65" : "1";
-      glide.style.transform = "translate(" + (r.left - pr.left - 11) + "px," + (r.top - pr.top - 7) + "px)";
-      glide.style.width = (r.width + 22) + "px";
-      glide.style.height = (r.height + 14) + "px";
-    };
-    const settle = () => { if (hovered) place(hovered); else glide.style.opacity = "0"; };
-    if (window.matchMedia("(hover:hover)").matches) {
-      links.forEach((l) => {
-        l.addEventListener("mouseenter", () => { hovered = l; place(l); });
-        l.addEventListener("mouseleave", () => { hovered = null; settle(); });
-        l.addEventListener("focus", () => { hovered = l; place(l); });
-        l.addEventListener("blur", () => { hovered = null; settle(); });
-      });
+  // phone screen carousel — continuous drifting band, faithful to the original
+  (function(){
+    var band = document.getElementById("pcBand");
+    var inner = document.getElementById("pcBandInner");
+    var frameEl = document.getElementById("pcFrame");
+    if (!band || !inner || !frameEl) return;
+    var slots = [1,2,3,4,5,6,7].map(function(n){ return document.getElementById("pcs"+n); });
+    var count = slots.length;
+    var stepMs = 2100, holdMs = 400, gapRatio = 0.8, bandHeight = 660;
+    var FRAME_W = 388, FRAME_H = 800;
+    var SCREEN_W = 356/388, SCREEN_H = 774/800, SCREEN_R = 56/356;
+    var paused = false, elapsed = 0, last = null;
+    var reducedMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var mobileMQ = window.matchMedia("(max-width: 767px)");
+    band.addEventListener("mouseenter", function(){ paused = true; });
+    band.addEventListener("mouseleave", function(){ paused = false; });
+    function scaleAt(d){
+      if (d <= 1) return 1 - 0.12*Math.pow(d,1.5);
+      if (d <= 2){ var x=d-1; return 0.88 - 0.12*(0.65*x+0.35*x*x); }
+      return Math.max(0.55, 0.76 - 0.16*Math.pow(Math.min(1,(d-2)/0.5),1.5));
     }
-    window.addEventListener("resize", () => { if (glide.style.opacity && glide.style.opacity !== "0") settle(); });
-    const secs = ["work", "impact", "ai", "experience", "contact"];
-    let lastSec = null;
-    window.__pfNavTick = () => {
-      const y = window.scrollY;
-      if (header) { if (y > 70) header.setAttribute("data-scrolled", ""); else header.removeAttribute("data-scrolled"); }
-      let cur = "top";
-      for (const id of secs) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top < window.innerHeight * 0.38) cur = id;
+    function opacityAt(d){
+      if (d >= 2.5) return 0;
+      if (d <= 1) return 1 - 0.2*Math.pow(d,1.6);
+      if (d <= 2){ var x=d-1; return 0.8 - 0.35*(0.6*x+0.4*x*x); }
+      return 0.45*(1 - Math.pow((d-2)/0.5,1.4));
+    }
+    function metrics(){
+      var w = inner.clientWidth || 1200;
+      var slot = w/5;
+      var aspect = FRAME_W/FRAME_H;
+      var frameW = Math.min(bandHeight*0.94*aspect, slot*gapRatio, FRAME_W);
+      return { slot: slot, frameW: frameW, frameH: frameW/aspect };
+    }
+    function put(el, posUnits, slot, screenW, screenH, opacity){
+      var d = Math.abs(posUnits);
+      el.style.width = screenW.toFixed(2)+"px";
+      el.style.height = screenH.toFixed(2)+"px";
+      el.style.borderRadius = (screenW*SCREEN_R).toFixed(2)+"px";
+      el.style.transform = "translate(-50%, -50%) translateX("+(posUnits*slot).toFixed(2)+"px) scale("+scaleAt(d).toFixed(4)+")";
+      el.style.opacity = String(opacity);
+      el.style.zIndex = String(Math.round(1000 - d*100));
+    }
+    function layout(){
+      var reduced = reducedMQ.matches, mobile = mobileMQ.matches;
+      var m = metrics(), slot = m.slot, frameW = m.frameW, frameH = m.frameH;
+      if (mobile){
+        var aspect = FRAME_W/FRAME_H;
+        frameW = Math.min(bandHeight*0.94*aspect, inner.clientWidth*0.72, FRAME_W);
+        frameH = frameW/aspect;
       }
-      if (cur !== lastSec) {
-        lastSec = cur;
-        active = links.find((l) => (l.getAttribute("href") || "") === "#" + cur) || links.find((l) => l.hasAttribute("data-navcurrent")) || links.find((l) => /^(#top|Portfolio\.dc\.html)$/.test(l.getAttribute("href") || "")) || null;
-        links.forEach((l) => {
-          const on = l === active;
-          l.style.color = on ? "var(--navOn)" : "var(--navOff)";
-          if (on) l.setAttribute("aria-current", "true"); else l.removeAttribute("aria-current");
-        });
-        if (!hovered) settle();
-      }
-    };
-    window.__pfNavTick();
-  }
-
-  bindNav() {
-    if (this._navBound) return;
-    this._navBound = true;
-    const seen = new Set();
-    const prefetch = (e) => {
-      const a = e.target && e.target.closest && e.target.closest("a");
-      if (!a || a.getAttribute("target") === "_blank") return;
-      const href = a.getAttribute("href") || "";
-      if (!/\.dc\.html/.test(href) || seen.has(href)) return;
-      seen.add(href);
-      const l = document.createElement("link");
-      l.rel = "prefetch"; l.href = href; l.as = "document";
-      document.head.appendChild(l);
-    };
-    document.addEventListener("pointerenter", prefetch, true);
-    document.addEventListener("focusin", prefetch);
-  }
-
-  initCursor() {
-    if (this._cursor) return;
-    if (!window.matchMedia("(hover:hover) and (pointer:fine)").matches) return;
-    this._cursor = true;
-    const dot = document.createElement("div");
-    dot.id = "lkb-dot";
-    const cur = document.createElement("div");
-    cur.id = "lkb-cur";
-    cur.style.opacity = "0";
-    cur.innerHTML = '<svg class="caret" width="27" height="27" viewBox="0 0 27 27" fill="none" aria-hidden="true">' +
-      '<path d="M4.2 3.4L23 12.4L14 14.6L10.4 23.2Z" fill="currentColor" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"></path></svg>' +
-      '<span class="tag"></span>';
-    document.body.append(dot, cur);
-    let tx = -100, ty = -100, dx = -100, dy = -100;
-    const move = (e) => {
-      tx = e.clientX; ty = e.clientY;
-      cur.style.transform = "translate(" + tx + "px," + ty + "px)";
-      if (!dot.hasAttribute("data-on")) { dx = tx; dy = ty; dot.setAttribute("data-on", ""); cur.style.opacity = "1"; if (cur.style.display !== "none") document.documentElement.setAttribute("data-cursor", ""); }
-      const hit = e.target.closest && e.target.closest("a,button,image-slot");
-      let label = "";
-      if (hit) {
-        const href = hit.getAttribute("href") || "";
-        label = hit.dataset.cursorLabel ||
-          (hit.tagName === "IMAGE-SLOT" ? "drop image" :
-           hit.tagName === "BUTTON" ? "click" :
-           href.startsWith("mailto:") ? "email" :
-           /linkedin/.test(href) ? "linkedin" :
-           /behance/.test(href) ? "behance" :
-           /figma/.test(href) ? "figma" :
-           /resume\.pdf/.test(href) ? "download cv" :
-           /about\.dc\.html/i.test(href) ? "about me" :
-           /app-merge\.dc\.html|rise-portal\.dc\.html|core-design-system\.dc\.html/i.test(href) ? "case study" :
-           /(^|\/)index\.dc\.html/i.test(href) ? "home" :
-           href.startsWith("#") ? "jump" : "open");
-      }
-      if (label) { cur.querySelector(".tag").textContent = label; cur.setAttribute("data-on", ""); dot.style.width = dot.style.height = "40px"; dot.style.margin = "-20px 0 0 -20px"; }
-      else { cur.removeAttribute("data-on"); dot.style.width = dot.style.height = "26px"; dot.style.margin = "-13px 0 0 -13px"; }
-    };
-    const setActive = (on) => {
-      if (on) { document.documentElement.setAttribute("data-cursor", ""); cur.style.display = ""; }
-      else { document.documentElement.removeAttribute("data-cursor"); cur.style.display = "none"; }
-    };
-    this._cursorActive = setActive;
-    const editing = () => !!(
-      document.querySelector("[contenteditable='true'],[contenteditable='']") ||
-      (document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) ||
-      document.documentElement.hasAttribute("data-om-editing") ||
-      document.body.hasAttribute("data-om-editing")
-    );
-    const sync = () => setActive(!editing());
-    document.addEventListener("focusin", sync);
-    document.addEventListener("focusout", () => setTimeout(sync, 0));
-    new MutationObserver(sync).observe(document.documentElement, {
-      attributes: true, subtree: true, attributeFilter: ["contenteditable", "data-om-editing"]
-    });
-    window.addEventListener("pointermove", move, { passive: true });
-    document.addEventListener("pointerleave", () => { dot.removeAttribute("data-on"); cur.style.opacity = "0"; });
-    document.addEventListener("pointerenter", () => { cur.style.opacity = "1"; });
-    const loop = () => {
-      dx += (tx - dx) * 0.16; dy += (ty - dy) * 0.16;
-      dot.style.transform = "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px)";
-      requestAnimationFrame(loop);
-    };
-    loop();
-  }
-
-  bindScroll() {
-    if (window.__pfScrollBound) return;
-    window.__pfScrollBound = true;
-    let frame = null;
-    this._onScroll = () => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = null;
-        const bar = document.querySelector("[data-progress]");
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(window.scrollY / max, 1) : 0) + ")";
-        this.sweepReveal();
-        if (window.__pfNavTick) window.__pfNavTick();
-      });
-    };
-    window.addEventListener("scroll", this._onScroll, { passive: true });
-    this._onScroll();
-  }
-
-  sweepReveal() {
-    const vh = window.innerHeight;
-    document.querySelectorAll("[data-revealed]").forEach((el) => {
-      if (el.style.opacity !== "0") return;
-      const r = el.getBoundingClientRect();
-      if (r.top < vh * 0.93 && r.bottom > 0) { el.style.transitionDelay = "0ms"; el.style.opacity = "1"; el.style.transform = "none"; el.style.filter = "blur(0px)"; }
-    });
-    if (this._reduced) return;
-    // images render at 1:1 — no parallax scale, which would upscale past natural resolution
-    document.querySelectorAll("img[style*='scale(1.115)']").forEach((im) => { im.style.transform = "none"; });
-  }
-
-  observe() {
-    if (!("IntersectionObserver" in window)) return;
-    this._reduced = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-    const cv = "cubic-bezier(.16,1,.3,1)";
-    const hide = (el) => {
-      el.style.transition = "none";
-      el.style.opacity = "0";
-      el.style.transform = "translateY(32px) scale(.99)";
-      el.style.filter = "blur(10px)";
-      void el.offsetWidth;
-      el.style.transition = "opacity .9s " + cv + ", transform .95s " + cv + ", filter .75s " + cv;
-    };
-    this._io = this._io || new IntersectionObserver((entries) => {
-      let k = 0;
-      entries.forEach((e) => {
-        const el = e.target;
-        if (e.isIntersecting) {
-          if (el.style.opacity === "0") {
-            el.style.transitionDelay = Math.min(k++ * 85, 420) + "ms";
-            el.style.opacity = "1";
-            el.style.transform = "none";
-            el.style.filter = "blur(0px)";
-          }
-        } else if (el.style.opacity !== "0") {
-          const r = e.boundingClientRect;
-          if (r.top > window.innerHeight + 40 || r.bottom < -40) { el.style.transitionDelay = "0ms"; hide(el); }
+      var screenW = frameW*SCREEN_W, screenH = frameH*SCREEN_H;
+      band.style.height = Math.min(bandHeight, frameH+40)+"px";
+      frameEl.style.width = frameW.toFixed(2)+"px";
+      frameEl.style.height = frameH.toFixed(2)+"px";
+      frameEl.style.transform = "translate(-50%, -50%)";
+      if (mobile){
+        var hold = Math.max(2200, stepMs*1.6), fade = 1100;
+        var cyc = elapsed/hold, idx = Math.floor(cyc)%count, nxt=(idx+1)%count;
+        var frac = cyc-Math.floor(cyc), fadeStart = 1-fade/hold, k=0;
+        if (frac > fadeStart){ var t=(frac-fadeStart)/(1-fadeStart); k=t*t*(3-2*t); }
+        for (var n=0;n<count;n++){
+          var el=slots[n], o = n===idx ? 1-k : (n===nxt?k:0);
+          put(el,0,slot,screenW,screenH,o);
+          el.style.zIndex = String(n===idx?900:(n===nxt?901:0));
         }
-      });
-    }, { threshold: [0, 0.08], rootMargin: "0px 0px -7% 0px" });
-    this._seen = this._seen || new WeakSet();
-    if (this._instant === undefined) {
-      const nav = performance.getEntriesByType("navigation")[0];
-      this._instant = (nav && nav.type === "back_forward") || (document.referrer && document.referrer.indexOf(location.host) > -1);
+        return;
+      }
+      if (reduced){
+        for (var n2=0;n2<count;n2++){ var pos2=n2-2; put(slots[n2],pos2,slot,screenW,screenH,opacityAt(Math.abs(pos2))); }
+        return;
+      }
+      var cycle = stepMs+holdMs, steps = Math.floor(elapsed/cycle), inCycle = elapsed-steps*cycle, f=0;
+      if (inCycle > holdMs){ var u=(inCycle-holdMs)/stepMs; f = u<0.5 ? 4*u*u*u : 1-Math.pow(-2*u+2,3)/2; }
+      var t2 = steps+f, half = count/2;
+      for (var n3=0;n3<count;n3++){
+        var pos3 = ((n3-t2+half)%count+count)%count-half;
+        put(slots[n3],pos3,slot,screenW,screenH,opacityAt(Math.abs(pos3)));
+      }
     }
-    const vh0 = window.innerHeight;
-    document.querySelectorAll("[data-reveal]").forEach((el) => {
-      if (this._seen.has(el)) return;
-      this._seen.add(el);
-      el.setAttribute("data-revealed", "");
-      if (this._reduced) { el.style.opacity = "1"; return; }
-      el.style.willChange = "opacity, transform, filter";
-      let r = null;
-      if (this._instant && performance.now() < 3000) r = el.getBoundingClientRect();
-      if (r && r.top < vh0 && r.bottom > 0) {
-        el.style.transition = "opacity .9s " + cv + ", transform .95s " + cv + ", filter .75s " + cv;
-        el.style.opacity = "1";
-      } else hide(el);
-      this._io.observe(el);
-    });
-    clearTimeout(this._revealSafety);
-    this._revealSafety = setTimeout(() => this.sweepReveal(), 1200);
-  }
+    function tick(now){
+      requestAnimationFrame(tick);
+      var dt = last==null?0:Math.min(now-last,64);
+      last = now;
+      var mobile = mobileMQ.matches, reduced = reducedMQ.matches;
+      if (!paused && (mobile || !reduced)) elapsed += dt;
+      layout();
+    }
+    window.addEventListener("resize", layout);
+    document.addEventListener("visibilitychange", function(){ last=null; layout(); });
+    layout();
+    requestAnimationFrame(tick);
+  })();
 
-  renderVals() {
-    const __menu = {
-      menuOpen: !!this.state.menu,
-      toggleMenu: () => this.setState((s) => { const n = !s.menu; document.body.style.overflow = n ? "hidden" : ""; document.documentElement.classList.toggle("mnav-open", n); return { menu: n }; }),
-      closeMenu: () => { document.body.style.overflow = ""; document.documentElement.classList.remove("mnav-open"); this.setState({ menu: false }); }
-    };
-    const dark = this.state.theme === "dark";
-    return {
-      ...__menu,
-      sunDisp: dark ? "none" : "block",
-      moonDisp: dark ? "block" : "none",
-      toggleTheme: () => this.applyTheme(dark ? "light" : "dark"),
-      facts: [
-        { label: "Role", value: "Product Designer — sole designer" },
-        { label: "Company", value: "Rupeezy · first project there" },
-        { label: "Scale", value: "~100 partners · 35% of revenue" },
-        { label: "Platform", value: "Responsive web — desktop & mobile" }
-      ],
-      model: [
-        { n: "01", text: "Partner shares their referral link" },
-        { n: "02", text: "Someone enters their mobile number — a lead" },
-        { n: "03", text: "The lead completes KYC — the partner’s client" },
-        { n: "04", text: "The client trades; the partner earns a share of brokerage" }
-      ],
-      questions: [
-        { n: "01", text: "How many of my leads converted?" },
-        { n: "02", text: "How much will I earn this cycle?" }
-      ],
-      finals: [
-        {
-          title: "The dashboard answers both questions before they’re asked",
-          body: "Earnings three ways — current cycle so far, last payout, all-time total — with a daily chart, so a partner sees not just what they’ve earned but the shape of it. Below it, the funnel, honestly: total leads, then the three states a lead can be in — account processing, account opened, account traded.",
-          notes: ["The funnel is the answer to “why did I earn less” — partners watch their own referrals move through the pipeline and see where the drop happens.", "The referral link always at hand — with a checkbox: “Do you want to show your name to referred clients?” Transparency runs in both directions."],
-          slot: "rp-hero",
-          shot: "VISUAL 1 — the Dashboard, desktop — upload ≥2120px wide (2× of ~1060px display)",
-          caption: "The dashboard — earnings three ways, the funnel in plain sight."
-        },
-        {
-          title: "Earnings, computed in the open",
-          body: "Earnings plotted against total clients and against traded clients, so a partner can see which of their clients actually generate revenue. Below it, full payout history — bank account, payout cycle, amount, deductions shown explicitly, payout date.",
-          notes: ["Nothing about the money is computed out of sight."],
-          slot: "rp-earnings",
-          shot: "VISUAL 2 — Earnings page, with payout history table — upload ≥2120px wide (2× of ~1060px display)",
-          caption: "Earnings — deductions shown explicitly, nothing hidden."
-        },
-        {
-          title: "Clients, split by the only thing that matters",
-          body: "Every client with their last-traded date, split into active and inactive. This is the page that changes partner behaviour — an inactive client earns the partner nothing, so partners re-engage them unprompted.",
-          notes: ["Active and inactive as the primary split — not signup date, not alphabet.", "Last-traded date makes “who do I call today” a one-glance decision."],
-          slot: "rp-funnel",
-          shot: "VISUAL 3 — Clients page — upload ≥2120px wide (2× of ~1060px display)",
-          caption: "Clients — the list that became a call sheet."
-        }
-      ],
-      results: [
-        { value: "2.4x", title: "Lead-to-client conversion", note: "In the two months after launch — reported by the business team from the partner dashboard." },
-        { value: "48%", title: "Fewer partner support tickets", note: "Earnings and lead-status queries — the two questions that dominated call logs — became self-serve. Reported by the support team and the partner relationship managers." },
-        { value: "1st", title: "The portal became a sales asset", note: "When onboarding new digital partners, the business finally had something to show — this is exactly how transparent your earnings will be. To our knowledge, no competitor offered partners anything comparable at the time." }
-      ]
-    };
+  // fade in lazy-loaded background photos instead of a hard pop-in
+  document.querySelectorAll("img.bg").forEach(function(img){
+    function reveal(){ img.classList.add("loaded"); }
+    if (img.complete && img.naturalWidth) reveal();
+    else img.addEventListener("load", reveal);
+  });
+
+  var totop = document.getElementById("totop");
+  if (totop){
+    window.addEventListener("scroll", function(){
+      if (window.scrollY > 400) totop.classList.add("show");
+      else totop.classList.remove("show");
+    }, { passive: true });
+    totop.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
   }
-}
+})();
 </script>
 </body>
 </html>

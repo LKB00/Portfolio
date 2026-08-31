@@ -1,695 +1,364 @@
 <!DOCTYPE html>
-<html>
-   
+<html lang="en">
 <head>
-<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#14130E":"#F8F6F0";d.style.colorScheme=t==="dark"?"dark":"light"})();</script>
-<style>
-img{max-width:100%;height:auto}
-img[src$=".png"],img[src$=".jpg"],img[src$=".jpeg"]{image-rendering:-webkit-optimize-contrast}
-:root{--imgpad:24px}
-@media (max-width:640px){:root{--imgpad:16px}}
-:root{--imgmax:78svh}
-@supports not (height:1svh){:root{--imgmax:74vh}}
-/* ONE container per image, zero padding: the image fills it edge to edge and the radius clips the corners.
-   No fill — the container's height comes from the image, so no background can ever show around it. */
-[data-imgbox]{box-sizing:border-box;padding:0;display:block;width:100%;max-width:100%;margin:0;
-  background:transparent;border:0;border-radius:14px;box-shadow:var(--sh);overflow:hidden;line-height:0}
-[data-imgbox]>img{display:block;margin:0;width:100%;height:auto;max-width:100%}
-[data-imgbox]>image-slot,[data-imgbox]>.sc-host{display:block;width:100%;height:100%;margin:0}
-[data-imgbox]>img{display:block;margin:0;max-width:100%;max-height:min(100%,var(--imgmax));width:auto;height:auto;object-fit:contain}
-[data-imgbox]>image-slot,[data-imgbox]>.sc-host{width:100%;height:100%;margin:0}
-/* portrait frames: height drives the box so it shrinks on BOTH axes instead of leaving side gaps */
-/* portrait frames would overflow the screen at full column width, so height leads and the ratio sets the width */
-[data-imgbox][data-tall]{height:var(--imgmax);width:auto;justify-self:center;align-self:center}
-[data-zoomrow] [data-imgbox][data-tall]{justify-self:end}
-[data-imgbox][data-tall]>img{width:auto;height:100%}
-[data-imgbox]>img{object-fit:cover}
-/* opt-out for embedded components: fixed intrinsic height, must not be clamped or clipped */
-[data-imgbox][data-nocap]{max-height:none;overflow:visible}
-[data-imgbox][data-nocap]>.sc-host{height:auto}
-html{background-color:#F8F6F0;scrollbar-gutter:stable;color-scheme:light}html[data-theme="dark"]{background-color:#14130E;color-scheme:dark}@view-transition{navigation:auto}</style>
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0A0A0A":"#F7F8F9";})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="./favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="./favicon-96.png" sizes="96x96">
-<link rel="apple-touch-icon" href="./apple-touch-icon.png">
-<link rel="manifest" href="./site.webmanifest">
-<meta name="theme-color" content="#F8F6F0" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#14130E" media="(prefers-color-scheme: dark)">
 <title>About — Lokesh Bhatia</title>
-<meta name="description" content="I design for the moment a user is nervous — about money, data, or new technology. Often the only designer on the product. Based in Bengaluru, open to full-time roles.">
+<meta name="description" content="Product designer, 3 years across fintech, AI and sustainability. A trading app at 200K+ users, an AI agent platform from zero to launch, and a B2B partner platform built from scratch.">
 <link rel="canonical" href="https://lokeshbhatia.com/about.html">
-
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
-<meta property="og:locale" content="en_IN">
-<meta property="og:url" content="https://lokeshbhatia.com/about.html">
 <meta property="og:title" content="About — Lokesh Bhatia">
-<meta property="og:description" content="I design for the moment a user is nervous — about money, data, or new technology. Often the only designer on the product. Based in Bengaluru, open to full-time roles.">
-<meta property="og:image" content="https://lokeshbhatia.com/og-about.png">
-<meta property="og:image:secure_url" content="https://lokeshbhatia.com/og-about.png">
-<meta property="og:image:type" content="image/png">
+<meta property="og:description" content="Product designer, 3 years across fintech, AI and sustainability. A trading app at 200K+ users, an AI agent platform from zero to launch, and a B2B partner platform built from scratch.">
+<meta property="og:url" content="https://lokeshbhatia.com/about.html">
+<meta property="og:image" content="https://lokeshbhatia.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="About Lokesh Bhatia — making tech feel human">
-
+<meta property="og:image:alt" content="About — Lokesh Bhatia">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="About — Lokesh Bhatia">
-<meta name="twitter:description" content="I design for the moment a user is nervous — about money, data, or new technology. Often the only designer on the product. Based in Bengaluru, open to full-time roles.">
-<meta name="twitter:image" content="https://lokeshbhatia.com/og-about.png">
-<meta name="twitter:image:alt" content="About Lokesh Bhatia — making tech feel human">
+<meta name="twitter:description" content="Product designer, 3 years across fintech, AI and sustainability. A trading app at 200K+ users, an AI agent platform from zero to launch, and a B2B partner platform built from scratch.">
+<meta name="twitter:image" content="https://lokeshbhatia.com/og-image.png">
+<link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com">
-<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin="">
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,1,2&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<script>(function(){var d=document.documentElement;var done=false;var ready=function(){if(done)return;done=true;d.classList.add("pf-ready")};var afterFonts=function(){var f=(document.fonts&&document.fonts.ready)||Promise.resolve();f.then(function(){requestAnimationFrame(function(){requestAnimationFrame(ready)})})};window.__pfShow=afterFonts;setTimeout(ready,1500);window.addEventListener("load",afterFonts);window.addEventListener("pageshow",function(e){if(e.persisted)ready()})})();</script>
-<script src="./support.js"></script>
-   <script defer src="https://cloud.umami.is/script.js" data-website-id="6628228e-bca8-419e-97e3-35ef9f9e78f0"></script>
-<script defer src="./analytics.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script>try{var t=localStorage.getItem("portfolio-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F8F6F0; --ink:#14140F; --muted:#6B675E; --faint:#948F81;
-  --line:#DEDACC; --card:#FFFFFF; --grid:rgba(30,26,14,.055);
-  --tint:#EFEBDE; --accent:#0E6B42;
-  --good:#0E6B42; --warn:#C7381A;
-  --note1:#F6E3D9; --note2:#EDE7D7; --note3:#DFE8DD; --noteInk:#181812;
-  --a2:#C7381A; --a3:#0E6B42;
-  --pad:clamp(18px,8vw,168px);
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --grad:linear-gradient(100deg,#0E6B42,#0E6B42);
-  --gradCta:linear-gradient(100deg,#14140F,#14140F);
-  --tintB:rgba(199,56,26,.045);
-  --w1:rgba(199,56,26,.10); --w2:rgba(14,107,66,.10); --w3:rgba(160,132,42,.10);
-  --orbA:transparent; --orbB:transparent; --orbC:transparent;
-  --sh:0 0 0 1px var(--line),0 1px 2px rgba(30,26,14,.025);
-  --shUp:0 0 0 1.5px var(--ink),0 8px 22px rgba(30,26,14,.07);
+  --t-h1:clamp(30px,4.4vw,54px); --t-h2:clamp(24px,3vw,38px);
+  --t-body-lg:clamp(18px,2vw,22px); --t-body:16px; --t-small:14px; --t-btn:16px;
+  --t-mono-lg:13px; --t-mono:12px;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-9:96px;
+  --lh-display:1.02; --lh-head:1.12; --lh-snug:1.3; --lh-body:1.6;
+  --tr-display:-.022em; --tr-head:-.02em; --tr-label:.1em; --tr-mono:.02em;
+  --pad:clamp(28px,8vw,140px);
+  --bg:#F7F8F9; --ink:#1B1D21; --muted:#5B6068; --faint:#6B7076;
+  --line:#E3E6E9; --card:#FFFFFF; --tint:#EDF0F3; --note1:#EDF0F3; --noteInk:#1B1D21;
+  --accent:#3F3AA8; --accentLine:#3F3AA8; --onAccent:#FFFFFF; --markWash:rgba(63,58,168,.20);
+  --frameSh:rgba(27,29,33,.28); --navOn:var(--accent); --navOff:#5B6068;
+  --mono:'Switzer',Helvetica,Arial,sans-serif;
 }
 :root[data-theme="dark"]{
-  --bg:#14130E; --ink:#F4F1E6; --muted:#A19C8E; --faint:#7C7768;
-  --line:#2C2A22; --card:#1B1A14; --grid:rgba(244,241,230,.045);
-  --tint:#242219; --accent:#5FBF8B;
-  --good:#5FBF8B; --warn:#E97550;
-  --note1:#3A2A20; --note2:#2E2A1C; --note3:#1F2E23; --noteInk:#F4F1E6;
-  --a2:#E97550; --a3:#5FBF8B;
-  --pad:clamp(18px,8vw,168px);
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --grad:linear-gradient(100deg,#5FBF8B,#5FBF8B);
-  --gradCta:linear-gradient(100deg,#F4F1E6,#F4F1E6);
-  --tintB:rgba(233,117,80,.07);
-  --w1:rgba(233,117,80,.14); --w2:rgba(95,191,139,.14); --w3:rgba(214,186,96,.12);
-  --orbA:transparent; --orbB:transparent; --orbC:transparent;
-  --sh:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.2);
-  --shUp:0 0 0 1.5px var(--accent),0 8px 22px rgba(0,0,0,.35);
+  --bg:#0A0A0A; --ink:#EDEFF2; --muted:#9AA0A6; --faint:#8A9095;
+  --line:#24262A; --card:#141619; --tint:#1A1D21; --note1:#171A1D; --noteInk:#EDEFF2;
+  --accent:#A5A0F5; --accentLine:#A5A0F5; --onAccent:#14140F; --markWash:rgba(165,160,245,.30);
+  --frameSh:rgba(0,0,0,.55); --navOff:#9AA0A6;
 }
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Satoshi',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;transition:background .4s ease,color .4s ease}
 *{box-sizing:border-box}
-button,input,select,textarea,image-slot{font-family:'Satoshi',Helvetica,Arial,sans-serif}
+html{scroll-behavior:smooth;background:var(--bg);color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Switzer',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto}
 a{color:var(--accent);text-decoration:none}
-:root{--navOn:#0B5637;--navOff:#666D74}
-:root[data-theme="dark"]{--navOn:#8FDCB2;--navOff:#8B9298}
 a:hover{color:var(--ink)}
-[data-mrow]{transition:background .2s ease}
-[data-mrow]:active{background:var(--tint,#EFEBDE)}
-[data-mrow] [data-mlabel]{color:var(--navOff)}
-[data-mrow][data-mcurrent] [data-mlabel]{color:var(--navOn)}
+button{font-family:inherit}
+.wrap{padding:0 var(--pad);position:relative}
+.emph{font-weight:500;color:var(--ink)}
+.mark{background-image:linear-gradient(transparent 62%,var(--markWash) 62%);background-repeat:no-repeat;color:var(--ink)}
+header{position:sticky;top:16px;z-index:40;width:100%;max-width:min(880px,100%);margin:0 auto;padding-top:var(--s-4);transition:max-width .35s ease}
+header.scrolled{max-width:min(320px,92%)}
+header:not(.scrolled) .navpill{background:transparent;backdrop-filter:none;box-shadow:none;padding-left:0;padding-right:0;justify-content:space-between}
+.navpill{position:relative;display:flex;align-items:center;gap:var(--s-5);padding:var(--s-3) var(--s-3) var(--s-3) var(--s-4);background:color-mix(in srgb,var(--card) 62%,transparent);backdrop-filter:blur(18px) saturate(1.7);border-radius:6px;transition:background .3s ease,padding .3s ease}
+header.scrolled .navpill{background:color-mix(in srgb,var(--card) 58%,transparent);backdrop-filter:blur(20px) saturate(1.8);box-shadow:0 10px 26px -14px var(--frameSh);padding:var(--s-2) var(--s-3)}
+header.scrolled .facemark{width:26px;height:26px}
+header.scrolled .facemark img{width:26px;height:26px}
+.facemark{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px}
+.facemark img{display:block;object-fit:contain}
+:root[data-theme="dark"] .facemark img{filter:invert(1)}
+nav.navlinks{display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);font-size:var(--t-small);font-weight:500}
+.navlink{display:inline-flex;align-items:center;justify-content:center;color:var(--navOff)}
+.navlink:hover{color:var(--ink)}
+header.scrolled .navtext{display:none}
+.navicon{display:none;line-height:0}
+header.scrolled .navicon{display:grid;place-items:center}
+header.scrolled .navlink{min-width:34px}
+.navdiv{flex:0 0 auto;width:1px;height:18px;background:color-mix(in srgb,var(--line) 78%,var(--muted))}
+.themebtn{border:0;background:transparent;padding:0;height:19px;color:var(--navOff);cursor:pointer;position:relative;display:inline-flex;align-items:center}
+.themebtn:hover{color:var(--ink)}
+.icon-sun,.icon-moon{line-height:0}
+html:not([data-theme="dark"]) .icon-moon{display:none}
+html[data-theme="dark"] .icon-sun{display:none}
+.burger{display:none;width:44px;height:44px;border:0;background:var(--tint);border-radius:4px;color:var(--ink);cursor:pointer;place-items:center;position:relative}
+.burger span.bars{display:flex;flex-direction:column;gap:var(--s-1)}
+.burger span.bars span{width:18px;height:2px;background:currentColor;border-radius:2px;display:block}
+.burger[aria-expanded="true"] .bicon-bars{display:none}
+.burger[aria-expanded="true"] .bicon-x{display:grid;place-items:center}
+@media (max-width:640px){nav.navlinks a{display:none}.navdiv{display:none}.burger{display:grid}}
+.mobilenav{position:fixed;inset:0;z-index:35;background:var(--bg);display:none;flex-direction:column;min-height:100dvh;overflow-y:auto;padding:0}
+.mobilenav.open{display:flex}
+.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(76px,11vh,100px);padding:0 var(--pad)}
+.mrow{display:flex;align-items:center;gap:var(--s-4);min-height:84px;padding:var(--s-4) 0;color:var(--ink);box-shadow:inset 0 -1px 0 var(--line)}
+.mrow.current{color:var(--accent)}
+.mrow.current .mlabel{color:var(--accent)}
+.mrow.current svg{color:var(--accent);opacity:.6}
+.mrow .mlabel{flex:1;font-size:34px;line-height:1;letter-spacing:var(--tr-display)}
+.mrow svg{flex:0 0 auto;color:var(--faint)}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:var(--s-4);padding:36px var(--pad) 30px}
+.availbadge{position:relative;width:130px;height:130px;flex:none;border-radius:50%;display:grid;place-items:center}
+.availring{animation:spin 16s linear infinite;transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mailbtn{display:inline-flex;align-items:center;min-height:48px;padding:0;border:0;background:transparent;font-size:var(--t-body-lg);font-weight:500;color:var(--accent);cursor:pointer}
+.mresume{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;border-radius:4px;background:var(--ink);color:var(--card);font-size:var(--t-btn);font-weight:500}
+.mresume:hover{background:var(--accent);color:var(--onAccent)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:var(--s-3);padding:14px 20px;border-radius:4px;background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 18px 40px -20px rgba(16,16,24,.32);white-space:nowrap}
+.toast.show{display:inline-flex}
 
-:root[data-theme="dark"] [data-facemark] img{filter:invert(1)}
-::selection{background:var(--accent);color:#fff}
+.totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;width:56px;height:56px;padding:0;border:1px solid var(--accentLine);border-radius:50%;background:var(--bg);color:var(--accent);cursor:pointer;display:grid;place-items:center;opacity:0;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1)}
+.totop.show{opacity:1;transform:scale(1);pointer-events:auto}
+@media (max-width:640px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg{width:14px;height:14px}}
 
-header{transition:max-width .42s cubic-bezier(.3,.8,.3,1)}
-header[data-scrolled]{max-width:min(470px,78%)!important}
-header[data-scrolled] [data-navpill]{padding:6px 8px 6px 14px!important;background:color-mix(in srgb,var(--card,#fff) 78%,transparent)!important}
-html.pf-ready header[data-scrolled] [data-navpill]{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-@media (max-width:760px){[data-pk]{display:none!important}}
-section[id]{scroll-margin-top:104px;position:relative;z-index:1}
-@media (max-width:760px){
-  header nav a,footer a,[data-crumb]{min-height:44px;display:inline-flex;align-items:center}
-  header nav button{min-width:44px;min-height:44px;border-radius:10px!important}
-  header a[href$="resume.pdf"]{min-height:44px;display:inline-flex;align-items:center}
-  a[href$=".html"]{min-height:44px}
-}
-@media (max-width:860px){
-  [data-2col]{grid-template-columns:minmax(0,1fr)!important;align-items:start!important}
-  [data-portrait]{aspect-ratio:3/3.2!important;max-height:520px;max-width:420px;margin-left:auto;margin-right:auto}
-  [style*="--span2"]{grid-column:auto!important}
-  [data-2col][style*="120px"]{grid-template-columns:1fr!important;gap:10px!important}
-}
-@media (max-width:640px){
-  [data-backhome]{display:none!important}
-  #top{padding-top:44px!important}
-  h1{font-size:clamp(30px,9vw,42px)!important;letter-spacing:-.03em!important}
-  header nav{gap:12px!important}
-  header nav a,header nav button{font-size:12.5px!important}
-}
-image-slot{aspect-ratio:auto!important;width:100%!important;height:100%!important;display:block!important;transform:none!important}
-image-slot::part(frame){background:transparent!important}
-
+#top{max-width:880px;margin:0 auto;padding:clamp(56px,8vw,112px) 0 96px;text-align:left}
+.top2col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:clamp(22px,3.2vw,44px);align-items:start}
+.portrait{position:relative;aspect-ratio:1/1;width:100%;border-radius:50%;overflow:hidden;background:color-mix(in srgb,var(--accent) 12%,var(--card))}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+h1{margin:0;font-size:clamp(34px,6.4vw,72px);line-height:1.06;letter-spacing:var(--tr-display);font-weight:400}
+.badges{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-top:clamp(24px,3.2vw,34px)}
+.badges span{font-family:var(--mono);font-size:var(--t-mono);color:var(--ink);background:var(--tint);border-radius:4px;padding:var(--s-2) var(--s-4)}
+@media (max-width:860px){.top2col{grid-template-columns:minmax(0,1fr)}.portrait{max-width:420px;margin:0 auto}}
+.section{max-width:880px;margin:0 auto;padding:0 0 80px;text-align:left}
+.bio{display:flex;flex-direction:column;gap:clamp(18px,2.2vw,26px);font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+.bio p{margin:0}
+h2{margin:0;font-size:clamp(28px,4.2vw,50px);line-height:var(--lh-display);letter-spacing:var(--tr-display);font-weight:400}
+.sechead{display:flex;flex-direction:column;gap:clamp(10px,1.4vw,16px);margin-bottom:clamp(28px,3.4vw,44px)}
+.sechead p{margin:0;font-size:var(--t-body);color:var(--muted)}
+.photogrid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(4px,.6vw,8px)}
+.photogrid4 .ph{aspect-ratio:3/4;width:100%;position:relative;overflow:hidden;border-radius:4px}
+.photogrid4 .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.notecard{background:var(--note1);color:var(--noteInk);border-radius:4px;padding:clamp(24px,3.6vw,44px);display:grid;grid-template-columns:minmax(min(260px,100%),1fr) minmax(0,1.1fr);gap:clamp(24px,3.4vw,48px);align-items:center}
+.notecard .posterbox{aspect-ratio:1/1;border-radius:12px;overflow:hidden;display:grid;place-items:center;background:transparent}
+.notecard .posterbox img{max-width:100%;max-height:100%;object-fit:contain}
+.notecard .eyebrow{margin:0;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.notecard h2{font-size:clamp(26px,3.4vw,40px)}
+.notecard p{margin:0;font-size:var(--t-body);line-height:var(--lh-body)}
+@media (max-width:860px){.notecard{grid-template-columns:minmax(0,1fr)}}
+.photogrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,2.4vw,32px)}
+.photogrid .ph{aspect-ratio:4/5;width:100%;position:relative;overflow:hidden;border-radius:4px}
+.photogrid .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.eyebrow2{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+#contact{max-width:880px;margin:0 auto;padding:0}
+#contact footer{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;padding:clamp(56px,6vw,84px) clamp(20px,6vw,40px) clamp(52px,5.5vw,72px);background:var(--tint);width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box}
+#contact h2{margin:0;font-size:var(--t-h2);line-height:var(--lh-head);letter-spacing:var(--tr-head);font-weight:400}
+#contact p{margin:12px 0 0;font-size:var(--t-body);color:var(--muted)}
+.social{display:flex;gap:clamp(8px,1.4vw,18px);flex-wrap:wrap;justify-content:center;margin-top:28px}
+.social a{display:grid;place-items:center;width:48px;height:48px;border-radius:4px;color:var(--faint)}
+.social a:hover{color:var(--ink);background:var(--tint)}
+[data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+[data-reveal].shown{opacity:1;transform:none}
 @media (hover:hover) and (pointer:fine){
-  html[data-cursor] , html[data-cursor] * {cursor:none!important}
-  #lkb-cur{position:fixed;top:0;left:0;z-index:999;pointer-events:none;will-change:transform}
-  #lkb-cur .caret{display:block;margin:-3px 0 0 -3px;color:#2E2E30;filter:drop-shadow(0 2px 4px rgba(0,0,0,.22));transition:opacity .18s ease}
-  #lkb-cur .tag{position:absolute;left:20px;top:22px;border-radius:999px;background:var(--accent,#0E6B42);color:#fff;box-shadow:0 3px 10px rgba(20,24,45,.20);
-    font-family:var(--mono);font-size:11px;letter-spacing:.02em;padding:5px 12px;font-weight:500;
-    white-space:nowrap;opacity:0;transform:translateY(-3px);transition:opacity .18s ease,transform .18s ease}
-  #lkb-cur[data-on] .tag{opacity:1;transform:none}
-  #lkb-dot{display:none}
+html.pf-cursor{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%233F3AA8' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
+html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%23A5A0F5' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
 }
-[data-burger] span span{transition:transform .28s cubic-bezier(.3,.8,.3,1),opacity .18s ease}
-[data-burger][aria-expanded="true"] span span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-[data-burger][aria-expanded="true"] span span:nth-child(2){opacity:0;transform:scaleX(.4)}
-[data-burger][aria-expanded="true"] span span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-@keyframes pfMenuIn{from{opacity:0;transform:translateY(-7px) scale(.985)}to{opacity:1;transform:none}}
-[data-mobilemenu]{animation:pfMenuIn .24s cubic-bezier(.3,.8,.3,1)}
-/* ---- responsive pass ---- */
-@media (max-width:640px){
-  #top{padding-top:44px!important}
-  section{padding-bottom:clamp(72px,16vw,120px)!important}
-}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important}}
 
-@media (max-width:760px){
-  header > div{padding:9px 9px 9px 14px!important;gap:10px!important}
-  header > div{flex-wrap:nowrap!important}
-  header > div > a{min-width:0;white-space:nowrap}
-  [data-logoname]{display:none!important}
-  header > div > a > span:first-of-type{width:44px!important;height:44px!important;border-radius:12px!important;font-size:15px!important}
-  header nav{flex-wrap:nowrap!important;gap:10px!important}
-  [data-crumb]{font-size:10.5px!important;max-width:30vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  header nav a,header nav button{font-size:12.5px!important}
-  header nav a[href$="resume.pdf"]{padding:9px 14px!important}
-}
-@media (max-width:520px){
-  h1{letter-spacing:-.03em!important}
-  h2,h3{text-wrap:pretty}
-  [data-cta] a,[data-cta] > a{flex:1 1 100%!important;justify-content:center!important;padding:15px 18px!important}
-  figure,blockquote{overflow-wrap:anywhere}
-  footer{flex-direction:column!important;gap:12px!important}
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  [data-blink]{animation:none!important}
-}
+img.bg{opacity:0;transition:opacity .5s ease}
+img.bg.loaded{opacity:1}
 
-@media (max-width:640px){
-  [data-logoname]{display:none!important}
-  header nav a{display:none!important}
-  header nav button{min-width:44px!important;min-height:44px!important}
-  [data-burger]{display:grid!important}
-}
-@media (min-width:641px){[data-mobilenav]{display:none!important}}
-[data-burger] [data-bicon]{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .15s ease}
-[data-burger] [data-bx]{opacity:0}
-[data-burger][aria-expanded="true"] [data-bbars]{opacity:0}
-[data-burger][aria-expanded="true"] [data-bx]{opacity:1}
-html.mnav-open [data-pen-ui],html.mnav-open [data-progress],html.mnav-open [data-ruler]{display:none!important}
-@keyframes mNavIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-[data-mobilenav] [data-mrow],[data-mobilenav] [data-mfoot]{animation:mNavIn .34s cubic-bezier(.3,.8,.3,1) both}
-[data-mlinks] [data-mrow]:nth-child(1){animation-delay:0ms}
-[data-mlinks] [data-mrow]:nth-child(2){animation-delay:60ms}
-[data-mlinks] [data-mrow]:nth-child(3){animation-delay:120ms}
-[data-mobilenav] [data-mfoot]{animation-delay:180ms}
-@media (prefers-reduced-motion:reduce){[data-mobilenav] [data-mrow],[data-mobilenav] [data-mfoot]{animation:none!important}}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
+
 </style>
-<script src="./image-slot.js"></script>
-<script type="speculationrules">{"prerender":[{"source":"list","urls":["index.html","app-merge.html","rise-portal.html","about.html","core-design-system.html"]}]}</script>
-</helmet>
-
-<div style="min-height:100vh;color:var(--ink,#14140F);background-color:var(--bg,#F8F6F0);background-image:linear-gradient(var(--grid,rgba(30,26,14,.055)) 1px,transparent 1px),linear-gradient(90deg,var(--grid,rgba(30,26,14,.055)) 1px,transparent 1px);background-size:64px 64px;padding:0 clamp(18px,8vw,168px)">
-
+</head>
+<body>
+<div class="wrap">
+  <button type="button" class="totop" id="totop" aria-label="Back to top">
+    <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </button>
   
-  <div data-progress="" style="position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;background:var(--accent,#0E6B42);z-index:80;opacity:.85"></div>
-
-  <header style="position:sticky;top:16px;z-index:40;width:100%;max-width:min(560px,100%);margin:0 auto;padding-top:16px">
-    <div data-navpill="" style="position:relative;z-index:2;display:flex;align-items:center;gap:20px;flex-wrap:nowrap;padding:10px 10px 10px 18px;background:color-mix(in srgb,var(--card,#fff) 62%,transparent);backdrop-filter:blur(18px) saturate(1.7);-webkit-backdrop-filter:blur(18px) saturate(1.7);border-radius:14px;box-shadow:0 3px 10px rgba(30,26,14,.035);transition:background .35s ease"><span data-navframe="" aria-hidden="true" style="position:absolute;left:0;top:0;width:0;height:0;opacity:0;pointer-events:none;background:color-mix(in srgb,var(--accent,#0E6B42) 9%,transparent);border-radius:9px;transition:transform .35s cubic-bezier(.3,.8,.3,1),width .35s cubic-bezier(.3,.8,.3,1),height .35s cubic-bezier(.3,.8,.3,1),opacity .25s ease"></span>
-      <a href="index.html" style="display:flex;align-items:center;gap:12px;color:var(--ink,#14140F);font-weight:500;font-size:15px;letter-spacing:-.01em;transition:color .25s ease" style-hover="color:var(--accent,#0E6B42)">
-        <span aria-hidden="true" data-facemark="" style="flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px"><img src="assets/lokesh-face.png" alt="" width="34" height="34" decoding="async" style="display:block;width:34px;height:34px;object-fit:contain"></span>
-      </a>
+  <header id="siteHeader">
+    <div class="navpill">
+      <a href="./index.html" class="facemark" style="color:var(--ink)"><img src="./assets/lokesh-face.png" alt="Lokesh Bhatia" width="34" height="34" loading="eager"></a>
       <div style="flex:1;min-width:8px"></div>
-      <nav style="display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);font-size:13.5px;font-weight:500;letter-spacing:-.01em">
-        <a data-navlink="" data-tag="01" href="index.html" style="color:var(--navOff);transition:color .25s ease" style-hover="color:var(--ink,#14140F)">Home</a>
-        <a data-navlink="" data-navcurrent="" data-tag="you are here" href="about.html" style="color:var(--accent,#0E6B42);transition:color .25s ease" style-hover="color:var(--accent,#0E6B42)">About</a>
-        <a data-navlink="" data-tag="03" href="index.html#contact" style="color:var(--navOff);transition:color .25s ease" style-hover="color:var(--ink,#14140F)">Contact</a>
-        <button data-cursor-label="theme" onClick="{{ toggleTheme }}" aria-label="Toggle colour theme" style="width:34px;height:34px;border:0;background:var(--tint,#EFEBDE);border-radius:8px;color:var(--muted,#6B675E);cursor:pointer;font-size:11px;display:grid;place-items:center;transition:background .25s ease,color .25s ease" style-hover="background:var(--ink,#14140F);color:var(--card,#fff)"><span style="display:{{ sunDisp }};line-height:0" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span><span style="display:{{ moonDisp }};line-height:0" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span></button>
-        <a href="resume.pdf" target="_blank" rel="noreferrer" data-cv="" style="display:inline-flex;align-items:center;padding:10px 18px;background:var(--ink,#14140F);border-radius:10px;color:var(--card,#fff);font-size:13px;transition:background .25s ease,color .25s ease" style-hover="background:var(--accent,#0E6B42);color:var(--bg,#F8F6F0)"><span data-cvword="">Resume</span> <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;vertical-align:-2px;margin-left:2px"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a><button data-burger="" data-cursor-label="menu" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="display:none;width:44px;height:44px;border:0;background:var(--tint,#EFEBDE);border-radius:12px;color:var(--ink,#14140F);cursor:pointer;place-items:center;position:relative"><span data-bicon="" data-bbars="" aria-hidden="true"><span style="display:flex;flex-direction:column;gap:4px"><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span><span style="width:18px;height:2px;background:currentColor;border-radius:2px"></span></span></span><span data-bicon="" data-bx="" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button></nav>
+      <nav class="navlinks">
+        <a class="navlink" href="./index.html" aria-label="Home"><span class="navtext">Home</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M2.4 7 8 2.6 13.6 7v6a.9.9 0 0 1-.9.9h-3v-4h-3.4v4h-3a.9.9 0 0 1-.9-.9z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        <a class="navlink" href="./about.html" aria-label="About"><span class="navtext">About</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.6" r="2.5" stroke="currentColor" stroke-width="1.4"></circle><path d="M2.9 13.4c.5-2.5 2.6-4 5.1-4s4.6 1.5 5.1 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg></span></a>
+        <a class="navlink" href="./resume.pdf" target="_blank" rel="noreferrer" aria-label="Resume"><span class="navtext">Resume</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M4 2.4h4.6L12 5.8v7.8H4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path><path d="M8.4 2.6v3.2H11.8M6 8.6h4M6 10.9h2.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg></span></a>
+        <span class="navdiv" aria-hidden="true"></span>
+        <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme">
+          <span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          <span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span>
+        </button>
+        <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false">
+          <span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span>
+          <span class="bicon-x bicon" aria-hidden="true" style="display:none"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span>
+        </button>
+      </nav>
     </div>
-  
-    
-  
-    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-      <div data-mobilenav="" style="position:fixed;inset:0;z-index:1;background:var(--bg,#F8F6F0);display:flex;flex-direction:column;min-height:100dvh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:86px 0 0">
-        <div data-mlinks="" style="display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(24px,8vh,80px);padding:0 var(--pad,clamp(18px,8vw,168px))">
-        <a data-mrow="" href="index.html" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
-          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">Home</span>
-          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </a>
-        <a data-mrow="" data-mcurrent="" aria-current="page" href="about.html" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
-          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">About</span>
-          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </a>
-        <a data-mrow="" href="index.html#contact" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 0;color:var(--ink,#14140F);box-shadow:inset 0 -1px 0 var(--line,#DEDACC)">
-          <span data-mlabel="" style="flex:1;font-size:clamp(44px,15vw,74px);line-height:1;letter-spacing:-.035em;font-weight:700">Contact</span>
-          <svg data-marrow="" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto;color:var(--faint,#948F81)"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </a>
-        </div>
-        <div data-mfoot="" style="margin-top:auto;display:flex;flex-direction:column;gap:16px;padding:36px var(--pad,clamp(18px,8vw,168px)) calc(env(safe-area-inset-bottom, 0px) + 30px)">
-          <span style="display:inline-flex;align-items:center;gap:8px;width:fit-content;padding:6px 13px 6px 11px;border-radius:999px;background:rgba(14,107,66,.10);font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent,#0E6B42)"><span aria-hidden="true" style="width:8px;height:8px;border-radius:50%;background:currentColor"></span>open to full-time roles · available immediately</span>
-          <a href="mailto:hi.lokeshux@gmail.com" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;min-height:48px;font-size:clamp(23px,6.4vw,28px);line-height:1.2;letter-spacing:-.02em;font-weight:500;color:var(--ink,#14140F)">hi.lokeshux@gmail.com</a>
-          <a href="resume.pdf" target="_blank" rel="noreferrer" onClick="{{ closeMenu }}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:12px;background:var(--ink,#14140F);color:var(--card,#fff);font-size:15px;font-weight:500">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-        </div>
+    <div class="mobilenav" id="mobileNav">
+      <div class="mlinks">
+        <a class="mrow" href="./index.html"><span class="mlabel">Home</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+        <a class="mrow" href="./about.html" aria-current="page"><span class="mlabel">About</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
       </div>
-    </sc-if>
+      <div class="mfoot">
+        <div class="availbadge" role="img" aria-label="Open to work — available now">
+          <svg class="availring" viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><defs><path id="aAvailPath" d="M46,46 m-33,0 a33,33 0 1,1 66,0 a33,33 0 1,1 -66,0"></path></defs><text style="font-family:var(--mono);font-size:8.2px;letter-spacing:.1em;text-transform:uppercase;fill:var(--accent)"><textPath href="#aAvailPath" startOffset="0">OPEN TO WORK · AVAILABLE NOW · </textPath></text></svg>
+          <svg viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><circle cx="46" cy="46" r="25.5" fill="none" stroke="var(--accent)" stroke-opacity=".45" stroke-width="1"></circle></svg>
+          <span aria-hidden="true" style="position:relative;font-size:16px;color:var(--accent)">✦</span>
+        </div>
+        <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
+        <a class="mresume" href="./resume.pdf" target="_blank" rel="noreferrer">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      </div>
+    </div>
   </header>
 
-  <section id="top" data-2col="" style="max-width:1060px;margin:0 auto;padding:clamp(56px,8vw,112px) 0 clamp(96px,13vw,180px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(min(320px,100%),.95fr);gap:clamp(30px,4.5vw,60px);align-items:start">
-    <div>
-      <h1 data-reveal="" style="margin:0;max-width:18ch;font-size:clamp(34px,5.6vw,72px);line-height:1.02;letter-spacing:-.035em;font-weight:700;text-wrap:balance">Hi, I’m Lokesh — making tech feel human</h1>
-      <p data-reveal="" style="max-width:46ch;margin:clamp(28px,4vw,40px) 0 0;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(18px,2vw,22px);line-height:1.6;color:var(--muted,#6B675E)">
-        I design for the moment a user is nervous — about money, data, or new technology. Often the only designer on the product.
-      </p>
-      <div data-reveal="" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:clamp(26px,4vw,38px)">
-        <sc-for list="{{ badges }}" as="b" hint-placeholder-count="3">
-          <span style="font-family:var(--mono);font-size:11px;color:var(--ink,#14140F);background:var(--tint,#EFEBDE);border-radius:8px;padding:9px 14px">{{ b }}</span>
-        </sc-for>
+  <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
+
+  <section id="top">
+    <div class="top2col">
+      <div class="portrait" data-reveal>
+        <img src="./assets/about-portrait-circle-v2.jpg" alt="Portrait of Lokesh" loading="eager">
+      </div>
+      <div>
+        <h1 data-reveal>I’m Lokesh, a product designer in Bengaluru.</h1>
+        <div class="badges" data-reveal><span>B.Tech ’22, IIT Guwahati</span></div>
       </div>
     </div>
-    <div data-reveal="" data-portrait="" style="aspect-ratio:660/440;min-width:0;margin-top:0;align-self:start;border-radius:0;box-shadow:none;background:transparent;position:relative;overflow:hidden">
-      <img src="assets/about-portrait.png" width="660" height="440" decoding="async" data-noparallax="" alt="Lokesh Bhatia at his desk" style="display:block;width:100%;height:100%;object-fit:contain">
+  </section>
+
+  <section class="section">
+    <div class="bio" data-reveal>
+      <p>I studied chemical engineering at IIT Guwahati. Somewhere in the middle of that I became the campus photographer, which is how this started — a camera, then Photoshop, then Adobe XD, and no idea that what I was doing already had a name.</p>
+      <p>I found out it did, and that people were paid to do it. <span class="emph">No degree, no bootcamp</span> — I taught myself, graduating in December 2022 into a market with no appetite for juniors. It took four months of making work nobody asked for before someone paid me for it.</p>
+      <p>Since then I’ve mostly been <span class="emph">the only designer on the product</span>, which taught me the parts of the job nobody assigns you and what solo work costs. <span class="mark">I learned to pressure-test my own thinking because there was nobody else to do it.</span> That story is in the case studies.</p>
+      <p>I’m a stubborn believer that if you can’t explain a number, you shouldn’t put it on a slide.</p>
     </div>
   </section>
 
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(96px,13vw,180px)">
-    <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:1px;background:var(--line,#DEDACC);border-radius:14px;overflow:hidden;box-shadow:var(--sh)">
-      <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
-        <div style="background:var(--card,#fff);padding:clamp(22px,3vw,32px)">
-          <div style="font-size:clamp(28px,3.6vw,42px);line-height:1;letter-spacing:-.03em;font-weight:700" data-count="">{{ f.n }}</div>
-          <div style="margin-top:10px;white-space:pre-line;font-family:var(--mono);font-size:11px;line-height:1.6;letter-spacing:.04em;text-transform:uppercase;color:var(--faint,#948F81)">{{ f.label }}</div>
-        </div>
-      </sc-for>
+  <section class="section">
+    <div class="sechead" data-reveal>
+      <h2>When I log off…</h2>
+      <p>Gym, sport, and travel when I can.</p>
+    </div>
+    <div class="photogrid4" data-reveal>
+      <div class="ph"><img src="./assets/off-sky.jpeg" alt="Looking up at a kite circling overhead against a clear blue sky" loading="lazy"></div>
+      <div class="ph"><img src="./assets/off-waterfall.jpeg" alt="Photographing a waterfall from below, light breaking through the canopy" loading="lazy"></div>
+      <div class="ph"><img src="./assets/off-backwaters.jpeg" alt="Evening by the backwaters, palms against a dusk sky" loading="lazy"></div>
+      <div class="ph"><img src="./assets/off-holi.jpeg" alt="Holi on the office terrace with the team, everyone covered in colour" loading="lazy"></div>
     </div>
   </section>
 
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(96px,13vw,180px)">
-    <p data-reveal="" style="margin:0 0 clamp(24px,3vw,36px);font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">The route here</p>
-    <sc-for list="{{ journey }}" as="j" hint-placeholder-count="4">
-      <div data-reveal="" data-2col="" style="display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr) minmax(0,1.5fr);gap:clamp(14px,3vw,40px);padding:clamp(22px,2.6vw,30px) 0;border-top:1px solid var(--line,#DEDACC);align-items:baseline">
-        <span style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--faint,#948F81)">{{ j.when }}</span>
-        <div>
-          <h3 style="margin:0;font-size:clamp(19px,2vw,25px);letter-spacing:-.03em;font-weight:700">{{ j.place }}</h3>
-          <p style="margin:6px 0 0;font-family:var(--mono);font-size:11px;color:var(--muted,#6B675E)">{{ j.role }}</p>
-        </div>
-        <p style="margin:0;max-width:48ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(15px,1.6vw,18px);line-height:1.6;color:var(--muted,#6B675E)">{{ j.what }}</p>
-      </div>
-    </sc-for>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(96px,13vw,180px)">
-    <div data-reveal="" style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,3.4vw,44px)">
-      <h2 style="margin:0;font-size:clamp(28px,4.2vw,50px);line-height:1.06;letter-spacing:-.03em;font-weight:700">When I log off…</h2>
-      <p style="margin:0;max-width:38ch;font-family:'Satoshi',Helvetica,Arial,sans-serif;font-size:clamp(15px,1.6vw,18px);line-height:1.6;color:var(--muted,#6B675E)">Gym, sport, a camera, and whatever trip I can talk myself into next.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:clamp(16px,2.4vw,28px)">
-      <sc-for list="{{ shots }}" as="s" hint-placeholder-count="4">
-        <div data-reveal="" data-imgbox="" data-ratio="" style="aspect-ratio:3/4;position:relative">
-          <img src="{{ s.src }}" width="{{ s.w }}" height="{{ s.h }}" loading="lazy" decoding="async" data-noparallax="" alt="{{ s.alt }}" style="display:block;width:100%;height:100%;object-fit:cover;object-position:{{ s.pos }}">
-        </div>
-      </sc-for>
-    </div>
-    <div data-reveal="" style="margin-top:clamp(18px,2.4vw,28px);background:var(--note1,#F6E3D9);color:var(--noteInk,#181812);border-radius:14px;padding:clamp(24px,3.6vw,44px);max-width:760px">
-      <p style="margin:0;font-size:clamp(18px,2.2vw,26px);line-height:1.4;letter-spacing:-.02em">I read too much about personal finance. Teammates noticed, so I started running sessions on theirs.</p>
-    </div>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto;padding:0 0 clamp(96px,13vw,180px)">
-    <div data-reveal="" style="margin-bottom:clamp(32px,4vw,52px)">
-      <p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">Always learning</p>
-      <h2 style="margin:0;max-width:22ch;font-size:clamp(26px,3.6vw,44px);line-height:1.08;letter-spacing:-.03em;font-weight:700;text-wrap:balance">What I’m digging into right now</h2>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:clamp(18px,2.6vw,30px)">
-      <sc-for list="{{ learning }}" as="l" hint-placeholder-count="3">
-        <div data-reveal="" style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(22px,2.8vw,30px);display:flex;flex-direction:column;gap:12px;min-height:170px">
-          <span style="font-family:var(--mono);font-size:11px;color:var(--faint,#948F81)">{{ l.n }}</span>
-          <h3 style="margin:0;font-size:clamp(17px,1.9vw,20px);letter-spacing:-.02em;font-weight:700;line-height:1.25">{{ l.title }}</h3>
-          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--muted,#6B675E)">{{ l.note }}</p>
-        </div>
-      </sc-for>
-    </div>
-  </section>
-
-  <section style="max-width:1060px;margin:0 auto">
-    <div data-reveal="" style="background:var(--card,#fff);border-radius:14px;box-shadow:var(--sh);padding:clamp(34px,6vw,88px)">
-      <p style="margin:0 0 22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--warn,#C7381A);font-weight:700">Say hello</p>
-      <h2 style="margin:0;font-size:clamp(28px,4.6vw,54px);line-height:1.05;letter-spacing:-.03em;font-weight:700;max-width:20ch;text-wrap:balance">Happy to talk design, finance, or a good trail.</h2>
-      <div data-cta="" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:clamp(28px,4vw,42px)">
-        <a href="mailto:lokeshux@gmail.com" style="display:inline-flex;align-items:center;gap:12px;padding:15px 26px;background:var(--ink,#14140F);border-radius:10px;color:var(--card,#fff);font-size:15px;font-weight:500">lokeshux@gmail.com <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:0 0 auto"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-        <a href="index.html#work" style="display:inline-flex;align-items:center;padding:15px 26px;background:var(--tint,#EFEBDE);border-radius:8px;color:var(--ink,#14140F);font-size:15px;font-weight:500">See selected work</a>
+  <section class="section">
+    <div class="notecard" data-reveal>
+      <div class="posterbox"><img src="./assets/about-finance-poster.png" alt="Company finance-session poster" loading="lazy"></div>
+      <div>
+        <p class="eyebrow">Beyond design</p>
+        <h2>I taught a session on personal finance</h2>
+        <p>I’m interested in personal finance and investing, and HR asked whether I’d run a session for the team. So I did — personal finance and derivatives, one afternoon in June 2024.</p>
+        <p style="color:var(--muted);margin-top:12px">It’s the same job as design: take something people avoid because it looks complicated, and make the first step obvious.</p>
       </div>
     </div>
-    <footer style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:clamp(32px,4.5vw,52px) 0;font-family:var(--mono);font-size:11px;color:var(--muted,#6B675E)">
-      <span>© 2026 Lokesh Bhatia — Bengaluru, IN</span>
-      <div style="display:flex;gap:20px;flex-wrap:wrap">
-        <a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">LinkedIn</a>
-        <a href="https://www.behance.net/lokeshbhatia" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">Behance</a>
-        <a href="https://www.figma.com/@lkb" target="_blank" rel="noreferrer" style="color:var(--muted,#6B675E)" style-hover="color:var(--ink,#14140F)">Figma</a>
+  </section>
+
+  <section class="section" style="padding-bottom:112px">
+    <div class="sechead" data-reveal>
+      <span class="eyebrow2">Before any of this</span>
+      <h2>Before design, there was a camera</h2>
+      <p>I stopped after graduating. The eye didn’t.</p>
+    </div>
+    <div class="photogrid" data-reveal>
+      <div class="ph"><img src="./assets/about-ph-1.jpg" alt="A stream of water frozen mid-pour from a glass, against blurred green foliage" loading="lazy"></div>
+      <div class="ph"><img src="./assets/about-ph-2.jpg" alt="Black-and-white triptych of a boy crouched outdoors, playing with cards" loading="lazy"></div>
+      <div class="ph"><img src="./assets/about-ph-3.jpg" alt="A sunset landscape refracted upside down inside a glass on a pink surface" loading="lazy"></div>
+      <div class="ph"><img src="./assets/about-ph-4.jpg" alt="Traffic on an Indian street reflected in the window of a moving bus" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <footer>
+      <h2>That’s the person. The work is next door.</h2>
+      <p>If any of it looks like the kind of problem your team is working on, I’d like to hear about it.</p>
+      <div class="social">
+        <a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="translate(12 12) scale(1.9) translate(-12 -12)" stroke-width="0.95"><path d="M8 11v5"></path><path d="M8 8v.01"></path><path d="M12 16v-5"></path><path d="M16 16v-3a2 2 0 1 0 -4 0"></path></g></svg></a>
+        <a href="https://www.behance.net/lokeshbhatia" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-12h4.5a3 3 0 0 1 0 6a3 3 0 0 1 0 6h-4.5"></path><path d="M3 12l4.5 0"></path><path d="M14 13h7a3.5 3.5 0 0 0 -7 0v2a3.5 3.5 0 0 0 6.64 1"></path><path d="M16 6l3 0"></path></svg></a>
+        <a href="https://www.figma.com/@lkb" target="_blank" rel="noreferrer" aria-label="Figma" title="Figma"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M6 6a3 3 0 0 1 3 -3h6a3 3 0 0 1 3 3a3 3 0 0 1 -3 3h-6a3 3 0 0 1 -3 -3"></path><path d="M9 9a3 3 0 0 0 0 6h3m-3 0a3 3 0 1 0 3 3v-15"></path></svg></a>
       </div>
     </footer>
   </section>
 </div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280},&quot;customCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
-class Component extends DCLogic {
-  state = { theme: "light" };
+<script>
+(function(){
+  "use strict";
+  var doc = document.documentElement;
+  function applyTheme(t){ doc.setAttribute("data-theme", t); doc.style.removeProperty("background-color"); try{ localStorage.setItem("portfolio-theme", t); }catch(e){} }
+  try{ applyTheme(localStorage.getItem("portfolio-theme") || "light"); }catch(e){ applyTheme("light"); }
+  document.getElementById("themeToggle").addEventListener("click", function(){
+    applyTheme(doc.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
 
-  componentDidMount() {
-    const saved = localStorage.getItem("portfolio-theme");
-    const theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    this.applyTheme(theme);
-    this.observe();
-    this.bindScroll();
-    this.initCursor();
-    this._cursorWatch = setInterval(() => {
-      if ((this.props.customCursor ?? false) && !this._cursor) this.initCursor();
-      else if (!(this.props.customCursor ?? false) && this._cursorActive) this._cursorActive(false);
-    }, 400);
-    this.bindNav();
-    this.initNavFx();
-    this.initFx2();
-    if (!this._menuDismiss) {
-      this._menuDismiss = true;
-      document.addEventListener("click", (e) => { if (this.state.menu && !e.target.closest("header")) this.setState({ menu: false }); });
-      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && this.state.menu) this.setState({ menu: false }); });
+  var header = document.getElementById("siteHeader");
+  function onScroll(){
+    if (window.scrollY > 70) header.classList.add("scrolled");
+    else header.classList.remove("scrolled");
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  var burger = document.getElementById("burgerBtn");
+  var mobileNav = document.getElementById("mobileNav");
+  function closeMenu(){
+    mobileNav.classList.remove("open");
+    burger.setAttribute("aria-expanded", "false");
+    burger.querySelector(".bicon-bars").style.display = "";
+    burger.querySelector(".bicon-x").style.display = "none";
+  }
+  function toggleMenu(){
+    var open = mobileNav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.querySelector(".bicon-bars").style.display = open ? "none" : "";
+    burger.querySelector(".bicon-x").style.display = open ? "grid" : "none";
+  }
+  burger.addEventListener("click", toggleMenu);
+  mobileNav.querySelectorAll(".mresume").forEach(function(el){ el.addEventListener("click", closeMenu); });
+  // mark current page + let nav links navigate immediately (no close animation first, avoids a visible flash)
+  var here = location.pathname.split("/").pop() || "index.html";
+  mobileNav.querySelectorAll(".mrow").forEach(function(el){
+    var target = el.getAttribute("href").split("#")[0].split("/").pop();
+    if (target === here) el.classList.add("current");
+  });
+
+  var toast = document.getElementById("toast");
+  var toastTimer;
+  function copyEmail(){
+    var email = "hi.lokeshux@gmail.com";
+    function done(){
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 2000);
     }
-    if (window.__pfShow) window.__pfShow();
+    if (navigator.clipboard) navigator.clipboard.writeText(email).then(done, done);
+    else done();
   }
+  document.querySelectorAll(".copyEmailBtn").forEach(function(btn){ btn.addEventListener("click", copyEmail); });
 
-
-  initFx2() {
-    if (this._fx2) return;
-    this._fx2 = true;
-    const reduced = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-    const els = Array.from(document.querySelectorAll("[data-count]"));
-    if (!els.length || !("IntersectionObserver" in window)) return;
-    const parse = (s) => { const m = /^([^\d]*)([\d.]+)(.*)$/.exec(s.trim()); return m && { pre: m[1], val: parseFloat(m[2]), dec: (m[2].split(".")[1] || "").length, suf: m[3], full: s }; };
-    const io = new IntersectionObserver((ents) => {
-      ents.forEach((en) => {
-        if (!en.isIntersecting) return;
-        io.unobserve(en.target);
-        const p = parse(en.target.textContent);
-        if (!p || reduced) return;
-        const t0 = performance.now(), dur = 1300;
-        const step = (now) => {
-          const k = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
-          if (k < 1) {
-            const dec = Math.max(p.dec, p.val < 10 ? 1 : 0);
-            en.target.textContent = p.pre + (p.val * e).toFixed(dec) + p.suf;
-            requestAnimationFrame(step);
-          } else en.target.textContent = p.full;
-        };
-        requestAnimationFrame(step);
-      });
-    }, { threshold: 0.5 });
-    els.forEach((el) => io.observe(el));
+  if ("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add("shown"); io.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll("[data-reveal]").forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll("[data-reveal]").forEach(function(el){ el.classList.add("shown"); });
   }
+  setTimeout(function(){ document.querySelectorAll("[data-reveal]").forEach(function(el){ el.classList.add("shown"); }); }, 900);
 
-  initNavFx() {
-    if (this._navFx) return;
-    this._navFx = true;
-    const header = document.querySelector("header");
-    const pill = document.querySelector("[data-navpill]");
-    const glide = document.querySelector("[data-navframe]");
-    if (!pill || !glide) return;
-    const links = Array.from(pill.querySelectorAll("[data-navlink]"));
-    let active = null, hovered = null;
-    let placed = false;
-    const place = (el, subtle) => {
-      const pr = pill.getBoundingClientRect(), r = el.getBoundingClientRect();
-      if (!placed) { placed = true; glide.style.transition = "none"; requestAnimationFrame(() => { glide.style.transition = "transform .35s cubic-bezier(.3,.8,.3,1),width .35s cubic-bezier(.3,.8,.3,1),height .35s cubic-bezier(.3,.8,.3,1),opacity .25s ease"; }); }
-      glide.style.opacity = subtle ? ".65" : "1";
-      glide.style.transform = "translate(" + (r.left - pr.left - 11) + "px," + (r.top - pr.top - 7) + "px)";
-      glide.style.width = (r.width + 22) + "px";
-      glide.style.height = (r.height + 14) + "px";
-    };
-    const settle = () => { if (hovered) place(hovered); else glide.style.opacity = "0"; };
-    if (window.matchMedia("(hover:hover)").matches) {
-      links.forEach((l) => {
-        l.addEventListener("mouseenter", () => { hovered = l; place(l); });
-        l.addEventListener("mouseleave", () => { hovered = null; settle(); });
-        l.addEventListener("focus", () => { hovered = l; place(l); });
-        l.addEventListener("blur", () => { hovered = null; settle(); });
-      });
-    }
-    window.addEventListener("resize", () => { if (glide.style.opacity && glide.style.opacity !== "0") settle(); });
-    const secs = ["work", "impact", "ai", "experience", "contact"];
-    let lastSec = null;
-    window.__pfNavTick = () => {
-      const y = window.scrollY;
-      if (header) { if (y > 70) header.setAttribute("data-scrolled", ""); else header.removeAttribute("data-scrolled"); }
-      let cur = "top";
-      for (const id of secs) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top < window.innerHeight * 0.38) cur = id;
-      }
-      if (cur !== lastSec) {
-        lastSec = cur;
-        active = links.find((l) => (l.getAttribute("href") || "") === "#" + cur) || links.find((l) => l.hasAttribute("data-navcurrent")) || links.find((l) => /^(#top|Portfolio\.dc\.html)$/.test(l.getAttribute("href") || "")) || null;
-        links.forEach((l) => {
-          const on = l === active;
-          l.style.color = on ? "var(--navOn)" : "var(--navOff)";
-          if (on) l.setAttribute("aria-current", "true"); else l.removeAttribute("aria-current");
-        });
-        if (!hovered) settle();
-      }
-    };
-    window.__pfNavTick();
+  if (matchMedia("(hover:hover) and (pointer:fine)").matches){ doc.classList.add("pf-cursor"); }
+
+  // fade in lazy-loaded background photos instead of a hard pop-in
+  document.querySelectorAll("img.bg").forEach(function(img){
+    function reveal(){ img.classList.add("loaded"); }
+    if (img.complete && img.naturalWidth) reveal();
+    else img.addEventListener("load", reveal);
+  });
+
+  var totop = document.getElementById("totop");
+  if (totop){
+    window.addEventListener("scroll", function(){
+      if (window.scrollY > 400) totop.classList.add("show");
+      else totop.classList.remove("show");
+    }, { passive: true });
+    totop.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
   }
-
-  bindNav() {
-    if (this._navBound) return;
-    this._navBound = true;
-    const seen = new Set();
-    const prefetch = (e) => {
-      const a = e.target && e.target.closest && e.target.closest("a");
-      if (!a || a.getAttribute("target") === "_blank") return;
-      const href = a.getAttribute("href") || "";
-      if (!/\.dc\.html/.test(href) || seen.has(href)) return;
-      seen.add(href);
-      const l = document.createElement("link");
-      l.rel = "prefetch"; l.href = href; l.as = "document";
-      document.head.appendChild(l);
-    };
-    document.addEventListener("pointerenter", prefetch, true);
-    document.addEventListener("focusin", prefetch);
-
-  }
-
-  componentDidUpdate() { this.observe(); }
-
-  componentWillUnmount() {
-  }
-
-  applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("portfolio-theme", theme);
-    this.setState({ theme });
-  }
-
-  initCursor() {
-    if (!(this.props.customCursor ?? false)) return;
-    if (this._cursor) return;
-    if (!window.matchMedia("(hover:hover) and (pointer:fine)").matches) return;
-    this._cursor = true;
-    const dot = document.createElement("div");
-    dot.id = "lkb-dot";
-    const cur = document.createElement("div");
-    cur.id = "lkb-cur";
-    cur.style.opacity = "0";
-    cur.innerHTML = '<svg class="caret" width="27" height="27" viewBox="0 0 27 27" fill="none" aria-hidden="true">' +
-      '<path d="M4.2 3.4L23 12.4L14 14.6L10.4 23.2Z" fill="currentColor" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"></path></svg>' +
-      '<span class="tag"></span>';
-    document.body.append(dot, cur);
-    let tx = -100, ty = -100, dx = -100, dy = -100;
-    const move = (e) => {
-      tx = e.clientX; ty = e.clientY;
-      cur.style.transform = "translate(" + tx + "px," + ty + "px)";
-      if (!dot.hasAttribute("data-on")) { dx = tx; dy = ty; dot.setAttribute("data-on", ""); cur.style.opacity = "1"; if (cur.style.display !== "none") document.documentElement.setAttribute("data-cursor", ""); }
-      const hit = e.target.closest && e.target.closest("a,button,image-slot");
-      let label = "";
-      if (hit) {
-        const href = hit.getAttribute("href") || "";
-        label = hit.dataset.cursorLabel ||
-          (hit.tagName === "IMAGE-SLOT" ? "drop image" :
-           hit.tagName === "BUTTON" ? "click" :
-           href.startsWith("mailto:") ? "email" :
-           /linkedin/.test(href) ? "linkedin" :
-           /behance/.test(href) ? "behance" :
-           /figma/.test(href) ? "figma" :
-           /resume\.pdf/.test(href) ? "download cv" :
-           /about\.dc\.html/i.test(href) ? "about me" :
-           /app-merge\.dc\.html|rise-portal\.dc\.html|core-design-system\.dc\.html/i.test(href) ? "case study" :
-           /(^|\/)index\.dc\.html/i.test(href) ? "home" :
-           href.startsWith("#") ? "jump" : "open");
-      }
-      if (label) { cur.querySelector(".tag").textContent = label; cur.setAttribute("data-on", ""); dot.style.width = dot.style.height = "40px"; dot.style.margin = "-20px 0 0 -20px"; }
-      else { cur.removeAttribute("data-on"); dot.style.width = dot.style.height = "26px"; dot.style.margin = "-13px 0 0 -13px"; }
-    };
-    const setActive = (on) => {
-      if (on) { document.documentElement.setAttribute("data-cursor", ""); cur.style.display = ""; }
-      else { document.documentElement.removeAttribute("data-cursor"); cur.style.display = "none"; }
-    };
-    this._cursorActive = setActive;
-    const editing = () => !!(
-      document.querySelector("[contenteditable='true'],[contenteditable='']") ||
-      (document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) ||
-      document.documentElement.hasAttribute("data-om-editing") ||
-      document.body.hasAttribute("data-om-editing")
-    );
-    const sync = () => setActive((this.props.customCursor ?? false) && !editing());
-    document.addEventListener("focusin", sync);
-    document.addEventListener("focusout", () => setTimeout(sync, 0));
-    new MutationObserver(sync).observe(document.documentElement, {
-      attributes: true, subtree: true, attributeFilter: ["contenteditable", "data-om-editing"]
-    });
-    window.addEventListener("pointermove", move, { passive: true });
-    document.addEventListener("pointerleave", () => { dot.removeAttribute("data-on"); cur.style.opacity = "0"; });
-    document.addEventListener("pointerenter", () => { cur.style.opacity = "1"; });
-    const loop = () => {
-      dx += (tx - dx) * 0.16; dy += (ty - dy) * 0.16;
-      dot.style.transform = "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px)";
-      requestAnimationFrame(loop);
-    };
-    loop();
-  }
-
-  bindScroll() {
-    if (window.__pfScrollBound) return;
-    window.__pfScrollBound = true;
-    let frame = null;
-    this._onScroll = () => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = null;
-        const bar = document.querySelector("[data-progress]");
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(window.scrollY / max, 1) : 0) + ")";
-        this.sweepReveal();
-        if (window.__pfNavTick) window.__pfNavTick();
-      });
-    };
-    window.addEventListener("scroll", this._onScroll, { passive: true });
-    this._onScroll();
-  }
-
-  sweepReveal() {
-    const vh = window.innerHeight;
-    document.querySelectorAll("[data-revealed]").forEach((el) => {
-      if (el.style.opacity !== "0") return;
-      const r = el.getBoundingClientRect();
-      if (r.top < vh * 0.93 && r.bottom > 0) { el.style.transitionDelay = "0ms"; el.style.opacity = "1"; el.style.transform = "none"; el.style.filter = "blur(0px)"; }
-    });
-    if (this._reduced) return;
-    // images render at 1:1 — no parallax scale, which would upscale past natural resolution
-    document.querySelectorAll("img[style*='scale(1.115)']").forEach((im) => { im.style.transform = "none"; });
-  }
-
-  observe() {
-    if (!("IntersectionObserver" in window)) return;
-    this._reduced = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-    const cv = "cubic-bezier(.16,1,.3,1)";
-    const hide = (el) => {
-      el.style.transition = "none";
-      el.style.opacity = "0";
-      el.style.transform = "translateY(32px) scale(.99)";
-      el.style.filter = "blur(10px)";
-      void el.offsetWidth;
-      el.style.transition = "opacity .9s " + cv + ", transform .95s " + cv + ", filter .75s " + cv;
-    };
-    this._io = this._io || new IntersectionObserver((entries) => {
-      let k = 0;
-      entries.forEach((e) => {
-        const el = e.target;
-        if (e.isIntersecting) {
-          if (el.style.opacity === "0") {
-            el.style.transitionDelay = Math.min(k++ * 85, 420) + "ms";
-            el.style.opacity = "1";
-            el.style.transform = "none";
-            el.style.filter = "blur(0px)";
-          }
-        } else if (el.style.opacity !== "0") {
-          const r = e.boundingClientRect;
-          if (r.top > window.innerHeight + 40 || r.bottom < -40) { el.style.transitionDelay = "0ms"; hide(el); }
-        }
-      });
-    }, { threshold: [0, 0.08], rootMargin: "0px 0px -7% 0px" });
-    this._seen = this._seen || new WeakSet();
-    if (this._instant === undefined) {
-      const nav = performance.getEntriesByType("navigation")[0];
-      this._instant = (nav && nav.type === "back_forward") || (document.referrer && document.referrer.indexOf(location.host) > -1);
-    }
-    const vh0 = window.innerHeight;
-    document.querySelectorAll("[data-reveal]").forEach((el) => {
-      if (this._seen.has(el)) return;
-      this._seen.add(el);
-      el.setAttribute("data-revealed", "");
-      if (this._reduced) { el.style.opacity = "1"; return; }
-      el.style.willChange = "opacity, transform, filter";
-      let r = null;
-      if (this._instant && performance.now() < 3000) r = el.getBoundingClientRect();
-      if (r && r.top < vh0 && r.bottom > 0) {
-        el.style.transition = "opacity .9s " + cv + ", transform .95s " + cv + ", filter .75s " + cv;
-        el.style.opacity = "1";
-      } else hide(el);
-      this._io.observe(el);
-    });
-    clearTimeout(this._revealSafety);
-    this._revealSafety = setTimeout(() => this.sweepReveal(), 1200);
-  }
-
-  renderVals() {
-    const __menu = {
-      menuOpen: !!this.state.menu,
-      toggleMenu: () => this.setState((s) => { const n = !s.menu; document.body.style.overflow = n ? "hidden" : ""; document.documentElement.classList.toggle("mnav-open", n); return { menu: n }; }),
-      closeMenu: () => { document.body.style.overflow = ""; document.documentElement.classList.remove("mnav-open"); this.setState({ menu: false }); }
-    };
-    const dark = this.state.theme === "dark";
-    return {
-      ...__menu,
-      sunDisp: dark ? "none" : "block",
-      moonDisp: dark ? "block" : "none",
-      toggleTheme: () => this.applyTheme(dark ? "light" : "dark"),
-      badges: ["B.Tech ’22, IIT Guwahati", "Bengaluru, IN · open to remote", "AI · Fintech · B2B SaaS"],
-      facts: [
-        { n: "3", label: "years designing\nproducts" },
-        { n: "4", label: "products, mostly as\nthe only designer" },
-        { n: "200K+", label: "user base on the app\nI owned end to end" },
-        { n: "~$1M", label: "run-rate on a 0→1\nproduct I launched" }
-      ],
-      journey: [
-        { place: "ZZAZZ AI", role: "Product Designer", when: "Dec 2025 —", what: "Sole designer on the mobile app for a platform that had only ever been web. Purchase flows, a creator surface, and light mode." },
-        { place: "Runable AI", role: "Founding Designer", when: "Aug — Nov 2025", what: "Only designer in the company. Concept to public launch, and a ~$1M annualised run-rate in month one." },
-        { place: "Rupeezy", role: "Product Designer", when: "Feb 2024 — Aug 2025", what: "A 200K+ user trading app owned end to end, a B2B partner platform from scratch, and the design system under both." },
-        { place: "Sustainability Economics.ai", role: "UI/UX Designer", when: "Apr — Oct 2023", what: "Sole designer on a net-zero carbon accounting tool for banks and insurers. Scope 1, 2 and 3 emissions made reportable." }
-      ],
-      shots: [
-        { src: "assets/off-sky.jpeg", w: 2268, h: 4032, pos: "center 62%", alt: "Looking up at a kite circling overhead against a clear blue sky" },
-        { src: "assets/off-waterfall.jpeg", w: 2268, h: 4032, pos: "center center", alt: "Photographing a waterfall from below, light breaking through the canopy" },
-        { src: "assets/off-backwaters.jpeg", w: 2268, h: 4032, pos: "center 40%", alt: "Evening by the backwaters, palms against a dusk sky" },
-        { src: "assets/off-holi.jpeg", w: 1737, h: 3088, pos: "center 55%", alt: "Holi on the office terrace with the team, everyone covered in colour" }
-      ],
-      learning: [
-        { n: "01", title: "Agent Experience (AX)", note: "How agents and humans hand work back and forth." },
-        { n: "02", title: "UX for probabilistic systems", note: "Keeping interfaces honest when the answer might be wrong." },
-        { n: "03", title: "Behavioural design", note: "Nudging with structure instead of persuasion." }
-      ]
-    };
-  }
-}
+})();
 </script>
 </body>
 </html>
