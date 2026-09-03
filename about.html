@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0A0A0A":"#F7F8F9";})();</script>
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0A0A0A":"#F7F6F1";})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About Lokesh Bhatia</title>
@@ -36,14 +36,14 @@
 
 :root{
   --dot:rgba(20,20,15,.16); --ease:cubic-bezier(.22,1,.36,1); --t-lead:15px; --t-statement:clamp(22px,2.9vw,32px);
-  --bg2:#F2F1EB; --t-h1:clamp(36px,6.6vw,74px); --t-h2:clamp(25px,2vw,32px); --t-body-lg:clamp(18px,2vw,22px);
+  --bg2:#F7F6F1; --t-h1:clamp(36px,6.6vw,74px); --t-h2:clamp(25px,2vw,32px); --t-body-lg:clamp(18px,2vw,22px);
   --t-body:16px; --t-small:13px; --t-btn:16px; --t-mono-lg:13px;
   --t-mono:12px; --s-1:4px; --s-2:8px; --s-3:12px;
   --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px;
   --s-8:64px; --s-9:96px; --lh-display:1.02; --lh-head:1.12;
   --lh-snug:1.3; --lh-body:1.6; --tr-display:-.022em; --tr-head:-.02em;
   --tr-label:.1em; --tr-mono:.02em; --pad:clamp(28px,8vw,140px); --secY:clamp(120px,16vw,240px);
-  --bg:#F7F8F9; --ink:#1B1D21; --muted:#5B6068; --faint:#6B7076;
+  --bg:#F7F6F1; --ink:#1B1D21; --muted:#5B6068; --faint:#6B7076;
   --line:#E3E6E9; --card:#FFFFFF; --tint:#EDF0F3; --note1:#EDF0F3;
   --noteInk:#1B1D21; --accent:#3F3AA8; --accentLine:#3F3AA8; --onAccent:#FFFFFF;
   --markWash:rgba(63,58,168,.20); --neg:#9B2C2C; --negWash:rgba(155,44,44,.20); --gain:#1C6A42;
@@ -63,7 +63,7 @@
 *{box-sizing:border-box}
 html{overflow-x:clip;scroll-behavior:smooth;background:var(--bg);color-scheme:light}
 html[data-theme="dark"]{color-scheme:dark}
-body{position:relative;overflow-x:clip;margin:0;background:var(--bg);color:var(--ink);font-family:'Switzer',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:'Switzer',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto}
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--ink)}
@@ -247,6 +247,7 @@ img.bg.loaded{opacity:1}
   .rmodal-actions .btn-primary,.rmodal-actions .btn-secondary{padding:10px 14px;font-size:14px}
   .rmodal-body{padding:var(--s-3)}
 }
+.rmodal-body img{max-width:100%;height:auto;display:block}
 body.rmodal-open{overflow:hidden}
 </style>
 <script defer src="./analytics.js"></script>
@@ -435,7 +436,7 @@ body.rmodal-open{overflow:hidden}
     if (mobileNav.classList.contains("open")) closeMenu(); else openMenu();
   }
   burger.addEventListener("click", toggleMenu);
-  mobileNav.querySelectorAll("a, button").forEach(function(el){
+  mobileNav.querySelectorAll("a").forEach(function(el){
     el.addEventListener("click", closeMenu);
   });
   document.addEventListener("keydown", function(e){
@@ -568,7 +569,7 @@ body.rmodal-open{overflow:hidden}
       </div>
     </div>
     <div class="rmodal-body">
-      <img data-src="./assets/resume-preview.webp" width="1600" height="2263" alt="Lokesh Kumar Bhatia resume, single page" loading="eager" decoding="async">
+      <img src="./assets/resume-preview.webp" width="1600" height="2263" alt="Lokesh Kumar Bhatia resume, single page" loading="eager" decoding="async">
     </div>
   </div>
 </div>
@@ -576,7 +577,8 @@ body.rmodal-open{overflow:hidden}
 (function(){
   var m=document.getElementById("resumeModal"); if(!m) return;
   var lastFocus=null;
-  function open(){ lastFocus=document.activeElement; m.hidden=false; document.body.classList.add("rmodal-open"); m.querySelector(".rmodal-close").focus(); }
+  function open(){ lastFocus=document.activeElement; m.hidden=false; document.body.classList.add("rmodal-open");
+    m.querySelector(".rmodal-close").focus(); }
   function close(){ m.hidden=true; document.body.classList.remove("rmodal-open"); if(lastFocus) lastFocus.focus(); }
   document.querySelectorAll('a[href$="resume.html"]').forEach(function(a){
     a.addEventListener("click",function(e){
