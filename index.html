@@ -826,6 +826,7 @@ body.rmodal-open{overflow:hidden}
   });
 
   // site notice banner
+  (function(){var nb=document.getElementById("noticeBanner");if(!nb)return;var im=nb.querySelector(".notice-photo");if(im&&im.dataset.src){im.src=im.dataset.src;im.removeAttribute("data-src");}var tx=nb.querySelector(".notice-text");if(tx)tx.removeAttribute("data-reveal");})();
   document.body.insertAdjacentHTML("beforeend", '<div id="noticeBanner" role="status"><img width="659" height="880" loading="eager" decoding="async" class="notice-photo" data-src="./assets/notice-banner-illustration.svg" alt=""><div class="notice-text" data-reveal><h3>Still putting this together !</h3><p>Bear with me if something looks off.</p></div><div class="notice-actions"><button type="button" class="notice-btn primary" id="noticeDismiss">That\'s fine</button></div></div>');
   (function(){
     var KEY = "pfSiteNoticeDismissed";
