@@ -4,22 +4,22 @@
 <script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0A0A0A":"#F7F8F9";})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Page not found, Lokesh Bhatia</title>
-<meta name="description" content="That page does not exist. Here is the way back to the work.">
-<link rel="canonical" href="https://lokeshbhatia.com/404.html">
+<title>Resume, Lokesh Bhatia</title>
+<meta name="description" content="Product designer, 3 years across fintech and AI. Resume, single page, PDF.">
+<link rel="canonical" href="https://lokeshbhatia.com/resume.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
-<meta property="og:title" content="Page not found, Lokesh Bhatia">
-<meta property="og:description" content="That page does not exist. Here is the way back to the work.">
-<meta property="og:url" content="https://lokeshbhatia.com/404.html">
+<meta property="og:title" content="Resume, Lokesh Bhatia">
+<meta property="og:description" content="Product designer, 3 years across fintech and AI. Resume, single page, PDF.">
+<meta property="og:url" content="https://lokeshbhatia.com/resume.html">
 <meta property="og:image" content="https://lokeshbhatia.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Lokesh Bhatia, product designer. I design products that show their work.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://lokeshbhatia.com/og-image.png">
-<meta name="twitter:title" content="Page not found, Lokesh Bhatia">
-<meta name="twitter:description" content="That page does not exist. Here is the way back to the work.">
+<meta name="twitter:title" content="Resume, Lokesh Bhatia">
+<meta name="twitter:description" content="Product designer, 3 years across fintech and AI. Resume, single page, PDF.">
 <link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -134,10 +134,7 @@ body.menu-open header{z-index:70}
 .totop.show{opacity:1;transform:scale(1);pointer-events:auto}
 @media (max-width:640px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg{width:14px;height:14px}}
 
-#top{max-width:880px;margin:0 auto;padding:clamp(56px,8vw,112px) 0 96px;text-align:left;display:flex;flex-direction:column;gap:var(--s-4)}
-#top .lead{margin-top:0;max-width:34em}
-#top .labelrow a{color:var(--accent)}
-#top .labelrow a:hover{color:var(--ink)}
+#top{max-width:880px;margin:0 auto;padding:var(--s-8) 0 var(--s-8);text-align:left}
 .top2col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:clamp(22px,3.2vw,44px);align-items:start}
 .portrait{position:relative;aspect-ratio:1/1;width:100%;border-radius:50%;overflow:hidden;background:color-mix(in srgb,var(--accent) 12%,var(--card))}
 .portrait img{width:100%;height:100%;object-fit:cover;display:block}
@@ -188,6 +185,20 @@ body:before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;filt
 section,main,footer{position:relative;z-index:2}
 
 section:has(+ #contact){padding-bottom:var(--s-8)}
+.lbl{margin:0;font-family:var(--mono);font-size:var(--t-small);font-weight:500;letter-spacing:var(--tr-label);text-transform:uppercase}
+.btnrow{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3);margin-top:var(--s-4)}
+.btn-primary,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:var(--s-3);min-height:48px;padding:0 var(--s-5);border-radius:4px;font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-btn);font-weight:500;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease}
+.btn-primary{border:1px solid var(--ink);background:var(--ink);color:var(--bg)}
+.btn-primary:hover{border-color:var(--accent);background:var(--accent);color:var(--onAccent)}
+.btn-secondary{border:1px solid var(--line);background:transparent;color:var(--ink)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.mobilenote{display:none;margin:0 0 var(--s-3);font-size:var(--t-small);line-height:1.4;color:var(--faint)}
+.shotcard{position:relative;background:var(--tint);border:1px solid var(--line);border-radius:4px;padding:clamp(20px,3vw,44px)}
+:root[data-theme="dark"] .shotcard{background:#1F2328;border-color:#31353B}
+.shotcard a{display:block}
+.shotcard img{display:block;width:100%;height:auto;border-radius:2px}
+.previewfig{margin:var(--s-8) 0 0;display:flex;flex-direction:column;gap:var(--s-3)}
+@media (max-width:640px){.mobilenote{display:block}.shotcard{padding:12px}.btnrow{flex-direction:column}.btnrow a,.btnrow button{width:100%;justify-content:center;min-height:48px}}
 .band:before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:-1;background:var(--bg2)}
 
 /* single-column below 760 */
@@ -227,30 +238,6 @@ img.bg.loaded{opacity:1}
 
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
 
-
-/* resume modal */
-.rmodal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:clamp(16px,3vw,40px)}
-.rmodal[hidden]{display:none}
-.rmodal-scrim{position:absolute;inset:0;background:color-mix(in srgb,var(--ink) 55%,transparent);backdrop-filter:blur(6px)}
-.rmodal-panel{position:relative;width:min(880px,100%);max-height:100%;display:flex;flex-direction:column;background:var(--card);border-radius:8px;box-shadow:0 30px 80px -30px var(--frameSh);overflow:hidden}
-.rmodal-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);padding:var(--s-4) var(--s-5);border-bottom:1px solid var(--line)}
-.rmodal-actions{display:flex;align-items:center;gap:var(--s-3)}
-.rmodal-close{width:40px;height:40px;display:grid;place-items:center;border:0;background:var(--tint);border-radius:4px;color:var(--ink);cursor:pointer}
-.rmodal-body{overflow-y:auto;overscroll-behavior:contain;padding:var(--s-5);background:var(--bg2)}
-.rmodal-body img{display:block;width:100%;height:auto;box-shadow:0 0 0 1px var(--line)}
-.rmodal .btn-primary,.rmodal .btn-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border-radius:4px;font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-btn);font-weight:500;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease}
-.rmodal .btn-primary{border:1px solid var(--ink);background:var(--ink);color:var(--bg)}
-.rmodal .btn-primary:hover{border-color:var(--accent);background:var(--accent);color:var(--onAccent)}
-.rmodal .btn-secondary{border:1px solid var(--line);background:transparent;color:var(--ink)}
-.rmodal .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
-.rmodal .lbl{margin:0;font-family:var(--mono);font-size:var(--t-small);font-weight:500;letter-spacing:var(--tr-label);text-transform:uppercase}
-@media (max-width:640px){
-  .rmodal{padding:0}
-  .rmodal-panel{width:100%;height:100%;max-height:none;border-radius:0}
-  .rmodal-actions .btn-primary,.rmodal-actions .btn-secondary{padding:10px 14px;font-size:14px}
-  .rmodal-body{padding:var(--s-3)}
-}
-body.rmodal-open{overflow:hidden}
 </style>
 <script defer src="./analytics.js"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76"></script>
@@ -306,14 +293,17 @@ body.rmodal-open{overflow:hidden}
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
 
   <section id="top">
-    <span class="eyebrow2">Error 404</span>
-    <h1 data-reveal>This page doesn’t exist.</h1>
-    <p class="lead" data-reveal>The link may be old, or the address slightly off. Everything else is still here.</p>
-    <div class="labelrow" style="--cols:3;margin-top:clamp(40px,5vw,64px)" data-reveal>
-      <div><span class="cap">Start here</span><p><a href="./index.html">Home, and the work</a></p></div>
-      <div><span class="cap">Case studies</span><p><a href="./app-merge.html">Rupeezy app merge</a><br><a href="./rise-portal.html">Rise Portal</a></p></div>
-      <div><span class="cap">Background</span><p><a href="./about.html">About Lokesh</a></p></div>
+    <h1 class="lbl" style="color:var(--accent)">Resume</h1>
+    <div class="btnrow">
+      <a class="btn-primary" href="./resume.pdf" download="Lokesh_Kumar_Bhatia_Resume.pdf">Download</a>
+      <button type="button" class="btn-secondary" id="shareBtn">Share</button>
     </div>
+    <figure class="previewfig" data-reveal>
+      <p class="mobilenote caption">Tap to open full size.</p>
+      <div class="shotcard">
+        <a href="./resume.pdf" target="_blank" rel="noopener"><img src="./assets/resume-preview.webp" width="1600" height="2263" alt="Lokesh Kumar Bhatia resume, single page" loading="eager" decoding="async"></a>
+      </div>
+    </figure>
   </section>
 
   <section id="contact">
@@ -496,54 +486,12 @@ body.rmodal-open{overflow:hidden}
   }
 })();
 </script>
-<div id="resumeModal" class="rmodal" role="dialog" aria-modal="true" aria-label="Resume" hidden>
-  <div class="rmodal-scrim"></div>
-  <div class="rmodal-panel">
-    <div class="rmodal-bar">
-      <span class="lbl" style="color:var(--accent)">Resume</span>
-      <div class="rmodal-actions">
-        <a class="btn-primary" href="./resume.pdf" download="Lokesh_Kumar_Bhatia_Resume.pdf">Download</a>
-        <button type="button" class="btn-secondary" id="rShare">Share</button>
-        <button type="button" class="rmodal-close" aria-label="Close">
-          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg>
-        </button>
-      </div>
-    </div>
-    <div class="rmodal-body">
-      <img data-src="./assets/resume-preview.webp" width="1600" height="2263" alt="Lokesh Kumar Bhatia resume, single page" loading="eager" decoding="async">
-    </div>
-  </div>
-</div>
 <script>
-(function(){
-  var m=document.getElementById("resumeModal"); if(!m) return;
-  var lastFocus=null;
-  function open(){ lastFocus=document.activeElement; m.hidden=false; document.body.classList.add("rmodal-open"); m.querySelector(".rmodal-close").focus(); }
-  function close(){ m.hidden=true; document.body.classList.remove("rmodal-open"); if(lastFocus) lastFocus.focus(); }
-  document.querySelectorAll('a[href$="resume.html"]').forEach(function(a){
-    a.addEventListener("click",function(e){
-      e.preventDefault();
-      if(document.body.classList.contains("menu-open")){ var b=document.getElementById("burgerBtn"); if(b) b.click(); }
-      open();
-    });
-  });
-  m.querySelector(".rmodal-scrim").addEventListener("click",close);
-  m.querySelector(".rmodal-close").addEventListener("click",close);
-  document.addEventListener("keydown",function(e){
-    if(m.hidden) return;
-    if(e.key==="Escape"){ close(); return; }
-    if(e.key!=="Tab") return;
-    var f=m.querySelectorAll("a,button"); var first=f[0], last=f[f.length-1];
-    if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus(); }
-    else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus(); }
-  });
-    var shareBtn=document.getElementById("rShare");
-  shareBtn.addEventListener("click", function(){
-    var url=new URL("./resume.html",location.href).href;
-    copyText(url, shareBtn, "Link copied");
-  });
-  if(location.hash==="#resume") open();
-})();
+var shareBtn=document.getElementById("shareBtn");
+shareBtn.addEventListener("click", function(){
+  var url=new URL("./resume.html",location.href).href;
+  copyText(url, shareBtn, "Link copied");
+});
 </script>
 </body>
 </html>
