@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0A0A0A":"#F7F6F1";})();</script>
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lokesh Bhatia, Product Designer</title>
-<meta name="description" content="Product designer, 3 years across fintech, AI and sustainability. A trading app at 200K+ users, an AI agent platform from zero to launch, and a B2B partner platform built from scratch.">
+<meta name="description" content="Product designer, 3 years across fintech and AI. A trading app at 200K+ users, an AI agent platform taken 0 to 1, and a B2B partner platform built from scratch.">
 <link rel="canonical" href="https://lokeshbhatia.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
 <meta property="og:title" content="Lokesh Bhatia, Product Designer">
-<meta property="og:description" content="Product designer, 3 years across fintech, AI and sustainability. A trading app at 200K+ users, an AI agent platform from zero to launch, and a B2B partner platform built from scratch.">
+<meta property="og:description" content="Product designer, 3 years across fintech and AI. A trading app at 200K+ users, an AI agent platform taken 0 to 1, and a B2B partner platform built from scratch.">
 <meta property="og:url" content="https://lokeshbhatia.com/">
 <meta property="og:image" content="https://lokeshbhatia.com/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -19,62 +19,77 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://lokeshbhatia.com/og-image.png">
 <meta name="twitter:title" content="Lokesh Bhatia, Product Designer">
-<meta name="twitter:description" content="Product designer, 3 years across fintech, AI and sustainability. A trading app at 200K+ users, an AI agent platform from zero to launch, and a B2B partner platform built from scratch.">
+<meta name="twitter:description" content="Product designer, 3 years across fintech and AI. A trading app at 200K+ users, an AI agent platform taken 0 to 1, and a B2B partner platform built from scratch.">
 <link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
-<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://api.fontshare.com">
-<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
 @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
 
+/* ── design tokens: jaimec.co-inspired ── */
 :root{
-  --dot:rgba(20,20,15,.16); --ease:cubic-bezier(.22,1,.36,1); --t-lead:15px; --t-statement:clamp(22px,2.9vw,32px);
-  --bg2:#F7F6F1; --t-display:clamp(34px,6.6vw,84px); --t-h1:clamp(36px,6.6vw,74px); --t-h2:clamp(25px,2vw,32px);
-  --t-body-lg:clamp(18px,2vw,22px); --t-body:16px; --t-small:13px; --t-btn:16px;
-  --t-mono-lg:13px; --t-mono:12px; --t-mono-sm:11px; --s-1:4px;
-  --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px;
-  --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px;
-  --lh-head:1.12; --lh-snug:1.3; --lh-body:1.6; --tr-display:-.022em;
-  --tr-head:-.02em; --tr-label:.1em; --tr-mono:.02em; --pad:clamp(28px,8vw,140px);
-  --secY:clamp(120px,16vw,240px); --bg:#F7F6F1; --ink:#1B1D21; --muted:#5B6068;
-  --faint:#6B7076; --line:#E3E6E9; --card:#FFFFFF; --tint:#EDF0F3;
-  --accent:#3F3AA8; --accentLine:#3F3AA8; --accentWash:rgba(63,58,168,.08); --onAccent:#FFFFFF;
-  --markWash:rgba(63,58,168,.20); --neg:#9B2C2C; --negWash:rgba(155,44,44,.20); --gain:#1C6A42;
-  --gainWash:rgba(28,106,66,.20); --live:#1C7C48; --frameSh:rgba(27,29,33,.28); --card-tint-01:#E0EDE5;
-  --card-tint-02:#E7E5F8; --card-tint-03:#F5E7E0; --navOn:var(--accent); --navOff:#868C94;
-  --serif:'Source Serif 4','Charter',Georgia,serif; --mono:'Switzer',Helvetica,Arial,sans-serif; --w-content:1120px; --w-text:640px;
-  --t-h3:clamp(20px,2.2vw,25px); --lh-display:1.02; --tr-body:0;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --bg:#FAFAFA; --surface:#F2F2F2; --card:#FFFFFF; --line:#E8E8E8;
+  --ink:#141414; --muted:#5C5C5C; --faint:#8A8A8A;
+  --link:#006AD4; --dark:#171717; --onDark:#FFFFFF;
+  --yellow:#FBE14D; --onYellow:#3D3400;
+  --ok:#1F9D4D; --warn:#E9A417; --crit:#E0392B;
+  --r-pill:1000px; --r-card:20px; --r-float:16px; --r-sm:10px;
+  --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
+  --display:'Geist','Inter',Helvetica,Arial,sans-serif;
+  --serif:var(--display); --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --t-display:24px; --t-lead:15px; --t-body:15px; --t-title:14px; --t-meta:13px; --t-ui:13px; --t-small:12px; --t-micro:11px; --t-xs:11px;
+  --t-h1:24px; --t-h2:14px; --t-h3:13px;
+  --t-body-lg:15px; --t-btn:13px; --t-mono:11px; --t-mono-lg:12px; --t-mono-sm:11px; --t-statement:15px;
+  --lh-body:1.42; --lh-head:1.2; --lh-display:1.2; --lh-snug:1.3;
+  --tr-display:-.01em; --tr-head:-.01em; --tr-body:-.01em; --tr-label:.02em; --tr-mono:0;
+  /* one frame shape for every work card: as landscape as the phone
+     mockups can stand, so the two web shots keep tight even air */
+  --card-ar:100/77;
+  --s-1:4px; --s-2:7px; --s-3:10px; --s-4:13px; --s-5:18px;
+  --s-6:24px; --s-7:36px; --s-8:45px; --s-9:67px;
+  --col:821px; --card-w:400px; --gap:24px;
+  --pad:18px; --w-content:821px; --w-text:468px; --measure:468px; --secY:67px;
+  --dot:rgba(20,20,20,.10); --frameSh:rgba(0,0,0,.14);
+  --accent:#006AD4; --accentLine:#006AD4; --accentWash:rgba(0,106,212,.08);
+  --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
+  --tint:var(--surface); --bg2:var(--surface); --deep:var(--dark); --onDeep:var(--onDark);
+  --gain:#1F9D4D; --gainWash:rgba(31,157,77,.10); --live:#1F9D4D;
+  --neg:#E0392B; --negWash:rgba(224,57,43,.10);
+  --card-tint-01:#F2F2F2; --card-tint-02:#F2F2F2; --card-tint-03:#F2F2F2;
+  --navOn:var(--ink); --navOff:#5C5C5C;
 }
 :root[data-theme="dark"]{
-  --dot:rgba(237,239,242,.10); --bg2:#0E0E0E; --bg:#0A0A0A; --ink:#EDEFF2;
-  --muted:#9AA0A6; --faint:#8A9095; --line:#24262A; --card:#141619;
-  --tint:#1A1D21; --accent:#A5A0F5; --accentLine:#A5A0F5; --accentWash:rgba(165,160,245,.12);
-  --onAccent:#14140F; --markWash:rgba(165,160,245,.30); --neg:#F08C8C; --negWash:rgba(240,140,140,.30);
-  --gain:#5AD2A4; --gainWash:rgba(120,214,164,.30); --live:#63CE92; --frameSh:rgba(0,0,0,.55);
-  --card-tint-01:#2A3D33; --card-tint-02:#332F52; --card-tint-03:#4A3833; --navOff:#7C838B;
-  --navOn:var(--accent);
+  --bg:#0F0F0F; --surface:#1A1A1A; --card:#161616; --line:#262626;
+  --ink:#EDEDED; --muted:#A1A1A1; --faint:#7A7A7A;
+  --link:#5EA9F5; --dark:#EDEDED; --onDark:#141414;
+  --yellow:#E5CB3C; --onYellow:#2A2400;
+  --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
+  --dot:rgba(237,237,237,.10); --frameSh:rgba(0,0,0,.6);
+  --accent:#5EA9F5; --accentLine:#5EA9F5; --accentWash:rgba(94,169,245,.12);
+  --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
+  --tint:var(--surface); --bg2:var(--surface); --deep:#EDEDED; --onDeep:#141414;
+  --gain:#4ED07F; --gainWash:rgba(78,208,127,.14);
+  --card-tint-01:#1A1A1A; --card-tint-02:#1A1A1A; --card-tint-03:#1A1A1A;
+  --navOff:#A1A1A1; --navOn:var(--ink);
 }
 *{box-sizing:border-box}
 html{overflow-x:clip;scroll-behavior:smooth;background:var(--bg);color-scheme:light}
 html[data-theme="dark"]{color-scheme:dark}
-body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:'Switzer',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:var(--display);-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto}
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--ink)}
 button{font-family:inherit}
 .wrap{padding:0 var(--pad);position:relative}
-.mark{background-image:linear-gradient(transparent 62%,var(--markWash) 62%);background-repeat:no-repeat;color:var(--ink)}
-h1 .mark{background-image:linear-gradient(var(--markWash),var(--markWash));background-size:100% .34em;background-position:0 .72em}
+.mark{background-image:linear-gradient(transparent 68%,var(--markWash) 68%,var(--markWash) 95%,transparent 95%);background-repeat:no-repeat;color:var(--ink);-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .emph{font-weight:500;color:var(--ink)}
-header{position:sticky;top:16px;will-change:max-width;z-index:40;width:100%;max-width:min(880px,100%);margin:0 auto;padding-top:var(--s-4);transition:max-width .35s ease}
-header.scrolled{max-width:min(320px,92%)}
+header{position:sticky;top:16px;will-change:max-width;z-index:40;width:100%;max-width:min(792px,100%);margin:0 auto;padding-top:var(--s-4);transition:max-width .35s ease}
+header.scrolled{max-width:min(288px,92%)}
 .navpill{position:relative;display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);padding:var(--s-3) var(--s-3) var(--s-3) var(--s-4);background:transparent;backdrop-filter:none;box-shadow:none;border-radius:6px;transition:background .3s ease,padding .3s ease,box-shadow .3s ease}
 header.scrolled .navpill{background:color-mix(in srgb,var(--card) 58%,transparent);backdrop-filter:blur(12px) saturate(1.4);box-shadow:0 10px 26px -14px var(--frameSh);padding:var(--s-2) var(--s-3)}
 header.scrolled .facemark{width:26px;height:26px}
@@ -82,7 +97,7 @@ header.scrolled .facemark img{width:26px;height:26px}
 .facemark{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px}
 .facemark img{display:block;object-fit:contain}
 :root[data-theme="dark"] .facemark img{filter:invert(1)}
-nav.navlinks{display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);font-size:var(--t-small);font-weight:500}
+nav.navlinks{display:flex;align-items:center;gap:clamp(11px,1.8vw,20px);font-size:var(--t-small);font-weight:500}
 .navlink{display:inline-flex;align-items:center;justify-content:center;color:var(--navOff)}
 .navlink:hover{color:var(--ink)}
 header.scrolled .navtext{display:none}
@@ -103,7 +118,7 @@ html[data-theme="dark"] .icon-sun{display:none}
 .burger .bicon-x{opacity:0;transform:rotate(-45deg)}
 .burger[aria-expanded="true"] .bicon-bars{opacity:0;transform:rotate(45deg)}
 .burger[aria-expanded="true"] .bicon-x{opacity:1;transform:rotate(0)}
-@media (max-width:640px){
+@media (max-width:576px){
   nav.navlinks a{display:none}
   .navdiv{display:none}
   .burger{display:grid}
@@ -114,113 +129,113 @@ html[data-theme="dark"] .icon-sun{display:none}
 .mobilenav a:focus:not(:focus-visible),
 .mobilenav button:focus:not(:focus-visible){outline:none}
 body.menu-open{overflow:hidden;position:fixed;width:100%}
-.mobilenav{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s;overscroll-behavior:contain;flex-direction:column;min-height:100dvh;overflow-y:auto;padding-top:calc(84px + env(safe-area-inset-top))}
-@media (max-width:640px){header .themebtn,header .burger{width:44px;height:44px;display:grid;place-items:center;border-radius:6px;background:var(--tint);border:0;color:var(--ink)}header .themebtn::before{display:none}nav.navlinks{gap:10px}}
+.mobilenav{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s;overscroll-behavior:contain;flex-direction:column;min-height:100dvh;overflow-y:auto;padding-top:calc(59px + env(safe-area-inset-top))}
+@media (max-width:576px){header .themebtn,header .burger{width:44px;height:44px;display:grid;place-items:center;border-radius:6px;background:var(--tint);border:0;color:var(--ink)}header .themebtn::before{display:none}nav.navlinks{gap:8px}}
 body.menu-open header{z-index:70}
 @media (min-width:641px){header .burger{display:none}}
 .mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
-.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(16px,3vh,32px);padding:0 var(--pad)}
+.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(13px,3vh,24px);padding:0 var(--pad)}
 .mrow{display:flex;align-items:center;gap:var(--s-4);min-height:64px;padding:var(--s-3) 0;color:var(--ink);box-shadow:inset 0 -1px 0 var(--line)}
 .mrow.current{color:var(--accent)}
 .mrow.current .mlabel{color:var(--accent)}
 .mrow.current svg{color:var(--accent);opacity:.6}
-.mrow .mlabel{flex:1;font-size:26px;line-height:1.15;letter-spacing:var(--tr-display)}
+.mrow .mlabel{flex:1;font-size:21px;line-height:1.15;letter-spacing:var(--tr-display)}
 .mrow svg{flex:0 0 auto;color:var(--faint)}
-.mfoot{margin-top:auto;display:flex;flex-direction:column;align-items:stretch;text-align:center;gap:var(--s-4);padding:28px var(--pad) 28px}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;align-items:stretch;text-align:center;gap:var(--s-4);padding:21px var(--pad) 21px}
 .availbadge svg{width:104px;height:104px}
 .availbadge{position:relative;width:104px;height:104px;flex:none;border-radius:50%;display:grid;place-items:center}
 .availring{animation:spin 16s linear infinite;transform-origin:50% 50%}
-@media (max-width:860px){.hero-badge{width:104px!important;height:104px!important}.hero-badge svg{width:104px!important;height:104px!important}}
-@media (max-width:640px){.hero-badge{display:none!important}}
+@media (max-width:774px){.hero-badge{width:104px!important;height:104px!important}.hero-badge svg{width:104px!important;height:104px!important}}
+@media (max-width:576px){.hero-badge{display:none!important}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .mresume{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;border-radius:4px;background:var(--ink);color:var(--card);font-size:var(--t-btn);font-weight:500}
 .mresume:hover{background:var(--accent);color:var(--onAccent)}
 .mailbtn{display:inline-flex;align-items:center;min-height:48px;padding:0;border:0;background:transparent;font-size:var(--t-body-lg);font-weight:500;color:var(--accent);cursor:pointer}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:var(--s-3);padding:14px 20px;border-radius:4px;background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 18px 40px -20px rgba(16,16,24,.32);white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:var(--s-3);padding:11px 16px;border-radius:4px;background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 18px 40px -20px rgba(16,16,24,.32);white-space:nowrap}
 .toast.show{display:inline-flex}
 .totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;width:56px;height:56px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--accent);cursor:pointer;display:grid;place-items:center;box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 16px -8px rgba(0,0,0,.10);opacity:0;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1)}
 .totop.show{opacity:1;transform:scale(1);pointer-events:auto}
-@media (max-width:640px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg{width:14px;height:14px}}
+@media (max-width:576px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg{width:14px;height:14px}}
 
-section{position:relative;z-index:2;padding-bottom:clamp(72px,16vw,120px)}
-#top{padding-top:clamp(56px,8vw,112px);padding-bottom:96px;max-width:880px;margin:0 auto;text-align:left}
-.hero-grid{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);gap:clamp(32px,4.6vw,64px);align-items:center}
-.hero-left{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2vw,22px)}
+section{position:relative;z-index:2;padding-bottom:clamp(50px,16vw,84px)}
+#top{padding-top:clamp(42px,8vw,78px);padding-bottom:67px;max-width:792px;margin:0 auto;text-align:left}
+.hero-grid{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);gap:clamp(24px,4.6vw,45px);align-items:center}
+.hero-left{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(13px,2vw,16px)}
 .eyebrow{margin:0;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--muted)}
 h1,h2,h3,.subhead,.lead,.statement{font-family:var(--serif)}
-#noticeBanner h3,#noticeBanner p{font-family:'Switzer',Helvetica,Arial,sans-serif}
+#noticeBanner h3,#noticeBanner p{font-family:var(--display)}
 h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;letter-spacing:-.02em;font-weight:400}
-.hero-sub{margin:clamp(6px,1vw,12px) 0 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
-.cta{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:clamp(12px,1.8vw,20px)}
+.hero-sub{margin:clamp(5px,1vw,10px) 0 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+.cta{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:clamp(10px,1.8vw,16px)}
 .splitcta{display:inline-flex;align-items:stretch;background:var(--ink);border-radius:4px;overflow:hidden}
-.splitcta a{display:inline-flex;align-items:center;gap:var(--s-3);padding:12px 16px;color:var(--card);font-size:var(--t-mono-lg);font-weight:500}
+.splitcta a{display:inline-flex;align-items:center;gap:var(--s-3);padding:10px 13px;color:var(--card);font-size:var(--t-mono-lg);font-weight:500}
 .splitcta a:hover{background:var(--accent);color:var(--onAccent)}
 .splitcta .div{width:1px;background:var(--card);opacity:.22}
-.splitcta button{display:inline-flex;align-items:center;justify-content:center;min-width:48px;padding:12px 14px;border:0;background:transparent;color:var(--card);cursor:pointer}
+.splitcta button{display:inline-flex;align-items:center;justify-content:center;min-width:48px;padding:10px 11px;border:0;background:transparent;color:var(--card);cursor:pointer}
 .splitcta button:hover{background:var(--accent);color:var(--onAccent)}
 .icon-done{display:none}
 .copied .icon-copy{display:none}
 .copied .icon-done{display:grid}
-.hero-visual{min-width:0;display:flex;flex-direction:column;align-items:flex-end;gap:clamp(12px,1.6vw,18px)}
+.hero-visual{min-width:0;display:flex;flex-direction:column;align-items:flex-end;gap:clamp(10px,1.6vw,14px)}
 .heroportrait{position:relative;aspect-ratio:3/2;min-width:0;width:100%;border-radius:0;overflow:hidden}
-@media (max-width:900px){
-  .hero-grid{grid-template-columns:minmax(0,1fr)!important;gap:clamp(28px,6vw,44px)}
+@media (max-width:810px){
+  .hero-grid{grid-template-columns:minmax(0,1fr)!important;gap:clamp(21px,6vw,33px)}
   .hero-visual{align-items:flex-start}
   .heroportrait{width:min(100%,420px)}
 }
-#work,#impact{max-width:880px;margin:0 auto}
-.workgrid{display:grid;grid-template-columns:minmax(0,1fr);row-gap:56px}
-.workrow{position:relative;display:grid;gap:clamp(28px,4vw,64px);align-items:end;color:inherit;grid-template-columns:minmax(0,57fr) minmax(0,43fr)}
+#work,#impact{max-width:792px;margin:0 auto}
+.workgrid{display:grid;grid-template-columns:minmax(0,1fr);row-gap:42px}
+.workrow{position:relative;display:grid;gap:clamp(21px,4vw,45px);align-items:end;color:inherit;grid-template-columns:minmax(0,57fr) minmax(0,43fr)}
 .cardframe{overflow:hidden;position:relative;aspect-ratio:16/9;border-radius:4px;transition:transform .3s cubic-bezier(.2,.85,.25,1)}
 .cardframe img.bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06);pointer-events:none}
 .worktext{display:flex;flex-direction:column;align-items:flex-start;gap:0}
 .worktext .num{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--faint)}
-.worktext h3{margin:16px 0 0;font-family:var(--serif);font-size:clamp(25px,2vw,32px);line-height:1.15;letter-spacing:-.012em;font-weight:400}
-.worktext .desc{margin:12px 0 0;font-family:var(--mono);font-size:var(--t-mono-lg);letter-spacing:var(--tr-mono);color:var(--muted)}
-.workcta{display:inline-flex;align-items:center;justify-content:center;min-width:180px;gap:var(--s-3);margin-top:24px;padding:10px 14px;border-radius:4px;box-shadow:0 0 0 1px var(--line);font-size:var(--t-mono-lg);font-weight:500;color:var(--accent)}
+.worktext h3{margin:13px 0 0;font-family:var(--serif);font-size:clamp(20px,2vw,26px);line-height:1.15;letter-spacing:-.012em;font-weight:400}
+.worktext .desc{margin:10px 0 0;font-family:var(--mono);font-size:var(--t-mono-lg);letter-spacing:var(--tr-mono);color:var(--muted)}
+.workcta{display:inline-flex;align-items:center;justify-content:center;min-width:180px;gap:var(--s-3);margin-top:18px;padding:8px 11px;border-radius:4px;box-shadow:0 0 0 1px var(--line);font-size:var(--t-mono-lg);font-weight:500;color:var(--accent)}
 .livecta{color:var(--live)}
 .livecta:hover{background:var(--live);color:var(--card)}
-@media (max-width:760px){
+@media (max-width:684px){
   .workrow{grid-template-columns:minmax(0,1fr)!important;align-items:start}
-  .workrow + .workrow{padding-top:40px}
+  .workrow + .workrow{padding-top:30px}
 }
-.impactgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.impactcol{background:var(--tint);border-radius:6px;padding:clamp(22px,2.4vw,30px)}
-.impactnum{font-size:52px;line-height:1;letter-spacing:var(--tr-display);font-variant-numeric:tabular-nums;color:var(--accent)}
-.impactcol p{margin:16px 0 0;max-width:34ch;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
-@media (max-width:900px){.impactgrid{grid-template-columns:minmax(0,1fr);row-gap:24px}.impactnum{font-size:44px}}
-#experience{max-width:880px;margin:0 auto}
-.exptimeline{position:relative;padding-left:40px}
+.impactgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.impactcol{background:var(--tint);border-radius:6px;padding:clamp(16px,2.4vw,22px)}
+.impactnum{font-size:42px;line-height:1;letter-spacing:var(--tr-display);font-variant-numeric:tabular-nums;color:var(--accent)}
+.impactcol p{margin:13px 0 0;max-width:34ch;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+@media (max-width:810px){.impactgrid{grid-template-columns:minmax(0,1fr);row-gap:18px}.impactnum{font-size:35px}}
+#experience{max-width:792px;margin:0 auto}
+.exptimeline{position:relative;padding-left:30px}
 .exptimeline:before{content:"";position:absolute;left:5px;top:calc(20px + clamp(40px,5vw,64px) + 22px);bottom:12px;width:1px;background:var(--line)}
-.exprow{position:relative;padding:0 0 clamp(48px,6vw,72px) 0;border:0}
+.exprow{position:relative;padding:0 0 clamp(36px,6vw,50px) 0;border:0}
 .exprow:last-child{padding-bottom:0}
 .exprow:before{content:"";position:absolute;left:-40px;top:9px;width:11px;height:11px;border-radius:50%;background:var(--bg);box-shadow:0 0 0 1px var(--line)}
-.expnext{position:relative;padding:0 0 clamp(40px,5vw,64px) 0}
+.expnext{position:relative;padding:0 0 clamp(30px,5vw,45px) 0}
 .expnext:before{content:"";position:absolute;left:-40px;top:9px;width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accentWash)}
 .expnext:after{content:"";position:absolute;left:-35px;top:20px;bottom:0;width:1px;background:repeating-linear-gradient(to bottom,var(--line) 0 4px,transparent 4px 8px)}
-.expchip{display:inline-block;text-decoration:none;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--accent);background:var(--accentWash);border:1px dashed var(--accentLine);border-radius:4px;padding:9px 16px;transition:background .25s ease,color .25s ease}
+.expchip{display:inline-block;text-decoration:none;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--accent);background:var(--accentWash);border:1px dashed var(--accentLine);border-radius:4px;padding:7px 13px;transition:background .25s ease,color .25s ease}
 .expchip:hover{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--ink)}
-@media (max-width:640px){.expnext:before{left:-28px;width:9px;height:9px}.expnext:after{left:-24px}}
-.exp-date{margin:0 0 10px;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
-.exp-co{margin:0;font-family:var(--serif);font-size:clamp(21px,2vw,26px);line-height:1.2;font-weight:400;color:var(--ink)}
-.exp-role{margin:6px 0 0;font-size:var(--t-body);color:var(--accent)}
-.exp-desc{margin:14px 0 0;font-size:var(--t-body);line-height:1.65;color:var(--muted);max-width:52ch}
-.exp-chips{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px}
+@media (max-width:576px){.expnext:before{left:-28px;width:9px;height:9px}.expnext:after{left:-24px}}
+.exp-date{margin:0 0 8px;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
+.exp-co{margin:0;font-family:var(--serif);font-size:clamp(17px,2vw,21px);line-height:1.2;font-weight:400;color:var(--ink)}
+.exp-role{margin:5px 0 0;font-size:var(--t-body);color:var(--accent)}
+.exp-desc{margin:11px 0 0;font-size:var(--t-body);line-height:1.65;color:var(--muted);max-width:52ch}
+.exp-chips{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
 .exp-chips span{font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint);border:0;padding:0}
-@media (max-width:640px){.exptimeline{padding-left:28px}.exptimeline:before{left:4px}.exprow:before{left:-28px;width:9px;height:9px}}
-#contact{max-width:880px;margin:0 auto;padding:0}
+@media (max-width:576px){.exptimeline{padding-left:21px}.exptimeline:before{left:4px}.exprow:before{left:-28px;width:9px;height:9px}}
+#contact{max-width:792px;margin:0 auto;padding:0}
 #contact h2{margin:0;font-family:var(--serif);font-size:var(--t-h2);line-height:1.15;letter-spacing:-.012em;font-weight:400}
-#contact p{margin:12px 0 0;font-size:var(--t-body);color:var(--muted)}
-.social{display:flex;gap:clamp(8px,1.4vw,18px);flex-wrap:wrap;justify-content:center;margin-top:28px}
+#contact p{margin:10px 0 0;font-size:var(--t-body);color:var(--muted)}
+.social{display:flex;gap:clamp(7px,1.4vw,14px);flex-wrap:wrap;justify-content:center;margin-top:21px}
 .social a{display:grid;place-items:center;width:48px;height:48px;border-radius:4px;color:var(--faint)}
 .social a:hover{color:var(--ink);background:var(--tint)}
-@media (max-width:640px){h1{letter-spacing:var(--tr-display)}}
+@media (max-width:576px){h1{letter-spacing:var(--tr-display)}}
 /* bg wash */
 #bgwash{position:fixed;inset:-10% -5%;z-index:0;pointer-events:none;background:radial-gradient(70% 58% at 12% 0%, color-mix(in oklab,var(--accent) 16%, transparent) 0%, transparent 72%),radial-gradient(64% 54% at 92% 14%, color-mix(in oklab,var(--accent) 11%, transparent) 0%, transparent 74%),radial-gradient(90% 55% at 50% 100%, color-mix(in oklab,var(--accent) 8%, transparent) 0%, transparent 76%)}
 body:before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;filter:url(#grain);opacity:.05}
 :root[data-theme="dark"] body:before{opacity:.07}
 .halftone{position:absolute;top:0;left:0;width:100vw;height:min(900px,90vh);pointer-events:none;z-index:0;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:13px 13px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%)}
-#contact footer{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;padding:clamp(56px,6vw,84px) clamp(20px,6vw,40px) clamp(52px,5.5vw,72px);background:var(--tint);width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;position:relative}
+#contact footer{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;padding:clamp(42px,6vw,59px) clamp(16px,6vw,30px) clamp(39px,5.5vw,50px);background:var(--tint);width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;position:relative}
 #contact footer > *:not(.halftone){position:relative;z-index:1}
 .halftone-foot{top:auto;bottom:0;left:50%;transform:translateX(-50%);width:100vw;max-width:none;height:min(520px,55vh);-webkit-mask-image:linear-gradient(0deg,rgba(0,0,0,.75),transparent 100%);mask-image:linear-gradient(0deg,rgba(0,0,0,.75),transparent 100%)}
 section,main,footer{position:relative;z-index:2}
@@ -229,7 +244,7 @@ section:has(+ #contact){padding-bottom:var(--s-8)}
 .band:before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:-1;background:var(--bg2)}
 
 /* single-column below 760 */
-@media (max-width:760px){
+@media (max-width:684px){
   .impactgrid{grid-template-columns:minmax(0,1fr)}
 }
 
@@ -257,8 +272,8 @@ figure[data-reveal].shown,.shotcard[data-reveal].shown,.figcard[data-reveal].sho
 }
 /* custom cursor */
 @media (hover:hover) and (pointer:fine){
-html.pf-cursor{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%233F3AA8' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
-html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%23A5A0F5' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
+html.pf-cursor{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%234A5FD0' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
+html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%23A5BBFC' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
 }
 #cursorTag{display:none}
 /* intro loader */
@@ -288,10 +303,10 @@ html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='h
 #loader .tag.top{top:-26px;left:0;animation:fadeUp .34s cubic-bezier(.33,.9,.24,1) .86s both}
 #loader .tag.bot{bottom:-26px;right:0;animation:fadeUp .34s cubic-bezier(.33,.9,.24,1) .96s both}
 /* command palette */
-#palette{display:none;position:fixed;inset:0;z-index:95;background:rgba(20,20,22,.28);backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:12vh 20px 20px}
+#palette{display:none;position:fixed;inset:0;z-index:95;background:rgba(20,20,22,.28);backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:12vh 16px 16px}
 #palette.open{display:flex}
-#palette .box{width:100%;max-width:520px;border-radius:4px;background:var(--card);box-shadow:0 24px 70px -30px rgba(20,24,45,.4)}
-#palette input{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-size:16px;padding:var(--s-4) var(--s-5);box-shadow:inset 0 -1px 0 var(--tint)}
+#palette .box{width:100%;max-width:468px;border-radius:4px;background:var(--card);box-shadow:0 24px 70px -30px rgba(20,24,45,.4)}
+#palette input{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-size:14px;padding:var(--s-4) var(--s-5);box-shadow:inset 0 -1px 0 var(--tint)}
 #palette .list{max-height:46vh;overflow:auto;padding:var(--s-2)}
 #palette .list a{display:block;padding:var(--s-3) var(--s-4);border-radius:4px;color:var(--ink);font-size:var(--t-body)}
 #palette .list a.active,#palette .list a:hover{background:var(--tint)}
@@ -326,21 +341,21 @@ img.bg.loaded{opacity:1}
 
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
 
-#noticeBanner{--nb-bg:#0E4A47;--nb-ink:#F3F7F5;--nb-muted:#AFC9C5;--nb-line:#17605C;--nb-btn:#F5F1E8;--nb-btnInk:#0B3B39;position:fixed;left:16px;right:16px;bottom:16px;z-index:60;width:auto;max-width:880px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--nb-bg);border:1px solid var(--nb-line);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.20),0 6px 16px rgba(0,0,0,.26),0 28px 64px -12px rgba(0,0,0,.42);opacity:0;transform:translateY(12px);transition:opacity .24s ease-out,transform .24s ease-out;pointer-events:none}
+#noticeBanner{--nb-bg:#0E4A47;--nb-ink:#F3F7F5;--nb-muted:#AFC9C5;--nb-line:#17605C;--nb-btn:#F5F1E8;--nb-btnInk:#0B3B39;position:fixed;left:16px;right:16px;bottom:16px;z-index:60;width:auto;max-width:792px;margin:0 auto;display:flex;align-items:center;gap:13px;padding:16px 18px;background:var(--nb-bg);border:1px solid var(--nb-line);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.20),0 6px 16px rgba(0,0,0,.26),0 28px 64px -12px rgba(0,0,0,.42);opacity:0;transform:translateY(12px);transition:opacity .24s ease-out,transform .24s ease-out;pointer-events:none}
 :root[data-theme="dark"] #noticeBanner{box-shadow:0 0 0 1px rgba(255,255,255,.10),0 2px 8px rgba(0,0,0,.5),0 16px 40px rgba(0,0,0,.6)}
 #noticeBanner.show{opacity:1;transform:translateY(0);pointer-events:auto}
 #noticeBanner.hide{opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .16s ease-in,transform .16s ease-in}
 @media (prefers-reduced-motion:reduce){#noticeBanner{transition:none!important;transform:none!important}}
-#noticeBanner .notice-photo{flex:none;width:64px;height:64px;border-radius:4px;object-fit:contain;background:var(--nb-btn);padding:6px;box-sizing:border-box}
+#noticeBanner .notice-photo{flex:none;width:64px;height:64px;border-radius:4px;object-fit:contain;background:var(--nb-btn);padding:5px;box-sizing:border-box}
 #noticeBanner .notice-text{flex:1;min-width:0}
 #noticeBanner .notice-text h3{margin:0;font-size:var(--t-body-lg);font-weight:500;color:var(--nb-ink)}
 #noticeBanner .notice-text p{margin:4px 0 0;font-size:var(--t-small);font-weight:400;line-height:var(--lh-body);color:var(--nb-muted)}
-#noticeBanner .notice-actions{flex:none;display:flex;align-items:center;gap:8px}
-#noticeBanner .notice-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:4px;font-size:var(--t-mono);font-weight:500;white-space:nowrap;cursor:pointer;border:0}
+#noticeBanner .notice-actions{flex:none;display:flex;align-items:center;gap:7px}
+#noticeBanner .notice-btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 13px;border-radius:4px;font-size:var(--t-mono);font-weight:500;white-space:nowrap;cursor:pointer;border:0}
 #noticeBanner .notice-btn.primary{background:var(--nb-btn);color:var(--nb-btnInk)}
 #noticeBanner .notice-btn.primary:hover{opacity:.9}
-@media (max-width:700px){
-  #noticeBanner{left:24px;right:24px;bottom:24px;top:auto;max-width:none;margin:0;border-radius:4px;flex-direction:column;align-items:stretch;gap:20px;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+@media (max-width:630px){
+  #noticeBanner{left:24px;right:24px;bottom:24px;top:auto;max-width:none;margin:0;border-radius:4px;flex-direction:column;align-items:stretch;gap:16px;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
   #noticeBanner .notice-photo{width:100%;max-width:none;height:190px;border-radius:4px;margin:0;padding:0;object-fit:cover;object-position:center 28%;background:var(--nb-btn);box-sizing:border-box}
   #noticeBanner .notice-text{padding:0}
   #noticeBanner .notice-actions{width:auto;margin:0;padding:0}
@@ -348,29 +363,1634 @@ img.bg.loaded{opacity:1}
 }
 
 /* resume modal */
-.rmodal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:clamp(16px,3vw,40px)}
-.rmodal[hidden]{display:none}
-.rmodal-scrim{position:absolute;inset:0;background:color-mix(in srgb,var(--ink) 55%,transparent);backdrop-filter:blur(6px)}
-.rmodal-panel{position:relative;width:min(880px,100%);max-height:100%;display:flex;flex-direction:column;background:var(--card);border-radius:8px;box-shadow:0 30px 80px -30px var(--frameSh);overflow:hidden}
-.rmodal-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);padding:var(--s-4) var(--s-5);border-bottom:1px solid var(--line)}
-.rmodal-actions{display:flex;align-items:center;gap:var(--s-3)}
-.rmodal-close{width:40px;height:40px;display:grid;place-items:center;border:0;background:var(--tint);border-radius:4px;color:var(--ink);cursor:pointer}
-.rmodal-body{overflow-y:auto;overscroll-behavior:contain;padding:var(--s-5);background:var(--bg2)}
-.rmodal-body img{display:block;width:100%;height:auto;box-shadow:0 0 0 1px var(--line)}
-.rmodal .btn-primary,.rmodal .btn-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border-radius:4px;font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-btn);font-weight:500;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease}
-.rmodal .btn-primary{border:1px solid var(--ink);background:var(--ink);color:var(--bg)}
-.rmodal .btn-primary:hover{border-color:var(--accent);background:var(--accent);color:var(--onAccent)}
-.rmodal .btn-secondary{border:1px solid var(--line);background:transparent;color:var(--ink)}
-.rmodal .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
-.rmodal .lbl{margin:0;font-family:var(--mono);font-size:var(--t-small);font-weight:500;letter-spacing:var(--tr-label);text-transform:uppercase}
-@media (max-width:640px){
-  .rmodal{padding:0}
-  .rmodal-panel{width:100%;height:100%;max-height:none;border-radius:0}
-  .rmodal-actions .btn-primary,.rmodal-actions .btn-secondary{padding:10px 14px;font-size:14px}
-  .rmodal-body{padding:var(--s-3)}
+@media (max-width:576px){
 }
-.rmodal-body img{max-width:100%;height:auto;display:block}
-body.rmodal-open{overflow:hidden}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   JAIMEC.CO-INSPIRED LAYER
+   Quiet 18px type, one 912px column, square 444px cards on #F2F2F2,
+   floating annotation chips, pill controls, a peeling contact tab.
+   ══════════════════════════════════════════════════════════════════ */
+
+html,body{background:var(--bg);font-family:var(--display);letter-spacing:var(--tr-body)}
+body{font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+body:before{display:none}          /* drop the film grain */
+#bgwash,.halftone{display:none}    /* drop the wash + dot fields */
+a{color:var(--link)}
+a:hover{color:var(--link);opacity:.7}
+::selection{background:var(--markWash)}
+
+.wrap{padding:0 var(--pad)}
+section{position:relative;z-index:2;padding-bottom:clamp(42px,7vw,62px)}
+#top,#work,#impact,#notes,#experience,#contact{max-width:var(--col);margin:0 auto}
+
+/* ── type: small, quiet, uniform ── */
+h1,h2,h3,.subhead,.lead,.statement,.exp-co,.worktext h3,#contact h2{
+  font-family:var(--display);font-size:var(--t-body);font-weight:400;
+  line-height:var(--lh-body);letter-spacing:var(--tr-body);color:var(--ink);margin:0}
+.eyebrow,.prooflabel,.exp-date,.worktext .num{
+  font-family:var(--display);font-size:var(--t-ui);font-weight:400;
+  letter-spacing:var(--tr-body);text-transform:none;color:var(--faint)}
+.mark{background-image:linear-gradient(transparent 68%,var(--markWash) 68%,var(--markWash) 95%,transparent 95%);-webkit-box-decoration-break:clone;box-decoration-break:clone;color:var(--ink)}
+.emph{font-weight:500;color:var(--ink)}
+
+/* ── nav: floating centred pill ── */
+header,header.scrolled{position:fixed;top:24px;left:0;right:0;max-width:none;width:100%;padding:0;z-index:50;pointer-events:none}
+.navpill{pointer-events:auto;width:max-content;margin:0 auto;display:flex;align-items:center;gap:var(--s-1);
+  padding:4px 5px;border:0;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--surface) 80%,transparent);backdrop-filter:blur(12px) saturate(1.4);
+  box-shadow:none;transition:background .3s var(--ease)}
+header.scrolled .navpill{background:color-mix(in srgb,var(--surface) 92%,transparent)}
+.facemark{display:none}
+.navpill > div[style]{display:none}
+nav.navlinks{display:flex;align-items:center;gap:2px}
+.navlink{padding:4px 10px;border-radius:var(--r-pill);font-size:var(--t-ui);font-weight:500;color:var(--navOff);letter-spacing:var(--tr-body)}
+.navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink);opacity:1}
+.navlink.navcta{display:none}
+.navtext{display:inline!important}
+.navicon{display:none!important}
+.navdiv{display:none}
+.themebtn{width:28px;height:28px;margin-left:2px;border-radius:var(--r-pill);background:transparent;color:var(--navOff);display:inline-grid;place-items:center}
+.themebtn::before{display:none}
+.themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.burger{border-radius:var(--r-pill);background:transparent;color:var(--ink);width:34px;height:34px}
+@media (min-width:641px){header .burger{display:none}}
+@media (max-width:576px){nav.navlinks a{display:none}header .themebtn,header .burger{width:34px;height:34px;border-radius:var(--r-pill);background:transparent}}
+
+/* ── contact tab: peels off the top-right corner ── */
+  transform:rotate(5deg) translateY(-10px);transform-origin:top right;
+  border-radius:0 0 14px 14px;padding:11px 16px 10px;font-size:var(--t-ui);font-weight:500;
+  margin-top:-2px;padding:0 16px;max-height:0;opacity:0;overflow:hidden;
+  display:flex;flex-direction:column;gap:5px;font-size:var(--t-ui);
+
+/* ── hero ── */
+#top{padding-top:clamp(84px,16vh,133px);padding-bottom:clamp(42px,7vw,56px);text-align:left}
+.hero-c{display:block;text-align:left}
+.herowash,.hero-badge,.proofstrip,.herocard{display:none}
+#top .eyebrow{display:none}
+#top h1{max-width:var(--measure);margin:0;font-size:var(--t-body);font-weight:400;color:var(--ink)}
+.hero-sub{max-width:var(--measure);margin:var(--s-5) 0 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+.hero-sub + .hero-sub{margin-top:var(--s-4)}
+#top .cta{justify-content:flex-start;gap:var(--s-2);margin-top:var(--s-6)}
+
+/* inline monogram chips inside prose */
+.co{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;color:var(--ink)}
+.co i{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;
+  background:var(--ink);color:var(--bg);font-style:normal;font-size:11px;font-weight:500;letter-spacing:0;
+  transform:translateY(1px)}
+
+/* ── pill buttons ── */
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:34px;padding:0 13px;
+  border:0;border-radius:var(--r-pill);font-family:var(--display);font-size:var(--t-ui);font-weight:500;
+  line-height:1;cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
+.pill-primary{background:var(--surface);color:var(--ink)}
+.pill-primary:hover{background:color-mix(in srgb,var(--ink) 10%,transparent);color:var(--ink);opacity:1}
+.pill-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.pill-ghost:hover{background:var(--surface);color:var(--ink);opacity:1}
+
+/* ── work: square cards in a two-up grid ── */
+.sechead{max-width:var(--measure);margin:0 0 var(--s-6);text-align:left}
+.sechead h2{font-size:var(--t-body);color:var(--ink)}
+.sechead p{margin:var(--s-2) 0 0;font-size:var(--t-body);color:var(--muted);max-width:var(--measure)}
+/* The top row is not two equal squares any more. One card holds two
+   portrait phones, the other holds a landscape dashboard; forcing both
+   into the same square meant one of them was always wrong, and it was
+   always Rise — the dashboard filled 63% of its frame and floated in a
+   pool of tint while the phones filled 85% of theirs.
+
+   The columns are now proportioned to what they hold, 42:58, and each
+   frame carries an aspect ratio built from the SAME two numbers over a
+   shared 47 — 42/47 and 58/47. Because both ratios share that
+   denominator, the two frames resolve to an identical height at every
+   viewport width, so the row stays a clean row and only the split moves. */
+/* one gap, both axes: the grid ran 42px between rows against 24px
+   between columns, so the same white space read as two different
+   measurements depending on which way you looked */
+.workgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap)}
+.workrow{display:block;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.workrow:hover{border:0;box-shadow:none}
+.workrow > div:first-child{grid-row:auto!important;grid-column:auto!important}
+.cardframe{position:relative;aspect-ratio:1/1;width:100%;border-radius:var(--r-card);background:var(--surface)!important;overflow:hidden;transition:transform .5s var(--ease)}
+.cardframe img.bg{display:none!important}
+.cardframe > img:not(.bg){transition:transform .6s var(--ease)}
+@media (hover:hover){.workrow:hover .cardframe > img:not(.bg){transform:scale(1.03)}}
+.worktext{display:block;padding:0;margin-top:var(--s-4)}
+.worktext .num{display:none}
+.worktext h3{margin:0;font-size:var(--t-ui);font-weight:500;color:var(--ink);line-height:1.35}
+.worktext .desc{display:block;margin:2px 0 0;font-size:var(--t-ui);font-weight:400;color:var(--faint);letter-spacing:var(--tr-body);text-transform:none!important}
+.metrics{margin-top:var(--s-3)}
+.metrics span{font-family:var(--display);font-size:var(--t-small);font-weight:400;letter-spacing:0;
+  color:var(--muted);background:var(--surface);border:0;border-radius:var(--r-pill);padding:4px 9px}
+.workcta{display:none}
+@media (max-width:684px){.workgrid{grid-template-columns:minmax(0,1fr);row-gap:30px}}
+
+/* floating annotation chips inside a card */
+.anno{position:absolute;z-index:4;display:flex;align-items:center;gap:8px;
+  background:var(--card);border-radius:var(--r-float);padding:9px 11px;box-shadow:var(--shadow-float);
+  animation:annofloat 6s ease-in-out infinite}
+.anno:nth-of-type(odd){animation-duration:7.5s;animation-delay:-2s}
+.anno .annotext{display:flex;flex-direction:column;gap:1px;line-height:1.25}
+.anno b{font-size:var(--t-small);font-weight:500;color:var(--ink)}
+.anno span{font-size:var(--t-small);font-weight:400;color:var(--muted)}
+.anno .badge{flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;line-height:1}
+.badge.ok{background:var(--ok)}.badge.warn{background:var(--warn)}.badge.crit{background:var(--crit)}
+@keyframes annofloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.anno{animation:none}}
+
+
+/* mock placement inside the square card */
+.cardframe > img[data-mock]{position:absolute!important;z-index:1!important}
+.cardframe > img[data-mock="right"]{left:50%!important;top:15%!important;height:74%!important;width:auto!important;filter:drop-shadow(0 18px 34px rgba(0,0,0,.20))}
+.cardframe > img[data-mock="left"]{left:13%!important;top:23%!important;height:70%!important;width:auto!important;z-index:2!important;filter:drop-shadow(0 18px 34px rgba(0,0,0,.16))}
+.cardframe > img[data-mock="anchor"],.cardframe > img[data-mock="single"]{
+  left:9%!important;right:auto!important;top:auto!important;bottom:13%!important;
+  width:82%!important;height:auto!important;border-radius:8px;
+  box-shadow:0 20px 44px -22px rgba(0,0,0,.35)!important}
+@media (hover:hover){
+  .workrow:hover .cardframe > img[data-mock="right"]{transform:translate(6px,-6px) scale(1.015)}
+  .workrow:hover .cardframe > img[data-mock="left"]{transform:translate(-6px,-6px) scale(1.015)}
+  .workrow:hover .cardframe > img[data-mock="anchor"],
+  .workrow:hover .cardframe > img[data-mock="single"]{transform:translateY(-8px) scale(1.015)}
+}
+
+
+/* ── built mock: Rise Portal partner dashboard ── */
+.mock{position:absolute;z-index:1;left:24px;top:58px;width:396px;
+  background:#fff;border-radius:12px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 22px 46px -24px rgba(0,0,0,.34);
+  font-family:var(--display);letter-spacing:0;color:#141414;
+  transition:transform .6s var(--ease)}
+:root[data-theme="dark"] .mock{background:#101010;color:#EDEDED}
+@media (hover:hover){.workrow:hover .mock{transform:translateY(-8px) scale(1.015)}}
+
+.mk-bar-top{display:flex;align-items:center;justify-content:center;height:26px;background:#F4F4F5;border-bottom:1px solid #EAEAEA}
+:root[data-theme="dark"] .mk-bar-top{background:#171717;border-bottom-color:#232323}
+.mk-url{font-size:9px;color:#9A9A9A}
+.mk-pad{padding:10px;display:flex;flex-direction:column;gap:8px}
+.mk-card{border:1px solid #ECECEC;border-radius:9px;padding:9px}
+:root[data-theme="dark"] .mk-card{border-color:#232323}
+.mk-h{font-size:10px;font-weight:500;color:#141414;margin-bottom:7px}
+:root[data-theme="dark"] .mk-h{color:#EDEDED}
+
+.mk-cond{flex:1;min-width:0}
+.mk-r{display:flex;align-items:baseline;gap:4px}
+.mk-r b{font-size:13px;font-weight:500;line-height:1;color:#141414}
+:root[data-theme="dark"] .mk-r b{color:#EDEDED}
+.mk-r em{font-size:10px;font-style:normal;color:#9A9A9A}
+.mk-r span{font-size:9.5px;color:#5C5C5C;margin-left:4px}
+.mk-req{margin-left:auto;font-style:normal;font-size:8px;letter-spacing:.04em;text-transform:uppercase;
+  color:#006AD4;background:rgba(0,106,212,.09);border-radius:100px;padding:3px 6px;white-space:nowrap}
+.mk-sub{display:block;font-size:9.5px;color:#5C5C5C;margin-top:1px}
+.mk-track{height:3px;border-radius:100px;background:#EDEDED;margin-top:6px;overflow:hidden}
+:root[data-theme="dark"] .mk-track{background:#232323}
+.mk-track u{display:block;height:100%;border-radius:100px;background:#006AD4;text-decoration:none}
+
+.mk-op{font-size:8px;font-weight:500;letter-spacing:.1em;color:#9A9A9A;margin:7px 0}
+.mk-pair{display:flex;align-items:flex-start;gap:7px}
+.mk-op-or{margin:11px 0 0;flex:0 0 auto}
+
+.mk-list .mk-li{display:flex;align-items:center;gap:7px;padding:5px 0;border-top:1px solid #F1F1F1}
+:root[data-theme="dark"] .mk-list .mk-li{border-top-color:#1E1E1E}
+.mk-nm{font-size:10px;color:#141414;flex:0 0 60px}
+:root[data-theme="dark"] .mk-nm{color:#EDEDED}
+.mk-msk{font-size:9.5px;color:#9A9A9A;letter-spacing:.02em}
+.mk-st{margin-left:auto;font-style:normal;font-size:8.5px;border-radius:100px;padding:3px 7px;white-space:nowrap}
+.mk-st.warn{color:#8A5A00;background:rgba(233,164,23,.16)}
+.mk-st.ok{color:#136B35;background:rgba(31,157,77,.14)}
+.mk-st.mute{color:#7A7A7A;background:#F2F2F2}
+:root[data-theme="dark"] .mk-st.mute{background:#1E1E1E}
+
+
+/* ══ TYPE SCALE — five clear steps ═════════════════════════════════
+   30 display · 18 lead · 16 title · 14 meta · 12 micro
+   ════════════════════════════════════════════════════════════════ */
+
+/* 1 — display: the name, and the only thing at this size */
+#top h1{font-size:var(--t-display);font-weight:500;line-height:1.1;letter-spacing:-.022em;color:var(--ink)}
+
+/* 2 — lead: hero prose */
+.hero-sub{font-size:var(--t-lead);font-weight:400;line-height:1.5;color:var(--muted)}
+.hero-sub .emph,.hero-sub .co{color:var(--ink);font-weight:500}
+
+/* 3 — title: card + company names */
+.worktext h3,.exp-co,#contact h2{font-size:var(--t-title);font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+
+/* 4 — meta: descriptions and supporting copy */
+.worktext .desc,.exp-role,#contact p{font-size:var(--t-meta);font-weight:400;line-height:1.45;color:var(--faint)}
+.exp-desc{font-size:var(--t-meta);line-height:1.55;color:var(--muted);max-width:var(--measure)}
+.exp-role{color:var(--muted)}
+
+/* 5 — micro: labels, dates, chips */
+.seclabel,.exp-date{margin:0;font-size:var(--t-micro);font-weight:500;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--faint)}
+.metrics span{font-size:var(--t-micro)}
+
+/* section labels get room, not a sentence */
+.seclabel{margin-bottom:var(--s-5)}
+#work,#notes,#experience,#contact{padding-top:var(--s-2)}
+.exprow,.expnext{padding-bottom:var(--s-6)}
+.exp-date{margin-bottom:var(--s-2)}
+.exp-role{margin-top:1px}
+.exp-desc{margin-top:var(--s-2)}
+
+/* the hero gets the most air on the page */
+#top{padding-bottom:clamp(50px,9vw,77px)}
+.hero-sub{margin-top:var(--s-4)}
+#top h1 + .hero-sub{margin-top:var(--s-5)}
+#top .cta{margin-top:var(--s-7)}
+
+/* ── impact (removed) ── */
+.impactgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.impactcol{background:var(--surface);border:0;border-radius:var(--r-card);padding:var(--s-5)}
+.impactcol p{order:1;margin:0 0 var(--s-4);font-size:var(--t-ui);line-height:1.4;color:var(--muted);max-width:none}
+.impactnum{order:2;font-family:var(--display);font-size:26px;font-weight:400;letter-spacing:-.02em;color:var(--ink)}
+@media (max-width:684px){.impactgrid{grid-template-columns:minmax(0,1fr)}}
+
+/* ── experience ── */
+.exptimeline{padding-left:0}
+.exptimeline:before,.exprow:before,.expnext:before,.expnext:after{display:none}
+.exprow{padding:0 0 var(--s-6)}
+.expnext{padding:0 0 var(--s-6)}
+.exp-date{margin:0 0 5px;font-size:var(--t-micro);font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.exp-co{font-size:var(--t-title);font-weight:500;letter-spacing:-.012em;color:var(--ink)}
+.exp-role{margin:2px 0 0;font-size:var(--t-meta);color:var(--muted)}
+.exp-desc{margin:var(--s-2) 0 0;font-size:var(--t-meta);line-height:1.55;color:var(--faint);max-width:var(--measure)}
+.exp-chips{gap:5px;margin-top:var(--s-3)}
+.exp-chips span{padding:4px 9px;border-radius:var(--r-pill);background:var(--surface);color:var(--muted);font-size:var(--t-small);letter-spacing:0;text-transform:none}
+.expchip{display:inline-flex;align-items:center;height:34px;padding:0 13px;border:0;border-radius:var(--r-pill);
+  background:var(--dark);color:var(--onDark);font-size:var(--t-ui);font-weight:500;letter-spacing:0;text-transform:none}
+.expchip:hover{background:var(--ink);color:var(--onDark);opacity:.85}
+
+
+/* experience: two-up so the column isn't half empty */
+.exptimeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7) var(--gap);padding-left:0}
+.exprow{padding:0}
+.expnext{grid-column:1/-1;padding:0;margin-bottom:var(--s-2)}
+.exp-desc{max-width:none}
+@media (max-width:684px){.exptimeline{grid-template-columns:minmax(0,1fr);gap:var(--s-6)}}
+
+
+/* ── hero rhythm: one even step, the way the reference does it ── */
+#top h1 + .hero-sub{margin-top:18px}
+.hero-sub + .hero-sub{margin-top:16px}
+#top .cta{margin-top:22px;gap:var(--s-2)}
+#top{padding-top:clamp(104px,20vh,158px);padding-bottom:clamp(62px,11vw,87px)}
+
+/* ── footer: one quiet row, no repeats ── */
+#contact{padding-bottom:0}
+#contact footer{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:var(--s-5);
+  width:auto;margin:0;padding:var(--s-6) 0 var(--s-7);background:transparent;
+  text-align:left}
+.footline{margin:0;font-size:var(--t-meta);color:var(--faint)}
+@media (max-width:504px){#contact footer{flex-direction:column;align-items:flex-start;gap:var(--s-3)}}
+
+/* (old contact/footer rules removed — superseded above) */
+
+/* ── chrome ── */
+.totop{border-radius:var(--r-pill);background:var(--surface);border:0;color:var(--ink);box-shadow:none}
+.toast,#palette .box{border-radius:var(--r-float);background:var(--card);box-shadow:var(--shadow-float)}
+#palette .list a,.mrow{border-radius:var(--r-sm)}
+.mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:var(--tr-body)}
+.mresume{border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:var(--t-ui)}
+.mailbtn{font-family:var(--display);font-size:var(--t-body);color:var(--link)}
+#loader{background:var(--bg)}
+#loader .name span{font-family:var(--display);font-size:var(--t-body);font-weight:400;letter-spacing:var(--tr-body);color:var(--ink)}
+#loader .tag{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:0;color:var(--faint)}
+#loader .ln,#loader .dot{background:var(--line)}
+#loader .dot{box-shadow:0 0 0 1px var(--line)}
+
+/* ── motion: quieter reveals ── */
+[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+[data-reveal].shown{opacity:1;transform:none}
+h1[data-reveal],h2[data-reveal],.statement[data-reveal]{transform:translateY(12px);transition-duration:.6s}
+.heroin h1{animation:riseIn .6s var(--ease) .04s both}
+.heroin .herosub{animation:riseIn .6s var(--ease) .12s both}
+@media (prefers-reduced-motion:reduce){.anno,[data-reveal],.heroin *{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}}
+
+/* ══════════════════════════════════════════════════════════════════
+   SHARED SITE CHROME — identical on every page
+   type scale · nav pill · contact tab · footer · overlays
+   ══════════════════════════════════════════════════════════════════ */
+
+html,body{background:var(--bg);font-family:var(--display);letter-spacing:-.01em}
+body{font-size:14px;line-height:1.6;color:var(--muted);-webkit-font-smoothing:antialiased}
+body:before,#bgwash,.halftone{display:none!important}
+a{color:var(--link);transition:opacity .2s ease,color .2s ease}
+a:hover{color:var(--link);opacity:.7}
+::selection{background:var(--markWash)}
+
+/* ── type scale: 30 display · 18 lead · 16 title · 15 ui · 14 meta · 12 label ── */
+h1,h2,h3,h4{font-family:var(--display);color:var(--ink);margin:0}
+.t-display{font-size:24px;font-weight:500;line-height:1.14;letter-spacing:-.022em;color:var(--ink)}
+.t-lead{font-size:15px;font-weight:400;line-height:1.5;color:var(--muted)}
+.t-title{font-size:14px;font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.t-meta{font-size:13px;font-weight:400;line-height:1.45;color:var(--faint)}
+.t-label{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.seclabel,.stage,.exp-date,.lbl{font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin:0}
+
+/* ── nav pill ── */
+header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;padding:0;z-index:50;pointer-events:none;transition:none}
+.navpill{pointer-events:auto;width:max-content;margin:0 auto;display:flex;align-items:center;gap:2px;
+  padding:4px 5px;border:0;border-radius:var(--r-pill);box-shadow:none;
+  background:color-mix(in srgb,var(--surface) 85%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4)}
+header.scrolled .navpill{background:color-mix(in srgb,var(--surface) 94%,transparent);padding:4px 5px}
+.facemark,.navdiv{display:none!important}
+.navpill > div[style]{display:none}
+.crumb{display:none}
+nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:500}
+.navlink{display:inline-flex;align-items:center;padding:4px 10px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;color:var(--navOff);min-width:0}
+.navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink);opacity:1}
+.navlink[aria-current="page"]{color:var(--ink)}
+.navtext{display:inline!important}
+.navicon{display:none!important}
+.themebtn{width:28px;height:28px;margin-left:2px;border:0;border-radius:var(--r-pill);
+  background:transparent;color:var(--navOff);display:inline-grid;place-items:center;cursor:pointer}
+.themebtn::before{display:none}
+.themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.burger{width:34px;height:34px;border:0;border-radius:var(--r-pill);background:transparent;color:var(--ink)}
+@media (min-width:641px){header .burger{display:none}}
+@media (max-width:576px){
+  nav.navlinks a{display:none}
+  header .themebtn,header .burger{width:34px;height:34px;border-radius:var(--r-pill);background:transparent}
+}
+
+/* ── footer ── */
+#contact{max-width:821px;margin:0 auto;padding-bottom:0}
+/* one line of type, so it is centred: space-between with a single
+   child just parks it on the left edge for no reason */
+#contact footer{display:flex;flex-direction:row;align-items:center;justify-content:center;
+  gap:18px;width:auto;margin:0;padding:24px 0 36px;background:transparent;
+  text-align:center;position:relative}
+#contact footer > *:not(.footline){display:none!important}
+#contact footer .footline{margin:0;font-size:13px;font-weight:400;line-height:1.45;color:var(--faint);max-width:none}
+@media (max-width:504px){#contact footer{flex-direction:column;align-items:center;gap:10px}}
+
+/* ══ AUDIT PASS ══════════════════════════════════════════════════════
+   Three structural problems, all measured on the page as it stood.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 2. RHYTHM. The gaps between sections decayed 94 -> 69 -> 52px, so the
+   page visibly ran out of breath on the way down. The hero keeps the
+   larger opening gap; every band after it is spaced the same. */
+#work,#notes,#experience{padding-bottom:clamp(46px,7vw,72px)}
+#experience:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
+
+/* 3. THE END OF THE PAGE. #contact carried nothing but a copyright: the
+   one place a reader has finished the work and decided to act had no way
+   to act. Kept as plain text links on the line that was already there —
+   no panel, no rule, no social profiles. */
+
+/* 4. A HIDDEN CONTROL WAS STILL IN THE TAB ORDER. #totop is the first
+   element inside .wrap, and at the top of the page it is opacity:0 with
+   pointer-events:none — but neither of those takes an element out of the
+   keyboard path, so the very first Tab press landed on an invisible
+   "Back to top" button. visibility removes it properly; it is delayed on
+   the way out so the fade still plays. */
+.totop{visibility:hidden;transition:opacity .2s ease,
+  transform .2s cubic-bezier(.3,.8,.3,1),visibility 0s linear .2s}
+.totop.show{visibility:visible;transition-delay:0s,0s,0s}
+
+
+
+
+/* ══ THE NOTE BOARD ══════════════════════════════════════════════════
+   The thing a designer does with any work put in front of them is stick
+   notes on it. So the portfolio hands them the pad.
+
+   Everything lives ON the canvas, the way it does in FigJam, Figma and
+   Miro: a floating pill of tools sitting over the board, not a row of
+   web buttons underneath it. There is no separate "add" button and no
+   instruction paragraph — the board arrives with one note already on it
+   and the instructions are that note's placeholder, so the first thing
+   you read is also the thing you type over.
+
+   The pill is the page's own float material — var(--card) on
+   --shadow-float — which is the same surface as the toast and the
+   command palette, so the borrowed pattern still speaks in this site's
+   voice rather than Figma's.
+   ═══════════════════════════════════════════════════════════════════ */
+.padwrap{display:block}
+.padhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:clamp(14px,2vw,18px)}
+.padtitle{margin:0;font-size:18px;font-weight:500;line-height:1.3;
+  letter-spacing:-.018em;color:var(--ink)}
+.padsub{margin:0;font-size:13px;line-height:1.45;color:var(--faint)}
+
+.padboard{position:relative;overflow:hidden;touch-action:manipulation;
+  height:clamp(300px,34vw,364px);border-radius:var(--r-card);
+  background-color:var(--surface);
+  background-image:radial-gradient(circle at 1px 1px,
+    color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
+  background-size:18px 18px;background-position:9px 9px}
+
+/* ── a note ── */
+.padnote{position:absolute;width:152px;border-radius:4px;
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 22px -14px rgba(16,16,24,.38);
+  transform:rotate(var(--tilt,0deg));transform-origin:50% 0}
+.padnote:focus-within{box-shadow:0 0 0 1.5px var(--accent),
+  0 10px 22px -14px rgba(16,16,24,.38)}
+.padgrip{display:flex;align-items:center;justify-content:space-between;
+  height:20px;padding:0 4px 0 7px;cursor:grab;touch-action:none;
+  border-radius:4px 4px 0 0}
+.padnote.is-dragging .padgrip{cursor:grabbing}
+.padgrip .dots{display:flex;gap:2px}
+.padgrip .dots i{width:3px;height:3px;border-radius:50%;background:rgba(20,20,20,.28)}
+.padkill{display:grid;place-items:center;width:17px;height:17px;padding:0;
+  border:0;border-radius:3px;background:transparent;cursor:pointer;
+  color:rgba(20,20,20,.42);transition:color .15s var(--ease)}
+@media (hover:hover){.padkill:hover{color:rgba(20,20,20,.85)}}
+.padnote textarea{display:block;width:100%;height:84px;padding:1px 10px 10px;
+  border:0;outline:0;resize:none;background:transparent;
+  font-family:var(--display);font-size:12.5px;line-height:1.45;
+  letter-spacing:-.005em;color:#1B1B1B}
+.padnote textarea::placeholder{color:rgba(20,20,20,.42)}
+.padnote.t0{background:#FDF0B7}
+.padnote.t1{background:#CFE6FA}
+.padnote.t2{background:#FBD5E3}
+.padnote.t3{background:#D2EEDA}
+
+/* the seed note carries the instructions, so it is cut a little larger
+   than a normal note and its placeholder is given more presence — it has
+   to be readable as a sentence before anyone types over it */
+.padnote.is-seed{width:190px}
+.padnote.is-seed textarea{height:92px}
+.padnote.is-seed textarea::placeholder{color:rgba(20,20,20,.56)}
+@media (max-width:560px){.padnote.is-seed{width:214px}.padnote.is-seed textarea{height:112px}}
+
+/* notes that have been handed over settle flat and step back, so the
+   board shows at a glance what has already gone and what is new */
+.padboard.is-sent .padnote.was-sent{transform:rotate(0deg);opacity:.62;
+  box-shadow:0 1px 2px rgba(0,0,0,.05)}
+
+/* ── the tool pill, floating on the canvas ── */
+.padbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  z-index:6;display:flex;align-items:center;gap:3px;padding:5px;
+  border-radius:var(--r-pill);background:var(--card);
+  box-shadow:var(--shadow-float)}
+.padtool{display:grid;place-items:center;width:32px;height:32px;padding:0;
+  border:0;border-radius:var(--r-pill);background:transparent;cursor:pointer;
+  color:var(--ink);transition:background .18s var(--ease),color .18s var(--ease)}
+@media (hover:hover){.padtool:hover{background:var(--surface)}}
+.padtool[disabled]{cursor:default;color:var(--faint);opacity:.5;background:transparent}
+.padtrash{color:var(--muted)}
+@media (hover:hover){.padtrash:hover{color:var(--ink)}}
+.padcount{min-width:16px;padding:0 2px;text-align:center;
+  font-family:var(--mono);font-size:11px;font-weight:500;color:var(--faint);
+  font-variant-numeric:tabular-nums}
+.padsep{width:1px;height:18px;margin:0 3px;background:var(--line)}
+.padsend{display:inline-flex;align-items:center;gap:6px;height:32px;
+  padding:0 13px;border:0;border-radius:var(--r-pill);cursor:pointer;
+  background:var(--ink);color:var(--bg);font-family:inherit;font-size:13px;
+  font-weight:500;transition:opacity .18s var(--ease)}
+@media (hover:hover){.padsend:hover{opacity:.88}}
+.padsend[disabled]{cursor:default;background:var(--line);color:var(--faint)}
+.padsend .ico-done{display:none}
+.padsend.is-done .ico-send{display:none}
+.padsend.is-done .ico-done{display:block}
+
+/* ── the acknowledgement ── */
+.padtoast{position:absolute;left:50%;top:12px;transform:translateX(-50%);
+  z-index:7;display:flex;align-items:center;gap:9px;max-width:calc(100% - 24px);
+  padding:8px 8px 8px 12px;border-radius:var(--r-pill);
+  background:var(--card);color:var(--muted);box-shadow:var(--shadow-float);
+  font-size:12.5px;line-height:1.35}
+.padtoast svg{flex:0 0 auto;color:var(--accent)}
+.padtoastx{display:grid;place-items:center;width:20px;height:20px;padding:0;
+  flex:0 0 auto;border:0;border-radius:50%;background:transparent;
+  cursor:pointer;color:var(--faint)}
+@media (hover:hover){.padtoastx:hover{color:var(--ink)}}
+.padwrap [hidden]{display:none}
+
+@media (max-width:560px){
+  .padboard{height:clamp(330px,92vw,392px)}
+  /* 16px or iOS zooms the page the moment a note is focused, so the note
+     grows to suit the type rather than the other way round */
+  .padnote{width:196px}
+  .padnote textarea{font-size:16px;height:92px}
+  .padtoast{font-size:12px;padding:7px 7px 7px 11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .padnote,.padtool,.padsend{transition:none}
+}
+
+/* ── overlays + chrome ── */
+.totop{border:0;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);box-shadow:none}
+.toast,#palette .box{border-radius:var(--r-float);background:var(--card);box-shadow:var(--shadow-float)}
+#palette .list a,.mrow{border-radius:var(--r-sm)}
+.mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:-.01em}
+.mresume{border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:13px}
+.mailbtn{font-family:var(--display);font-size:14px;color:var(--link)}
+.mobilenav{background:var(--bg)}
+#loader{background:var(--bg)}
+#loader .name span{font-family:var(--display);font-size:15px;font-weight:400;letter-spacing:-.01em;color:var(--ink)}
+#loader .tag{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--faint)}
+#loader .ln{background:var(--line)}
+#loader .dot{background:var(--bg);box-shadow:0 0 0 1px var(--line)}
+
+/* ── pill buttons (shared) ── */
+.pill,.btn-primary,.btn-secondary,.mresume{font-family:var(--display)}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:34px;padding:0 13px;
+  border:0;border-radius:var(--r-pill);font-size:13px;font-weight:500;line-height:1;cursor:pointer;
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.pill-primary{background:var(--surface);color:var(--ink)}
+.pill-primary:hover{background:color-mix(in srgb,var(--ink) 10%,transparent);opacity:1}
+.pill-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.pill-ghost:hover{background:var(--surface);opacity:1}
+.btn-primary{height:34px;padding:0 13px;border:0;border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:13px;font-weight:500}
+.btn-primary:hover{background:var(--ink);opacity:.85}
+.btn-secondary{height:34px;padding:0 13px;border:0;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);font-size:13px;font-weight:500}
+.btn-secondary:hover{background:color-mix(in srgb,var(--ink) 10%,transparent)}
+
+/* ── motion ── */
+[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+[data-reveal].shown{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* ── hero avatar ── */
+.heroavatar{display:block;width:72px;height:72px;border-radius:1000px;object-fit:cover;
+  margin:0 0 20px;box-shadow:0 0 8px -6px rgba(0,0,0,.5)}
+@media (max-width:576px){.heroavatar{width:64px;height:64px;margin-bottom:16px}}
+
+/* ── hero: text left, image right ── */
+.heroavatar{display:none}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:clamp(21px,4vw,42px);align-items:center}
+.hero-c{display:block}
+#top .hero-sub{max-width:38em}
+
+.heroimg{position:relative;margin:0;padding:0;overflow:hidden;
+  aspect-ratio:4/3;border-radius:var(--r-card);background:var(--surface);
+  display:grid;place-items:end center}
+.heroimg img{display:block;width:94%;height:auto;object-fit:contain}
+
+@media (max-width:774px){
+  .hero-grid{grid-template-columns:minmax(0,1fr);gap:clamp(21px,5vw,30px)}
+  .heroimg{aspect-ratio:16/10;max-width:468px}
+}
+
+/* ══ WHERE I'VE WORKED — a rail, read top to bottom ══════════════ */
+#experience .exptimeline{position:relative;display:block;padding-left:20px;margin-top:2px;
+  grid-template-columns:none;gap:0}
+#experience .exptimeline:before{content:"";display:block;position:absolute;left:4px;top:9px;bottom:12px;
+  width:1px;background:var(--line)}
+
+/* current status: where the rail starts */
+#experience .expnow{position:relative;margin:0;padding:0 0 22px;
+  font-size:12px;font-weight:500;letter-spacing:-.01em;color:var(--link)}
+#experience .expnow:before{content:"";display:block;position:absolute;left:-20px;top:3px;width:9px;height:9px;
+  border-radius:50%;background:var(--link);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--link) 15%,transparent)}
+
+/* one role per node */
+#experience .exprow{position:relative;display:grid;
+  grid-template-columns:minmax(0,152px) minmax(0,1fr);gap:0 clamp(13px,2.4vw,24px);
+  padding:0 0 22px;align-items:start;border:0;background:transparent}
+#experience .exprow:last-child{padding-bottom:0}
+#experience .exprow:before{content:"";display:block;position:absolute;left:-20px;top:4px;width:9px;height:9px;
+  border-radius:50%;background:var(--bg);box-shadow:0 0 0 1.5px var(--line)}
+#experience .exprow:first-of-type:before{background:var(--ink);box-shadow:0 0 0 1.5px var(--ink)}
+
+#experience .exp-date{margin:1px 0 0;font-size:11px;font-weight:500;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--faint);white-space:nowrap}
+#experience .exp-co{margin:0;font-size:14px;font-weight:500;line-height:1.3;
+  letter-spacing:-.012em;color:var(--ink)}
+#experience .exp-role{margin:2px 0 0;font-size:13px;line-height:1.45;color:var(--muted)}
+#experience .exp-desc{margin:7px 0 0;font-size:13px;line-height:1.55;color:var(--faint);max-width:56ch}
+
+@media (max-width:576px){
+  #experience .exptimeline{padding-left:16px}
+  #experience .exptimeline:before{left:3px}
+  #experience .exprow{grid-template-columns:minmax(0,1fr);gap:4px;padding-bottom:20px}
+  #experience .exprow:before,#experience .expnow:before{left:-17px}
+  #experience .exp-date{margin-bottom:4px}
+}
+
+#experience .exp-date{grid-column:1;grid-row:1/span 3}
+#experience .exp-co{grid-column:2;grid-row:1}
+#experience .exp-role{grid-column:2;grid-row:2}
+#experience .exp-desc{grid-column:2;grid-row:3}
+@media (max-width:576px){
+  #experience .exp-date,#experience .exp-co,#experience .exp-role,#experience .exp-desc{grid-column:1;grid-row:auto}
+}
+
+#top .hero-c{display:block;max-width:none}
+
+.hero-id{display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  margin:0 0 clamp(16px,2.6vw,22px);font-size:13px;line-height:1.4;color:var(--faint)}
+.hero-face{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none;
+  background:var(--surface)}
+.hero-id b{font-weight:500;color:var(--ink)}
+.hero-id b + span:before{content:"\00B7";margin-right:8px;color:var(--faint);opacity:.6}
+
+#top h1{max-width:none;font-size:clamp(22px,3.2vw,35px);font-weight:500;
+  line-height:1.16;letter-spacing:-.026em;color:var(--ink);text-wrap:pretty}
+/* two beats, one per line: the observation sets it up in muted, the claim
+   lands in ink. Breaking anywhere else drops the rhetorical structure. */
+#top h1 .h1-a,#top h1 .h1-b{display:block}
+/* These are two sentences, not one sentence that wrapped. At 1.16 the
+   line box gave them 0px between — set solid, so they read as a block of
+   text rather than as a setup and a claim. The gap is added between the
+   two lines only; the line-height inside each stays tight so a line that
+   wraps on a narrow screen still holds together. */
+#top h1 .h1-a{color:var(--muted);margin-bottom:clamp(7px,.9vw,12px)}
+#top h1 + .hero-sub{margin-top:clamp(14px,2vw,18px)}
+#top .hero-sub{max-width:66ch;font-size:var(--t-lead);line-height:1.55;color:var(--muted)}
+#top .cta{margin-top:clamp(18px,2.8vw,24px)}
+#top .cta .pill svg{margin-left:2px;opacity:.55}
+
+@media (max-width:576px){
+    #top h1{letter-spacing:-.02em}
+  /* the row wraps here, which would strand the separator at the head of
+     line two looking like a stray bullet */
+  .hero-id b + span:before{content:none}
+}
+/* ══ SELECTED WORK ═══════════════════════════════════════════════════
+   What a hiring manager is doing here is triaging: which of these three
+   is worth ten minutes? That needs four things fast — what it was, how
+   much of it was Lokesh, what happened, and where to read more. Every
+   one of those was either missing, hidden, or stated twice.
+
+   · titles ran at 15px, the same size as the caption under them, so the
+     one line worth scanning had no weight at all
+   · the outcome numbers appeared twice on cards 02 and 03 — once as a
+     chip floating over the mock, once as a pill below it
+   · those floating chips were hand-placed per card and sat on top of the
+     work they were annotating
+   · `.num` and `.workcta` were both display:none, so no card had a
+     visible call to action
+   · Runable is a <div> whose only link was the hidden .workcta, leaving
+     the most recent work with nothing to click at all
+   · three cards in a two-column grid orphaned the third
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* The wide row was a 444px SQUARE frame holding a 364x238 browser shot:
+   206px of the frame was empty mat, and the text beside it filled only
+   31% of the row's height, which is the void that made this card read as
+   unfinished. A landscape subject gets a landscape frame — 16:10 — and
+   the row height drops from 444px to roughly the height of the two
+   square cards above it, so the section keeps one rhythm.
+
+   The text column is fixed rather than fluid: the frame takes the rest,
+   so the artwork gets the growth as the page widens. */
+/* Rise and Runable are both browser screenshots, and they were being
+   presented as two different kinds of object — one framed 462x375 in the
+   row above, the other 455x284 in a row with its own private column
+   widths. Now the wide row inherits the SAME 42:58 split and the SAME
+   frame ratio as the row above it, and the shot sits in the 58 column:
+   the two web cards are identical in width, height and framing, and the
+   Runable frame lines up edge to edge with the Rise frame above it.
+
+   The text takes the 42 column, so it lands under the App Merge card and
+   the grid holds on both axes. */
+.workrow.is-wide{grid-column:1/-1;display:grid;
+  grid-template-columns:minmax(0,42fr) minmax(0,58fr);
+  gap:var(--gap);align-items:center}
+.workrow.is-wide .cardframe{aspect-ratio:58/39.58}
+.workrow.is-wide > div:first-child{grid-column:2;grid-row:1}
+.workrow.is-wide .worktext{grid-column:1;grid-row:1;margin-top:0}
+
+/* and it is placed the way the Rise dashboard is placed: 96% wide,
+   contained, centred, even air on every side. Same object, same rules. */
+.workrow.is-wide .cardframe > img[data-mock="single"]{
+  left:20px!important;right:auto!important;width:calc(100% - 40px)!important;
+  height:auto!important;top:50%!important;bottom:auto!important;
+  transform:translateY(-50%);
+  /* flat at rest, like the Rise shot */
+  box-shadow:none!important;filter:none;
+  transition:transform .45s var(--ease)}
+/* the same 1.03x and the same 8px lift */
+.workrow.is-wide:hover .cardframe > img[data-mock="single"],
+.workrow.is-wide:focus-within .cardframe > img[data-mock="single"]{
+  transform:translateY(-50%) translateY(-8px) scale(1.03)}
+
+/* index marker — ties the grid to the 01 · 02 · 03 stages in the studies */
+.worktext .num{display:block;margin:0 0 8px;font-family:var(--display);
+  font-size:11px;font-weight:500;letter-spacing:.09em;color:var(--faint)}
+
+/* the line they actually scan */
+.worktext h3{font-size:clamp(16px,1.6vw,18px);font-weight:500;line-height:1.3;
+  letter-spacing:-.018em;color:var(--ink)}
+.worktext .desc{margin-top:5px;font-size:13px;color:var(--faint)}
+
+/* outcomes: figure in ink, label faint — same pattern as the App Merge
+   ledger, so a number reads the same way everywhere on the site */
+.metrics{display:flex;flex-wrap:wrap;gap:7px clamp(16px,3vw,28px);margin-top:13px}
+.metrics > div{display:flex;flex-direction:column;gap:1px}
+.metrics b{font-size:16px;font-weight:500;line-height:1.2;letter-spacing:-.022em;
+  color:var(--ink);font-variant-numeric:tabular-nums}
+.metrics > div > span{font-size:12px;font-weight:400;line-height:1.35;
+  color:var(--faint);background:none;border:0;border-radius:0;padding:0}
+
+/* the caveats he writes into his own case studies, kept on the card */
+.worknote{margin:10px 0 0;font-size:12px;line-height:1.5;color:var(--faint);max-width:44ch}
+
+/* a visible way in — and on Runable the ONLY way in */
+.workcta{display:inline-flex;align-items:center;gap:5px;min-width:0;margin-top:14px;
+  padding:0;border-radius:0;box-shadow:none;font-size:13px;font-weight:500;color:var(--accent)}
+.workcta svg{transition:transform .25s var(--ease)}
+@media (hover:hover){.workrow:hover .workcta svg{transform:translateX(3px)}}
+.livecta{padding:7px 11px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--line)}
+@media (hover:hover){.livecta:hover{background:var(--surface)}}
+
+/* the chips are gone: they duplicated the numbers below and covered the mock */
+.cardframe .anno{display:none}
+
+/* the grid equalises row height, so bottom-align the CTA — otherwise the
+   card carrying a note pushes its link out of step with the one that isn't */
+/* align-items:stretch is explicit: the <=900px layer sets align-items:start,
+   which was inert while this was display:block but collapses the frame to
+   zero width once the row becomes a column flex container */
+.workrow:not(.is-wide){display:flex;flex-direction:column;align-items:stretch}
+.workrow:not(.is-wide) .worktext{flex:1;display:flex;flex-direction:column;align-items:flex-start}
+.workrow:not(.is-wide) .workcta{margin-top:auto;padding-top:14px}
+
+@media (max-width:684px){
+  .workrow.is-wide{grid-template-columns:minmax(0,1fr);gap:var(--s-4);align-items:start}
+  /* stacked, the explicit placement above would put the caption first —
+     every other card on this page is picture then words */
+  .workrow.is-wide > div:first-child{grid-column:1;grid-row:1}
+  .workrow.is-wide .worktext{grid-column:1;grid-row:2;margin-top:var(--s-4)}
+}
+/* ══ SELECTED WORK — hierarchy pass ══════════════════════════════════
+   Two problems, both measured on the old card:
+
+   1. 57px of dead space sat between the image and the first line of
+      text, so each card read as two unrelated objects rather than one.
+      The text now sits 14px under its image — that gap IS the link.
+
+   2. Seven type sizes in one card (11/17.5/13/16/12/12/13), with the
+      metric figure at 16px against a 17.5px title. The numbers were
+      competing with the heading instead of supporting it.
+      Now four levels, and really two sizes — 18 and 13 — with weight
+      and colour doing the ranking:
+        TITLE    18/500 ink     what it was
+        WHO      13/400 faint   company, role, product type
+        PROOF    13     figures in ink, rest faint
+        ACTION   13/500 accent  the way in
+   ═══════════════════════════════════════════════════════════════════ */
+/* the 57px void was a leftover flex `gap` on the row (clamp(21px,4vw,48px)),
+   inherited from when this was a two-column layout. In a column flex it was
+   spacing the image away from its own caption. */
+.workrow:not(.is-wide){gap:0}
+.workrow .worktext{margin-top:14px!important}
+.workrow .cardframe{margin-bottom:0}
+
+.worktext h3{font-size:18px;font-weight:500;line-height:1.3;letter-spacing:-.018em;color:var(--ink)}
+.worktext .desc{display:block;margin-top:5px;font-size:13px;font-weight:400;
+  line-height:1.45;color:var(--faint)}
+
+/* one line, figures in ink — proof that supports the title rather than
+   out-shouting it */
+.workfacts{margin:9px 0 0;font-size:13px;font-weight:400;line-height:1.5;color:var(--faint)}
+.workfacts b{font-weight:500;color:var(--ink)}
+.workfacts i{font-style:normal;margin:0 7px;color:var(--faint);opacity:.45}
+
+.workrow .workcta{margin-top:12px;padding-top:0;font-size:13px}
+.workrow:not(.is-wide) .workcta{margin-top:auto;padding-top:14px}
+/* ══ MOBILE MENU ═════════════════════════════════════════════════════
+   "Contact" is gone: it scrolled to a footer that carries no contact
+   details, and this panel already ends with the email address. That
+   left ~420px of dead space between the links and the foot — which is
+   now where the work lives, since a portfolio menu with no route to the
+   case studies is missing the only thing it's really for.
+   Arrows changed from the ↗ (external) glyph to a plain right arrow:
+   every destination here is on this site.
+   ═══════════════════════════════════════════════════════════════════ */
+.mcases{display:flex;flex-direction:column;flex:0 0 auto;
+  margin-top:clamp(16px,3vh,26px);padding:0 var(--pad)}
+.mgroup{margin:0 0 4px;font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.mcase{display:flex;align-items:center;gap:var(--s-4);padding:13px 0;
+  color:var(--ink);border-radius:var(--r-sm);box-shadow:inset 0 -1px 0 var(--line)}
+.mcase:last-child{box-shadow:none}
+.mcase-x{flex:1;min-width:0}
+.mcase-t{display:block;font-family:var(--display);font-size:16px;font-weight:400;
+  line-height:1.3;letter-spacing:-.01em;color:var(--ink)}
+.mcase-m{display:block;margin-top:3px;font-family:var(--display);font-size:13px;
+  line-height:1.4;color:var(--faint)}
+.mcase svg{flex:0 0 auto;color:var(--faint)}
+.mcase[aria-current="page"] .mcase-t{color:var(--accent)}
+.mcase[aria-current="page"] svg{color:var(--accent);opacity:.6}
+/* ══ THE OPEN SLOT ═══════════════════════════════════════════════════
+   "Open to new work" was a line of blue text floating above the job
+   history. But the timeline is a list of filled roles — so the honest,
+   and more interesting, way to say it is to draw the NEXT row and leave
+   it unfilled: an empty form field, with the caret still blinking,
+   waiting for a company name.
+
+   A dashed outline already means "absent / not there yet" everywhere
+   else on this site (the unreachable node in the chain of access, the
+   `not done` gaps, the hidden cells in the payout black box), so this
+   reads in a language the rest of the portfolio has already taught.
+   ═══════════════════════════════════════════════════════════════════ */
+#experience .exprow.expopen:before{background:var(--link);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--link) 15%,transparent)}
+#experience .expopen .exp-date{color:var(--link)}
+
+/* ── the open slot, made fillable ──────────────────────────────────
+   Three states on one element, driven by data-state:
+     empty   → a dashed, EMPTY slot — quiet until you reach for it
+     editing → live input, accent border, save button
+     filled  → reads as a real timeline entry, with edit / remove
+   The payoff is the filled state: the visitor's team name sits in the
+   career list looking exactly like the four real roles beneath it.  */
+/* Two failure modes, one on each side of the line.
+
+   It began by painting three "this field has keyboard focus" signals at
+   once — accent border, accent fill and a blinking caret — while nothing
+   was focused. A blinking caret is the operating system's word for "type
+   and it lands here", so anyone who believed it lost their keystrokes.
+
+   Stripping all three went too far the other way: a plain grey dashed
+   box reads as decoration, not as something you can write in.
+
+   So the resting state now says EDITABLE without saying FOCUSED. The
+   accent is back, at low strength, and it carries a pencil at the end of
+   the field — an unambiguous "you can write here" that no operating
+   system uses to mean focus. The caret, the only true focus signal in
+   the set, is the one thing held back for hover. */
+#experience .expslot{display:inline-flex;align-items:center;gap:6px;
+  justify-self:start;min-width:200px;max-width:100%;cursor:text;
+  padding:5px 7px 5px 9px;border-radius:8px;
+  border:1px dashed color-mix(in srgb,var(--link) 40%,transparent);
+  background:color-mix(in srgb,var(--link) 4%,transparent);
+  transition:border-color .25s ease,background .25s ease,padding .25s ease}
+@media (hover:hover){
+  #experience .expslot[data-state="empty"]:hover{
+    border-color:color-mix(in srgb,var(--link) 66%,transparent);
+    background:color-mix(in srgb,var(--link) 9%,transparent)}
+}
+
+/* the pencil: shown only on the empty slot, decorative, never in the tab
+   order — the input behind it is the real target */
+#experience .exphint{display:none;flex:0 0 auto;width:14px;height:14px;
+  margin-left:6px;color:color-mix(in srgb,var(--link) 58%,transparent);
+  transition:color .2s ease}
+#experience .exphint svg{width:14px;height:14px;display:block}
+#experience .expslot[data-state="empty"] .exphint{display:inline-flex}
+@media (hover:hover){
+  #experience .expslot[data-state="empty"]:hover .exphint{color:var(--link)}
+}
+#experience .expfield{position:relative;display:inline-flex;align-items:center;min-width:0;flex:1}
+
+#experience .expinput{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:0;
+  font-family:var(--display);font-size:14px;font-weight:400;line-height:1.3;
+  letter-spacing:-.012em;color:var(--ink)}
+#experience .expinput::placeholder{color:var(--faint);opacity:1}
+#experience .expname{display:none;font-family:var(--display);font-size:14px;font-weight:500;
+  line-height:1.3;letter-spacing:-.012em;color:var(--ink);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+
+/* the caret is kept, but only on hover — there it reads as a preview of
+   where the text will go, not as a claim that the field already has the
+   keyboard. It never blinks while unhovered, and the editing state hides
+   it so it never fights the real one. */
+.expcaret{display:inline-block;width:1.5px;height:15px;flex:0 0 auto;margin-right:5px;
+  background:var(--link);border-radius:1px;opacity:0;
+  transition:opacity .2s ease}
+@media (hover:hover){
+  #experience .expslot[data-state="empty"]:hover .expcaret{
+    opacity:1;animation:expblink 1.15s step-end infinite}
+}
+@keyframes expblink{0%,100%{opacity:1}50%{opacity:0}}
+
+#experience .expacts{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto}
+#experience .expbtn{display:none;width:24px;height:24px;padding:0;border:0;cursor:pointer;
+  border-radius:6px;background:transparent;color:var(--faint);
+  align-items:center;justify-content:center;transition:background .18s ease,color .18s ease}
+#experience .expbtn svg{width:15px;height:15px;display:block}
+#experience .expbtn:hover{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink)}
+#experience .expbtn.is-done:hover{color:var(--ok)}
+#experience .expbtn.is-del:hover{color:var(--neg)}
+
+/* ── editing ── */
+#experience .expslot[data-state="editing"]{border-style:solid;
+  border-color:color-mix(in srgb,var(--link) 65%,transparent);
+  background:color-mix(in srgb,var(--link) 8%,transparent)}
+#experience .expslot[data-state="editing"] .expcaret{display:none}
+#experience .expslot[data-state="editing"] .expbtn.is-done{display:inline-flex}
+
+/* ── filled: stop looking like a form, start looking like a role ── */
+#experience .expslot[data-state="filled"]{border-color:transparent;background:transparent;
+  padding-left:0;padding-right:2px}
+#experience .expslot[data-state="filled"] .expcaret,
+#experience .expslot[data-state="filled"] .expinput{display:none}
+#experience .expslot[data-state="filled"] .expname{display:inline-block}
+#experience .expslot[data-state="filled"] .expbtn.is-edit,
+#experience .expslot[data-state="filled"] .expbtn.is-del{display:inline-flex;opacity:0;
+  transition:opacity .2s ease,background .18s ease,color .18s ease}
+#experience .expslot[data-state="filled"]:hover .expbtn.is-edit,
+#experience .expslot[data-state="filled"]:hover .expbtn.is-del,
+#experience .expslot[data-state="filled"]:focus-within .expbtn.is-edit,
+#experience .expslot[data-state="filled"]:focus-within .expbtn.is-del{opacity:1}
+
+@media (prefers-reduced-motion:reduce){#experience .expslot[data-state="empty"]:hover .expcaret{animation:none;opacity:.9}}
+/* ── touch ─────────────────────────────────────────────────────────
+   Three things break on a phone otherwise:
+   1. edit/remove are revealed by :hover, which touch cannot fire — so
+      on a coarse pointer they are simply always visible;
+   2. 24px icon buttons are under the ~44px tap minimum;
+   3. an input below 16px makes iOS zoom the page on focus.          */
+@media (pointer:coarse){
+  #experience .expbtn{width:38px;height:38px;border-radius:8px}
+  #experience .expslot{padding:3px 4px 3px 9px;gap:2px}
+  #experience .expslot[data-state="filled"] .expbtn.is-edit,
+  #experience .expslot[data-state="filled"] .expbtn.is-del{opacity:1}
+}
+@media (max-width:640px){
+  #experience .expinput,#experience .expname{font-size:16px}
+  #experience .expslot{min-width:0;width:100%}
+}
+/* ══ WORK CARDS — hover overlay ══════════════════════════════════════
+   Default is the work alone: no title, no copy, just three images. On
+   hover the text rises over the image behind a gradient scrim.
+
+   The mechanism: .worktext goes position:absolute, which takes it OUT
+   of flow — so the card's height collapses to the image's height, and
+   the overlay lands exactly on the frame with inset:0. No reserved
+   space, no layout shift, and the grid becomes a clean row of images.
+
+   Scoped to (hover:hover) — touch devices, which cannot hover, keep the
+   text below the image exactly as before. :focus-within carries it for
+   keyboard users so they never tab into an invisible link.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (hover:hover) and (min-width:901px){
+  .workrow{position:relative}
+
+  /* A sheet, not a scrim.
+     Both earlier attempts changed the whole card to show three lines of
+     text: first a black gradient over the full frame, then a frosted
+     wash over two thirds of it. Either way the picture was the thing
+     being altered, which is why it read as heavy-handed.
+
+     This alters nothing. A small panel — the page's own float material,
+     the one the toast, the palette and the annotation chips are made of
+     (var(--card), --r-float, --shadow-float) — rises 10px into place at
+     the foot of the frame, inset 12px so the artwork is still framed on
+     all four sides. The mock is untouched and stays sharp; the type sits
+     on its own opaque ground, so it keeps the page's normal ink and
+     faint colours and needs no white-on-black inversion.
+
+     One movement, one surface, nothing dimmed. */
+  .workrow .worktext{
+    position:absolute;left:12px;right:12px;bottom:12px;top:auto;
+    z-index:5;margin:0!important;display:block;
+    padding:14px 16px 15px;
+    border-radius:var(--r-float);background:var(--card);
+    box-shadow:var(--shadow-float);
+    opacity:0;transform:translateY(10px);
+    transition:opacity .3s var(--ease),transform .38s var(--ease)}
+
+  .workrow:hover .worktext,
+  .workrow:focus-within .worktext{opacity:1;transform:none}
+
+  /* the title stays 18px here: the same object — a case-study title —
+     was 18px on the wide card and 16px inside this panel, so identical
+     things were ranked differently on one screen */
+  .workrow .worktext h3{font-size:18px;line-height:1.3}
+  .workrow .worktext .desc{margin-top:3px}
+  .workrow .worktext .workfacts{margin-top:7px}
+  /* the whole card is the link and the cursor already says "open", so a
+     button inside the panel is one affordance too many */
+  .workrow .worktext .workcta{display:none}
+
+  /* the frame lifts very slightly to meet the cursor */
+  .workrow .cardframe{transition:transform .55s var(--ease)}
+  .workrow:hover .cardframe{transform:translateY(-3px)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .workrow .worktext,
+  .workrow .cardframe{transition:none!important;transform:none!important}
+}
+/* ══ ROW TWO — Runable, and the slot after it ════════════════════════
+   Runable was a full-width feature card. With more studies coming, the
+   grid reads better as a plain 2x2: same two column widths on both
+   rows, same frame height on all four cards, so the page has one
+   rhythm instead of a rhythm plus an exception.
+
+   Runable takes the 58 column because a browser screenshot is a wide
+   object and would have swum in the 42; the "next" slot takes the 42.
+   Explicit placement, so the DOM can still lead with the real work.
+   ═══════════════════════════════════════════════════════════════════ */
+.workrow.runrow{grid-column:1;grid-row:2}
+.workrow.soonrow{grid-column:2;grid-row:2}
+
+/* 41.49 is the denominator the two cards above already share, so every
+   frame on the grid resolves to the same height at every width */
+.cardframe.runshot{aspect-ratio:var(--card-ar)}
+.cardframe.soonframe{aspect-ratio:var(--card-ar)}
+
+/* the shot sits centred with even air, framed like the Rise dashboard
+   standing above it */
+.cardframe.runshot > img[data-mock="single"]{
+  left:50%!important;right:auto!important;top:50%!important;bottom:auto!important;
+  width:88%!important;height:auto!important;
+  transform:translate(-50%,-50%);
+  box-shadow:none!important;filter:none;
+  transition:transform .45s var(--ease)}
+@media (hover:hover){
+  .workrow:hover .cardframe.runshot > img[data-mock="single"],
+  .workrow:focus-within .cardframe.runshot > img[data-mock="single"]{
+    transform:translate(-50%,-50%) translateY(-8px) scale(1.03)}
+}
+
+/* Runable has no case study to open, so its sheet keeps the one thing
+   the other two can drop: a visible way out to the live product. */
+@media (hover:hover) and (min-width:901px){
+  .workrow .worktext .workcta.livecta{display:inline-flex}
+}
+
+/* ── the next slot ──────────────────────────────────────────────────
+   Not a card pretending to be work. It says what it is, in the page's
+   own label voice, and stays still: nothing to click, so nothing that
+   lifts or reveals on hover. */
+.soonframe{display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:10px;text-align:center;padding:24px;
+  /* the site's own yellow, and its own ink for that yellow — the same
+     pair the highlight wash is built from, so it belongs to the page
+     rather than arriving from outside it */
+  background:var(--yellow)!important}
+.soonlabel{font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--onYellow);opacity:.62}
+.soontext{margin:0;font-size:15px;font-weight:400;line-height:1.45;
+  color:var(--onYellow);max-width:24ch}
+.workrow.soonrow:hover .cardframe{transform:none}
+
+@media (max-width:684px){
+  .workrow.runrow,.workrow.soonrow{grid-column:auto;grid-row:auto}
+}
+
+/* hero emphasis: the figures in ink against muted prose — the same
+   pattern the work cards use for their numbers, so a figure reads the
+   same way everywhere on the page. */
+.hero-sub b{font-weight:500;color:var(--ink)}
+/* ══ APP MERGE CARD — two into one ═══════════════════════════════════
+   "Two apps into one, built to hold the third." So the card performs a
+   merge, and it performs it in 3D, because a flat slide-together reads
+   as two mockups placed next to each other rather than as a gesture.
+
+   At rest the screens are hinged open like two panels of a book — each
+   pivots on its INNER edge (transform-origin 100%/0%), swung back in Y
+   so the outer edges recede from the viewer. They breathe on a slow,
+   offset float so the card is alive before you touch it.
+
+   On hover the panels swing shut: rotateY resolves to 0, they slide
+   over one another, scale up, and the front screen lifts 34px toward
+   the viewer in Z so the stack has real depth rather than flat overlap.
+   The float pauses on hover so the closing gesture reads cleanly.
+   ═══════════════════════════════════════════════════════════════════ */
+.cardframe.merge2{overflow:hidden;aspect-ratio:var(--card-ar)}
+
+/* No perspective, no rotateY, no translateZ. The screens are known
+   shapes — a phone with straight edges — so any Y-axis foreshortening
+   reads as the image being stretched rather than as depth.
+   Depth is carried instead by SIZE, SHADOW and OVERLAP, which the eye
+   reads just as readily and which distorts nothing.
+
+   No will-change / backface-visibility either: those promote the node
+   to a composited layer, so the browser rasterises it once and then
+   GPU-scales the bitmap — which is what made the screens soft. Without
+   them each frame is rasterised at its real size and stays crisp.
+
+   The embedded artwork is 388x800, so the rendered width is held at or
+   under ~194px: exactly 2x on a retina display, never upscaled. */
+/* the frame is shorter now — the web cards were shortened so the air
+   around their screenshots is even on all four sides, and this card has
+   to match their height — so the phones are scaled to suit it rather
+   than being cropped by it */
+.workrow .cardframe.merge2 .mgphone{
+  position:absolute;top:12%;left:50%;width:30%;height:auto;
+  transition:transform 1s cubic-bezier(.16,1,.3,1),filter .8s ease;
+  animation:mgFloat 8s ease-in-out infinite}
+
+/* behind: smaller and softer-shadowed, so it sits back */
+.workrow .cardframe.merge2 .mg-a{
+  z-index:2;
+  transform:translateX(-96%) rotate(-7deg) scale(.9);
+  filter:drop-shadow(-8px 16px 20px rgba(18,18,22,.14))}
+/* in front: full size, deeper shadow */
+.workrow .cardframe.merge2 .mg-b{
+  z-index:3;animation-delay:-4s;
+  transform:translateX(-6%) rotate(4.5deg) scale(1);
+  filter:drop-shadow(-14px 22px 26px rgba(18,18,22,.24))}
+
+/* closed into one stack — upright, still stepped in size for depth */
+.workrow:hover .cardframe.merge2 .mg-a,
+.workrow:focus-within .cardframe.merge2 .mg-a{
+  transform:translateX(-58%) rotate(0deg) scale(.95)}
+.workrow:hover .cardframe.merge2 .mg-b,
+.workrow:focus-within .cardframe.merge2 .mg-b{
+  transform:translateX(-42%) rotate(0deg) scale(1);
+  filter:drop-shadow(-18px 26px 32px rgba(18,18,22,.30))}
+
+.workrow:hover .cardframe.merge2 .mgphone,
+.workrow:focus-within .cardframe.merge2 .mgphone{animation-play-state:paused}
+
+@keyframes mgFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}
+
+@media (prefers-reduced-motion:reduce){
+  .workrow .cardframe.merge2 .mgphone{animation:none;transition:none}
+}
+/* ══ RISE PORTAL CARD ════════════════════════════════════════════════
+   Same shape as the App Merge card: alive at rest with a slow float,
+   then one clean move on hover. The auto-playing cursor tour is gone —
+   it drew attention to itself rather than to the work.
+
+   The zoom is done with background-size, not transform: the browser
+   re-renders the SVG at the new size, so the dashboard stays sharp
+   instead of being a scaled bitmap.
+   ═══════════════════════════════════════════════════════════════════ */
+.cardframe.rztour{overflow:hidden;aspect-ratio:var(--card-ar)}
+
+.rztour .rz-shot{position:absolute;
+  background-image:url("./assets/rise-dashboard.svg");
+  background-repeat:no-repeat;
+  /* Placement is matched to the App Merge card standing beside it, not
+     to an arbitrary centre. Measured: the phones start 46px below the top
+     of their frame, so the dashboard does too. It was floating at 92%
+     with 16px of side air and 67/79 top-and-bottom slack — tighter at the
+     sides than above and below, which is the unevenness that made it read
+     as adrift in its box.
+
+     The margin is now the same measurement on all four sides — 20px —
+     instead of 9px at the sides against 35px above and below.
+
+     The frame height is derived from that, not chosen: the shot is drawn
+     at (frame width - 40), and the frame is exactly that tall plus 40.
+     Which is why the two web cards are NOT the same height: this one is
+     1601x1102 and Runable is 1050x685, so at an identical 20px margin
+     they land at 330px and 315px. Same width, same margin, same
+     treatment — the frame just fits what it holds. */
+  inset:0;
+  background-size:calc(100% - 40px) auto;
+  background-position:50% 50%;
+  /* flat at rest: no shadow, no float — the shot is just printed on the
+     tint, exactly as it looks in a still */
+  filter:none;animation:none;
+  transition:background-size .45s var(--ease),translate .45s var(--ease)}
+
+/* hover: 1.03x and 8px up. The zoom is background-size rather than a
+   transform so the browser re-renders the SVG at the larger size and it
+   stays sharp; 103% of (100% - 40px) is (103% - 41.2px). */
+.workrow:hover .rztour .rz-shot,
+.workrow:focus-within .rztour .rz-shot{
+  background-size:calc(103% - 41.2px) auto;translate:0 -8px}
+
+/* and the frame itself does not lift as well — the Runable card has no
+   frame lift, and these two are meant to behave identically */
+.workrow:not(.is-wide):hover .cardframe.rztour{transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .rztour .rz-shot{animation:none;transition:none;translate:none!important}
+  .workrow.is-wide .cardframe > img[data-mock="single"]{transition:none}
+}
+/* ══ HERO ════════════════════════════════════════════════════════════
+   The identity block is built from the SAME parts as a work card, so
+   the page has one card grammar instead of two:
+
+     .cardframe  -> borderless tinted well, --surface, --r-card
+     .worktext   -> caption OUTSIDE and BELOW the well, margin-top s-4,
+                    title at --t-ui/500/ink, sub at --t-ui/400/faint
+
+   The previous version invented its own object — white --card box, 1px
+   border, drop shadow, an inner radius, a hairline divider and a mono
+   uppercase location stamp. None of those exist anywhere else on this
+   page (work cards deliberately drop their mono labels), which is why
+   it read as pasted in from another site.
+
+   The portrait is an RGBA cutout, so it floats on the tint exactly the
+   way the case-study mockups do — same treatment, no box around a
+   person. It is drawn at its true 3:2 and contained, never cropped.
+   ═══════════════════════════════════════════════════════════════════ */
+/* stretch, not start: the row height is set by the text column, and the
+   well takes all of it — the two sides end on the same line */
+#top .hero-c{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);
+  gap:clamp(30px,4vw,54px);align-items:stretch;max-width:none}
+
+.heroprint{position:static;margin:0;padding:0;border:0;background:none;
+  box-shadow:none;transform:none;animation:none;border-radius:0;height:100%}
+
+/* the well — same rule set as .cardframe, height driven by the row */
+.hp-frame{position:relative;width:100%;height:100%;min-height:250px;
+  overflow:hidden;border-radius:var(--r-card);background:var(--surface);
+  display:grid;align-items:center;justify-items:center}
+/* contained at its own 3:2, centred in whatever height the row gives it */
+.hp-frame img{display:block;width:92%;height:auto;aspect-ratio:3/2;
+  object-fit:contain;transition:transform .6s var(--ease)}
+@media (hover:hover){.heroprint:hover .hp-frame img{transform:scale(1.03)}}
+
+#top h1{font-size:clamp(25px,2.9vw,32px)}
+
+@media (max-width:860px){
+  #top .hero-c{grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,32px)}
+  #top .hero-t{order:1}
+  .heroprint{order:2;max-width:320px;height:auto}
+  .hp-frame{height:auto;aspect-ratio:1/1}
+}
+/* ══ LINKEDIN CTA ════════════════════════════════════════════════════
+   LinkedIn's own brand values: #0A66C2, #004182 on hover, white mark.
+   Kept as a solid fill next to the neutral Email pill so the two read
+   as primary and secondary rather than as a matched pair — the CTA
+   people should click first is still the one that reaches you directly.
+   ═══════════════════════════════════════════════════════════════════ */
+/* Email me is the action that matters, so it takes the strongest
+   treatment on the site — solid ink — and LinkedIn steps back to a ring.
+   It was the other way round: a saturated blue button next to a pale
+   grey one reads as "LinkedIn first", which is not the ask.
+
+   No brand glyph. A solid blue LinkedIn mark was the one icon on the
+   page that came from outside the set, and an "in" redrawn as an
+   outline is an awkward object at 15px — letterforms do not survive
+   being turned into line art that small.
+
+   The word already says LinkedIn, so the icon's only remaining job is
+   to say "this leaves the site" — which is exactly the arrow the live
+   product link and the case-study links already use. Same icon, same
+   weight, same position after the label. */
+.pill-li{background:transparent;color:var(--ink);
+  box-shadow:inset 0 0 0 1px var(--line)}
+.pill-li:hover,.pill-li:focus-visible{background:var(--surface);color:var(--ink);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 26%,transparent);opacity:1}
+.pill-li svg{width:14px;height:14px;flex:0 0 auto;display:block}
+#top .cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+
+/* the card credits line sits directly under an 18px Geist title as its
+   subtitle — mono there reads as code, not as a caption */
+.worktext .desc{font-family:var(--display)}
+
+/* ══ THE LANDING ═════════════════════════════════════════════════════
+   The hero arrives in reading order rather than all at once — portrait,
+   the claim, the proof, the two ways to reach him. It is not a show; it
+   is the reading order made visible, so the eye is led rather than
+   dropped. See THE ARRIVAL below for the timings.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* the primary action on the page */
+#top .cta .pill-primary{background:var(--ink);color:var(--bg);box-shadow:none}
+#top .cta .pill-primary:hover,#top .cta .pill-primary:focus-visible{opacity:.88}
+#top .cta .pill-li svg{width:15px;height:15px}
+
+/* ══ THE ARRIVAL ═════════════════════════════════════════════════════
+   The welcome is the page arriving, not an object that says hello. A
+   bubble with a waving hand announces itself, and Emil Kowalski's test
+   for motion is the opposite of that: "the moment someone says 'nice
+   animation', you've probably overdone it." Great motion is not noticed;
+   the interface is just felt to be good.
+
+   So the greeting is the headline lifting into place behind its own
+   edge — the oldest, quietest reveal in typography, and the one thing
+   here worth animating, because it is the sentence the whole site is
+   about. Nothing is added to the page to make it happen: no copy, no
+   chrome, no glyph. Two lines, one after the other, and then the page is
+   simply there.
+
+   Built to the craft rules that hold up:
+     · transform and opacity only, so it never touches layout or paint
+     · ease-out, because the element is entering
+     · 460ms for the lines, 340ms for everything after — inside the
+       "shorter than 300ms for micro-interactions, a little more for
+       larger moves" range, not a second-long performance
+     · a 90ms stagger, enough to read as sequence rather than as lag
+     · and it does not run at all for prefers-reduced-motion
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* The mask exists ONLY while the lines are moving. A permanent
+   overflow:hidden is a trap: the day the headline wraps — a longer
+   sentence, a narrower column, a fallback font that sets wider before
+   Geist loads — the mask silently eats the second line. It is applied
+   for the length of the animation and then released, so at rest the
+   headline is a plain block of text with nothing clipping it.
+   The padding gives descenders room while it is on. */
+#top h1 .h1-line{display:block;padding-bottom:.2em;margin-bottom:-.2em}
+body.arriving #top h1 .h1-line{overflow:hidden}
+
+.heroin #top h1 .h1-a,.heroin #top h1 .h1-b{
+  animation:lineRise .46s cubic-bezier(.22,.9,.28,1) backwards}
+.heroin #top h1 .h1-a{animation-delay:.32s}
+.heroin #top h1 .h1-b{animation-delay:.41s}
+@keyframes lineRise{from{transform:translateY(108%)}to{transform:none}}
+
+/* everything else simply settles: no travel worth noticing, just enough
+   to arrive in reading order behind the sentence */
+/* ── the photograph ──────────────────────────────────────────────────
+   The first version wiped the frame open with clip-path. It was janky,
+   and predictably so: clip-path is not a compositor property, so every
+   frame of that wipe forced a repaint of a 660x440 image. It broke the
+   one rule that matters most for smooth motion — animate transform and
+   opacity, nothing else.
+
+   So the reveal is now a single transform. The photograph settles out of
+   a slight zoom as it fades up: one element, two compositor properties,
+   no repaint, no layout. It runs on the GPU and cannot stutter.
+
+   `backwards`, not `both`: the from-state applies during the delay and
+   the element returns to its normal style afterwards. `both` pins the
+   last keyframe permanently and would kill the hover zoom. */
+.heroin .hp-frame img{
+  animation:photoSettle 1.1s cubic-bezier(.16,.84,.24,1) .28s backwards;
+  will-change:transform}
+@keyframes photoSettle{
+  from{opacity:0;transform:scale(1.08)}
+  to{opacity:1;transform:scale(1)}}
+/* the will-change hint is dropped once it has landed, so the layer is
+   not held for the life of the page */
+body:not(.arriving) .hp-frame img{will-change:auto}
+.heroin .hero-sub{animation:settle .34s ease-out .52s backwards}
+.heroin #top .cta{animation:settle .34s ease-out .60s backwards}
+@keyframes settle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .heroin #top h1 .h1-a,.heroin #top h1 .h1-b,
+  .heroin .hp-frame img,
+  .heroin .hero-sub,.heroin #top .cta{animation:none!important}
+  #top h1 .h1-line{overflow:visible}
+}
+
+/* ══ THE BOARD, RESTAGED ═════════════════════════════════════════════
+   It used to show everything at once: a note already on the canvas and a
+   toolbar of four controls, three of which did nothing until there was
+   something to act on. Now the board shows only what is usable.
+
+     empty     one plus button and a sentence saying what the board is
+               for. No toolbar, because there is nothing to send, count
+               or clear.
+     writing   the note appears, the toolbar comes up underneath it.
+
+   Add is refused while a blank note is on the board — the blank one
+   shakes instead, which answers "why did nothing happen" without a
+   message. It is impossible to end up with two empty notes.
+   ═══════════════════════════════════════════════════════════════════ */
+.padblank{position:absolute;inset:0;display:none;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;padding:0 34px;text-align:center}
+.padboard:not(.has-notes) .padblank{display:flex}
+/* The button hangs over the board rather than sitting on it: the accent
+   fill lifts it off the dotted ground, and the shadow is thrown well
+   below and softened, which is what makes a thing read as suspended
+   rather than stuck down. It breathes on a slow loop so the board is
+   alive before anyone touches it, and the shadow tightens as it rises —
+   a fixed shadow on a moving object is the thing that gives away a fake
+   float. */
+.padblankadd{display:grid;place-items:center;width:56px;height:56px;padding:0;
+  border:0;border-radius:50%;cursor:pointer;
+  background:var(--accent);color:#FFFFFF;
+  box-shadow:0 10px 24px -8px color-mix(in srgb,var(--accent) 55%,transparent),
+             0 2px 6px -2px rgba(16,16,24,.18);
+  animation:padHang 4.2s ease-in-out infinite;
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+@keyframes padHang{
+  0%,100%{transform:translateY(0);
+    box-shadow:0 10px 24px -8px color-mix(in srgb,var(--accent) 55%,transparent),
+               0 2px 6px -2px rgba(16,16,24,.18)}
+  50%{transform:translateY(-6px);
+    box-shadow:0 18px 30px -10px color-mix(in srgb,var(--accent) 42%,transparent),
+               0 4px 10px -3px rgba(16,16,24,.14)}}
+@media (hover:hover){.padblankadd:hover{animation-play-state:paused;
+  transform:translateY(-6px);
+  box-shadow:0 20px 34px -10px color-mix(in srgb,var(--accent) 60%,transparent),
+             0 5px 12px -3px rgba(16,16,24,.18)}}
+.padblankadd:active{animation-play-state:paused;transform:translateY(-2px) scale(.96)}
+.padblanktext{margin:0;max-width:44ch;font-size:13.5px;line-height:1.55;color:var(--faint)}
+
+/* The toolbar waits for the first typed character, not for the note.
+   An empty note has nothing to count, send or clear, so the controls
+   would all be inert — they arrive the moment the note has content. */
+.padboard:not(.has-text) .padbar{display:none}
+
+/* refusing to add a second blank note */
+@keyframes padShake{
+  0%,100%{transform:translateX(0) rotate(var(--tilt,0deg))}
+  20%{transform:translateX(-5px) rotate(var(--tilt,0deg))}
+  40%{transform:translateX(4px) rotate(var(--tilt,0deg))}
+  60%{transform:translateX(-3px) rotate(var(--tilt,0deg))}
+  80%{transform:translateX(2px) rotate(var(--tilt,0deg))}}
+.padnote.is-nudged{animation:padShake .42s ease-in-out}
+.padtool[disabled]{cursor:not-allowed}
+
+@media (prefers-reduced-motion:reduce){
+  .padnote.is-nudged{animation:none;box-shadow:0 0 0 2px var(--accent)}
+  .padblankadd{transition:none;animation:none}
+}
+
+/* ══ THE BOARD, COLLAPSED BY DEFAULT ═════════════════════════════════
+   Measured: open, this section ran 484px — 58% of a viewport and 21%
+   of the whole page — and since it sits above the work, it pushed the
+   case studies 484px further down. That is a lot of screen for an
+   optional interaction most visitors will never touch.
+
+   So it starts as one row. Clicking it opens the board AND creates the
+   first note in the same move, because clicking "Add a note" is already
+   the intent to write one — making someone click a second plus inside
+   the thing they just opened is a step that earns nothing.
+
+   Deleting the last note closes it again and gives the space back.
+   ═══════════════════════════════════════════════════════════════════ */
+.padtrigger{display:flex;align-items:center;gap:11px;width:100%;
+  margin:0;padding:14px 16px;cursor:pointer;text-align:left;
+  border:1px dashed color-mix(in srgb,var(--muted) 32%,transparent);
+  border-radius:var(--r-card);background:transparent;
+  font-family:inherit;color:var(--ink);
+  transition:border-color .2s var(--ease),background .2s var(--ease)}
+.padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:26px;height:26px;
+  border-radius:50%;background:var(--accent);color:#FFFFFF}
+.padtriggertext{font-size:14px;font-weight:500;letter-spacing:-.01em}
+.padtriggerhint{font-size:13px;color:var(--faint);letter-spacing:-.005em}
+@media (hover:hover){
+  .padtrigger:hover{border-color:color-mix(in srgb,var(--accent) 55%,transparent);
+    background:color-mix(in srgb,var(--accent) 4%,transparent)}
+}
+.padtrigger:active{transform:scale(.995)}
+
+/* closed is the default: the board does not exist until asked for */
+.padboard{display:none}
+.padwrap.is-open .padtrigger{display:none}
+.padwrap.is-open .padboard{display:block}
+
+@media (max-width:560px){
+  .padtrigger{flex-wrap:wrap;gap:8px 11px}
+  .padtriggerhint{flex:1 0 100%;padding-left:37px}
+}
+/* ══ ARRIVAL, SECTION BY SECTION ═════════════════════════════════════
+   Every section shared one entrance: fade up 10px. Correct, and
+   completely anonymous — the page arrived the same way whether it was
+   showing a grid of work, a timeline, or an invitation to write
+   something. Motion that says nothing about what it is moving is just
+   delay.
+
+   So each section now enters the way its own content behaves:
+
+     work        four cards land on a short diagonal stagger, so the
+                 grid assembles rather than appearing
+     note board  the row unrolls out of its own plus button — the
+                 button IS the thing you press, so it becomes the row
+     experience  the rail draws downward and each node pops onto it in
+                 turn, which is what a timeline does
+     footer      one quiet line, no ceremony
+
+   Delays are carried on --rd so a row and its dot can share one number.
+   Everything is transform/opacity except the single clip on the note
+   trigger, which is one small element for 0.75s.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── selected work: the grid assembles ── */
+#work .workrow[data-reveal]{transform:translateY(24px) scale(.985);
+  transition:opacity .6s var(--ease),transform .7s var(--ease);
+  transition-delay:var(--rd,0s)}
+#work .workrow[data-reveal].shown{transform:none}
+#work .workrow:nth-child(1){--rd:0s}
+#work .workrow:nth-child(2){--rd:.08s}
+#work .workrow:nth-child(3){--rd:.16s}
+#work .workrow:nth-child(4){--rd:.24s}
+
+/* ── the note board: the row unrolls out of the plus ── */
+#notes .padwrap[data-reveal]{transform:translateY(12px);
+  transition:opacity .45s var(--ease),transform .45s var(--ease)}
+#notes .padwrap[data-reveal] .padtrigger{
+  clip-path:inset(0 calc(100% - 54px) 0 0 round var(--r-card));
+  /* not var(--ease): that curve is spent in its first fifth, which
+     makes an unroll snap open and then crawl. This one keeps moving. */
+  transition:clip-path .7s cubic-bezier(.16,.84,.24,1),
+    border-color .2s var(--ease),background .2s var(--ease)}
+#notes .padwrap[data-reveal].shown .padtrigger{
+  clip-path:inset(0 0 0 0 round var(--r-card));transition-delay:.18s}
+/* the words arrive after the room has been made for them */
+#notes .padwrap[data-reveal] .padtriggertext,
+#notes .padwrap[data-reveal] .padtriggerhint{opacity:0;transform:translateX(-8px);
+  transition:opacity .45s var(--ease),transform .45s var(--ease)}
+#notes .padwrap[data-reveal].shown .padtriggertext{opacity:1;transform:none;
+  transition-delay:.44s}
+#notes .padwrap[data-reveal].shown .padtriggerhint{opacity:1;transform:none;
+  transition-delay:.54s}
+/* once it is open the clip has no job and must not cut the board */
+.padwrap.is-open .padtrigger{clip-path:none}
+
+/* ── experience: the rail draws, the nodes land on it ── */
+#experience .exptimeline[data-reveal]{opacity:1;transform:none;transition:none}
+#experience .exptimeline:before{transform:scaleY(0);transform-origin:50% 0;
+  transition:transform 1.15s var(--ease)}
+#experience .exptimeline[data-reveal].shown:before{transform:scaleY(1)}
+#experience .exprow[data-reveal]{transform:translateY(14px);
+  transition:opacity .55s var(--ease),transform .55s var(--ease);
+  transition-delay:var(--rd,0s)}
+#experience .exprow[data-reveal].shown{transform:none}
+/* the dot lands just after its row, with a little overshoot — a node
+   snapping onto a rail, not a circle fading up */
+#experience .exprow:before{transform:scale(0);
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  transition-delay:calc(var(--rd,0s) + .14s)}
+#experience .exprow[data-reveal].shown:before{transform:scale(1)}
+#experience .exprow:nth-child(1){--rd:.06s}
+#experience .exprow:nth-child(2){--rd:.14s}
+#experience .exprow:nth-child(3){--rd:.22s}
+#experience .exprow:nth-child(4){--rd:.30s}
+#experience .exprow:nth-child(5){--rd:.38s}
+
+/* ── the footer says goodbye quietly ── */
+#contact footer[data-reveal]{transform:translateY(10px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease)}
+#contact footer[data-reveal].shown{transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  #work .workrow[data-reveal],
+  #experience .exprow[data-reveal],
+  #experience .exprow:before,
+  #experience .exptimeline:before,
+  #notes .padwrap[data-reveal],
+  #notes .padwrap[data-reveal] .padtrigger,
+  #notes .padwrap[data-reveal] .padtriggertext,
+  #notes .padwrap[data-reveal] .padtriggerhint,
+  #contact footer[data-reveal]{
+    transition:none!important;transition-delay:0s!important;
+    opacity:1!important;transform:none!important;clip-path:none!important}
+}
+/* ══ THE INTRO ═══════════════════════════════════════════════════════
+   The name sets, a cursor arrives at its top-left corner, presses, and
+   DRAGS a marquee across it — the rectangle grows under the cursor the
+   whole way, exactly as it does in Figma. On release the handles snap
+   onto the corners and the dimension chip appears, reading "Product
+   Designer" where a width and a height would be.
+
+   The frame is not a decoration that draws itself for no reason, and it
+   does not simply appear on a click either: it is drawn, by the cursor,
+   and you can watch it being drawn. That is the one gesture every
+   person this site is addressed to makes a thousand times a day.
+
+   ~1.4s, inside a 1.75s hold, so it finishes and can be read before it
+   leaves.
+   ═══════════════════════════════════════════════════════════════════ */
+#loader .box{padding:clamp(13px,1.8vw,18px) clamp(18px,2.6vw,26px)}
+
+/* the object being selected. 400, not 500: at this size the heavier
+   cut read as a headline competing with the hero it hands over to —
+   this is a name, set quietly. */
+#loader .name{overflow:visible;max-width:none;
+  animation:lodName .4s cubic-bezier(.16,.84,.24,1) both}
+#loader .name span{font-family:var(--display);
+  font-size:clamp(22px,3.6vw,34px);font-weight:400;
+  letter-spacing:-.022em;line-height:1.12;color:var(--ink)}
+
+/* the marquee: a rectangle pulled out of the top-left corner. width and
+   height rather than a transform, because a scaled border thins on one
+   axis and thickens on the other — this keeps a true 1.5px edge at
+   every moment of the drag. It is one absolutely-positioned box, so
+   nothing else on the page relays out while it grows. */
+#loader .sel{position:absolute;left:0;top:0;width:0;height:0;
+  border:1.5px solid var(--accent);background:transparent;
+  animation:lodDraw .45s cubic-bezier(.32,.72,.3,1) .56s both}
+
+/* square handles, the way a design tool draws them — after the release */
+#loader .dot{width:8px;height:8px;border-radius:2px;
+  background:var(--bg);box-shadow:0 0 0 1.5px var(--accent);opacity:0;
+  animation:lodHandle .24s cubic-bezier(.3,1.6,.5,1) both}
+#loader .dot.tl{top:-4px;left:-4px;animation-delay:1.02s}
+#loader .dot.tr{top:-4px;right:-4px;animation-delay:1.05s}
+#loader .dot.bl{bottom:-4px;left:-4px;animation-delay:1.08s}
+#loader .dot.br{bottom:-4px;right:-4px;animation-delay:1.11s}
+
+/* the dimension chip, saying something truer than a width and a height.
+   Bottom-left, because the cursor finishes on the right corner and two
+   objects on one corner reads as a collision. */
+#loader .tag.bot{top:auto;bottom:-32px;left:0;right:auto;
+  padding:3px 7px;border-radius:4px;
+  background:var(--accent);color:var(--onAccent);
+  font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.02em;
+  opacity:0;transform-origin:0 0;
+  animation:lodChip .28s cubic-bezier(.16,.84,.24,1) 1.10s both}
+
+/* the cursor travels in left/top rather than translate: percentages
+   there resolve against the frame, so it tracks the corner of the
+   marquee it is pulling instead of a guessed pixel distance */
+#loader .curwrap{position:absolute;inset:0;pointer-events:none;z-index:3}
+#loader .cur{position:absolute;left:0;top:0;width:17px;height:17px;
+  color:var(--ink);opacity:0;
+  animation:lodCur .88s cubic-bezier(.3,.7,.32,1) .2s both}
+#loader .cur svg{display:block;width:100%;height:100%}
+#loader.hide .cur{opacity:0;transition:opacity .2s linear}
+
+@keyframes lodName{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes lodDraw{from{width:0;height:0}to{width:100%;height:100%}}
+@keyframes lodHandle{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+@keyframes lodChip{from{opacity:0;transform:translateY(-5px) scale(.88)}
+  to{opacity:1;transform:none}}
+/* in from off-corner, press, then drag to the opposite corner */
+@keyframes lodCur{
+  0%{opacity:0;left:-62px;top:-48px;transform:scale(1)}
+  24%{opacity:1;left:0;top:0;transform:scale(1)}
+  32%{transform:scale(.8)}
+  40%{left:0;top:0;transform:scale(1)}
+  92%{left:100%;top:100%;transform:scale(1)}
+  100%{opacity:1;left:100%;top:100%;transform:scale(1)}}
+
+@media (prefers-reduced-motion:reduce){
+  #loader .name,#loader .sel,#loader .dot,#loader .tag.bot,#loader .cur{
+    animation:none!important;opacity:1!important;transform:none!important}
+  #loader .sel{width:100%;height:100%}
+}
+
 </style>
 <script defer src="./analytics.js"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76"></script>
@@ -380,11 +2000,11 @@ body.rmodal-open{overflow:hidden}
 <div class="halftone halftone-down" aria-hidden="true"></div>
 <div id="loader" aria-hidden="true">
   <div class="box">
-    <span class="ln lnTop"></span><span class="ln lnRight"></span><span class="ln lnBottom"></span><span class="ln lnLeft"></span>
+    <span class="sel" aria-hidden="true"></span>
     <span class="dot tl"></span><span class="dot tr"></span><span class="dot bl"></span><span class="dot br"></span>
-    <span class="tag top">Portfolio</span>
-    <span class="tag bot">2026 × 100%</span>
+    <span class="tag bot">Product Designer</span>
     <span class="name"><span>Lokesh Bhatia</span></span>
+    <span class="curwrap" aria-hidden="true"><span class="cur"><svg viewBox="0 0 16 16" fill="none"><path d="M3.2 1.8 12.6 7.5l-4 .9-1.7 4.1z" fill="currentColor" stroke="var(--bg)" stroke-width="1.1" stroke-linejoin="round"/></svg></span></span>
   </div>
 </div>
 <div id="bgwash" aria-hidden="true"></div>
@@ -404,73 +2024,103 @@ body.rmodal-open{overflow:hidden}
 
   <header id="siteHeader">
     <div class="navpill">
-      <a href="#top" class="facemark" style="color:var(--ink)">
-        <img decoding="async" src="./assets/lokesh-face.png" alt="Lokesh Bhatia" width="34" height="34" loading="eager">
-      </a>
-      <div style="flex:1;min-width:8px"></div>
       <nav class="navlinks">
-        <a class="navlink" href="#top" aria-label="Home"><span class="navtext">Home</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M2.4 7 8 2.6 13.6 7v6a.9.9 0 0 1-.9.9h-3v-4h-3.4v4h-3a.9.9 0 0 1-.9-.9z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-        <a class="navlink" href="./about.html" aria-label="About"><span class="navtext">About</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.6" r="2.5" stroke="currentColor" stroke-width="1.4"></circle><path d="M2.9 13.4c.5-2.5 2.6-4 5.1-4s4.6 1.5 5.1 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg></span></a>
-        <a class="navlink" href="./resume.html" aria-label="Resume"><span class="navtext">Resume</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M4 2.4h4.6L12 5.8v7.8H4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path><path d="M8.4 2.6v3.2H11.8M6 8.6h4M6 10.9h2.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg></span></a>
-        <span class="navdiv" aria-hidden="true"></span>
-        <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme" data-cursor-label="theme">
-          <span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
-          <span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span>
-        </button>
-        <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false" data-cursor-label="menu">
-          <span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span>
-          <span class="bicon-x bicon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span>
-        </button>
+        <a class="navlink" href="./index.html" aria-current="page"><span class="navtext">Home</span></a>
+        <a class="navlink" href="./about.html"><span class="navtext">About</span></a>
+        <a class="navlink" href="./resume.html"><span class="navtext">Resume</span></a>
+        <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span><span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span></button>
+        <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button>
       </nav>
     </div>
+
 
   </header>
 
   <div class="mobilenav" id="mobileNav">
     <div class="mlinks">
-      <a class="mrow" href="#top" aria-current="page"><span class="mlabel">Home</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-      <a class="mrow" href="./about.html"><span class="mlabel">About</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-      <a class="mrow" href="#contact"><span class="mlabel">Contact</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mrow" href="#top" aria-current="page"><span class="mlabel">Home</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mrow" href="./about.html"><span class="mlabel">About</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
-    <div class="mfoot">
+    <div class="mcases">
+      <p class="mgroup">Case studies</p>
+      <a class="mcase" href="./app-merge.html"><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mcase" href="./rise-portal.html"><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+    </div>
+        <div class="mfoot">
       <div class="availbadge" role="img" aria-label="Open to work, available now">
         <svg class="availring" viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><defs><path id="mAvailPath" d="M46,46 m-33,0 a33,33 0 1,1 66,0 a33,33 0 1,1 -66,0"></path></defs><text style="font-family:var(--mono);font-size:8.2px;letter-spacing:.1em;text-transform:uppercase;fill:var(--accent)"><textPath href="#mAvailPath" startOffset="0">OPEN TO WORK · AVAILABLE NOW · </textPath></text></svg>
         <svg viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><circle cx="46" cy="46" r="25.5" fill="none" stroke="var(--accent)" stroke-opacity=".45" stroke-width="1"></circle></svg>
         <span aria-hidden="true" style="position:relative;font-size:16px;color:var(--accent)">✦</span>
       </div>
       <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
-      <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
   </div>
 
 
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
 
+  <main>
   <section id="top" data-reveal>
-    <div class="hero-grid">
-      <div class="hero-left">
-        <p class="eyebrow">3 yrs · Fintech, AI</p>
-        <h1>I design products that <span class="mark">show their work</span>.</h1>
-        <p class="hero-sub">End-to-end ownership of a trading app serving <span class="emph">200K+ users</span> and <span class="emph">97% of company revenue</span>. AI agent platform taken from <span class="emph">0→1</span>, as the only designer.</p>
-        <div class="cta">
-          <div class="splitcta copyEmailWrap">
-            <a href="mailto:hi.lokeshux@gmail.com" target="_blank" rel="noreferrer">hi.lokeshux@gmail.com <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-            <span class="div" aria-hidden="true"></span>
-            <button type="button" class="copyEmailBtn" aria-label="Copy email address">
-              <span class="icon-copy" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="5.4" y="5.4" width="8.2" height="8.2" rx="1.8" stroke="currentColor" stroke-width="1.4"></rect><path d="M10.6 5.2V4.1c0-1-.8-1.8-1.8-1.8H4.1c-1 0-1.8.8-1.8 1.8v4.7c0 1 .8 1.8 1.8 1.8h1.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg></span>
-              <span class="icon-done" aria-hidden="true" style="display:none"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.6 8.4l3 3 5.8-6.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-            </button>
-          </div>
+    <div class="hero-c">
+      <figure class="heroprint">
+        <div class="hp-frame">
+          <img src="./assets/about-portrait.png" width="660" height="440" alt="Lokesh Bhatia at his desk" loading="eager" decoding="async">
         </div>
+      </figure>
+      <div class="hero-t">
+      <h1><span class="h1-line"><span class="h1-a">Trading, payouts, AI agents.</span></span><span class="h1-line"><span class="h1-b">I make them show their work.</span></span></h1>
+      <p class="hero-sub">Product designer, three years, usually the only one on the product. I owned a trading app carrying 97% of company revenue, built the first product its referral partners ever had, and took an AI agent platform from 0&#8594;1.</p>
+      <div class="cta">
+        <a class="pill pill-primary" href="mailto:hi.lokeshux@gmail.com">Email me<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      
+        <a class="pill pill-li" href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <div class="hero-visual">
-        <div class="availbadge hero-badge" role="img" aria-label="Open to work, available now">
-          <svg class="availring" viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><defs><path id="heroAvailPath" d="M46,46 m-33,0 a33,33 0 1,1 66,0 a33,33 0 1,1 -66,0"></path></defs><text style="font-family:var(--mono);font-size:8.2px;letter-spacing:.1em;text-transform:uppercase;fill:var(--accent)"><textPath href="#heroAvailPath" startOffset="0">OPEN TO WORK · AVAILABLE NOW · </textPath></text></svg>
-          <svg viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><circle cx="46" cy="46" r="25.5" fill="none" stroke="var(--accent)" stroke-opacity=".45" stroke-width="1"></circle></svg>
-          <span aria-hidden="true" style="position:relative;font-size:16px;color:var(--accent)">✦</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="notes">
+    <div class="padwrap" data-reveal>
+      <div class="padhead">
+        <h2 class="padtitle">The floor is yours.</h2>
+        <p class="padsub">I read every one.</p>
+      </div>
+
+      <button type="button" class="padtrigger" id="padTrigger">
+        <span class="padtriggerplus" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </span>
+        <span class="padtriggertext">Leave me a note</span>
+        <span class="padtriggerhint">A thought, a question, a fix &#8212; you stay anonymous.</span>
+      </button>
+
+      <div class="padboard" id="padBoard">
+        <div class="padblank" id="padBlank">
+          <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
+            <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+          <p class="padblanktext">A thought, a question, something you&#8217;d have done differently. Whatever you want to say.</p>
         </div>
-        <div class="heroportrait">
-          <img decoding="async" src="./assets/about-portrait.png" width="660" height="440" alt="Lokesh Bhatia at his desk" loading="eager" style="display:block;width:100%;height:100%;object-fit:cover">
+
+        <div class="padtoast" id="padToast" role="status" hidden>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="padToastText">Sent. Thank you &#8212; I read every one.</span>
+          <button type="button" class="padtoastx" id="padToastX" aria-label="Dismiss">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
+        </div>
+
+        <div class="padbar" role="toolbar" aria-label="Board tools">
+          <button type="button" class="padtool" id="padAdd" title="Add a note" aria-label="Add a note">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+          <span class="padcount" id="padCount" aria-live="polite">1</span>
+          <span class="padsep" aria-hidden="true"></span>
+          <button type="button" class="padtool padtrash" id="padClear" title="Clear the board" aria-label="Clear the board">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 4.5h9M6.5 4.5V3.2h3v1.3M5 4.5l.6 8h4.8l.6-8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="padsend" id="padSend" title="Send these to me" aria-label="Send these notes to Lokesh">
+            <svg class="ico-send" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14 2 7.4 8.6M14 2l-4.3 12-2.3-5.4L2 6.3 14 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <svg class="ico-done" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="sendlabel">Send</span></button>
         </div>
       </div>
     </div>
@@ -480,107 +2130,113 @@ body.rmodal-open{overflow:hidden}
     <div class="workgrid">
       <a href="./app-merge.html" class="workrow" data-reveal data-cursor-label="open">
         <div style="grid-row:1;grid-column:1;min-width:0">
-          <div class="cardframe" style="background:var(--card-tint-01)">
-            <img width="1600" height="1067" loading="eager" decoding="async" class="bg" src="./assets/am-bg-before-home-1600.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06);pointer-events:none">
-            <img loading="eager" decoding="async" data-mock="right" data-src="./assets/app-merge-phone-account-630.png" data-srcset="./assets/app-merge-phone-account-420.png 420w, ./assets/app-merge-phone-account-630.png 630w, ./assets/app-merge-phone-account-840.png 840w" sizes="(max-width:900px) 38vw, 170px" width="630" height="1226" alt="Merged app account and funds screen" style="position:absolute;left:181px;top:52px;height:120%;width:auto;z-index:1;filter:drop-shadow(0 26px 40px var(--frameSh))">
-            <img loading="eager" decoding="async" data-mock="left" data-src="./assets/app-merge-phone-watchlist-630.png" data-srcset="./assets/app-merge-phone-watchlist-420.png 420w, ./assets/app-merge-phone-watchlist-630.png 630w, ./assets/app-merge-phone-watchlist-840.png 840w" sizes="(max-width:900px) 38vw, 170px" width="630" height="1226" alt="Merged app watchlist screen" style="position:absolute;left:76px;top:120px;height:113%;width:auto;z-index:2">
+          <div class="cardframe merge2" style="background:var(--card-tint-01)">
+            <img class="mgphone mg-a" src="./assets/AM-B-1.svg" width="396" height="816" loading="eager" decoding="async" alt="Rupeezy Trade watchlist screen">
+            <img class="mgphone mg-b" src="./assets/AM-B-2.svg" width="396" height="816" loading="eager" decoding="async" alt="The merged app&#8217;s account and funds screen">
           </div>
         </div>
         <div class="worktext">
-          <span class="num">01</span>
           <h3>Two apps into one, built to hold the third</h3>
-          <span class="desc">Rupeezy · Merging two fintech apps into one product</span>
+          <span class="desc">Rupeezy &#183; Sole designer &#183; Consumer app</span>
+          <p class="workfacts"><b>200K+</b> registered users <i>&#183;</i> <b>97%</b> of company revenue</p>
           <span class="workcta">Read case study<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         </div>
       </a>
 
       <a href="./rise-portal.html" class="workrow" data-reveal data-cursor-label="open">
         <div style="grid-row:1;grid-column:1;min-width:0">
-          <div class="cardframe" style="background:var(--card-tint-02)">
-            <img width="1600" height="1200" loading="eager" decoding="async" class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06);pointer-events:none">
-            <img loading="eager" decoding="async" data-mock="anchor" data-src="./assets/rise-portal-web-1050.png" data-srcset="./assets/rise-portal-web-700.png 700w, ./assets/rise-portal-web-1050.png 1050w, ./assets/rise-portal-web-1400.png 1400w" sizes="(max-width:900px) 72vw, 320px" width="1050" height="722" alt="Rise Portal partner dashboard on desktop" style="position:absolute;left:14%;bottom:-20px;width:72%;height:auto;z-index:1;box-shadow:0 24px 48px var(--frameSh)">
+          <div class="cardframe rztour" style="background:var(--card-tint-02)">
+            <div class="rz-shot" role="img" aria-label="Rise Portal dashboard — earnings, clients, and the payout eligibility criteria"></div>
           </div>
         </div>
         <div class="worktext">
-          <span class="num">02</span>
           <h3>The first product Rupeezy’s partners ever had</h3>
-          <span class="desc">Rise Portal · A B2B partner platform, built from scratch</span>
+          <span class="desc">Rupeezy &#183; Sole designer &#183; B2B platform</span>
+          <p class="workfacts"><b>2.4&#215;</b> lead-to-client <i>&#183;</i> <b>48%</b> fewer support tickets</p>
           <span class="workcta">Read case study<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         </div>
       </a>
 
-      <div class="workrow" data-reveal>
+      <a href="https://runable.com/" target="_blank" rel="noreferrer" class="workrow runrow" data-reveal data-cursor-label="visit" aria-label="Runable, an AI agent platform — visit the live site">
         <div style="grid-row:1;grid-column:1;min-width:0">
-          <div class="cardframe" style="background:var(--card-tint-03)">
-            <img width="1600" height="1067" loading="eager" decoding="async" class="bg" src="./assets/rn-bg-frame-1600.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06);pointer-events:none">
-            <img loading="eager" decoding="async" data-mock="single" data-src="./assets/runable-agent-home-1050.png" data-srcset="./assets/runable-agent-home-700.png 700w, ./assets/runable-agent-home-1050.png 1050w, ./assets/runable-agent-home-1400.png 1400w" sizes="(max-width:900px) 72vw, 320px" width="1050" height="685" alt="Runable agent home screen in a browser" style="position:absolute;left:14%;bottom:-20px;width:72%;height:auto;z-index:1;box-shadow:0 24px 48px var(--frameSh)">
+          <div class="cardframe runshot" style="background:var(--card-tint-03)">
+            <img loading="eager" decoding="async" data-mock="single" data-src="./assets/runable-agent-home-1050.png" data-srcset="./assets/runable-agent-home-700.png 700w, ./assets/runable-agent-home-1050.png 1050w, ./assets/runable-agent-home-1400.png 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="685" alt="Runable agent home screen in a browser" style="position:absolute;left:14%;bottom:-20px;width:72%;height:auto;z-index:1;box-shadow:0 24px 48px var(--frameSh)">
           </div>
         </div>
         <div class="worktext">
-          <span class="num">03</span>
           <h3>An AI agent platform, concept to public launch</h3>
-          <span class="desc">Runable · 0→1 AI product, Founding Designer</span>
-          <span class="desc" style="margin-top:4px;text-transform:uppercase;letter-spacing:.01em">Shipped Nov 2025 · Product has since evolved</span>
-          <a class="workcta livecta" href="https://runable.com/" target="_blank" rel="noreferrer" aria-label="Visit the live Runable site"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>Live site<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+          <span class="desc">Runable &#183; Founding designer &#183; AI product</span>
+          
+          <p class="workfacts"><b>~$1M</b> run-rate in month one <i>&#183;</i> <b>0&#8594;1</b> concept to launch</p>
+          <span class="workcta livecta"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>View live product<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        </div>
+      </a>
+
+      <div class="workrow soonrow" data-reveal>
+        <div style="min-width:0">
+          <div class="cardframe soonframe">
+            <span class="soonlabel">Next</span>
+            <p class="soontext">More case studies are being written up.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="impact" data-reveal>
-    <div class="impactgrid">
-      <div class="impactcol" data-reveal><div class="impactnum">2.4×</div><p>Lead-to-client conversion in the two months after Rise Portal launched.</p></div>
-      <div class="impactcol" data-reveal><div class="impactnum">48%</div><p>Fewer partner support tickets once earnings and lead status went self-serve.</p></div>
-      <div class="impactcol" data-reveal><div class="impactnum">~$1M</div><p>Annualised run-rate in Runable’s first month post-launch, built 0→1 with no PM.</p></div>
-    </div>
-  </section>
-
   <section id="experience">
-    <div class="exptimeline">
-    <div class="exprow expnext"><a href="#contact" class="expchip">Let’s build something</a></div>
+    <div class="exptimeline" data-reveal>
+    <div class="exprow expopen" data-reveal>
+      <p class="exp-date">Now</p>
+      <div class="expslot" id="expSlot" data-state="empty">
+        <span class="expfield">
+          <span class="expcaret" aria-hidden="true"></span>
+          <input class="expinput" id="expInput" type="text" maxlength="26" autocomplete="off" spellcheck="false"
+                 placeholder="Your company here" aria-label="Type your company name into the timeline">
+          <span class="expname" id="expName" aria-live="polite"></span>
+          <span class="exphint" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M10.9 2.9a1.55 1.55 0 0 1 2.2 2.2L6 12.2l-3 .8.8-3z" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </span>
+        <span class="expacts">
+          <button type="button" class="expbtn is-done" id="expDone" aria-label="Save" title="Save"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="expbtn is-edit" id="expEdit" aria-label="Edit" title="Edit"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10.9 2.9a1.55 1.55 0 0 1 2.2 2.2L6 12.2l-3 .8.8-3z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="expbtn is-del" id="expDel" aria-label="Remove" title="Remove"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 4.2 11.8 11.8M11.8 4.2 4.2 11.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+        </span>
+      </div>
+      <p class="exp-role">Product Designer</p>
+      <p class="exp-desc">Open to work. The problem matters more than the industry.</p>
+    </div>
     <div class="exprow" data-reveal>
       <p class="exp-date">Dec 2025 – Apr 2026</p>
       <h3 class="exp-co">ZZAZZ AI</h3>
       <p class="exp-role">Product Designer</p>
       <p class="exp-desc">Priced content for the post-AI web. Designed the publisher product and rebuilt the payment flow from seven steps to four.</p>
-      <div class="exp-chips"><span>Publish</span><span>Payment flow 7→4</span><span>Light mode</span></div>
     </div>
     <div class="exprow" data-reveal>
       <p class="exp-date">Sep 2025 – Nov 2025</p>
       <h3 class="exp-co">Runable AI</h3>
       <p class="exp-role">Founding Product Designer</p>
       <p class="exp-desc">Only designer, no PM. Took an AI agent platform from concept to public launch.</p>
-      <div class="exp-chips"><span>0→1</span><span>Agent transparency</span><span>Onboarding &amp; activation</span></div>
     </div>
     <div class="exprow" data-reveal>
       <p class="exp-date">Feb 2024 – Aug 2025</p>
       <h3 class="exp-co">Rupeezy</h3>
       <p class="exp-role">Product Designer</p>
       <p class="exp-desc">Owned the trading app end to end: 200K+ registered users, 97% of company revenue. Built the partner platform and the design system.</p>
-      <div class="exp-chips"><span>KYC &amp; Onboarding</span><span>Design system</span><span>30+ products &amp; features</span></div>
     </div>
     <div class="exprow" data-reveal>
       <p class="exp-date">Apr 2023 – Jan 2024</p>
       <h3 class="exp-co">Sustainability Economics.ai</h3>
       <p class="exp-role">UI/UX Designer</p>
       <p class="exp-desc">Sole designer on a net-zero carbon accounting platform. Built for banks, insurers and corporates.</p>
-      <div class="exp-chips"><span>Carbon accounting</span><span>Data ingestion</span><span>Enterprise dashboards</span></div>
     </div>
     </div>
   </section>
 
   <section id="contact">
-    <footer>
-      <div class="halftone halftone-foot" aria-hidden="true"></div>
-      <h2>Let’s connect.</h2>
-      <p>Always up for a conversation about product, design, or how something got built.</p>
-      <div class="social">
-        <a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="translate(12 12) scale(1.9) translate(-12 -12)" stroke-width="0.95"><path d="M8 11v5"></path><path d="M8 8v.01"></path><path d="M12 16v-5"></path><path d="M16 16v-3a2 2 0 1 0 -4 0"></path></g></svg></a>
-        <a href="https://www.behance.net/lokeshbhatia" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-12h4.5a3 3 0 0 1 0 6a3 3 0 0 1 0 6h-4.5"></path><path d="M3 12l4.5 0"></path><path d="M14 13h7a3.5 3.5 0 0 0 -7 0v2a3.5 3.5 0 0 0 6.64 1"></path><path d="M16 6l3 0"></path></svg></a>
-        <a href="https://www.figma.com/@lkb" target="_blank" rel="noreferrer" aria-label="Figma" title="Figma"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M6 6a3 3 0 0 1 3 -3h6a3 3 0 0 1 3 3a3 3 0 0 1 -3 3h-6a3 3 0 0 1 -3 -3"></path><path d="M9 9a3 3 0 0 0 0 6h3m-3 0a3 3 0 1 0 3 3v-15"></path></svg></a>
-      </div>
+    <footer data-reveal>
+      <p class="footline">&#169; 2026 Lokesh Bhatia</p>
     </footer>
   </section>
+  </main>
 
 </div>
 <script>
@@ -647,7 +2303,7 @@ body.rmodal-open{overflow:hidden}
   }
   burger.addEventListener("click", toggleMenu);
   var here = location.pathname.split("/").pop() || "index.html";
-  mobileNav.querySelectorAll(".mrow").forEach(function(el){
+  mobileNav.querySelectorAll(".mrow, .mcase").forEach(function(el){
     var href = el.getAttribute("href");
     if (href.indexOf("#contact") > -1) return;
     var target = href.split("#")[0].split("/").pop() || "index.html";
@@ -720,22 +2376,70 @@ body.rmodal-open{overflow:hidden}
   } catch(e){}
   var seen = fromInternal;
   var hidden = false;
-  function hideLoader(){ if (hidden) return; hidden = true; loader.classList.add("hide"); document.body.classList.add("heroin"); }
+  /* Start the hero AFTER the loader has actually cleared.
+     Both paths used to fire it at the same instant the loader began to
+     go, and the loader takes 500ms to fade: the whole 600ms arrival
+     played underneath it and was over before anything was visible. On
+     the returning-visitor path it was worse — the class was added during
+     parse, so the animation ran against the document timeline and was
+     finished before the first paint. Either way you saw a settled page
+     and no motion, which is exactly what was reported. */
+  function startHero(){
+    document.body.classList.add("heroin","arriving");
+    /* release the headline mask once the lines have landed */
+    setTimeout(function(){ document.body.classList.remove("arriving") },1500);
+    /* the rest of the page starts arriving 300ms behind the hero, so the
+       two entrances read as one sequence rather than one pile-up */
+    setTimeout(startReveal, 300);
+  }
+  /* The class goes on at the SAME moment the loader starts to go, never
+     after it. Delaying it was what produced the flash: the hero painted
+     in its finished position while the loader faded, then the class
+     landed, snapped it back to the start of the animation, and played it
+     — so you saw the page arrive, undo itself, and arrive again.
+
+     The wait now lives in animation-delay instead, with fill-mode
+     backwards holding the start state through it. The hero is therefore
+     never painted settled before it animates: it is held at frame zero,
+     under the fading loader, and released once the loader has gone. */
+  function hideLoader(){ if (hidden) return; hidden = true;
+    loader.classList.add("hide"); startHero(); }
   if (seen){
     loader.style.transition = "none";
     loader.classList.add("hide");
-    document.body.classList.add("heroin");
+    startHero();
   } else {
-    window.addEventListener("load", function(){ setTimeout(hideLoader, 1400); });
-    setTimeout(hideLoader, 2200);
+    window.addEventListener("load", function(){ setTimeout(hideLoader, 1750); });
+    setTimeout(hideLoader, 2550);
     ["click","keydown","touchstart"].forEach(function(ev){
       document.addEventListener(ev, function(){ hideLoader(); }, { once: true });
     });
   }
 
-  // scroll reveal
-  var revealed = false;
-  if ("IntersectionObserver" in window){
+  /* Scroll reveal — HELD until the loader has gone.
+
+     The observer used to start the moment this script ran, which is
+     while the intro is still covering the page. Everything above the
+     fold therefore played its entrance underneath the loader, finished,
+     and was sitting in its final state by the time the loader faded.
+     The animations were running; they were just running where nobody
+     could see them. Same failure the hero had, one layer down.
+
+     So nothing is observed until startHero() releases it, plus a beat
+     so the sections below do not move while the hero is still landing.
+     The hero itself is marked shown immediately — it has its own
+     arrival and must not also fade in. */
+  var revealed = false, revealStarted = false;
+  var revealEls = document.querySelectorAll("[data-reveal]");
+  function showAllReveals(){
+    for (var i = 0; i < revealEls.length; i++) revealEls[i].classList.add("shown");
+  }
+  function startReveal(){
+    if (revealStarted) return;
+    revealStarted = true;
+    var hero = document.getElementById("top");
+    if (hero) hero.classList.add("shown");
+    if (!("IntersectionObserver" in window)){ showAllReveals(); return; }
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if (en.isIntersecting){
@@ -747,14 +2451,13 @@ body.rmodal-open{overflow:hidden}
         }
       });
     }, { threshold: 0, rootMargin: "0px 0px -10% 0px" });
-    document.querySelectorAll("[data-reveal]").forEach(function(el){ io.observe(el); });
-  } else {
-    document.querySelectorAll("[data-reveal]").forEach(function(el){ el.classList.add("shown"); });
+    for (var i = 0; i < revealEls.length; i++){
+      if (revealEls[i] !== hero) io.observe(revealEls[i]);
+    }
+    setTimeout(function(){ if (!revealed) showAllReveals(); }, 2500);
   }
-  setTimeout(function(){
-    if (revealed) return;
-    document.querySelectorAll("[data-reveal]").forEach(function(el){ el.classList.add("shown"); });
-  }, 2500);
+  /* last resort: if the loader never hands over, nothing stays blank */
+  setTimeout(startReveal, 4000);
   (function(){
     var imgs=document.querySelectorAll("img[data-src]");
     function put(i){ if(i.dataset.srcset){ i.srcset=i.dataset.srcset; i.removeAttribute("data-srcset"); } i.src=i.dataset.src; i.removeAttribute("data-src"); }
@@ -778,8 +2481,7 @@ body.rmodal-open{overflow:hidden}
   var paletteItems = [
     { label: "Home", href: "#top" },
     { label: "Selected work", href: "#work" },
-    { label: "Impact, the numbers", href: "#impact" },
-    { label: "Journey so far", href: "#experience" },
+    { label: "Experience", href: "#experience" },
     { label: "Contact", href: "#contact" },
     { label: "About", href: "./about.html" },
     { label: "App Merge case study", href: "./app-merge.html" },
@@ -825,88 +2527,319 @@ body.rmodal-open{overflow:hidden}
     else img.addEventListener("load", reveal);
   });
 
-  // site notice banner
-  document.body.insertAdjacentHTML("beforeend", '<div id="noticeBanner" role="status"><img width="659" height="880" loading="eager" decoding="async" class="notice-photo" src="./assets/notice-banner-illustration.svg" alt=""><div class="notice-text"><h3>Still putting this together !</h3><p>Bear with me if something looks off.</p></div><div class="notice-actions"><button type="button" class="notice-btn primary" id="noticeDismiss">That\'s fine</button></div></div>');
-  (function(){
-    var KEY = "pfSiteNoticeDismissed";
-    var dismissed = false;
-    try { dismissed = sessionStorage.getItem(KEY) === "1"; } catch(e) {}
-    if (dismissed) { var stale = document.getElementById("noticeBanner"); if (stale) stale.remove(); return; }
-    var banner = document.getElementById("noticeBanner");
-    var dismissBtn = document.getElementById("noticeDismiss");
-    if (!banner || !dismissBtn) return;
-    function dismiss(){
-      banner.classList.remove("show");
-      banner.classList.add("hide");
-      try { sessionStorage.setItem(KEY, "1"); } catch(e) {}
-      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      setTimeout(function(){ banner.remove(); }, reduced ? 0 : 160);
-    }
-    dismissBtn.addEventListener("click", dismiss);
-    // 8s counted from when the intro loader finishes and the page is visible
-    var start = function(){ setTimeout(function(){ banner.classList.add("show"); }, 2000); };
-    var ldr = document.getElementById("loader");
-    if (!ldr || ldr.classList.contains("hide")) start();
-    else {
-      var fired = false;
-      var go = function(){ if (fired) return; fired = true; obs.disconnect(); start(); };
-      var obs = new MutationObserver(function(){ if (ldr.classList.contains("hide")) go(); });
-      obs.observe(ldr, { attributes: true, attributeFilter: ["class"] });
-      setTimeout(go, 5000);
-    }
-  })();
+  // site notice banner removed
+
 })();
 
 </script>
-<div id="resumeModal" class="rmodal" role="dialog" aria-modal="true" aria-label="Resume" hidden>
-  <div class="rmodal-scrim"></div>
-  <div class="rmodal-panel">
-    <div class="rmodal-bar">
-      <span class="lbl" style="color:var(--accent)">Resume</span>
-      <div class="rmodal-actions">
-        <a class="btn-primary" href="./resume.pdf" download="Lokesh_Kumar_Bhatia_Resume.pdf">Download</a>
-        <button type="button" class="btn-secondary" id="rShare">Share</button>
-        <button type="button" class="rmodal-close" aria-label="Close">
-          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg>
-        </button>
-      </div>
-    </div>
-    <div class="rmodal-body">
-      <img src="./assets/resume-preview.webp" width="1600" height="2263" alt="Lokesh Kumar Bhatia resume, single page" loading="eager" decoding="async">
-    </div>
-  </div>
-</div>
+<script>
+</script>
 <script>
 (function(){
-  var m=document.getElementById("resumeModal"); if(!m) return;
-  var lastFocus=null;
-  function open(){ lastFocus=document.activeElement; m.hidden=false; document.body.classList.add("rmodal-open");
-    m.querySelector(".rmodal-close").focus(); }
-  function close(){ m.hidden=true; document.body.classList.remove("rmodal-open"); if(lastFocus) lastFocus.focus(); }
-  document.querySelectorAll('a[href$="resume.html"]').forEach(function(a){
-    a.addEventListener("click",function(e){
-      e.preventDefault();
-      if(document.body.classList.contains("menu-open")){ var b=document.getElementById("burgerBtn"); if(b) b.click(); }
-      open();
-    });
+  var slot=document.getElementById("expSlot"); if(!slot) return;
+  var input=document.getElementById("expInput"),
+      name =document.getElementById("expName"),
+      bDone=document.getElementById("expDone"),
+      bEdit=document.getElementById("expEdit"),
+      bDel =document.getElementById("expDel"),
+      role =slot.parentNode.querySelector(".exp-role"),
+      desc =slot.parentNode.querySelector(".exp-desc"),
+      KEY="lb.openslot", DESC0=desc?desc.textContent:"";
+
+  function store(v){ try{ v?localStorage.setItem(KEY,v):localStorage.removeItem(KEY);}catch(e){} }
+  function read(){ try{ return localStorage.getItem(KEY)||""; }catch(e){ return ""; } }
+
+  function setState(st){
+    slot.setAttribute("data-state",st);
+    // the row reads as a real entry once it is filled
+    if(desc) desc.textContent = st==="filled"
+      ? "That would work. Email me and let\u2019s talk."
+      : DESC0;
+  }
+  function fill(v){
+    name.textContent=v; input.value=v; store(v); setState("filled");
+  }
+  function commit(){
+    var v=input.value.trim().replace(/\s+/g," ");
+    if(v){ fill(v); bEdit.focus(); } else { clear(); }
+  }
+  function clear(){ input.value=""; name.textContent=""; store(""); setState("empty"); }
+
+  /* the whole slot is the target, not just the 1px of text inside it */
+  slot.addEventListener("click",function(e){
+    if(e.target.closest("button")) return;
+    if(slot.getAttribute("data-state")==="empty") input.focus();
   });
-  m.querySelector(".rmodal-scrim").addEventListener("click",close);
-  m.querySelector(".rmodal-close").addEventListener("click",close);
-  document.addEventListener("keydown",function(e){
-    if(m.hidden) return;
-    if(e.key==="Escape"){ close(); return; }
-    if(e.key!=="Tab") return;
-    var f=m.querySelectorAll("a,button"); var first=f[0], last=f[f.length-1];
-    if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus(); }
-    else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus(); }
+  input.addEventListener("focus",function(){ if(slot.getAttribute("data-state")!=="filled") setState("editing"); });
+  input.addEventListener("blur", function(){
+    if(slot.getAttribute("data-state")==="editing" && !input.value.trim()) setState("empty");
   });
-    var shareBtn=document.getElementById("rShare");
-  shareBtn.addEventListener("click", function(){
-    var url=new URL("./resume.html",location.href).href;
-    copyText(url, shareBtn, "Link copied");
+  input.addEventListener("keydown",function(e){
+    if(e.key==="Enter"){ e.preventDefault(); commit(); }
+    else if(e.key==="Escape"){ e.preventDefault(); input.value=read(); read()?fill(read()):clear(); input.blur(); }
   });
-  if(location.hash==="#resume") open();
+  bDone.addEventListener("mousedown",function(e){ e.preventDefault(); });
+  bDone.addEventListener("click",commit);
+  bEdit.addEventListener("click",function(){
+    setState("editing"); input.focus(); input.select();
+  });
+  bDel.addEventListener("click",function(){ clear(); input.focus(); });
+
+  var saved=read(); if(saved) fill(saved);
 })();
+
+
+/* ── the note board ───────────────────────────────────────────────────
+   States, in order:
+     empty    → a plus button and one sentence. Nothing else exists.
+     writing  → the note is on the board, the toolbar appears under it.
+   Add refuses while any note is still blank: the blank note shakes to
+   say "fill me first", so two empty notes cannot exist.
+
+   The delete button was dead because it lives INSIDE the drag strip:
+   pointerdown captured the pointer for dragging before the click could
+   reach the button. The grip now ignores pointerdowns that start on it.
+
+   Send posts the notes to a mail relay (formsubmit.co) so they arrive
+   in the inbox directly — no mail app opens. If the network call fails,
+   it falls back to a prefilled mailto draft rather than losing the
+   notes. */
+(function(){
+  var board=document.getElementById("padBoard"); if(!board) return;
+  var wrap=board.closest(".padwrap"),
+      trigger=document.getElementById("padTrigger"),
+      addBtn=document.getElementById("padAdd"),
+      blankAdd=document.getElementById("padBlankAdd"),
+      sendBtn=document.getElementById("padSend"),
+      clearBtn=document.getElementById("padClear"),
+      count=document.getElementById("padCount"),
+      toast=document.getElementById("padToast"),
+      toastText=document.getElementById("padToastText"),
+      toastX=document.getElementById("padToastX");
+  if(!addBtn||!blankAdd||!sendBtn||!clearBtn||!count||!toast||!toastX) return;
+
+  var KEY="lb.notes", MAIL="hi.lokeshux@gmail.com", MAX=12, BAR=52;
+
+  /* ─────────────────────────────────────────────────────────────────
+     PASTE YOUR APPS SCRIPT WEB APP URL HERE.
+     Setup is in notes-sheet.gs in this folder. Until it is filled in,
+     Send falls back to opening a prefilled mail draft, so the board
+     keeps working either way.
+     ───────────────────────────────────────────────────────────────── */
+  var SHEET_URL = "https://script.google.com/macros/s/AKfycbyK0dI4FgZ6NxfpPcsAoRoccPWE4FRUKQdXlazPBXx8LpXcB3mpcqF-wweGusk9SRDbPA/exec";
+  var notes=[], sending=false;
+
+  function read(){ try{ return JSON.parse(localStorage.getItem(KEY)) }catch(e){ return null } }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(notes)) }catch(e){} }
+  function written(){ return notes.filter(function(n){ return (n.text||"").trim() }) }
+  function blank(){
+    var i=notes.findIndex(function(n){ return !(n.text||"").trim() });
+    return i<0?null:{note:notes[i],el:board.querySelectorAll(".padnote")[i]};
+  }
+
+  function open(){ if(wrap) wrap.classList.add("is-open") }
+  function close(){ if(wrap) wrap.classList.remove("is-open") }
+
+  function sync(){
+    var n=notes.length, w=written().length;
+    /* an empty board is just space: give it back */
+    if(n===0) close(); else open();
+    board.classList.toggle("has-notes",n>0);   /* hides the empty state */
+    board.classList.toggle("has-text",w>0);    /* brings up the toolbar */
+    count.textContent=String(n);
+    /* Add stays live even when a blank note is on the board: greying it
+       out leaves the visitor guessing. It is clickable, and clicking it
+       shakes the note that still needs filling — a refusal that says
+       which note, instead of a dead button that says nothing. */
+    addBtn.disabled = n>=MAX;
+    sendBtn.disabled = w===0 || sending;
+    clearBtn.disabled = n===0;
+  }
+
+  function nudge(){
+    var b=blank(); if(!b||!b.el) return;
+    b.el.classList.remove("is-nudged"); void b.el.offsetWidth;
+    b.el.classList.add("is-nudged");
+    var ta=b.el.querySelector("textarea"); if(ta) ta.focus();
+  }
+
+  function settle(el,note){
+    var bb=board.getBoundingClientRect(); if(!bb.width) return;
+    var pad=6,
+        maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
+        maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
+        minX=pad/bb.width*100, minY=pad/bb.height*100;
+    note.x=Math.max(minX,Math.min(note.x,Math.max(minX,maxX)));
+    note.y=Math.max(minY,Math.min(note.y,Math.max(minY,maxY)));
+    el.style.left=note.x+"%"; el.style.top=note.y+"%";
+  }
+
+  function render(note){
+    var el=document.createElement("div");
+    el.className="padnote t"+(note.tone%4);
+    el.style.setProperty("--tilt",note.tilt+"deg");
+    el.style.left=note.x+"%"; el.style.top=note.y+"%";
+    el.innerHTML='<div class="padgrip"><span class="dots" aria-hidden="true">'+
+      '<i></i><i></i><i></i></span>'+
+      '<button type="button" class="padkill" aria-label="Delete this note">'+
+      '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">'+
+      '<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>'+
+      '</svg></button></div>';
+    var ta=document.createElement("textarea");
+    ta.placeholder="Type a note…"; ta.value=note.text||"";
+    ta.setAttribute("aria-label","Note text");
+    ta.addEventListener("input",function(){ note.text=ta.value; save(); sync() });
+    el.appendChild(ta);
+
+    el.querySelector(".padkill").addEventListener("click",function(){
+      notes.splice(notes.indexOf(note),1); el.remove(); save(); sync();
+    });
+
+    var grip=el.querySelector(".padgrip"), dx=0, dy=0;
+    grip.addEventListener("pointerdown",function(e){
+      /* dragging must not swallow the delete button's click */
+      if(e.target.closest(".padkill")) return;
+      if(e.button!==undefined&&e.button!==0) return;
+      var r=el.getBoundingClientRect();
+      dx=e.clientX-r.left; dy=e.clientY-r.top;
+      el.classList.add("is-dragging");
+      board.appendChild(el);
+      try{ grip.setPointerCapture(e.pointerId) }catch(err){}
+      function move(ev){
+        var bb=board.getBoundingClientRect(), pad=6,
+            maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
+            maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
+            minX=pad/bb.width*100, minY=pad/bb.height*100;
+        var x=(ev.clientX-bb.left-dx)/bb.width*100,
+            y=(ev.clientY-bb.top-dy)/bb.height*100;
+        note.x=Math.max(minX,Math.min(x,Math.max(minX,maxX)));
+        note.y=Math.max(minY,Math.min(y,Math.max(minY,maxY)));
+        el.style.left=note.x+"%"; el.style.top=note.y+"%";
+      }
+      function up(){
+        grip.removeEventListener("pointermove",move);
+        grip.removeEventListener("pointerup",up);
+        grip.removeEventListener("pointercancel",up);
+        el.classList.remove("is-dragging"); save();
+      }
+      grip.addEventListener("pointermove",move);
+      grip.addEventListener("pointerup",up);
+      grip.addEventListener("pointercancel",up);
+      e.preventDefault();
+    });
+
+    el.addEventListener("keydown",function(e){
+      if(!(e.altKey||e.metaKey||e.ctrlKey)) return;
+      var step=e.shiftKey?6:2, moved=true;
+      if(e.key==="ArrowLeft") note.x-=step;
+      else if(e.key==="ArrowRight") note.x+=step;
+      else if(e.key==="ArrowUp") note.y-=step;
+      else if(e.key==="ArrowDown") note.y+=step;
+      else moved=false;
+      if(moved){ settle(el,note); save(); e.preventDefault() }
+    });
+
+    board.appendChild(el);
+    return el;
+  }
+
+  function add(x,y){
+    if(notes.length>=MAX) return;
+    if(blank()){ nudge(); return }     /* one blank note at a time */
+    var i=notes.length;
+    var note={ x:x, y:y, text:"", tone:i%4, tilt:[-2,1.4,-1,2][i%4] };
+    notes.push(note); save(); sync();
+    var el=render(note); settle(el,note);
+    el.querySelector("textarea").focus();
+  }
+
+  blankAdd.addEventListener("click",function(){ add(8,12) });
+  /* one move: open the board and start the note */
+  if(trigger) trigger.addEventListener("click",function(){ open(); add(8,12) });
+  addBtn.addEventListener("click",function(){
+    var n=notes.length; add(6+(n%4)*21, 8+(Math.floor(n/4)%3)*24);
+  });
+  board.addEventListener("dblclick",function(e){
+    if(e.target.closest(".padnote")||e.target.closest(".padbar")||e.target.closest(".padblank")) return;
+    var bb=board.getBoundingClientRect();
+    add((e.clientX-bb.left-76)/bb.width*100,(e.clientY-bb.top-14)/bb.height*100);
+  });
+
+  clearBtn.addEventListener("click",function(){
+    notes=[];
+    [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() });
+    hideToast(); save(); sync();
+  });
+
+  function showToast(msg){ toastText.textContent=msg; toast.hidden=false }
+  function hideToast(){ toast.hidden=true }
+  toastX.addEventListener("click",hideToast);
+
+  sendBtn.addEventListener("click",function(){
+    var lines=written().map(function(n,i){ return (i+1)+". "+n.text.trim() });
+    if(!lines.length||sending) return;
+    var bodyText="Notes from your portfolio:\n\n"+lines.join("\n\n");
+    sending=true; sync();
+    var label=sendBtn.querySelector(".sendlabel");
+    if(label) label.textContent="Sending…";
+
+    if(!SHEET_URL){ handOff(bodyText,"No collection point is configured yet — opening your mail app."); return }
+
+    /* text/plain keeps this a "simple" request: an application/json body
+       would trigger a CORS preflight, and Apps Script web apps do not
+       answer OPTIONS, so the send would fail before it left the page. */
+    fetch(SHEET_URL,{method:"POST",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify({
+        notes:written().map(function(n){ return n.text.trim() }),
+        page:location.href,
+        sentAt:new Date().toISOString()
+      })})
+    .then(function(r){ if(!r.ok) throw 0; return r.text() })
+    .then(function(){
+      sending=false;
+      if(label) label.textContent="Send";
+      sendBtn.classList.add("is-done");
+      setTimeout(function(){ sendBtn.classList.remove("is-done") },2600);
+      showToast("Sent. Thank you — I read every one.");
+      notes=[]; save();
+      [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() });
+      sync();
+    })
+    .catch(function(){ handOff(bodyText,"Couldn’t reach the board’s inbox — opening your mail app instead.") });
+
+    /* Never lose what somebody took the trouble to write: if the sheet
+       cannot be reached, hand the notes to their own mail app. */
+    function handOff(text,msg){
+      sending=false;
+      if(label) label.textContent="Send";
+      sync();
+      showToast(msg);
+      window.location.href="mailto:"+MAIL+
+        "?subject="+encodeURIComponent("Notes on your portfolio")+
+        "&body="+encodeURIComponent(text+"\n\n");
+    }
+  });
+
+  var stored=read();
+  if(Array.isArray(stored)&&stored.length){
+    notes=stored;
+    open();                                  /* size the board before placing */
+    notes.forEach(function(n){ settle(render(n),n) });
+  }
+  sync();
+
+  var rt;
+  window.addEventListener("resize",function(){
+    clearTimeout(rt);
+    rt=setTimeout(function(){
+      var els=board.querySelectorAll(".padnote");
+      notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
+      save();
+    },160);
+  });
+})();
+
 </script>
 </body>
 </html>

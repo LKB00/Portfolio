@@ -2,36 +2,40 @@
 
 Lokesh Bhatia — product design portfolio.
 
-## Upload these files to the REPO ROOT
+## Layout
 
-Not inside a folder. `index.html` must sit next to this README, or GitHub Pages will not find it.
+The site serves from the **repo root**. `index.html` sits next to this README.
+There is no `Portfolio/` subfolder and there should not be one.
 
-```
-index.html
-about.html
-app-merge.html
-rise-portal.html
-core-design-system.html
-FixedAndVariable.dc.html
-support.js
-image-slot.js
-.nojekyll
-assets/            (21 files — keep the folder)
-```
+## Deployment
 
-If a `Portfolio/` folder already exists in the repo from an earlier upload, delete it — it holds redirect stubs that point at a file which does not exist.
+Vercel, with the project's **Root Directory left empty**. Pushing to `main`
+deploys.
 
-## Hosting on GitHub Pages
+## Do not delete
 
-Settings → Pages → Source: `main`, folder `/ (root)`.
+- `resume.pdf`
+- `favicon.ico`, `favicon-96.png`, `apple-touch-icon.png`, `icon-192.png`,
+  `icon-512.png`
+- `site.webmanifest`
+- `.nojekyll`
+- `api/stats.js`
 
-The repo must be public, or Pages needs a paid plan.
+The current pages do not reference these — they use `assets/lokesh-face.png`
+as the favicon and link to `resume.html` rather than the PDF. They are kept
+deliberately: the PDF is a stable public URL that may be linked from outside
+the site, and the icons cover browsers and devices that look for them by
+convention at the root. Do not remove them on the grounds that nothing links
+to them.
 
-## Notes
+## Assets
 
-- `support.js` is required — without it every page loads blank.
-- `image-slot.js` renders the image placeholders.
-- `FixedAndVariable.dc.html` is loaded by the app-merge page; keep the filename exactly as-is.
-- `assets/` holds every image. Keep the folder name and its contents together.
-- `.nojekyll` stops GitHub stripping files; it is invisible in Finder — enable hidden files (⌘⇧.) when dragging, or create it on GitHub with "Add file → Create new file" named `.nojekyll`.
-- Add `resume.pdf` at the root — the nav and command palette link to it, and it is not included here.
+`assets/` holds every image the site uses. Keep the folder name and its
+contents together; all pages reference it as `./assets/…`.
+
+## Analytics
+
+Each page carries the Umami tag inline in its `<head>`, alongside
+`analytics.js`. `.github/workflows/inject-analytics.yml` adds that tag to any
+root-level page missing it; it skips `assets/` so the embedded animation
+files are never tagged.
