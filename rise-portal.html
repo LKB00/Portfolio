@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0A0A0A":"#F7F6F1";})();</script>
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rise Portal: the first product Rupeezy’s partners ever had, by Lokesh Bhatia</title>
+<title>Rise Portal — Rupeezy case study</title>
 <meta name="description" content="A B2B platform for the partners behind 35% of company revenue, who couldn't verify their own payouts.">
 <link rel="canonical" href="https://lokeshbhatia.com/rise-portal.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
-<meta property="og:title" content="Rise Portal: the first product Rupeezy’s partners ever had, by Lokesh Bhatia">
+<meta property="og:title" content="Rise Portal — Rupeezy case study">
 <meta property="og:description" content="A B2B platform for the partners behind 35% of company revenue, who couldn't verify their own payouts.">
 <meta property="og:url" content="https://lokeshbhatia.com/rise-portal.html">
 <meta property="og:image" content="https://lokeshbhatia.com/og-image.png">
@@ -18,17 +18,13 @@
 <meta property="og:image:alt" content="Lokesh Bhatia, product designer. I design products that show their work.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://lokeshbhatia.com/og-image.png">
-<meta name="twitter:title" content="Rise Portal: the first product Rupeezy’s partners ever had, by Lokesh Bhatia">
+<meta name="twitter:title" content="Rise Portal — Rupeezy case study">
 <meta name="twitter:description" content="A B2B platform for the partners behind 35% of company revenue, who couldn't verify their own payouts.">
 <link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
-<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://api.fontshare.com">
-<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
 
@@ -36,40 +32,55 @@
 @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
 
 
+/* ── design tokens: jaimec.co-inspired ── */
 :root{
-  --dot:rgba(20,20,15,.16); --ease:cubic-bezier(.22,1,.36,1); --bg2:#F7F6F1; --t-h1:clamp(36px,6.6vw,74px);
-  --t-h2:clamp(28px,3vw,40px); --t-statement:clamp(21px,2.4vw,27px); --t-lead:15px; --t-body:17px; --t-subhead:20px;
-  --t-small:13px; --t-btn:16px; --t-body-lg:clamp(18px,2vw,22px); --t-mono-lg:13px;
-  --t-mono:12px; --t-mono-sm:11px; --s-1:4px; --s-2:8px;
-  --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px;
-  --s-7:48px; --s-8:64px; --s-9:96px; --w-text:640px;
-  --w-content:1120px; --lh-display:1.02; --lh-head:1.12; --lh-snug:1.3;
-  --lh-body:1.6; --tr-display:-.022em; --tr-head:-.02em; --tr-label:.1em;
-  --tr-mono:.02em; --pad:clamp(28px,8vw,140px); --secY:clamp(120px,16vw,240px); --bg:#F7F6F1;
-  --ink:#1B1D21; --muted:#5B6068; --faint:#6B7076; --line:#E3E6E9;
-  --card:#FFFFFF; --tint:#EDF0F3; --note1:#EDF0F3; --note2:#EDEFF2;
-  --note3:#E9ECEF; --noteInk:#1B1D21; --accent:#3F3AA8; --accentLine:#3F3AA8;
-  --accentWash:rgba(63,58,168,.08); --onAccent:#FFFFFF; --markWash:rgba(63,58,168,.20); --frameSh:rgba(27,29,33,.28);
-  --navOn:var(--accent); --navOff:#5B6068; --neg:#9B2C2C; --negWash:rgba(155,44,44,.20);
-  --gain:#1C6A42; --gainWash:rgba(28,106,66,.20); --serif:'Source Serif 4','Charter',Georgia,serif; --mono:'Switzer',Helvetica,Arial,sans-serif;
-  --frameBar:#F1F3F6; --framePill:#E3E6EB; --frameUrl:#5F6570; --frameIcon:#878E9B;
-  --frameEdge2:rgba(18,24,38,.07); --t-display:clamp(34px,6.6vw,84px); --t-h3:clamp(20px,2.2vw,25px); --tr-body:0;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --bg:#FAFAFA; --surface:#F2F2F2; --card:#FFFFFF; --line:#E8E8E8;
+  --ink:#141414; --muted:#5C5C5C; --faint:#8A8A8A;
+  --link:#006AD4; --dark:#171717; --onDark:#FFFFFF;
+  --yellow:#FBE14D; --onYellow:#3D3400;
+  --ok:#1F9D4D; --warn:#E9A417; --crit:#E0392B;
+  --r-pill:1000px; --r-card:20px; --r-float:16px; --r-sm:10px;
+  --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
+  --display:'Geist','Inter',Helvetica,Arial,sans-serif;
+  --serif:var(--display); --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --t-display:24px; --t-lead:15px; --t-body:15px; --t-title:14px; --t-meta:13px; --t-ui:13px; --t-small:12px; --t-micro:11px; --t-xs:11px;
+  --t-h1:24px; --t-h2:14px; --t-h3:13px;
+  --t-body-lg:15px; --t-btn:13px; --t-mono:11px; --t-mono-lg:12px; --t-mono-sm:11px; --t-statement:15px;
+  --lh-body:1.42; --lh-head:1.2; --lh-display:1.2; --lh-snug:1.3;
+  --tr-display:-.01em; --tr-head:-.01em; --tr-body:-.01em; --tr-label:.02em; --tr-mono:0;
+  --s-1:4px; --s-2:7px; --s-3:10px; --s-4:13px; --s-5:18px;
+  --s-6:24px; --s-7:36px; --s-8:45px; --s-9:67px;
+  --col:821px; --card-w:400px; --gap:24px;
+  --pad:18px; --w-content:821px; --w-text:468px; --measure:468px; --secY:67px;
+  --dot:rgba(20,20,20,.10); --frameSh:rgba(0,0,0,.14);
+  --accent:#006AD4; --accentLine:#006AD4; --accentWash:rgba(0,106,212,.08);
+  --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
+  --tint:var(--surface); --bg2:var(--surface); --deep:var(--dark); --onDeep:var(--onDark);
+  --gain:#1F9D4D; --gainWash:rgba(31,157,77,.10); --live:#1F9D4D;
+  --neg:#E0392B; --negWash:rgba(224,57,43,.10);
+  --card-tint-01:#F2F2F2; --card-tint-02:#F2F2F2; --card-tint-03:#F2F2F2;
+  --navOn:var(--ink); --navOff:#5C5C5C;
 }
 :root[data-theme="dark"]{
-  --dot:rgba(237,239,242,.10); --bg2:#0E0E0E; --bg:#0A0A0A; --ink:#EDEFF2;
-  --muted:#9AA0A6; --faint:#8A9095; --line:#24262A; --card:#141619;
-  --tint:#1A1D21; --note1:#171A1D; --note2:#16181B; --note3:#15181A;
-  --noteInk:#EDEFF2; --accent:#A5A0F5; --accentLine:#A5A0F5; --accentWash:rgba(165,160,245,.12);
-  --onAccent:#14140F; --markWash:rgba(165,160,245,.30); --frameSh:rgba(0,0,0,.55); --navOff:#9AA0A6;
-  --neg:#F08C8C; --negWash:rgba(240,140,140,.30); --gain:#5AD2A4; --gainWash:rgba(120,214,164,.30);
-  --frameBar:#292C31; --framePill:#373B43; --frameUrl:#98A0AE; --frameIcon:#828A97;
-  --frameEdge2:rgba(0,0,0,.28); --navOn:var(--accent);
+  --bg:#0F0F0F; --surface:#1A1A1A; --card:#161616; --line:#262626;
+  --ink:#EDEDED; --muted:#A1A1A1; --faint:#7A7A7A;
+  --link:#5EA9F5; --dark:#EDEDED; --onDark:#141414;
+  --yellow:#E5CB3C; --onYellow:#2A2400;
+  --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
+  --dot:rgba(237,237,237,.10); --frameSh:rgba(0,0,0,.6);
+  --accent:#5EA9F5; --accentLine:#5EA9F5; --accentWash:rgba(94,169,245,.12);
+  --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
+  --tint:var(--surface); --bg2:var(--surface); --deep:#EDEDED; --onDeep:#141414;
+  --gain:#4ED07F; --gainWash:rgba(78,208,127,.14);
+  --card-tint-01:#1A1A1A; --card-tint-02:#1A1A1A; --card-tint-03:#1A1A1A;
+  --navOff:#A1A1A1; --navOn:var(--ink);
 }
 *{box-sizing:border-box}
 html{overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:120px;background:var(--bg);color-scheme:light}
 html,body{overflow-x:clip;max-width:100%}
 html[data-theme="dark"]{color-scheme:dark}
-body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:'Switzer',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:var(--display);-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto}
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--ink)}
@@ -80,8 +91,8 @@ em{font-style:italic}
 .mark{background-image:linear-gradient(transparent 62%,var(--markWash) 62%);background-repeat:no-repeat;color:var(--ink)}
 .mark-gain{background-image:linear-gradient(transparent 62%,var(--gainWash) 62%);background-repeat:no-repeat;color:var(--ink)}
 section{position:relative;z-index:2;padding-top:var(--secY);padding-bottom:var(--secY)}
-header{position:sticky;top:16px;will-change:max-width;z-index:40;width:100%;max-width:min(calc(880px + var(--pad) * 2),100%);margin:0 auto;padding:var(--s-4) var(--pad) 0;transition:max-width .35s ease}
-header.scrolled{max-width:min(calc(320px + var(--pad) * 2),92%)}
+header{position:sticky;top:16px;will-change:max-width;z-index:40;width:100%;max-width:min(calc(792px + var(--pad) * 2),100%);margin:0 auto;padding:var(--s-4) var(--pad) 0;transition:max-width .35s ease}
+header.scrolled{max-width:min(calc(288px + var(--pad) * 2),92%)}
 .navpill{position:relative;display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);padding:var(--s-3) var(--s-3) var(--s-3) var(--s-4);background:transparent;backdrop-filter:none;box-shadow:none;border-radius:6px;transition:background .3s ease,padding .3s ease,box-shadow .3s ease}
 header.scrolled .navpill{background:color-mix(in srgb,var(--card) 58%,transparent);backdrop-filter:blur(12px) saturate(1.4);box-shadow:0 10px 26px -14px var(--frameSh);padding:var(--s-2) var(--s-3)}
 header.scrolled .facemark{width:26px;height:26px}
@@ -91,7 +102,7 @@ header.scrolled .facemark img{width:26px;height:26px}
 :root[data-theme="dark"] .facemark img{filter:invert(1)}
 .crumb{font-family:var(--mono);font-size:var(--t-mono);line-height:1;display:inline-flex;align-items:center;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:22ch;transition:opacity .28s ease,max-width .38s ease}
 header.scrolled .crumb{opacity:0;max-width:0}
-nav.navlinks{display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);font-size:var(--t-small);font-weight:500}
+nav.navlinks{display:flex;align-items:center;gap:clamp(11px,1.8vw,20px);font-size:var(--t-small);font-weight:500}
 .navlink{display:inline-flex;align-items:center;justify-content:center;color:var(--navOff)}
 .navlink:hover{color:var(--ink)}
 header.scrolled .navtext{display:none}
@@ -105,7 +116,7 @@ html[data-theme="dark"] .icon-sun{display:none}
 .burger{display:grid;width:44px;height:44px;border:0;background:var(--tint);border-radius:4px;color:var(--ink);cursor:pointer;place-items:center;position:relative}
 .burger span.bars{display:flex;flex-direction:column;gap:var(--s-1)}
 .burger span.bars span{width:18px;height:2px;background:currentColor;border-radius:2px;display:block}
-@media (max-width:640px){nav.navlinks a{display:none}.navdiv{display:none}.burger{display:grid}}
+@media (max-width:576px){nav.navlinks a{display:none}.navdiv{display:none}.burger{display:grid}}
 
 :focus{outline:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
@@ -117,21 +128,21 @@ body.menu-open{overflow:hidden;position:fixed;width:100%}
 .burger .bicon-x{opacity:0;transform:rotate(-45deg)}
 .burger[aria-expanded="true"] .bicon-bars{opacity:0;transform:rotate(45deg)}
 .burger[aria-expanded="true"] .bicon-x{opacity:1;transform:rotate(0)}
-.mobilenav{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s;overscroll-behavior:contain;flex-direction:column;min-height:100dvh;overflow-y:auto;padding-top:calc(84px + env(safe-area-inset-top))}
-@media (max-width:640px){header .themebtn,header .burger{width:44px;height:44px;display:grid;place-items:center;border-radius:6px;background:var(--tint);border:0;color:var(--ink)}header .themebtn::before{display:none}nav.navlinks{gap:10px}}
+.mobilenav{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s;overscroll-behavior:contain;flex-direction:column;min-height:100dvh;overflow-y:auto;padding-top:calc(59px + env(safe-area-inset-top))}
+@media (max-width:576px){header .themebtn,header .burger{width:44px;height:44px;display:grid;place-items:center;border-radius:6px;background:var(--tint);border:0;color:var(--ink)}header .themebtn::before{display:none}nav.navlinks{gap:8px}}
 
 body.menu-open header{z-index:70}
 @media (min-width:641px){header .burger{display:none}}
 
 .mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
-.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(16px,3vh,32px);padding:0 var(--pad)}
+.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(13px,3vh,24px);padding:0 var(--pad)}
 .mrow{display:flex;align-items:center;gap:var(--s-4);min-height:64px;padding:var(--s-3) 0;color:var(--ink);box-shadow:inset 0 -1px 0 var(--line)}
 .mrow.current{color:var(--accent)}
 .mrow.current .mlabel{color:var(--accent)}
 .mrow.current svg{color:var(--accent);opacity:.6}
-.mrow .mlabel{flex:1;font-size:26px;line-height:1.15;letter-spacing:var(--tr-display)}
+.mrow .mlabel{flex:1;font-size:21px;line-height:1.15;letter-spacing:var(--tr-display)}
 .mrow svg{flex:0 0 auto;color:var(--faint)}
-.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:var(--s-4);padding:28px var(--pad) 28px}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:var(--s-4);padding:21px var(--pad) 21px}
 .availbadge svg{width:104px;height:104px}
 .availbadge{position:relative;width:104px;height:104px;flex:none;border-radius:50%;display:grid;place-items:center}
 .availring{animation:spin 16s linear infinite;transform-origin:50% 50%}
@@ -140,108 +151,108 @@ body.menu-open header{z-index:70}
 .mailbtn{display:inline-flex;align-items:center;min-height:48px;padding:0;border:0;background:transparent;font-size:var(--t-body-lg);font-weight:500;color:var(--accent);cursor:pointer}
 .mresume{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;border-radius:4px;background:var(--ink);color:var(--card);font-size:var(--t-btn);font-weight:500}
 .mresume:hover{background:var(--accent);color:var(--onAccent)}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:var(--s-3);padding:14px 20px;border-radius:4px;background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 18px 40px -20px rgba(16,16,24,.32);white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:var(--s-3);padding:11px 16px;border-radius:4px;background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 18px 40px -20px rgba(16,16,24,.32);white-space:nowrap}
 .toast.show{display:inline-flex}
 
 .totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;width:56px;height:56px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--accent);cursor:pointer;display:grid;place-items:center;box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 16px -8px rgba(0,0,0,.10);opacity:0;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1)}
 .totop.show{opacity:1;transform:scale(1);pointer-events:auto}
-@media (max-width:640px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg{width:14px;height:14px}}
+@media (max-width:576px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg{width:14px;height:14px}}
 
 
-#top{max-width:var(--w-content);margin:0 auto;padding:clamp(56px,8vw,112px) var(--pad) clamp(56px,7vw,96px);text-align:left}
-#top > *{max-width:880px}
+#top{max-width:var(--w-content);margin:0 auto;padding:clamp(42px,8vw,78px) var(--pad) clamp(42px,7vw,67px);text-align:left}
+#top > *{max-width:792px}
 h1{font-family:var(--serif);font-weight:400;color:var(--ink)}
 
 h1{margin:0;font-size:var(--t-h1);line-height:1.02;letter-spacing:-.02em;max-width:none}
-p,.labelrow p,.card p,.decision dd{font-family:'Switzer',Helvetica,Arial,sans-serif}
+p,.labelrow p,.card p,.decision dd{font-family:var(--display)}
 
-.herosub{margin:clamp(18px,2.2vw,26px) 0 0;font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-body-lg);line-height:var(--lh-body);color:var(--ink);text-wrap:pretty}
-.subline{margin:clamp(24px,3vw,36px) 0 0;font-family:var(--mono);font-size:var(--t-mono-lg);letter-spacing:var(--tr-mono);color:var(--muted)}
-.resultstrip{margin:clamp(40px,5vw,64px) 0 0;padding:0;border:0;display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:clamp(14px,2vw,20px);align-items:stretch}
-.resultstrip > div{display:flex;flex-direction:column;gap:var(--s-2);background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(18px,2.2vw,26px)}
-.resultstrip .big{font-size:clamp(28px,3.4vw,42px);line-height:1;letter-spacing:-.02em;font-weight:400;color:var(--ink)}
+.herosub{margin:clamp(14px,2.2vw,20px) 0 0;font-family:var(--display);font-size:var(--t-body-lg);line-height:var(--lh-body);color:var(--ink);text-wrap:pretty}
+.subline{margin:clamp(18px,3vw,27px) 0 0;font-family:var(--mono);font-size:var(--t-mono-lg);letter-spacing:var(--tr-mono);color:var(--muted)}
+.resultstrip{margin:clamp(30px,5vw,45px) 0 0;padding:0;border:0;display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:clamp(11px,2vw,16px);align-items:stretch}
+.resultstrip > div{display:flex;flex-direction:column;gap:var(--s-2);background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(14px,2.2vw,20px)}
+.resultstrip .big{font-size:clamp(22px,3.4vw,34px);line-height:1;letter-spacing:-.02em;font-weight:400;color:var(--ink)}
 .resultstrip .lbl{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink);margin-top:var(--s-2)}
 .resultstrip .note{font-size:var(--t-small);line-height:var(--lh-body);color:var(--muted);margin-top:var(--s-2)}
-.shotframe{position:relative;border-radius:4px;overflow:hidden;padding:clamp(16px,7%,84px)}
-.shotframe-hero{position:relative;border-radius:4px;overflow:hidden;padding:clamp(16px,7%,84px)}
+.shotframe{position:relative;border-radius:4px;overflow:hidden;padding:clamp(13px,7%,59px)}
+.shotframe-hero{position:relative;border-radius:4px;overflow:hidden;padding:clamp(13px,7%,59px)}
 .shotframe img.bg,.shotframe-hero img.bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06)}
 .safari{position:relative;z-index:1;display:block;width:100%;container-type:inline-size;line-height:0;border-radius:4px;overflow:hidden;box-shadow:0 8px 20px -14px rgba(0,0,0,.28)}
-.safari-bar{display:flex;align-items:center;gap:clamp(9px,1.55cqw,14px);position:relative;height:clamp(26px,4.2cqw,38px);padding:0 clamp(9px,1.55cqw,14px);background:var(--frameBar);border-bottom:.5px solid var(--frameEdge2)}
-.safari-dots{display:flex;align-items:center;gap:clamp(5.5px,.9cqw,8px);flex:0 0 auto}
+.safari-bar{display:flex;align-items:center;gap:clamp(7px,1.55cqw,11px);position:relative;height:clamp(26px,4.2cqw,38px);padding:0 clamp(7px,1.55cqw,11px);background:var(--frameBar);border-bottom:.5px solid var(--frameEdge2)}
+.safari-dots{display:flex;align-items:center;gap:clamp(5px,.9cqw,7px);flex:0 0 auto}
 .safari-dots i{display:block;width:clamp(8px,1.33cqw,12px);height:clamp(8px,1.33cqw,12px);border-radius:999px}
 .safari-dots i:nth-child(1){background:#FF5F57}
 .safari-dots i:nth-child(2){background:#FEBC2E}
 .safari-dots i:nth-child(3){background:#28C840}
-.safari-pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;gap:4px;min-width:150px;height:clamp(16px,2.7cqw,24px);padding:0 clamp(8px,1.4cqw,13px);border-radius:999px;background:var(--framePill);color:var(--frameUrl);font-family:var(--mono);font-size:clamp(8px,1.18cqw,12px);white-space:nowrap}
+.safari-pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;gap:4px;min-width:150px;height:clamp(16px,2.7cqw,24px);padding:0 clamp(7px,1.4cqw,10px);border-radius:999px;background:var(--framePill);color:var(--frameUrl);font-family:var(--mono);font-size:clamp(8px,1.18cqw,11px);white-space:nowrap}
 .safari-imgbox{position:relative;aspect-ratio:16/9}
 .safari-imgbox img{width:100%;height:100%;object-fit:cover;display:block}
 .safari-imgbox iframe{display:block;width:100%;height:100%;border:0;background:transparent}
-.caption,figcaption{font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-small);line-height:1.4;color:var(--faint);font-style:normal;letter-spacing:0}
-.shortver{background:var(--tint);border-radius:0;border-left:3px solid var(--accent);padding:clamp(32px,4vw,56px) clamp(28px,3.5vw,48px);max-width:none}
+.caption,figcaption{font-family:var(--display);font-size:var(--t-small);line-height:1.4;color:var(--faint);font-style:normal;letter-spacing:0}
+.shortver{background:var(--tint);border-radius:0;border-left:3px solid var(--accent);padding:clamp(24px,4vw,42px) clamp(21px,3.5vw,36px);max-width:none}
 .shortver .lbl{margin:0 0 var(--s-5);font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--accent)}
-.shortver p{margin:0;font-size:clamp(17px,1.6vw,20px);line-height:1.6;color:var(--ink);max-width:46em}
-.shortver p + p{margin-top:clamp(14px,1.8vw,20px)}
+.shortver p{margin:0;font-size:clamp(14px,1.6vw,17px);line-height:1.6;color:var(--ink);max-width:46em}
+.shortver p + p{margin-top:clamp(11px,1.8vw,16px)}
 .section{max-width:var(--w-content);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);text-align:left}
 .body-col p{margin:0}
 .grid2{display:flex;flex-direction:column;gap:var(--s-6)}
 .grid2 > div:first-child{position:static;width:100%;max-width:none;border-top:0;padding-top:0;margin-bottom:var(--s-7)}
-.modelgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:clamp(12px,1.8vw,16px);align-items:stretch}
-.modelgrid .card{background:var(--tint);box-shadow:0 0 0 1px var(--line);border-radius:4px;padding:clamp(18px,2.2vw,26px)}
+.modelgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:clamp(10px,1.8vw,13px);align-items:stretch}
+.modelgrid .card{background:var(--tint);box-shadow:0 0 0 1px var(--line);border-radius:4px;padding:clamp(14px,2.2vw,20px)}
 .modelgrid .card .n{font-family:var(--mono);font-size:var(--t-mono);color:var(--accent);letter-spacing:var(--tr-label)}
 .modelgrid .card p{margin:var(--s-3) 0 0;font-size:var(--t-btn);line-height:var(--lh-body);color:var(--ink)}
-.qrow .card{background:var(--tint);box-shadow:0 0 0 1px var(--line);border-radius:4px;padding:clamp(22px,2.8vw,34px);display:flex;flex-direction:column;gap:var(--s-4)}
+.qrow .card{background:var(--tint);box-shadow:0 0 0 1px var(--line);border-radius:4px;padding:clamp(16px,2.8vw,26px);display:flex;flex-direction:column;gap:var(--s-4)}
 .qrow .card span:first-child{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
-.qrow .card span:last-child{font-size:clamp(19px,2.2vw,26px);line-height:var(--lh-snug);letter-spacing:var(--tr-head);color:var(--ink)}
-blockquote.pq{margin:clamp(10px,1.6vw,18px) 0;width:100%;padding:0 0 0 clamp(18px,2.4vw,30px);border-left:2px solid var(--accentLine)}
-blockquote.pq.big{margin:clamp(38px,5.2vw,68px) 0}
-blockquote.pq p{margin:0;font-style:italic;font-size:clamp(19px,2.2vw,27px);line-height:var(--lh-snug);letter-spacing:var(--tr-head);color:var(--ink)}
-blockquote.pq cite{display:block;margin:clamp(14px,1.8vw,20px) 0 0;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint);font-style:normal}
-figure.quotebox{margin:0;background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(22px,2.8vw,34px);display:flex;flex-direction:column;gap:var(--s-4)}
-figure.quotebox blockquote{margin:0;font-size:clamp(18px,2.2vw,24px);line-height:var(--lh-body);letter-spacing:var(--tr-head)}
+.qrow .card span:last-child{font-size:clamp(16px,2.2vw,21px);line-height:var(--lh-snug);letter-spacing:var(--tr-head);color:var(--ink)}
+blockquote.pq{margin:clamp(8px,1.6vw,14px) 0;width:100%;padding:0 0 0 clamp(14px,2.4vw,22px);border-left:2px solid var(--accentLine)}
+blockquote.pq.big{margin:clamp(28px,5.2vw,48px) 0}
+blockquote.pq p{margin:0;font-style:italic;font-size:clamp(16px,2.2vw,22px);line-height:var(--lh-snug);letter-spacing:var(--tr-head);color:var(--ink)}
+blockquote.pq cite{display:block;margin:clamp(11px,1.8vw,16px) 0 0;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint);font-style:normal}
+figure.quotebox{margin:0;background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(16px,2.8vw,26px);display:flex;flex-direction:column;gap:var(--s-4)}
+figure.quotebox blockquote{margin:0;font-size:clamp(15px,2.2vw,19px);line-height:var(--lh-body);letter-spacing:var(--tr-head)}
 .decision dt{font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
-.decision dd{margin:0;font-size:16px;line-height:1.55;color:var(--muted)}
+.decision dd{margin:0;font-size:14px;line-height:1.55;color:var(--muted)}
 .decision dd.chose{color:var(--ink)}
-@media (max-width:700px){.decision dt{margin-top:var(--s-4)}}
+@media (max-width:630px){.decision dt{margin-top:var(--s-4)}}
 
 figure{margin-left:0;margin-right:0}
 .figcard{background:var(--card);border-radius:6px;box-shadow:0 0 0 1px var(--line);overflow:hidden}
-.figpad{padding:clamp(18px,2.4vw,32px)}
+.figpad{padding:clamp(14px,2.4vw,24px)}
 .figpad svg{display:block;width:100%;height:auto}
 .figcard:has(> svg),.figcard:has(> .figpad > svg){background:transparent;border:0;box-shadow:none;padding:0;border-radius:0}
 .figpad:has(> svg){padding:0}
 .figcard > svg,.figpad > svg{display:block;width:100%;height:auto}
-.qrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,2.6vw,32px);margin:var(--s-8) 0;align-items:stretch}
+.qrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.6vw,24px);margin:var(--s-8) 0;align-items:stretch}
 .qrow > div{padding-top:var(--s-4)}
 .qrow .cap{font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint);display:block;margin-bottom:var(--s-3)}
-.qrow p,.body-col .qrow p{font-family:var(--serif);font-size:clamp(19px,2.2vw,25px);line-height:1.3;color:var(--ink);margin:0;max-width:none}
-.limitation{padding:clamp(28px,3.5vw,44px) 0;margin:var(--s-9) 0 0;display:flex;flex-direction:column;gap:var(--s-3)}
+.qrow p,.body-col .qrow p{font-family:var(--serif);font-size:clamp(16px,2.2vw,20px);line-height:1.3;color:var(--ink);margin:0;max-width:none}
+.limitation{padding:clamp(21px,3.5vw,33px) 0;margin:var(--s-9) 0 0;display:flex;flex-direction:column;gap:var(--s-3)}
 .limitation .cap{font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
 .limitation p,.body-col .limitation p{margin:0;font-size:var(--t-body);line-height:1.6;color:var(--ink);max-width:44em}
-.labelrow > div{display:flex;flex-direction:column;gap:var(--s-3);background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(18px,2.2vw,26px)}
+.labelrow > div{display:flex;flex-direction:column;gap:var(--s-3);background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(14px,2.2vw,20px)}
 .labelrow .cap{font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
-.labelrow p{margin:0;font-size:16px;line-height:1.6;color:var(--muted)}
+.labelrow p{margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
 .body-col > .statement:last-child{margin-bottom:0}
 .notebox{background:transparent;border-radius:0;padding:0;display:flex;flex-direction:column;gap:var(--s-4)}
 .notebox span{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
 .notebox .labelrow p{font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted);letter-spacing:0}
-.notebox p{margin:0;font-size:clamp(17px,2vw,21px);line-height:var(--lh-body);letter-spacing:var(--tr-head);color:var(--ink)}
-.bigblock{border-radius:4px;padding:clamp(34px,7vw,96px);box-shadow:none}
+.notebox p{margin:0;font-size:clamp(14px,2vw,17px);line-height:var(--lh-body);letter-spacing:var(--tr-head);color:var(--ink)}
+.bigblock{border-radius:4px;padding:clamp(26px,7vw,67px);box-shadow:none}
 .bigblock .lbl{margin:0 0 var(--s-5);font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.bigblock p{margin:0;font-size:clamp(18px,2.2vw,26px);line-height:var(--lh-snug);letter-spacing:var(--tr-head)}
-.bigblock .huge{font-size:clamp(28px,5.4vw,64px);line-height:var(--lh-display);letter-spacing:var(--tr-display);font-weight:400}
-.elgrid{display:grid;grid-template-columns:minmax(0,54fr) minmax(0,46fr);gap:clamp(24px,3.4vw,44px);align-items:start}
+.bigblock p{margin:0;font-size:clamp(15px,2.2vw,21px);line-height:var(--lh-snug);letter-spacing:var(--tr-head)}
+.bigblock .huge{font-size:clamp(22px,5.4vw,51px);line-height:var(--lh-display);letter-spacing:var(--tr-display);font-weight:400}
+.elgrid{display:grid;grid-template-columns:minmax(0,54fr) minmax(0,46fr);gap:clamp(18px,3.4vw,33px);align-items:start}
 .imgbox{position:relative;aspect-ratio:16/9;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
 .imgbox img{width:100%;height:100%;object-fit:cover;display:block}
-.finalgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(20px,3vw,34px);align-items:center}
+.finalgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(16px,3vw,26px);align-items:center}
 .finalgrid .notes{display:flex;flex-direction:column;gap:var(--s-3);margin-top:var(--s-5)}
 .finalgrid .notes .row{display:grid;grid-template-columns:20px 1fr;gap:var(--s-3);align-items:start}
 .finalgrid .notes .row span:first-child{font-family:var(--mono);font-size:var(--t-mono);color:var(--accent)}
 .finalgrid .notes .row span:last-child{font-size:var(--t-btn);line-height:var(--lh-body)}
 .finalnum{margin:0 0 var(--s-3);font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--accent)}
 .finalbody{margin:var(--s-4) 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
-.resultsgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:clamp(14px,2vw,20px);align-items:stretch}
-.resultsgrid .card{background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(18px,2.2vw,26px)}
-.resultsgrid .card .val{font-size:clamp(30px,3.8vw,44px);letter-spacing:var(--tr-display);font-weight:400;line-height:1}
+.resultsgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:clamp(11px,2vw,16px);align-items:stretch}
+.resultsgrid .card{background:var(--tint);border-radius:4px;box-shadow:0 0 0 1px var(--line);padding:clamp(14px,2.2vw,20px)}
+.resultsgrid .card .val{font-size:clamp(24px,3.8vw,35px);letter-spacing:var(--tr-display);font-weight:400;line-height:1}
 .resultsgrid .card h3{margin:var(--s-4) 0 var(--s-2);font-size:var(--t-body);font-weight:500;letter-spacing:var(--tr-head)}
 .resultsgrid .card p{margin:0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
 .pcband{position:relative;width:100%;height:660px;overflow:hidden;border-radius:4px;touch-action:pan-y}
@@ -249,10 +260,10 @@ figure{margin-left:0;margin-right:0}
 #pcBandInner{position:relative;width:100%;height:100%;overflow:hidden;z-index:1}
 #pcBandInner img{position:absolute;left:50%;top:50%;opacity:0;object-fit:cover;pointer-events:none;will-change:transform,opacity;user-select:none}
 #pcFrame{z-index:5000}
-#contact{max-width:880px;margin:0 auto;padding:0}
+#contact{max-width:792px;margin:0 auto;padding:0}
 #contact h2{margin:0;font-size:var(--t-h2);line-height:var(--lh-head);letter-spacing:var(--tr-head);font-weight:400}
-#contact p{margin:12px 0 0;font-size:var(--t-body);color:var(--muted)}
-.social{display:flex;gap:clamp(8px,1.4vw,18px);flex-wrap:wrap;justify-content:center;margin-top:28px}
+#contact p{margin:10px 0 0;font-size:var(--t-body);color:var(--muted)}
+.social{display:flex;gap:clamp(7px,1.4vw,14px);flex-wrap:wrap;justify-content:center;margin-top:21px}
 .social a{display:grid;place-items:center;width:48px;height:48px;border-radius:4px;color:var(--faint)}
 .social a:hover{color:var(--ink);background:var(--tint)}
 /* bg wash */
@@ -260,7 +271,7 @@ figure{margin-left:0;margin-right:0}
 body:before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;filter:url(#grain);opacity:.05}
 :root[data-theme="dark"] body:before{opacity:.07}
 .halftone{position:absolute;top:0;left:0;width:100vw;height:min(900px,90vh);pointer-events:none;z-index:0;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:13px 13px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%)}
-#contact footer{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;padding:clamp(56px,6vw,84px) clamp(20px,6vw,40px) clamp(52px,5.5vw,72px);background:var(--tint);width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;position:relative}
+#contact footer{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;padding:clamp(42px,6vw,59px) clamp(16px,6vw,30px) clamp(39px,5.5vw,50px);background:var(--tint);width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;position:relative}
 #contact footer > *:not(.halftone){position:relative;z-index:1}
 .halftone-foot{top:auto;bottom:0;left:50%;transform:translateX(-50%);width:100vw;max-width:none;height:min(520px,55vh);-webkit-mask-image:linear-gradient(0deg,rgba(0,0,0,.75),transparent 100%);mask-image:linear-gradient(0deg,rgba(0,0,0,.75),transparent 100%)}
 section,main,footer{position:relative;z-index:2}
@@ -269,18 +280,18 @@ section,main,footer{position:relative;z-index:2}
 .handoff{font-size:var(--t-body);line-height:1.6;color:var(--faint);margin-top:var(--s-8);max-width:34em}
 .shortsec{padding-top:var(--s-9);padding-bottom:var(--secY)}
 section:has(+ #contact){padding-bottom:var(--s-8)}
-.toc{position:fixed;right:clamp(16px,2.4vw,40px);top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:var(--tr-label);text-transform:uppercase;opacity:0;transition:opacity .4s ease;pointer-events:none}
+.toc{position:fixed;right:clamp(16px,2.4vw,40px);top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:var(--tr-label);text-transform:uppercase;opacity:0;transition:opacity .4s ease;pointer-events:none}
 .toc.visible{opacity:1;pointer-events:auto}
 .toc a{color:var(--faint);text-decoration:none;display:grid;grid-template-columns:28px 1fr;align-items:center;gap:0;transition:color .25s ease}
 .toc a:before{content:"";justify-self:end;width:14px;height:1px;background:var(--line);transition:width .25s ease,background .25s ease}
 .toc a:hover{color:var(--ink)}
 .toc a.active{color:var(--ink)}
 .toc a.active:before{width:24px;background:var(--accent)}
-@media (max-width:1240px){.toc{display:none}}
+@media (max-width:1116px){.toc{display:none}}
 
 
 /* single-column below 760 */
-@media (max-width:760px){
+@media (max-width:684px){
   .qrow,.elgrid,.modelgrid,.resultsgrid,.resultstrip,.labelrow{grid-template-columns:minmax(0,1fr)}
   .qrow{gap:var(--s-6)}
   .resultstrip{gap:var(--s-6)}
@@ -311,16 +322,16 @@ figure[data-reveal].shown,.shotcard[data-reveal].shown,.figcard[data-reveal].sho
 }
 
 @media (hover:hover) and (pointer:fine){
-html.pf-cursor{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%233F3AA8' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
-html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%23A5A0F5' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
+html.pf-cursor{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%234A5FD0' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
+html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%23A5BBFC' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
 }
 
 :root[data-theme="dark"] h1,
 :root[data-theme="dark"] h2,
-:root[data-theme="dark"] .statement{font-weight:600}
-@media (max-width:640px){
-  :root{--secY:clamp(72px,14vw,110px);--pad:20px}
-  .body-col p.statement{font-size:clamp(20px,5.5vw,24px);max-width:none;padding-left:16px;margin-bottom:var(--s-8)}
+:root[data-theme="dark"] .statement{font-weight:500}
+@media (max-width:576px){
+  :root{--secY:clamp(50px,14vw,77px);--pad:16px}
+  .body-col p.statement{font-size:clamp(17px,5.5vw,19px);max-width:none;padding-left:13px;margin-bottom:var(--s-8)}
 
   .navpill a,.mobilenav a{min-height:44px;display:flex;align-items:center}
 }
@@ -338,10 +349,10 @@ img.bg.loaded{opacity:1}
 /* vertical grouping */
 .body-col{display:flex;flex-direction:column;gap:0;width:100%;max-width:none}
 .body-col > * + *{margin-top:var(--s-6)}
-.pquote,.body-col p.pquote{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.8vw,30px);line-height:1.35;color:var(--ink);max-width:20em;border:0;padding:0;margin:var(--s-6) 0 0}
+.pquote,.body-col p.pquote{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.8vw,24px);line-height:1.35;color:var(--ink);max-width:20em;border:0;padding:0;margin:var(--s-6) 0 0}
 .pquote + .pattrib,.body-col p.pquote + p.pattrib{font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint);margin:var(--s-3) 0 0}
 .pattrib + *{margin-top:var(--s-9)}
-.body-col p.statement{font-family:var(--serif);font-weight:400;font-size:var(--t-statement);line-height:1.35;color:var(--ink);max-width:24em;border-left:3px solid var(--accent);padding-left:clamp(20px,2.4vw,32px);margin-top:var(--s-9);margin-bottom:0}
+.body-col p.statement{font-family:var(--serif);font-weight:400;font-size:var(--t-statement);line-height:1.35;color:var(--ink);max-width:24em;border-left:3px solid var(--accent);padding-left:clamp(16px,2.4vw,24px);margin-top:var(--s-9);margin-bottom:0}
 
 .body-col > * + p{margin-top:var(--s-6)}
 .body-col > .subhead + p{margin-top:0}
@@ -358,30 +369,9 @@ figure + *{margin-top:var(--s-8)}
 .body-col > p.caption + *{margin-top:var(--s-7)}
 
 /* resume modal */
-.rmodal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:clamp(16px,3vw,40px)}
-.rmodal[hidden]{display:none}
-.rmodal-scrim{position:absolute;inset:0;background:color-mix(in srgb,var(--ink) 55%,transparent);backdrop-filter:blur(6px)}
-.rmodal-panel{position:relative;width:min(880px,100%);max-height:100%;display:flex;flex-direction:column;background:var(--card);border-radius:8px;box-shadow:0 30px 80px -30px var(--frameSh);overflow:hidden}
-.rmodal-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);padding:var(--s-4) var(--s-5);border-bottom:1px solid var(--line)}
-.rmodal-actions{display:flex;align-items:center;gap:var(--s-3)}
-.rmodal-close{width:40px;height:40px;display:grid;place-items:center;border:0;background:var(--tint);border-radius:4px;color:var(--ink);cursor:pointer}
-.rmodal-body{overflow-y:auto;overscroll-behavior:contain;padding:var(--s-5);background:var(--bg2)}
-.rmodal-body img{display:block;width:100%;height:auto;box-shadow:0 0 0 1px var(--line)}
-.rmodal .btn-primary,.rmodal .btn-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border-radius:4px;font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-btn);font-weight:500;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease}
-.rmodal .btn-primary{border:1px solid var(--ink);background:var(--ink);color:var(--bg)}
-.rmodal .btn-primary:hover{border-color:var(--accent);background:var(--accent);color:var(--onAccent)}
-.rmodal .btn-secondary{border:1px solid var(--line);background:transparent;color:var(--ink)}
-.rmodal .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
-.rmodal .lbl{margin:0;font-family:var(--mono);font-size:var(--t-small);font-weight:500;letter-spacing:var(--tr-label);text-transform:uppercase}
-@media (max-width:640px){
-  .rmodal{padding:0}
-  .rmodal-panel{width:100%;height:100%;max-height:none;border-radius:0}
-  .rmodal-actions .btn-primary,.rmodal-actions .btn-secondary{padding:10px 14px;font-size:14px}
-  .rmodal-body{padding:var(--s-3)}
+@media (max-width:576px){
 }
 
-.rmodal-body img{max-width:100%;height:auto;display:block}
-body.rmodal-open{overflow:hidden}
 
 /* ---- mobile stacking (must sit last: .labelrow and .decision are re-declared
    further down the sheet, which would otherwise beat the earlier media queries) ---- */
@@ -390,7 +380,7 @@ body.rmodal-open{overflow:hidden}
   .qrow,.elgrid,.modelgrid,.resultsgrid{grid-template-columns:minmax(0,1fr)}
   .resultstrip{--cols:1;grid-template-columns:minmax(0,1fr);gap:var(--s-4)}
 }
-@media (max-width:700px){
+@media (max-width:630px){
   .decision dt{margin-top:var(--s-4)}
 }
 
@@ -406,7 +396,7 @@ body.rmodal-open{overflow:hidden}
   border:0;
   border-radius:0;
   box-shadow:none;
-  padding:clamp(18px,2.2vw,26px);
+  padding:clamp(14px,2.2vw,20px);
   clip-path:polygon(0 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%);
   filter:drop-shadow(0 1px 1px rgba(20,20,15,.10)) drop-shadow(0 10px 18px rgba(20,20,15,.10));
 }
@@ -429,18 +419,18 @@ body.rmodal-open{overflow:hidden}
 /* ---- type scale + block rhythm: one declaration each, nothing above this may repeat them ---- */
 h2{font-family:var(--serif);font-size:var(--t-h2);line-height:1.15;letter-spacing:-.015em;color:var(--ink);font-weight:400;margin:0;max-width:none;text-wrap:pretty}
 h3{font-family:var(--serif);font-size:var(--t-subhead);line-height:1.35;letter-spacing:var(--tr-head);color:var(--ink);font-weight:400;margin:0;text-wrap:pretty}
-.lead{font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-lead);line-height:1.55;color:var(--muted);margin:var(--s-4) 0 0;max-width:none}
-.subhead{font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-subhead);font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--ink);margin:var(--s-9) 0 var(--s-4);text-wrap:pretty}
+.lead{font-family:var(--display);font-size:var(--t-lead);line-height:1.55;color:var(--muted);margin:var(--s-4) 0 0;max-width:none}
+.subhead{font-family:var(--display);font-size:var(--t-subhead);font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--ink);margin:var(--s-9) 0 var(--s-4);text-wrap:pretty}
 .subhead + p{margin-top:0}
-.body-col > p{font-family:'Switzer',Helvetica,Arial,sans-serif;font-size:var(--t-body);line-height:1.65;color:var(--muted);max-width:60ch;margin:0}
+.body-col > p{font-family:var(--display);font-size:var(--t-body);line-height:1.65;color:var(--muted);max-width:60ch;margin:0}
 .body-col > p + p{margin-top:var(--s-4)}
-.statement{font-family:var(--serif);font-size:var(--t-statement);line-height:1.35;letter-spacing:-.01em;color:var(--ink);font-weight:400;max-width:24em;border-left:3px solid var(--accent);padding:0 0 0 clamp(20px,2.4vw,32px);margin:var(--s-9) 0 0}
+.statement{font-family:var(--serif);font-size:var(--t-statement);line-height:1.35;letter-spacing:-.01em;color:var(--ink);font-weight:400;max-width:24em;border-left:3px solid var(--accent);padding:0 0 0 clamp(16px,2.4vw,24px);margin:var(--s-9) 0 0}
 .statement + .handoff{margin-top:var(--s-7)}
-.labelrow{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:clamp(28px,4vw,52px);margin:var(--s-8) 0 var(--s-6)}
-.decision{border-left:1px solid var(--accent);padding:0 0 0 clamp(20px,2.4vw,32px);margin:var(--s-8) 0 var(--s-6);display:grid;grid-template-columns:minmax(0,110px) minmax(0,1fr);gap:var(--s-3) var(--s-5)}
-@media (max-width:760px){.labelrow{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:700px){.decision{grid-template-columns:minmax(0,1fr);gap:var(--s-2)}}
-@media (max-width:640px){.statement{max-width:none;padding-left:16px}}
+.labelrow{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:clamp(21px,4vw,39px);margin:var(--s-8) 0 var(--s-6)}
+.decision{border-left:1px solid var(--accent);padding:0 0 0 clamp(16px,2.4vw,24px);margin:var(--s-8) 0 var(--s-6);display:grid;grid-template-columns:minmax(0,110px) minmax(0,1fr);gap:var(--s-3) var(--s-5)}
+@media (max-width:684px){.labelrow{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:630px){.decision{grid-template-columns:minmax(0,1fr);gap:var(--s-2)}}
+@media (max-width:576px){.statement{max-width:none;padding-left:13px}}
 
 /* the translateY(26px) reveal offset outranks [data-reveal].shown by source order — reset it here */
 h1[data-reveal].shown,h2[data-reveal].shown,.statement[data-reveal].shown{transform:none}
@@ -458,14 +448,14 @@ h1[data-reveal].shown,h2[data-reveal].shown,.statement[data-reveal].shown{transf
 .body-col > * + figure.axisdemo-wrap{margin-top:var(--s-7)}
 
 /* one descending scale: h2 40 → statement 27 → quote 24 → lead 20 → body 17 → label 13 */
-.lead{font-size:clamp(18px,1.6vw,20px);line-height:1.5;color:var(--muted)}
-.pquote,.body-col p.pquote{font-size:clamp(20px,2vw,24px);line-height:1.4;max-width:26em}
+.lead{font-size:clamp(15px,1.6vw,17px);line-height:1.5;color:var(--muted)}
+.pquote,.body-col p.pquote{font-size:clamp(17px,2vw,19px);line-height:1.4;max-width:26em}
 .pattrib,.body-col p.pattrib{font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
 .body-col > .pquote + .pattrib{margin-top:var(--s-3)}
 .body-col > .pattrib + *{margin-top:var(--s-8)}
 
 /* the two question boxes are bare divs, not .card — give them the same paper treatment */
-.qrow > div{display:flex;flex-direction:column;gap:var(--s-3);background:var(--card);border:0;border-radius:0;box-shadow:none;padding:clamp(18px,2.2vw,26px);
+.qrow > div{display:flex;flex-direction:column;gap:var(--s-3);background:var(--card);border:0;border-radius:0;box-shadow:none;padding:clamp(14px,2.2vw,20px);
   clip-path:polygon(0 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%);
   filter:drop-shadow(0 1px 1px rgba(20,20,15,.10)) drop-shadow(0 10px 18px rgba(20,20,15,.10))}
 :root[data-theme="dark"] .qrow > div{filter:drop-shadow(0 1px 1px rgba(0,0,0,.45)) drop-shadow(0 12px 22px rgba(0,0,0,.40))}
@@ -473,7 +463,7 @@ h1[data-reveal].shown,h2[data-reveal].shown,.statement[data-reveal].shown{transf
   background:linear-gradient(135deg,color-mix(in srgb,var(--card) 88%,var(--ink)) 0 50%,transparent 50%)}
 .qrow > div{position:relative}
 /* the question is the emphasis in its card, not another line of body copy */
-.qrow p{font-family:var(--serif);font-size:clamp(19px,1.7vw,22px);line-height:1.35;color:var(--ink);max-width:22em}
+.qrow p{font-family:var(--serif);font-size:clamp(16px,1.7vw,18px);line-height:1.35;color:var(--ink);max-width:22em}
 /* let the sibling rhythm own the spacing so it can't stack with the next block's margin */
 .qrow{margin:0}
 .body-col > .labelrow + p:not(.statement):not(.handoff){margin-top:0}
@@ -481,7 +471,7 @@ h1[data-reveal].shown,h2[data-reveal].shown,.statement[data-reveal].shown{transf
 
 /* the question cards hold verbatim partner quotes — accent wash + rule sets them apart
    from the white paper cards, which carry our own statements */
-.qrow > div{background:var(--accentWash);border-left:2px solid var(--accentLine);padding-left:clamp(16px,2vw,22px)}
+.qrow > div{background:var(--accentWash);border-left:2px solid var(--accentLine);padding-left:clamp(13px,2vw,16px)}
 .qrow > div:after{background:linear-gradient(135deg,color-mix(in srgb,var(--accentWash) 60%,var(--ink)) 0 50%,transparent 50%)}
 .qrow .cap{color:var(--accent)}
 .notebox .labelrow{margin:0}
@@ -502,6 +492,1085 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
 @media (prefers-reduced-motion:reduce){
   [data-reveal]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   JAIMEC.CO CASE-STUDY LAYER
+   32px title · 28/500 section heads · 16/400 prose in a 720 column
+   left sticky section rail · numbered items · metric strips
+   ══════════════════════════════════════════════════════════════════ */
+html,body{background:var(--bg);font-family:var(--display);letter-spacing:-.01em}
+body{font-size:14px;line-height:1.6;color:var(--muted)}
+body:before,#bgwash,.halftone{display:none}
+a{color:var(--link)} a:hover{opacity:.7;color:var(--link)}
+
+.wrap{padding:0 clamp(18px,8vw,84px)}
+section{padding-bottom:0}
+.section{max-width:1080px;margin:0 auto;padding:0 0 clamp(45px,8vw,73px)}
+#top{max-width:1080px;margin:0 auto;padding:clamp(78px,14vh,105px) 0 clamp(36px,6vw,50px)}
+
+/* ── nav pill (same as home) ── */
+header,header.scrolled{position:fixed;top:24px;left:0;right:0;max-width:none;width:100%;padding:0;z-index:50;pointer-events:none}
+.navpill{pointer-events:auto;width:max-content;margin:0 auto;display:flex;align-items:center;gap:2px;
+  padding:4px 5px;border:0;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--surface) 85%,transparent);backdrop-filter:blur(12px) saturate(1.4);box-shadow:none}
+.facemark,.navdiv,.navpill > div[style]{display:none}
+nav.navlinks{display:flex;align-items:center;gap:2px}
+.navlink{padding:4px 10px;border-radius:var(--r-pill);font-size:13px;font-weight:500;color:var(--navOff)}
+.navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink);opacity:1}
+.navtext{display:inline!important}.navicon{display:none!important}
+.themebtn{width:28px;height:28px;margin-left:2px;border-radius:var(--r-pill);background:transparent;color:var(--navOff);display:inline-grid;place-items:center}
+.themebtn::before{display:none}
+.burger{border-radius:var(--r-pill);background:transparent;color:var(--ink);width:34px;height:34px}
+@media (min-width:641px){header .burger{display:none}}
+
+/* ── hero ── */
+#top h1{max-width:20ch;margin:0;font-size:clamp(21px,3.4vw,26px);font-weight:400;line-height:1.14;letter-spacing:-.02em;color:var(--ink)}
+#top .herosub,#top .hero-sub{max-width:60ch;margin:13px 0 0;font-size:15px;font-weight:400;line-height:1.5;color:var(--muted)}
+.csmeta{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.csmeta span{font-size:12px;color:var(--muted);background:var(--surface);border-radius:var(--r-pill);padding:5px 10px}
+
+/* ── left sticky section rail (replaces the right-hand TOC) ── */
+.toc{position:fixed;left:clamp(16px,2.2vw,32px);top:50%;transform:translateY(-50%);z-index:30;
+  width:max-content;max-width:150px;align-items:flex-start;
+  display:flex;flex-direction:column;gap:7px;font-family:var(--display);font-size:13px;
+  letter-spacing:-.01em;text-transform:none;opacity:0;transition:opacity .3s var(--ease)}
+.toc.visible{opacity:1;pointer-events:auto}
+.toc a{display:block;color:var(--faint);text-decoration:none;transition:color .2s ease}
+.toc a:before{display:none}
+.toc a:hover{color:var(--ink);opacity:1}
+.toc a.active{color:var(--ink);font-weight:500}
+@media (max-width:1116px){.toc{display:none}}
+
+/* ── section structure: heading block over a 720 content column ── */
+.grid2{display:block}
+.grid2 > div:first-child{max-width:648px;margin:0 0 20px;padding:0;border:0;position:static;width:auto}
+.stage{margin:0 0 8px;font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.section h2{margin:0;font-size:clamp(18px,2.6vw,22px);font-weight:500;line-height:1.32;letter-spacing:-.018em;color:var(--ink);max-width:20ch}
+.lead{max-width:576px;margin:10px 0 0;font-size:15px;font-weight:400;line-height:1.5;color:var(--muted)}
+.body-col{display:block;max-width:648px;width:auto}
+.body-col > p{max-width:576px;font-size:14px;font-weight:400;line-height:1.6;color:var(--muted)}
+.body-col > * + *{margin-top:16px}
+.body-col > * + .subhead{margin-top:33px}
+.subhead{margin:0;font-size:15px;font-weight:500;line-height:1.4;letter-spacing:-.012em;color:var(--ink)}
+.subhead + p{margin-top:8px}
+.statement,.body-col p.statement{max-width:576px;margin:24px 0 0;padding:0 0 0 13px;
+  border-left:2px solid var(--line);font-size:15px;font-weight:400;line-height:1.5;color:var(--ink);letter-spacing:-.012em}
+.handoff,.body-col > p.handoff{max-width:576px;font-size:13px;color:var(--faint)}
+.pquote,.body-col p.pquote{max-width:576px;font-family:var(--display);font-style:normal;font-size:17px;
+  font-weight:400;line-height:1.45;letter-spacing:-.014em;color:var(--ink);border:0;padding:0;margin:24px 0 0}
+.pattrib,.body-col p.pattrib{margin-top:7px;font-size:12px;letter-spacing:0;text-transform:none;color:var(--faint)}
+.cap,.caption,.lbl,figcaption{font-family:var(--display);letter-spacing:0}
+figcaption{margin-top:10px;font-size:13px;line-height:1.45;color:var(--faint)}
+.body-col > p.caption{font-size:13px;color:var(--faint)}
+.body-col > p.lbl{margin-top:33px;font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* ── numbered items (Problem-style lists) ── */
+.labelrow{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:16px;margin-top:16px}
+.labelrow > div{position:relative}
+.labelrow .cap{display:block;font-size:15px;font-weight:500;line-height:1.35;letter-spacing:-.012em;color:var(--ink)}
+.labelrow p{margin:5px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}
+@media (max-width:684px){.labelrow{grid-template-columns:minmax(0,1fr)}}
+
+/* ── metric strip ── */
+.resultstrip{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:13px;margin:21px 0 0;padding:0;border:0}
+.resultstrip > div{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:0;border-radius:var(--r-card);padding:16px;box-shadow:none;filter:none;clip-path:none}
+.resultstrip > div:after{display:none}
+.resultstrip .big{font-size:21px;font-weight:500;line-height:1.15;letter-spacing:-.02em;color:var(--ink)}
+.resultstrip .lbl{margin-top:2px;font-size:13px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink)}
+.resultstrip .note{margin-top:5px;font-size:12px;line-height:1.45;color:var(--faint)}
+@media (max-width:684px){.resultstrip{grid-template-columns:minmax(0,1fr)}}
+
+/* ── decision blocks ── */
+.decision{margin:21px 0 0;padding:16px;background:var(--surface);border:0;border-radius:var(--r-card)}
+.decision dt{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.decision dd{margin:4px 0 0;font-size:13px;line-height:1.55;color:var(--muted)}
+.decision dd + dt{margin-top:13px}
+
+/* ── figures + surfaces ── */
+.figcard,.shotcard{border-radius:var(--r-card);border:0;background:var(--surface);box-shadow:none;margin-top:21px}
+.figcard:has(> svg),.figcard:has(> .figpad > svg){background:transparent}
+.notebox{background:var(--surface);border-radius:var(--r-card);padding:16px;gap:11px}
+.notebox > span{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.notebox p{font-size:13px;line-height:1.55;color:var(--muted);letter-spacing:0}
+.notebox .labelrow > div{padding-left:0}
+.notebox .labelrow > div:before{display:none}
+.notebox .cap{font-size:13px}
+
+/* ── contact / footer ── */
+#contact{max-width:1080px;margin:0 auto;padding:0}
+#contact footer{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:18px;
+  width:auto;margin:0;padding:24px 0 36px;background:transparent;text-align:left}
+#contact footer > *:not(.footline){display:none}
+.footline{margin:0;font-size:13px;color:var(--faint)}
+@media (max-width:504px){#contact footer{flex-direction:column;align-items:center;gap:10px}}
+
+
+/* content column narrow enough to leave the rail its own margin */
+.section,#top,#contact{max-width:936px}
+@media (max-width:1260px){.toc{display:none}}
+
+/* neutralise the old folded-corner card treatment */
+.resultstrip > div,.modelgrid .card,.qrow .card,.resultsgrid .card{
+  clip-path:none!important;filter:none!important;box-shadow:none!important;
+  border-radius:var(--r-card)!important;background:var(--surface)!important}
+.resultstrip > div:after,.modelgrid .card:after,.qrow .card:after,.resultsgrid .card:after{display:none!important}
+.qrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:18px}
+.qrow .card{padding:16px}
+.qrow .card p{font-family:var(--display)!important;font-size:15px!important;font-weight:400!important;
+  line-height:1.45!important;letter-spacing:-.012em!important;color:var(--ink)!important}
+.qrow .lbl,.modelgrid .lbl{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.modelgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:16px}
+.modelgrid .card{padding:16px}
+.modelgrid .card p{font-size:13px;line-height:1.55;color:var(--muted)}
+@media (max-width:684px){.qrow,.modelgrid{grid-template-columns:minmax(0,1fr)}}
+
+.qrow > *,.labelrow > *,.modelgrid > *,.resultsgrid > *,.resultstrip > *{
+  clip-path:none!important;filter:none!important;box-shadow:none!important;border-radius:var(--r-card)!important}
+.qrow > *:after,.labelrow > *:after,.modelgrid > *:after,.resultsgrid > *:after,.resultstrip > *:after{display:none!important}
+.qrow > *{background:color-mix(in srgb,var(--link) 7%,transparent)!important;padding:16px!important}
+.labelrow > *,.modelgrid > *,.resultsgrid > *{background:var(--surface)!important;padding:16px!important}
+.notebox .labelrow > *{background:transparent!important;padding:0!important}
+
+.optrow > .card{clip-path:none!important;filter:none!important;box-shadow:none!important;
+  border-radius:var(--r-card)!important;background:var(--surface)!important;padding:16px!important}
+.optrow > .card:after{display:none!important}
+.optrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:18px}
+.optrow .card.is-chosen{background:color-mix(in srgb,var(--link) 7%,transparent)!important}
+.optrow .lbl{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+@media (max-width:684px){.optrow{grid-template-columns:minmax(0,1fr)}}
+
+/* ── chrome + motion ── */
+.totop{border-radius:var(--r-pill);background:var(--surface);border:0;color:var(--ink);box-shadow:none}
+.toast,#palette .box{border-radius:var(--r-float);background:var(--card);box-shadow:var(--shadow-float)}
+.mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:-.01em}
+.mresume{border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:13px}
+.mailbtn{font-family:var(--display);font-size:14px;color:var(--link)}
+#loader{background:var(--bg)}
+#loader .name span{font-family:var(--display);font-size:15px;font-weight:400;letter-spacing:-.01em;color:var(--ink)}
+#loader .tag{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--faint)}
+#loader .ln,#loader .dot{background:var(--line)}
+[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+[data-reveal].shown{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* ══ CASE-STUDY LAYOUT — matching the reference structure ═══════════
+   1200 container · centred hero · 720 reading column centred inside it
+   ═══════════════════════════════════════════════════════════════════ */
+.section,#top,#contact{max-width:1080px;margin:0 auto}
+
+/* hero: centred, full container width */
+#top{text-align:center;padding:clamp(84px,15vh,115px) 0 clamp(30px,5vw,42px)}
+#top h1{max-width:none;margin:0 auto;text-align:center;font-size:clamp(21px,3.4vw,26px);font-weight:400;line-height:1.16;letter-spacing:-.02em}
+#top .herosub,#top .hero-sub{max-width:46em;margin:14px auto 0;text-align:center;font-size:15px;line-height:1.5;color:var(--muted)}
+.csmeta{justify-content:center;margin-top:18px}
+#top .ba,#top figure,#top .balabels,#top .resultstrip,#top .subline{text-align:left}
+#top .subline{max-width:46em;margin-left:auto;margin-right:auto;text-align:center}
+
+/* body: one 720 column, centred in the container, left-aligned inside */
+.grid2{max-width:648px;margin:0 auto;text-align:left}
+.grid2 > div:first-child{max-width:none;margin:0 0 20px}
+.body-col{max-width:648px;margin:0}
+
+/* prose sits at 640 so the line length stays readable; left edge shared */
+.section h2{max-width:576px}
+.lead,.body-col > p,.statement,.body-col p.statement,.handoff,.body-col > p.handoff,
+.pquote,.body-col p.pquote,.body-col > p.caption{max-width:576px}
+
+/* figures and card grids use the full column */
+.figcard,.shotcard,.labelrow,.resultstrip,.qrow,.modelgrid,.optrow,.notebox,.decision,.body-col figure{max-width:648px}
+
+/* section rhythm */
+.section{padding:0 0 clamp(50px,9vw,78px)}
+
+/* left rail clears the container */
+.toc{left:24px;max-width:92px}
+@media (max-width:1295px){.toc{display:none}}
+
+/* hero visual spans the full container, body figures stay in the column */
+#top .figcard,#top figure,#top .ba,#top .shotcard,#top .bawrap{max-width:none;width:100%;margin-left:0;margin-right:0}
+#top .balabels{max-width:none}
+
+/* ══════════════════════════════════════════════════════════════════
+   SHARED SITE CHROME — identical on every page
+   type scale · nav pill · contact tab · footer · overlays
+   ══════════════════════════════════════════════════════════════════ */
+
+html,body{background:var(--bg);font-family:var(--display);letter-spacing:-.01em}
+body{font-size:14px;line-height:1.6;color:var(--muted);-webkit-font-smoothing:antialiased}
+body:before,#bgwash,.halftone{display:none!important}
+a{color:var(--link);transition:opacity .2s ease,color .2s ease}
+a:hover{color:var(--link);opacity:.7}
+::selection{background:var(--markWash)}
+
+/* ── type scale: 30 display · 18 lead · 16 title · 15 ui · 14 meta · 12 label ── */
+h1,h2,h3,h4{font-family:var(--display);color:var(--ink);margin:0}
+.t-display{font-size:24px;font-weight:500;line-height:1.14;letter-spacing:-.022em;color:var(--ink)}
+.t-lead{font-size:15px;font-weight:400;line-height:1.5;color:var(--muted)}
+.t-title{font-size:14px;font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.t-meta{font-size:13px;font-weight:400;line-height:1.45;color:var(--faint)}
+.t-label{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.seclabel,.stage,.exp-date,.lbl{font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin:0}
+
+/* ── nav pill ── */
+header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;padding:0;z-index:50;pointer-events:none;transition:none}
+.navpill{pointer-events:auto;width:max-content;margin:0 auto;display:flex;align-items:center;gap:2px;
+  padding:4px 5px;border:0;border-radius:var(--r-pill);box-shadow:none;
+  background:color-mix(in srgb,var(--surface) 85%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4)}
+header.scrolled .navpill{background:color-mix(in srgb,var(--surface) 94%,transparent);padding:4px 5px}
+.facemark,.navdiv{display:none!important}
+.navpill > div[style]{display:none}
+.crumb{display:none}
+nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:500}
+.navlink{display:inline-flex;align-items:center;padding:4px 10px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;color:var(--navOff);min-width:0}
+.navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink);opacity:1}
+.navlink[aria-current="page"]{color:var(--ink)}
+.navtext{display:inline!important}
+.navicon{display:none!important}
+.themebtn{width:28px;height:28px;margin-left:2px;border:0;border-radius:var(--r-pill);
+  background:transparent;color:var(--navOff);display:inline-grid;place-items:center;cursor:pointer}
+.themebtn::before{display:none}
+.themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.burger{width:34px;height:34px;border:0;border-radius:var(--r-pill);background:transparent;color:var(--ink)}
+@media (min-width:641px){header .burger{display:none}}
+@media (max-width:576px){
+  nav.navlinks a{display:none}
+  header .themebtn,header .burger{width:34px;height:34px;border-radius:var(--r-pill);background:transparent}
+}
+
+/* ── footer ── */
+#contact{max-width:821px;margin:0 auto;padding-bottom:0}
+/* one line of type, so it is centred: space-between with a single
+   child just parks it on the left edge for no reason */
+#contact footer{display:flex;flex-direction:row;align-items:center;justify-content:center;
+  gap:18px;width:auto;margin:0;padding:24px 0 36px;background:transparent;
+  text-align:center;position:relative}
+#contact footer > *:not(.footline){display:none!important}
+#contact footer .footline{margin:0;font-size:13px;font-weight:400;line-height:1.45;color:var(--faint);max-width:none}
+@media (max-width:504px){#contact footer{flex-direction:column;align-items:center;gap:10px}}
+
+/* ── overlays + chrome ── */
+.totop{border:0;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);box-shadow:none}
+.toast,#palette .box{border-radius:var(--r-float);background:var(--card);box-shadow:var(--shadow-float)}
+#palette .list a,.mrow{border-radius:var(--r-sm)}
+.mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:-.01em}
+.mresume{border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:13px}
+.mailbtn{font-family:var(--display);font-size:14px;color:var(--link)}
+.mobilenav{background:var(--bg)}
+#loader{background:var(--bg)}
+#loader .name span{font-family:var(--display);font-size:15px;font-weight:400;letter-spacing:-.01em;color:var(--ink)}
+#loader .tag{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--faint)}
+#loader .ln{background:var(--line)}
+#loader .dot{background:var(--bg);box-shadow:0 0 0 1px var(--line)}
+
+/* ── pill buttons (shared) ── */
+.pill,.btn-primary,.btn-secondary,.mresume{font-family:var(--display)}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:34px;padding:0 13px;
+  border:0;border-radius:var(--r-pill);font-size:13px;font-weight:500;line-height:1;cursor:pointer;
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.pill-primary{background:var(--surface);color:var(--ink)}
+.pill-primary:hover{background:color-mix(in srgb,var(--ink) 10%,transparent);opacity:1}
+.pill-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.pill-ghost:hover{background:var(--surface);opacity:1}
+.btn-primary{height:34px;padding:0 13px;border:0;border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:13px;font-weight:500}
+.btn-primary:hover{background:var(--ink);opacity:.85}
+.btn-secondary{height:34px;padding:0 13px;border:0;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);font-size:13px;font-weight:500}
+.btn-secondary:hover{background:color-mix(in srgb,var(--ink) 10%,transparent)}
+
+/* ── motion ── */
+[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+[data-reveal].shown{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* ══════════════════════════════════════════════════════════════════
+   CASE-STUDY COMPONENT LANGUAGE  (matches app-merge)
+     filled card  = a discrete object you can compare
+     ruled text   = a parallel point in an argument
+     outlined box = a decision, with a verdict
+     quote mark   = somebody actually said this
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── label rows: parallel points, not cards ── */
+/* NB: `> div`, not `> *` — the sticky-note layer above sets `.labelrow > div
+   {border:0}` at the same specificity, so a universal child selector loses the
+   border-width here and the coloured rules below silently render at 0px. */
+.labelrow > div{background:transparent!important;padding:0 0 0 13px!important;
+  border-left:2px solid var(--line);border-radius:0!important}
+.labelrow .cap{display:block;font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.labelrow p{margin:7px 0 0;font-size:13px;line-height:1.55;color:var(--muted)}
+
+.labelrow.is-goal > *{border-left-color:color-mix(in srgb,var(--link) 55%,var(--line))}
+.labelrow.is-goal .cap{color:var(--link)}
+.labelrow.is-goal .cap:before{content:"";display:inline-block;width:9px;height:9px;
+  border:2px solid currentColor;border-radius:50%;vertical-align:middle;margin-right:7px}
+
+/* what I didn't do — stated plainly, drawn provisionally */
+.notebox .labelrow.is-gap > *,.labelrow.is-gap > *{border-left:0!important;padding:13px!important;
+  background:transparent!important;
+  border:1px dashed color-mix(in srgb,var(--faint) 45%,transparent)!important;
+  border-radius:var(--r-card)!important}
+.labelrow.is-gap .cap{color:var(--faint)}
+.labelrow.is-gap .cap:after{content:"not done";margin-left:7px;font-size:10px;letter-spacing:.06em;
+  padding:2px 6px;border-radius:var(--r-pill);background:var(--surface);color:var(--faint);text-transform:none}
+
+/* ── questions the product exists to answer ── */
+.qrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:18px}
+.qrow > *{position:relative;background:color-mix(in srgb,var(--link) 6%,transparent)!important;
+  border:1px solid color-mix(in srgb,var(--link) 22%,transparent)!important;
+  border-radius:var(--r-card)!important;padding:16px 16px 16px 39px!important}
+.qrow > *:before{content:"?";position:absolute;left:18px;top:19px;width:22px;height:22px;
+  display:grid;place-items:center;border-radius:50%;background:var(--link);color:#fff;
+  font-size:11px;font-weight:500;line-height:1}
+.qrow .lbl{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--link)}
+.qrow p{margin:7px 0 0!important;font-family:var(--display)!important;font-size:15px!important;
+  font-weight:400!important;line-height:1.45!important;letter-spacing:-.012em!important;color:var(--ink)!important}
+@media (max-width:576px){.qrow{grid-template-columns:minmax(0,1fr)}}
+
+/* ── quotes: somebody said this, and who ── */
+.body-col p.pquote,.pquote{position:relative;margin:26px 0 0;padding:0 0 0 26px;border:0;
+  font-family:var(--display);font-style:normal;font-size:17px;font-weight:400;
+  line-height:1.45;letter-spacing:-.014em;color:var(--ink);max-width:576px}
+.pquote:before{content:"\201C";position:absolute;left:0;top:-6px;
+  font-size:35px;line-height:1;color:color-mix(in srgb,var(--link) 55%,transparent)}
+.body-col p.pattrib,.pattrib{margin:8px 0 0 26px;font-size:12px;font-weight:400;letter-spacing:0;
+  text-transform:none;color:var(--faint)}
+.pattrib:before{content:"";display:inline-block;width:16px;height:1px;background:var(--line);
+  vertical-align:middle;margin-right:7px}
+
+/* ── decision: an argument with four moves ── */
+.decision{display:grid;grid-template-columns:minmax(0,168px) minmax(0,1fr);gap:0;
+  background:transparent;border:1px solid var(--line);border-radius:var(--r-card);
+  margin:21px 0 0;padding:0;overflow:hidden}
+.decision dt{display:flex;align-items:flex-start;gap:7px;margin:0;padding:12px 11px 12px 16px;
+  font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.decision dd{margin:0;padding:12px 16px 12px 0;font-size:13px;line-height:1.55;color:var(--muted)}
+.decision dt:nth-of-type(n+2),.decision dd:nth-of-type(n+2){border-top:1px solid var(--line)}
+.decision dt:before{content:"";width:16px;height:16px;margin-top:1px;flex:0 0 auto;border-radius:50%;
+  display:inline-block;border:1.5px solid currentColor}
+.decision dt:nth-of-type(2):before{border-style:dashed}
+.decision dt:nth-of-type(3){color:var(--gain);background:color-mix(in srgb,var(--gain) 6%,transparent)}
+.decision dt:nth-of-type(3):before{border:0;background:var(--gain);
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.2 8.4l3.2 3.2 6.4-7' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.2 8.4l3.2 3.2 6.4-7' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.decision dd.chose{color:var(--ink);background:color-mix(in srgb,var(--gain) 6%,transparent)}
+.decision dt:nth-of-type(4){color:var(--warn)}
+.decision dt:nth-of-type(4):before{border:0;background:var(--warn);
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2.6L14.4 13H1.6z' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M8 6.6v3.1' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2.6L14.4 13H1.6z' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M8 6.6v3.1' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+@media (max-width:576px){
+  .decision{grid-template-columns:minmax(0,1fr)}
+  .decision dd{padding:0 16px 12px}
+  .decision dd:nth-of-type(n+2){border-top:0}
+}
+
+/* ── metrics: figure first ── */
+.resultstrip > div{background:var(--surface)!important;padding:16px!important}
+.resultstrip .lbl{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.resultstrip .big{margin:7px 0 4px;font-size:24px;font-weight:500;line-height:1.1;letter-spacing:-.022em;color:var(--ink)}
+.resultstrip .note{font-size:12px;line-height:1.45;color:var(--muted)}
+
+/* ── the honest-gaps box loses its card, keeps its label ── */
+.notebox{background:transparent;border:0;border-radius:0;padding:0;gap:11px}
+.notebox > span{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* ── statement: emphasis, never a card ── */
+.body-col p.statement,.statement{background:transparent;border-left:2px solid var(--ink);
+  padding:2px 0 2px 14px;font-size:15px;line-height:1.5;color:var(--ink);letter-spacing:-.012em}
+
+/* ══════════════════════════════════════════════════════════════════
+   CASE-STUDY TYPOGRAPHY
+   One face (Geist). Seven steps. Three inks. Every step has one job,
+   and the job is what the content is doing — not how big it looks.
+
+     EYEBROW  12/500 caps faint  · where you are
+     SUBHEAD  16/500 ink         · a move inside the section
+     BODY     16/400 muted       · the argument
+     ASIDE    14/400 faint       · sourcing, captions, transitions
+     LEAD     18/400 muted       · the section in one line
+     ASSERT   18/400 ink         · a claim I am making
+     QUOTE    20/400 ink         · somebody else's words
+     TITLE    28/500 ink         · what this section is
+     FIGURE   30/500 ink         · a number
+   ══════════════════════════════════════════════════════════════════ */
+
+.section,.section *{font-family:var(--display)}
+
+/* EYEBROW — where you are */
+.section .stage,.section .lbl,.section .cap,.section .tagpill,
+.section .decision dt,.section .timeline .when,.section .resultstrip .lbl,
+.section .cardgrid .tag,.section .qrow .lbl,.notebox > span{
+  font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.35;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* TITLE — what this section is */
+.section h2{font-size:clamp(18px,2.6vw,22px);font-weight:500;line-height:1.28;
+  letter-spacing:-.018em;color:var(--ink)}
+
+/* LEAD — the section in one line */
+.section .lead{font-size:15px;font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
+
+/* SUBHEAD — a move inside the section */
+.section .subhead,.section .cardtitle,.section h3{font-size:14px;font-weight:500;line-height:1.35;
+  letter-spacing:-.012em;color:var(--ink);text-transform:none}
+
+/* BODY — the argument */
+.section p,.section .body-col > p,.section .decision dd,.section .timeline .what,
+.section .labelrow p,.section .card p,.section .cardgrid .card p,.section li{
+  font-size:14px;font-weight:400;line-height:1.6;letter-spacing:0;color:var(--muted)}
+
+/* ASSERT — a claim I am making */
+.section .statement,.section .body-col p.statement{font-size:15px;font-weight:400;line-height:1.5;
+  letter-spacing:-.012em;color:var(--ink)}
+
+/* QUOTE — somebody else's words */
+.section .pquote,.section .body-col p.pquote{font-size:17px;font-weight:400;line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink)}
+
+/* ASIDE — sourcing, captions, transitions, attribution */
+.section .handoff,.section .body-col > p.handoff,.section .caption,.section .body-col > p.caption,
+.section figcaption,.section .pattrib,.section .body-col p.pattrib,
+/* these are sentence-case phrases, not caps labels — mono on a sentence
+   reads as code, so the plain variants stay on the display face */
+.section .resultstrip .note,.section .lbl.plain,.section .note{
+  font-family:var(--display);
+  font-size:13px;font-weight:400;line-height:1.5;letter-spacing:0;
+  text-transform:none;color:var(--faint)}
+
+/* FIGURE — a number */
+.section .resultstrip .val,.section .resultstrip .big{font-size:24px;font-weight:500;line-height:1.1;
+  letter-spacing:-.022em;color:var(--ink)}
+
+/* the three inks, stated once
+   ink   = I am asserting this            muted = this is the argument
+   faint = this is metadata about the argument                        */
+.section .emph{font-weight:500;color:var(--ink)}
+
+/* three stragglers, brought onto the scale */
+/* sequence markers are metadata about order, not content — eyebrow step */
+.section .n{font-size:11px!important;font-weight:500!important;line-height:1.35!important;
+  letter-spacing:.09em!important;text-transform:uppercase!important;color:var(--faint)!important;margin-bottom:2px}
+/* sourcing notes are asides, wherever they sit */
+.section .caption,.section p.caption,.section .body-col > p.caption{font-size:13px!important;color:var(--faint)!important}
+
+/* in-figure annotation pins keep their own small type — they label a drawing,
+   not the page, so they sit outside the reading scale on purpose */
+.section .pin b{font-size:11px;font-weight:500}
+
+/* attribution is an aside; beat the component-layer selector on specificity */
+.section .body-col p.pattrib,.section .body-col p.caption,.section .body-col p.handoff{
+  font-size:13px;font-weight:400;line-height:1.5;letter-spacing:0;text-transform:none;color:var(--faint)}
+
+/* ══ CHAIN OF ACCESS ═════════════════════════════════════════════════
+   The section is about distance: the user is the one person he never
+   met. Drawn as a relay so the gap is the first thing you see.
+   ═══════════════════════════════════════════════════════════════════ */
+.reach{margin-top:20px}
+.reach-lane{display:grid;grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr) 96px minmax(0,1fr);
+  align-items:stretch;gap:0}
+
+.reach-node{position:relative;display:flex;flex-direction:column;padding:14px;
+  border-radius:var(--r-card);background:var(--surface);border:1px solid transparent}
+.reach-node b{margin-top:7px;font-size:14px;font-weight:500;letter-spacing:-.012em;color:var(--ink)}
+.reach-node p{margin:7px 0 0!important;font-size:13px!important;line-height:1.5!important;color:var(--muted)!important}
+.reach-tag{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* out of reach: drawn provisionally, because he never got there */
+.reach-node.is-out{background:transparent;border:1px dashed color-mix(in srgb,var(--faint) 50%,transparent)}
+.reach-node.is-out .reach-tag{color:var(--neg)}
+.reach-node.is-out b{color:var(--muted)}
+
+/* the person actually in the room */
+.reach-node.is-me{background:color-mix(in srgb,var(--link) 6%,transparent);
+  border-color:color-mix(in srgb,var(--link) 30%,transparent)}
+.reach-node.is-me .reach-tag{color:var(--link)}
+
+/* the relay itself */
+.reach-arrow{position:relative;display:flex;align-items:center;justify-content:center}
+.reach-arrow:before{content:"";position:absolute;left:8px;right:8px;top:50%;height:1px;background:var(--line)}
+.reach-arrow:after{content:"";position:absolute;right:8px;top:50%;width:6px;height:6px;
+  border-top:1px solid var(--line);border-right:1px solid var(--line);
+  transform:translateY(-50%) rotate(45deg)}
+.reach-arrow span{position:relative;transform:translateY(20px);white-space:normal;text-align:center;
+  max-width:88px;line-height:1.25;
+  font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+
+.reach-foot{margin:13px 0 0!important;font-size:13px!important;line-height:1.5!important;color:var(--faint)!important}
+.reach-also{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--faint);background:var(--surface);border-radius:var(--r-pill);padding:3px 7px;margin-right:7px}
+
+@media (max-width:684px){
+  .reach-lane{grid-template-columns:minmax(0,1fr);gap:0}
+  .reach-arrow{height:46px}
+  .reach-arrow:before{left:50%;right:auto;top:8px;bottom:8px;width:1px;height:auto}
+  .reach-arrow:after{left:50%;right:auto;top:auto;bottom:8px;transform:translateX(-50%) rotate(135deg)}
+  .reach-arrow span{transform:translateX(28px)}
+}
+
+/* ══ THE BLACK BOX ═══════════════════════════════════════════════════
+   The answer existed; the partner just couldn't see any of it.
+   Drawn as four inputs behind a dashed wall — the same dashed language
+   the site uses everywhere for "out of reach".
+   ═══════════════════════════════════════════════════════════════════ */
+.blackbox{margin-top:20px;padding:16px;border-radius:var(--r-card);
+  border:1px dashed color-mix(in srgb,var(--faint) 50%,transparent);background:transparent}
+.blackbox-h{margin:0 0 11px!important;font-size:11px!important;font-weight:500!important;
+  letter-spacing:.09em!important;text-transform:uppercase!important;color:var(--faint)!important}
+.blackbox-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.blackbox-cell{position:relative;padding:11px 11px 11px 26px;border-radius:var(--r-float);
+  background:color-mix(in srgb,var(--faint) 7%,transparent)}
+.blackbox-cell:before{content:"";position:absolute;left:13px;top:16px;width:12px;height:12px;
+  border-radius:50%;border:1.5px solid color-mix(in srgb,var(--faint) 70%,transparent)}
+.blackbox-cell:after{content:"";position:absolute;left:13px;top:21.5px;width:12px;height:1.5px;
+  background:color-mix(in srgb,var(--faint) 70%,transparent);transform:rotate(-45deg)}
+.blackbox-cell span{display:block;font-size:11px;font-weight:500;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--faint)}
+.blackbox-cell b{display:block;margin-top:4px;font-size:13px;font-weight:400;line-height:1.4;color:var(--muted)}
+.blackbox-foot{margin:11px 0 0!important;font-size:13px!important;line-height:1.5!important;color:var(--faint)!important}
+@media (max-width:684px){.blackbox-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:414px){.blackbox-row{grid-template-columns:minmax(0,1fr)}}
+/* ══ CASE STUDY HERO (matches App Merge) ═════════════════════════════
+   Same problems, same fix: the h1 ran at 32px centred on a page whose
+   every other block is left-aligned, the meta pills repeated the credit
+   line, and the three numbers sat at y=966 — under the fold. The h1 only
+   needs part of a 1200px section, so the numbers move into the air
+   beside it and the hero shot takes the full width beneath.
+   ═══════════════════════════════════════════════════════════════════ */
+#top{text-align:left;padding:clamp(73px,13vh,105px) 0 clamp(36px,6vw,50px)}
+#top > *{max-width:none}
+
+.cs-eyebrow{margin:0 0 clamp(13px,1.8vw,16px);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+#top h1{max-width:20ch;margin:0;text-align:left;text-wrap:balance;
+  font-size:clamp(26px,4vw,40px);font-weight:500;line-height:1.1;letter-spacing:-.028em}
+#top .herosub{max-width:46ch;margin:clamp(13px,1.8vw,16px) 0 0;text-align:left;
+  font-size:clamp(15px,1.5vw,17px);line-height:1.5;color:var(--muted)}
+#top .subline{max-width:72ch;margin:clamp(13px,1.8vw,16px) 0 0;margin-left:0;margin-right:0;
+  text-align:left;font-size:13px;line-height:1.5;letter-spacing:0;color:var(--faint)}
+
+/* ══ CASE STUDY HERO ═════════════════════════════════════════════════
+   It was a two-column split: the title squeezed into 20ch on the left
+   while the three figures stood in a 340px column on the right, stacked
+   with hairlines between them.
+
+   Two problems. The headline — the one thing a case study opens with —
+   was given the narrowest measure on the widest part of the page. And
+   the figures, set vertically beside the title, read as a spec table
+   parked next to a heading rather than as evidence for it; the first of
+   them sat level with the eyebrow, so the page opened top-heavy on the
+   right before the title had been read.
+
+   One column now. Title at full measure, then the three figures across
+   a single band beneath it. Left to right they read as the arc they
+   are — the exposure, the shock, where it landed — which is the
+   direction a sequence is read in, and the band gives the words a floor
+   before the artefact begins.
+   ═══════════════════════════════════════════════════════════════════ */
+.cshero{display:block}
+
+/* the title gets the room it was being denied */
+#top h1{max-width:20ch;font-size:clamp(28px,4.4vw,44px)}
+#top .herosub{max-width:52ch;font-size:clamp(15px,1.6vw,18px)}
+
+#top .resultstrip{max-width:none;display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(20px,3.4vw,40px);
+  margin:clamp(30px,4.4vw,44px) 0 0;padding:clamp(18px,2.4vw,24px) 0 0;
+  border-top:1px solid var(--line)}
+#top .resultstrip > div{display:block!important;background:none!important;
+  box-shadow:none!important;filter:none!important;clip-path:none!important;
+  border:0!important;border-radius:0!important;padding:0!important;gap:0}
+#top .resultstrip > div:after{display:none}
+#top .resultstrip .lbl{margin:0 0 9px;font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+#top .resultstrip .val,#top .resultstrip .big{margin:0 0 8px;
+  font-size:clamp(26px,3.2vw,36px);font-weight:500;line-height:1.02;
+  letter-spacing:-.026em;color:var(--ink);font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+/* the red on the loss is the beat of the whole arc */
+#top .resultstrip .val.neg{color:var(--neg)}
+#top .resultstrip .lbl.plain,#top .resultstrip .note{margin:0;
+  font-size:12.5px;font-weight:400;letter-spacing:0;text-transform:none;
+  line-height:1.45;color:var(--faint);max-width:26ch}
+
+/* narrow: the band becomes the list it used to be, but only when three
+   columns would each be too thin to hold a figure and its sentence */
+@media (max-width:700px){
+  #top .resultstrip{grid-template-columns:minmax(0,1fr);gap:0;
+    padding-top:0;border-top:0}
+  #top .resultstrip > div{border-top:1px solid var(--line)!important;
+    padding:15px 0 0!important;margin-top:15px}
+  #top .resultstrip > div:first-child{margin-top:0}
+  #top .resultstrip .lbl.plain,#top .resultstrip .note{max-width:46ch}
+}
+@media (max-width:576px){
+  #top h1{max-width:none;letter-spacing:-.022em}
+}
+
+/* the hero shot follows the whole block and takes the section width */
+#top .cshero + div{max-width:none;margin-top:clamp(27px,4.5vw,42px)}
+#top .shotframe-hero{max-width:none;width:100%;border-radius:var(--r-card)}
+/* ══ MOBILE MENU ═════════════════════════════════════════════════════
+   "Contact" is gone: it scrolled to a footer that carries no contact
+   details, and this panel already ends with the email address. That
+   left ~420px of dead space between the links and the foot — which is
+   now where the work lives, since a portfolio menu with no route to the
+   case studies is missing the only thing it's really for.
+   Arrows changed from the ↗ (external) glyph to a plain right arrow:
+   every destination here is on this site.
+   ═══════════════════════════════════════════════════════════════════ */
+.mcases{display:flex;flex-direction:column;flex:0 0 auto;
+  margin-top:clamp(16px,3vh,26px);padding:0 var(--pad)}
+.mgroup{margin:0 0 4px;font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.mcase{display:flex;align-items:center;gap:var(--s-4);padding:13px 0;
+  color:var(--ink);border-radius:var(--r-sm);box-shadow:inset 0 -1px 0 var(--line)}
+.mcase:last-child{box-shadow:none}
+.mcase-x{flex:1;min-width:0}
+.mcase-t{display:block;font-family:var(--display);font-size:16px;font-weight:400;
+  line-height:1.3;letter-spacing:-.01em;color:var(--ink)}
+.mcase-m{display:block;margin-top:3px;font-family:var(--display);font-size:13px;
+  line-height:1.4;color:var(--faint)}
+.mcase svg{flex:0 0 auto;color:var(--faint)}
+.mcase[aria-current="page"] .mcase-t{color:var(--accent)}
+.mcase[aria-current="page"] svg{color:var(--accent);opacity:.6}
+
+/* every page ends with a way to reach him: on desktop these pages had
+   exactly three links on them — Home, About, Resume — and no contact at
+   all, so anyone who finished reading had nowhere to go */
+
+/* ── next case study ──────────────────────────────────────────────────
+   One line, above the footer. A case study used to end with nothing to
+   do next, at exactly the moment a reader is most willing to read
+   another. Kept as a link rather than a card so it stays out of the way
+   of the work above it. */
+/* the same 648px reading column the case study itself is set in, so
+   the link sits directly under the text you just finished */
+#next{max-width:648px;margin:0 auto;padding:0 0 clamp(30px,5vw,52px)}
+
+/* ══ NEXT CASE STUDY ═════════════════════════════════════════════════
+   It was a hairline rule with a label and a title sharing one baseline,
+   which read as a run-on sentence — "NEXT CASE STUDY The first product
+   Rupeezy's partners ever had" — rather than as a label above a name.
+   Nothing about it looked like somewhere you could go, and the rule was
+   the same kind of divider the rest of the page had already dropped.
+
+   It is a panel now: the page's own card material and radius, the
+   label on its own line, the title at reading size below it, and the
+   arrow parked at the right edge where a "go here" always sits. One
+   object, obviously clickable, and the run of dead space before the
+   footer is doing something. */
+.nextlink{display:grid;grid-template-columns:1fr auto;align-items:center;
+  gap:4px clamp(16px,3vw,24px);width:100%;
+  padding:clamp(20px,3vw,26px) clamp(20px,3vw,26px);
+  /* white with a hairline, not the grey tint: the panels directly above
+     it are tinted content, and a link that shares their material reads
+     as one more of them. The outlined-white ground is the same one the
+     page's other interactive rows use. */
+  border-top:0;border-radius:var(--r-card);background:var(--card);
+  box-shadow:inset 0 0 0 1px var(--line);
+  color:var(--ink);text-decoration:none;
+  transition:background .25s var(--ease,ease),box-shadow .25s var(--ease,ease)}
+.nextlink .nextlbl{grid-column:1;font-family:var(--mono,inherit);font-size:11px;
+  font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.nextlink .nexttitle{grid-column:1;font-size:clamp(17px,1.8vw,19px);font-weight:500;
+  line-height:1.3;letter-spacing:-.016em;color:var(--ink);
+  transition:color .25s var(--ease,ease)}
+/* the arrow spans both text rows so it centres on the pair, not on one */
+.nextlink svg{grid-column:2;grid-row:1/3;flex:0 0 auto;color:var(--faint);
+  transition:transform .25s var(--ease,ease),color .25s var(--ease,ease)}
+@media (hover:hover){
+  .nextlink:hover{background:var(--surface);
+    box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
+  .nextlink:hover .nexttitle{color:var(--link)}
+  .nextlink:hover svg{transform:translateX(4px);color:var(--link)}
+}
+@media (prefers-reduced-motion:reduce){
+  .nextlink,.nextlink svg,.nextlink .nexttitle{transition:none}
+}
+
+/* sentence-case phrases are not caps labels: mono on a sentence reads as
+   code. This catches the ones in the hero strip, which sit outside
+   .section and so were still picking up the label-tier font. */
+.lbl.plain,.resultstrip .note,.notebox .note{font-family:var(--display)}
+
+/* sentence-case running text stays on the display face — mono is for the
+   caps label tier only. These two are full sentences that happened to
+   inherit the label font. */
+.subline,.caption{font-family:var(--display)}
+
+/* ══ WHO WAS IN REACH ═════════════════════════════════════════════════
+   It was three 152px cards in a row with arrows between them. At that
+   width 13px copy broke to five words a line and ran six lines deep; the
+   boxes carried 20px radii at 152px wide, which reads as bubbly; and
+   three accent treatments (red tag, grey box, blue box) competed inside
+   one small figure. It also ran sideways on a page that reads downward.
+
+   It is now the rail the career timeline on the home page is built from:
+   one column, a dot per link, and the connector sitting on the rail
+   between them. Three gains, none of them decorative — the copy gets the
+   full 576px measure instead of a 124px box, the chain reads top to
+   bottom like the rest of the page, and the distance from the person is
+   carried by the rail rather than by three competing containers.
+
+   The first dot is hollow and dashed: the person I never reached. The
+   last is filled in the accent, exactly as "NOW" is on the timeline.
+   ═══════════════════════════════════════════════════════════════════ */
+/* .reach is the first child of .body-col, so a first-child reset was
+   zeroing this and running the lead straight into the chain */
+.reach,.section .body-col > .reach{margin-top:clamp(26px,3.4vw,38px)!important;max-width:576px}
+.rchain{list-style:none;margin:0;padding:0 0 0 42px;position:relative}
+/* --line is nearly invisible against the page ground, so the rail that
+   makes this a chain reads a step darker than a divider would */
+.rchain:before{content:"";position:absolute;left:12px;top:14px;bottom:14px;width:1px;
+  background:color-mix(in srgb,var(--muted) 30%,transparent)}
+
+/* The marker on the rail is an icon, not a dot: at a glance the chain
+   says PERSON -> WHAT REACHED ME INSTEAD -> ME, which is the whole point
+   of the section and previously took reading three paragraphs to get.
+   The ring around it carries the state — dashed for the person I never
+   reached, solid for the relay, filled accent for me. */
+.rstep{position:relative;margin:0}
+.ricon{position:absolute;left:-42px;top:-3px;display:grid;place-items:center;
+  width:26px;height:26px;border-radius:50%;background:var(--bg);
+  box-shadow:0 0 0 1px var(--line);color:var(--muted);box-sizing:border-box}
+.ricon svg{width:14px;height:14px;display:block}
+/* never reached: the ring is dashed and the figure is ghosted */
+.rstep.is-out .ricon{background:transparent;box-shadow:none;
+  border:1px dashed color-mix(in srgb,var(--faint) 72%,transparent);
+  color:color-mix(in srgb,var(--muted) 68%,transparent)}
+/* me */
+.rstep.is-me .ricon{background:var(--accent);color:#FFFFFF;
+  box-shadow:0 0 0 3px var(--accentWash)}
+
+.rtag{display:block;font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.rstep b{display:block;margin-top:5px;font-size:15px;font-weight:500;line-height:1.35;
+  letter-spacing:-.014em;color:var(--ink)}
+.rstep p{margin:6px 0 0!important;max-width:none!important;
+  font-size:14px!important;line-height:1.6!important;color:var(--muted)!important}
+
+/* The connector is not another label — it is the movement between two of
+   them, so it steps down a level: smaller, lighter, and carrying the
+   arrow the old lane used to draw. Without this it read at exactly the
+   same rank as the step tags and the chain flattened. */
+.rlink{display:flex;align-items:center;gap:7px;margin:13px 0;
+  font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.08em;
+  text-transform:uppercase;color:color-mix(in srgb,var(--faint) 78%,transparent)}
+.rlink:before{content:"";flex:0 0 auto;width:10px;height:1px;
+  background:color-mix(in srgb,var(--muted) 34%,transparent)}
+
+.reach-foot{margin-top:clamp(20px,2.6vw,26px)!important;max-width:576px}
+
+/* ══ SECTION RHYTHM ══════════════════════════════════════════════════
+   Measured on section 02 before this: the eyebrow sat on the title with
+   a 0px gap, the subhead sat on its own paragraph with a 0px gap, and in
+   the same section one gap was 89px. Nothing was congested by accident —
+   the page had no scale, so every relationship looked either glued
+   together or unrelated. One scale now: 8 / 14 / 16 / 44.
+   ═══════════════════════════════════════════════════════════════════ */
+.section .stage{margin:0 0 14px}
+.section h2{margin-bottom:0}
+.section .lead{margin-top:16px}
+.section .body-col > * + .subhead,.section .subhead{margin-top:clamp(38px,4.6vw,52px)}
+.section .subhead + p{margin-top:8px!important}
+
+/* ASSERT — the claim, without the bar.
+   A 2px rule down the left is the convention for QUOTING SOMEBODY ELSE,
+   and this is the author's own sentence, so the mark was saying the
+   wrong thing. The emphasis is now the space around it and the shift to
+   ink at a larger size: it stops the column instead of decorating it. */
+.section .statement,.section .body-col p.statement{
+  margin:clamp(38px,4.6vw,52px) 0 0!important;padding:0!important;
+  border-left:0!important;background:none!important;
+  max-width:52ch;font-size:16px;line-height:1.55;letter-spacing:-.014em;color:var(--ink)}
+
+.section .handoff,.section .body-col > p.handoff{
+  margin-top:clamp(34px,4.2vw,46px)!important}
+
+/* ══ FEWER CONTAINERS ════════════════════════════════════════════════
+   Same diagnosis as the reach chain, applied to the rest of the page.
+   Every one of these components was saying its content twice: once in
+   words, once in a box drawn around the words. Stacked up — a dashed
+   frame holding four filled cards, two tinted cards holding two
+   questions, two columns with rules down their left edge — the page read
+   as congested no matter how the margins were set.
+
+   Three of them also had a glyph positioned absolutely over the label it
+   was meant to sit beside, so the icon literally overlapped the first
+   letter of the text. Not a taste call: a bug, visible in every one of
+   those components.
+
+   Nothing here changes a word of the content. The containers come off,
+   the collisions go away, and the hierarchy is carried by a hairline,
+   the label, and the space.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 1. THE TWO QUESTIONS — were two tinted, bordered cards with a "?" disc
+      pinned on top of the label. They are questions; they are now set as
+      questions, under a rule. */
+.qrow{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,34px)!important;
+  margin-top:clamp(22px,2.8vw,30px)!important}
+/* no rule: the label, the gap and the column edge are enough to
+   separate two columns. A hairline over each one just draws the grid the
+   layout already implies. */
+.qrow > *{position:static!important;background:none!important;border:0!important;
+  border-radius:0!important;padding:0!important}
+.qrow > *:before{display:none!important}
+.qrow .cap,.qrow .lbl{color:var(--faint)!important}
+.qrow p{margin:9px 0 0!important;font-size:16px!important;line-height:1.45!important;
+  letter-spacing:-.014em!important;color:var(--ink)!important}
+
+/* 2. THE TWO GOALS — a blue rule down the left of each column and a ring
+      glyph overlapping the label. Same hairline as the questions above,
+      so the two rows read as one pair of pairs. */
+.labelrow.is-goal > *{border-left:0!important;padding-left:0!important}
+.labelrow.is-goal .cap{color:var(--faint)!important}
+.labelrow.is-goal .cap:before{display:none!important}
+
+/* 3. THE BLACK BOX — one dashed frame around four filled cards, each with
+      a crossed-circle pinned over its label: five containers and four
+      collisions to say "four inputs, none of them visible". The dashed
+      frame stays, because dashed IS the meaning here — this is the part
+      the partner could not see. The cards inside become plain columns. */
+.blackbox{padding:clamp(18px,2.4vw,26px)!important}
+.blackbox-row{gap:clamp(16px,2.4vw,30px)!important}
+.blackbox-cell{position:static!important;padding:0!important;background:none!important;
+  border:0!important;border-radius:0!important}
+.blackbox-cell:before{display:none!important}
+.blackbox-cell span{display:block;font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.blackbox-cell b{display:block;margin-top:5px;font-size:14px;font-weight:400;
+  line-height:1.45;color:var(--muted)}
+.blackbox-foot{margin-top:clamp(14px,2vw,18px)!important}
+
+/* 4. THE QUOTE — a 35px curly glyph sat outside the text and set the
+      indent for the whole block, and the attribution ran as monospaced
+      capitals across a full sentence. The quotation marks are already in
+      the copy; the attribution is a sentence, so it is set as one. */
+.pquote:before{display:none!important}
+.body-col p.pquote,.pquote{padding-left:0!important}
+.body-col p.pattrib,.pattrib,.section .pattrib,.section .body-col p.pattrib{
+  margin:10px 0 0!important;font-family:var(--display)!important;font-size:13px!important;
+  font-weight:400!important;letter-spacing:0!important;text-transform:none!important;
+  color:var(--faint)!important}
+
+/* 5. THE HIGHLIGHT — the marker wash came off the home page for this
+      exact reason: on this site emphasis is ink and weight, not a pen. */
+.mark,.mark-gain{background-image:none!important;font-weight:500;color:var(--ink)}
+
+/* ══ SIGNS, NOT DECORATION ═══════════════════════════════════════════
+   The last pass took the boxes off and left the page flat: correct
+   diagnosis, wrong cure. A box around a question was never what told you
+   it was a question — but nothing else did either, so removing it left
+   you reading to find out.
+
+   The fix is the toilet-door principle: a sign you recognise before you
+   read. Each of the eight sections now carries a mark for what KIND of
+   section it is, so a change of section is visible before a word of it
+   is read — origin, people, problem, goal, approach, obstacle, what was
+   built, what happened. And the labels that name a kind of thing carry
+   that thing: a question mark on a question, a person on the partner, a
+   case on the business, a crossed circle on what did not happen, a
+   struck-through eye on the data nobody could see.
+
+   Drawn to one spec — 16px box, 1.3 stroke, no fill — so they read as
+   one family and never as clip art. All inline, all in flow: the old
+   glyphs were absolutely positioned and sat on top of the words.
+   ═══════════════════════════════════════════════════════════════════ */
+
+
+/* the label mark — .cap is set to display:block by an earlier layer, so
+   the icon and the words ran together with no gap at all */
+.cap,.section .cap,.labelrow .cap,.qrow .cap,.blackbox-h{
+  display:flex!important;align-items:center;gap:7px}
+.capicon{flex:0 0 auto;display:inline-grid;place-items:center;color:currentColor;opacity:.9}
+.capicon svg{width:13px;height:13px;display:block}
+.qrow .capicon{color:var(--accent);opacity:1}
+.labelrow.is-gap .capicon{color:var(--neg);opacity:.85}
+.blackbox-h{gap:8px!important}
+.blackbox-h .capicon svg{width:14px;height:14px}
+
+/* ══ THE ARC, IN COLOUR ══════════════════════════════════════════════
+   A rule between sections is the first thing anyone reaches for and it
+   says nothing except "a line goes here". The icon in front of the
+   heading had the opposite problem — it competed with the title for the
+   first look. Both gone.
+
+   What marks a section now is its NUMBER, set large and in colour, with
+   the label beside it in the quiet mono. Nothing new is drawn: the
+   number was already in the text, it just stops being punctuation and
+   becomes the marker.
+
+   The colour is not decoration and it is not eight colours. It is the
+   emotional arc of the case study, in four:
+
+     neutral   setup — where this started, who, how, what I built
+     red       what was broken
+     amber     what got in the way
+     blue      what we were after
+     green     what happened next
+
+   Scrolling the page you feel it turn: quiet, then red, then the goal
+   in blue, quiet again, amber at the obstacle, and green at the end.
+   That is the story the copy tells, told a second time in a way you can
+   read at a glance without reading at all.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* no rule between sections — the colour and the space do that work */
+/* 78px of existing bottom padding + the top padding added when the rule
+   was removed came to 138px of blank between sections — a third of a
+   screen of nothing. The break should read as a break, not a gap in the
+   page. */
+.section + .section{border-top:0!important;padding-top:clamp(16px,2.2vw,28px)!important}
+
+.section .stage{display:flex;align-items:baseline;gap:8px;
+  margin:0 0 clamp(12px,1.6vw,16px)}
+/* One colour for every number. Colour-coding the sections turned the
+   count into a legend the reader has to learn; a single accent lets the
+   number do the one job it has — this is where a section begins — and
+   the count stays a count.
+
+   And it is a marker, not a headline: 14px against the 11px label is
+   enough of a step to read as a marker without going chunky and
+   competing with the h2 underneath it. */
+.snum{font-family:var(--mono);font-size:14px;font-weight:500;line-height:1;
+  letter-spacing:.02em;color:var(--accent);font-variant-numeric:tabular-nums}
+.sdot{color:var(--faint);opacity:.5;font-size:11px;line-height:1}
+
+/* the label keeps its quiet voice — the number is the loud part */
+.section .stage{color:var(--faint)}
+
+/* ══ TWO KINDS OF PICTURE ════════════════════════════════════════════
+   A case study shows two very different things and was framing them
+   identically: a grey rounded well for a REAL SHIPPED SCREEN, and the
+   same grey rounded well for a DIAGRAM I drew to explain something. A
+   reader cannot tell evidence from explanation, which in a case study is
+   the one distinction that actually matters — "this is what exists" is a
+   different claim from "this is how I thought about it".
+
+   So the ground says which it is, without a word of new copy:
+
+     screens   sit on a plain tinted mat, mounted behind a hairline —
+               a photograph in a mount
+     diagrams  sit on dot-grid paper, the same grid as the note board on
+               the home page — a drawing on a drawing surface
+
+   Nobody has to be taught this. You have seen graph paper.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* the drawing surface */
+.figcard{position:relative;background-color:var(--surface)!important;
+  background-image:radial-gradient(circle at 1px 1px,
+    color-mix(in srgb,var(--muted) 22%,transparent) 1px,transparent 0)!important;
+  background-size:16px 16px!important;background-position:8px 8px!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--muted) 12%,transparent)!important;
+  border-radius:var(--r-card)!important;overflow:hidden}
+
+/* the mount */
+.shotcard{position:relative;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--muted) 10%,transparent)!important;
+  border-radius:var(--r-card)!important}
+
+/* the caption belongs to the picture above it, not to the page */
+.section .caption,.section figcaption,.body-col > .caption{
+  margin-top:11px!important;max-width:576px}
+
+/* ── the last of the left bars ──────────────────────────────────────
+   Three components still carried a rule down their left edge, which is
+   the convention for quoting somebody else and was being used here for
+   the author's own columns. The same hairline-above treatment the
+   questions and goals now use, so every column on the page is read the
+   same way. */
+.labelrow > *{border-left:0!important;padding-left:0!important;border-top:0!important}
+/* No tinted rules. When these columns had bars down their left edge the
+   bar carried the colour, and I kept the colour when the bar became a
+   hairline above — so a blue line appeared over "for the business" and a
+   red one elsewhere, meaning nothing and matching nothing. Every column
+   rule on the page is now the same hairline. */
+/* the bar goes, the padding stays: .shortver is a TINTED PANEL, not an
+   indented column, so zeroing its left padding pushed the type flat
+   against the tint on one side while the other three kept 21-36px. It
+   read as though the block had been cropped. */
+.shortver{border-left:0!important}
+/* .decision is no longer a left-barred column either — it is a bordered
+   card with its own cell padding, so it needs no override at all. The
+   old one was stripping the card's left border. */
+
+/* ══ ONE CORNER RADIUS FOR EVERY PICTURE ═════════════════════════════
+   Audited, because it was not guessable by eye: the picture containers
+   on these two pages were running FOUR different radii.
+
+     .ba, .figcard, .shotcard, .shotframe-hero (hero only)   20px
+     .shotframe — Rise Portal's screenshot frame, used 5x     4px
+     images inside those frames                            0 and 4px
+
+   Rise Portal's main screenshot container is .shotframe, not .shotcard,
+   which is why the previous pass changed nothing on that page: the rule
+   was written against a class that page does not use. Every frame is
+   now on --r-card, and the artwork inside sits at 12px so it nests
+   inside the corner instead of fighting it or squaring off against it.
+   ═══════════════════════════════════════════════════════════════════ */
+.shotframe,.shotframe-hero,.shotcard,.figcard,.ba,
+#top .shotframe-hero,.section .shotframe,.section .shotframe-hero{
+  border-radius:var(--r-card)!important}
+
+/* Rise Portal's screenshots never got the mount the App Merge ones did */
+.shotframe,.shotframe-hero{
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--muted) 10%,transparent)}
+
+/* the artwork nests inside the frame's corner */
+/* The artwork itself is never rounded. A screenshot has its own corners
+   — a browser window, a phone, a panel — and clipping them cuts the
+   product's own frame off, which is exactly what a case study must not
+   do to the thing it is evidence for. Only the container is rounded. */
+.shotframe img,.shotframe-hero img,.shotcard img,.ba img,
+.shotframe .safari,.shotframe-hero .safari{border-radius:0!important}
+
+/* ══ THE MAT BEHIND A SCREENSHOT ═════════════════════════════════════
+   Every shot sat on a blurred photograph — a pink one on Rise Portal, a
+   green one on App Merge. Three problems with it, in order of how much
+   they cost:
+
+   1. It was 1.6-2.8MB of JPEG per backdrop, seven per page, downloaded
+      eagerly and then blurred until nothing in it was legible.
+   2. It says nothing. A pink flower is not about a partner payout
+      dashboard; it is a mood behind a product, and the product is the
+      argument.
+   3. It cannot theme. A pink wash stays pink in dark mode.
+
+   The mat is now drawn in CSS from the page's own tokens: a soft
+   diagonal fall from the page ground to a slightly deeper grey, so the
+   screenshot still sits ON something with a light source rather than
+   floating on a flat panel — and it follows the theme, costs nothing to
+   download, and stays out of the way of the work.
+   ═══════════════════════════════════════════════════════════════════ */
+.shotframe,.shotframe-hero,.shotcard{
+  background-color:transparent!important;
+  background-image:linear-gradient(158deg,
+    color-mix(in srgb,var(--muted) 6%,var(--bg)) 0%,
+    color-mix(in srgb,var(--muted) 16%,var(--bg)) 100%)!important}
+
+/* ══ THE COMPARISON FRAME ════════════════════════════════════════════
+   Inset on a mat, this became two containers: a soft grey frame wrapped
+   around a hard-edged rectangle, because the artwork carries its own
+   background — lavender on the before side, black on the after side.
+   Two frames with two different corner treatments, one inside the other.
+
+   The artwork IS the container. It bleeds to the frame's edges and takes
+   the frame's corner, so there is one shape, and the coloured field runs
+   into the rounded corner the way it is meant to. The phones reaching
+   the foot of the picture is the composition of the picture, not a crop
+   — and it only looked like a crop while a second frame was drawn
+   around it. */
+.ba{aspect-ratio:16/9!important;background:none!important}
+.ba img{object-fit:cover!important;padding:0!important}
 </style>
 <script defer src="./analytics.js"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76"></script>
@@ -514,43 +1583,38 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <button type="button" class="totop" id="totop" aria-label="Back to top">
     <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
   </button>
-  
+
   <header id="siteHeader">
     <div class="navpill">
-      <a href="./index.html" class="facemark" style="color:var(--ink)"><img decoding="async" src="./assets/lokesh-face.png" alt="Lokesh Bhatia" width="34" height="34" loading="eager"></a>
-      <span class="crumb">/ Rise Portal</span>
-      <div style="flex:1;min-width:8px"></div>
       <nav class="navlinks">
-        <a class="navlink" href="./index.html" aria-label="Home"><span class="navtext">Home</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M2.4 7 8 2.6 13.6 7v6a.9.9 0 0 1-.9.9h-3v-4h-3.4v4h-3a.9.9 0 0 1-.9-.9z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-        <a class="navlink" href="./about.html" aria-label="About"><span class="navtext">About</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.6" r="2.5" stroke="currentColor" stroke-width="1.4"></circle><path d="M2.9 13.4c.5-2.5 2.6-4 5.1-4s4.6 1.5 5.1 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg></span></a>
-        <a class="navlink" href="./resume.html" aria-label="Resume"><span class="navtext">Resume</span><span class="navicon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M4 2.4h4.6L12 5.8v7.8H4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path><path d="M8.4 2.6v3.2H11.8M6 8.6h4M6 10.9h2.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg></span></a>
-        <span class="navdiv" aria-hidden="true"></span>
-        <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme">
-          <span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
-          <span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span>
-        </button>
-        <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false">
-          <span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span>
-          <span class="bicon-x bicon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span>
-        </button>
+        <a class="navlink" href="./index.html" aria-current="page"><span class="navtext">Home</span></a>
+        <a class="navlink" href="./about.html" aria-current="page"><span class="navtext">About</span></a>
+        <a class="navlink" href="./resume.html" aria-current="page"><span class="navtext">Resume</span></a>
+        <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span><span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span></button>
+        <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button>
       </nav>
     </div>
+
   </header>
 
   <div class="mobilenav" id="mobileNav">
     <div class="mlinks">
-      <a class="mrow" href="./index.html"><span class="mlabel">Home</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-      <a class="mrow" href="./about.html"><span class="mlabel">About</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-      <a class="mrow" href="./index.html#contact"><span class="mlabel">Contact</span><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mrow" href="./index.html"><span class="mlabel">Home</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mrow" href="./about.html"><span class="mlabel">About</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
-    <div class="mfoot">
+    <div class="mcases">
+      <p class="mgroup">Case studies</p>
+      <a class="mcase" href="./app-merge.html"><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mcase" href="./rise-portal.html" aria-current="page"><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+    </div>
+        <div class="mfoot">
       <div class="availbadge" role="img" aria-label="Open to work, available now">
         <svg class="availring" viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><defs><path id="rpAvailPath" d="M46,46 m-33,0 a33,33 0 1,1 66,0 a33,33 0 1,1 -66,0"></path></defs><text style="font-family:var(--mono);font-size:8.2px;letter-spacing:.1em;text-transform:uppercase;fill:var(--accent)"><textPath href="#rpAvailPath" startOffset="0">OPEN TO WORK · AVAILABLE NOW · </textPath></text></svg>
         <svg viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><circle cx="46" cy="46" r="25.5" fill="none" stroke="var(--accent)" stroke-opacity=".45" stroke-width="1"></circle></svg>
         <span aria-hidden="true" style="position:relative;font-size:16px;color:var(--accent)">✦</span>
       </div>
       <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
-      <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
   </div>
 
@@ -558,22 +1622,32 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
 
   <nav class="toc" aria-label="Case study sections">
-    <a href="#s1">Where this started</a>
-    <a href="#s2">Who was involved</a>
-    <a href="#s3">What was broken</a>
-    <a href="#s4">What we were after</a>
-    <a href="#s5">How I went at it</a>
-    <a href="#s6">What got in the way</a>
-    <a href="#s7">What I built</a>
-    <a href="#s8">What happened next</a>
+    <a href="#s1">Context</a>
+    <a href="#s2">Team</a>
+    <a href="#s3">Problem</a>
+    <a href="#s4">Goals</a>
+    <a href="#s5">Approach</a>
+    <a href="#s6">Constraints</a>
+    <a href="#s7">Designs</a>
+    <a href="#s8">Impact</a>
   </nav>
 
   <section id="top">
-    <h1 data-reveal>Rise Portal: the first product Rupeezy’s partners ever had</h1>
-    <p class="herosub" data-reveal>A partner portal that shows the funnel and the payout calculation, not just the total.</p>
+    <div class="cshero">
+      <div class="cshero-t">
+        <p class="cs-eyebrow" data-reveal>Case study &#183; Rise Portal</p>
+        <h1 data-reveal>The first product Rupeezy&#8217;s partners ever had</h1>
+        <p class="herosub" data-reveal>A partner portal that shows the funnel and the payout calculation, not just the total.</p>
+        <p class="subline" data-reveal>Sole designer &#183; 1 PM &#183; Responsive web &#183; Rupeezy, 2024</p>
+      </div>
+      <div class="resultstrip" data-reveal>
+        <div><div class="lbl">What it replaced</div><div class="big">0&#8594;1</div><div class="note">Spreadsheets and phone calls. No product existed.</div></div>
+        <div><div class="lbl">Conversion</div><div class="big">2.4&#215;</div><div class="note">lead-to-client, two months post-launch (business team)</div></div>
+        <div><div class="lbl">Support</div><div class="big">48%</div><div class="note">fewer partner support tickets (support team)</div></div>
+      </div>
+    </div>
     <div data-reveal style="margin-top:clamp(40px,5vw,64px)">
       <div class="shotframe-hero">
-        <img width="1600" height="1200" decoding="async" class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="eager">
         <div class="safari">
           <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
           <div class="safari-imgbox"><iframe src="./assets/rp-refer-animation.html" loading="eager" scrolling="no" title="Rise Portal, the refer modal, animated"></iframe></div>
@@ -581,12 +1655,6 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
       </div>
       <p class="caption" style="margin:var(--s-4) 0 0">Rupeezy was called AsthaTrade until the rebrand, so the old domain appears in these screens.</p>
     </div>
-    <div class="resultstrip" data-reveal>
-      <div><div class="big">2.4×</div><div class="lbl">Lead-to-client conversion</div><div class="note">Business team, two months post-launch</div></div>
-      <div><div class="big">48%</div><div class="lbl">Fewer partner support tickets</div><div class="note">Reported by the support team</div></div>
-      <div><div style="font-size:clamp(17px,1.9vw,22px);line-height:var(--lh-snug);letter-spacing:var(--tr-head);color:var(--ink)">Built from nothing</div><div class="lbl">What it replaced</div><div class="note">Spreadsheets and phone calls. No product existed.</div></div>
-    </div>
-    <p class="subline" data-reveal>Sole designer · 1 PM · Responsive web · Rupeezy, 2024</p>
   </section>
 
   <section class="section shortsec">
@@ -601,7 +1669,7 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <section class="section" id="s1">
     <div class="grid2">
       <div data-reveal>
-        <p class="stage">01 · Where this started</p>
+        <p class="stage"><b class="snum">01</b><span class="sdot">&#183;</span>Where this started</p>
         <h2>A third of the revenue ran through people who couldn’t see it</h2><p class="lead">Rupeezy’s digital partners refer traders. Around 100 of them, driving about 35% of company revenue.</p></div>
       <div class="body-col">
         <div data-reveal class="resultstrip" style="--cols:2">
@@ -637,13 +1705,33 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <section class="section" id="s2">
     <div class="grid2">
       <div data-reveal>
-        <p class="stage">02 · Who was involved</p>
+        <p class="stage"><b class="snum">02</b><span class="sdot">&#183;</span>Who was involved</p>
         <h2>My first project, a PM, a support desk, and partners I never met</h2><p class="lead">The PRD was full of terms I didn’t know. I learned the business before I touched a screen.</p></div>
       <div class="body-col">
-        <div data-reveal class="labelrow" style="--cols:3">
-          <div><span class="cap">The partners</span><p>Experienced traders with a following. They refer, their referrals trade, they earn a share of the brokerage. Around 100 of them.</p></div>
-          <div><span class="cap">The team</span><p>Kunal as PM. The support team who took partner calls every day. The business team who owned the commission model. Me, sole designer.</p></div>
-          <div><span class="cap">My role</span><p>First project at Rupeezy. Responsive web, desktop and mobile, designed end to end.</p></div>
+        <div class="reach" data-reveal role="img" aria-label="Chain of access: around 100 partners, never met, called the support desk daily; the support desk relayed what they said to me, the sole designer. Everything known about the partner arrived second-hand.">
+          <ol class="rchain">
+            <li class="rstep is-out">
+              <span class="ricon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="6.4" cy="5.9" r="2.3" stroke="currentColor" stroke-width="1.3"/><path d="M2 13.1c0-2.5 2-4 4.4-4s4.4 1.5 4.4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M10.8 4.1a2.3 2.3 0 0 1 0 4.3M11.6 9.4c1.7.3 2.9 1.6 2.9 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+              <span class="rtag">Never met</span>
+              <b>~100 partners</b>
+              <p>Experienced traders with a following. They refer, their referrals trade, they earn a share of the brokerage.</p>
+            </li>
+            <li class="rlink"><span>calls, daily</span></li>
+            <li class="rstep is-proxy">
+              <span class="ricon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M3.3 10.2V8.4a4.7 4.7 0 0 1 9.4 0v1.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><rect x="1.9" y="9.6" width="2.7" height="4" rx="1.15" stroke="currentColor" stroke-width="1.3"/><rect x="11.4" y="9.6" width="2.7" height="4" rx="1.15" stroke="currentColor" stroke-width="1.3"/></svg></span>
+              <span class="rtag">Proxy</span>
+              <b>The support desk</b>
+              <p>Took partner calls every day. What partners actually asked arrived here first.</p>
+            </li>
+            <li class="rlink"><span>relayed</span></li>
+            <li class="rstep is-me">
+              <span class="ricon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M10.7 2.6a1.6 1.6 0 0 1 2.3 2.3L5.7 12.2l-3.1.8.8-3.1z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="rtag">Me</span>
+              <b>Sole designer</b>
+              <p>First project at Rupeezy. Responsive web, desktop and mobile, end to end.</p>
+            </li>
+          </ol>
+          <p class="reach-foot"><span class="reach-also">Also in reach</span> Kunal, PM &#8212; mapped where the money moved. The business team &#8212; owned the commission model.</p>
         </div>
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
           <div class="figcard"><div class="figpad">
@@ -673,13 +1761,23 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <section class="section" id="s3">
     <div class="grid2">
       <div data-reveal>
-        <p class="stage">03 · What was broken</p>
+        <p class="stage"><b class="snum">03</b><span class="sdot">&#183;</span>What was broken</p>
         <h2>Refer more, earn less, and no way to find out why</h2><p class="lead">A partner wanting to know how their leads had converted called their relationship manager, who opened a spreadsheet and read the numbers back.</p></div>
       <div class="body-col">
         <p data-reveal>A hundred partners, referring daily, each entitled to ask at any time. The share varied by period, anywhere from 10% to 60%, and payouts landed on the 15th of every month.</p>
         <p data-reveal class="pquote">“Last month I referred 100 people and earned X. This month I referred 200 and earned less. Why?”</p>
         <p data-reveal class="pattrib">The call the support team took most.</p>
-        <p data-reveal>There’s a real answer, and it depends on how many leads completed KYC, how many clients traded, how much, and what the rate was that month. The partner could see none of it.</p>
+        <div class="blackbox" data-reveal role="img" aria-label="The payout depended on four inputs: leads completing KYC, clients trading, how much they traded, and the rate that month. The partner could see none of them.">
+          <p class="blackbox-h"><span class="capicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M1.7 8s2.6-4.2 6.3-4.2S14.3 8 14.3 8s-2.6 4.2-6.3 4.2S1.7 8 1.7 8Z" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="1.8" stroke="currentColor" stroke-width="1.3"/><path d="M3.2 12.8 12.8 3.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>What the payout actually depended on</p>
+          <div class="blackbox-row">
+            <div class="blackbox-cell"><span>Leads</span><b>completed KYC</b></div>
+            <div class="blackbox-cell"><span>Clients</span><b>actually traded</b></div>
+            <div class="blackbox-cell"><span>Volume</span><b>how much they traded</b></div>
+            <div class="blackbox-cell"><span>Rate</span><b>the share that month</b></div>
+          </div>
+          <p class="blackbox-foot">The partner could see none of it &#8212; only the total, once a month, on the 15th.</p>
+        </div>
+        
         <p data-reveal class="statement">When a third of your revenue flows through people who can’t verify their own income, you don’t have a reporting gap. <span class="mark">You have a trust problem.</span></p>
         <p data-reveal class="handoff">That’s the problem. What we wanted from fixing it is next.</p>
       </div>
@@ -689,16 +1787,16 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <section class="section" id="s4">
     <div class="grid2">
       <div data-reveal>
-        <p class="stage">04 · What we were after</p>
+        <p class="stage"><b class="snum">04</b><span class="sdot">&#183;</span>What we were after</p>
         <h2>Two questions, answered before anyone had to ask</h2><p class="lead">Every call came down to the same two things. The product exists to answer them.</p></div>
       <div class="body-col">
         <div data-reveal class="qrow">
-          <div><span class="cap">Question one</span><p>“How many of my leads converted?”</p></div>
-          <div><span class="cap">Question two</span><p>“How much will I earn this cycle?”</p></div>
+          <div><span class="cap"><span class="capicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.9" stroke="currentColor" stroke-width="1.3"/><path d="M6.4 6.3a1.7 1.7 0 0 1 3.3.5c0 1.2-1.7 1.4-1.7 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="11.4" r=".75" fill="currentColor"/></svg></span>Question one</span><p>“How many of my leads converted?”</p></div>
+          <div><span class="cap"><span class="capicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.9" stroke="currentColor" stroke-width="1.3"/><path d="M6.4 6.3a1.7 1.7 0 0 1 3.3.5c0 1.2-1.7 1.4-1.7 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="11.4" r=".75" fill="currentColor"/></svg></span>Question two</span><p>“How much will I earn this cycle?”</p></div>
         </div>
-        <div data-reveal class="labelrow" style="--cols:2">
-          <div><span class="cap">For the business</span><p>Transparency, visibility and trust. The relationship was leaking on all three, and a third of revenue ran through it.</p></div>
-          <div><span class="cap">For the partner</span><p>See your own business. Where every referral is, what’s stuck, what each day earns, which is enough to decide where to put effort next.</p></div>
+        <div data-reveal class="labelrow is-goal" style="--cols:2">
+          <div><span class="cap"><span class="capicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><rect x="2.2" y="5.2" width="11.6" height="8.2" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.9 5.2V4a1.2 1.2 0 0 1 1.2-1.2h1.8A1.2 1.2 0 0 1 10.1 4v1.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>For the business</span><p>Transparency, visibility and trust. The relationship was leaking on all three, and a third of revenue ran through it.</p></div>
+          <div><span class="cap"><span class="capicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.7" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M3.1 13.2c0-2.7 2.2-4.3 4.9-4.3s4.9 1.6 4.9 4.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>For the partner</span><p>See your own business. Where every referral is, what’s stuck, what each day earns, which is enough to decide where to put effort next.</p></div>
         </div>
         <p data-reveal class="statement">Every screen answers one of those two questions, and the funnel was built so partners could act on what they saw.</p>
         <p data-reveal class="handoff">Four screens, one job each.</p>
@@ -709,14 +1807,14 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <section class="section" id="s5">
     <div class="grid2">
       <div data-reveal>
-        <p class="stage">05 · How I went at it</p>
+        <p class="stage"><b class="snum">05</b><span class="sdot">&#183;</span>How I went at it</p>
         <h2>Show the calculation, not just the total</h2><p class="lead">If a partner can see how a number was made, they don’t need to call and ask.</p></div>
       <div class="body-col">
         <p data-reveal>Responsive web, both ends. The same four sections in a bottom navigation on mobile, with charts and tables restacked for one thumb.</p>
         <h3 data-reveal class="subhead">Dashboard</h3>
         <p data-reveal>Earnings three ways, current cycle, last payout and all-time, with a daily chart. Below it sits the funnel, showing total leads and then the three states a lead can be in.</p>
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
-          <div class="shotframe"><img width="1600" height="1200" decoding="async" class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="eager">
+          <div class="shotframe">
             <div class="safari">
               <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
               <div class="safari-imgbox"><img width="1200" height="825" decoding="async" data-src="./assets/rp-hero.webp" alt="Rise Portal Dashboard, desktop" loading="eager"></div>
@@ -734,13 +1832,13 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <section class="section" id="s6">
     <div class="grid2">
       <div data-reveal>
-        <p class="stage">06 · What got in the way</p>
+        <p class="stage"><b class="snum">06</b><span class="sdot">&#183;</span>What got in the way</p>
         <h2>A compound rule and a compliance line</h2><p class="lead">One rule that couldn’t be simplified, and one piece of data that couldn’t be shown.</p></div>
       <div class="body-col">
         <h3 data-reveal class="subhead">One: making “X and (Y or Z)” readable</h3>
         <p data-reveal>Partners don’t get paid automatically every cycle. Ten active clients, mandatory, AND either 30% of total clients active OR five new clients that cycle. The rule came from the business. Partners needed to read their own status, not parse a logic expression.</p>
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
-          <div class="shotframe"><img width="1600" height="1200" decoding="async" class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="eager"><div class="imgbox" style="position:relative;z-index:1"><img width="604" height="327" loading="eager" decoding="async" data-src="./assets/rp-eligibility.webp" alt="Payout Eligibility card, cropped"></div></div>
+          <div class="shotframe"><div class="imgbox" style="position:relative;z-index:1"><img width="604" height="327" loading="eager" decoding="async" data-src="./assets/rp-eligibility.webp" alt="Payout Eligibility card, cropped"></div></div>
           <figcaption>Each condition its own fraction, with the AND/OR relationship visible. Someone three clients short can see exactly which lever to pull.</figcaption>
         </figure>
         <p data-reveal class="pquote">“A message saying only ‘you’re not eligible for payout’ would produce exactly the phone call the whole product was built to remove.”</p>
@@ -755,7 +1853,7 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
         <h3 data-reveal class="subhead">Two: the number we couldn’t show</h3>
         <p data-reveal>As a regulated broker, we can’t expose client phone numbers, not to partners and not to anyone. But most partners already collect contact details through their own forms. What they need from the portal isn’t the number. It’s the match.</p>
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
-          <div class="shotframe"><img width="1600" height="1200" decoding="async" class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="eager">
+          <div class="shotframe">
             <div class="safari">
               <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
               <div class="safari-imgbox"><img width="1200" height="750" decoding="async" data-src="./assets/rp-masked-number.webp" alt="Masked phone number column on the Clients screen" loading="eager"></div>
@@ -777,13 +1875,13 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <section class="section" id="s7">
     <div class="grid2">
       <div data-reveal>
-        <p class="stage">07 · What I built</p>
+        <p class="stage"><b class="snum">07</b><span class="sdot">&#183;</span>What I built</p>
         <h2>Earnings, clients, and the list that became a call sheet</h2><p class="lead">Three more screens, and a mobile version built for one hand.</p></div>
       <div class="body-col">
         <h3 data-reveal class="subhead">Earnings</h3>
         <p data-reveal>Earnings plotted against total clients and against traded clients, so a partner can see which clients actually generate revenue. Below it, payout history with bank account, cycle, amount, deductions and date.</p>
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
-          <div class="shotframe"><img width="1600" height="1200" decoding="async" class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="eager">
+          <div class="shotframe">
             <div class="safari">
               <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
               <div class="safari-imgbox"><img width="1200" height="750" decoding="async" data-src="./assets/rp-earnings.webp" alt="Rise Portal Earnings page, with payout history table" loading="eager"></div>
@@ -795,7 +1893,7 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
         <h3 data-reveal class="subhead">Clients</h3>
         <p data-reveal>Every client with their last-traded date, split into active and inactive, not by signup date and not alphabetically.</p>
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
-          <div class="shotframe"><img width="1600" height="1200" decoding="async" class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="eager">
+          <div class="shotframe">
             <div class="safari">
               <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
               <div class="safari-imgbox"><img width="1200" height="750" decoding="async" data-src="./assets/rp-funnel.webp" alt="Rise Portal Clients page" loading="eager"></div>
@@ -806,7 +1904,6 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
         <h3 data-reveal class="subhead">Mobile</h3>
         <figure style="display:flex;flex-direction:column;gap:var(--s-4)" data-reveal>
       <div class="pcband" id="pcBand">
-        <img width="1600" height="1200" decoding="async" class="bg" src="./assets/rp-bg-frame-1600.jpg" alt="" aria-hidden="true" loading="eager">
         <div id="pcBandInner">
           <img width="1500" height="3248" loading="eager" decoding="async" id="pcs1" data-src="./assets/rp-screen-1.png" alt="Refer & Earn sheet">
           <img width="1500" height="3248" loading="eager" decoding="async" id="pcs2" data-src="./assets/rp-screen-2.png" alt="Contact Us sheet">
@@ -829,20 +1926,58 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   <section class="section" id="s8">
     <div class="grid2">
       <div data-reveal>
-        <p class="stage">08 · What happened next</p>
+        <p class="stage"><b class="snum">08</b><span class="sdot">&#183;</span>What happened next</p>
         <h2>Partners started doing what the funnel was built for</h2><p class="lead">Two months after launch, the business team confirmed it: partners were chasing their own stuck leads.</p></div>
       <div class="body-col">
-        <p data-reveal>A partner sees a referral stuck at “account processing”. That lead is money one step from becoming a client, so they call. That call used to be the KYC support team’s job, and the partner’s call works better, because the lead already trusts the person who referred them.</p>
+        <p data-reveal>A partner sees a referral stuck at “account processing”. That lead is money one step from becoming a client, so they call — a call that used to be the KYC support team’s job.</p>
+
+        <figure class="figcard dg" data-reveal>
+          <svg viewBox="0 0 900 372" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The same stalled lead, before and after Rise Portal. Before: the lead stalls at KYC, is invisible to the partner, and the support desk eventually calls. After: the same lead stalls, becomes visible on the partner's dashboard, and the partner calls. Only the partner is paid when the lead clears.">
+            <defs>
+              <pattern id="s8dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="var(--dg-dot)"/></pattern>
+              <marker id="s8arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9" fill="none" stroke="var(--dg-line)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+              <marker id="s8arrowW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9" fill="none" stroke="var(--dg-wStroke)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+            </defs>
+
+            <rect x="0" y="0" width="900" height="372" rx="10" fill="var(--dg-bg)"/>
+            <rect x="0" y="0" width="900" height="372" rx="10" fill="url(#s8dots)"/>
+            <rect x=".5" y=".5" width="899" height="371" rx="10" fill="none" stroke="var(--dg-edge)"/>
+
+            <!-- BEFORE -->
+            <text x="34" y="100" font-family="var(--dg-font)" font-size="11" letter-spacing="1.6" fill="var(--dg-muted)">BEFORE</text>
+            <g transform="rotate(-0.5 214 96)"><rect x="116" y="62" width="196" height="68" rx="5" fill="var(--dg-nFill)" stroke="var(--dg-nStroke)"/><text x="214" y="101" font-family="var(--dg-font)" font-size="13.5" fill="var(--dg-ink)" text-anchor="middle">Lead stalls at KYC</text></g>
+            <line x1="318" y1="96" x2="346" y2="96" stroke="var(--dg-line)" stroke-width="1" marker-end="url(#s8arrow)"/>
+            <g transform="rotate(0.4 450 96)"><rect x="352" y="62" width="196" height="68" rx="5" fill="none" stroke="var(--dg-line)" stroke-dasharray="5 4"/><text x="450" y="101" font-family="var(--dg-font)" font-size="13.5" fill="var(--dg-muted)" text-anchor="middle">Invisible to the partner</text></g>
+            <line x1="554" y1="96" x2="582" y2="96" stroke="var(--dg-line)" stroke-width="1" marker-end="url(#s8arrow)"/>
+            <g transform="rotate(-0.3 686 96)"><rect x="588" y="62" width="196" height="68" rx="5" fill="none" stroke="var(--dg-line)" stroke-dasharray="5 4"/><text x="686" y="101" font-family="var(--dg-font)" font-size="13.5" fill="var(--dg-muted)" text-anchor="middle">Support desk calls</text></g>
+            <text x="116" y="160" font-family="var(--dg-font)" font-size="13" fill="var(--dg-muted)">A stranger, working a queue. The partner never learns it stalled.</text>
+
+            <line x1="34" y1="192" x2="866" y2="192" stroke="var(--dg-rule)" stroke-width="1"/>
+
+            <!-- AFTER -->
+            <text x="34" y="262" font-family="var(--dg-font)" font-size="11" letter-spacing="1.6" fill="var(--dg-muted)">AFTER</text>
+            <g transform="rotate(0.5 214 258)"><rect x="116" y="224" width="196" height="68" rx="5" fill="var(--dg-nFill)" stroke="var(--dg-nStroke)"/><text x="214" y="263" font-family="var(--dg-font)" font-size="13.5" fill="var(--dg-ink)" text-anchor="middle">Lead stalls at KYC</text></g>
+            <line x1="318" y1="258" x2="346" y2="258" stroke="var(--dg-line)" stroke-width="1" marker-end="url(#s8arrow)"/>
+            <g transform="rotate(-0.4 450 258)"><rect x="352" y="224" width="196" height="68" rx="5" fill="var(--dg-bFill)" stroke="var(--dg-bStroke)"/><text x="450" y="263" font-family="var(--dg-font)" font-size="13.5" fill="var(--dg-bInk)" text-anchor="middle">On the partner&#8217;s dashboard</text></g>
+            <line x1="554" y1="258" x2="582" y2="258" stroke="var(--dg-line)" stroke-width="1" marker-end="url(#s8arrow)"/>
+            <g transform="rotate(0.6 686 258)"><rect x="588" y="224" width="196" height="68" rx="5" fill="var(--dg-wFill)" stroke="var(--dg-wStroke)"/><text x="686" y="263" font-family="var(--dg-font)" font-size="13.5" fill="var(--dg-wInk)" text-anchor="middle">The partner calls</text></g>
+
+            <path d="M686 296 v16 q0 10 -10 10 H224 q-10 0 -10 -10 v-16" fill="none" stroke="var(--dg-wStroke)" stroke-width="1.4" marker-end="url(#s8arrowW)"/>
+            <text x="450" y="352" font-family="var(--dg-font)" font-size="13" fill="var(--dg-wInk)" text-anchor="middle">Only the partner is paid when this clears &#8212; so only the partner keeps checking.</text>
+          </svg>
+          <figcaption data-reveal>Same lead, same stall. The product changed nothing about the queue; it changed who could see it, and that person was already the one the lead trusted.</figcaption>
+        </figure>
+
         <p data-reveal>The inactive list works the same way. An inactive client earns the partner nothing, so partners nudge them back. The product made their pipeline visible; the design bet was that self-interest would do the rest. It did.</p>
         <p data-reveal class="statement"><span class="mark-gain">Rise Portal turned 100 partners into a distributed sales layer that costs nothing and converts better than a cold call.</span></p>
         <h3 data-reveal class="subhead">And a way to recruit</h3>
         <p data-reveal>The portal became something the business team could show a prospective partner. Before, the pitch was a commission rate. After, it was a screen.</p>
         <div data-reveal class="notebox">
           <span>What I’d do differently</span>
-          <div class="labelrow" style="--cols:1;gap:var(--s-5)">
-            <div><span class="cap">No direct contact</span><p>I never spoke to a partner. I designed for a behaviour I predicted and couldn’t observe. Five conversations before launch would have told me how close the bet was.</p></div>
-            <div><span class="cap">No plan for the numbers</span><p>We didn’t agree what this should move. The 2.4× and the 48% exist because I went and asked the business and support teams afterwards.</p></div>
-            <div><span class="cap">No evidence, only reasoning</span><p>I made the placement case on frequency alone. I was right, and I had nothing to show. A screen recording of five partners would have settled it in a minute.</p></div>
+          <div class="labelrow is-gap" style="--cols:1;gap:var(--s-5)">
+            <div><span class="cap"><span class="capicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.9" stroke="currentColor" stroke-width="1.3"/><path d="M6 6l4 4M10 6l-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>No direct contact</span><p>I never spoke to a partner. I designed for a behaviour I predicted and couldn’t observe. Five conversations before launch would have told me how close the bet was.</p></div>
+            <div><span class="cap"><span class="capicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.9" stroke="currentColor" stroke-width="1.3"/><path d="M6 6l4 4M10 6l-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>No plan for the numbers</span><p>We didn’t agree what this should move. The 2.4× and the 48% exist because I went and asked the business and support teams afterwards.</p></div>
+            <div><span class="cap"><span class="capicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.9" stroke="currentColor" stroke-width="1.3"/><path d="M6 6l4 4M10 6l-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>No evidence, only reasoning</span><p>I made the placement case on frequency alone. I was right, and I had nothing to show. A screen recording of five partners would have settled it in a minute.</p></div>
           </div>
         </div>
         <p data-reveal class="lbl">What I can claim</p>
@@ -855,16 +1990,17 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
     </div>
   </section>
 
+  <section id="next">
+    <a class="nextlink" href="./app-merge.html" data-reveal>
+      <span class="nextlbl">Next case study</span>
+      <span class="nexttitle">Two apps into one, built to hold the third</span>
+      <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </section>
+
   <section id="contact">
     <footer>
-      <div class="halftone halftone-foot" aria-hidden="true"></div>
-      <h2>Let’s connect.</h2>
-      <p>Always up for a conversation about product, design, or how something got built.</p>
-      <div class="social">
-        <a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="translate(12 12) scale(1.9) translate(-12 -12)" stroke-width="0.95"><path d="M8 11v5"></path><path d="M8 8v.01"></path><path d="M12 16v-5"></path><path d="M16 16v-3a2 2 0 1 0 -4 0"></path></g></svg></a>
-        <a href="https://www.behance.net/lokeshbhatia" target="_blank" rel="noreferrer" aria-label="Behance" title="Behance"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-12h4.5a3 3 0 0 1 0 6a3 3 0 0 1 0 6h-4.5"></path><path d="M3 12l4.5 0"></path><path d="M14 13h7a3.5 3.5 0 0 0 -7 0v2a3.5 3.5 0 0 0 6.64 1"></path><path d="M16 6l3 0"></path></svg></a>
-        <a href="https://www.figma.com/@lkb" target="_blank" rel="noreferrer" aria-label="Figma" title="Figma"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M6 6a3 3 0 0 1 3 -3h6a3 3 0 0 1 3 3a3 3 0 0 1 -3 3h-6a3 3 0 0 1 -3 -3"></path><path d="M9 9a3 3 0 0 0 0 6h3m-3 0a3 3 0 1 0 3 3v-15"></path></svg></a>
-      </div>
+      <p class="footline">&#169; 2026 Lokesh Bhatia</p>
     </footer>
   </section>
 </div>
@@ -931,7 +2067,7 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   });
   // mark current page + let nav links navigate immediately (no close animation first, avoids a visible flash)
   var here = location.pathname.split("/").pop() || "index.html";
-  mobileNav.querySelectorAll(".mrow").forEach(function(el){
+  mobileNav.querySelectorAll(".mrow, .mcase").forEach(function(el){
     var href = el.getAttribute("href");
     if (href.indexOf("#contact") > -1) return;
     var target = href.split("#")[0].split("/").pop() || "index.html";
@@ -1149,55 +2285,7 @@ figure[data-reveal].shown,.shotframe[data-reveal].shown,.shotcard[data-reveal].s
   if(hero) heroIO.observe(hero);
 })();
 </script>
-<div id="resumeModal" class="rmodal" role="dialog" aria-modal="true" aria-label="Resume" hidden>
-  <div class="rmodal-scrim"></div>
-  <div class="rmodal-panel">
-    <div class="rmodal-bar">
-      <span class="lbl" style="color:var(--accent)">Resume</span>
-      <div class="rmodal-actions">
-        <a class="btn-primary" href="./resume.pdf" download="Lokesh_Kumar_Bhatia_Resume.pdf">Download</a>
-        <button type="button" class="btn-secondary" id="rShare">Share</button>
-        <button type="button" class="rmodal-close" aria-label="Close">
-          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg>
-        </button>
-      </div>
-    </div>
-    <div class="rmodal-body">
-      <img src="./assets/resume-preview.webp" width="1600" height="2263" alt="Lokesh Kumar Bhatia resume, single page" loading="eager" decoding="async">
-    </div>
-  </div>
-</div>
 <script>
-(function(){
-  var m=document.getElementById("resumeModal"); if(!m) return;
-  var lastFocus=null;
-  function open(){ lastFocus=document.activeElement; m.hidden=false; document.body.classList.add("rmodal-open");
-    m.querySelector(".rmodal-close").focus(); }
-  function close(){ m.hidden=true; document.body.classList.remove("rmodal-open"); if(lastFocus) lastFocus.focus(); }
-  document.querySelectorAll('a[href$="resume.html"]').forEach(function(a){
-    a.addEventListener("click",function(e){
-      e.preventDefault();
-      if(document.body.classList.contains("menu-open")){ var b=document.getElementById("burgerBtn"); if(b) b.click(); }
-      open();
-    });
-  });
-  m.querySelector(".rmodal-scrim").addEventListener("click",close);
-  m.querySelector(".rmodal-close").addEventListener("click",close);
-  document.addEventListener("keydown",function(e){
-    if(m.hidden) return;
-    if(e.key==="Escape"){ close(); return; }
-    if(e.key!=="Tab") return;
-    var f=m.querySelectorAll("a,button"); var first=f[0], last=f[f.length-1];
-    if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus(); }
-    else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus(); }
-  });
-    var shareBtn=document.getElementById("rShare");
-  shareBtn.addEventListener("click", function(){
-    var url=new URL("./resume.html",location.href).href;
-    copyText(url, shareBtn, "Link copied");
-  });
-  if(location.hash==="#resume") open();
-})();
 </script>
 </body>
 </html>

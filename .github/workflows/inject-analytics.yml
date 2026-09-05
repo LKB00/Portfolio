@@ -40,7 +40,8 @@ jobs:
           print("-----------------------------\n")
 
           files = [f for f in sorted(root.rglob("*.html"))
-                   if ".github" not in f.parts and "node_modules" not in f.parts]
+                   if ".github" not in f.parts and "node_modules" not in f.parts
+                   and "assets" not in f.parts]
 
           if not files:
               print("No .html files found anywhere in the repo.")
