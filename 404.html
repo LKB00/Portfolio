@@ -3,6 +3,7 @@
 <head>
 <script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
 <meta charset="utf-8">
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page not found, Lokesh Bhatia</title>
 <meta name="description" content="That page does not exist. Here is the way back to the work.">
@@ -15,7 +16,7 @@
 <meta property="og:image" content="https://lokeshbhatia.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Lokesh Bhatia, product designer. I design products that show their work.">
+<meta property="og:image:alt" content="Lokesh Bhatia at his desk, beside the words: Trading, payouts, AI agents. I make them show their work.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://lokeshbhatia.com/og-image.png">
 <meta name="twitter:title" content="Page not found, Lokesh Bhatia">
@@ -321,12 +322,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 #contact{max-width:821px;margin:0 auto;padding-bottom:0}
 /* one line of type, so it is centred: space-between with a single
    child just parks it on the left edge for no reason */
-#contact footer{display:flex;flex-direction:row;align-items:center;justify-content:center;
-  gap:18px;width:auto;margin:0;padding:24px 0 36px;background:transparent;
+/* two lines now, stacked: the credit is a footnote under the copyright,
+   not a second thing competing with it on the same row */
+#contact footer{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;width:auto;margin:0;padding:24px 0 36px;background:transparent;
   text-align:center;position:relative}
-#contact footer > *:not(.footline){display:none!important}
-#contact footer .footline{margin:0;font-size:13px;font-weight:400;line-height:1.45;color:var(--faint);max-width:none}
-@media (max-width:504px){#contact footer{flex-direction:column;align-items:center;gap:10px}}
+#contact footer > *:not(.footcredit){display:none!important}
+
+@media (max-width:504px){#contact footer{gap:0}}
 
 /* ── overlays + chrome ── */
 .totop{border:0;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);box-shadow:none}
@@ -441,9 +444,156 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* every page ends with a way to reach him: on desktop these pages had
    exactly three links on them — Home, About, Resume — and no contact at
    all, so anyone who finished reading had nowhere to go */
+/* ── the footer credit ───────────────────────────────────────────────
+   Two round tokens instead of the two nouns: a face for "me", a spark
+   for the AI. They are the same size and the same shape, so the line
+   reads as a pair of small agents rather than as decoration — which is
+   the joke, since the sentence is about the two of them disagreeing.
+
+   The words are still there for anything that cannot see the marks:
+   .fsr keeps "me" and "an AI" in the accessible text and out of the
+   visual line, so a screen reader hears the whole sentence.
+
+   The spark is the site's own — the same one turning inside the
+   availability badge — not a new symbol introduced at the very bottom
+   of the page. */
+/* normal inline flow, not flex: as flex items the words became separate
+   boxes and the spaces between them collapsed, so a screen reader heard
+   "built byme, with an AI". Inline keeps the sentence a sentence, and
+   lets it wrap like one on a narrow screen. */
+/* #contact p sets the size for anything in this section and outranks a
+   bare class, so the credit has to be addressed through #contact too —
+   otherwise it silently stays at 13px and the step-downs below never
+   fire on a narrow phone. */
+#contact .footcredit{margin:6px 0 0;font-size:12.5px;line-height:1.7;
+  color:var(--faint);text-align:center;white-space:nowrap}
+/* it has to hold one line on the narrowest phone too, so the type steps
+   down rather than the sentence breaking in half */
+@media (max-width:400px){#contact .footcredit{font-size:11.5px}}
+@media (max-width:340px){#contact .footcredit{font-size:10.5px}}
+.fmark{display:inline-grid;place-items:center;
+  width:20px;height:20px;flex:0 0 auto;
+  border-radius:50%;overflow:hidden;margin:0 2px;
+  /* middle, not a pixel nudge: the mark is 20px against ~12px type, so
+     it has to be centred on the text's own middle rather than hung off
+     the baseline — a fixed offset drifts as soon as the font-size steps
+     down on a narrow screen. */
+  vertical-align:middle}
+/* the global img rule is height:auto, which let the face out of its
+   circle — 20x25 inside a 20x20 well */
+.fme img{width:20px!important;height:20px!important;
+  object-fit:cover;display:block;border-radius:50%}
+.fai{background:color-mix(in srgb,var(--accent) 12%,transparent);
+  color:var(--accent);font-size:11px;line-height:1}
+
+/* ── hover: the two of them square up ────────────────────────────────
+   The sentence is about a disagreement, so the marks lean toward each
+   other rather than doing the usual lift-and-brighten. The face turns
+   in, the spark turns in and spins a quarter — the one that thinks, and
+   the one that answers.
+
+   It fires on the LINE, not on each mark: they are two halves of one
+   joke, and hovering the face while the spark sat still would break it.
+   The whole thing is transform and colour, so nothing reflows a footer
+   that sits at the very bottom of a long page. */
+.fmark{transition:transform .34s var(--ease),background .34s var(--ease)}
+/* each one answers for itself: the face leans in when you point at the
+   face, the spark spins when you point at the spark. Hovering one and
+   watching both move reads as a group effect rather than a response. */
+@media (hover:hover){
+  .fmark{cursor:default}
+  .fme:hover{transform:scale(1.35) rotate(-8deg)}
+  .fai:hover{transform:scale(1.35) rotate(180deg);
+    background:color-mix(in srgb,var(--accent) 26%,transparent)}
+}
+@media (prefers-reduced-motion:reduce){
+  .fmark{transition:none}
+  .fme:hover,.fai:hover{transform:none}
+}
+/* present to assistive tech, absent from the line */
+.fsr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
+  white-space:nowrap;border:0}
+/* ══ 404 — an empty selection ════════════════════════════════════════
+   The page was three stacked paragraphs. It said the right things — it
+   does not blame the visitor, and it offers three routes out — but a
+   designer's 404 that is only prose is a missed sentence.
+
+   So it says "nothing here" in the site's OWN vocabulary: the marquee
+   from the intro loader, the one that selects the name on the way in,
+   drawn here around nothing. Same dashed accent edge, same square
+   handles, same dimension chip — reading 0 x 0.
+
+   It is the joke and the error message at once, which is why the
+   headline could drop to two words. The routes below are untouched:
+   they are the useful part and they were already right.
+   ═══════════════════════════════════════════════════════════════════ */
+.nfsel{position:relative;width:100%;max-width:340px;aspect-ratio:16/7;
+  margin:clamp(24px,3.6vw,34px) auto clamp(34px,4.6vw,46px);
+  border:1.5px dashed color-mix(in srgb,var(--accent) 42%,transparent);
+  border-radius:3px}
+.nfh{position:absolute;width:8px;height:8px;border-radius:2px;
+  background:var(--bg);box-shadow:0 0 0 1.5px var(--accent)}
+.nfh.tl{top:-5.75px;left:-5.75px}
+.nfh.tr{top:-5.75px;right:-5.75px}
+.nfh.bl{bottom:-5.75px;left:-5.75px}
+.nfh.br{bottom:-5.75px;right:-5.75px}
+/* the chip hangs off the bottom-left corner, where a real one does */
+.nfchip{position:absolute;left:0;bottom:-27px;padding:3px 7px;border-radius:4px;
+  background:var(--accent);color:var(--onAccent);white-space:nowrap;
+  font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.02em}
+@media (max-width:520px){.nfsel{max-width:260px}}
+/* ── what IS on the canvas ───────────────────────────────────────────
+   The three text columns said the right things and looked like a
+   footer. The page has just told you nothing is selected, so the most
+   useful next thing is the list of what there is — which is a layers
+   panel, and the metaphor was already running.
+
+   Each row carries its own type mark: a frame for a page, a picture for
+   a case study, a figure for the one about a person. The visitor is
+   choosing between kinds of thing, not reading four blue links. */
+.nflayers{width:100%;max-width:380px;margin:clamp(30px,4.4vw,44px) auto 0;
+  text-align:left;border:1px solid var(--line);border-radius:var(--r-card);
+  background:var(--card);overflow:hidden}
+.nflabel{margin:0;padding:11px 16px 10px;font-family:var(--mono);
+  font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid var(--line);background:var(--surface)}
+.nfrow{display:flex;align-items:center;gap:12px;padding:13px 16px;
+  color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--line);
+  transition:background .18s var(--ease),padding-left .22s var(--ease)}
+.nfrow:last-child{border-bottom:0}
+.nfic{flex:0 0 auto;display:grid;place-items:center;width:19px;height:19px;
+  color:var(--faint);transition:color .18s var(--ease)}
+.nfic svg{width:100%;height:100%;display:block}
+.nftext{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.nfname{font-size:14px;font-weight:500;letter-spacing:-.012em;line-height:1.3}
+.nfmeta{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint)}
+.nfgo{flex:0 0 auto;width:15px;height:15px;color:var(--faint);
+  opacity:0;transform:translateX(-4px);
+  transition:opacity .2s var(--ease),transform .24s var(--ease)}
+@media (hover:hover){
+  /* the row steps in, the way a layer does when you point at it.
+     colour and opacity are stated because the global `a:hover` rule
+     drops every link to 70% and recolours it — on a whole row that
+     fades the icon, the name and the type label together, which reads
+     as the row switching off rather than lighting up. */
+  .nfrow:hover{background:var(--surface);padding-left:20px;
+    opacity:1;color:var(--ink)}
+  .nfrow:hover .nfname{color:var(--accent)}
+  .nfrow:hover .nfic{color:var(--accent)}
+  .nfrow:hover .nfgo{opacity:1;transform:none}
+}
+.nfrow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.nfrow:focus-visible .nfgo{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .nfrow,.nfgo,.nfic{transition:none}
+  .nfrow:hover{padding-left:16px}
+}
 </style>
-<script defer src="./analytics.js"></script>
-<script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76"></script>
+<script defer src="./analytics.js?v=3"></script>
+<script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
 <body>
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter></svg>
@@ -496,18 +646,25 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
   <section id="top">
     <span class="eyebrow2">Error 404</span>
-    <h1 data-reveal>This page doesn’t exist.</h1>
-    <p class="lead" data-reveal>The link may be old, or the address slightly off. Everything else is still here.</p>
-    <div class="labelrow" style="--cols:3;margin-top:clamp(40px,5vw,64px)" data-reveal>
-      <div><span class="cap">Start here</span><p><a href="./index.html">Home, and the work</a></p></div>
-      <div><span class="cap">Case studies</span><p><a href="./app-merge.html">Rupeezy app merge</a><br><a href="./rise-portal.html">Rise Portal</a></p></div>
-      <div><span class="cap">Background</span><p><a href="./about.html">About Lokesh</a></p></div>
+    <div class="nfsel" data-reveal aria-hidden="true">
+      <span class="nfh tl"></span><span class="nfh tr"></span>
+      <span class="nfh bl"></span><span class="nfh br"></span>
+      <span class="nfchip">0 &#215; 0</span>
+    </div>
+    <h1 data-reveal>Nothing selected.</h1>
+    <p class="lead" data-reveal>You&#8217;ve landed on an empty artboard. The link is probably old, or the address is off by a character &#8212; nothing you did. Everything else is still where it was.</p>
+    <div class="nflayers" data-reveal>
+      <p class="nflabel">On the canvas</p>
+      <a class="nfrow" href="./index.html"><span class="nfic"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2.2" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="nftext"><span class="nfname">Home, and the work</span><span class="nfmeta">Page</span></span><svg class="nfgo" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="nfrow" href="./app-merge.html"><span class="nfic"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2.2" y="3.4" width="11.6" height="9.2" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.6 10.4 5.4 8l2.3 1.9 2.7-3.1 2.9 3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nftext"><span class="nfname">Rupeezy app merge</span><span class="nfmeta">Case study</span></span><svg class="nfgo" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="nfrow" href="./rise-portal.html"><span class="nfic"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2.2" y="3.4" width="11.6" height="9.2" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.6 10.4 5.4 8l2.3 1.9 2.7-3.1 2.9 3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nftext"><span class="nfname">Rise Portal</span><span class="nfmeta">Case study</span></span><svg class="nfgo" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="nfrow" href="./about.html"><span class="nfic"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="6" r="2.6" stroke="currentColor" stroke-width="1.5"/><path d="M3.4 13.4c.8-2.4 2.5-3.6 4.6-3.6s3.8 1.2 4.6 3.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="nftext"><span class="nfname">About Lokesh</span><span class="nfmeta">Page</span></span><svg class="nfgo" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </section>
 
   <section id="contact">
     <footer>
-      <p class="footline">&#169; 2026 Lokesh Bhatia</p>
+      <p class="footcredit">Designed and built by <span class="fmark fme" aria-hidden="true"><img src="./assets/lokesh-face.png" width="40" height="40" alt="" loading="lazy" decoding="async"></span><span class="fsr">me</span>, with <span class="fmark fai" aria-hidden="true">&#10022;</span><span class="fsr">an AI</span> that argued back.</p>
     </footer>
   </section>
 </div>
