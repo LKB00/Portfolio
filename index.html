@@ -1652,6 +1652,22 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   .heroprint{order:2;max-width:320px;height:auto}
   .hp-frame{height:auto;aspect-ratio:1/1}
 }
+
+/* On a phone the portrait was a 320px square well holding a 3:2 image at
+   92% width — so the picture carried a band of empty tint above and below
+   it, inside a card that stopped short of both edges. Three insets around
+   one photograph.
+
+   Full bleed instead, and the well takes the photograph's own 3:2 ratio
+   so there is nothing left to letterbox. Same 100vw pull the footer uses,
+   and the radius goes: a rounded corner has nothing to sit against once
+   the frame reaches the edge of the screen. */
+@media (max-width:640px){
+  .heroprint{max-width:none;width:100vw;
+    margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+  .hp-frame{aspect-ratio:3/2;border-radius:0;min-height:0}
+  .hp-frame img{width:100%;height:100%;object-fit:cover}
+}
 /* ══ LINKEDIN CTA ════════════════════════════════════════════════════
    LinkedIn's own brand values: #0A66C2, #004182 on hover, white mark.
    Kept as a solid fill next to the neutral Email pill so the two read
