@@ -1223,6 +1223,13 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .mcase-m{margin-top:2px;font-size:12.5px}
 .mcase svg{width:15px;height:15px;opacity:.7}
 
+/* the case study you are reading: same mark as the current page */
+.mcase[aria-current="page"] .mcase-t{color:var(--ink)}
+.mcase[aria-current="page"] svg{display:none}
+.mcase[aria-current="page"] .mcase-x{position:relative;padding-left:16px}
+.mcase[aria-current="page"] .mcase-x:before{content:"";position:absolute;
+  left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
 /* tier 3 — the ways to reach him */
 .mfoot{text-align:left;gap:clamp(16px,2.4vh,22px);padding-bottom:clamp(22px,4vh,30px)}
 .availbadge{align-self:flex-start}

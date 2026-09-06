@@ -400,6 +400,59 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .mcase svg{flex:0 0 auto;color:var(--faint)}
 .mcase[aria-current="page"] .mcase-t{color:var(--accent)}
 .mcase[aria-current="page"] svg{color:var(--accent);opacity:.6}
+
+/* ══ MOBILE NAV — three tiers, and a divider that is actually straight ══
+   Two problems, one of them a bug.
+
+   THE BUG: the row dividers were `box-shadow: inset 0 -1px 0` on a
+   rounded box. An inset shadow follows the border radius, so each line
+   curled up at both ends — the detached lozenge sitting under every
+   label. A border draws straight; the radius stays for the focus ring.
+
+   THE HIERARCHY: pages were 18px and case-study titles 16px, so four
+   destinations of two completely different kinds read as one flat list.
+   The panel now has three clear tiers — the site's pages, the work, and
+   the ways to reach him — separated by size and weight, not by rules.
+
+   And the current page no longer turns the whole row blue. A page you
+   are already on is the one row you do NOT want shouting; it gets a
+   small accent dot and keeps its ink. */
+.mrow,.mcase{box-shadow:none!important;border-bottom:1px solid var(--line);
+  border-radius:0}
+.mrow:last-child,.mcase:last-child{border-bottom:0}
+
+/* tier 1 — the pages */
+.mrow{min-height:58px;padding:var(--s-3) 0}
+.mrow .mlabel{font-size:22px;font-weight:500;letter-spacing:-.02em;line-height:1.2}
+.mrow svg{width:18px;height:18px;color:var(--faint)}
+
+/* the current page: a mark, not a colour wash */
+.mrow.current,.mrow.current .mlabel{color:var(--ink)}
+.mrow.current .mlabel{position:relative;padding-left:16px}
+.mrow.current .mlabel:before{content:"";position:absolute;left:0;top:50%;
+  width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--accent)}
+.mrow.current svg{display:none}
+
+/* tier 2 — the work, clearly subordinate to the pages */
+.mcases{margin-top:clamp(26px,4.5vh,38px)}
+.mgroup{margin:0 0 10px}
+.mcase{padding:14px 0}
+.mcase-t{font-size:15px;font-weight:500;line-height:1.35}
+.mcase-m{margin-top:2px;font-size:12.5px}
+.mcase svg{width:15px;height:15px;opacity:.7}
+
+/* the case study you are reading: same mark as the current page */
+.mcase[aria-current="page"] .mcase-t{color:var(--ink)}
+.mcase[aria-current="page"] svg{display:none}
+.mcase[aria-current="page"] .mcase-x{position:relative;padding-left:16px}
+.mcase[aria-current="page"] .mcase-x:before{content:"";position:absolute;
+  left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* tier 3 — the ways to reach him */
+.mfoot{text-align:left;gap:clamp(16px,2.4vh,22px);padding-bottom:clamp(22px,4vh,30px)}
+.availbadge{align-self:flex-start}
+.mmail{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.mailbtn{min-height:0;font-size:16px;font-weight:500}
 /* ══ RESUME ══════════════════════════════════════════════════════════
    It used to be a 1600x2263 image of a PDF. For the person this page is
    built for that meant: no text to select or paste into an ATS, no
@@ -528,7 +581,10 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
         <svg viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><circle cx="46" cy="46" r="25.5" fill="none" stroke="var(--accent)" stroke-opacity=".45" stroke-width="1"></circle></svg>
         <span aria-hidden="true" style="position:relative;font-size:16px;color:var(--accent)">✦</span>
       </div>
-      <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
+      <div class="mmail">
+        <p class="mgroup">Email</p>
+        <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
+      </div>
       <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
   </div>
