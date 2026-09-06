@@ -137,7 +137,6 @@ export default async function handler(req, res) {
   const prevRange = `startAt=${prevStart}&endAt=${prevEnd}`;
 
   const diag = [];
-  let sampledActivityKeys = false;
 
   // --- transport ----------------------------------------------------------
   async function timedFetch(url, init, label) {
@@ -397,18 +396,32 @@ export default async function handler(req, res) {
             byPage: CASE_STUDIES.map((path) => {
               const labels = PAGE_SECTIONS[path] || [];
               const counts = labels.map((name) => sectionsAll[name] || 0);
-              const reach = counts.length ? counts[0] : 0;
+
+              // Against the PEAK, not against section one. A drop-off curve
+              // looks monotonic but is not guaranteed to be: anyone who
+              // deep-links to #s3, or lands mid-page from a shared anchor,
+              // reaches a later section without passing the first. The live
+              // call proved it — "Revenue at risk" outscored the opening
+              // section and produced ofFirst 133.3%, which is the same class
+              // of error as dividing events by visitors.
+              const peak = counts.length ? Math.max(...counts) : 0;
+              const peakAt = counts.indexOf(peak);
+              const monotonic = counts.every((c, i) => i === 0 || c <= counts[i - 1]);
+
               return {
                 path,
                 source: "authored-map",
                 ordered: true,
+                // False means people are entering mid-page rather than the
+                // curve being broken — worth surfacing, not hiding.
+                monotonic,
+                peakSection: labels[peakAt] || null,
                 sections: labels.map((name, i) => ({
                   name,
                   count: counts[i],
-                  // Share of the people who reached the first section. Both
-                  // sides are the same kind of number — section-reached
-                  // events — so this one is safe to express as a percentage.
-                  ofFirst: reach ? +((counts[i] / reach) * 100).toFixed(1) : null,
+                  // Both sides are section-reached events, so this percentage
+                  // divides like with like and cannot exceed 100.
+                  ofPeak: peak ? +((counts[i] / peak) * 100).toFixed(1) : null,
                 })),
               };
             }),
@@ -472,52 +485,60 @@ export default async function handler(req, res) {
             let actions = null;
             let utm = null;
             let duration = null;
+            let visitCount = null;
 
             if (acts && acts.length) {
               actions = acts.length;
 
-              // Builds disagree on where a custom property lands on an
-              // activity row, so every plausible container is checked rather
-              // than one being assumed. The first live run returned null for
-              // every session because only eventData.depth was tried.
-              const depthOf = (a) => {
-                const bag = a.eventData || a.data || a.properties || a.eventProperties || a;
-                const v = bag && (bag.depth ?? bag.value ?? bag.event_data);
-                const n = Number(v);
-                return Number.isFinite(n) ? n : null;
-              };
-              const depths = acts
-                .filter((a) => /scroll-depth/.test(String(a.eventName || a.event_name || a.name || "")))
-                .map(depthOf)
-                .filter((n) => n !== null);
+              // An activity row carries NO property values. The live shape is
+              // createdAt, urlPath, urlQuery, referrerDomain, eventId,
+              // eventType, eventName, visitId, hostname, hasData — and
+              // hasData only says a property exists, never what it is. So
+              // depth cannot be read; it has to be counted.
+              //
+              // analytics.js fires scroll-depth at 25, 50, 75 and 100 once
+              // each per page load, in order. So N scroll-depth rows for one
+              // path means the Nth threshold was crossed. Grouped by urlPath,
+              // because a session that reads two pages would otherwise sum
+              // them into a depth nobody reached.
+              const TIERS = [25, 50, 75, 100];
+              const perPath = {};
+              acts.forEach((a) => {
+                if (!/scroll-depth/.test(String(a.eventName || ""))) return;
+                const p = a.urlPath || "(unknown)";
+                perPath[p] = (perPath[p] || 0) + 1;
+              });
+              const depths = Object.values(perPath).map(
+                (n) => TIERS[Math.min(Math.max(n, 1), TIERS.length) - 1]
+              );
               maxScroll = depths.length ? Math.max(...depths) : null;
 
-              // Duration from the activity itself, not from the session row.
-              // Umami's firstAt/lastAt span a session's whole lifetime, which
-              // is why the first live run reported 450248 seconds — 5.2 days
-              // — for a single visitor. What matters is time spent inside the
-              // window being asked about.
-              const stamps = acts
-                .map((a) => new Date(a.createdAt || a.timestamp || a.time || 0).getTime())
-                .filter((t) => Number.isFinite(t) && t > 0);
-              if (stamps.length > 1) {
-                duration = Math.max(0, Math.round((Math.max(...stamps) - Math.min(...stamps)) / 1000));
-              } else if (stamps.length === 1) {
-                duration = 0;
-              }
+              // Duration per VISIT, not per session. A Umami session persists
+              // across days — the live call returned 240690 seconds, 2.8
+              // days, for one person — and visitId is what separates the
+              // individual visits inside it. Reported as the longest single
+              // visit, which is the one that means something.
+              const byVisit = {};
+              acts.forEach((a) => {
+                const t = new Date(a.createdAt || 0).getTime();
+                if (!Number.isFinite(t) || !t) return;
+                const v = a.visitId || "single";
+                (byVisit[v] = byVisit[v] || []).push(t);
+              });
+              const spans = Object.values(byVisit).map((ts) =>
+                Math.max(0, Math.round((Math.max(...ts) - Math.min(...ts)) / 1000))
+              );
+              duration = spans.length ? Math.max(...spans) : null;
+              visitCount = spans.length || null;
 
-              const q = acts.find((a) => a.urlQuery || a.query);
-              const raw = q && (q.urlQuery || q.query);
-              if (raw) {
-                const m = String(raw).match(/utm_source=([^&]+)/i);
+              const q = acts.find((a) => a.urlQuery);
+              if (q && q.urlQuery) {
+                const m = String(q.urlQuery).match(/utm_source=([^&]+)/i);
                 if (m) utm = decodeURIComponent(m[1]);
               }
-
-              // One row's field names, once per response. Cheap, and the only
-              // way to fix a shape mismatch without another guessing round.
-              if (maxScroll === null && !sampledActivityKeys) {
-                sampledActivityKeys = true;
-                diag.push({ call: "activity row shape", ok: true, keys: Object.keys(acts[0] || {}) });
+              if (!utm) {
+                const r = acts.find((a) => a.referrerDomain);
+                if (r) utm = null; // referrer is not a utm source; left null on purpose
               }
             }
 
@@ -528,7 +549,9 @@ export default async function handler(req, res) {
               country: s.country || null,
               device: s.device || null,
               utmSource: utm,
+              longestVisitSeconds: duration,
               durationSeconds: duration,
+              visits: visitCount,
               maxScrollDepth: maxScroll,
               actions,
             };
@@ -606,7 +629,14 @@ export default async function handler(req, res) {
       notes.push("this Umami build ignored the device filter; per-device counts withheld rather than guessed.");
     }
     if (sessions && sessions.some((s) => s.maxScrollDepth === null)) {
-      notes.push("some sessions had no scroll-depth activity; their depth is null, not zero.");
+      notes.push("some sessions fired no scroll-depth events; their depth is null, not zero.");
+    }
+    if (sections && sections.byPage.some((p) => p.monotonic === false)) {
+      notes.push(
+        "a drop-off curve rises somewhere: people are entering that page mid-way, " +
+          "via an anchor or a shared link, rather than the curve being wrong. " +
+          "ofPeak is measured against peakSection."
+      );
     }
 
     return res.status(200).json({
