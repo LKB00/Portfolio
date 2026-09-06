@@ -38,6 +38,35 @@ const SESSION_SAMPLE = 8; // per-session activity lookups are N+1; cap them
 
 const CASE_STUDIES = ["/app-merge.html", "/rise-portal.html"];
 
+// The section labels each case study carries, in the order a reader meets
+// them. This is the authored order from the markup, not a guess.
+//
+// It exists because Umami ignores the &url= filter on /event-data/values —
+// verified live: both case studies returned all 21 site-wide values. Since we
+// wrote these names ourselves and they are unique per page, splitting them
+// here needs no filter and no extra request.
+//
+// It also produces something the filter never could. Umami sorts values by
+// count; a drop-off curve has to be in document order, or the shape is
+// meaningless. Reading the map in order gives that for free.
+const PAGE_SECTIONS = {
+  "/app-merge.html": [
+    "Two apps, one customer", "Who was in the room", "Revenue at risk",
+    "Not a merge", "Fast version first", "Three constraints",
+    "Ten slots to five", "What shipped",
+  ],
+  "/rise-portal.html": [
+    "Revenue they couldn't see", "Who I was working with",
+    "Refer more, earn less", "Two questions", "Show the calculation",
+    "The eligibility rule", "The call sheet", "What changed",
+  ],
+};
+
+// Umami builds disagree on what the page-path metric is called. Live returned
+// 400 for type=url while every other metric returned 200, so the type is
+// probed rather than assumed.
+const PATH_METRIC_TYPES = ["path", "url"];
+
 // Click events, in the order the dashboard should list them. Kept explicit
 // rather than inferred, so a new event name cannot silently join the CTA
 // list and change what "CTA clicks" means between two deploys.
@@ -108,6 +137,7 @@ export default async function handler(req, res) {
   const prevRange = `startAt=${prevStart}&endAt=${prevEnd}`;
 
   const diag = [];
+  let sampledActivityKeys = false;
 
   // --- transport ----------------------------------------------------------
   async function timedFetch(url, init, label) {
@@ -202,6 +232,16 @@ export default async function handler(req, res) {
       );
 
     // --- fetch, in parallel ----------------------------------------------
+    // Tries each candidate type and keeps the first that answers. One 400 for
+    // the wrong name is cheap; an empty `pages` list on the dashboard is not.
+    const getPaths = async () => {
+      for (const t of PATH_METRIC_TYPES) {
+        const j = await get(`${site}/metrics?type=${t}&${range}`, `metrics ${t}`);
+        if (j) return j;
+      }
+      return null;
+    };
+
     const [
       stats, referrers, urls, events,
       prevStats, prevEvents,
@@ -211,7 +251,7 @@ export default async function handler(req, res) {
     ] = await Promise.all([
       get(`${site}/stats?${range}`, "stats"),
       get(`${site}/metrics?type=referrer&${range}`, "metrics referrer"),
-      get(`${site}/metrics?type=url&${range}`, "metrics url"),
+      getPaths(),
       get(`${site}/metrics?type=event&${range}`, "metrics event"),
 
       get(`${site}/stats?${prevRange}`, "stats (previous period)"),
@@ -228,16 +268,6 @@ export default async function handler(req, res) {
 
       get(`${site}/sessions?${range}&pageSize=${SESSION_SAMPLE}`, "sessions"),
     ]);
-
-    // section-reached, scoped per case study. Umami cannot cross-tabulate two
-    // properties, so page scoping is attempted with a url filter. If this
-    // build ignores the filter every page comes back identical — visible in
-    // _diag as equal item counts, and called out in notes below.
-    const perPageSections = await Promise.all(
-      CASE_STUDIES.map((p) =>
-        eventValues("section-reached", "section", `&url=${encodeURIComponent(p)}`)
-      )
-    );
 
     // --- shaping helpers ---------------------------------------------------
     const num = (v) => (v && typeof v === "object" ? v.value : v) || 0;
@@ -281,12 +311,25 @@ export default async function handler(req, res) {
     const visitors = num(stats?.visitors);
     const pageviews = num(stats?.pageviews);
 
+    // contactRate and heroPassRate are kept in the response because things
+    // already read them, but they are no longer computed. They divided event
+    // TOTALS by UNIQUE VISITORS — two different units — which is how the live
+    // endpoint reported heroPassRate 103.2% and a desktop completion rate of
+    // 400%. One visitor passing the hero on three pages is three events.
+    //
+    // Umami's metrics endpoint cannot return unique visitors per event, so an
+    // honest rate needs a per-session pass over every session in the window.
+    // At this volume that is a lot of requests to earn a number that a raw
+    // count already tells you, so the counts are exposed and the rates are
+    // null until the traffic justifies the work.
     const headline = {
       visitors,
       pageviews,
       events: (rows(events) || []).reduce((a, e) => a + (Number(e.y) || 0), 0),
-      contactRate: rate(contacts, visitors),
-      heroPassRate: rate(started, visitors),
+      contacts,
+      passedHero: started,
+      contactRate: null,
+      heroPassRate: null,
     };
 
     // --- 1. previous -------------------------------------------------------
@@ -308,13 +351,20 @@ export default async function handler(req, res) {
           visitors: prevVisitors,
           pageviews: num(prevStats?.pageviews),
           events: (rows(prevEvents) || []).reduce((a, e) => a + (Number(e.y) || 0), 0),
-          contactRate: rate(prevContacts, prevVisitors),
-          heroPassRate: rate(prevStarted, prevVisitors),
+          contacts: prevContacts,
+          passedHero: prevStarted,
+          contactRate: null,
+          heroPassRate: null,
+          // A previous window with no data at all is a first period, not a
+          // rise from zero. Saying "+63" against a baseline that never
+          // existed reads as growth; the flag lets the front end say "no
+          // comparison yet" instead of drawing an arrow.
+          baseline: prevVisitors === 0 && num(prevStats?.pageviews) === 0 ? "empty" : "ok",
           delta: {
             visitors: delta(visitors, prevVisitors),
             pageviews: delta(pageviews, num(prevStats?.pageviews)),
-            contactRate: delta(headline.contactRate, rate(prevContacts, prevVisitors)),
-            heroPassRate: delta(headline.heroPassRate, rate(prevStarted, prevVisitors)),
+            contacts: delta(contacts, prevContacts),
+            passedHero: delta(started, prevStarted),
           },
         };
 
@@ -330,35 +380,44 @@ export default async function handler(req, res) {
     // --- 3. sections -------------------------------------------------------
     const sectionsAll = valueMap(sectionRows);
 
-    // Two pages returning byte-identical section counts means the url filter
-    // was ignored, not that both case studies were read the same way. Left
-    // undetected this renders two identical drop-off maps and presents them
-    // as per-page fact, which is worse than showing nothing.
-    const perPageMaps = perPageSections.map(valueMap);
-    const answeredPages = perPageMaps.filter((m) => m !== null);
-    const filterIgnored =
-      answeredPages.length > 1 &&
-      new Set(answeredPages.map((m) => JSON.stringify(m))).size === 1;
-
     const toList = (m) =>
       Object.entries(m)
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count);
 
+    // byPage is split with the authored map, not with a server-side filter.
+    // Every label is emitted in document order with a zero where nobody
+    // reached it, so the array IS the drop-off curve and the front end can
+    // plot it without sorting, joining or filling gaps.
     const sections =
       sectionsAll === null
         ? null
         : {
             all: toList(sectionsAll),
-            byPage: CASE_STUDIES.map((path, i) => {
-              const m = perPageMaps[i];
-              const usable = m !== null && !filterIgnored;
+            byPage: CASE_STUDIES.map((path) => {
+              const labels = PAGE_SECTIONS[path] || [];
+              const counts = labels.map((name) => sectionsAll[name] || 0);
+              const reach = counts.length ? counts[0] : 0;
               return {
                 path,
-                scoped: usable,
-                sections: usable ? toList(m) : null,
+                source: "authored-map",
+                ordered: true,
+                sections: labels.map((name, i) => ({
+                  name,
+                  count: counts[i],
+                  // Share of the people who reached the first section. Both
+                  // sides are the same kind of number — section-reached
+                  // events — so this one is safe to express as a percentage.
+                  ofFirst: reach ? +((counts[i] / reach) * 100).toFixed(1) : null,
+                })),
               };
             }),
+            // Anything recorded that no longer belongs to a case study:
+            // homepage sections, ids from before the labels landed, and the
+            // stray <h2> text the old selector matched.
+            unmapped: toList(sectionsAll).filter(
+              (s) => !Object.values(PAGE_SECTIONS).some((l) => l.includes(s.name))
+            ),
           };
 
     // --- 4. ctas -----------------------------------------------------------
@@ -412,34 +471,64 @@ export default async function handler(req, res) {
             let maxScroll = null;
             let actions = null;
             let utm = null;
+            let duration = null;
 
-            if (acts) {
+            if (acts && acts.length) {
               actions = acts.length;
+
+              // Builds disagree on where a custom property lands on an
+              // activity row, so every plausible container is checked rather
+              // than one being assumed. The first live run returned null for
+              // every session because only eventData.depth was tried.
+              const depthOf = (a) => {
+                const bag = a.eventData || a.data || a.properties || a.eventProperties || a;
+                const v = bag && (bag.depth ?? bag.value ?? bag.event_data);
+                const n = Number(v);
+                return Number.isFinite(n) ? n : null;
+              };
               const depths = acts
-                .filter((a) => (a.eventName || a.event_name) === "scroll-depth")
-                .map((a) => Number((a.eventData && a.eventData.depth) ?? a.depth))
-                .filter((n) => !Number.isNaN(n));
+                .filter((a) => /scroll-depth/.test(String(a.eventName || a.event_name || a.name || "")))
+                .map(depthOf)
+                .filter((n) => n !== null);
               maxScroll = depths.length ? Math.max(...depths) : null;
+
+              // Duration from the activity itself, not from the session row.
+              // Umami's firstAt/lastAt span a session's whole lifetime, which
+              // is why the first live run reported 450248 seconds — 5.2 days
+              // — for a single visitor. What matters is time spent inside the
+              // window being asked about.
+              const stamps = acts
+                .map((a) => new Date(a.createdAt || a.timestamp || a.time || 0).getTime())
+                .filter((t) => Number.isFinite(t) && t > 0);
+              if (stamps.length > 1) {
+                duration = Math.max(0, Math.round((Math.max(...stamps) - Math.min(...stamps)) / 1000));
+              } else if (stamps.length === 1) {
+                duration = 0;
+              }
+
               const q = acts.find((a) => a.urlQuery || a.query);
               const raw = q && (q.urlQuery || q.query);
               if (raw) {
                 const m = String(raw).match(/utm_source=([^&]+)/i);
                 if (m) utm = decodeURIComponent(m[1]);
               }
-            }
 
-            const first = s.firstAt || s.createdAt || null;
-            const last = s.lastAt || null;
+              // One row's field names, once per response. Cheap, and the only
+              // way to fix a shape mismatch without another guessing round.
+              if (maxScroll === null && !sampledActivityKeys) {
+                sampledActivityKeys = true;
+                diag.push({ call: "activity row shape", ok: true, keys: Object.keys(acts[0] || {}) });
+              }
+            }
 
             return {
               id: id || null,
-              time: first,
+              time: s.firstAt || s.createdAt || null,
               city: s.city || null,
               country: s.country || null,
               device: s.device || null,
               utmSource: utm,
-              durationSeconds:
-                first && last ? Math.max(0, Math.round((new Date(last) - new Date(first)) / 1000)) : null,
+              durationSeconds: duration,
               maxScrollDepth: maxScroll,
               actions,
             };
@@ -484,21 +573,40 @@ export default async function handler(req, res) {
         return {
           device: name,
           visitors: visitorsOn,
-          completionRate: usable ? rate(m["passed-hero"] || 0, visitorsOn) : null,
+          // Counts, for the same reason the headline rates are null: these
+          // are event totals and `visitors` is unique people. Dividing them
+          // is what produced a 400% desktop completion rate.
+          passedHero: usable ? m["passed-hero"] || 0 : null,
+          // No readToEnd here: nothing emits `read-complete`. That name came
+          // from a different script that was never deployed, and reporting a
+          // hard zero for an event no code fires would read as "nobody
+          // finished" rather than "not measured".
+          sectionsReached: usable ? m["section-reached"] || 0 : null,
+          scrollDepthEvents: usable ? m["scroll-depth"] || 0 : null,
+          completionRate: null,
           filtered: usable,
         };
       });
     }
 
     const notes = [];
-    if (sections && sections.byPage.some((p) => !p.scoped)) {
-      notes.push("section counts could not be scoped per page; `sections.all` is site-wide.");
+    notes.push(
+      "contactRate, heroPassRate and devices[].completionRate are null on purpose. " +
+        "They divided event totals by unique visitors, which reported 103% and 400%. " +
+        "Use the counts beside them."
+    );
+    if (sections && sections.unmapped.length) {
+      notes.push(
+        `${sections.unmapped.length} recorded section names belong to no case study ` +
+          "(homepage sections, ids from before the labels landed). They are in " +
+          "`sections.unmapped` and excluded from the drop-off curves."
+      );
     }
     if (devices && devices.some((d) => d.filtered === false)) {
-      notes.push("this Umami build ignored the device filter; completionRate withheld rather than guessed.");
+      notes.push("this Umami build ignored the device filter; per-device counts withheld rather than guessed.");
     }
     if (sessions && sessions.some((s) => s.maxScrollDepth === null)) {
-      notes.push("some sessions returned no activity; their depth and action counts are null, not zero.");
+      notes.push("some sessions had no scroll-depth activity; their depth is null, not zero.");
     }
 
     return res.status(200).json({
