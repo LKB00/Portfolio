@@ -73,7 +73,7 @@
   --accent:#5EA9F5; --accentLine:#5EA9F5; --accentWash:rgba(94,169,245,.12);
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
   --tint:var(--surface); --bg2:var(--surface); --deep:#EDEDED; --onDeep:#141414;
-  --gain:#4ED07F; --gainWash:rgba(78,208,127,.14);
+  --gain:#4ED07F; --gainWash:rgba(78,208,127,.14); --live:#4ED07F;
   --card-tint-01:#1A1A1A; --card-tint-02:#1A1A1A; --card-tint-03:#1A1A1A;
   --navOff:#A1A1A1; --navOn:var(--ink);
 }
@@ -2138,6 +2138,32 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   #loader .sel{width:100%;height:100%}
 }
 
+/* ── the live-product pill ───────────────────────────────────────────
+   Two things were wrong.
+
+   It wrapped onto two lines inside its own border — 41px tall for what
+   is meant to be a single-line pill — because the label could break and
+   nothing stopped it. nowrap, and the pill sizes to its words.
+
+   And it was accent blue. Every other link on this page is blue and
+   goes to another page of this site; this one leaves for a running
+   product. The site already has a green that means live — the same one
+   the case studies use for a figure that went up — so it uses that.
+   --live had no dark-theme value and was rendering the light green on a
+   dark ground; it tracks the theme now, like every other token. */
+.workrow .workcta.livecta{white-space:nowrap;color:var(--live);
+  /* padding:14px 11px 7px — the top was coming from
+     `.workrow:not(.is-wide) .workcta{padding-top:14px}`, which exists to
+     push a plain TEXT link away from the copy above it. On a pill that
+     lands inside the border: 14 above the label, 7 below, so the words
+     sat high in a box 41px tall. The gap belongs on the margin. */
+  padding:7px 12px;margin-top:14px;line-height:1.35;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--live) 32%,transparent)}
+.workrow .workcta.livecta svg{color:var(--live)}
+@media (hover:hover){
+  .workrow:hover .workcta.livecta{background:var(--gainWash);
+    box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--live) 55%,transparent)}
+}
 </style>
 <script defer src="./analytics.js"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76"></script>
@@ -2318,7 +2344,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
           <span class="desc">Runable &#183; Founding designer &#183; AI product</span>
           
           <p class="workfacts"><b>~$1M</b> run-rate in month one <i>&#183;</i> <b>0&#8594;1</b> concept to launch</p>
-          <span class="workcta livecta"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>View live product<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <span class="workcta livecta"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>View live<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         </div>
       </a>
 
