@@ -10,6 +10,53 @@
 //   UMAMI_USER           admin
 //   UMAMI_PASS           your Umami admin password
 //   UMAMI_WEBSITE_ID     5a59e8a0-e996-42f4-a248-fcf582413c76
+//
+// Every key that existed before is still returned unchanged: ok, updated,
+// days, headline, sources, pages, events, totals. Seven were added:
+// previous, timeBuckets, sections, ctas, countries (with cities), sessions,
+// devices. All arithmetic happens here; the front end renders what it gets.
+//
+// Two constraints this file exists to absorb:
+//
+//   1. Umami's metrics endpoint returns event NAMES and totals only —
+//      properties never surface there. Anything that needs a property
+//      breakdown (time-on-page bucket, section-reached section, card-click
+//      card) goes through /event-data/values instead.
+//
+//   2. The Neon free tier sleeps. The first request after idle takes 3-4
+//      seconds, sometimes more. Every call is bounded by an AbortController
+//      and the login is retried once, because a cold start should read as
+//      slow, not as broken.
+//
+// Nothing is ever invented. A field Umami cannot answer comes back null,
+// and _diag says which upstream call failed and why.
+
+export const config = { maxDuration: 30 };
+
+const REQ_TIMEOUT_MS = 8000;
+const SESSION_SAMPLE = 8; // per-session activity lookups are N+1; cap them
+
+const CASE_STUDIES = ["/app-merge.html", "/rise-portal.html"];
+
+// Click events, in the order the dashboard should list them. Kept explicit
+// rather than inferred, so a new event name cannot silently join the CTA
+// list and change what "CTA clicks" means between two deploys.
+const CTA_EVENTS = [
+  "card-click",
+  "resume-click",
+  "resume-open",
+  "email-click",
+  "email-copied",
+  "social-click",
+  "outbound",
+  "outbound-runable",
+  "outbound-other",
+  "nav-about",
+  "palette-open",
+  "palette-navigate",
+];
+
+const TIME_BUCKETS = ["0-10s", "10-30s", "30-60s", "1-3m", "3m+"];
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -54,49 +101,176 @@ export default async function handler(req, res) {
   const base = String(UMAMI_URL).replace(/\/+$/, "");
   const range = `startAt=${startAt}&endAt=${endAt}`;
 
-  try {
-    // --- log in ----------------------------------------------------------
-    const loginRes = await fetch(`${base}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: UMAMI_USER, password: UMAMI_PASS }),
-    });
+  // The preceding window of equal length, so every headline number can carry
+  // a comparison. Ends where the current window begins — no overlap.
+  const prevEnd = startAt;
+  const prevStart = startAt - (endAt - startAt);
+  const prevRange = `startAt=${prevStart}&endAt=${prevEnd}`;
 
-    if (!loginRes.ok) {
-      const text = await loginRes.text();
+  const diag = [];
+
+  // --- transport ----------------------------------------------------------
+  async function timedFetch(url, init, label) {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), REQ_TIMEOUT_MS);
+    const t0 = Date.now();
+    try {
+      const r = await fetch(url, { ...init, signal: ctl.signal });
+      return { r, ms: Date.now() - t0 };
+    } catch (err) {
+      const aborted = err && err.name === "AbortError";
+      diag.push({
+        call: label,
+        ok: false,
+        ms: Date.now() - t0,
+        error: aborted ? `timeout after ${REQ_TIMEOUT_MS}ms` : String(err).slice(0, 120),
+      });
+      return { r: null, ms: Date.now() - t0 };
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  try {
+    // --- log in -----------------------------------------------------------
+    // Retried once: a cold Neon instance routinely loses the first attempt,
+    // and returning 502 for a database that is merely asleep is a lie.
+    let token = null;
+    let loginDetail = "";
+    for (let attempt = 1; attempt <= 2 && !token; attempt++) {
+      const { r, ms } = await timedFetch(
+        `${base}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: UMAMI_USER, password: UMAMI_PASS }),
+        },
+        `auth/login (attempt ${attempt})`
+      );
+      if (!r) continue;
+      if (!r.ok) {
+        loginDetail = (await r.text()).slice(0, 200);
+        diag.push({ call: `auth/login (attempt ${attempt})`, ok: false, ms, status: r.status });
+        continue;
+      }
+      const j = await r.json();
+      token = j && j.token;
+      diag.push({ call: `auth/login (attempt ${attempt})`, ok: true, ms, status: r.status });
+    }
+
+    if (!token) {
       return res.status(502).json({
         error: "Umami login failed",
-        status: loginRes.status,
-        detail: text.slice(0, 200),
+        detail: loginDetail || "no response after 2 attempts",
+        _diag: diag,
       });
     }
 
-    const { token } = await loginRes.json();
     const auth = { Authorization: `Bearer ${token}` };
-
-    const get = async (path) => {
-      const r = await fetch(`${base}${path}`, { headers: auth });
-      if (!r.ok) return null;
-      return r.json();
-    };
-
     const site = `/api/websites/${UMAMI_WEBSITE_ID}`;
 
-    const [stats, referrers, urls, events] = await Promise.all([
-      get(`${site}/stats?${range}`),
-      get(`${site}/metrics?type=referrer&${range}`),
-      get(`${site}/metrics?type=url&${range}`),
-      get(`${site}/metrics?type=event&${range}`),
+    // Returns null on any failure and records why. Callers must treat null as
+    // "unknown", never as zero.
+    const get = async (path, label) => {
+      const { r, ms } = await timedFetch(`${base}${path}`, { headers: auth }, label || path);
+      if (!r) return null;
+      if (!r.ok) {
+        diag.push({ call: label || path, ok: false, ms, status: r.status });
+        return null;
+      }
+      let j = null;
+      try { j = await r.json(); } catch { j = null; }
+      diag.push({
+        call: label || path,
+        ok: true,
+        ms,
+        status: r.status,
+        items: Array.isArray(j) ? j.length : (j && Array.isArray(j.data) ? j.data.length : null),
+      });
+      return j;
+    };
+
+    // Property breakdown for one event. Umami's metrics endpoint cannot do
+    // this — it returns the event name and a total, and the properties are
+    // simply absent — so every per-property number on the dashboard comes
+    // from here.
+    const eventValues = (eventName, propertyName, extra = "") =>
+      get(
+        `${site}/event-data/values?${range}&eventName=${encodeURIComponent(eventName)}` +
+          `&propertyName=${encodeURIComponent(propertyName)}${extra}`,
+        `event-data/values ${eventName}.${propertyName}${extra}`
+      );
+
+    // --- fetch, in parallel ----------------------------------------------
+    const [
+      stats, referrers, urls, events,
+      prevStats, prevEvents,
+      countryRows, cityRows, deviceRows,
+      bucketRows, sectionRows, cardRows, socialRows,
+      sessionPage,
+    ] = await Promise.all([
+      get(`${site}/stats?${range}`, "stats"),
+      get(`${site}/metrics?type=referrer&${range}`, "metrics referrer"),
+      get(`${site}/metrics?type=url&${range}`, "metrics url"),
+      get(`${site}/metrics?type=event&${range}`, "metrics event"),
+
+      get(`${site}/stats?${prevRange}`, "stats (previous period)"),
+      get(`${site}/metrics?type=event&${prevRange}`, "metrics event (previous period)"),
+
+      get(`${site}/metrics?type=country&${range}`, "metrics country"),
+      get(`${site}/metrics?type=city&${range}`, "metrics city"),
+      get(`${site}/metrics?type=device&${range}`, "metrics device"),
+
+      eventValues("time-on-page", "bucket"),
+      eventValues("section-reached", "section"),
+      eventValues("card-click", "card"),
+      eventValues("social-click", "to"),
+
+      get(`${site}/sessions?${range}&pageSize=${SESSION_SAMPLE}`, "sessions"),
     ]);
 
-    // --- reshape ---------------------------------------------------------
-    const num = (v) => (v && typeof v === "object" ? v.value : v) || 0;
+    // section-reached, scoped per case study. Umami cannot cross-tabulate two
+    // properties, so page scoping is attempted with a url filter. If this
+    // build ignores the filter every page comes back identical — visible in
+    // _diag as equal item counts, and called out in notes below.
+    const perPageSections = await Promise.all(
+      CASE_STUDIES.map((p) =>
+        eventValues("section-reached", "section", `&url=${encodeURIComponent(p)}`)
+      )
+    );
 
-    const evMap = {};
-    (events || []).forEach((e) => { evMap[e.x] = e.y; });
+    // --- shaping helpers ---------------------------------------------------
+    const num = (v) => (v && typeof v === "object" ? v.value : v) || 0;
+    const rows = (j) => (Array.isArray(j) ? j : (j && Array.isArray(j.data) ? j.data : null));
+    const rate = (n, d) => (d ? +((n / d) * 100).toFixed(1) : 0);
+    const delta = (now, was) =>
+      was === null || was === undefined ? null : +(now - was).toFixed(1);
+
+    // event-data/values rows are {value, total}; metrics rows are {x, y}
+    const valueMap = (j) => {
+      const r = rows(j);
+      if (!r) return null;
+      const m = {};
+      r.forEach((row) => {
+        const k = row.value !== undefined ? row.value : row.x;
+        const v = row.total !== undefined ? row.total : row.y;
+        if (k !== undefined && k !== null) m[String(k)] = Number(v) || 0;
+      });
+      return m;
+    };
+
+    const eventMap = (j) => {
+      const r = rows(j);
+      if (!r) return {};
+      const m = {};
+      r.forEach((e) => { m[e.x] = Number(e.y) || 0; });
+      return m;
+    };
+
+    // --- existing shape, unchanged ----------------------------------------
+    const evMap = eventMap(events);
 
     const started = evMap["passed-hero"] || 0;
-    const finished = evMap["scroll-depth"] ? null : null; // depth split below
 
     const cardClicks = evMap["card-click"] || 0;
     const contacts =
@@ -107,31 +281,261 @@ export default async function handler(req, res) {
     const visitors = num(stats?.visitors);
     const pageviews = num(stats?.pageviews);
 
+    const headline = {
+      visitors,
+      pageviews,
+      events: (rows(events) || []).reduce((a, e) => a + (Number(e.y) || 0), 0),
+      contactRate: rate(contacts, visitors),
+      heroPassRate: rate(started, visitors),
+    };
+
+    // --- 1. previous -------------------------------------------------------
+    // Same shape as headline, plus the deltas, so the front end subtracts
+    // nothing. null where the previous window could not be read at all.
+    const prevEvMap = eventMap(prevEvents);
+    const prevVisitors = num(prevStats?.visitors);
+    const prevContacts =
+      (prevEvMap["email-copied"] || 0) +
+      (prevEvMap["email-click"] || 0) +
+      (prevEvMap["social-click"] || 0);
+    const prevStarted = prevEvMap["passed-hero"] || 0;
+
+    const previous = !prevStats
+      ? null
+      : {
+          from: new Date(prevStart).toISOString(),
+          to: new Date(prevEnd).toISOString(),
+          visitors: prevVisitors,
+          pageviews: num(prevStats?.pageviews),
+          events: (rows(prevEvents) || []).reduce((a, e) => a + (Number(e.y) || 0), 0),
+          contactRate: rate(prevContacts, prevVisitors),
+          heroPassRate: rate(prevStarted, prevVisitors),
+          delta: {
+            visitors: delta(visitors, prevVisitors),
+            pageviews: delta(pageviews, num(prevStats?.pageviews)),
+            contactRate: delta(headline.contactRate, rate(prevContacts, prevVisitors)),
+            heroPassRate: delta(headline.heroPassRate, rate(prevStarted, prevVisitors)),
+          },
+        };
+
+    // --- 2. timeBuckets ----------------------------------------------------
+    // Fixed order, zero-filled, so the chart's x-axis never reorders itself
+    // because one bucket happened to be empty.
+    const bucketVals = valueMap(bucketRows);
+    const timeBuckets =
+      bucketVals === null
+        ? null
+        : TIME_BUCKETS.map((b) => ({ bucket: b, count: bucketVals[b] || 0 }));
+
+    // --- 3. sections -------------------------------------------------------
+    const sectionsAll = valueMap(sectionRows);
+
+    // Two pages returning byte-identical section counts means the url filter
+    // was ignored, not that both case studies were read the same way. Left
+    // undetected this renders two identical drop-off maps and presents them
+    // as per-page fact, which is worse than showing nothing.
+    const perPageMaps = perPageSections.map(valueMap);
+    const answeredPages = perPageMaps.filter((m) => m !== null);
+    const filterIgnored =
+      answeredPages.length > 1 &&
+      new Set(answeredPages.map((m) => JSON.stringify(m))).size === 1;
+
+    const toList = (m) =>
+      Object.entries(m)
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count);
+
+    const sections =
+      sectionsAll === null
+        ? null
+        : {
+            all: toList(sectionsAll),
+            byPage: CASE_STUDIES.map((path, i) => {
+              const m = perPageMaps[i];
+              const usable = m !== null && !filterIgnored;
+              return {
+                path,
+                scoped: usable,
+                sections: usable ? toList(m) : null,
+              };
+            }),
+          };
+
+    // --- 4. ctas -----------------------------------------------------------
+    // Per name, in a fixed order, with the two that carry a useful property
+    // broken down underneath.
+    const ctas = {
+      byName: CTA_EVENTS.map((name) => ({ name, count: evMap[name] || 0 })),
+      cards: valueMap(cardRows)
+        ? Object.entries(valueMap(cardRows))
+            .map(([card, count]) => ({ card, count }))
+            .sort((a, b) => b.count - a.count)
+        : null,
+      socials: valueMap(socialRows)
+        ? Object.entries(valueMap(socialRows))
+            .map(([to, count]) => ({ to, count }))
+            .sort((a, b) => b.count - a.count)
+        : null,
+    };
+
+    // --- 5. countries and cities ------------------------------------------
+    const geoList = (j, key) => {
+      const r = rows(j);
+      if (!r) return null;
+      return r
+        .map((row) => ({ [key]: row.x || "unknown", visitors: Number(row.y) || 0 }))
+        .sort((a, b) => b.visitors - a.visitors)
+        .slice(0, 20);
+    };
+    const countries = geoList(countryRows, "code");
+    const cities = geoList(cityRows, "city");
+
+    // --- 6. sessions -------------------------------------------------------
+    // Umami's session list carries identity and duration but not behaviour,
+    // so max scroll depth and action count come from one activity call per
+    // session. Capped at SESSION_SAMPLE: this is the only N+1 in the handler
+    // and it is not worth a slow dashboard.
+    const sessionRows = rows(sessionPage) || [];
+    const sessions = !sessionPage
+      ? null
+      : await Promise.all(
+          sessionRows.slice(0, SESSION_SAMPLE).map(async (s) => {
+            const id = s.id || s.sessionId;
+            const act = id
+              ? await get(
+                  `${site}/sessions/${encodeURIComponent(id)}/activity?${range}`,
+                  `session activity ${String(id).slice(0, 8)}`
+                )
+              : null;
+            const acts = rows(act);
+
+            let maxScroll = null;
+            let actions = null;
+            let utm = null;
+
+            if (acts) {
+              actions = acts.length;
+              const depths = acts
+                .filter((a) => (a.eventName || a.event_name) === "scroll-depth")
+                .map((a) => Number((a.eventData && a.eventData.depth) ?? a.depth))
+                .filter((n) => !Number.isNaN(n));
+              maxScroll = depths.length ? Math.max(...depths) : null;
+              const q = acts.find((a) => a.urlQuery || a.query);
+              const raw = q && (q.urlQuery || q.query);
+              if (raw) {
+                const m = String(raw).match(/utm_source=([^&]+)/i);
+                if (m) utm = decodeURIComponent(m[1]);
+              }
+            }
+
+            const first = s.firstAt || s.createdAt || null;
+            const last = s.lastAt || null;
+
+            return {
+              id: id || null,
+              time: first,
+              city: s.city || null,
+              country: s.country || null,
+              device: s.device || null,
+              utmSource: utm,
+              durationSeconds:
+                first && last ? Math.max(0, Math.round((new Date(last) - new Date(first)) / 1000)) : null,
+              maxScrollDepth: maxScroll,
+              actions,
+            };
+          })
+        );
+
+    // --- 7. devices --------------------------------------------------------
+    // Completion rate per device needs event counts filtered by device. If
+    // this Umami build ignores the filter, completionRate comes back null
+    // rather than repeating the site-wide number under a device label.
+    const deviceList = rows(deviceRows) || [];
+    let devices = null;
+
+    if (deviceRows) {
+      const scopedMaps = await Promise.all(
+        deviceList.map(async (d) => {
+          const name = d.x || "unknown";
+          const scoped = await get(
+            `${site}/metrics?type=event&${range}&device=${encodeURIComponent(name)}`,
+            `metrics event device=${name}`
+          );
+          return scoped ? eventMap(scoped) : null;
+        })
+      );
+
+      // Whether the filter works is a property of the build, not of one
+      // device. Deciding it per device would withhold a correct number from
+      // a site whose traffic genuinely is all desktop. It is only ignored if
+      // EVERY device returns the site-wide figure while more than one exists.
+      const siteWidePassed = evMap["passed-hero"] || 0;
+      const answered = scopedMaps.filter((m) => m !== null);
+      const filterIgnored =
+        deviceList.length > 1 &&
+        answered.length > 1 &&
+        answered.every((m) => (m["passed-hero"] || 0) === siteWidePassed);
+
+      devices = deviceList.map((d, i) => {
+        const name = d.x || "unknown";
+        const visitorsOn = Number(d.y) || 0;
+        const m = scopedMaps[i];
+        const usable = m !== null && !filterIgnored;
+        return {
+          device: name,
+          visitors: visitorsOn,
+          completionRate: usable ? rate(m["passed-hero"] || 0, visitorsOn) : null,
+          filtered: usable,
+        };
+      });
+    }
+
+    const notes = [];
+    if (sections && sections.byPage.some((p) => !p.scoped)) {
+      notes.push("section counts could not be scoped per page; `sections.all` is site-wide.");
+    }
+    if (devices && devices.some((d) => d.filtered === false)) {
+      notes.push("this Umami build ignored the device filter; completionRate withheld rather than guessed.");
+    }
+    if (sessions && sessions.some((s) => s.maxScrollDepth === null)) {
+      notes.push("some sessions returned no activity; their depth and action counts are null, not zero.");
+    }
+
     return res.status(200).json({
       ok: true,
       updated: new Date().toISOString(),
       days,
-      headline: {
-        visitors,
-        pageviews,
-        events: (events || []).reduce((a, e) => a + e.y, 0),
-        contactRate: visitors ? +((contacts / visitors) * 100).toFixed(1) : 0,
-        heroPassRate: visitors ? +((started / visitors) * 100).toFixed(1) : 0,
-      },
-      sources: (referrers || [])
-        .map((r) => ({ name: r.x || "direct", count: r.y }))
+      headline,
+      sources: (rows(referrers) || [])
+        .map((r) => ({ name: r.x || "direct", count: Number(r.y) || 0 }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 6),
-      pages: (urls || [])
-        .map((u) => ({ path: u.x, views: u.y }))
+      pages: (rows(urls) || [])
+        .map((u) => ({ path: u.x, views: Number(u.y) || 0 }))
         .sort((a, b) => b.views - a.views)
         .slice(0, 8),
-      events: (events || [])
-        .map((e) => ({ name: e.x, count: e.y }))
+      events: (rows(events) || [])
+        .map((e) => ({ name: e.x, count: Number(e.y) || 0 }))
         .sort((a, b) => b.count - a.count),
       totals: { cardClicks, contacts, passedHero: started },
+
+      previous,
+      timeBuckets,
+      sections,
+      ctas,
+      countries,
+      cities,
+      sessions,
+      devices,
+
+      notes,
+      _diag: diag,
     });
   } catch (err) {
-    return res.status(500).json({ error: "Fetch failed", detail: String(err).slice(0, 200) });
+    return res.status(500).json({
+      error: "Fetch failed",
+      detail: String(err).slice(0, 200),
+      _diag: diag,
+    });
   }
 }
