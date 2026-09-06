@@ -14,6 +14,13 @@ permissions:
 jobs:
   inject:
     runs-on: ubuntu-latest
+
+    # One source of truth for both steps below. Changing the tracked site is
+    # a two-line edit here — and the guard makes sure every page follows.
+    env:
+      UMAMI_HOST: umami-swart-five.vercel.app
+      UMAMI_ID: 5a59e8a0-e996-42f4-a248-fcf582413c76
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -61,13 +68,66 @@ jobs:
           print(f"OK: analytics.js ({len(src)} bytes) emits all {len(REQUIRED)} required events.")
           PY
 
+      # The injector only writes a tag when the Umami host is ABSENT from a
+      # file. So changing UMAMI_ID above does not rewrite pages that already
+      # carry a tag — they keep reporting to the old website while the build
+      # goes green and the dashboard, pointed at the new one, looks empty.
+      # That failure is invisible from every side, so it gets its own check.
+      - name: Assert every page reports to the configured website
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, re, sys
+
+          want = os.environ["UMAMI_ID"]
+
+          files = [f for f in sorted(pathlib.Path(".").rglob("*.html"))
+                   if ".github" not in f.parts and "node_modules" not in f.parts
+                   and "assets" not in f.parts
+                   and f.name != "dashboard.html"]
+
+          wrong, tagged, untagged = [], [], []
+
+          for f in files:
+              html = f.read_text(encoding="utf-8", errors="ignore")
+              if 'http-equiv="refresh"' in html or "location.replace(" in html:
+                  continue
+              ids = re.findall(r'data-website-id="([^"]*)"', html)
+              if not ids:
+                  # The injector adds the tag with the right id on this run.
+                  untagged.append(str(f))
+                  continue
+              for got in ids:
+                  if got != want:
+                      wrong.append((str(f), got))
+                  else:
+                      tagged.append(str(f))
+
+          for f in untagged:
+              print(f"note     {f}  has no tag yet; the injector will add it")
+
+          if wrong:
+              print(f"\nexpected website id: {want}")
+              for f, got in wrong:
+                  print(f"  MISMATCH {f}  ->  {got}")
+              sys.exit(
+                  "\nFAIL: pages are reporting to a different website than the one "
+                  "configured.\nThe injector will NOT fix this: it only adds a tag "
+                  "when none is present.\nEdit data-website-id in the files above, "
+                  "or change UMAMI_ID back."
+              )
+
+          print(f"OK: {len(tagged)} pages report to {want}.")
+          PY
+
       - name: Fix script tags
         run: |
           python3 - <<'PY'
-          import pathlib, re
+          import os, pathlib, re
 
-          UMAMI_HOST = "umami-swart-five.vercel.app"
-          UMAMI_ID   = "5a59e8a0-e996-42f4-a248-fcf582413c76"
+          # Read from the job env, not from a second copy of the literal. Two
+          # hardcoded ids in one file is how they drift apart.
+          UMAMI_HOST = os.environ["UMAMI_HOST"]
+          UMAMI_ID   = os.environ["UMAMI_ID"]
 
           TAGS = (
               f'<script defer src="https://{UMAMI_HOST}/script.js" '
