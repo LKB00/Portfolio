@@ -36,6 +36,11 @@ export const config = { maxDuration: 30 };
 const REQ_TIMEOUT_MS = 8000;
 const SESSION_SAMPLE = 8; // per-session activity lookups are N+1; cap them
 
+// Umami pages the activity endpoint. A session that returns exactly this many
+// rows was almost certainly cut off, which makes actions, visits and depth
+// floors rather than totals — so it is flagged instead of reported as fact.
+const ACTIVITY_PAGE_CAP = 500;
+
 const CASE_STUDIES = ["/app-merge.html", "/rise-portal.html"];
 
 // The section labels each case study carries, in the order a reader meets
@@ -405,7 +410,10 @@ export default async function handler(req, res) {
               // section and produced ofFirst 133.3%, which is the same class
               // of error as dividing events by visitors.
               const peak = counts.length ? Math.max(...counts) : 0;
-              const peakAt = counts.indexOf(peak);
+              // Only a real peak has a name. With every count at zero,
+              // indexOf(0) returns the first label and would present it as
+              // the most-reached section of a page nobody has opened.
+              const peakAt = peak > 0 ? counts.indexOf(peak) : -1;
               const monotonic = counts.every((c, i) => i === 0 || c <= counts[i - 1]);
 
               return {
@@ -486,9 +494,11 @@ export default async function handler(req, res) {
             let utm = null;
             let duration = null;
             let visitCount = null;
+            let truncated = false;
 
             if (acts && acts.length) {
               actions = acts.length;
+              truncated = acts.length >= ACTIVITY_PAGE_CAP;
 
               // An activity row carries NO property values. The live shape is
               // createdAt, urlPath, urlQuery, referrerDomain, eventId,
@@ -554,6 +564,9 @@ export default async function handler(req, res) {
               visits: visitCount,
               maxScrollDepth: maxScroll,
               actions,
+              // True means the activity list was paged: actions, visits and
+              // maxScrollDepth are lower bounds for this session.
+              actionsTruncated: truncated,
             };
           })
         );
@@ -627,6 +640,12 @@ export default async function handler(req, res) {
     }
     if (devices && devices.some((d) => d.filtered === false)) {
       notes.push("this Umami build ignored the device filter; per-device counts withheld rather than guessed.");
+    }
+    if (sessions && sessions.some((s) => s.actionsTruncated)) {
+      notes.push(
+        `some sessions hit the ${ACTIVITY_PAGE_CAP}-row activity cap; their actions, ` +
+          "visits and depth are lower bounds, not totals."
+      );
     }
     if (sessions && sessions.some((s) => s.maxScrollDepth === null)) {
       notes.push("some sessions fired no scroll-depth events; their depth is null, not zero.");
