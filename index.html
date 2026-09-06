@@ -781,7 +781,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .padsub{margin:0;font-size:13px;line-height:1.45;color:var(--faint)}
 
 .padboard{position:relative;overflow:hidden;touch-action:manipulation;
-  height:clamp(300px,34vw,364px);border-radius:var(--r-card);
+  height:0;border-radius:var(--r-card);
   background-color:var(--surface);
   background-image:radial-gradient(circle at 1px 1px,
     color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
@@ -793,6 +793,17 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   transform:rotate(var(--tilt,0deg));transform-origin:50% 0}
 .padnote:focus-within{box-shadow:0 0 0 1.5px var(--accent),
   0 10px 22px -14px rgba(16,16,24,.38)}
+/* A new note used to be inserted at full opacity while the board was
+   still growing under it, so a yellow card snapped into a box that was
+   still moving. It fades and settles instead, and starts 0.2s in — by
+   then the board has most of its height and the card lands on something
+   that has stopped moving. The tilt is carried through every keyframe;
+   dropping it would make the note straighten as it arrives. */
+@keyframes noteIn{
+  from{opacity:0;transform:rotate(var(--tilt,0deg)) translateY(8px) scale(.96)}
+  to{opacity:1;transform:rotate(var(--tilt,0deg)) translateY(0) scale(1)}}
+.padnote.is-new{animation:noteIn .32s cubic-bezier(.16,.84,.24,1) .2s backwards}
+@media (prefers-reduced-motion:reduce){.padnote.is-new{animation:none}}
 .padgrip{display:flex;align-items:center;justify-content:space-between;
   height:20px;padding:0 4px 0 7px;cursor:grab;touch-action:none;
   border-radius:4px 4px 0 0}
@@ -855,23 +866,19 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* ── the acknowledgement ── */
 .padtoast{position:absolute;left:50%;top:12px;transform:translateX(-50%);
   z-index:7;display:flex;align-items:center;gap:9px;max-width:calc(100% - 24px);
-  padding:8px 8px 8px 12px;border-radius:var(--r-pill);
+  padding:8px 14px;border-radius:var(--r-pill);
   background:var(--card);color:var(--muted);box-shadow:var(--shadow-float);
   font-size:12.5px;line-height:1.35}
 .padtoast svg{flex:0 0 auto;color:var(--accent)}
-.padtoastx{display:grid;place-items:center;width:20px;height:20px;padding:0;
-  flex:0 0 auto;border:0;border-radius:50%;background:transparent;
-  cursor:pointer;color:var(--faint)}
-@media (hover:hover){.padtoastx:hover{color:var(--ink)}}
 .padwrap [hidden]{display:none}
 
 @media (max-width:560px){
-  .padboard{height:clamp(330px,92vw,392px)}
+  .padwrap.is-open .padstack{height:clamp(330px,92vw,392px)}
   /* 16px or iOS zooms the page the moment a note is focused, so the note
      grows to suit the type rather than the other way round */
   .padnote{width:196px}
   .padnote textarea{font-size:16px;height:92px}
-  .padtoast{font-size:12px;padding:7px 7px 7px 11px}
+  .padtoast{font-size:12px;padding:7px 12px}
 }
 @media (prefers-reduced-motion:reduce){
   .padnote,.padtool,.padsend{transition:none}
@@ -1789,26 +1796,94 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
    Deleting the last note closes it again and gives the space back.
    ═══════════════════════════════════════════════════════════════════ */
-.padtrigger{display:flex;align-items:center;gap:11px;width:100%;
-  margin:0;padding:14px 16px;cursor:pointer;text-align:left;
-  border:1px dashed color-mix(in srgb,var(--muted) 32%,transparent);
-  border-radius:var(--r-card);background:transparent;
+/* It was the only thing on the page with no ground: transparent, on a
+   #FAFAFA page, inside a 32%-opacity dashed hairline. Between two solid
+   tinted work cards it read as a divider with a blue dot on it, not as
+   something you could press.
+
+   It has the page's card white under it now, so it is an object. The
+   dashed edge stays and gets its full strength — dashed on white is the
+   universal "empty slot, put something here", which is exactly what it
+   is, and it keeps the row from looking like the finished panels
+   elsewhere. Taller, a larger plus, and the label a step up so the
+   invitation and the reassurance stop reading as one grey line. */
+.padtrigger{position:relative;display:flex;align-items:center;gap:12px;width:100%;
+  margin:0;padding:19px 20px;cursor:pointer;text-align:left;
+  border:1px dashed color-mix(in srgb,var(--muted) 55%,transparent);
+  border-radius:var(--r-card);
+  /* the same ground the board opens onto — surface tint and the same
+     18px dot grid — so the closed row is a slice of the artboard rather
+     than a different object standing in front of it. Opening it reads
+     as the board unrolling, not as one material swapping for another. */
+  background-color:var(--surface);
+  background-image:radial-gradient(circle at 1px 1px,
+    color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
+  background-size:18px 18px;background-position:9px 9px;
   font-family:inherit;color:var(--ink);
-  transition:border-color .2s var(--ease),background .2s var(--ease)}
-.padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:26px;height:26px;
+  transition:border-color .2s var(--ease),background-color .2s var(--ease),
+    opacity .18s linear,visibility 0s linear .18s}
+.padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
   border-radius:50%;background:var(--accent);color:#FFFFFF}
-.padtriggertext{font-size:14px;font-weight:500;letter-spacing:-.01em}
+.padtriggertext{font-size:15px;font-weight:500;letter-spacing:-.012em}
 .padtriggerhint{font-size:13px;color:var(--faint);letter-spacing:-.005em}
 @media (hover:hover){
-  .padtrigger:hover{border-color:color-mix(in srgb,var(--accent) 55%,transparent);
-    background:color-mix(in srgb,var(--accent) 4%,transparent)}
+  .padtrigger:hover{border-color:color-mix(in srgb,var(--accent) 60%,transparent);
+    background-color:color-mix(in srgb,var(--accent) 4%,var(--surface))}
 }
+
+@media (prefers-reduced-motion:reduce){
+  .padtrigger,.padboard,.padstack{transition:none!important}}
 .padtrigger:active{transform:scale(.995)}
 
-/* closed is the default: the board does not exist until asked for */
-.padboard{display:none}
-.padwrap.is-open .padtrigger{display:none}
-.padwrap.is-open .padboard{display:block}
+/* ── opening and closing ─────────────────────────────────────────────
+   This was a display swap: the row vanished and the board appeared in
+   the same frame, and the section jumped ~300px. Nothing about that
+   said the row had BECOME the board.
+
+   Both states are in flow now and their heights animate against each
+   other — the row collapses to nothing as the board grows to its own
+   height, so the section's height moves once, smoothly, in one gesture.
+
+   display cannot be transitioned, so visibility carries the job of
+   taking the hidden one out of the tab order: switched instantly on the
+   way in, and delayed to the end of the transition on the way out, so
+   it never cuts the animation short.
+
+   The trigger's collapse needs a real number to animate from — height
+   auto does not transition — so --trig-h is measured in JS and remeasured
+   on resize, where the row wraps to two lines. */
+/* ONE box changes height, not two.
+
+   Animating the row down while the board grew up meant the section's
+   height was the SUM of the two mid-flight: it swelled to ~348px before
+   settling at 300, so everything below shoved down and bounced back.
+   That overshoot was the jump.
+
+   The row and the board now share a single grid cell, so only the cell's
+   height animates — 70px to 300px, monotonic, nothing below it moves
+   twice. Inside the cell the two simply cross-fade.
+
+   And the curve is ease-in-out, not var(--ease): that one spends itself
+   in its first fifth, which on a 230px height change reads as a lurch
+   followed by a crawl. */
+.padstack{position:relative;display:grid;overflow:hidden;
+  height:var(--trig-h,auto);border-radius:var(--r-card);
+  transition:height .45s cubic-bezier(.4,0,.2,1)}
+.padstack > *{grid-area:1/1;min-height:0}
+.padwrap.is-open .padstack{height:clamp(300px,34vw,364px)}
+
+.padboard{height:100%;opacity:0;visibility:hidden;
+  transition:opacity .2s var(--ease),visibility 0s linear .2s}
+.padwrap.is-open .padboard{opacity:1;visibility:visible;
+  transition:opacity .26s var(--ease) .16s,visibility 0s}
+
+.padwrap.is-open .padtrigger{opacity:0;visibility:hidden;pointer-events:none}
+
+/* the first paint must not animate: a visitor returning to saved notes
+   would watch the board unfold for no reason */
+.padwrap:not(.is-ready) .padstack,
+.padwrap:not(.is-ready) .padboard,
+.padwrap:not(.is-ready) .padtrigger{transition:none!important}
 
 @media (max-width:560px){
   .padtrigger{flex-wrap:wrap;gap:8px 11px}
@@ -1853,8 +1928,12 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   clip-path:inset(0 calc(100% - 54px) 0 0 round var(--r-card));
   /* not var(--ease): that curve is spent in its first fifth, which
      makes an unroll snap open and then crawl. This one keeps moving. */
+  /* this rule outranks the base .padtrigger one, and `transition` is a
+     shorthand — so the collapse properties have to be listed HERE too or
+     they are silently dropped and open/close snaps. */
   transition:clip-path .7s cubic-bezier(.16,.84,.24,1),
-    border-color .2s var(--ease),background .2s var(--ease)}
+    border-color .2s var(--ease),background-color .2s var(--ease),
+    opacity .18s linear,visibility 0s linear .18s}
 #notes .padwrap[data-reveal].shown .padtrigger{
   clip-path:inset(0 0 0 0 round var(--r-card));transition-delay:.18s}
 /* the words arrive after the room has been made for them */
@@ -2087,6 +2166,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         <p class="padsub">I read every one.</p>
       </div>
 
+      <div class="padstack">
       <button type="button" class="padtrigger" id="padTrigger">
         <span class="padtriggerplus" aria-hidden="true">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
@@ -2106,8 +2186,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         <div class="padtoast" id="padToast" role="status" hidden>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span id="padToastText">Sent. Thank you &#8212; I read every one.</span>
-          <button type="button" class="padtoastx" id="padToastX" aria-label="Dismiss">
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
         </div>
 
         <div class="padbar" role="toolbar" aria-label="Board tools">
@@ -2122,6 +2200,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
             <svg class="ico-done" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="sendlabel">Send</span></button>
         </div>
+      </div>
       </div>
     </div>
   </section>
@@ -2363,6 +2442,42 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   }
   document.querySelectorAll(".copyEmailBtn").forEach(function(btn){
     btn.addEventListener("click", copyEmail);
+  });
+
+  /* ── mailto, for people who have no mail app ──────────────────────
+     "Email me" is a plain mailto: link and there is nothing wrong with
+     it — nothing on the page cancels the click. But a mailto only does
+     something if the browser has a handler registered for it, and on a
+     machine where Mail was never set up, or in a browser where the
+     "open Gmail for email links?" prompt was dismissed once, the click
+     is silently swallowed by the OS. The visitor sees a dead button.
+
+     So: let the mailto fire as normal, then check whether the page lost
+     focus. If it did, a mail client took over and there is nothing to
+     do. If we are still here 700ms later, nothing opened — copy the
+     address and say so, so the click always produces something. */
+  var toastMsg = toast ? toast.querySelector("span") : null;
+  var toastDefault = toastMsg ? toastMsg.textContent : "";
+  var toastResetTimer;
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function(a){
+    a.addEventListener("click", function(){
+      var addr = a.getAttribute("href").replace(/^mailto:/, "").split("?")[0];
+      var left = false;
+      function mark(){ left = true; }
+      window.addEventListener("blur", mark, { once: true });
+      document.addEventListener("visibilitychange", mark, { once: true });
+      setTimeout(function(){
+        window.removeEventListener("blur", mark);
+        document.removeEventListener("visibilitychange", mark);
+        if (left || document.hidden) return;
+        if (toastMsg) toastMsg.textContent = "No mail app opened \u2014 address copied";
+        copyText(addr);
+        clearTimeout(toastResetTimer);
+        toastResetTimer = setTimeout(function(){
+          if (toastMsg) toastMsg.textContent = toastDefault;
+        }, 2600);
+      }, 700);
+    });
   });
 
   // intro loader, once per session, but always on a full reload of the home page
@@ -2614,9 +2729,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       clearBtn=document.getElementById("padClear"),
       count=document.getElementById("padCount"),
       toast=document.getElementById("padToast"),
-      toastText=document.getElementById("padToastText"),
-      toastX=document.getElementById("padToastX");
-  if(!addBtn||!blankAdd||!sendBtn||!clearBtn||!count||!toast||!toastX) return;
+      toastText=document.getElementById("padToastText");
+  if(!addBtn||!blankAdd||!sendBtn||!clearBtn||!count||!toast) return;
 
   var KEY="lb.notes", MAIL="hi.lokeshux@gmail.com", MAX=12, BAR=52;
 
@@ -2637,8 +2751,21 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     return i<0?null:{note:notes[i],el:board.querySelectorAll(".padnote")[i]};
   }
 
-  function open(){ if(wrap) wrap.classList.add("is-open") }
-  function close(){ if(wrap) wrap.classList.remove("is-open") }
+  function open(){
+    if(!wrap||wrap.classList.contains("is-open")) return;
+    /* pin the height we are about to collapse FROM, while the row is
+       still standing. Measuring only at boot was not enough: a visitor
+       returning to saved notes opens straight into the board, so the
+       row was never measured and the first close-then-open snapped. */
+    measureTrigger();
+    wrap.classList.add("is-open");
+  }
+  /* A successful send empties the board, and sync() closes an empty
+     board — which used to hide the thank-you in the same tick it was
+     shown. The one moment that has to be confirmed was the one moment
+     nothing was. So closing waits for the toast to finish; the toast's
+     own timer calls sync() again on the way out. */
+  function close(){ if(wrap && toast.hidden) wrap.classList.remove("is-open") }
 
   function sync(){
     var n=notes.length, w=written().length;
@@ -2750,7 +2877,12 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     var note={ x:x, y:y, text:"", tone:i%4, tilt:[-2,1.4,-1,2][i%4] };
     notes.push(note); save(); sync();
     var el=render(note); settle(el,note);
-    el.querySelector("textarea").focus();
+    el.classList.add("is-new");
+    el.addEventListener("animationend",function(){ el.classList.remove("is-new") },{once:true});
+    /* preventScroll: focusing a field inside a box that is still growing
+       makes the browser scroll to it, which is the other half of the
+       jump. The caret still lands in the note. */
+    el.querySelector("textarea").focus({preventScroll:true});
   }
 
   blankAdd.addEventListener("click",function(){ add(8,12) });
@@ -2771,9 +2903,15 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     hideToast(); save(); sync();
   });
 
-  function showToast(msg){ toastText.textContent=msg; toast.hidden=false }
-  function hideToast(){ toast.hidden=true }
-  toastX.addEventListener("click",hideToast);
+  /* It carries no decision, so it needs no dismiss: it says its piece
+     and goes. 4.2s is a short sentence read once, unhurried. */
+  var toastTimer=null;
+  function showToast(msg){
+    toastText.textContent=msg; toast.hidden=false;
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ hideToast(); sync() },4200);
+  }
+  function hideToast(){ clearTimeout(toastTimer); toast.hidden=true }
 
   sendBtn.addEventListener("click",function(){
     var lines=written().map(function(n,i){ return (i+1)+". "+n.text.trim() });
@@ -2821,6 +2959,19 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     }
   });
 
+  /* height:auto does not transition, so the row's real height is measured
+     and handed to CSS. Only measurable while the row is actually open. */
+  /* --trig-h is the stack's CLOSED height, i.e. the row's own height.
+     Released before reading, or the measurement is circular: offsetHeight
+     would report the value set last time and the cell could never grow
+     when the row wraps to two lines on a phone. */
+  function measureTrigger(){
+    if(!trigger||!wrap||wrap.classList.contains("is-open")) return;
+    wrap.style.setProperty("--trig-h","auto");
+    var h=trigger.offsetHeight;
+    wrap.style.setProperty("--trig-h",h+"px");
+  }
+
   var stored=read();
   if(Array.isArray(stored)&&stored.length){
     notes=stored;
@@ -2828,11 +2979,21 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     notes.forEach(function(n){ settle(render(n),n) });
   }
   sync();
+  measureTrigger();
+  /* Transitions come alive only after the first paint has settled, so a
+     visitor returning to saved notes does not watch the board unfold.
+     The timeout is not belt-and-braces: rAF does not fire in a hidden or
+     background tab, and without it the board would stay un-animated for
+     the whole session for anyone who opened the page in a new tab. */
+  function ready(){ if(wrap) wrap.classList.add("is-ready") }
+  requestAnimationFrame(function(){ requestAnimationFrame(ready) });
+  setTimeout(ready,400);
 
   var rt;
   window.addEventListener("resize",function(){
     clearTimeout(rt);
     rt=setTimeout(function(){
+      measureTrigger();
       var els=board.querySelectorAll(".padnote");
       notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
       save();
