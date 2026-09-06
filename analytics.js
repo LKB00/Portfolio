@@ -113,11 +113,29 @@
   }
 
   // ---- 3. section reached (powers the page-map drop-off chart) -----------
-  // Watches every <section> and every <h2>. Reports the first time each
-  // one is seen, so you learn WHICH section loses readers, not just a %.
+  // Reports each content section the first time it crosses the middle of the
+  // viewport.
+  //
+  // NOT 50% visibility, which is what this used to do. A section taller than
+  // twice the viewport can never BE 50% visible, so on the merge case study
+  // s6 (2350px) and s7 (3773px) were unreportable at every scroll position on
+  // every device — and s7 is the largest section on the page. Measured on the
+  // live site at an 841px viewport they topped out at 36% and 22%. A midline
+  // crossing is height-independent and means the same thing on a phone as on
+  // a desktop.
+  //
+  // The selector is section[id] alone. It used to also carry "main h2,
+  // article h2", which matched nothing because these pages had no <main>;
+  // now that they do, leaving it in would report every section twice under
+  // two different names.
+  //
+  // top, next and contact are excluded: a title block, a link to the next
+  // case study and a footer are not content, and counting them flattens the
+  // drop-off curve at both ends.
   function watchSections() {
     if (!("IntersectionObserver" in window)) return;
-    var nodes = document.querySelectorAll("section[id], main h2, article h2");
+    var nodes = [].slice.call(document.querySelectorAll("section[id]"))
+      .filter(function (el) { return !/^(top|next|contact)$/i.test(el.id); });
     if (!nodes.length) return;
 
     var seen = {};
@@ -125,13 +143,16 @@
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         var el = en.target;
-        var name = el.id || (el.textContent || "").trim().slice(0, 48);
+        // The readable label wins, so the drop-off map is labelled with what
+        // a reader actually saw. The id stays the fallback, so a page nobody
+        // has annotated still reports something.
+        var name = el.getAttribute("data-section") || el.id;
         if (!name || seen[name]) return;
         seen[name] = true;
         track("section-reached", { page: page, section: name });
         io.unobserve(el);
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0, rootMargin: "-45% 0px -45% 0px" });
 
     nodes.forEach(function (n) { io.observe(n); });
   }
