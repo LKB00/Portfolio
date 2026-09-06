@@ -18,6 +18,49 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
+      # analytics.js was silently flattened once already: an "Add files via
+      # upload" commit replaced the 160-line event script with a 15-line stub,
+      # and three weeks of scroll-depth, section-reached and time-on-page went
+      # missing before anyone noticed. api/stats.js reads these names by hand,
+      # so a missing one is not a lint warning — it is a dead chart. Fail loud.
+      - name: Assert analytics.js still emits every event the dashboard reads
+        run: |
+          python3 - <<'PY'
+          import pathlib, sys
+
+          REQUIRED = [
+              "passed-hero", "scroll-depth", "section-reached", "card-click",
+              "resume-open", "email-copied", "social-click", "time-on-page",
+              "resume-click", "email-click", "outbound",
+          ]
+
+          f = pathlib.Path("analytics.js")
+          if not f.exists():
+              sys.exit("FAIL: analytics.js is missing from the repo root.")
+
+          src = f.read_text(encoding="utf-8", errors="ignore")
+
+          missing = [n for n in REQUIRED if f'"{n}"' not in src and f"'{n}'" not in src]
+
+          # The live script tag points data-before-send at this function. If it
+          # is undefined the tag silently does nothing and / and /index.html
+          # are counted as two separate pages.
+          if "pfBeforeSend" not in src:
+              missing.append("pfBeforeSend (function definition)")
+
+          if missing:
+              print(f"analytics.js is {len(src)} bytes and is missing:")
+              for n in missing:
+                  print(f"  - {n}")
+              sys.exit(
+                  "\nFAIL: analytics.js has lost events the dashboard depends on.\n"
+                  "This is what a flattened upload looks like. Restore the full\n"
+                  "script before merging — do not delete names from the list."
+              )
+
+          print(f"OK: analytics.js ({len(src)} bytes) emits all {len(REQUIRED)} required events.")
+          PY
+
       - name: Fix script tags
         run: |
           python3 - <<'PY'
@@ -39,9 +82,13 @@ jobs:
               print(("DIR  " if p.is_dir() else "FILE ") + p.name)
           print("-----------------------------\n")
 
+          # dashboard.html is excluded on purpose: it reports on this site's
+          # traffic, so injecting the tracker into it would mean opening the
+          # dashboard pollutes the numbers the dashboard is showing.
           files = [f for f in sorted(root.rglob("*.html"))
                    if ".github" not in f.parts and "node_modules" not in f.parts
-                   and "assets" not in f.parts]
+                   and "assets" not in f.parts
+                   and f.name != "dashboard.html"]
 
           if not files:
               print("No .html files found anywhere in the repo.")
