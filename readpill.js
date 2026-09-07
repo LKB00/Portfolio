@@ -32,8 +32,11 @@
   // is true without any data: you have been counted.
   function show(n) {
     if (!n || !line) return;
-    line.textContent = "You’re one of " + num(n) + " readers";
-    if (sub) sub.textContent = "See where they stop reading";
+    // The badge and the sentence do one job between them: the +1 is the
+    // subject, the line names it. Saying "you have been counted" beside a
+    // visible +1 was the same fact twice.
+    line.textContent = "That +1 was you. " + num(n) + " so far.";
+    if (sub) sub.textContent = "See how far the others got";
   }
 
   function cached() {
