@@ -51,7 +51,23 @@
   var rnd = Math.round;
   var num = function (n) { return (n == null ? 0 : n).toLocaleString('en-GB'); };
   function secs(s) { return s == null ? '—' : s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's'; }
-  function day(iso) { return new Date(iso + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); }
+  /* This appended 'T00:00:00' unconditionally, which assumes a date-only
+     string. The demo builds one (toISOString().slice(0,10)); the real
+     endpoint returns a full timestamp, and '...582ZT00:00:00' is not a
+     date -- so the live header read "Invalid Date - Invalid Date vs
+     Invalid Date - Invalid Date" while the demo read correctly. Exactly
+     the demo-and-real divergence the build guard exists for, in a shape
+     the guard does not cover.
+
+     Date-only still gets the suffix on purpose: bare 'YYYY-MM-DD' parses
+     as UTC and would render as the day before anywhere west of it. */
+  function day(iso) {
+    if (iso == null) return '';
+    var str = String(iso);
+    var d = /^\d{4}-\d{2}-\d{2}$/.test(str) ? new Date(str + 'T00:00:00') : new Date(str);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  }
 
   /* ================= uncertainty =================
    * A rate from 45 of 104 sessions is not 43%, it is 43% give or take 9. The
@@ -173,8 +189,11 @@
     var x = function (i) { return CH.L + (i * (CH.R - CH.L)) / (n - 1); };
     var y = function (v) { return CH.B - (v / 100) * (CH.B - CH.T); };
 
-    var worst = 1, fall = -1;
+    // percentage points, so a subtraction of two floats. Printed raw it
+    // read "-11.100000000000009 at Experience".
+    var worst = 1, fall = -Infinity;
     for (var i = 1; i < n; i++) { var f = s[i - 1].reach - s[i].reach; if (f > fall) { fall = f; worst = i; } }
+    fall = Math.round(fall);
 
     var pts = s.map(function (sec, i) { return x(i) + ',' + y(sec.reach); }).join(' ');
     var area = 'M' + x(0) + ',' + CH.B + ' L' +
@@ -236,7 +255,11 @@
         '<span class="chartwrap">' + c.svg + '</span>' +
         '<span class="xlab"><span>' + esc(p.sections[0].name) + '</span>' +
           '<span>' + esc(p.sections[p.sections.length - 1].name) + '</span></span>' +
-        '<span class="drop">−' + c.fall + ' at ' + esc(c.worst) + '</span>' +
+        (c.fall > 0
+          ? '<span class="drop">−' + c.fall + ' at ' + esc(c.worst) + '</span>'
+          // a single reader who saw every section leaves every step equal,
+          // and "−0 at Who I was working with" named a drop that is not there
+          : '<span class="drop">no single drop-off</span>') +
       '</button>';
     }).join('');
   }
@@ -362,9 +385,18 @@
       if (!deepest || last.count > deepest.count) deepest = { page: p.page, n: last.count };
     });
 
+    /* passedHero is a count of events, not of people: one visitor scrolling
+       six pages passes the hero six times. Against 6 visitors it printed
+       "17 got past the hero", which reads as seventeen people and cannot
+       be true. Events are counted in times; only `visitors` is people. */
     var out = v + (v === 1 ? ' visitor' : ' visitors');
-    out += hero ? ', ' + hero + ' got past the hero' : ', none scrolled past the hero';
-    if (deepest && deepest.n) out += ', ' + deepest.n + ' reached the end of ' + deepest.page;
+    out += hero
+      ? ', the hero was passed ' + hero + (hero === 1 ? ' time' : ' times')
+      : ', nobody scrolled past the hero';
+    if (deepest && deepest.n) {
+      out += ', ' + deepest.page + ' was read to the end ' +
+        deepest.n + (deepest.n === 1 ? ' time' : ' times');
+    }
     out += act ? ', and ' + act + (act === 1 ? ' got in touch.' : ' got in touch.') : ', and nobody got in touch.';
     set('verdict', out.charAt(0).toUpperCase() + out.slice(1));
   }
@@ -537,9 +569,14 @@
     renderFilters();
 
     // context: which period, against which period, and how fresh
-    if (d.range.from && d.range.to) {
-      set('meta.period', day(d.range.from) + ' – ' + day(d.range.to) +
-        (d.range.prevFrom ? '  vs  ' + day(d.range.prevFrom) + ' – ' + day(d.range.prevTo) : ''));
+    // built from what parses, so an unreadable date leaves the line out
+    // rather than printing the words "Invalid Date" at the top of the page
+    var a = day(d.range.from), b = day(d.range.to);
+    if (a && b) {
+      var pa = day(d.range.prevFrom), pb = day(d.range.prevTo);
+      set('meta.period', a + ' – ' + b + (pa && pb ? '  vs  ' + pa + ' – ' + pb : ''));
+    } else {
+      set('meta.period', '');
     }
     set('meta.updated', 'as of ' + new Date().toLocaleTimeString('en-GB',
       { hour: '2-digit', minute: '2-digit' }));
