@@ -187,7 +187,9 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
 .i:hover::after{content:attr(data-tip);position:absolute;left:0;top:22px;width:252px;z-index:60;
   background:var(--dark);color:var(--onDark);border-radius:var(--r-sm);padding:var(--s-3) var(--s-4);
   font-family:var(--display);font-size:var(--fs-small);font-weight:400;line-height:1.5;
-  letter-spacing:var(--tr-body);text-transform:none;text-align:left;box-shadow:var(--shadow-float)}
+  letter-spacing:var(--tr-body);text-transform:none;text-align:left;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--onDark) 20%,transparent),
+             0 8px 24px -8px rgba(0,0,0,.55)}
 .thin-flag{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-mono);color:var(--thin)}
 
 /* ── figures ─────────────────────────────────────────────── */
@@ -535,7 +537,7 @@ body.demo{padding-top:34px}
     <section class="card c12">
       <div class="head">
         <h2 class="t-h1">Where in the world
-          <span class="i" data-tip="Shaded by how many readers each country sends. Big countries look important on a map whether or not they are, so the honest counts sit in the list beside it. Cities come from IP lookup, which will happily place a VPN user three countries from home — treat a single city as a rumour, not a fact.">i</span></h2>
+          <span class="i" data-tip="Cities are guessed from IP, and VPNs lie. Treat any one city as a rumour.">i</span></h2>
         <span class="hint" data-slot="map.hint">—</span>
       </div>
       <div class="locgrid">
@@ -559,7 +561,7 @@ body.demo{padding-top:34px}
     <section class="card invert c12">
       <div class="head">
         <h2 class="t-h1">Where people give up
-          <span class="i" data-tip="Every section of every page, in the order you'd meet them, measured against whichever one pulled the biggest crowd. A gentle slope is normal — people have lives. A cliff is a section I should probably rewrite. All three share one scale, so you're welcome to compare them unkindly.">i</span></h2>
+          <span class="i" data-tip="How far people got before wandering off. A gentle slope is life. A cliff is my writing.">i</span></h2>
         <span class="hint">Pick one to zoom in</span>
       </div>
       <div class="mult" data-slot="retention.cells"><p class="empty">Counting…</p></div>
@@ -567,7 +569,7 @@ body.demo{padding-top:34px}
     <section class="card c6">
       <div class="head">
         <h2 class="t-h1">Phones vs laptops
-          <span class="i" data-tip="Counts, not percentages. Dividing event totals by people once told me 400% of visitors finished a page, which was flattering and completely false. Sections reached is the honest version — and if phones get a fraction as far as laptops, that's my layout's fault, not the phone's.">i</span></h2>
+          <span class="i" data-tip="Counts, not percentages. The percentages once claimed 400%, which was flattering and false.">i</span></h2>
         <span class="hint">how far each one got</span>
       </div>
       <div data-slot="devices.rows"><p class="empty">Counting…</p></div>
@@ -576,7 +578,7 @@ body.demo{padding-top:34px}
     <section class="card c6">
       <div class="head">
         <h2 class="t-h1">How they found me
-          <span class="i" data-tip="Wherever your browser admits you came from. Typed the address, followed a link someone sent you privately, or arrived from an app that keeps its secrets? You land in “direct” — which is most of you, and is not a hole in the tracking.">i</span></h2>
+          <span class="i" data-tip="Typed the address, or came from a private link? You count as direct. Most of you do.">i</span></h2>
         <span class="hint">readers each</span>
       </div>
       <div data-slot="sources.rows"><p class="empty">Counting…</p></div>
@@ -592,10 +594,10 @@ body.demo{padding-top:34px}
         <div class="seg sm" role="tablist" aria-label="Detail">
           <button type="button" role="tab" id="tab-pages" aria-controls="panel-pages" aria-selected="true"
                   data-hint="One page, counted once"
-                  data-info="/, /index.html, /#top and /index.html#top are all the same page wearing different hats. They get squashed into one before anything is sent, so the homepage doesn't get to count as four.">Pages</button>
+                  data-info="/, /index.html and /#top are one page wearing three hats. Counted once.">Pages</button>
           <button type="button" role="tab" id="tab-clicks" aria-controls="panel-clicks" aria-selected="false"
                   data-hint="Every click, all pages"
-                  data-info="Every button gets its own name. Umami only hands back totals, so if two buttons shared one they would quietly add up into a number that means nothing.">Clicks</button>
+                  data-info="Every button gets its own name, or they'd add up into one meaningless number.">Clicks</button>
         </div>
         <span class="headctl">
           <span class="hint" data-slot="detail.hint">One page, counted once</span>

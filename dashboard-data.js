@@ -418,17 +418,19 @@
     /* Same four facts, said by a person. Every clause still drops when its
        number is zero, and events are still counted in times rather than in
        people -- the voice changed, nothing it claims did. */
+    /* One sentence, not four clauses. Still counted in times, not people:
+       one reader on six pages scrolls past the hero six times. */
     var out = (v === 1 ? 'One person' : v + ' people') + ' stopped by';
     out += hero
-      ? '. The hero got scrolled past ' + hero + (hero === 1 ? ' time' : ' times')
-      : '. Nobody made it past the hero';
+      ? ', scrolled past hello ' + hero + (hero === 1 ? ' time' : ' times')
+      : ', none of them past hello';
     if (deepest && deepest.n) {
-      out += ', ' + pname(deepest.page) + ' was read all the way down ' +
+      out += ', finished ' + pname(deepest.page) + ' ' +
         deepest.n + (deepest.n === 1 ? ' time' : ' times');
     }
     out += act
-      ? ', and ' + (act === 1 ? 'one of you said hello back.' : act + ' of you said hello back.')
-      : ", and nobody's said hello back yet.";
+      ? ', and ' + (act === 1 ? 'one said hello back.' : act + ' said hello back.')
+      : ", and nobody said hello back.";
     set('verdict', out);
   }
 
