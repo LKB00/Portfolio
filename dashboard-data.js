@@ -12,7 +12,6 @@
  *            city:[{code,label,visitors,readRate}] },  // code = the country it sits in
  *   (metrics?type=country|region|city — all three exist in Umami)
  *   days:[{date,visitors,opened,read,acted,note}],
- *   apps:[{company,campaign,sent,opened,stage,stages,seconds,resume}],
  *   pages:[{path,visitors,median,read}], cta:[{label,clicks}] }
  *
  * Filters cross-cut everything: the server recomputes the whole payload for the
@@ -67,25 +66,23 @@
   }
   function overlap(a, b) { return a.lo <= b.hi && b.lo <= a.hi; }
 
-  /* ================= the quality scale =================
-   * One meaning for colour on this page: how well a segment reads, measured
-   * against the site average. Below MIN_N it gets no colour at all — grey is
-   * "not judgeable yet", which is a statement, not a gap.
+  /* ================= the sequential scale =================
+   * One quantitative variable, so one hue in steps. The map used to rank
+   * countries good/average/poor by finish rate — a variable the endpoint no
+   * longer returns, which left band() falling through to its "average" branch
+   * and painting every country amber: a verdict about data that did not
+   * exist. Volume has no good or bad direction, so nothing here implies one.
    */
-  var BAND = [
-    { k: 'good', cls: 'q-good', svg: 'g' },
-    { k: 'mid',  cls: 'q-mid',  svg: 'm' },
-    { k: 'poor', cls: 'q-poor', svg: 'p' },
-    { k: 'none', cls: 'q-none', svg: 'n' }
-  ];
-  function band(rate, avg, n) {
-    if (n != null && n < MIN_N) return BAND[3];
-    if (!avg) return BAND[1];
-    var r = rate / avg;
-    if (r >= 1.25) return BAND[0];
-    if (r >= 0.75) return BAND[1];
-    return BAND[2];
+  var SEQ = ['s0', 's1', 's2', 's3', 's4'];
+  function seqBand(v, max) {
+    if (!v || !max) return SEQ[0];
+    var r = v / max;
+    if (r > 0.66) return SEQ[4];
+    if (r > 0.33) return SEQ[3];
+    if (r > 0.12) return SEQ[2];
+    return SEQ[1];
   }
+
 
   /* ================= tooltip ================= */
   var tip = $('#tip');
@@ -175,17 +172,18 @@
 
     var grid = [100, 50, 0].map(function (v) {
       return '<line x1="' + CH.L + '" y1="' + y(v) + '" x2="' + CH.R + '" y2="' + y(v) +
-             '" style="stroke:var(--line);stroke-width:1"/>' +
+             '" style="stroke:var(--rule);stroke-width:1"/>' +
              '<text x="' + (CH.L - 6) + '" y="' + y(v) + '" text-anchor="end" ' +
              'dominant-baseline="middle" class="ytick">' + v + '</text>';
     }).join('');
 
-    var endBand = band(s[n - 1].reach, p.avgEnd, p.visitors);
+    // The steepest fall is the finding; the last point is just the end of the
+    // line. Neither is good or bad, so neither gets a verdict colour — the
+    // fall is marked by accent and radius, which survives colour blindness.
     var dots = s.map(function (sec, i) {
-      var fill = i === worst ? 'var(--q-poor)'
-               : i === n - 1 ? 'var(--' + endBand.cls + ')' : 'var(--ink)';
+      var fill = i === worst ? 'var(--mark)' : 'currentColor';
       return '<circle cx="' + x(i) + '" cy="' + y(sec.reach) + '" r="' +
-        (i === worst || i === n - 1 ? CH.R_MAX : 2.2) + '" style="fill:' + fill + '"/>';
+        (i === worst ? CH.R_MAX : 2.2) + '" style="fill:' + fill + '"/>';
     }).join('');
 
     var bw = (CH.R - CH.L) / (n - 1);
@@ -200,9 +198,9 @@
       svg: '<svg viewBox="0 0 ' + CH.W + ' ' + CH.H + '" role="img" aria-label="Retention through ' +
         esc(p.page) + '">' + grid +
         '<path d="' + area + '" style="fill:var(--ink);fill-opacity:.07"/>' +
-        '<polyline points="' + pts + '" style="fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round"/>' +
+        '<polyline points="' + pts + '" style="fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round"/>' +
         '<line x1="' + x(worst - 1) + '" y1="' + y(s[worst - 1].reach) + '" x2="' + x(worst) +
-          '" y2="' + y(s[worst].reach) + '" style="stroke:var(--q-poor);stroke-width:1.9"/>' +
+          '" y2="' + y(s[worst].reach) + '" style="stroke:var(--mark);stroke-width:1.9"/>' +
         dots + hits + '</svg>',
       worst: s[worst].name, fall: fall
     };
@@ -269,33 +267,40 @@
   }
 
   /* ================= source quality ================= */
-  function renderQuality(rows) {
-    var el = slot('quality.rows');
-    if (!rows.length) { el.innerHTML = '<p class="empty">No sources in this segment</p>'; return; }
-    var tv = rows.reduce(function (a, r) { return a + r.visitors; }, 0);
-    var mean = tv ? rows.reduce(function (a, r) { return a + r.readRate * r.visitors; }, 0) / tv : 0;
-    var sorted = rows.slice().sort(function (a, b) { return b.readRate - a.readRate; });
+  /* ================= depth by device =================
+   * Two bars per row on one common scale, which is the comparison worth
+   * making: how many sections a device's readers actually reach. Counts, not
+   * rates — Umami returns event totals and unique visitors, and dividing one
+   * by the other is what produced a 400% completion rate. No colour: there
+   * are two series and a legend does that job without spending a hue.
+   */
+  function renderDevices(rows) {
+    var el = slot('devices.rows');
+    if (!el) return;
+    rows = (rows || []).filter(function (r) { return r.visitors > 0; })
+      .sort(function (a, b) { return (b.sectionsReached || 0) - (a.sectionsReached || 0); });
+    if (!rows.length) { el.innerHTML = '<p class="empty">No devices in this segment</p>'; return; }
 
-    el.innerHTML =
-      '<div class="lgrid"><div></div><div class="reflab"><span style="position:absolute;left:' + pct(mean) +
-        '%;transform:translateX(-50%);white-space:nowrap">avg ' + rnd(mean) + '%</span></div><div></div></div>' +
-      sorted.map(function (r) {
-        var thin = r.visitors < MIN_N, on = state.filters.source === r.label;
-        var b = band(r.readRate, mean, r.visitors);
-        return '<button class="lgrid lrow ' + b.cls + (thin ? ' low' : '') + '" data-filter-source="' + esc(r.label) +
-          '" aria-pressed="' + on + '" data-tip-label="' + esc(r.label) +
-          '" data-tip-value="' + r.visitors + ' visitors · ' + rnd(r.readRate) + '% finish, 95% CI ' +
-            Math.round(wilson(r.readRate * r.visitors / 100, r.visitors).lo) + '–' +
-            Math.round(wilson(r.readRate * r.visitors / 100, r.visitors).hi) + '%">' +
-          '<span class="nm">' + esc(r.label) + '</span>' +
-          '<span class="ax"><span class="refline" style="left:' + pct(mean) + '%"></span>' +
-            '<span class="stem" style="width:' + pct(r.readRate) + '%"></span>' +
-            '<span class="dot" style="left:' + pct(r.readRate) + '%;background:currentColor"></span></span>' +
-          '<span class="pc">' + sig(r.readRate, wilson(r.readRate * r.visitors / 100, r.visitors).half) +
-            '%<small>' + r.visitors + ' vis</small></span>' +
-        '</button>';
-      }).join('') +
-      '<div class="lgrid"><div></div><div class="ticks"><span>0</span><span>50</span><span>100%</span></div><div></div></div>';
+    // One bar, one scale. Plotting visitors beside sections reached put an
+    // 8x magnitude gap on a shared axis and squashed the smaller series into
+    // a sliver — two series that do not share a unit do not share an axis.
+    // Sections reached is the question; visitors is the context, and context
+    // reads fine as a number.
+    var max = rows.reduce(function (m, r) { return Math.max(m, r.sectionsReached || 0); }, 0) || 1;
+
+    el.innerHTML = rows.map(function (r) {
+      var unknown = r.sectionsReached == null;
+      var per = (!unknown && r.visitors) ? (r.sectionsReached / r.visitors) : null;
+      return '<div class="dvrow">' +
+        '<span class="nm">' + esc(r.device) + '</span>' +
+        '<span class="bars">' +
+          (unknown ? '' : '<i style="width:' + pct(((r.sectionsReached || 0) / max) * 100) + '%"></i>') +
+        '</span>' +
+        '<span class="vv">' + (unknown ? '—' : num(r.sectionsReached)) +
+          '<small>' + num(r.visitors) + ' vis' +
+          (per == null ? '' : ' · ' + (Math.round(per * 10) / 10) + ' each') + '</small></span>' +
+      '</div>';
+    }).join('');
   }
 
   /* ================= world map =================
@@ -311,24 +316,24 @@
   function renderMap(places) {
     var el = slot('map.svg');
     if (!window.WORLD) { el.innerHTML = '<p class="noloc">Map failed to load.</p>'; return; }
-    var by = {}, tot = 0, wsum = 0;
-    places.forEach(function (p) { by[p.code] = p; tot += p.visitors; wsum += p.readRate * p.visitors; });
-    var avg = tot ? wsum / tot : 0;
+    var by = {}, max = 0, tot = 0;
+    places.forEach(function (p) { by[p.code] = p; tot += p.visitors; max = Math.max(max, p.visitors); });
 
     var paths = Object.keys(WORLD.c).map(function (k) {
       var p = by[k];
-      var cls = p ? band(p.readRate, avg, p.visitors).svg + ' on' : '';
+      var cls = p ? seqBand(p.visitors, max) + ' on' : 's0';
       if (p && state.filters.country === k) cls += ' sel';
       var attrs = p
         ? ' data-filter-country="' + k + '" data-tip-label="' + esc(cname(k)) +
-          '" data-tip-value="' + p.visitors + ' visitors · ' + rnd(p.readRate) + '% finish"'
+          '" data-tip-value="' + p.visitors + (p.visitors === 1 ? ' visitor' : ' visitors') + '"'
         : '';
       return '<path class="' + cls + '" d="' + WORLD.c[k].d + '"' + attrs + '></path>';
     }).join('');
 
     el.innerHTML = '<svg viewBox="' + WORLD.viewBox + '" role="img" aria-label="Visitors by country">' +
       paths + '</svg>';
-    set('map.hint', places.length + ' countries · avg ' + rnd(avg) + '% finish');
+    set('map.hint', places.length + (places.length === 1 ? ' country · ' : ' countries · ') +
+      num(tot) + (tot === 1 ? ' visitor' : ' visitors'));
   }
 
   /* ================= places list =================
@@ -348,11 +353,9 @@
     }
     var max = rows.reduce(function (a, p) { return Math.max(a, p.visitors); }, 0) || 1;
     var tot = rows.reduce(function (a, p) { return a + p.visitors; }, 0);
-    var avg = tot ? rows.reduce(function (a, p) { return a + p.readRate * p.visitors; }, 0) / tot : 0;
 
     el.innerHTML = rows.slice().sort(function (a, b) { return b.visitors - a.visitors; })
       .map(function (p) {
-        var b = band(p.readRate, avg, p.visitors);
         // only country rows filter — Umami has no region/city filter on the
         // endpoints this dashboard uses, so those rows stay read-only
         var isCountry = state.level === 'country';
@@ -362,7 +365,7 @@
         var attrs = isCountry
           ? ' data-filter-country="' + esc(p.code) + '" aria-pressed="' + (state.filters.country === p.code) + '"'
           : '';
-        return '<' + tag + ' class="crow ' + b.cls + (isCountry ? '' : ' flat') + '"' + attrs +
+        return '<' + tag + ' class="crow ' + (isCountry ? '' : ' flat') + '"' + attrs +
           ' data-tip-label="' + esc(nm) + '" data-tip-value="' + p.visitors + ' visitors · ' +
             rnd(p.readRate) + '% finish">' +
           '<span class="nm">' + esc(nm) + sub + '</span>' +
@@ -446,8 +449,7 @@
       }),
       cta: (a.ctas && a.ctas.byName ? a.ctas.byName : []).map(function (c) {
         return { label: c.name, clicks: c.count };
-      }),
-      apps: []
+      })
     };
   }
 
@@ -472,8 +474,8 @@
       return p && Array.isArray(p.sections) && p.sections.length >= 2;
     });
     d.quality = Array.isArray(d.quality) ? d.quality : [];
+    d.devices = Array.isArray(d.devices) ? d.devices : [];
     d.days = (Array.isArray(d.days) ? d.days : []).filter(function (x) { return x && x.date; });
-    d.apps = Array.isArray(d.apps) ? d.apps : [];
     d.pages = Array.isArray(d.pages) ? d.pages : [];
     d.cta = Array.isArray(d.cta) ? d.cta : [];
     d.places = Array.isArray(d.places) ? { country: d.places } : (d.places || {});
@@ -524,7 +526,7 @@
           '× likelier to open the CV. The 95% intervals do not overlap, so the gap is real.'
         : 'The two intervals overlap — at this sample size the difference is not yet real.');
 
-    renderQuality(d.quality);
+    renderDevices(d.devices);
 
     var places = d.places;
     lastPlaces = places;
@@ -551,33 +553,13 @@
     set('days.to', day(d.days[d.days.length - 1].date));
     }
 
-    /* applications */
-    var apps = d.apps.slice().sort(function (a, b) {
-      return (!!b.opened - !!a.opened) || (b.stage - a.stage) || (b.seconds - a.seconds);
-    });
-    html('apps.rows', apps.length ? apps.map(function (a) {
-      var steps = '';
-      for (var i = 0; i < a.stages; i++) steps += '<i class="' + (i < a.stage ? (i === a.stages - 1 ? 'end' : 'on') : '') + '"></i>';
-      var src = 'apply · ' + a.campaign;
-      return '<tr class="' + (a.opened ? '' : 'cold') + '" data-filter-source="' + esc(src) +
-        '" aria-pressed="' + (state.filters.source === src) + '">' +
-        '<td class="trunc"><span class="dot6' + (a.opened ? ' on' : '') + '"></span>' + esc(a.company) + '</td>' +
-        '<td class="dim mono">' + esc(a.sent) + '</td>' +
-        '<td class="dim mono">' + (a.opened ? esc(a.opened) : '—') + '</td>' +
-        '<td><span class="track">' + steps + '</span></td>' +
-        '<td class="r">' + (a.opened ? secs(a.seconds) : '—') + '</td>' +
-        '<td class="r">' + (a.resume ? '✓' : '') + '</td></tr>';
-    }).join('') : '<tr><td colspan="6" class="empty">No tagged applications</td></tr>');
 
-    var pv = d.pages.reduce(function (a, r) { return a + r.visitors; }, 0);
-    var pavg = pv ? d.pages.reduce(function (a, r) { return a + r.read * r.visitors; }, 0) / pv : 0;
     html('pages.rows', d.pages.map(function (r) {
       return '<tr data-filter-page="' + esc(r.path) + '" aria-pressed="' + (state.filters.page === r.path) + '">' +
         '<td class="trunc mono">' + esc(r.path) + '</td>' +
         '<td class="r">' + r.visitors + '</td>' +
-        '<td class="r">' + secs(r.median) + '</td>' +
-        '<td class="r ' + band(r.read, pavg, r.visitors).cls + '">' +
-          (r.visitors < MIN_N ? '<span class="thin-flag">thin</span>' : r.read + '%') + '</td></tr>';
+        '<td class="r">' + (r.median == null ? '—' : secs(r.median)) + '</td>' +
+        '<td class="r">' + (r.read == null ? '—' : r.read + '%') + '</td></tr>';
     }).join(''));
 
     var cmax = d.cta.reduce(function (a, r) { return Math.max(a, r.clicks); }, 0) || 1;
@@ -731,6 +713,11 @@
       },
       retention: R,
       payoff: { deep: { n: n(24), resume: n(11), contact: n(4) }, shallow: { n: n(39), resume: n(3), contact: n(1) } },
+      devices: [
+        { device: 'laptop', visitors: n(35), sectionsReached: n(290), scrollDepthEvents: n(157) },
+        { device: 'mobile', visitors: n(27), sectionsReached: n(66), scrollDepthEvents: n(42) },
+        { device: 'desktop', visitors: n(4), sectionsReached: n(8), scrollDepthEvents: n(10) }
+      ],
       quality: Q,
       days: series,
       places: (function () {
@@ -757,13 +744,6 @@
                     ['SG','Singapore',7,46],['AE','Dubai',5,23],['PL','Warsaw',4,49]], true)
         };
       }()),
-      apps: [
-        { company: 'Stripe', campaign: 'stripe', sent: '31 Aug', opened: '2 Sep', stage: 5, stages: 5, seconds: 412, resume: true },
-        { company: 'Razorpay', campaign: 'razorpay', sent: '1 Sep', opened: '1 Sep', stage: 4, stages: 5, seconds: 268, resume: true },
-        { company: 'Linear', campaign: 'linear', sent: '2 Sep', opened: '4 Sep', stage: 2, stages: 5, seconds: 74, resume: false },
-        { company: 'Zerodha', campaign: 'zerodha', sent: '3 Sep', opened: '3 Sep', stage: 1, stages: 5, seconds: 21, resume: false },
-        { company: 'Notion', campaign: 'notion', sent: '4 Sep', opened: null, stage: 0, stages: 5, seconds: 0, resume: false }
-      ],
       pages: [
         { path: '/', visitors: n(63), median: 42, read: rate(18) },
         { path: '/app-merge', visitors: n(31), median: 214, read: rate(41) },
