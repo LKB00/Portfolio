@@ -91,11 +91,27 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
    rule is later, so it won: the app bar collapsed to 8px of solid ink and
    read as a black stripe across the top of the page with the header's own
    contents spilling out of it. */
-.appbar{max-width:var(--w);margin:0 auto;padding:0 var(--s-5);
+.appbar{position:relative;max-width:var(--w);margin:0 auto;padding:0 var(--s-5);
   display:flex;align-items:center;gap:var(--s-5);flex-wrap:wrap}
 .appbar .brand{font-size:var(--fs-h2);font-weight:500;letter-spacing:var(--tr-h2);white-space:nowrap}
 .appbar .spacer{flex:1 1 auto}
-.navpill{display:flex;align-items:center;gap:2px}
+
+/* The nav sat at the far right of a full-width bar. Every other page on
+   the site floats it in the middle of the window, so arriving here moved
+   the one control that is the same everywhere -- and the page stopped
+   feeling like part of the site at the exact moment it was entered.
+
+   It is centred on the bar itself rather than the viewport: the bar is
+   already centred and max-width:var(--w), so the pill lands where the
+   portfolio's does while the dashboard's own controls keep the ends.
+   Same pill as there, too -- translucent surface, blur, --r-pill -- so
+   it is recognisably the same object and not a copy of one. */
+.navpill{position:absolute;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:2px;padding:4px 5px;
+  border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--surface) 85%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);
+  -webkit-backdrop-filter:blur(12px) saturate(1.4)}
 .navlink{display:inline-flex;align-items:center;padding:4px 10px;border-radius:var(--r-pill);
   font-size:var(--fs-body);font-weight:500;letter-spacing:var(--tr-body);
   color:var(--muted);text-decoration:none;transition:.2s var(--ease)}
@@ -444,6 +460,9 @@ body.demo{padding-top:34px}
 .empty{color:var(--faint);font-size:var(--fs-body);padding:var(--s-4) 0}
 
 @media(max-width:1000px){
+  /* the ends of the bar reach the middle at this width, so the pill stops
+     being centred and goes back to sitting at the end of the row */
+  .navpill{position:static;transform:none}
   .c7,.c5,.c6,.c8,.c4{grid-column:span 12}
   .figs{grid-template-columns:repeat(2,1fr)}
   .verdict{font-size:var(--fs-body)}
