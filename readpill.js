@@ -20,9 +20,12 @@
   var KEY = "lb-readers";
   var TIMEOUT_MS = 6000;
 
-  var API = /(^|\.)lokeshbhatia\.com$/.test(location.hostname)
-    ? "https://www.lokeshbhatia.com/api/stats"
-    : "/api/stats";
+  // Same rule as the dashboard: the apex loses POST bodies to its redirect, a
+  // local page has no /api of its own, and a preview deployment does.
+  var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname) ||
+              location.protocol === "file:";
+  var LIVE_HOST = /(^|\.)lokeshbhatia\.com$/.test(location.hostname);
+  var API = (LIVE_HOST || LOCAL) ? "https://www.lokeshbhatia.com/api/stats" : "/api/stats";
 
   function num(n) {
     try { return Number(n).toLocaleString("en-GB"); } catch (e) { return String(n); }
