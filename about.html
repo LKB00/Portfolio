@@ -808,11 +808,12 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
   font-family:var(--mono);font-size:10px;font-weight:500;font-style:normal;
   box-shadow:0 0 0 2px var(--card);background:var(--surface);color:var(--faint)}
 #contact .rp-faces i + i{margin-left:-9px}
-/* the three behind are quiet on purpose: they are other people, and the one
-   that matters is the reader's own */
-#contact .rp-faces i:nth-child(1){background:color-mix(in srgb,var(--ink) 13%,transparent)}
-#contact .rp-faces i:nth-child(2){background:color-mix(in srgb,var(--ink) 9%,transparent)}
-#contact .rp-faces i:nth-child(3){background:color-mix(in srgb,var(--ink) 6%,transparent)}
+/* One tone, not a fade. The original ramp ran 13/9/6% ink, which measured
+   1.32, 1.20 and 1.13 against the white pill — three circles nobody could
+   see, carrying the meaning "other people". A facepile does not gradient
+   away; overlap and the ring already say which is in front. 52% is 3.69 on
+   white and 4.97 on the dark pill. */
+#contact .rp-faces i{background:color-mix(in srgb,var(--ink) 52%,transparent)}
 /* Visible by default. If the observer never fires — a background tab, a
    browser without it, a reader who lands at the footer already — the pill is
    still finished, and the animation is the thing that is missing rather than
@@ -911,7 +912,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
   white-space:nowrap;border:0}
 </style>
 <script defer src="./analytics.js?v=3"></script>
-<script defer src="./readpill.js?v=3"></script>
+<script defer src="./readpill.js?v=4"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
 <body>
