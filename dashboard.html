@@ -532,26 +532,17 @@ body.demo{padding-top:34px}
 
   <div class="grid">
 
-    <section class="card invert c12">
-      <div class="head">
-        <h2 class="t-h1">Where people give up
-          <span class="i" data-tip="Every section of every page, in the order a reader meets them, measured against the section that reached the most people. Same scale on all three, so the shapes compare directly: a gentle slope is normal attrition, a cliff is a section to rewrite. Click a chart to filter.">i</span></h2>
-        <span class="hint">Pick one to zoom in</span>
-      </div>
-      <div class="mult" data-slot="retention.cells"><p class="empty">Counting…</p></div>
-    </section>
-
     <section class="card c12">
       <div class="head">
         <h2 class="t-h1">Where in the world
-          <span class="i" data-tip="Shaded by how many visitors each country sends, in one hue: five steps, no verdict. Area on a map exaggerates large countries, so the exact counts live in the list beside it. Region and city come from IP lookup — VPNs and carriers misplace people — so read a single city as a lead, not a fact.">i</span></h2>
+          <span class="i" data-tip="Shaded by how many readers each country sends. Big countries look important on a map whether or not they are, so the honest counts sit in the list beside it. Cities come from IP lookup, which will happily place a VPN user three countries from home — treat a single city as a rumour, not a fact.">i</span></h2>
         <span class="hint" data-slot="map.hint">—</span>
       </div>
       <div class="locgrid">
         <div>
           <div class="mapwrap" data-slot="map.svg"><p class="empty">Counting…</p></div>
           <div class="legend">
-            <span class="cap">Visitors</span>
+            <span class="cap">Readers</span>
             <span class="lg">fewer<span class="sw" style="background:var(--seq-0)"></span><span class="sw" style="background:var(--seq-1)"></span><span class="sw" style="background:var(--seq-2)"></span><span class="sw" style="background:var(--seq-3)"></span><span class="sw" style="background:var(--seq-4)"></span>more</span>
           </div>
         </div>
@@ -565,10 +556,18 @@ body.demo{padding-top:34px}
         </div>
       </div>
     </section>
+    <section class="card invert c12">
+      <div class="head">
+        <h2 class="t-h1">Where people give up
+          <span class="i" data-tip="Every section of every page, in the order you'd meet them, measured against whichever one pulled the biggest crowd. A gentle slope is normal — people have lives. A cliff is a section I should probably rewrite. All three share one scale, so you're welcome to compare them unkindly.">i</span></h2>
+        <span class="hint">Pick one to zoom in</span>
+      </div>
+      <div class="mult" data-slot="retention.cells"><p class="empty">Counting…</p></div>
+    </section>
     <section class="card c6">
       <div class="head">
         <h2 class="t-h1">Phones vs laptops
-          <span class="i" data-tip="Counts, not rates. Umami reports event totals, and dividing those by unique visitors is what once produced a 400% completion rate. Sections reached is the honest comparison: if phones reach a fraction of what laptops do, that is a layout problem.">i</span></h2>
+          <span class="i" data-tip="Counts, not percentages. Dividing event totals by people once told me 400% of visitors finished a page, which was flattering and completely false. Sections reached is the honest version — and if phones get a fraction as far as laptops, that's my layout's fault, not the phone's.">i</span></h2>
         <span class="hint">how far each one got</span>
       </div>
       <div data-slot="devices.rows"><p class="empty">Counting…</p></div>
@@ -577,7 +576,7 @@ body.demo{padding-top:34px}
     <section class="card c6">
       <div class="head">
         <h2 class="t-h1">How they found me
-          <span class="i" data-tip="Referrers, as the browser reports them. Anyone arriving by typing the address, from a private message, or from an app that strips the referrer counts as direct — which is most of it, and is not a gap in the tracking.">i</span></h2>
+          <span class="i" data-tip="Wherever your browser admits you came from. Typed the address, followed a link someone sent you privately, or arrived from an app that keeps its secrets? You land in “direct” — which is most of you, and is not a hole in the tracking.">i</span></h2>
         <span class="hint">readers each</span>
       </div>
       <div data-slot="sources.rows"><p class="empty">Counting…</p></div>
@@ -593,10 +592,10 @@ body.demo{padding-top:34px}
         <div class="seg sm" role="tablist" aria-label="Detail">
           <button type="button" role="tab" id="tab-pages" aria-controls="panel-pages" aria-selected="true"
                   data-hint="One page, counted once"
-                  data-info="Paths are normalised before send, so /, /index.html, /#top and /index.html#top count as one page instead of four.">Pages</button>
+                  data-info="/, /index.html, /#top and /index.html#top are all the same page wearing different hats. They get squashed into one before anything is sent, so the homepage doesn't get to count as four.">Pages</button>
           <button type="button" role="tab" id="tab-clicks" aria-controls="panel-clicks" aria-selected="false"
                   data-hint="Every click, all pages"
-                  data-info="Each CTA emits its own event name. Umami's summary endpoint returns totals only, so shared names would collapse into one meaningless number.">Clicks</button>
+                  data-info="Every button gets its own name. Umami only hands back totals, so if two buttons shared one they would quietly add up into a number that means nothing.">Clicks</button>
         </div>
         <span class="headctl">
           <span class="hint" data-slot="detail.hint">One page, counted once</span>
@@ -605,7 +604,7 @@ body.demo{padding-top:34px}
       </div>
       <div id="panel-pages" role="tabpanel" aria-labelledby="tab-pages">
         <table>
-          <thead><tr><th>Page</th><th class="r">Visitors</th><th class="r">Read to the end</th></tr></thead>
+          <thead><tr><th>Page</th><th class="r">Readers</th><th class="r">Read to the end</th></tr></thead>
           <tbody data-slot="pages.rows"><tr><td colspan="4" class="empty">Counting…</td></tr></tbody>
         </table>
       </div>
