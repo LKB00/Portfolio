@@ -552,24 +552,30 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    It renders complete and animates on arrival with no data at all — the
    count is a lazy upgrade, so a slow or failed request costs nothing and
    never moves the layout. */
-/* Purple, not the site accent. The pad beside it already uses the
-   blue for its plus, and two adjacent pills marked in the same
-   colour read as one control split in half. --rp-mark is a fill and
-   an outline, so it holds in both themes at once: 5.59 on white,
-   3.11 on the dark card, and 5.59 for the white +1 sitting on it.
-   --rp-ink is the same purple used as TEXT, which needs 4.5 rather
-   than 3, so it lightens in the dark theme where the first one
-   would fall to 3.11. */
-#contact .readpill{--rp-mark:#7A45E0;--rp-ink:#7A45E0;
+/* A filled purple block, not a white card with a purple mark on it.
+   The pad beside it is a dashed empty slot on the page's own surface,
+   so the two now differ in substance rather than in trim: one is the
+   space you are invited to write in, the other is a thing to go and
+   look at.
+
+   #6B3FD4 carries the type at 6.39 for white and 4.54 for the second
+   line at 78%, and the block itself reads 6.12 against the light page
+   and 3.00 against the dark one -- exactly the floor, which is why the
+   dark theme adds a hairline so the edge never depends on it. Hover
+   deepens to #5B34C7 and takes the second line to full white, which
+   holds 7.61 there. */
+#contact .readpill{--rp-bg:#6B3FD4;--rp-bg-h:#5B34C7;
   display:inline-flex;align-items:center;gap:var(--s-4);
   margin:0 auto var(--s-5);padding:9px 16px 9px 10px;border-radius:var(--r-card);
-  background:var(--card);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(16,16,24,.04);
-  color:var(--ink);text-align:left;transition:box-shadow .25s var(--ease)}
-:root[data-theme="dark"] #contact .readpill{--rp-ink:#9B7BF0}
+  background:var(--rp-bg);
+  color:#FFFFFF;text-align:left;transition:background-color .25s var(--ease)}
+/* 3.00 against #0F0F0F is the threshold and nothing more, so the edge
+   gets drawn rather than inferred from the fill. */
+:root[data-theme="dark"] #contact .readpill{box-shadow:0 0 0 1px rgba(255,255,255,.14)}
 #contact .rp-faces{display:inline-flex;flex:none}
 #contact .rp-faces i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
   font-family:var(--mono);font-size:10px;font-weight:500;font-style:normal;
-  box-shadow:0 0 0 2px var(--card);background:var(--surface);color:var(--faint)}
+  box-shadow:0 0 0 2px var(--rp-bg);background:var(--surface);color:var(--faint)}
 #contact .rp-faces i + i{margin-left:-9px}
 /* One tone, not a fade. The original ramp ran 13/9/6% ink, which measured
    1.32, 1.20 and 1.13 against the white pill — three circles nobody could
@@ -596,12 +602,12 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* i.rp-me, not .rp-me: `#contact .rp-faces i` carries an extra element
    selector and outranks a bare class, which left the +1 at --faint on
    accent blue — 1.01:1, invisible. Same trap that hid the footer credit. */
-#contact .rp-faces i.rp-me{background:var(--rp-mark);color:#FFFFFF}
+#contact .rp-faces i.rp-me{background:#FFFFFF;color:var(--rp-bg)}
 #contact .readpill.is-in .rp-me{animation:rpPop .62s cubic-bezier(.22,1.4,.36,1) .25s forwards}
 @keyframes rpPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
 #contact .rp-txt{display:flex;flex-direction:column;gap:1px;min-width:0}
 #contact .rp-txt b{font-size:var(--t-mono-lg);font-weight:500;letter-spacing:var(--tr-body);white-space:nowrap}
-#contact .rp-sub{display:grid;font-size:var(--t-mono);color:var(--faint);white-space:nowrap}
+#contact .rp-sub{display:grid;font-size:var(--t-mono);color:rgba(255,255,255,.78);white-space:nowrap}
 #contact .rp-sub > span{grid-area:1/1;transition:opacity .2s var(--ease)}
 #contact .rp-sub-b{opacity:0}
 @media (hover:hover){
@@ -611,15 +617,17 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (prefers-reduced-motion:reduce){
   #contact .rp-sub > span{transition:none}
 }
-#contact .rp-go{flex:none;color:var(--faint);transition:transform .25s var(--ease)}
+#contact .rp-go{flex:none;color:rgba(255,255,255,.8);transition:transform .25s var(--ease),color .25s var(--ease)}
 /* The pill used to rise 1px and throw a shadow. It sits in the page,
    not on top of it -- nothing else here lifts -- so hovering says so
    in colour: the outline and the arrow take the pill's own purple,
    and it stays exactly where it is. */
 @media (hover:hover){
-  #contact .readpill:hover{box-shadow:0 0 0 1px var(--rp-mark)}
-  #contact .readpill:hover .rp-go{color:var(--rp-ink);transform:translate(2px,-2px)}
-  #contact .readpill:hover .rp-sub-b{color:var(--rp-ink)}
+  #contact .readpill:hover{background:var(--rp-bg-h)}
+  #contact .readpill:hover .rp-faces i{box-shadow:0 0 0 2px var(--rp-bg-h)}
+  #contact .readpill:hover .rp-faces i.rp-me{color:var(--rp-bg-h)}
+  #contact .readpill:hover .rp-go{color:#FFFFFF;transform:translate(2px,-2px)}
+  #contact .readpill:hover .rp-sub-b{color:#FFFFFF}
 }
 @media (prefers-reduced-motion:reduce){
   #contact .rp-me{animation:none}
