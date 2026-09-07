@@ -777,11 +777,15 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    voice rather than Figma's.
    ═══════════════════════════════════════════════════════════════════ */
 .padwrap{display:block}
-.padhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
-  margin-bottom:clamp(14px,2vw,18px)}
-.padtitle{margin:0;font-size:18px;font-weight:500;line-height:1.3;
-  letter-spacing:-.018em;color:var(--ink)}
-.padsub{margin:0;font-size:13px;line-height:1.45;color:var(--faint)}
+/* The section used to open with a heading and a sub above the row, which
+   put four lines of copy on one small idea: an invitation, a promise, a
+   button label and a hint, all saying come and write something. The row
+   carries the invitation and the promise now -- it is the thing being
+   read at the moment they matter -- and the heading stays for the
+   document outline, where it is the only place it was still doing work. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
+  white-space:nowrap;border:0}
 
 /* The dot grid used to be painted twice -- once by the row, once by the
    board -- each from its own origin. The board starts one row-height
@@ -2370,18 +2374,15 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   <section id="notes" data-section="Notes board">
     <div class="padwrap" data-reveal>
-      <div class="padhead">
-        <h2 class="padtitle">The floor is yours.</h2>
-        <p class="padsub">I read every one.</p>
-      </div>
+      <h2 class="sr-only">The floor is yours.</h2>
 
       <div class="padstack">
       <button type="button" class="padtrigger" id="padTrigger">
         <span class="padtriggerplus" aria-hidden="true">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         </span>
-        <span class="padtriggertext">Leave me a note</span>
-        <span class="padtriggerhint">A thought, a question, a fix &#8212; you stay anonymous.</span>
+        <span class="padtriggertext">The floor is yours.</span>
+        <span class="padtriggerhint">Leave a note &#8212; anonymous, and I read every one.</span>
       </button>
 
       <div class="padboard" id="padBoard">
