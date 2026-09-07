@@ -1,11 +1,11 @@
 // api/stats.js — lives at the ROOT of the Portfolio repo (not in a subfolder)
 //
-// Checks the dashboard password, logs into the self-hosted Umami with
-// admin credentials held in Vercel env vars, fetches the numbers and
-// returns them as JSON. Umami credentials never reach the browser.
+// Logs into the self-hosted Umami with admin credentials held in Vercel env
+// vars, fetches the numbers and returns them as JSON. No auth: the dashboard
+// is public, so every field here is an aggregate. Umami credentials never
+// reach the browser.
 //
 // Required Vercel environment variables:
-//   DASHBOARD_PASSWORD   password you type on the dashboard page
 //   UMAMI_URL            https://umami-swart-five.vercel.app
 //   UMAMI_USER           admin
 //   UMAMI_PASS           your Umami admin password
@@ -13,8 +13,13 @@
 //
 // Every key that existed before is still returned unchanged: ok, updated,
 // days, headline, sources, pages, events, totals. Seven were added:
-// previous, timeBuckets, sections, ctas, countries (with cities), sessions,
+// previous, timeBuckets, sections, ctas, countries (with cities) and
 // devices. All arithmetic happens here; the front end renders what it gets.
+//
+// There is no `sessions` field. It existed, and it listed individual
+// readers by city, device and dwell time. That is defensible behind a
+// password and not defensible in public, and this endpoint is public, so
+// it was removed rather than softened.
 //
 // Two constraints this file exists to absorb:
 //
@@ -34,12 +39,7 @@
 export const config = { maxDuration: 30 };
 
 const REQ_TIMEOUT_MS = 8000;
-const SESSION_SAMPLE = 8; // per-session activity lookups are N+1; cap them
 
-// Umami pages the activity endpoint. A session that returns exactly this many
-// rows was almost certainly cut off, which makes actions, visits and depth
-// floors rather than totals — so it is flagged instead of reported as fact.
-const ACTIVITY_PAGE_CAP = 500;
 
 // Every page with a labelled funnel. The home page earns its place: it
 // takes the most traffic, and hero -> work -> experience -> notes is a
@@ -102,7 +102,6 @@ export default async function handler(req, res) {
   }
 
   const {
-    DASHBOARD_PASSWORD,
     UMAMI_URL,
     UMAMI_USER,
     UMAMI_PASS,
@@ -110,7 +109,6 @@ export default async function handler(req, res) {
   } = process.env;
 
   const missing = [];
-  if (!DASHBOARD_PASSWORD) missing.push("DASHBOARD_PASSWORD");
   if (!UMAMI_URL) missing.push("UMAMI_URL");
   if (!UMAMI_USER) missing.push("UMAMI_USER");
   if (!UMAMI_PASS) missing.push("UMAMI_PASS");
@@ -119,17 +117,16 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Server not configured", missing });
   }
 
-  // --- password check -----------------------------------------------------
-  let given = "";
-  try {
-    const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
-    given = String(body.password || "");
-  } catch {
-    return res.status(400).json({ error: "Bad request." });
-  }
-  if (given !== DASHBOARD_PASSWORD) {
-    return res.status(401).json({ error: "Wrong password." });
-  }
+  // --- public ------------------------------------------------------------
+  // No password. The dashboard is public, so this endpoint is too, and every
+  // field below is an aggregate. The one field that described individual
+  // people — recent sessions, with their city, device and dwell time — was
+  // removed rather than published: counting readers is not the same as
+  // listing them.
+  //
+  // Cached at the edge so that being public costs one upstream round trip
+  // every five minutes instead of one per visitor.
+  res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
 
   const days = Number(
     (typeof req.body === "object" && req.body && req.body.days) || 30
@@ -255,7 +252,6 @@ export default async function handler(req, res) {
       prevStats, prevEvents,
       countryRows, cityRows, deviceRows,
       bucketRows, sectionRows, cardRows, socialRows,
-      sessionPage,
     ] = await Promise.all([
       get(`${site}/stats?${range}`, "stats"),
       get(`${site}/metrics?type=referrer&${range}`, "metrics referrer"),
@@ -274,7 +270,6 @@ export default async function handler(req, res) {
       eventValues("card-click", "card"),
       eventValues("social-click", "to"),
 
-      get(`${site}/sessions?${range}&pageSize=${SESSION_SAMPLE}`, "sessions"),
     ]);
 
     // The daily series. Without it the traffic chart has no source at all —
@@ -482,108 +477,7 @@ export default async function handler(req, res) {
     const countries = geoList(countryRows, "code");
     const cities = geoList(cityRows, "city");
 
-    // --- 6. sessions -------------------------------------------------------
-    // Umami's session list carries identity and duration but not behaviour,
-    // so max scroll depth and action count come from one activity call per
-    // session. Capped at SESSION_SAMPLE: this is the only N+1 in the handler
-    // and it is not worth a slow dashboard.
-    const sessionRows = rows(sessionPage) || [];
-    const sessions = !sessionPage
-      ? null
-      : await Promise.all(
-          sessionRows.slice(0, SESSION_SAMPLE).map(async (s) => {
-            const id = s.id || s.sessionId;
-            const act = id
-              ? await get(
-                  `${site}/sessions/${encodeURIComponent(id)}/activity?${range}`,
-                  `session activity ${String(id).slice(0, 8)}`
-                )
-              : null;
-            const acts = rows(act);
-
-            let maxScroll = null;
-            let actions = null;
-            let utm = null;
-            let duration = null;
-            let visitCount = null;
-            let truncated = false;
-
-            if (acts && acts.length) {
-              actions = acts.length;
-              truncated = acts.length >= ACTIVITY_PAGE_CAP;
-
-              // An activity row carries NO property values. The live shape is
-              // createdAt, urlPath, urlQuery, referrerDomain, eventId,
-              // eventType, eventName, visitId, hostname, hasData — and
-              // hasData only says a property exists, never what it is. So
-              // depth cannot be read; it has to be counted.
-              //
-              // analytics.js fires scroll-depth at 25, 50, 75 and 100 once
-              // each per page load, in order. So N scroll-depth rows for one
-              // path means the Nth threshold was crossed. Grouped by urlPath,
-              // because a session that reads two pages would otherwise sum
-              // them into a depth nobody reached.
-              const TIERS = [25, 50, 75, 100];
-              const perPath = {};
-              acts.forEach((a) => {
-                if (!/scroll-depth/.test(String(a.eventName || ""))) return;
-                const p = a.urlPath || "(unknown)";
-                perPath[p] = (perPath[p] || 0) + 1;
-              });
-              const depths = Object.values(perPath).map(
-                (n) => TIERS[Math.min(Math.max(n, 1), TIERS.length) - 1]
-              );
-              maxScroll = depths.length ? Math.max(...depths) : null;
-
-              // Duration per VISIT, not per session. A Umami session persists
-              // across days — the live call returned 240690 seconds, 2.8
-              // days, for one person — and visitId is what separates the
-              // individual visits inside it. Reported as the longest single
-              // visit, which is the one that means something.
-              const byVisit = {};
-              acts.forEach((a) => {
-                const t = new Date(a.createdAt || 0).getTime();
-                if (!Number.isFinite(t) || !t) return;
-                const v = a.visitId || "single";
-                (byVisit[v] = byVisit[v] || []).push(t);
-              });
-              const spans = Object.values(byVisit).map((ts) =>
-                Math.max(0, Math.round((Math.max(...ts) - Math.min(...ts)) / 1000))
-              );
-              duration = spans.length ? Math.max(...spans) : null;
-              visitCount = spans.length || null;
-
-              const q = acts.find((a) => a.urlQuery);
-              if (q && q.urlQuery) {
-                const m = String(q.urlQuery).match(/utm_source=([^&]+)/i);
-                if (m) utm = decodeURIComponent(m[1]);
-              }
-              if (!utm) {
-                const r = acts.find((a) => a.referrerDomain);
-                if (r) utm = null; // referrer is not a utm source; left null on purpose
-              }
-            }
-
-            return {
-              id: id || null,
-              time: s.firstAt || s.createdAt || null,
-              city: s.city || null,
-              country: s.country || null,
-              device: s.device || null,
-              utmSource: utm,
-              longestVisitSeconds: duration,
-              durationSeconds: duration,
-              visits: visitCount,
-              maxScrollDepth: maxScroll,
-              actions,
-              // True means the activity list was paged: actions, visits and
-              // maxScrollDepth are lower bounds for this session.
-              actionsTruncated: truncated,
-            };
-          })
-        );
-
-    // --- 7. devices --------------------------------------------------------
+    // --- 6. devices7. devices --------------------------------------------------------
     // Completion rate per device needs event counts filtered by device. If
     // this Umami build ignores the filter, completionRate comes back null
     // rather than repeating the site-wide number under a device label.
@@ -653,15 +547,6 @@ export default async function handler(req, res) {
     if (devices && devices.some((d) => d.filtered === false)) {
       notes.push("this Umami build ignored the device filter; per-device counts withheld rather than guessed.");
     }
-    if (sessions && sessions.some((s) => s.actionsTruncated)) {
-      notes.push(
-        `some sessions hit the ${ACTIVITY_PAGE_CAP}-row activity cap; their actions, ` +
-          "visits and depth are lower bounds, not totals."
-      );
-    }
-    if (sessions && sessions.some((s) => s.maxScrollDepth === null)) {
-      notes.push("some sessions fired no scroll-depth events; their depth is null, not zero.");
-    }
     if (sections && sections.byPage.some((p) => p.monotonic === false)) {
       notes.push(
         "a drop-off curve rises somewhere: people are entering that page mid-way, " +
@@ -728,7 +613,6 @@ export default async function handler(req, res) {
       ctas,
       countries,
       cities,
-      sessions,
       devices,
 
       notes,

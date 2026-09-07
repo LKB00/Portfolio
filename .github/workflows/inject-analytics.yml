@@ -79,25 +79,40 @@ jobs:
           const fs = require("fs");
           const src = fs.readFileSync("dashboard-data.js", "utf8");
 
-          const lines = src.split("\n")
-            .filter((l) => /var\s+(SHOW_GATE|OFFLINE)\s*=/.test(l))
-            .join("\n");
+          // Find the OFFLINE declaration, then pull in whatever it depends on.
+          // Naming the helpers directly meant a rename broke the check rather
+          // than the guard — which is the wrong thing to be fragile about.
+          const decl = (name) => {
+            const re = new RegExp("^\\s*var\\s+" + name + "\\s*=.*$", "m");
+            const m = src.match(re);
+            return m ? m[0] : null;
+          };
 
-          if (!/OFFLINE/.test(lines)) {
+          const offline = decl("OFFLINE");
+          if (!offline) {
             console.error("FAIL: no OFFLINE guard found in dashboard-data.js.");
             process.exit(1);
           }
+
+          const deps = [];
+          for (const id of new Set(offline.match(/\b[A-Z][A-Z0-9_]{2,}\b/g) || [])) {
+            if (id === "OFFLINE") continue;
+            const d = decl(id);
+            if (d) deps.push(d);
+          }
+
+          const lines = deps.concat(offline).join("\n");
 
           // The guard's own source, run against a fake location. Evaluating it
           // means a rewritten regex is tested on behaviour rather than on
           // whether it still looks like the one we expected.
           const guard = new Function(
             "location",
-            lines + "\nreturn { SHOW_GATE: SHOW_GATE, OFFLINE: OFFLINE };"
+            lines + "\nreturn { OFFLINE: OFFLINE };"
           );
 
           const LIVE = ["lokeshbhatia.com", "www.lokeshbhatia.com"];
-          const SEARCHES = ["", "?gate", "?days=7", "?gate&days=7"];
+          const SEARCHES = ["", "?live", "?days=7", "?live&days=7"];
 
           const bad = [];
           for (const hostname of LIVE) {

@@ -792,7 +792,10 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 #contact footer{display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:0;width:auto;margin:0;padding:24px 0 36px;background:transparent;
   text-align:center;position:relative}
-#contact footer > *:not(.footcredit){display:none!important}
+/* Everything except the credit and the readership line. This rule exists
+   because older footer content kept reappearing; it now has to name what
+   it keeps, or the next thing added here vanishes silently too. */
+#contact footer > *:not(.footcredit):not(.footread){display:none!important}
 
 @media (max-width:504px){#contact footer{flex-direction:column;align-items:center;gap:10px}}
 
@@ -1722,6 +1725,11 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    around it. */
 .ba{aspect-ratio:16/9!important;background:none!important}
 .ba img{object-fit:cover!important;padding:0!important}
+#contact .footread{margin:0 0 var(--s-3);font-size:var(--t-mono-lg);color:var(--faint);text-align:center}
+#contact .footread a{display:inline-flex;align-items:center;gap:5px;color:var(--accent)}
+#contact .footread svg{transition:transform .25s var(--ease)}
+@media (hover:hover){#contact .footread a:hover svg{transform:translate(2px,-2px)}}
+@media (max-width:400px){#contact .footread{font-size:11.5px}}
 /* ── the footer credit ───────────────────────────────────────────────
    Two round tokens instead of the two nouns: a face for "me", a spark
    for the AI. They are the same size and the same shape, so the line
@@ -2296,7 +2304,8 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
   <section id="contact">
     <footer>
-      <p class="footcredit">Designed and built by <span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.png" width="96" height="96" alt="" loading="lazy" decoding="async"></span><span class="fsr">me</span>, with <span class="fmark fai" aria-hidden="true">&#10022;</span><span class="fsr">an AI</span> that argued back.</p>
+      <p class="footread">This site measures how far people read it. <a href="./dashboard.html">The numbers are public<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a></p>
+    <p class="footcredit">Designed and built by <span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.png" width="96" height="96" alt="" loading="lazy" decoding="async"></span><span class="fsr">me</span>, with <span class="fmark fai" aria-hidden="true">&#10022;</span><span class="fsr">an AI</span> that argued back.</p>
     </footer>
   </section>
 </div>

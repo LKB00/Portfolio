@@ -1,6 +1,7 @@
 /* dashboard-data.js — data, filtering, interaction. No design decisions here.
  *
- * POST {password, range, filters:{source,page,day}} → JSON:
+ * POST {range, filters:{source,page,day}} → JSON.  No auth: the endpoint
+ * is public and returns aggregates only.
  * { ok, range:{from,to,days,prevFrom,prevTo},
  *   totals:{visitors:{v,prev}, opened:{v,prev,n}, read:{v,prev,n}, acted:{v,prev,n}},
  *   retention:[{page,visitors,sections:[{name,reach}]}],
@@ -24,7 +25,7 @@
   var API = /(^|\.)lokeshbhatia\.com$/.test(location.hostname)
     ? 'https://www.lokeshbhatia.com/api/stats' : '/api/stats';
 
-  var state = { pw: null, range: 28, metric: 'visitors', level: 'country', filters: { source: null, page: null, day: null, country: null } };
+  var state = { range: 28, metric: 'visitors', level: 'country', filters: { source: null, page: null, day: null, country: null } };
   var last = null;
 
   var $ = function (s) { return document.querySelector(s); };
@@ -383,12 +384,81 @@
    * normalised once, up front, and render() is wrapped — any throw leaves the
    * previous view intact and says so out loud.
    */
+  /* ================= adapt =================
+   * api/stats.js answers with what Umami can honestly provide; the renderers
+   * below were written against an earlier, more optimistic payload. This maps
+   * one to the other in a single place, so the charts keep their maths and
+   * the endpoint keeps its honesty.
+   *
+   * Only runs on a real response. Demo data is already in the internal shape,
+   * so it passes straight through and the two paths cannot drift.
+   */
+  function adapt(a) {
+    var h = a.headline || {}, prev = a.previous || {};
+    var evt = {};
+    (a.events || []).forEach(function (e) { evt[e.name] = e.count; });
+
+    // Four counts, each with a real previous-period figure behind it. The
+    // rates that used to sit here divided event totals by unique visitors and
+    // reported 103%; the endpoint returns null for them now, and the counts
+    // are what it can actually stand behind.
+    var t = function (v, p) { return { v: v || 0, prev: (prev && prev[p]) || 0, n: null }; };
+
+    // ofPeak is already a 0-100 reach, which is exactly what the curve wants.
+    // Pages nobody has opened are dropped rather than drawn as a flat zero.
+    var retention = (a.sections && a.sections.byPage ? a.sections.byPage : [])
+      .map(function (p) {
+        var peak = (p.sections || []).reduce(function (m, s) { return Math.max(m, s.count || 0); }, 0);
+        return {
+          page: p.path,
+          visitors: peak,
+          monotonic: p.monotonic !== false,
+          sections: (p.sections || []).map(function (s) {
+            return { name: s.name, reach: s.ofPeak == null ? 0 : s.ofPeak, count: s.count || 0 };
+          })
+        };
+      })
+      .filter(function (p) { return p.visitors > 0 && p.sections.length >= 2; });
+
+    return {
+      range: a.range || {},
+      updated: a.updated,
+      totals: {
+        visitors: t(h.visitors, 'visitors'),
+        pageviews: t(h.pageviews, 'pageviews'),
+        passedHero: t(h.passedHero, 'passedHero'),
+        contacts: t(h.contacts, 'contacts')
+      },
+      retention: retention,
+      devices: a.devices || [],
+      notes: a.notes || [],
+      // No per-country read rate exists, so the map carries location only and
+      // the counts live in the list beside it.
+      places: { country: (a.countries || []).map(function (c) {
+                  return { code: c.code, visitors: c.visitors, readRate: null }; }),
+                city: (a.cities || []).map(function (c) {
+                  return { code: null, label: c.city, visitors: c.visitors, readRate: null }; }) },
+      days: (a.daily || []).map(function (x) {
+        return { date: x.date, visitors: x.visitors, pageviews: x.pageviews };
+      }),
+      pages: (a.pages || []).map(function (p) {
+        return { path: p.path, visitors: p.views, median: null, read: null };
+      }),
+      cta: (a.ctas && a.ctas.byName ? a.ctas.byName : []).map(function (c) {
+        return { label: c.name, clicks: c.count };
+      }),
+      apps: []
+    };
+  }
+
   function shape(d) {
     d = d || {};
+    // A real response carries `headline`; demo data does not.
+    if (d.headline) d = adapt(d);
     var z = { v: 0, prev: 0, n: 0 };
     d.range = d.range || {};
     d.totals = d.totals || {};
-    ['visitors', 'opened', 'read', 'acted'].forEach(function (k) {
+    ['visitors', 'pageviews', 'passedHero', 'contacts'].forEach(function (k) {
       var t = d.totals[k];
       d.totals[k] = (t && typeof t.v === 'number') ? t : z;
     });
@@ -416,7 +486,8 @@
   }
 
   /* ================= render ================= */
-  var METRIC_LABEL = { visitors: 'visitors', opened: 'opened a case study', read: 'read to the end', acted: 'then acted' };
+  // Two metrics, because two are what the daily series honestly contains.
+  var METRIC_LABEL = { visitors: 'visitors', pageviews: 'pageviews' };
 
   function render(raw) {
     var d = shape(raw);
@@ -433,9 +504,9 @@
       { hour: '2-digit', minute: '2-digit' }));
 
     fig('visitors', d.totals.visitors);
-    fig('opened', d.totals.opened, true);
-    fig('read', d.totals.read, true);
-    fig('acted', d.totals.acted, true);
+    fig('pageviews', d.totals.pageviews);
+    fig('passedHero', d.totals.passedHero);
+    fig('contacts', d.totals.contacts);
 
     renderRetention(d.retention);
 
@@ -472,10 +543,10 @@
       var on = state.filters.day === x.date;
       return '<button class="d' + (x.note ? ' mark' : '') + '" data-filter-day="' + x.date + '" aria-pressed="' + on +
         '" data-tip-label="' + day(x.date) + (x.note ? ' — ' + esc(x.note) : '') +
-        '" data-tip-value="' + (x[m] || 0) + (m === 'visitors' ? ' visitors' : '%') +
+        '" data-tip-value="' + (x[m] || 0) + ' ' + METRIC_LABEL[m] +
         '"><i style="height:' + pct(((x[m] || 0) / max) * 100) + '%"></i></button>';
     }).join(''));
-    set('days.peak', 'peak ' + max + (m === 'visitors' ? '' : '%'));
+    set('days.peak', 'peak ' + max);
     set('days.from', day(d.days[0].date));
     set('days.to', day(d.days[d.days.length - 1].date));
     }
@@ -560,39 +631,36 @@
     return load().catch(function (ex) { console.error(ex); fail(ex.message); });
   }
   function load() {
+    // No password. The endpoint is public and every field it returns is an
+    // aggregate, so there is nothing here to authenticate.
     return fetch(API, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: state.pw, range: state.range, filters: state.filters })
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ days: state.range, filters: state.filters })
     }).then(function (r) {
-      if (r.status === 401) throw new Error('Wrong password');
-      if (!r.ok) throw new Error('API returned ' + r.status);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
-    }).then(function (d) {
-      if (!d || d.ok !== true) throw new Error((d && d.error) || 'Unexpected response');
-      try { render(d); }
-      catch (ex) {
-        console.error(ex);
-        fail('Could not draw this view — the figures above are from the previous one.');
-      }
+    }).then(function (j) {
+      if (!j || j.ok !== true) throw new Error((j && j.error) || 'Bad response');
+      render(j);
+      return j;
     });
   }
-  function unlock() { var g = $('#gate'); if (g) g.remove(); document.body.classList.remove('locked'); }
 
-  $('#gate-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var err = slot('gate.error'); err.textContent = '';
-    state.pw = $('#pw').value;
-    load().then(function () { sessionStorage.setItem('dashpw', state.pw); unlock(); })
-      .catch(function (ex) { err.textContent = ex.message; });
-  });
+  // Public: load on arrival. There is no gate to pass and nothing to type.
+  function boot() {
+    load().catch(function (ex) {
+      if (OFFLINE) return startDemo();
+      fail('Could not load the numbers: ' + ex.message);
+    });
+  }
 
   /* ================= sample data ================= */
   // Demo mode fills the page with synthetic numbers off-domain so the layout
-  // can be worked on without a password. ?gate opts out of it, because the
-  // gate is a designed surface and there was otherwise no way to look at it
-  // anywhere except production.
-  var SHOW_GATE = /[?&]gate\b/.test(location.search);
-  var OFFLINE = !SHOW_GATE && !/lokeshbhatia\.com$/.test(location.hostname), DEMO_ON = false;
+  // can be worked on without a live endpoint. ?live opts out of it, to test
+  // the real fetch and its failure state from anywhere.
+  var SHOW_LIVE = /[?&]live\b/.test(location.search);
+  var OFFLINE = !SHOW_LIVE && !/lokeshbhatia\.com$/.test(location.hostname), DEMO_ON = false;
 
   // deterministic per-segment jitter, so filtering visibly changes the page
   function seed(str) { var h = 2166136261; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = (h * 16777619) >>> 0; } return h; }
@@ -718,20 +786,8 @@
     document.body.classList.add('demo');
     render(demo(state.range, state.filters));
     set('meta.footer', 'SAMPLE DATA — api/stats.js not reachable from this host. Filtering is live; the numbers are synthetic.');
-    unlock();
   }
 
-  var saved = sessionStorage.getItem('dashpw');
-  if (saved) {
-    state.pw = saved;
-    // a stored password can go stale. Drop it, and off-domain fall through to
-    // the sample data rather than leaving the page locked behind a dead gate.
-    load().then(unlock).catch(function () {
-      sessionStorage.removeItem('dashpw');
-      state.pw = null;
-      if (OFFLINE) startDemo();
-    });
-  } else if (OFFLINE) {
-    startDemo();
-  }
+  boot();
+
 }());

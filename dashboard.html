@@ -363,41 +363,6 @@ details .body p{margin-bottom:var(--s-4)}
 details .body b{color:var(--ink);font-weight:500}
 mark{background:var(--markWash);color:inherit;padding:0 2px;border-radius:2px}
 
-/* ── gate ────────────────────────────────────────────────── */
-#gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:90;
-  padding:var(--s-6);overflow:auto}
-#gate .plaque{width:100%;max-width:340px}
-#gate .eyebrow{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-label);
-  text-transform:uppercase;color:var(--faint);margin:0 0 var(--s-4)}
-#gate h1{font-size:var(--fs-page);font-weight:500;letter-spacing:var(--tr-page);
-  line-height:var(--lh-page);margin:0 0 var(--s-3)}
-#gate .lead{font-size:var(--fs-lead);line-height:var(--lh-lead);letter-spacing:var(--tr-lead);
-  color:var(--muted);margin:0 0 var(--s-5)}
-/* The spec is the plaque: three decisions, stated as decisions. Mono because
-   these are measurements, not prose. */
-#gate .spec{margin:0 0 var(--s-5);padding:var(--s-4) 0;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  display:grid;gap:var(--s-2)}
-#gate .spec > div{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-4)}
-#gate dt,#gate dd{margin:0;font-family:var(--mono);font-size:var(--fs-small);letter-spacing:var(--tr-mono)}
-#gate dt{color:var(--ink)}
-#gate dd{color:var(--faint);text-align:right}
-#gate .fine{margin:var(--s-4) 0 0;font-size:var(--fs-micro);line-height:var(--lh-micro);color:var(--faint)}
-#gate form{width:100%;display:grid;gap:var(--s-3)}
-@media(max-width:420px){
-  #gate .spec > div{flex-direction:column;gap:2px}
-  #gate dd{text-align:left}
-}
-#gate input{width:100%;height:38px;padding:0 var(--s-4);border:0;border-radius:var(--r-pill);
-  background:var(--surface);color:var(--ink);font-family:var(--display);font-size:var(--fs-body);
-  letter-spacing:var(--tr-body)}
-#gate input:focus{outline:none;box-shadow:inset 0 0 0 1px var(--ink)}
-#gate button{height:34px;border:0;border-radius:var(--r-pill);background:var(--ink);color:var(--bg);
-  font-family:var(--display);font-size:var(--fs-body);font-weight:500;letter-spacing:var(--tr-body);cursor:pointer}
-#gate .err{font-size:var(--fs-small);color:var(--neg);min-height:16px;text-align:center}
-/* Hidden, not blurred. blur(4px) does not obscure 24px figures — shape and
-   magnitude survive it, and a screenshot survives it completely. The plaque
-   is also better off without a half-legible dashboard competing behind it. */
 /* Demo mode fills this page with synthetic numbers. A hostname regex is the
    only thing keeping that off production, and if it ever breaks the page
    looks entirely normal while every figure is invented. So the numbers say
@@ -410,8 +375,6 @@ mark{background:var(--markWash);color:inherit;padding:0 2px;border-radius:2px}
   text-align:center;padding:9px var(--s-5);line-height:1.3}
 body.demo #demobar{display:block}
 body.demo{padding-top:34px}
-body.locked{overflow:hidden}
-body.locked .wrap,body.locked header{visibility:hidden}
 .empty{color:var(--faint);font-size:var(--fs-body);padding:var(--s-4) 0}
 
 @media(max-width:1000px){
@@ -443,38 +406,12 @@ body.locked .wrap,body.locked header{visibility:hidden}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
-<body class="locked">
+<body>
 
 <div id="demobar" role="status">Demo data &#183; synthetic numbers, not real traffic</div>
 
 <div id="tip"></div>
 
-<!-- The gate is the only public face this page has: anyone who is given the
-     URL lands here. A bare password box tells them nothing, so it says what
-     the thing is and what it measures — and no numbers, which is the whole
-     reason it can be said out loud. -->
-<div id="gate">
-  <div class="plaque">
-    <p class="eyebrow">Private</p>
-    <h1>Readership</h1>
-    <p class="lead">I instrumented my own portfolio to find out where readers stop.</p>
-
-    <dl class="spec">
-      <div><dt>Drop-off, per section</dt><dd>named, in reading order</dd></div>
-      <div><dt>Depth by device</dt><dd>counts, not rates</dd></div>
-      <div><dt>Where readers arrive from</dt><dd>no personal data</dd></div>
-    </dl>
-
-    <form id="gate-form" autocomplete="off">
-      <input id="pw" type="password" placeholder="Password" autocomplete="current-password">
-      <button type="submit">Open</button>
-      <div class="err" data-slot="gate.error" role="alert"></div>
-    </form>
-
-    <p class="fine">Cookieless, self-hosted, own device excluded. Private because at
-      this volume a two-visit difference is not a trend.</p>
-  </div>
-</div>
 
 <header>
   <div class="navpill">
@@ -709,6 +646,6 @@ body.locked .wrap,body.locked header{visibility:hidden}
 }());
 </script>
 <script src="world-map.js?v=2" defer></script>
-<script src="dashboard-data.js?v=2" defer></script>
+<script src="dashboard-data.js?v=3" defer></script>
 </body>
 </html>
