@@ -876,7 +876,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .padwrap [hidden]{display:none}
 
 @media (max-width:560px){
-  .padwrap.is-open .padstack{height:clamp(330px,92vw,392px)}
   /* 16px or iOS zooms the page the moment a note is focused, so the note
      grows to suit the type rather than the other way round */
   .padnote{width:196px}
@@ -1937,18 +1936,40 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    And the curve is ease-in-out, not var(--ease): that one spends itself
    in its first fifth, which on a 230px height change reads as a lurch
    followed by a crawl. */
-.padstack{position:relative;display:grid;overflow:hidden;
+/* The row and the board used to share one grid cell and cross-fade, so
+   opening the board took the invitation away with it — the only words
+   naming what this thing is disappeared at the moment someone started
+   using it. They are two rows now: the row stays put as the board's
+   header, and the board opens underneath it. The open height gains the
+   row's height so the board itself is the size it was designed at. */
+.padstack{position:relative;display:grid;grid-template-rows:auto 1fr;
+  overflow:hidden;
   height:var(--trig-h,auto);border-radius:var(--r-card);
   transition:height .45s cubic-bezier(.4,0,.2,1)}
-.padstack > *{grid-area:1/1;min-height:0}
-.padwrap.is-open .padstack{height:clamp(300px,34vw,364px)}
+.padstack > *{min-height:0}
+.padstack > .padtrigger{grid-row:1}
+.padstack > .padboard{grid-row:2}
+.padwrap.is-open .padstack{height:calc(var(--trig-h,62px) + clamp(300px,34vw,364px))}
 
 .padboard{height:100%;opacity:0;visibility:hidden;
   transition:opacity .2s var(--ease),visibility 0s linear .2s}
 .padwrap.is-open .padboard{opacity:1;visibility:visible;
   transition:opacity .26s var(--ease) .16s,visibility 0s}
 
-.padwrap.is-open .padtrigger{opacity:0;visibility:hidden;pointer-events:none}
+/* Open, it is no longer a control: the dashed "empty slot" edge goes,
+   the plus goes (the board has its own), and a hairline is all that
+   separates the header from the ground it shares with the board. */
+.padwrap.is-open .padtrigger{cursor:default;
+  border-style:solid;border-color:transparent;
+  border-bottom-color:color-mix(in srgb,var(--muted) 26%,transparent);
+  border-radius:0}
+.padwrap.is-open .padtriggerplus{opacity:0;width:0;margin-right:-12px}
+/* the stack already clips to the card radius; the board keeping its own
+   rounded its top corners away from the header and left two white nicks */
+.padwrap.is-open .padboard{border-radius:0}
+.padtrigger:disabled{opacity:1;color:var(--ink)}
+.padtriggerplus{transition:opacity .2s var(--ease),width .3s var(--ease),
+  margin-right .3s var(--ease)}
 
 /* the first paint must not animate: a visitor returning to saved notes
    would watch the board unfold for no reason */
@@ -1958,7 +1979,17 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
 @media (max-width:560px){
   .padtrigger{flex-wrap:wrap;gap:8px 11px}
-  .padtriggerhint{flex:1 0 100%;padding-left:37px}
+  .padtriggerhint{flex:1 0 100%;padding-left:37px;
+    transition:padding-left .3s var(--ease)}
+  /* the indent cleared the plus. Open, there is no plus to clear, and the
+     hint was left hanging off the title it belongs under. */
+  .padwrap.is-open .padtriggerhint{padding-left:0}
+
+  /* This lived with the other phone rules, 1000 lines above the
+     unconditional .padwrap.is-open .padstack rule — same specificity,
+     so the later one won and the phone board has been 300px, not the
+     345 intended here. It has to sit after that rule to take effect. */
+  .padwrap.is-open .padstack{height:calc(var(--trig-h,62px) + clamp(330px,92vw,392px))}
 }
 /* ══ ARRIVAL, SECTION BY SECTION ═════════════════════════════════════
    Every section shared one entrance: fade up 10px. Correct, and
@@ -2946,13 +2977,21 @@ body:not(.arriving) .hp-frame img{will-change:auto}
        row was never measured and the first close-then-open snapped. */
     measureTrigger();
     wrap.classList.add("is-open");
+    /* it stays on screen as the header, so it has to stop being a
+       control — otherwise it keeps taking focus and doing nothing */
+    if(trigger) trigger.disabled=true;
   }
   /* A successful send empties the board, and sync() closes an empty
      board — which used to hide the thank-you in the same tick it was
      shown. The one moment that has to be confirmed was the one moment
      nothing was. So closing waits for the toast to finish; the toast's
      own timer calls sync() again on the way out. */
-  function close(){ if(wrap && toast.hidden) wrap.classList.remove("is-open") }
+  function close(){
+    if(wrap && toast.hidden){
+      wrap.classList.remove("is-open");
+      if(trigger) trigger.disabled=false;
+    }
+  }
 
   function sync(){
     var n=notes.length, w=written().length;
