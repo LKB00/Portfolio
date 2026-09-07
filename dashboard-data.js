@@ -24,7 +24,7 @@
   var API = /(^|\.)lokeshbhatia\.com$/.test(location.hostname)
     ? 'https://www.lokeshbhatia.com/api/stats' : '/api/stats';
 
-  var state = { range: 28, metric: 'visitors', level: 'country', filters: { source: null, page: null, day: null, country: null } };
+  var state = { range: 28, metric: 'visitors', level: 'country', filters: { source: null, page: null, day: null } };
   var last = null;
 
   var $ = function (s) { return document.querySelector(s); };
@@ -119,7 +119,6 @@
     if (f.source) out.push(chip('source', f.source));
     if (f.page) out.push(chip('page', f.page));
     if (f.day) out.push(chip('day', day(f.day)));
-    if (f.country) out.push(chip('country', cname(f.country)));
     html('filters', any
       ? '<span class="scope">Filtered to</span>' + out.join('') +
         '<button class="chip ghost" data-clear="all">Clear all</button>'
@@ -129,7 +128,7 @@
   document.addEventListener('click', function (e) {
     var c = e.target.closest ? e.target.closest('[data-clear]') : null;
     if (!c) return;
-    if (c.dataset.clear === 'all') state.filters = { source: null, page: null, day: null, country: null };
+    if (c.dataset.clear === 'all') state.filters = { source: null, page: null, day: null };
     else state.filters[c.dataset.clear] = null;   // clearFilter would refresh again
     refresh();
   });
@@ -274,6 +273,47 @@
    * by the other is what produced a 400% completion rate. No colour: there
    * are two series and a legend does that job without spending a hue.
    */
+  /* ================= the verdict =================
+   * The page's own conclusion, stated before any chart. A reader should not
+   * have to assemble the funnel out of four boxes and a line chart, and a
+   * number nobody can turn into a sentence was probably not worth plotting.
+   * Every clause is dropped when its number is zero, so this never claims a
+   * step nobody took.
+   */
+  function renderVerdict(d) {
+    var v = d.totals.visitors.v, hero = d.totals.passedHero.v, act = d.totals.contacts.v;
+    if (!v) { set('verdict', 'Nothing recorded in this window yet.'); return; }
+
+    var deepest = null;
+    (d.retention || []).forEach(function (p) {
+      var last = p.sections[p.sections.length - 1];
+      if (!deepest || last.count > deepest.count) deepest = { page: p.page, n: last.count };
+    });
+
+    var out = v + (v === 1 ? ' visitor' : ' visitors');
+    out += hero ? ', ' + hero + ' got past the hero' : ', none scrolled past the hero';
+    if (deepest && deepest.n) out += ', ' + deepest.n + ' reached the end of ' + deepest.page;
+    out += act ? ', and ' + act + (act === 1 ? ' got in touch.' : ' got in touch.') : ', and nobody got in touch.';
+    set('verdict', out.charAt(0).toUpperCase() + out.slice(1));
+  }
+
+  /* ================= where they came from ================= */
+  function renderSources(rows) {
+    var el = slot('sources.rows');
+    if (!el) return;
+    rows = (rows || []).filter(function (r) { return r.visitors > 0; })
+      .sort(function (a, b) { return b.visitors - a.visitors; }).slice(0, 7);
+    if (!rows.length) { el.innerHTML = '<p class="empty">No referrers in this segment</p>'; return; }
+    var max = rows[0].visitors || 1;
+    el.innerHTML = rows.map(function (r) {
+      var on = state.filters.source === r.label;
+      return '<button class="dvrow srow" data-filter-source="' + esc(r.label) + '" aria-pressed="' + on + '">' +
+        '<span class="nm">' + esc(r.label) + '</span>' +
+        '<span class="bars"><i style="width:' + pct((r.visitors / max) * 100) + '%"></i></span>' +
+        '<span class="vv">' + num(r.visitors) + '</span></button>';
+    }).join('');
+  }
+
   function renderDevices(rows) {
     var el = slot('devices.rows');
     if (!el) return;
@@ -303,83 +343,6 @@
     }).join('');
   }
 
-  /* ================= world map =================
-   * Choropleth by read rate, not by volume: a large country full of bouncers
-   * must not look like a win. Area on a map already exaggerates big countries,
-   * so the exact counts live in the ranked list beside it.
-   */
-  function cname(code) {
-    var W = window.WORLD;
-    return (W && W.n && W.n[code]) || (W && W.c[code] && W.c[code].n) || code;
-  }
-
-  function renderMap(places) {
-    var el = slot('map.svg');
-    if (!window.WORLD) { el.innerHTML = '<p class="noloc">Map failed to load.</p>'; return; }
-    var by = {}, max = 0, tot = 0;
-    places.forEach(function (p) { by[p.code] = p; tot += p.visitors; max = Math.max(max, p.visitors); });
-
-    var paths = Object.keys(WORLD.c).map(function (k) {
-      var p = by[k];
-      var cls = p ? seqBand(p.visitors, max) + ' on' : 's0';
-      if (p && state.filters.country === k) cls += ' sel';
-      var attrs = p
-        ? ' data-filter-country="' + k + '" data-tip-label="' + esc(cname(k)) +
-          '" data-tip-value="' + p.visitors + (p.visitors === 1 ? ' visitor' : ' visitors') + '"'
-        : '';
-      return '<path class="' + cls + '" d="' + WORLD.c[k].d + '"' + attrs + '></path>';
-    }).join('');
-
-    el.innerHTML = '<svg viewBox="' + WORLD.viewBox + '" role="img" aria-label="Visitors by country">' +
-      paths + '</svg>';
-    set('map.hint', places.length + (places.length === 1 ? ' country · ' : ' countries · ') +
-      num(tot) + (tot === 1 ? ' visitor' : ' visitors'));
-  }
-
-  /* ================= places list =================
-   * Country, region and city are the same rows at three zoom levels. The map
-   * stays at country level because that is all the geometry can carry; the list
-   * is where the resolution lives. A single city at n=1 is not a statistic —
-   * it is a lead, which is exactly why it earns a place next to the map.
-   */
-  var lastPlaces = {};
-
-  function renderPlaces(places) {
-    var rows = places[state.level] || [];
-    var el = slot('places.rows');
-    if (!rows.length) {
-      el.innerHTML = '<p class="empty">No ' + state.level + ' data in this segment</p>';
-      return;
-    }
-    var max = rows.reduce(function (a, p) { return Math.max(a, p.visitors); }, 0) || 1;
-    var tot = rows.reduce(function (a, p) { return a + p.visitors; }, 0);
-
-    el.innerHTML = rows.slice().sort(function (a, b) { return b.visitors - a.visitors; })
-      .map(function (p) {
-        // only country rows filter — Umami has no region/city filter on the
-        // endpoints this dashboard uses, so those rows stay read-only
-        var isCountry = state.level === 'country';
-        var nm = isCountry ? cname(p.code) : p.label;
-        var sub = !isCountry && p.code ? ' <span class="sub">' + esc(cname(p.code)) + '</span>' : '';
-        var tag = isCountry ? 'button' : 'div';
-        var attrs = isCountry
-          ? ' data-filter-country="' + esc(p.code) + '" aria-pressed="' + (state.filters.country === p.code) + '"'
-          : '';
-        return '<' + tag + ' class="crow ' + (isCountry ? '' : ' flat') + '"' + attrs +
-          ' data-tip-label="' + esc(nm) + '" data-tip-value="' + p.visitors + ' visitors · ' +
-            rnd(p.readRate) + '% finish">' +
-          '<span class="nm">' + esc(nm) + sub + '</span>' +
-          '<span class="vb"><i style="width:' + pct((p.visitors / max) * 100) + '%"></i></span>' +
-          '<span class="vv">' + p.visitors + '</span></' + tag + '>';
-      }).join('');
-  }
-
-  document.querySelectorAll('[data-level]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      state.level = b.dataset.level;
-      renderPlaces(lastPlaces);
-    });
-  });
 
   /* ================= payload hardening =================
    * A half-rendered dashboard is worse than a broken one: stale numbers sit
@@ -434,6 +397,9 @@
       },
       retention: retention,
       devices: a.devices || [],
+      sources: (a.sources || []).map(function (r) {
+        return { label: r.name === 'direct' || !r.name ? 'direct' : r.name, visitors: r.count };
+      }),
       notes: a.notes || [],
       // No per-country read rate exists, so the map carries location only and
       // the counts live in the list beside it.
@@ -475,6 +441,7 @@
     });
     d.quality = Array.isArray(d.quality) ? d.quality : [];
     d.devices = Array.isArray(d.devices) ? d.devices : [];
+    d.sources = Array.isArray(d.sources) ? d.sources : [];
     d.days = (Array.isArray(d.days) ? d.days : []).filter(function (x) { return x && x.date; });
     d.pages = Array.isArray(d.pages) ? d.pages : [];
     d.cta = Array.isArray(d.cta) ? d.cta : [];
@@ -527,31 +494,10 @@
         : 'The two intervals overlap — at this sample size the difference is not yet real.');
 
     renderDevices(d.devices);
+    renderSources(d.sources);
+    renderVerdict(d);
 
-    var places = d.places;
-    lastPlaces = places;
-    renderMap(places.country || []);
-    renderPlaces(places);
 
-    /* traffic — plots whichever figure is selected */
-    var m = state.metric;
-    set('days.metric', METRIC_LABEL[m]);
-    if (!d.days.length) {
-      html('days.bars', '');
-      set('days.peak', 'no data'); set('days.from', '—'); set('days.to', '—');
-    } else {
-    var max = d.days.reduce(function (a, x) { return Math.max(a, x[m] || 0); }, 0) || 1;
-    html('days.bars', d.days.map(function (x) {
-      var on = state.filters.day === x.date;
-      return '<button class="d' + (x.note ? ' mark' : '') + '" data-filter-day="' + x.date + '" aria-pressed="' + on +
-        '" data-tip-label="' + day(x.date) + (x.note ? ' — ' + esc(x.note) : '') +
-        '" data-tip-value="' + (x[m] || 0) + ' ' + METRIC_LABEL[m] +
-        '"><i style="height:' + pct(((x[m] || 0) / max) * 100) + '%"></i></button>';
-    }).join(''));
-    set('days.peak', 'peak ' + max);
-    set('days.from', day(d.days[0].date));
-    set('days.to', day(d.days[d.days.length - 1].date));
-    }
 
 
     html('pages.rows', d.pages.map(function (r) {
@@ -673,21 +619,27 @@
         opened: rate(46), read: rate(19), acted: rate(11)
       });
     }
-    var shape = function (base) {
+    // count is derived from the page's own visitors, not the site total: the
+    // real payload counts section-reached events per page, and a sample that
+    // did otherwise would exercise a shape the live data never produces.
+    var shape = function (base, pv) {
       return base.map(function (s, i) {
-        return { name: s.name, reach: i === 0 ? 100 : Math.max(4, Math.min(99, rnd(s.reach * (lift > 1 ? 1.22 : lift < 1 ? 0.78 : 1) * (0.94 + rand() * 0.12)))) };
+        var rr = i === 0 ? 100 : Math.max(4, Math.min(99,
+          rnd(s.reach * (lift > 1 ? 1.22 : lift < 1 ? 0.78 : 1) * (0.94 + rand() * 0.12))));
+        return { name: s.name, reach: rr, count: Math.round((rr / 100) * pv) };
       });
     };
+    var pvA = n(31), pvB = n(20), pvC = n(17);
     var R = [
-      { page: '/app-merge', visitors: n(31), sections: shape([
+      { page: '/app-merge', visitors: pvA, sections: shape([
         { name: 'Hero', reach: 100 }, { name: 'Problem', reach: 86 }, { name: 'Research', reach: 71 },
-        { name: 'Merge rules', reach: 41 }, { name: 'Testing', reach: 34 }, { name: 'Outcome', reach: 29 }]) },
-      { page: '/rise-portal', visitors: n(20), sections: shape([
+        { name: 'Merge rules', reach: 41 }, { name: 'Testing', reach: 34 }, { name: 'Outcome', reach: 29 }], pvA) },
+      { page: '/rise-portal', visitors: pvB, sections: shape([
         { name: 'Hero', reach: 100 }, { name: 'Context', reach: 82 }, { name: 'System', reach: 66 },
-        { name: 'Rollout', reach: 52 }, { name: 'Outcome', reach: 44 }]) },
-      { page: '/about', visitors: n(17), sections: shape([
+        { name: 'Rollout', reach: 52 }, { name: 'Outcome', reach: 44 }], pvB) },
+      { page: '/about', visitors: pvC, sections: shape([
         { name: 'Intro', reach: 100 }, { name: 'How I work', reach: 74 },
-        { name: 'Background', reach: 61 }, { name: 'Contact', reach: 55 }]) }
+        { name: 'Background', reach: 61 }, { name: 'Contact', reach: 55 }], pvC) }
     ];
     if (f.page) R = R.filter(function (r) { return r.page === f.page; });
 
@@ -713,6 +665,11 @@
       },
       retention: R,
       payoff: { deep: { n: n(24), resume: n(11), contact: n(4) }, shallow: { n: n(39), resume: n(3), contact: n(1) } },
+      sources: [
+        { label: 'linkedin.com', visitors: n(96) }, { label: 'direct', visitors: n(74) },
+        { label: 'google.com', visitors: n(41) }, { label: 'read.cv', visitors: n(23) },
+        { label: 'x.com', visitors: n(11) }
+      ],
       devices: [
         { device: 'laptop', visitors: n(35), sectionsReached: n(290), scrollDepthEvents: n(157) },
         { device: 'mobile', visitors: n(27), sectionsReached: n(66), scrollDepthEvents: n(42) },
