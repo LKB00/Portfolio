@@ -8,6 +8,11 @@
  * The count is fetched once per session, not once per page. Six pages all
  * carrying this would otherwise be six calls into a function that makes
  * fifteen upstream requests on a cache miss.
+ *
+ * The window is every day there is, not the dashboard's rolling four weeks.
+ * "so far" has to mean since the counting started: on a 28-day window the
+ * total would quietly shrink whenever a quiet month followed a busy one,
+ * which is the one thing a running count must never do.
  */
 (function () {
   "use strict";
@@ -17,7 +22,7 @@
 
   var line = pill.querySelector("[data-rp-line]");
   var sub = pill.querySelector("[data-rp-sub]");
-  var KEY = "lb-readers";
+  var KEY = "lb-readers-all";
   var TIMEOUT_MS = 6000;
 
   // Same rule as the dashboard: the apex loses POST bodies to its redirect, a
@@ -38,7 +43,17 @@
     // The badge and the sentence do one job between them: the +1 is the
     // subject, the line names it. Saying "you have been counted" beside a
     // visible +1 was the same fact twice.
-    line.textContent = "That +1 was you. " + num(n) + " so far.";
+    //
+    // Built as nodes rather than a string, so the figure can carry the
+    // site's own numeral treatment -- mono, tabular -- the way every other
+    // number on the site is set. Tabular also stops the pill changing
+    // width as the count ticks over a digit.
+    line.textContent = "That +1 was you. ";
+    var fig = document.createElement("span");
+    fig.className = "rp-n";
+    fig.textContent = num(n);
+    line.appendChild(fig);
+    line.appendChild(document.createTextNode(" so far."));
     if (sub) sub.textContent = "See how far the others got";
   }
 
@@ -67,7 +82,7 @@
     fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ days: 28 }),
+      body: JSON.stringify({ days: 3650 }),
       signal: ctl ? ctl.signal : undefined
     })
       .then(function (r) { return r.ok ? r.json() : null; })

@@ -1649,7 +1649,19 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    see, carrying the meaning "other people". A facepile does not gradient
    away; overlap and the ring already say which is in front. 52% is 3.69 on
    white and 4.97 on the dark pill. */
-#contact .rp-faces i{background:color-mix(in srgb,var(--ink) 52%,transparent)}
+#contact .rp-faces i{background:color-mix(in srgb,var(--ink) 52%,transparent);overflow:hidden}
+/* Three empty discs said "some people" and showed nobody. A generic figure
+   knocked out of the disc is the honest version: it reads as a person
+   without claiming to be one, which is all the site knows about them. The
+   shoulders run past the circle and are clipped by it, the way an avatar
+   crop works, so these are heads in a pile rather than icons in a row. */
+#contact .rp-faces i svg{width:100%;height:100%;color:var(--card)}
+#contact .rp-faces i.rp-me svg{display:none}
+/* Tabular, not mono: Geist Mono gives the group separator a full digit
+   advance, so 1,284 came out as "1 , 284". Tabular figures give the even
+   columns -- the pill keeps its width as the count gains a digit --
+   without breaking the number in half. */
+#contact .rp-n{font-variant-numeric:tabular-nums}
 /* Visible by default. If the observer never fires — a background tab, a
    browser without it, a reader who lands at the footer already — the pill is
    still finished, and the animation is the thing that is missing rather than
@@ -2146,7 +2158,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   <section id="contact">
     <footer>
     <a class="readpill" href="./dashboard.html" data-readpill>
-      <span class="rp-faces" aria-hidden="true"><i></i><i></i><i></i><i class="rp-me">+1</i></span>
+      <span class="rp-faces" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="8.9" r="4.1"/><path d="M12 14.7c-4.8 0-8.7 3.4-8.7 7.7V24h17.4v-1.6c0-4.3-3.9-7.7-8.7-7.7Z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="8.9" r="4.1"/><path d="M12 14.7c-4.8 0-8.7 3.4-8.7 7.7V24h17.4v-1.6c0-4.3-3.9-7.7-8.7-7.7Z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="8.9" r="4.1"/><path d="M12 14.7c-4.8 0-8.7 3.4-8.7 7.7V24h17.4v-1.6c0-4.3-3.9-7.7-8.7-7.7Z"/></svg></i><i class="rp-me">+1</i></span>
       <span class="rp-txt"><b data-rp-line>That +1 was you.</b><span class="rp-sub" data-rp-sub>See what everyone else did</span></span>
       <svg class="rp-go" width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
     </a>
