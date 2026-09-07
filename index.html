@@ -783,12 +783,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   letter-spacing:-.018em;color:var(--ink)}
 .padsub{margin:0;font-size:13px;line-height:1.45;color:var(--faint)}
 
+/* The dot grid used to be painted twice -- once by the row, once by the
+   board -- each from its own origin. The board starts one row-height
+   down, which is not a multiple of 18, so the two grids ran out of phase
+   and the seam between them read as a cut across the card. The ground is
+   one plane on .padstack now and both of these sit on it transparently,
+   so the grid is continuous by construction. */
 .padboard{position:relative;overflow:hidden;touch-action:manipulation;
-  height:0;border-radius:var(--r-card);
-  background-color:var(--surface);
-  background-image:radial-gradient(circle at 1px 1px,
-    color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
-  background-size:18px 18px;background-position:9px 9px}
+  height:0;background:transparent}
 
 /* ── a note ── */
 .padnote{position:absolute;width:152px;border-radius:4px;
@@ -1885,12 +1887,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      18px dot grid — so the closed row is a slice of the artboard rather
      than a different object standing in front of it. Opening it reads
      as the board unrolling, not as one material swapping for another. */
-  background-color:var(--surface);
-  background-image:radial-gradient(circle at 1px 1px,
-    color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
-  background-size:18px 18px;background-position:9px 9px;
+  background:transparent;
   font-family:inherit;color:var(--ink);
-  transition:border-color .2s var(--ease),background-color .2s var(--ease),
+  transition:border-color .3s var(--ease),background-color .2s var(--ease),
+    box-shadow .3s var(--ease),
     opacity .18s linear,visibility 0s linear .18s}
 .padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
   border-radius:50%;background:var(--accent);color:#FFFFFF}
@@ -1898,7 +1898,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .padtriggerhint{font-size:13px;color:var(--faint);letter-spacing:-.005em}
 @media (hover:hover){
   .padtrigger:hover{border-color:color-mix(in srgb,var(--accent) 60%,transparent);
-    background-color:color-mix(in srgb,var(--accent) 4%,var(--surface))}
+    background-color:color-mix(in srgb,var(--accent) 5%,transparent)}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -1945,6 +1945,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .padstack{position:relative;display:grid;grid-template-rows:auto 1fr;
   overflow:hidden;
   height:var(--trig-h,auto);border-radius:var(--r-card);
+  background-color:var(--surface);
+  background-image:radial-gradient(circle at 1px 1px,
+    color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
+  background-size:18px 18px;background-position:9px 9px;
   transition:height .45s cubic-bezier(.4,0,.2,1)}
 .padstack > *{min-height:0}
 .padstack > .padtrigger{grid-row:1}
@@ -1956,17 +1960,19 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .padwrap.is-open .padboard{opacity:1;visibility:visible;
   transition:opacity .26s var(--ease) .16s,visibility 0s}
 
-/* Open, it is no longer a control: the dashed "empty slot" edge goes,
-   the plus goes (the board has its own), and a hairline is all that
-   separates the header from the ground it shares with the board. */
+/* Open, it is no longer a control: the dashed "empty slot" edge fades
+   out and the plus goes, because the board has its own.
+
+   Nothing about the box itself changes. border-style and border-radius
+   are not animatable, so switching them on open snapped mid-transition
+   -- the cut in the middle of the opening. The border stays dashed at
+   the same radius the whole time and only its COLOUR moves, which does
+   animate; the separator is an inset shadow rather than a border edge
+   for the same reason. */
 .padwrap.is-open .padtrigger{cursor:default;
-  border-style:solid;border-color:transparent;
-  border-bottom-color:color-mix(in srgb,var(--muted) 26%,transparent);
-  border-radius:0}
+  border-color:transparent;
+  box-shadow:inset 0 -1px 0 color-mix(in srgb,var(--muted) 26%,transparent)}
 .padwrap.is-open .padtriggerplus{opacity:0;width:0;margin-right:-12px}
-/* the stack already clips to the card radius; the board keeping its own
-   rounded its top corners away from the header and left two white nicks */
-.padwrap.is-open .padboard{border-radius:0}
 .padtrigger:disabled{opacity:1;color:var(--ink)}
 .padtriggerplus{transition:opacity .2s var(--ease),width .3s var(--ease),
   margin-right .3s var(--ease)}
@@ -2034,7 +2040,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      shorthand — so the collapse properties have to be listed HERE too or
      they are silently dropped and open/close snaps. */
   transition:clip-path .7s cubic-bezier(.16,.84,.24,1),
-    border-color .2s var(--ease),background-color .2s var(--ease),
+    border-color .3s var(--ease),background-color .2s var(--ease),
+    box-shadow .3s var(--ease),
     opacity .18s linear,visibility 0s linear .18s}
 #notes .padwrap[data-reveal].shown .padtrigger{
   clip-path:inset(0 0 0 0 round var(--r-card));transition-delay:.18s}
