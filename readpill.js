@@ -1,7 +1,8 @@
 /* readpill.js — the footer's readership pill.
  *
  * The pill is already complete in the markup: faces, a +1, and copy that is
- * true whether or not this file ever runs. Everything here is an upgrade —
+ * true whether or not this file ever runs -- "You're in the count." holds
+ * on its own, and only gives way to the total if one arrives. Everything here is an upgrade —
  * the arrival animation, and the count. If the fetch is slow, blocked or
  * broken, the reader sees a finished pill and nothing shifts.
  *
@@ -21,7 +22,6 @@
   if (!pill) return;
 
   var line = pill.querySelector("[data-rp-line]");
-  var sub = pill.querySelector("[data-rp-sub]");
   var KEY = "lb-readers-all";
   var TIMEOUT_MS = 6000;
 
@@ -38,23 +38,22 @@
 
   // "one of N" only once N is known. Until then the pill says the thing that
   // is true without any data: you have been counted.
+  // Only the top line is ever rewritten. It rests on a sentence that is
+  // true with no data at all and becomes the total once there is one; the
+  // line under it does not move, and the second line under THAT is the
+  // hover, which is CSS and none of this file's business.
+  //
+  // Built as nodes rather than a string so the figure can carry its own
+  // numeral treatment: tabular, so the pill holds its width when the
+  // count gains a digit.
   function show(n) {
     if (!n || !line) return;
-    // The badge and the sentence do one job between them: the +1 is the
-    // subject, the line names it. Saying "you have been counted" beside a
-    // visible +1 was the same fact twice.
-    //
-    // Built as nodes rather than a string, so the figure can carry the
-    // site's own numeral treatment -- mono, tabular -- the way every other
-    // number on the site is set. Tabular also stops the pill changing
-    // width as the count ticks over a digit.
-    line.textContent = "That +1 was you. ";
+    line.textContent = "";
     var fig = document.createElement("span");
     fig.className = "rp-n";
     fig.textContent = num(n);
     line.appendChild(fig);
     line.appendChild(document.createTextNode(" so far."));
-    if (sub) sub.textContent = "See how far the others got";
   }
 
   function cached() {
