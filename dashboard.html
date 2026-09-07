@@ -156,7 +156,11 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 .thin-flag{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-mono);color:var(--thin)}
 
 /* ── figures ─────────────────────────────────────────────── */
-.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4)}
+/* The page's conclusion, in the site's lead size. It sits above the figures
+   because it is the answer and they are the evidence. */
+.verdict{font-size:var(--fs-lead);line-height:var(--lh-lead);letter-spacing:var(--tr-lead);
+  color:var(--ink);max-width:62ch;margin:0 0 var(--s-5)}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4);margin-bottom:var(--s-6)}
 /* reference numbers, not controls — nothing here responds to a click */
 .fig{background:var(--surface);border-radius:var(--r-card);padding:var(--s-5) var(--s-6)}
 .fig .lab{display:flex;align-items:center;font-family:var(--mono);font-size:var(--fs-micro);
@@ -214,7 +218,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
    Two bars on one common scale, which is the only comparison here worth
    making. Position and length carry it; the legend distinguishes the series,
    so no hue is spent on a distinction two shapes already make. */
-.dvrow{display:grid;grid-template-columns:74px minmax(0,1fr) 150px;gap:var(--s-4);
+.dvrow{display:grid;grid-template-columns:88px minmax(0,1fr) 150px;gap:var(--s-4);
   align-items:center;padding:var(--s-2) 0}
 .dvrow .nm{font-size:var(--fs-small);letter-spacing:var(--tr-body);color:var(--ink);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -222,6 +226,11 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 .dvrow .vv{font-family:var(--mono);font-size:var(--fs-small);letter-spacing:var(--tr-mono);
   text-align:right;color:var(--ink)}
 .dvrow .vv small{display:block;font-size:var(--fs-micro);color:var(--faint);white-space:nowrap}
+.srow{grid-template-columns:88px minmax(0,1fr) 52px;width:100%;border:0;background:transparent;
+  font:inherit;letter-spacing:var(--tr-body);color:inherit;text-align:left;cursor:pointer;
+  border-radius:var(--r-sm);padding:var(--s-2) var(--s-3);transition:background .15s var(--ease)}
+.srow:hover{background:var(--inset)}
+.srow[aria-pressed="true"]{background:var(--inset);box-shadow:inset 2px 0 0 var(--ink)}
 
 /* ── source quality ──────────────────────────────────────── */
 .lgrid{display:grid;grid-template-columns:1fr minmax(0,2.2fr) 72px;gap:var(--s-4);align-items:center}
@@ -415,6 +424,7 @@ body.demo{padding-top:34px}
 @media(max-width:1000px){
   .c7,.c5,.c6,.c8,.c4{grid-column:span 12}
   .figs{grid-template-columns:repeat(2,1fr)}
+  .verdict{font-size:var(--fs-body)}
   .mult{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:700px){
@@ -478,21 +488,22 @@ body.demo{padding-top:34px}
   </div>
 
   <!-- clickable figures — they choose what the traffic chart plots -->
-  <div class="figs" style="margin-bottom:var(--s-4)">
+  <!-- Most dashboards never state their conclusion. This one says it in a
+       sentence before any chart, because the funnel IS the finding and a
+       reader should not have to assemble it from four boxes. -->
+  <p class="verdict" data-slot="verdict">—</p>
+
+  <div class="figs">
     <div class="fig">
       <span class="lab">Visitors</span>
       <span class="row"><span class="val" data-slot="f.visitors.value">—</span><span class="dlt" data-slot="f.visitors.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Pageviews</span>
-      <span class="row"><span class="val" data-slot="f.pageviews.value">—</span><span class="dlt" data-slot="f.pageviews.delta">—</span></span>
-    </div>
-    <div class="fig">
-      <span class="lab">Passed the hero</span>
+      <span class="lab">Past the hero</span>
       <span class="row"><span class="val" data-slot="f.passedHero.value">—</span><span class="dlt" data-slot="f.passedHero.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Contacts</span>
+      <span class="lab">Got in touch</span>
       <span class="row"><span class="val" data-slot="f.contacts.value">—</span><span class="dlt" data-slot="f.contacts.delta">—</span></span>
     </div>
   </div>
@@ -510,54 +521,24 @@ body.demo{padding-top:34px}
 
     <section class="card c6">
       <div class="head">
-        <h2 class="t-h1">Depth by device
+        <h2 class="t-h1">How far each device gets
           <span class="i" data-tip="Counts, not rates. Umami reports event totals, and dividing those by unique visitors is what once produced a 400% completion rate. Sections reached is the honest comparison: if phones reach a fraction of what laptops do, that is a layout problem.">i</span></h2>
         <span class="hint">Sections reached</span>
       </div>
       <div data-slot="devices.rows"><p class="empty">Loading…</p></div>
     </section>
 
-
-    <section class="card c12">
+    <section class="card c6">
       <div class="head">
-        <h2 class="t-h1">Location
-          <span class="i" data-tip="Shaded by how many visitors each country sends, in one hue: five steps, no verdict. Area on a map exaggerates large countries, so the exact counts live in the list beside it. Region and city come from IP lookup — VPNs and carriers misplace people — so read a single city as a lead, not a fact.">i</span></h2>
-        <span class="hint" data-slot="map.hint">—</span>
+        <h2 class="t-h1">Where they came from
+          <span class="i" data-tip="Referrers, as the browser reports them. Anyone arriving by typing the address, from a private message, or from an app that strips the referrer counts as direct — which is most of it, and is not a gap in the tracking.">i</span></h2>
+        <span class="hint">Visitors</span>
       </div>
-      <div class="locgrid">
-        <div>
-          <div class="mapwrap" data-slot="map.svg"><p class="empty">Loading…</p></div>
-          <div class="legend">
-            <span class="cap">Visitors</span>
-            <span class="lg">fewer<span class="sw" style="background:var(--seq-0)"></span><span class="sw" style="background:var(--seq-1)"></span><span class="sw" style="background:var(--seq-2)"></span><span class="sw" style="background:var(--seq-3)"></span><span class="sw" style="background:var(--seq-4)"></span>more</span>
-          </div>
-        </div>
-        <div class="locside">
-          <div class="seg sm listtabs" role="tablist" aria-label="Location detail">
-            <button type="button" role="tab" data-level="country" aria-selected="true">Countries</button>
-            <button type="button" role="tab" data-level="region" aria-selected="false">Regions</button>
-            <button type="button" role="tab" data-level="city" aria-selected="false">Cities</button>
-          </div>
-          <div class="clist" data-slot="places.rows"><p class="empty">Loading…</p></div>
-        </div>
-      </div>
+      <div data-slot="sources.rows"><p class="empty">Loading…</p></div>
     </section>
 
-    <section class="card c12">
-      <div class="head">
-        <h2 class="t-h1">Traffic
-          <span class="i" data-tip="Yellow dots mark what I did that day — applications sent, posts published. A traffic chart with no causes is decoration. Click a bar to filter to that day.">i</span></h2>
-        <div class="headctl">
-          <div class="seg sm" role="group" aria-label="Metric to plot">
-            <button type="button" data-metric="visitors" aria-pressed="true">Visitors</button>
-            <button type="button" data-metric="pageviews" aria-pressed="false">Pageviews</button>
-          </div>
-          <span class="hint" data-slot="days.peak">—</span>
-        </div>
-      </div>
-      <div class="days" data-slot="days.bars"></div>
-      <div class="daxis"><span data-slot="days.from">—</span><span data-slot="days.to">—</span></div>
-    </section>
+
+
 
     <!-- three separate datasets, never compared side by side: the one honest
          place for tabs. The active tab is the card's title. -->
@@ -648,7 +629,6 @@ body.demo{padding-top:34px}
   });
 }());
 </script>
-<script src="world-map.js?v=2" defer></script>
-<script src="dashboard-data.js?v=9" defer></script>
+<script src="dashboard-data.js?v=12" defer></script>
 </body>
 </html>
