@@ -713,6 +713,9 @@
 
   function startDemo() {
     DEMO_ON = true;
+    // Before anything renders. If the guard above ever fails open, this is
+    // what stops an invented number being read as a real one.
+    document.body.classList.add('demo');
     render(demo(state.range, state.filters));
     set('meta.footer', 'SAMPLE DATA — api/stats.js not reachable from this host. Filtering is live; the numbers are synthetic.');
     unlock();
