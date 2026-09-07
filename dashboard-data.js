@@ -725,9 +725,9 @@
       range: { from: iso(days - 1), to: iso(0), days: days, prevFrom: iso(days * 2 - 1), prevTo: iso(days) },
       totals: {
         visitors: { v: vis, prev: n(58) },
-        opened: { v: rate(46), prev: rate(41), n: vis },
-        read: { v: rate(19), prev: rate(22), n: n(30) },
-        acted: { v: rate(12), prev: rate(9), n: n(30) }
+        pageviews: { v: vis * 3 + n(40), prev: n(220) },
+        passedHero: { v: Math.round(vis * 0.68), prev: n(44) },
+        contacts: { v: Math.round(vis * 0.11), prev: n(9) }
       },
       retention: R,
       payoff: { deep: { n: n(24), resume: n(11), contact: n(4) }, shallow: { n: n(39), resume: n(3), contact: n(1) } },

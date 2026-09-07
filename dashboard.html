@@ -19,22 +19,22 @@
   --yellow:#FBE14D; --onYellow:#3D3400; --ok:#1F9D4D; --crit:#E0392B;
   --r-pill:1000px; --r-card:20px; --r-float:16px; --r-sm:10px;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
-  --display:'Geist','Inter',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  --display:'Geist','Inter',Helvetica,Arial,sans-serif;
   --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 
   /* ── type scale, measured off lokeshbhatia.com ──────────────────────────
      Tracking tightens as size grows, exactly as the site does: -.026em at
      32px down to -.011em at 13px. Mono sits at 0. Only two weights exist,
      400 and 500, because that is all the site loads. */
-  --fs-page:22px;  --lh-page:1.22; --tr-page:-.022em;
+  --fs-page:24px;  --lh-page:1.2;  --tr-page:-.01em;
   --fs-h1:18px;    --lh-h1:1.3;    --tr-h1:-.018em;
   --fs-h2:14px;    --lh-h2:1.3;    --tr-h2:-.012em;
   --fs-lead:15px;  --lh-lead:1.5;  --tr-lead:-.010em;
-  --fs-body:13px;  --lh-body:1.45; --tr-body:-.011em;
+  --fs-body:13px;  --lh-body:1.42; --tr-body:-.01em;
   --fs-small:12px; --lh-small:1.42;
   --fs-micro:11px; --lh-micro:1.5;
   --fs-stat:24px;  --tr-stat:-.022em;
-  --tr-label:.09em; --tr-mono:0;
+  --tr-label:.02em; --tr-mono:0;
 
   --s-1:4px; --s-2:7px; --s-3:10px; --s-4:13px; --s-5:18px; --s-6:24px; --s-7:36px; --s-8:45px;
   --accent:#006AD4; --accentWash:rgba(0,106,212,.08); --markWash:rgba(251,225,77,.55);
@@ -42,6 +42,7 @@
   --gain:#1F9D4D; --neg:#C62A1D; --thin:#B4B4B4;
   --q-good:#1F9D4D; --q-mid:#B78011; --q-poor:#E0392B; --q-none:#8C8C81;
   --land:#E4E4E0; --land-line:#FAFAFA;
+  --inset:color-mix(in srgb,var(--ink) 6%,transparent);
   --w:1120px;
 }
 :root[data-theme="dark"]{
@@ -108,7 +109,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
   background:color-mix(in srgb,var(--bg) 26%,transparent);font-family:var(--mono);font-size:10px}
 .chip:hover{opacity:.85}
 .chip.ghost{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line);padding:0 var(--s-4)}
-.chip.ghost:hover{color:var(--ink);background:var(--surface)}
+.chip.ghost:hover{color:var(--ink);background:var(--inset)}
 .seg{display:inline-flex;gap:2px;padding:3px;background:var(--surface);border-radius:var(--r-pill)}
 .seg button{appearance:none;border:0;background:transparent;color:var(--muted);cursor:pointer;height:26px;
   padding:0 12px;border-radius:var(--r-pill);font-family:var(--display);font-size:var(--fs-small);
@@ -122,8 +123,11 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 
 /* ── cards ───────────────────────────────────────────────── */
 .grid{display:grid;gap:var(--s-4);grid-template-columns:repeat(12,1fr)}
-.card{background:var(--card);border-radius:var(--r-card);padding:var(--s-6);
-  box-shadow:inset 0 0 0 1px var(--line);min-width:0}
+/* The site's one card grammar: a borderless tinted well on --surface. This
+   used to be a white --card box with a 1px border, which is the exact object
+   index.html removed from its hero for reading as pasted in from another
+   site. Same object, same problem, so the same fix. */
+.card{background:var(--surface);border-radius:var(--r-card);padding:var(--s-6);min-width:0}
 .card.sub{padding:var(--s-5)}
 .card.invert{background:var(--deep);color:var(--onDeep);box-shadow:none}
 .c12{grid-column:span 12} .c7{grid-column:span 7} .c5{grid-column:span 5}
@@ -154,8 +158,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 /* ── figures ─────────────────────────────────────────────── */
 .figs{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4)}
 /* reference numbers, not controls — nothing here responds to a click */
-.fig{background:var(--card);border-radius:var(--r-card);padding:var(--s-5) var(--s-6);
-  box-shadow:inset 0 0 0 1px var(--line)}
+.fig{background:var(--surface);border-radius:var(--r-card);padding:var(--s-5) var(--s-6)}
 .fig .lab{display:flex;align-items:center;font-family:var(--mono);font-size:var(--fs-micro);
   font-weight:500;line-height:var(--lh-micro);letter-spacing:var(--tr-label);
   text-transform:uppercase;color:var(--faint)}
@@ -167,7 +170,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 
 /* ── reading depth ───────────────────────────────────────── */
 .mult{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-4)}
-.mult .cell{background:var(--surface);border-radius:var(--r-float);padding:var(--s-5);cursor:pointer;
+.mult .cell{background:var(--inset);border-radius:var(--r-float);padding:var(--s-5);cursor:pointer;
   border:0;font:inherit;letter-spacing:var(--tr-body);color:inherit;text-align:left;
   transition:.2s var(--ease);box-shadow:inset 0 0 0 1px transparent}
 .mult .cell:hover{box-shadow:inset 0 0 0 1px var(--muted)}
@@ -268,7 +271,7 @@ td{padding:var(--s-3) 0;border-bottom:1px solid var(--line);vertical-align:middl
 tr:last-child td{border-bottom:0}
 th+th,td+td{padding-left:var(--s-4)}
 tbody tr[data-filter-source],tbody tr[data-filter-page]{cursor:pointer;transition:background .15s var(--ease)}
-tbody tr[data-filter-source]:hover,tbody tr[data-filter-page]:hover{background:var(--surface)}
+tbody tr[data-filter-source]:hover,tbody tr[data-filter-page]:hover{background:var(--inset)}
 tbody tr[aria-pressed="true"]{background:var(--accentWash)}
 tbody tr[aria-pressed="true"] td:first-child{box-shadow:inset 2px 0 0 var(--ink)}
 td:first-child{padding-left:var(--s-3)!important} th:first-child{padding-left:var(--s-3)}
@@ -281,9 +284,9 @@ tr.cold td{color:var(--faint)}
   margin-right:var(--s-2);vertical-align:1px}
 .dot6.on{background:var(--gain)}
 .track{display:flex;gap:2px;width:88px}
-.track i{flex:1;height:8px;border-radius:2px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.track i{flex:1;height:8px;border-radius:2px;background:var(--inset)}
 .track i.on{background:var(--ink);box-shadow:none} .track i.end{background:var(--gain);box-shadow:none}
-.bwrap{background:var(--surface);border-radius:var(--r-pill);width:100%}
+.bwrap{background:var(--inset);border-radius:var(--r-pill);width:100%}
 .bar{height:8px;border-radius:var(--r-pill);background:var(--ink);min-width:3px}
 table.fixed{table-layout:fixed}
 table.fixed td:nth-child(2){width:42%} table.fixed td:nth-child(3){width:38px}
@@ -325,15 +328,15 @@ table.fixed .trunc{width:auto;max-width:none}
 .crow{display:grid;grid-template-columns:1.3fr minmax(0,0.85fr) 34px;gap:var(--s-3);align-items:center;
   padding:var(--s-2) var(--s-3);border-radius:var(--r-sm);cursor:pointer;border:0;background:transparent;
   color:inherit;font:inherit;letter-spacing:var(--tr-body);text-align:left;transition:background .15s var(--ease)}
-.crow:hover{background:var(--surface)}
-.crow[aria-pressed="true"]{background:var(--surface);box-shadow:inset 2px 0 0 var(--ink)}
+.crow:hover{background:var(--inset)}
+.crow[aria-pressed="true"]{background:var(--inset);box-shadow:inset 2px 0 0 var(--ink)}
 .crow .nm{font-size:var(--fs-small);letter-spacing:var(--tr-body);white-space:nowrap;overflow:hidden;
   text-overflow:ellipsis;color:var(--ink)}
 .crow .nm .sub{color:var(--faint)}
 /* region and city rows have nothing to filter, so they get no affordance */
 .crow.flat{cursor:default}
 .crow.flat:hover{background:transparent}
-.crow .vb{background:var(--surface);border-radius:var(--r-pill);height:8px}
+.crow .vb{background:var(--inset);border-radius:var(--r-pill);height:8px}
 .crow[aria-pressed="true"] .vb{background:color-mix(in srgb,var(--ink) 12%,transparent)}
 .crow .vb i{display:block;height:8px;border-radius:var(--r-pill);background:currentColor;min-width:3px}
 .crow .vv{font-family:var(--mono);font-size:var(--fs-small);letter-spacing:var(--tr-mono);
@@ -349,7 +352,7 @@ table.fixed .trunc{width:auto;max-width:none}
 #tip .m{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-mono);opacity:.7;display:block}
 
 /* ── method ──────────────────────────────────────────────── */
-details{background:var(--card);border-radius:var(--r-card);box-shadow:inset 0 0 0 1px var(--line);margin-top:var(--s-4)}
+details{background:var(--surface);border-radius:var(--r-card);margin-top:var(--s-4)}
 summary{list-style:none;cursor:pointer;padding:var(--s-5) var(--s-6);font-size:var(--fs-small);
   letter-spacing:var(--tr-body);color:var(--muted);display:flex;justify-content:space-between;align-items:center;
   transition:color .2s var(--ease)}
@@ -453,16 +456,16 @@ body.demo{padding-top:34px}
       <span class="row"><span class="val" data-slot="f.visitors.value">—</span><span class="dlt" data-slot="f.visitors.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Opened a case study</span>
-      <span class="row"><span class="val"><span data-slot="f.opened.value">—</span><span class="u">%</span></span><span class="dlt" data-slot="f.opened.delta">—</span></span>
+      <span class="lab">Pageviews</span>
+      <span class="row"><span class="val" data-slot="f.pageviews.value">—</span><span class="dlt" data-slot="f.pageviews.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Read to the end</span>
-      <span class="row"><span class="val"><span data-slot="f.read.value">—</span><span class="u">%</span></span><span class="dlt" data-slot="f.read.delta">—</span></span>
+      <span class="lab">Passed the hero</span>
+      <span class="row"><span class="val" data-slot="f.passedHero.value">—</span><span class="dlt" data-slot="f.passedHero.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Then acted</span>
-      <span class="row"><span class="val"><span data-slot="f.acted.value">—</span><span class="u">%</span></span><span class="dlt" data-slot="f.acted.delta">—</span></span>
+      <span class="lab">Contacts</span>
+      <span class="row"><span class="val" data-slot="f.contacts.value">—</span><span class="dlt" data-slot="f.contacts.delta">—</span></span>
     </div>
   </div>
 
@@ -646,6 +649,6 @@ body.demo{padding-top:34px}
 }());
 </script>
 <script src="world-map.js?v=2" defer></script>
-<script src="dashboard-data.js?v=3" defer></script>
+<script src="dashboard-data.js?v=4" defer></script>
 </body>
 </html>
