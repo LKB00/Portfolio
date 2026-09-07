@@ -68,6 +68,89 @@ jobs:
           print(f"OK: analytics.js ({len(src)} bytes) emits all {len(REQUIRED)} required events.")
           PY
 
+      # dashboard-data.js fills the page with synthetic numbers when it thinks
+      # it is off-domain. One hostname regex stands between that and the live
+      # site, and if it ever fails open the dashboard looks completely normal
+      # while every figure on it is invented — the same silent-wrong failure as
+      # the section bug. So the guard is executed here, not read.
+      - name: Assert demo data cannot appear on the live site
+        run: |
+          node - <<'JS'
+          const fs = require("fs");
+          const src = fs.readFileSync("dashboard-data.js", "utf8");
+
+          // Find the OFFLINE declaration, then pull in whatever it depends on.
+          // Naming the helpers directly meant a rename broke the check rather
+          // than the guard — which is the wrong thing to be fragile about.
+          const decl = (name) => {
+            const re = new RegExp("^\\s*var\\s+" + name + "\\s*=.*$", "m");
+            const m = src.match(re);
+            return m ? m[0] : null;
+          };
+
+          const offline = decl("OFFLINE");
+          if (!offline) {
+            console.error("FAIL: no OFFLINE guard found in dashboard-data.js.");
+            process.exit(1);
+          }
+
+          const deps = [];
+          for (const id of new Set(offline.match(/\b[A-Z][A-Z0-9_]{2,}\b/g) || [])) {
+            if (id === "OFFLINE") continue;
+            const d = decl(id);
+            if (d) deps.push(d);
+          }
+
+          const lines = deps.concat(offline).join("\n");
+
+          // The guard's own source, run against a fake location. Evaluating it
+          // means a rewritten regex is tested on behaviour rather than on
+          // whether it still looks like the one we expected.
+          const guard = new Function(
+            "location",
+            lines + "\nreturn { OFFLINE: OFFLINE };"
+          );
+
+          const LIVE = ["lokeshbhatia.com", "www.lokeshbhatia.com"];
+          const SEARCHES = ["", "?live", "?days=7", "?live&days=7"];
+
+          const bad = [];
+          for (const hostname of LIVE) {
+            for (const search of SEARCHES) {
+              let r;
+              try {
+                r = guard({ hostname, search });
+              } catch (e) {
+                console.error(`FAIL: guard threw for ${hostname}${search}: ${e.message}`);
+                process.exit(1);
+              }
+              if (r.OFFLINE !== false) bad.push(`${hostname}${search || " (no query)"}`);
+            }
+          }
+
+          if (bad.length) {
+            console.error("Demo mode would activate on:");
+            bad.forEach((b) => console.error("  " + b));
+            console.error(
+              "\nFAIL: the live site can render synthetic numbers.\n" +
+              "dashboard-data.js must treat lokeshbhatia.com as online for every query string."
+            );
+            process.exit(1);
+          }
+
+          // Not a failure: someone may deliberately remove demo mode. But
+          // losing it silently would cost the local workflow, so it is said.
+          const dev = guard({ hostname: "localhost", search: "" });
+          if (dev.OFFLINE !== true) {
+            console.log("note: demo mode no longer activates on localhost.");
+          }
+
+          console.log(
+            `OK: demo mode stays off for ${LIVE.length} live hostnames across ` +
+            `${SEARCHES.length} query strings.`
+          );
+          JS
+
       # The injector only writes a tag when the Umami host is ABSENT from a
       # file. So changing UMAMI_ID above does not rewrite pages that already
       # carry a tag — they keep reporting to the old website while the build

@@ -1,6 +1,7 @@
 /* dashboard-data.js — data, filtering, interaction. No design decisions here.
  *
- * POST {password, range, filters:{source,page,day}} → JSON:
+ * POST {range, filters:{source,page,day}} → JSON.  No auth: the endpoint
+ * is public and returns aggregates only.
  * { ok, range:{from,to,days,prevFrom,prevTo},
  *   totals:{visitors:{v,prev}, opened:{v,prev,n}, read:{v,prev,n}, acted:{v,prev,n}},
  *   retention:[{page,visitors,sections:[{name,reach}]}],
@@ -11,7 +12,6 @@
  *            city:[{code,label,visitors,readRate}] },  // code = the country it sits in
  *   (metrics?type=country|region|city — all three exist in Umami)
  *   days:[{date,visitors,opened,read,acted,note}],
- *   apps:[{company,campaign,sent,opened,stage,stages,seconds,resume}],
  *   pages:[{path,visitors,median,read}], cta:[{label,clicks}] }
  *
  * Filters cross-cut everything: the server recomputes the whole payload for the
@@ -21,11 +21,22 @@
   'use strict';
 
   var MIN_N = 20;
-  var API = /(^|\.)lokeshbhatia\.com$/.test(location.hostname)
-    ? 'https://www.lokeshbhatia.com/api/stats' : '/api/stats';
+  /* Where to ask.
+   *
+   * On the live domain the absolute www URL is mandatory, not tidiness: the
+   * apex 302-redirects to www and a POST body does not survive the redirect.
+   *
+   * Locally and on file:// there is no /api to hit, so it asks production
+   * directly — which works because the endpoint sends
+   * Access-Control-Allow-Origin. Anywhere else (a Vercel preview) same-origin
+   * is right, since that deployment ships its own copy of the function. */
+  var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname) ||
+              location.protocol === 'file:';
+  var LIVE_HOST = /(^|\.)lokeshbhatia\.com$/.test(location.hostname);
+  var API = (LIVE_HOST || LOCAL) ? 'https://www.lokeshbhatia.com/api/stats' : '/api/stats';
 
-  var state = { pw: null, range: 28, metric: 'visitors', level: 'country', filters: { source: null, page: null, day: null, country: null } };
-  var last = null;
+  var state = { range: 28, metric: 'visitors', level: 'country', filters: { source: null, page: null, day: null, country: null } };
+  var last = null, lastPlaces = {};
 
   var $ = function (s) { return document.querySelector(s); };
   var slot = function (n) { return document.querySelector('[data-slot="' + n + '"]'); };
@@ -66,25 +77,23 @@
   }
   function overlap(a, b) { return a.lo <= b.hi && b.lo <= a.hi; }
 
-  /* ================= the quality scale =================
-   * One meaning for colour on this page: how well a segment reads, measured
-   * against the site average. Below MIN_N it gets no colour at all — grey is
-   * "not judgeable yet", which is a statement, not a gap.
+  /* ================= the sequential scale =================
+   * One quantitative variable, so one hue in steps. The map used to rank
+   * countries good/average/poor by finish rate — a variable the endpoint no
+   * longer returns, which left band() falling through to its "average" branch
+   * and painting every country amber: a verdict about data that did not
+   * exist. Volume has no good or bad direction, so nothing here implies one.
    */
-  var BAND = [
-    { k: 'good', cls: 'q-good', svg: 'g' },
-    { k: 'mid',  cls: 'q-mid',  svg: 'm' },
-    { k: 'poor', cls: 'q-poor', svg: 'p' },
-    { k: 'none', cls: 'q-none', svg: 'n' }
-  ];
-  function band(rate, avg, n) {
-    if (n != null && n < MIN_N) return BAND[3];
-    if (!avg) return BAND[1];
-    var r = rate / avg;
-    if (r >= 1.25) return BAND[0];
-    if (r >= 0.75) return BAND[1];
-    return BAND[2];
+  var SEQ = ['s0', 's1', 's2', 's3', 's4'];
+  function seqBand(v, max) {
+    if (!v || !max) return SEQ[0];
+    var r = v / max;
+    if (r > 0.66) return SEQ[4];
+    if (r > 0.33) return SEQ[3];
+    if (r > 0.12) return SEQ[2];
+    return SEQ[1];
   }
+
 
   /* ================= tooltip ================= */
   var tip = $('#tip');
@@ -174,17 +183,18 @@
 
     var grid = [100, 50, 0].map(function (v) {
       return '<line x1="' + CH.L + '" y1="' + y(v) + '" x2="' + CH.R + '" y2="' + y(v) +
-             '" style="stroke:var(--line);stroke-width:1"/>' +
+             '" style="stroke:var(--rule);stroke-width:1"/>' +
              '<text x="' + (CH.L - 6) + '" y="' + y(v) + '" text-anchor="end" ' +
              'dominant-baseline="middle" class="ytick">' + v + '</text>';
     }).join('');
 
-    var endBand = band(s[n - 1].reach, p.avgEnd, p.visitors);
+    // The steepest fall is the finding; the last point is just the end of the
+    // line. Neither is good or bad, so neither gets a verdict colour — the
+    // fall is marked by accent and radius, which survives colour blindness.
     var dots = s.map(function (sec, i) {
-      var fill = i === worst ? 'var(--q-poor)'
-               : i === n - 1 ? 'var(--' + endBand.cls + ')' : 'var(--ink)';
+      var fill = i === worst ? 'var(--mark)' : 'currentColor';
       return '<circle cx="' + x(i) + '" cy="' + y(sec.reach) + '" r="' +
-        (i === worst || i === n - 1 ? CH.R_MAX : 2.2) + '" style="fill:' + fill + '"/>';
+        (i === worst ? CH.R_MAX : 2.2) + '" style="fill:' + fill + '"/>';
     }).join('');
 
     var bw = (CH.R - CH.L) / (n - 1);
@@ -199,9 +209,9 @@
       svg: '<svg viewBox="0 0 ' + CH.W + ' ' + CH.H + '" role="img" aria-label="Retention through ' +
         esc(p.page) + '">' + grid +
         '<path d="' + area + '" style="fill:var(--ink);fill-opacity:.07"/>' +
-        '<polyline points="' + pts + '" style="fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round"/>' +
+        '<polyline points="' + pts + '" style="fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round"/>' +
         '<line x1="' + x(worst - 1) + '" y1="' + y(s[worst - 1].reach) + '" x2="' + x(worst) +
-          '" y2="' + y(s[worst].reach) + '" style="stroke:var(--q-poor);stroke-width:1.9"/>' +
+          '" y2="' + y(s[worst].reach) + '" style="stroke:var(--mark);stroke-width:1.9"/>' +
         dots + hits + '</svg>',
       worst: s[worst].name, fall: fall
     };
@@ -268,39 +278,12 @@
   }
 
   /* ================= source quality ================= */
-  function renderQuality(rows) {
-    var el = slot('quality.rows');
-    if (!rows.length) { el.innerHTML = '<p class="empty">No sources in this segment</p>'; return; }
-    var tv = rows.reduce(function (a, r) { return a + r.visitors; }, 0);
-    var mean = tv ? rows.reduce(function (a, r) { return a + r.readRate * r.visitors; }, 0) / tv : 0;
-    var sorted = rows.slice().sort(function (a, b) { return b.readRate - a.readRate; });
-
-    el.innerHTML =
-      '<div class="lgrid"><div></div><div class="reflab"><span style="position:absolute;left:' + pct(mean) +
-        '%;transform:translateX(-50%);white-space:nowrap">avg ' + rnd(mean) + '%</span></div><div></div></div>' +
-      sorted.map(function (r) {
-        var thin = r.visitors < MIN_N, on = state.filters.source === r.label;
-        var b = band(r.readRate, mean, r.visitors);
-        return '<button class="lgrid lrow ' + b.cls + (thin ? ' low' : '') + '" data-filter-source="' + esc(r.label) +
-          '" aria-pressed="' + on + '" data-tip-label="' + esc(r.label) +
-          '" data-tip-value="' + r.visitors + ' visitors · ' + rnd(r.readRate) + '% finish, 95% CI ' +
-            Math.round(wilson(r.readRate * r.visitors / 100, r.visitors).lo) + '–' +
-            Math.round(wilson(r.readRate * r.visitors / 100, r.visitors).hi) + '%">' +
-          '<span class="nm">' + esc(r.label) + '</span>' +
-          '<span class="ax"><span class="refline" style="left:' + pct(mean) + '%"></span>' +
-            '<span class="stem" style="width:' + pct(r.readRate) + '%"></span>' +
-            '<span class="dot" style="left:' + pct(r.readRate) + '%;background:currentColor"></span></span>' +
-          '<span class="pc">' + sig(r.readRate, wilson(r.readRate * r.visitors / 100, r.visitors).half) +
-            '%<small>' + r.visitors + ' vis</small></span>' +
-        '</button>';
-      }).join('') +
-      '<div class="lgrid"><div></div><div class="ticks"><span>0</span><span>50</span><span>100%</span></div><div></div></div>';
-  }
-
-  /* ================= world map =================
-   * Choropleth by read rate, not by volume: a large country full of bouncers
-   * must not look like a win. Area on a map already exaggerates big countries,
-   * so the exact counts live in the ranked list beside it.
+  /* ================= depth by device =================
+   * Two bars per row on one common scale, which is the comparison worth
+   * making: how many sections a device's readers actually reach. Counts, not
+   * rates — Umami returns event totals and unique visitors, and dividing one
+   * by the other is what produced a 400% completion rate. No colour: there
+   * are two series and a legend does that job without spending a hue.
    */
   function cname(code) {
     var W = window.WORLD;
@@ -310,33 +293,27 @@
   function renderMap(places) {
     var el = slot('map.svg');
     if (!window.WORLD) { el.innerHTML = '<p class="noloc">Map failed to load.</p>'; return; }
-    var by = {}, tot = 0, wsum = 0;
-    places.forEach(function (p) { by[p.code] = p; tot += p.visitors; wsum += p.readRate * p.visitors; });
-    var avg = tot ? wsum / tot : 0;
+    var by = {}, max = 0, tot = 0;
+    places.forEach(function (p) { by[p.code] = p; tot += p.visitors; max = Math.max(max, p.visitors); });
 
     var paths = Object.keys(WORLD.c).map(function (k) {
       var p = by[k];
-      var cls = p ? band(p.readRate, avg, p.visitors).svg + ' on' : '';
+      var cls = p ? seqBand(p.visitors, max) + ' on' : 's0';
       if (p && state.filters.country === k) cls += ' sel';
       var attrs = p
         ? ' data-filter-country="' + k + '" data-tip-label="' + esc(cname(k)) +
-          '" data-tip-value="' + p.visitors + ' visitors · ' + rnd(p.readRate) + '% finish"'
+          '" data-tip-value="' + p.visitors + (p.visitors === 1 ? ' visitor' : ' visitors') + '"'
         : '';
       return '<path class="' + cls + '" d="' + WORLD.c[k].d + '"' + attrs + '></path>';
     }).join('');
 
     el.innerHTML = '<svg viewBox="' + WORLD.viewBox + '" role="img" aria-label="Visitors by country">' +
       paths + '</svg>';
-    set('map.hint', places.length + ' countries · avg ' + rnd(avg) + '% finish');
+    var tgt = places.reduce(function (a, c) {
+      return a + (c.code === 'US' || c.code === 'GB' ? c.visitors : 0); }, 0);
+    set('map.hint', places.length + (places.length === 1 ? ' country · ' : ' countries · ') +
+      (tot ? Math.round((tgt / tot) * 100) + '% from the US and UK' : 'no visitors yet'));
   }
-
-  /* ================= places list =================
-   * Country, region and city are the same rows at three zoom levels. The map
-   * stays at country level because that is all the geometry can carry; the list
-   * is where the resolution lives. A single city at n=1 is not a statistic —
-   * it is a lead, which is exactly why it earns a place next to the map.
-   */
-  var lastPlaces = {};
 
   function renderPlaces(places) {
     var rows = places[state.level] || [];
@@ -347,11 +324,9 @@
     }
     var max = rows.reduce(function (a, p) { return Math.max(a, p.visitors); }, 0) || 1;
     var tot = rows.reduce(function (a, p) { return a + p.visitors; }, 0);
-    var avg = tot ? rows.reduce(function (a, p) { return a + p.readRate * p.visitors; }, 0) / tot : 0;
 
     el.innerHTML = rows.slice().sort(function (a, b) { return b.visitors - a.visitors; })
       .map(function (p) {
-        var b = band(p.readRate, avg, p.visitors);
         // only country rows filter — Umami has no region/city filter on the
         // endpoints this dashboard uses, so those rows stay read-only
         var isCountry = state.level === 'country';
@@ -361,7 +336,7 @@
         var attrs = isCountry
           ? ' data-filter-country="' + esc(p.code) + '" aria-pressed="' + (state.filters.country === p.code) + '"'
           : '';
-        return '<' + tag + ' class="crow ' + b.cls + (isCountry ? '' : ' flat') + '"' + attrs +
+        return '<' + tag + ' class="crow ' + (isCountry ? '' : ' flat') + '"' + attrs +
           ' data-tip-label="' + esc(nm) + '" data-tip-value="' + p.visitors + ' visitors · ' +
             rnd(p.readRate) + '% finish">' +
           '<span class="nm">' + esc(nm) + sub + '</span>' +
@@ -370,12 +345,76 @@
       }).join('');
   }
 
-  document.querySelectorAll('[data-level]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      state.level = b.dataset.level;
-      renderPlaces(lastPlaces);
+  /* ================= the verdict =================
+   * The page's own conclusion, stated before any chart. A reader should not
+   * have to assemble the funnel out of four boxes and a line chart, and a
+   * number nobody can turn into a sentence was probably not worth plotting.
+   * Every clause is dropped when its number is zero, so this never claims a
+   * step nobody took.
+   */
+  function renderVerdict(d) {
+    var v = d.totals.visitors.v, hero = d.totals.passedHero.v, act = d.totals.contacts.v;
+    if (!v) { set('verdict', 'Nothing recorded in this window yet.'); return; }
+
+    var deepest = null;
+    (d.retention || []).forEach(function (p) {
+      var last = p.sections[p.sections.length - 1];
+      if (!deepest || last.count > deepest.count) deepest = { page: p.page, n: last.count };
     });
-  });
+
+    var out = v + (v === 1 ? ' visitor' : ' visitors');
+    out += hero ? ', ' + hero + ' got past the hero' : ', none scrolled past the hero';
+    if (deepest && deepest.n) out += ', ' + deepest.n + ' reached the end of ' + deepest.page;
+    out += act ? ', and ' + act + (act === 1 ? ' got in touch.' : ' got in touch.') : ', and nobody got in touch.';
+    set('verdict', out.charAt(0).toUpperCase() + out.slice(1));
+  }
+
+  /* ================= where they came from ================= */
+  function renderSources(rows) {
+    var el = slot('sources.rows');
+    if (!el) return;
+    rows = (rows || []).filter(function (r) { return r.visitors > 0; })
+      .sort(function (a, b) { return b.visitors - a.visitors; }).slice(0, 7);
+    if (!rows.length) { el.innerHTML = '<p class="empty">No referrers in this segment</p>'; return; }
+    var max = rows[0].visitors || 1;
+    el.innerHTML = rows.map(function (r) {
+      var on = state.filters.source === r.label;
+      return '<button class="dvrow srow" data-filter-source="' + esc(r.label) + '" aria-pressed="' + on + '">' +
+        '<span class="nm">' + esc(r.label) + '</span>' +
+        '<span class="bars"><i style="width:' + pct((r.visitors / max) * 100) + '%"></i></span>' +
+        '<span class="vv">' + num(r.visitors) + '</span></button>';
+    }).join('');
+  }
+
+  function renderDevices(rows) {
+    var el = slot('devices.rows');
+    if (!el) return;
+    rows = (rows || []).filter(function (r) { return r.visitors > 0; })
+      .sort(function (a, b) { return (b.sectionsReached || 0) - (a.sectionsReached || 0); });
+    if (!rows.length) { el.innerHTML = '<p class="empty">No devices in this segment</p>'; return; }
+
+    // One bar, one scale. Plotting visitors beside sections reached put an
+    // 8x magnitude gap on a shared axis and squashed the smaller series into
+    // a sliver — two series that do not share a unit do not share an axis.
+    // Sections reached is the question; visitors is the context, and context
+    // reads fine as a number.
+    var max = rows.reduce(function (m, r) { return Math.max(m, r.sectionsReached || 0); }, 0) || 1;
+
+    el.innerHTML = rows.map(function (r) {
+      var unknown = r.sectionsReached == null;
+      var per = (!unknown && r.visitors) ? (r.sectionsReached / r.visitors) : null;
+      return '<div class="dvrow">' +
+        '<span class="nm">' + esc(r.device) + '</span>' +
+        '<span class="bars">' +
+          (unknown ? '' : '<i style="width:' + pct(((r.sectionsReached || 0) / max) * 100) + '%"></i>') +
+        '</span>' +
+        '<span class="vv">' + (unknown ? '—' : num(r.sectionsReached)) +
+          '<small>' + num(r.visitors) + ' vis' +
+          (per == null ? '' : ' · ' + (Math.round(per * 10) / 10) + ' each') + '</small></span>' +
+      '</div>';
+    }).join('');
+  }
+
 
   /* ================= payload hardening =================
    * A half-rendered dashboard is worse than a broken one: stale numbers sit
@@ -383,12 +422,83 @@
    * normalised once, up front, and render() is wrapped — any throw leaves the
    * previous view intact and says so out loud.
    */
+  /* ================= adapt =================
+   * api/stats.js answers with what Umami can honestly provide; the renderers
+   * below were written against an earlier, more optimistic payload. This maps
+   * one to the other in a single place, so the charts keep their maths and
+   * the endpoint keeps its honesty.
+   *
+   * Only runs on a real response. Demo data is already in the internal shape,
+   * so it passes straight through and the two paths cannot drift.
+   */
+  function adapt(a) {
+    var h = a.headline || {}, prev = a.previous || {};
+    var evt = {};
+    (a.events || []).forEach(function (e) { evt[e.name] = e.count; });
+
+    // Four counts, each with a real previous-period figure behind it. The
+    // rates that used to sit here divided event totals by unique visitors and
+    // reported 103%; the endpoint returns null for them now, and the counts
+    // are what it can actually stand behind.
+    var t = function (v, p) { return { v: v || 0, prev: (prev && prev[p]) || 0, n: null }; };
+
+    // ofPeak is already a 0-100 reach, which is exactly what the curve wants.
+    // Pages nobody has opened are dropped rather than drawn as a flat zero.
+    var retention = (a.sections && a.sections.byPage ? a.sections.byPage : [])
+      .map(function (p) {
+        var peak = (p.sections || []).reduce(function (m, s) { return Math.max(m, s.count || 0); }, 0);
+        return {
+          page: p.path,
+          visitors: peak,
+          monotonic: p.monotonic !== false,
+          sections: (p.sections || []).map(function (s) {
+            return { name: s.name, reach: s.ofPeak == null ? 0 : s.ofPeak, count: s.count || 0 };
+          })
+        };
+      })
+      .filter(function (p) { return p.visitors > 0 && p.sections.length >= 2; });
+
+    return {
+      range: a.range || {},
+      updated: a.updated,
+      totals: {
+        visitors: t(h.visitors, 'visitors'),
+        pageviews: t(h.pageviews, 'pageviews'),
+        passedHero: t(h.passedHero, 'passedHero'),
+        contacts: t(h.contacts, 'contacts')
+      },
+      retention: retention,
+      devices: a.devices || [],
+      sources: (a.sources || []).map(function (r) {
+        return { label: r.name === 'direct' || !r.name ? 'direct' : r.name, visitors: r.count };
+      }),
+      notes: a.notes || [],
+      // No per-country read rate exists, so the map carries location only and
+      // the counts live in the list beside it.
+      places: { country: (a.countries || []).map(function (c) {
+                  return { code: c.code, visitors: c.visitors, readRate: null }; }),
+                city: (a.cities || []).map(function (c) {
+                  return { code: null, label: c.city, visitors: c.visitors, readRate: null }; }) },
+      days: (a.daily || []).map(function (x) {
+        return { date: x.date, visitors: x.visitors, pageviews: x.pageviews };
+      }),
+      pages: (a.pages || []).map(function (p) {
+        return { path: p.path, visitors: p.views, median: null, read: null };
+      }),
+      cta: (a.ctas && a.ctas.byName ? a.ctas.byName : []).map(function (c) {
+        return { label: c.name, clicks: c.count };
+      })
+    };
+  }
+
   function shape(d) {
     d = d || {};
+    // A real response carries `headline`; demo data does not.
+    if (d.headline) d = adapt(d);
     var z = { v: 0, prev: 0, n: 0 };
     d.range = d.range || {};
     d.totals = d.totals || {};
-    ['visitors', 'opened', 'read', 'acted'].forEach(function (k) {
+    ['visitors', 'pageviews', 'passedHero', 'contacts'].forEach(function (k) {
       var t = d.totals[k];
       d.totals[k] = (t && typeof t.v === 'number') ? t : z;
     });
@@ -402,8 +512,9 @@
       return p && Array.isArray(p.sections) && p.sections.length >= 2;
     });
     d.quality = Array.isArray(d.quality) ? d.quality : [];
+    d.devices = Array.isArray(d.devices) ? d.devices : [];
+    d.sources = Array.isArray(d.sources) ? d.sources : [];
     d.days = (Array.isArray(d.days) ? d.days : []).filter(function (x) { return x && x.date; });
-    d.apps = Array.isArray(d.apps) ? d.apps : [];
     d.pages = Array.isArray(d.pages) ? d.pages : [];
     d.cta = Array.isArray(d.cta) ? d.cta : [];
     d.places = Array.isArray(d.places) ? { country: d.places } : (d.places || {});
@@ -416,7 +527,8 @@
   }
 
   /* ================= render ================= */
-  var METRIC_LABEL = { visitors: 'visitors', opened: 'opened a case study', read: 'read to the end', acted: 'then acted' };
+  // Two metrics, because two are what the daily series honestly contains.
+  var METRIC_LABEL = { visitors: 'visitors', pageviews: 'pageviews' };
 
   function render(raw) {
     var d = shape(raw);
@@ -433,9 +545,28 @@
       { hour: '2-digit', minute: '2-digit' }));
 
     fig('visitors', d.totals.visitors);
-    fig('opened', d.totals.opened, true);
-    fig('read', d.totals.read, true);
-    fig('acted', d.totals.acted, true);
+    fig('pageviews', d.totals.pageviews);
+    fig('passedHero', d.totals.passedHero);
+    fig('contacts', d.totals.contacts);
+
+    // Reach into the markets Lokesh is applying to. Not a vanity total: a
+    // remote application to London or New York is answered by this number and
+    // by nothing else on the page.
+    // Deliberately NOT fig(): that renders a period-over-period delta, and a
+    // raw count sitting beside Visitors invited a comparison against the wrong
+    // denominator. Geolocation resolves fewer visitors than the site counts,
+    // so the share is taken against located visitors and said out loud.
+    var TARGETS = ['US', 'GB'];
+    var geo = (d.places && d.places.country) || [];
+    var located = geo.reduce(function (a, c) { return a + c.visitors; }, 0);
+    var reach = geo.reduce(function (a, c) {
+      return a + (TARGETS.indexOf(c.code) > -1 ? c.visitors : 0); }, 0);
+    set('f.reach.value', num(reach));
+    var rd = slot('f.reach.delta');
+    if (rd) {
+      rd.className = 'dlt';
+      rd.textContent = located ? Math.round((reach / located) * 100) + '% of located' : '—';
+    }
 
     renderRetention(d.retention);
 
@@ -453,60 +584,22 @@
           '× likelier to open the CV. The 95% intervals do not overlap, so the gap is real.'
         : 'The two intervals overlap — at this sample size the difference is not yet real.');
 
-    renderQuality(d.quality);
+    renderDevices(d.devices);
+    renderSources(d.sources);
+    lastPlaces = d.places || {};
+    renderMap((d.places && d.places.country) || []);
+    renderPlaces(d.places || {});
+    renderVerdict(d);
 
-    var places = d.places;
-    lastPlaces = places;
-    renderMap(places.country || []);
-    renderPlaces(places);
 
-    /* traffic — plots whichever figure is selected */
-    var m = state.metric;
-    set('days.metric', METRIC_LABEL[m]);
-    if (!d.days.length) {
-      html('days.bars', '');
-      set('days.peak', 'no data'); set('days.from', '—'); set('days.to', '—');
-    } else {
-    var max = d.days.reduce(function (a, x) { return Math.max(a, x[m] || 0); }, 0) || 1;
-    html('days.bars', d.days.map(function (x) {
-      var on = state.filters.day === x.date;
-      return '<button class="d' + (x.note ? ' mark' : '') + '" data-filter-day="' + x.date + '" aria-pressed="' + on +
-        '" data-tip-label="' + day(x.date) + (x.note ? ' — ' + esc(x.note) : '') +
-        '" data-tip-value="' + (x[m] || 0) + (m === 'visitors' ? ' visitors' : '%') +
-        '"><i style="height:' + pct(((x[m] || 0) / max) * 100) + '%"></i></button>';
-    }).join(''));
-    set('days.peak', 'peak ' + max + (m === 'visitors' ? '' : '%'));
-    set('days.from', day(d.days[0].date));
-    set('days.to', day(d.days[d.days.length - 1].date));
-    }
 
-    /* applications */
-    var apps = d.apps.slice().sort(function (a, b) {
-      return (!!b.opened - !!a.opened) || (b.stage - a.stage) || (b.seconds - a.seconds);
-    });
-    html('apps.rows', apps.length ? apps.map(function (a) {
-      var steps = '';
-      for (var i = 0; i < a.stages; i++) steps += '<i class="' + (i < a.stage ? (i === a.stages - 1 ? 'end' : 'on') : '') + '"></i>';
-      var src = 'apply · ' + a.campaign;
-      return '<tr class="' + (a.opened ? '' : 'cold') + '" data-filter-source="' + esc(src) +
-        '" aria-pressed="' + (state.filters.source === src) + '">' +
-        '<td class="trunc"><span class="dot6' + (a.opened ? ' on' : '') + '"></span>' + esc(a.company) + '</td>' +
-        '<td class="dim mono">' + esc(a.sent) + '</td>' +
-        '<td class="dim mono">' + (a.opened ? esc(a.opened) : '—') + '</td>' +
-        '<td><span class="track">' + steps + '</span></td>' +
-        '<td class="r">' + (a.opened ? secs(a.seconds) : '—') + '</td>' +
-        '<td class="r">' + (a.resume ? '✓' : '') + '</td></tr>';
-    }).join('') : '<tr><td colspan="6" class="empty">No tagged applications</td></tr>');
 
-    var pv = d.pages.reduce(function (a, r) { return a + r.visitors; }, 0);
-    var pavg = pv ? d.pages.reduce(function (a, r) { return a + r.read * r.visitors; }, 0) / pv : 0;
     html('pages.rows', d.pages.map(function (r) {
       return '<tr data-filter-page="' + esc(r.path) + '" aria-pressed="' + (state.filters.page === r.path) + '">' +
         '<td class="trunc mono">' + esc(r.path) + '</td>' +
         '<td class="r">' + r.visitors + '</td>' +
-        '<td class="r">' + secs(r.median) + '</td>' +
-        '<td class="r ' + band(r.read, pavg, r.visitors).cls + '">' +
-          (r.visitors < MIN_N ? '<span class="thin-flag">thin</span>' : r.read + '%') + '</td></tr>';
+        '<td class="r">' + (r.median == null ? '—' : secs(r.median)) + '</td>' +
+        '<td class="r">' + (r.read == null ? '—' : r.read + '%') + '</td></tr>';
     }).join(''));
 
     var cmax = d.cta.reduce(function (a, r) { return Math.max(a, r.clicks); }, 0) || 1;
@@ -560,39 +653,36 @@
     return load().catch(function (ex) { console.error(ex); fail(ex.message); });
   }
   function load() {
+    // No password. The endpoint is public and every field it returns is an
+    // aggregate, so there is nothing here to authenticate.
     return fetch(API, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: state.pw, range: state.range, filters: state.filters })
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ days: state.range, filters: state.filters })
     }).then(function (r) {
-      if (r.status === 401) throw new Error('Wrong password');
-      if (!r.ok) throw new Error('API returned ' + r.status);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
-    }).then(function (d) {
-      if (!d || d.ok !== true) throw new Error((d && d.error) || 'Unexpected response');
-      try { render(d); }
-      catch (ex) {
-        console.error(ex);
-        fail('Could not draw this view — the figures above are from the previous one.');
-      }
+    }).then(function (j) {
+      if (!j || j.ok !== true) throw new Error((j && j.error) || 'Bad response');
+      render(j);
+      return j;
     });
   }
-  function unlock() { var g = $('#gate'); if (g) g.remove(); document.body.classList.remove('locked'); }
 
-  $('#gate-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var err = slot('gate.error'); err.textContent = '';
-    state.pw = $('#pw').value;
-    load().then(function () { sessionStorage.setItem('dashpw', state.pw); unlock(); })
-      .catch(function (ex) { err.textContent = ex.message; });
-  });
+  // Public: load on arrival. There is no gate to pass and nothing to type.
+  function boot() {
+    load().catch(function (ex) {
+      if (OFFLINE) return startDemo();
+      fail('Could not load the numbers: ' + ex.message);
+    });
+  }
 
   /* ================= sample data ================= */
   // Demo mode fills the page with synthetic numbers off-domain so the layout
-  // can be worked on without a password. ?gate opts out of it, because the
-  // gate is a designed surface and there was otherwise no way to look at it
-  // anywhere except production.
-  var SHOW_GATE = /[?&]gate\b/.test(location.search);
-  var OFFLINE = !SHOW_GATE && !/lokeshbhatia\.com$/.test(location.hostname), DEMO_ON = false;
+  // can be worked on without a live endpoint. ?live opts out of it, to test
+  // the real fetch and its failure state from anywhere.
+  var SHOW_LIVE = /[?&]live\b/.test(location.search);
+  var OFFLINE = !SHOW_LIVE && !/lokeshbhatia\.com$/.test(location.hostname), DEMO_ON = false;
 
   // deterministic per-segment jitter, so filtering visibly changes the page
   function seed(str) { var h = 2166136261; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = (h * 16777619) >>> 0; } return h; }
@@ -623,21 +713,27 @@
         opened: rate(46), read: rate(19), acted: rate(11)
       });
     }
-    var shape = function (base) {
+    // count is derived from the page's own visitors, not the site total: the
+    // real payload counts section-reached events per page, and a sample that
+    // did otherwise would exercise a shape the live data never produces.
+    var shape = function (base, pv) {
       return base.map(function (s, i) {
-        return { name: s.name, reach: i === 0 ? 100 : Math.max(4, Math.min(99, rnd(s.reach * (lift > 1 ? 1.22 : lift < 1 ? 0.78 : 1) * (0.94 + rand() * 0.12)))) };
+        var rr = i === 0 ? 100 : Math.max(4, Math.min(99,
+          rnd(s.reach * (lift > 1 ? 1.22 : lift < 1 ? 0.78 : 1) * (0.94 + rand() * 0.12))));
+        return { name: s.name, reach: rr, count: Math.round((rr / 100) * pv) };
       });
     };
+    var pvA = n(31), pvB = n(20), pvC = n(17);
     var R = [
-      { page: '/app-merge', visitors: n(31), sections: shape([
+      { page: '/app-merge', visitors: pvA, sections: shape([
         { name: 'Hero', reach: 100 }, { name: 'Problem', reach: 86 }, { name: 'Research', reach: 71 },
-        { name: 'Merge rules', reach: 41 }, { name: 'Testing', reach: 34 }, { name: 'Outcome', reach: 29 }]) },
-      { page: '/rise-portal', visitors: n(20), sections: shape([
+        { name: 'Merge rules', reach: 41 }, { name: 'Testing', reach: 34 }, { name: 'Outcome', reach: 29 }], pvA) },
+      { page: '/rise-portal', visitors: pvB, sections: shape([
         { name: 'Hero', reach: 100 }, { name: 'Context', reach: 82 }, { name: 'System', reach: 66 },
-        { name: 'Rollout', reach: 52 }, { name: 'Outcome', reach: 44 }]) },
-      { page: '/about', visitors: n(17), sections: shape([
+        { name: 'Rollout', reach: 52 }, { name: 'Outcome', reach: 44 }], pvB) },
+      { page: '/about', visitors: pvC, sections: shape([
         { name: 'Intro', reach: 100 }, { name: 'How I work', reach: 74 },
-        { name: 'Background', reach: 61 }, { name: 'Contact', reach: 55 }]) }
+        { name: 'Background', reach: 61 }, { name: 'Contact', reach: 55 }], pvC) }
     ];
     if (f.page) R = R.filter(function (r) { return r.page === f.page; });
 
@@ -657,12 +753,22 @@
       range: { from: iso(days - 1), to: iso(0), days: days, prevFrom: iso(days * 2 - 1), prevTo: iso(days) },
       totals: {
         visitors: { v: vis, prev: n(58) },
-        opened: { v: rate(46), prev: rate(41), n: vis },
-        read: { v: rate(19), prev: rate(22), n: n(30) },
-        acted: { v: rate(12), prev: rate(9), n: n(30) }
+        pageviews: { v: vis * 3 + n(40), prev: n(220) },
+        passedHero: { v: Math.round(vis * 0.68), prev: n(44) },
+        contacts: { v: Math.round(vis * 0.11), prev: n(9) }
       },
       retention: R,
       payoff: { deep: { n: n(24), resume: n(11), contact: n(4) }, shallow: { n: n(39), resume: n(3), contact: n(1) } },
+      sources: [
+        { label: 'linkedin.com', visitors: n(96) }, { label: 'direct', visitors: n(74) },
+        { label: 'google.com', visitors: n(41) }, { label: 'read.cv', visitors: n(23) },
+        { label: 'x.com', visitors: n(11) }
+      ],
+      devices: [
+        { device: 'laptop', visitors: n(35), sectionsReached: n(290), scrollDepthEvents: n(157) },
+        { device: 'mobile', visitors: n(27), sectionsReached: n(66), scrollDepthEvents: n(42) },
+        { device: 'desktop', visitors: n(4), sectionsReached: n(8), scrollDepthEvents: n(10) }
+      ],
       quality: Q,
       days: series,
       places: (function () {
@@ -689,13 +795,6 @@
                     ['SG','Singapore',7,46],['AE','Dubai',5,23],['PL','Warsaw',4,49]], true)
         };
       }()),
-      apps: [
-        { company: 'Stripe', campaign: 'stripe', sent: '31 Aug', opened: '2 Sep', stage: 5, stages: 5, seconds: 412, resume: true },
-        { company: 'Razorpay', campaign: 'razorpay', sent: '1 Sep', opened: '1 Sep', stage: 4, stages: 5, seconds: 268, resume: true },
-        { company: 'Linear', campaign: 'linear', sent: '2 Sep', opened: '4 Sep', stage: 2, stages: 5, seconds: 74, resume: false },
-        { company: 'Zerodha', campaign: 'zerodha', sent: '3 Sep', opened: '3 Sep', stage: 1, stages: 5, seconds: 21, resume: false },
-        { company: 'Notion', campaign: 'notion', sent: '4 Sep', opened: null, stage: 0, stages: 5, seconds: 0, resume: false }
-      ],
       pages: [
         { path: '/', visitors: n(63), median: 42, read: rate(18) },
         { path: '/app-merge', visitors: n(31), median: 214, read: rate(41) },
@@ -713,22 +812,26 @@
 
   function startDemo() {
     DEMO_ON = true;
+    // Before anything renders. If the guard above ever fails open, this is
+    // what stops an invented number being read as a real one.
+    document.body.classList.add('demo');
     render(demo(state.range, state.filters));
     set('meta.footer', 'SAMPLE DATA — api/stats.js not reachable from this host. Filtering is live; the numbers are synthetic.');
-    unlock();
   }
 
-  var saved = sessionStorage.getItem('dashpw');
-  if (saved) {
-    state.pw = saved;
-    // a stored password can go stale. Drop it, and off-domain fall through to
-    // the sample data rather than leaving the page locked behind a dead gate.
-    load().then(unlock).catch(function () {
-      sessionStorage.removeItem('dashpw');
-      state.pw = null;
-      if (OFFLINE) startDemo();
+  // Countries / Regions / Cities are the same rows at three zoom levels. Only
+  // the list changes: the map stays at country level, which is all the
+  // geometry can carry.
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-level]') : null;
+    if (!b) return;
+    state.level = b.dataset.level;
+    [].forEach.call(document.querySelectorAll('[data-level]'), function (x) {
+      x.setAttribute('aria-selected', String(x === b));
     });
-  } else if (OFFLINE) {
-    startDemo();
-  }
+    renderPlaces(lastPlaces);
+  });
+
+  boot();
+
 }());

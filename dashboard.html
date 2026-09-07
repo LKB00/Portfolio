@@ -16,47 +16,56 @@
   --bg:#FAFAFA; --surface:#F2F2F2; --card:#FFFFFF; --line:#E8E8E8;
   --ink:#141414; --muted:#5C5C5C; --faint:#6D6D6D;
   --link:#006AD4; --dark:#171717; --onDark:#FFFFFF;
-  --yellow:#FBE14D; --ok:#1F9D4D; --crit:#E0392B;
+  --yellow:#FBE14D; --onYellow:#3D3400; --ok:#1F9D4D; --crit:#E0392B;
   --r-pill:1000px; --r-card:20px; --r-float:16px; --r-sm:10px;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
-  --display:'Geist','Inter',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  --display:'Geist','Inter',Helvetica,Arial,sans-serif;
   --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 
   /* ── type scale, measured off lokeshbhatia.com ──────────────────────────
      Tracking tightens as size grows, exactly as the site does: -.026em at
      32px down to -.011em at 13px. Mono sits at 0. Only two weights exist,
      400 and 500, because that is all the site loads. */
-  --fs-page:22px;  --lh-page:1.22; --tr-page:-.022em;
-  --fs-h1:18px;    --lh-h1:1.3;    --tr-h1:-.018em;
+  --fs-page:24px;  --lh-page:1.2;  --tr-page:-.01em;
+  --fs-h1:15px;    --lh-h1:1.3;    --tr-h1:-.01em;
   --fs-h2:14px;    --lh-h2:1.3;    --tr-h2:-.012em;
   --fs-lead:15px;  --lh-lead:1.5;  --tr-lead:-.010em;
-  --fs-body:13px;  --lh-body:1.45; --tr-body:-.011em;
+  --fs-body:13px;  --lh-body:1.42; --tr-body:-.01em;
   --fs-small:12px; --lh-small:1.42;
   --fs-micro:11px; --lh-micro:1.5;
   --fs-stat:24px;  --tr-stat:-.022em;
-  --tr-label:.09em; --tr-mono:0;
+  --tr-label:.02em; --tr-mono:0;
 
   --s-1:4px; --s-2:7px; --s-3:10px; --s-4:13px; --s-5:18px; --s-6:24px; --s-7:36px; --s-8:45px;
   --accent:#006AD4; --accentWash:rgba(0,106,212,.08); --markWash:rgba(251,225,77,.55);
   --deep:var(--dark); --onDeep:var(--onDark);
-  --gain:#1F9D4D; --neg:#C62A1D; --thin:#B4B4B4;
-  --q-good:#1F9D4D; --q-mid:#B78011; --q-poor:#E0392B; --q-none:#8C8C81;
+  --gain:#177A3C; --neg:#C62A1D; --thin:#B4B4B4;
+  --seq-4:#00509F; --seq-3:#006AD4; --seq-2:#7FB0E6; --seq-1:#CFE1F5; --seq-0:#E4E4E0;
   --land:#E4E4E0; --land-line:#FAFAFA;
+  /* bar sits above canvas, canvas below panel: a dashboard is panels on a
+     surface, not text printed into paper. The page used to run the other way
+     — #FAFAFA ground with #F2F2F2 cards — which is why it read as flat. */
+  --bar:#FAFAFA; --canvas:#F1F1EF; --panel:#FFFFFF;
+  --shadow-card:0 1px 2px rgba(16,16,24,.05),0 1px 6px -2px rgba(16,16,24,.06);
+  --inset:color-mix(in srgb,var(--ink) 6%,transparent);
+  --nest:var(--canvas);
   --w:1120px;
 }
 :root[data-theme="dark"]{
   --bg:#0F0F0F; --surface:#1A1A1A; --card:#161616; --line:#262626;
   --ink:#EDEDED; --muted:#A1A1A1; --faint:#8A8A8A;
   --link:#5EA9F5; --dark:#EDEDED; --onDark:#141414;
-  --yellow:#E5CB3C; --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
+  --yellow:#E5CB3C; --onYellow:#2A2400; --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
   --accent:#5EA9F5; --accentWash:rgba(94,169,245,.14); --markWash:rgba(229,203,60,.30);
   --gain:#4ED07F; --neg:#F2695C; --thin:#6A6A6A;
-  --q-good:#4ED07F; --q-mid:#F0B740; --q-poor:#F2695C; --q-none:#646464;
+  --seq-4:#9CC7F2; --seq-3:#5EA9F5; --seq-2:#2F6DA8; --seq-1:#1E3E5C; --seq-0:#242424;
   --land:#242424; --land-line:#0F0F0F;
+  --bar:#141414; --canvas:#0D0D0D; --panel:#1A1A1A;
+  --shadow-card:0 1px 2px rgba(0,0,0,.4),0 1px 6px -2px rgba(0,0,0,.3);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:var(--bg); color:var(--ink);
+  background:var(--canvas); color:var(--ink);
   font-family:var(--display); font-size:var(--fs-body); font-weight:400;
   line-height:var(--lh-body); letter-spacing:var(--tr-body);
   font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1;
@@ -75,8 +84,13 @@ body{
 .mono{font-family:var(--mono);letter-spacing:var(--tr-mono)}
 
 /* ── nav ─────────────────────────────────────────────────── */
-header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 0 var(--s-5)}
-.navpill{display:flex;align-items:center;justify-content:center;gap:2px}
+header{position:sticky;top:0;z-index:40;background:var(--bar);
+  box-shadow:inset 0 -1px 0 var(--line);padding:var(--s-3) 0}
+.bar{max-width:var(--w);margin:0 auto;padding:0 var(--s-5);
+  display:flex;align-items:center;gap:var(--s-5);flex-wrap:wrap}
+.bar .brand{font-size:var(--fs-h2);font-weight:500;letter-spacing:var(--tr-h2);white-space:nowrap}
+.bar .spacer{flex:1 1 auto}
+.navpill{display:flex;align-items:center;gap:2px}
 .navlink{display:inline-flex;align-items:center;padding:4px 10px;border-radius:var(--r-pill);
   font-size:var(--fs-body);font-weight:500;letter-spacing:var(--tr-body);
   color:var(--muted);text-decoration:none;transition:.2s var(--ease)}
@@ -89,9 +103,12 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 :root:not([data-theme="dark"]) .icon-moon{display:none}
 
 /* ── page head ───────────────────────────────────────────── */
-.pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s-5);
-  flex-wrap:wrap;margin-bottom:var(--s-5)}
-.pagehead p{color:var(--muted);margin-top:var(--s-2);max-width:56ch}
+/* The finding, then the window it covers. A dashboard opens with its answer;
+   a report opens with its title. The title moved into the bar. */
+.headline{padding:var(--s-6) 0 var(--s-5)}
+.verdict{font-size:var(--fs-page);line-height:var(--lh-page);letter-spacing:var(--tr-page);
+  font-weight:500;color:var(--ink);max-width:46ch;margin:0}
+.headline .asof{display:block;margin:var(--s-3) 0 0}
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);
   flex-wrap:wrap;margin-bottom:var(--s-4);min-height:34px}
 .filters{display:flex;align-items:center;gap:var(--s-2);flex-wrap:wrap;min-height:30px}
@@ -108,27 +125,31 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
   background:color-mix(in srgb,var(--bg) 26%,transparent);font-family:var(--mono);font-size:10px}
 .chip:hover{opacity:.85}
 .chip.ghost{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line);padding:0 var(--s-4)}
-.chip.ghost:hover{color:var(--ink);background:var(--surface)}
-.seg{display:inline-flex;gap:2px;padding:3px;background:var(--surface);border-radius:var(--r-pill)}
+.chip.ghost:hover{color:var(--ink);background:var(--inset)}
+.seg{display:inline-flex;gap:2px;padding:3px;background:var(--canvas);border-radius:var(--r-pill)}
 .seg button{appearance:none;border:0;background:transparent;color:var(--muted);cursor:pointer;height:26px;
   padding:0 12px;border-radius:var(--r-pill);font-family:var(--display);font-size:var(--fs-small);
   font-weight:500;line-height:1;letter-spacing:var(--tr-body);transition:.2s var(--ease)}
 .seg button:hover{color:var(--ink)}
-.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--card);color:var(--ink);
-  box-shadow:var(--shadow-float)}
+.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--panel);color:var(--ink);
+  box-shadow:var(--shadow-card)}
 [role="tabpanel"][hidden]{display:none}
 .seg.sm button{height:23px;padding:0 10px;font-size:var(--fs-micro);letter-spacing:var(--tr-body)}
 .headctl{display:flex;align-items:center;gap:var(--s-4);flex-wrap:wrap;justify-content:flex-end}
 
 /* ── cards ───────────────────────────────────────────────── */
 .grid{display:grid;gap:var(--s-4);grid-template-columns:repeat(12,1fr)}
-.card{background:var(--card);border-radius:var(--r-card);padding:var(--s-6);
-  box-shadow:inset 0 0 0 1px var(--line);min-width:0}
+/* The site's one card grammar: a borderless tinted well on --surface. This
+   used to be a white --card box with a 1px border, which is the exact object
+   index.html removed from its hero for reading as pasted in from another
+   site. Same object, same problem, so the same fix. */
+.card{background:var(--panel);border-radius:var(--r-card);padding:var(--s-5) var(--s-6);
+  box-shadow:var(--shadow-card);min-width:0}
 .card.sub{padding:var(--s-5)}
 .card.invert{background:var(--deep);color:var(--onDeep);box-shadow:none}
 .c12{grid-column:span 12} .c7{grid-column:span 7} .c5{grid-column:span 5}
 .c6{grid-column:span 6} .c8{grid-column:span 8} .c4{grid-column:span 4}
-.head{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);margin-bottom:var(--s-5)}
+.head{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);margin-bottom:var(--s-4)}
 .head h2{color:var(--ink);display:flex;align-items:center;flex-wrap:wrap;min-width:0}
 .invert .head h2{color:var(--onDeep)}
 .invert .title{color:var(--onDeep);opacity:.5}
@@ -152,11 +173,13 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 .thin-flag{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-mono);color:var(--thin)}
 
 /* ── figures ─────────────────────────────────────────────── */
-.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4)}
+/* The page's conclusion, in the site's lead size. It sits above the figures
+   because it is the answer and they are the evidence. */
+.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4);margin-bottom:var(--s-6)}
 /* reference numbers, not controls — nothing here responds to a click */
-.fig{background:var(--card);border-radius:var(--r-card);padding:var(--s-5) var(--s-6);
-  box-shadow:inset 0 0 0 1px var(--line)}
-.fig .lab{display:flex;align-items:center;font-family:var(--mono);font-size:var(--fs-micro);
+.fig{background:var(--panel);border-radius:var(--r-card);padding:var(--s-4) var(--s-5);
+  box-shadow:var(--shadow-card)}
+.fig .lab{display:flex;align-items:center;gap:3px;font-family:var(--mono);font-size:var(--fs-micro);
   font-weight:500;line-height:var(--lh-micro);letter-spacing:var(--tr-label);
   text-transform:uppercase;color:var(--faint)}
 .fig .row{display:flex;align-items:baseline;gap:var(--s-2);margin-top:var(--s-3)}
@@ -167,7 +190,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 
 /* ── reading depth ───────────────────────────────────────── */
 .mult{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-4)}
-.mult .cell{background:var(--surface);border-radius:var(--r-float);padding:var(--s-5);cursor:pointer;
+.mult .cell{background:var(--nest);border-radius:var(--r-float);padding:var(--s-5);cursor:pointer;
   border:0;font:inherit;letter-spacing:var(--tr-body);color:inherit;text-align:left;
   transition:.2s var(--ease);box-shadow:inset 0 0 0 1px transparent}
 .mult .cell:hover{box-shadow:inset 0 0 0 1px var(--muted)}
@@ -186,8 +209,45 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
   padding-left:11.25%;padding-right:2.9%;
   font-family:var(--mono);font-size:var(--fs-micro);line-height:1;letter-spacing:var(--tr-mono);color:var(--faint)}
 .drop{display:inline-flex;align-items:center;margin-top:var(--s-4);height:22px;padding:0 var(--s-3);
-  border-radius:var(--r-pill);background:color-mix(in srgb,var(--neg) 12%,transparent);
-  font-family:var(--mono);font-size:var(--fs-micro);line-height:1;letter-spacing:var(--tr-mono);color:var(--neg)}
+  border-radius:var(--r-pill);background:var(--inset);
+  font-family:var(--mono);font-size:var(--fs-micro);line-height:1;letter-spacing:var(--tr-mono);color:var(--muted)}
+
+/* Two tokens so a component can be drawn on either ground without knowing
+   which it is on: --mark is the one emphasis colour, --rule the gridline. On
+   the inverted panel the light-theme accent is far too dark to sit on #171717,
+   so it steps to the dark-theme accent, which is what that value is for. */
+:root{--mark:var(--accent);--rule:var(--line)}
+/* The inverted panel flips with the theme — dark ground in light mode, light
+   ground in dark mode — so its emphasis colour has to flip with it. Left
+   fixed, the light-blue accent landed on a light panel at 2.2:1. */
+:root[data-theme="dark"] .card.invert{--mark:#006AD4}
+.card.invert{--mark:#5EA9F5;--rule:color-mix(in srgb,var(--onDeep) 16%,transparent);
+  --inset:color-mix(in srgb,var(--onDeep) 9%,transparent);
+  --nest:color-mix(in srgb,var(--onDeep) 8%,transparent)}
+.card.invert .mult .nm{color:var(--onDeep)}
+.card.invert .mult .cnt,.card.invert .xlab,.card.invert .drop{color:var(--onDeep);opacity:.62}
+.card.invert .mult svg .ytick{fill:var(--onDeep);opacity:.55}
+.card.invert .mult .cell:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--onDeep) 45%,transparent)}
+.card.invert .mult .cell[aria-pressed="true"]{box-shadow:inset 0 0 0 1.5px var(--onDeep)}
+.card.invert .empty{color:var(--onDeep);opacity:.6}
+
+/* ── depth by device ─────────────────────────────────────────
+   Two bars on one common scale, which is the only comparison here worth
+   making. Position and length carry it; the legend distinguishes the series,
+   so no hue is spent on a distinction two shapes already make. */
+.dvrow{display:grid;grid-template-columns:88px minmax(0,1fr) 150px;gap:var(--s-4);
+  align-items:center;padding:var(--s-2) 0}
+.dvrow .nm{font-size:var(--fs-small);letter-spacing:var(--tr-body);color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dvrow .bars i{display:block;height:10px;border-radius:2px;min-width:2px;background:var(--ink)}
+.dvrow .vv{font-family:var(--mono);font-size:var(--fs-small);letter-spacing:var(--tr-mono);
+  text-align:right;color:var(--ink)}
+.dvrow .vv small{display:block;font-size:var(--fs-micro);color:var(--faint);white-space:nowrap}
+.srow{grid-template-columns:88px minmax(0,1fr) 52px;width:100%;border:0;background:transparent;
+  font:inherit;letter-spacing:var(--tr-body);color:inherit;text-align:left;cursor:pointer;
+  border-radius:var(--r-sm);padding:var(--s-2) var(--s-3);transition:background .15s var(--ease)}
+.srow:hover{background:var(--inset)}
+.srow[aria-pressed="true"]{background:var(--inset);box-shadow:inset 2px 0 0 var(--ink)}
 
 /* ── source quality ──────────────────────────────────────── */
 .lgrid{display:grid;grid-template-columns:1fr minmax(0,2.2fr) 72px;gap:var(--s-4);align-items:center}
@@ -227,7 +287,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
   color:var(--muted);opacity:.55;pointer-events:none;transition:left .4s var(--ease),right .4s var(--ease)}
 .payrow .pt{position:absolute;top:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;
   border-radius:50%;background:var(--ink);transition:left .4s var(--ease)}
-.payrow.deep .pt{background:var(--q-good)}
+.payrow.deep .pt{background:var(--ink)}
 .payrow.shallow .pt{background:var(--muted)}
 .payrow.shallow .ci{opacity:.4}
 .payrow .pc{font-family:var(--mono);font-size:var(--fs-small);letter-spacing:var(--tr-mono);
@@ -246,9 +306,9 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 .days{display:flex;align-items:flex-end;gap:3px;height:96px;margin-top:var(--s-3)}
 .days .d{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative;
   cursor:pointer;border:0;background:transparent;padding:0}
-.days .d i{display:block;background:var(--line);border-radius:var(--r-sm) var(--r-sm) 2px 2px;min-height:2px;
-  transition:background .15s var(--ease)}
-.days .d.mark i{background:color-mix(in srgb,var(--ink) 55%,transparent)}
+.days .d i{display:block;background:color-mix(in srgb,var(--ink) 26%,transparent);
+  border-radius:2px;min-height:2px;transition:background .15s var(--ease)}
+.days .d.mark i{background:color-mix(in srgb,var(--ink) 62%,transparent)}
 .days .d[aria-pressed="true"] i{background:var(--ink)}
 .days .d:hover i{background:var(--muted)}
 .days .d.mark:hover i{background:var(--ink)}
@@ -268,7 +328,7 @@ td{padding:var(--s-3) 0;border-bottom:1px solid var(--line);vertical-align:middl
 tr:last-child td{border-bottom:0}
 th+th,td+td{padding-left:var(--s-4)}
 tbody tr[data-filter-source],tbody tr[data-filter-page]{cursor:pointer;transition:background .15s var(--ease)}
-tbody tr[data-filter-source]:hover,tbody tr[data-filter-page]:hover{background:var(--surface)}
+tbody tr[data-filter-source]:hover,tbody tr[data-filter-page]:hover{background:var(--inset)}
 tbody tr[aria-pressed="true"]{background:var(--accentWash)}
 tbody tr[aria-pressed="true"] td:first-child{box-shadow:inset 2px 0 0 var(--ink)}
 td:first-child{padding-left:var(--s-3)!important} th:first-child{padding-left:var(--s-3)}
@@ -281,9 +341,9 @@ tr.cold td{color:var(--faint)}
   margin-right:var(--s-2);vertical-align:1px}
 .dot6.on{background:var(--gain)}
 .track{display:flex;gap:2px;width:88px}
-.track i{flex:1;height:8px;border-radius:2px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.track i{flex:1;height:8px;border-radius:2px;background:var(--nest)}
 .track i.on{background:var(--ink);box-shadow:none} .track i.end{background:var(--gain);box-shadow:none}
-.bwrap{background:var(--surface);border-radius:var(--r-pill);width:100%}
+.bwrap{background:var(--nest);border-radius:var(--r-pill);width:100%}
 .bar{height:8px;border-radius:var(--r-pill);background:var(--ink);min-width:3px}
 table.fixed{table-layout:fixed}
 table.fixed td:nth-child(2){width:42%} table.fixed td:nth-child(3){width:38px}
@@ -300,9 +360,10 @@ table.fixed .trunc{width:auto;max-width:none}
   margin-top:var(--s-5);padding-top:var(--s-4);border-top:1px solid var(--line)}
 .legend .lg{display:inline-flex;align-items:center;gap:var(--s-2);font-size:var(--fs-micro);
   letter-spacing:var(--tr-body);color:var(--muted)}
-.legend .sw{width:10px;height:10px;border-radius:3px;display:block}
-.legend .sw.ring{box-shadow:inset 0 0 0 1.5px #6E1A14}
-:root[data-theme="dark"] .legend .sw.ring{box-shadow:inset 0 0 0 1.5px #FFC9C2}
+.legend .sw{width:16px;height:10px;display:block}
+.legend .lg .sw:first-of-type{border-radius:3px 0 0 3px}
+.legend .lg .sw:last-of-type{border-radius:0 3px 3px 0}
+.legend .lg{gap:var(--s-2)} .legend .lg .sw+.sw{margin-left:-2px}
 .legend .cap{font-family:var(--mono);font-size:var(--fs-micro);font-weight:500;
   letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
 .mapwrap{position:relative;width:100%}
@@ -312,28 +373,28 @@ table.fixed .trunc{width:auto;max-width:none}
 .mapwrap path.on{cursor:pointer;pointer-events:auto}
 .mapwrap path.on:hover{stroke:var(--ink);stroke-width:.012}
 .mapwrap path.sel{stroke:var(--ink);stroke-width:.016}
-.mapwrap path.g{fill:var(--q-good)} .mapwrap path.m{fill:var(--q-mid)}
-.mapwrap path.n{fill:var(--q-none)}
-/* red and amber collapse into one hue under deuteranopia, and the map is the
-   only block where colour is not backed by an adjacent number. The outline is
-   the second channel — legible at this scale where a fill pattern is not. */
-.mapwrap path.p{fill:var(--q-poor);stroke:#6E1A14;stroke-width:.013}
-:root[data-theme="dark"] .mapwrap path.p{stroke:#FFC9C2}
+.mapwrap path.s4{fill:var(--seq-4)} .mapwrap path.s3{fill:var(--seq-3)}
+.mapwrap path.s2{fill:var(--seq-2)} .mapwrap path.s1{fill:var(--seq-1)}
+.mapwrap path.s0{fill:var(--seq-0)}
+/* The ranked list beside the map carries the exact counts, so the map only
+   has to say where and roughly how many. One hue in five steps survives every
+   form of colour blindness; the old red/amber pair did not, and needed an
+   outline as a second channel to be legible at all. */
 
 /* ── country list ────────────────────────────────────────── */
 .clist{display:grid;gap:2px}
 .crow{display:grid;grid-template-columns:1.3fr minmax(0,0.85fr) 34px;gap:var(--s-3);align-items:center;
   padding:var(--s-2) var(--s-3);border-radius:var(--r-sm);cursor:pointer;border:0;background:transparent;
   color:inherit;font:inherit;letter-spacing:var(--tr-body);text-align:left;transition:background .15s var(--ease)}
-.crow:hover{background:var(--surface)}
-.crow[aria-pressed="true"]{background:var(--surface);box-shadow:inset 2px 0 0 var(--ink)}
+.crow:hover{background:var(--inset)}
+.crow[aria-pressed="true"]{background:var(--inset);box-shadow:inset 2px 0 0 var(--ink)}
 .crow .nm{font-size:var(--fs-small);letter-spacing:var(--tr-body);white-space:nowrap;overflow:hidden;
   text-overflow:ellipsis;color:var(--ink)}
 .crow .nm .sub{color:var(--faint)}
 /* region and city rows have nothing to filter, so they get no affordance */
 .crow.flat{cursor:default}
 .crow.flat:hover{background:transparent}
-.crow .vb{background:var(--surface);border-radius:var(--r-pill);height:8px}
+.crow .vb{background:var(--nest);border-radius:var(--r-pill);height:8px}
 .crow[aria-pressed="true"] .vb{background:color-mix(in srgb,var(--ink) 12%,transparent)}
 .crow .vb i{display:block;height:8px;border-radius:var(--r-pill);background:currentColor;min-width:3px}
 .crow .vv{font-family:var(--mono);font-size:var(--fs-small);letter-spacing:var(--tr-mono);
@@ -349,7 +410,7 @@ table.fixed .trunc{width:auto;max-width:none}
 #tip .m{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-mono);opacity:.7;display:block}
 
 /* ── method ──────────────────────────────────────────────── */
-details{background:var(--card);border-radius:var(--r-card);box-shadow:inset 0 0 0 1px var(--line);margin-top:var(--s-4)}
+details{background:var(--panel);border-radius:var(--r-card);box-shadow:var(--shadow-card);margin-top:var(--s-4)}
 summary{list-style:none;cursor:pointer;padding:var(--s-5) var(--s-6);font-size:var(--fs-small);
   letter-spacing:var(--tr-body);color:var(--muted);display:flex;justify-content:space-between;align-items:center;
   transition:color .2s var(--ease)}
@@ -363,48 +424,24 @@ details .body p{margin-bottom:var(--s-4)}
 details .body b{color:var(--ink);font-weight:500}
 mark{background:var(--markWash);color:inherit;padding:0 2px;border-radius:2px}
 
-/* ── gate ────────────────────────────────────────────────── */
-#gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:90;
-  padding:var(--s-6);overflow:auto}
-#gate .plaque{width:100%;max-width:340px}
-#gate .eyebrow{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-label);
-  text-transform:uppercase;color:var(--faint);margin:0 0 var(--s-4)}
-#gate h1{font-size:var(--fs-page);font-weight:500;letter-spacing:var(--tr-page);
-  line-height:var(--lh-page);margin:0 0 var(--s-3)}
-#gate .lead{font-size:var(--fs-lead);line-height:var(--lh-lead);letter-spacing:var(--tr-lead);
-  color:var(--muted);margin:0 0 var(--s-5)}
-/* The spec is the plaque: three decisions, stated as decisions. Mono because
-   these are measurements, not prose. */
-#gate .spec{margin:0 0 var(--s-5);padding:var(--s-4) 0;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  display:grid;gap:var(--s-2)}
-#gate .spec > div{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-4)}
-#gate dt,#gate dd{margin:0;font-family:var(--mono);font-size:var(--fs-small);letter-spacing:var(--tr-mono)}
-#gate dt{color:var(--ink)}
-#gate dd{color:var(--faint);text-align:right}
-#gate .fine{margin:var(--s-4) 0 0;font-size:var(--fs-micro);line-height:var(--lh-micro);color:var(--faint)}
-#gate form{width:100%;display:grid;gap:var(--s-3)}
-@media(max-width:420px){
-  #gate .spec > div{flex-direction:column;gap:2px}
-  #gate dd{text-align:left}
-}
-#gate input{width:100%;height:38px;padding:0 var(--s-4);border:0;border-radius:var(--r-pill);
-  background:var(--surface);color:var(--ink);font-family:var(--display);font-size:var(--fs-body);
-  letter-spacing:var(--tr-body)}
-#gate input:focus{outline:none;box-shadow:inset 0 0 0 1px var(--ink)}
-#gate button{height:34px;border:0;border-radius:var(--r-pill);background:var(--ink);color:var(--bg);
-  font-family:var(--display);font-size:var(--fs-body);font-weight:500;letter-spacing:var(--tr-body);cursor:pointer}
-#gate .err{font-size:var(--fs-small);color:var(--neg);min-height:16px;text-align:center}
-/* Hidden, not blurred. blur(4px) does not obscure 24px figures — shape and
-   magnitude survive it, and a screenshot survives it completely. The plaque
-   is also better off without a half-legible dashboard competing behind it. */
-body.locked{overflow:hidden}
-body.locked .wrap,body.locked header{visibility:hidden}
+/* Demo mode fills this page with synthetic numbers. A hostname regex is the
+   only thing keeping that off production, and if it ever breaks the page
+   looks entirely normal while every figure is invented. So the numbers say
+   so themselves: unmissable, above everything, impossible to screenshot
+   without it. */
+#demobar{display:none;position:fixed;top:0;left:0;right:0;z-index:70;
+  background:var(--yellow);color:var(--onYellow);
+  font-family:var(--mono);font-size:var(--fs-micro);font-weight:500;
+  letter-spacing:var(--tr-label);text-transform:uppercase;
+  text-align:center;padding:9px var(--s-5);line-height:1.3}
+body.demo #demobar{display:block}
+body.demo{padding-top:34px}
 .empty{color:var(--faint);font-size:var(--fs-body);padding:var(--s-4) 0}
 
 @media(max-width:1000px){
   .c7,.c5,.c6,.c8,.c4{grid-column:span 12}
   .figs{grid-template-columns:repeat(2,1fr)}
+  .verdict{font-size:var(--fs-body)}
   .mult{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:700px){
@@ -424,145 +461,89 @@ body.locked .wrap,body.locked header{visibility:hidden}
 }
 
 /* utilities last, so they win over component colour declarations */
-.card.invert{--q-good:#4ED07F;--q-mid:#F0B740;--q-poor:#F2695C;--q-none:#646464}
-:root[data-theme="dark"] .card.invert{--q-good:#1F9B4C;--q-mid:#B27D11;--q-poor:#E0392B;--q-none:#88887D}
-.q-good{color:var(--q-good)} .q-mid{color:var(--q-mid)}
-.q-poor{color:var(--q-poor)} .q-none{color:var(--q-none)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
-<body class="locked">
+<body>
+
+<div id="demobar" role="status">Demo data &#183; synthetic numbers, not real traffic</div>
 
 <div id="tip"></div>
 
-<!-- The gate is the only public face this page has: anyone who is given the
-     URL lands here. A bare password box tells them nothing, so it says what
-     the thing is and what it measures — and no numbers, which is the whole
-     reason it can be said out loud. -->
-<div id="gate">
-  <div class="plaque">
-    <p class="eyebrow">Private</p>
-    <h1>Readership</h1>
-    <p class="lead">I instrumented my own portfolio to find out where readers stop.</p>
-
-    <dl class="spec">
-      <div><dt>Drop-off, per section</dt><dd>named, in reading order</dd></div>
-      <div><dt>Depth by device</dt><dd>counts, not rates</dd></div>
-      <div><dt>Where readers arrive from</dt><dd>no personal data</dd></div>
-    </dl>
-
-    <form id="gate-form" autocomplete="off">
-      <input id="pw" type="password" placeholder="Password" autocomplete="current-password">
-      <button type="submit">Open</button>
-      <div class="err" data-slot="gate.error" role="alert"></div>
-    </form>
-
-    <p class="fine">Cookieless, self-hosted, own device excluded. Private because at
-      this volume a two-visit difference is not a trend.</p>
-  </div>
-</div>
 
 <header>
-  <div class="navpill">
-    <a class="navlink" href="./index.html">Home</a>
-    <a class="navlink" href="./about.html">About</a>
-    <a class="navlink" href="./resume.html">Resume</a>
-    <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme">
-      <span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-      <span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-    </button>
-  </div>
-</header>
-
-<div class="wrap">
-
-  <!-- control bar: active filters live here -->
-  <div class="pagehead">
-    <div>
-      <h1 class="t-page">Readership</h1>
-      <p class="t-lead">Who reads the case studies, how far they get, and where the readers come from.</p>
-    </div>
-  </div>
-
-  <div class="toolbar">
+  <div class="bar">
+    <span class="brand">Readership</span>
     <div class="filters" data-slot="filters"><span class="scope">All visitors</span></div>
-    <span class="asof mono"><span data-slot="meta.period"></span><span class="dot-sep">·</span><span data-slot="meta.updated"></span></span>
-    <p class="loaderr" data-slot="load.error" role="status" hidden></p>
+    <span class="spacer"></span>
     <div class="seg" role="group" aria-label="Date range">
       <button type="button" data-range="7" aria-pressed="false">7d</button>
       <button type="button" data-range="28" aria-pressed="true">28d</button>
       <button type="button" data-range="90" aria-pressed="false">90d</button>
     </div>
+    <div class="navpill">
+      <a class="navlink" href="./index.html">Home</a>
+      <a class="navlink" href="./about.html">About</a>
+      <a class="navlink" href="./resume.html">Resume</a>
+      <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme">
+      <span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+      <span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+    </button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="headline">
+    <p class="verdict" data-slot="verdict">—</p>
+    <p class="asof mono"><span data-slot="meta.period"></span><span class="dot-sep">·</span><span data-slot="meta.updated"></span></p>
+    <p class="loaderr" data-slot="load.error" role="status" hidden></p>
   </div>
 
   <!-- clickable figures — they choose what the traffic chart plots -->
-  <div class="figs" style="margin-bottom:var(--s-4)">
+  <div class="figs">
     <div class="fig">
       <span class="lab">Visitors</span>
       <span class="row"><span class="val" data-slot="f.visitors.value">—</span><span class="dlt" data-slot="f.visitors.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Opened a case study</span>
-      <span class="row"><span class="val"><span data-slot="f.opened.value">—</span><span class="u">%</span></span><span class="dlt" data-slot="f.opened.delta">—</span></span>
+      <span class="lab">Past the hero</span>
+      <span class="row"><span class="val" data-slot="f.passedHero.value">—</span><span class="dlt" data-slot="f.passedHero.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Read to the end</span>
-      <span class="row"><span class="val"><span data-slot="f.read.value">—</span><span class="u">%</span></span><span class="dlt" data-slot="f.read.delta">—</span></span>
+      <span class="lab">Got in touch</span>
+      <span class="row"><span class="val" data-slot="f.contacts.value">—</span><span class="dlt" data-slot="f.contacts.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Then acted</span>
-      <span class="row"><span class="val"><span data-slot="f.acted.value">—</span><span class="u">%</span></span><span class="dlt" data-slot="f.acted.delta">—</span></span>
+      <span class="lab">US <span class="plus">+</span> UK</span>
+      <span class="row"><span class="val" data-slot="f.reach.value">—</span><span class="dlt" data-slot="f.reach.delta">—</span></span>
     </div>
   </div>
 
   <div class="grid">
 
-    <section class="card c12">
+    <section class="card invert c12">
       <div class="head">
-        <h2 class="t-h1">Reading depth
-          <span class="i" data-tip="Share of visitors still present at each section. Same 0–100% scale on all three, so the shapes compare directly: a gentle slope is normal attrition, a cliff is a broken section. Click a chart to filter.">i</span></h2>
+        <h2 class="t-h1">Where readers stop
+          <span class="i" data-tip="Every section of every page, in the order a reader meets them, measured against the section that reached the most people. Same scale on all three, so the shapes compare directly: a gentle slope is normal attrition, a cliff is a section to rewrite. Click a chart to filter.">i</span></h2>
         <span class="hint">Click a chart to filter</span>
       </div>
       <div class="mult" data-slot="retention.cells"><p class="empty">Loading…</p></div>
     </section>
 
-    <section class="card invert c7">
-      <div class="head">
-        <h2 class="t-h1">Source quality
-          <span class="i" data-tip="Ranked by the share of that source's visitors who finish a case study — not by how many arrived. Volume without depth is not worth chasing. Click a row to filter.">i</span></h2>
-        <span class="hint">% who finish a case study</span>
-      </div>
-      <div data-slot="quality.rows"><p class="empty">Loading…</p></div>
-    </section>
-
-    <section class="card sub c5">
-      <div class="head">
-        <h2 class="t-h2">Payoff
-          <span class="i" data-tip="If deep readers act at the same rate as bouncers, the case studies are decoration. The gap between the two bars is the argument for writing them.">i</span></h2>
-      </div>
-      <p class="paysub">Opened the resume</p>
-      <div data-slot="pay.resume"></div>
-      <p class="paysub">Made contact</p>
-      <div data-slot="pay.contact"></div>
-      <div data-slot="pay.axis"></div>
-      <p class="line" data-slot="pay.line">—</p>
-    </section>
-
     <section class="card c12">
       <div class="head">
         <h2 class="t-h1">Location
-          <span class="i" data-tip="Shaded by how well each country reads, not by how many visitors it sends, so a big country full of bouncers stays red. Below-average countries also carry an outline, because red and amber are hard to separate for red-green colour blindness and the map is the one block with no number beside the mark. Area exaggerates large countries, so the counts live in the list. Region and city come from IP lookup — VPNs and carriers misplace people — read a single city as a lead, not a fact.">i</span></h2>
+          <span class="i" data-tip="Shaded by how many visitors each country sends, in one hue: five steps, no verdict. Area on a map exaggerates large countries, so the exact counts live in the list beside it. Region and city come from IP lookup — VPNs and carriers misplace people — so read a single city as a lead, not a fact.">i</span></h2>
         <span class="hint" data-slot="map.hint">—</span>
       </div>
       <div class="locgrid">
         <div>
           <div class="mapwrap" data-slot="map.svg"><p class="empty">Loading…</p></div>
           <div class="legend">
-            <span class="cap">Reads</span>
-            <span class="lg"><span class="sw" style="background:var(--q-good)"></span>Above average</span>
-            <span class="lg"><span class="sw" style="background:var(--q-mid)"></span>Around average</span>
-            <span class="lg"><span class="sw ring" style="background:var(--q-poor)"></span>Below average</span>
-            <span class="lg"><span class="sw" style="background:var(--q-none)"></span>Too few to judge</span>
+            <span class="cap">Visitors</span>
+            <span class="lg">fewer<span class="sw" style="background:var(--seq-0)"></span><span class="sw" style="background:var(--seq-1)"></span><span class="sw" style="background:var(--seq-2)"></span><span class="sw" style="background:var(--seq-3)"></span><span class="sw" style="background:var(--seq-4)"></span>more</span>
           </div>
         </div>
         <div class="locside">
@@ -575,34 +556,33 @@ body.locked .wrap,body.locked header{visibility:hidden}
         </div>
       </div>
     </section>
-
-    <section class="card c12">
+    <section class="card c6">
       <div class="head">
-        <h2 class="t-h1">Traffic
-          <span class="i" data-tip="Yellow dots mark what I did that day — applications sent, posts published. A traffic chart with no causes is decoration. Click a bar to filter to that day.">i</span></h2>
-        <div class="headctl">
-          <div class="seg sm" role="group" aria-label="Metric to plot">
-            <button type="button" data-metric="visitors" aria-pressed="true">Visitors</button>
-            <button type="button" data-metric="opened" aria-pressed="false">Opened</button>
-            <button type="button" data-metric="read" aria-pressed="false">Read</button>
-            <button type="button" data-metric="acted" aria-pressed="false">Acted</button>
-          </div>
-          <span class="hint" data-slot="days.peak">—</span>
-        </div>
+        <h2 class="t-h1">How far each device gets
+          <span class="i" data-tip="Counts, not rates. Umami reports event totals, and dividing those by unique visitors is what once produced a 400% completion rate. Sections reached is the honest comparison: if phones reach a fraction of what laptops do, that is a layout problem.">i</span></h2>
+        <span class="hint">Sections reached</span>
       </div>
-      <div class="days" data-slot="days.bars"></div>
-      <div class="daxis"><span data-slot="days.from">—</span><span data-slot="days.to">—</span></div>
+      <div data-slot="devices.rows"><p class="empty">Loading…</p></div>
     </section>
+
+    <section class="card c6">
+      <div class="head">
+        <h2 class="t-h1">Where they came from
+          <span class="i" data-tip="Referrers, as the browser reports them. Anyone arriving by typing the address, from a private message, or from an app that strips the referrer counts as direct — which is most of it, and is not a gap in the tracking.">i</span></h2>
+        <span class="hint">Visitors</span>
+      </div>
+      <div data-slot="sources.rows"><p class="empty">Loading…</p></div>
+    </section>
+
+
+
 
     <!-- three separate datasets, never compared side by side: the one honest
          place for tabs. The active tab is the card's title. -->
     <section class="card sub c12">
       <div class="head">
         <div class="seg sm" role="tablist" aria-label="Detail">
-          <button type="button" role="tab" id="tab-apps" aria-controls="panel-apps" aria-selected="true"
-                  data-hint="Click a row to filter"
-                  data-info="Tagged with utm_campaign per company — the only traffic that can be attributed to a named application. Depth is how many sections deep they got.">Applications</button>
-          <button type="button" role="tab" id="tab-pages" aria-controls="panel-pages" aria-selected="false"
+          <button type="button" role="tab" id="tab-pages" aria-controls="panel-pages" aria-selected="true"
                   data-hint="Paths normalised"
                   data-info="Paths are normalised before send, so /, /index.html, /#top and /index.html#top count as one page instead of four.">Pages</button>
           <button type="button" role="tab" id="tab-clicks" aria-controls="panel-clicks" aria-selected="false"
@@ -614,15 +594,7 @@ body.locked .wrap,body.locked header{visibility:hidden}
           <span class="i" id="detail-info" data-tip="">i</span>
         </span>
       </div>
-
-      <div id="panel-apps" role="tabpanel" aria-labelledby="tab-apps">
-        <table>
-          <thead><tr><th>Company</th><th>Sent</th><th>Opened</th><th style="width:110px">Depth</th><th class="r">Time</th><th class="r">CV</th></tr></thead>
-          <tbody data-slot="apps.rows"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
-        </table>
-      </div>
-
-      <div id="panel-pages" role="tabpanel" aria-labelledby="tab-pages" hidden>
+      <div id="panel-pages" role="tabpanel" aria-labelledby="tab-pages">
         <table>
           <thead><tr><th>Page</th><th class="r">Visitors</th><th class="r">Median time</th><th class="r">Read</th></tr></thead>
           <tbody data-slot="pages.rows"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody>
@@ -695,6 +667,6 @@ body.locked .wrap,body.locked header{visibility:hidden}
 }());
 </script>
 <script src="world-map.js?v=2" defer></script>
-<script src="dashboard-data.js?v=2" defer></script>
+<script src="dashboard-data.js?v=18" defer></script>
 </body>
 </html>
