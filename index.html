@@ -2659,7 +2659,15 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       new URL(document.referrer).origin === location.origin &&
       new URL(document.referrer).pathname !== location.pathname;
   } catch(e){}
+  /* The referrer is not a session. It is missing on a typed URL, on file://,
+     on some refreshes, and whenever a browser or extension strips it — and
+     every one of those replays a 2.5s intro that covers the whole page, which
+     reads as a blank screen rather than as an animation. sessionStorage is
+     what "once per session" actually means, so it is the primary check and
+     the referrer stays as a fallback for the first navigation of a session. */
   var seen = fromInternal;
+  try { if (sessionStorage.getItem("lb-intro") === "1") seen = true; } catch (e) {}
+  try { sessionStorage.setItem("lb-intro", "1"); } catch (e) {}
   var hidden = false;
   /* Start the hero AFTER the loader has actually cleared.
      Both paths used to fire it at the same instant the loader began to
@@ -2739,7 +2747,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     for (var i = 0; i < revealEls.length; i++){
       if (revealEls[i] !== hero) io.observe(revealEls[i]);
     }
-    setTimeout(function(){ if (!revealed) showAllReveals(); }, 2500);
+    /* Unconditional. `revealed` flips as soon as ANY section intersects, so
+       one visible section used to disarm the catch-all and leave everything
+       that never scrolled into view invisible for good. showAllReveals only
+       adds a class, so running it anyway costs nothing. */
+    setTimeout(showAllReveals, 2500);
   }
   /* last resort: if the loader never hands over, nothing stays blank */
   setTimeout(startReveal, 4000);
