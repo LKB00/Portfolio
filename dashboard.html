@@ -127,12 +127,12 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
    used to be a white --card box with a 1px border, which is the exact object
    index.html removed from its hero for reading as pasted in from another
    site. Same object, same problem, so the same fix. */
-.card{background:var(--surface);border-radius:var(--r-card);padding:var(--s-6);min-width:0}
+.card{background:var(--surface);border-radius:var(--r-card);padding:var(--s-5) var(--s-6);min-width:0}
 .card.sub{padding:var(--s-5)}
 .card.invert{background:var(--deep);color:var(--onDeep);box-shadow:none}
 .c12{grid-column:span 12} .c7{grid-column:span 7} .c5{grid-column:span 5}
 .c6{grid-column:span 6} .c8{grid-column:span 8} .c4{grid-column:span 4}
-.head{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);margin-bottom:var(--s-5)}
+.head{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);margin-bottom:var(--s-4)}
 .head h2{color:var(--ink);display:flex;align-items:center;flex-wrap:wrap;min-width:0}
 .invert .head h2{color:var(--onDeep)}
 .invert .title{color:var(--onDeep);opacity:.5}
@@ -158,12 +158,10 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);padding:var(--s-4) 
 /* ── figures ─────────────────────────────────────────────── */
 /* The page's conclusion, in the site's lead size. It sits above the figures
    because it is the answer and they are the evidence. */
-.verdict{font-size:var(--fs-lead);line-height:var(--lh-lead);letter-spacing:var(--tr-lead);
-  color:var(--ink);max-width:62ch;margin:0 0 var(--s-5)}
-.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4);margin-bottom:var(--s-6)}
+.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4);margin-bottom:var(--s-6)}
 /* reference numbers, not controls — nothing here responds to a click */
-.fig{background:var(--surface);border-radius:var(--r-card);padding:var(--s-5) var(--s-6)}
-.fig .lab{display:flex;align-items:center;font-family:var(--mono);font-size:var(--fs-micro);
+.fig{background:var(--surface);border-radius:var(--r-card);padding:var(--s-4) var(--s-5)}
+.fig .lab{display:flex;align-items:center;gap:3px;font-family:var(--mono);font-size:var(--fs-micro);
   font-weight:500;line-height:var(--lh-micro);letter-spacing:var(--tr-label);
   text-transform:uppercase;color:var(--faint)}
 .fig .row{display:flex;align-items:baseline;gap:var(--s-2);margin-top:var(--s-3)}
@@ -472,7 +470,7 @@ body.demo{padding-top:34px}
   <div class="pagehead">
     <div>
       <h1 class="t-page">Readership</h1>
-      <p class="t-lead">Who reads the case studies, how far they get, and where the readers come from.</p>
+      <p class="t-lead" data-slot="verdict">—</p>
     </div>
   </div>
 
@@ -488,11 +486,6 @@ body.demo{padding-top:34px}
   </div>
 
   <!-- clickable figures — they choose what the traffic chart plots -->
-  <!-- Most dashboards never state their conclusion. This one says it in a
-       sentence before any chart, because the funnel IS the finding and a
-       reader should not have to assemble it from four boxes. -->
-  <p class="verdict" data-slot="verdict">—</p>
-
   <div class="figs">
     <div class="fig">
       <span class="lab">Visitors</span>
@@ -505,6 +498,10 @@ body.demo{padding-top:34px}
     <div class="fig">
       <span class="lab">Got in touch</span>
       <span class="row"><span class="val" data-slot="f.contacts.value">—</span><span class="dlt" data-slot="f.contacts.delta">—</span></span>
+    </div>
+    <div class="fig">
+      <span class="lab">US <span class="plus">+</span> UK</span>
+      <span class="row"><span class="val" data-slot="f.reach.value">—</span><span class="dlt" data-slot="f.reach.delta">—</span></span>
     </div>
   </div>
 
@@ -519,6 +516,30 @@ body.demo{padding-top:34px}
       <div class="mult" data-slot="retention.cells"><p class="empty">Loading…</p></div>
     </section>
 
+    <section class="card c12">
+      <div class="head">
+        <h2 class="t-h1">Location
+          <span class="i" data-tip="Shaded by how many visitors each country sends, in one hue: five steps, no verdict. Area on a map exaggerates large countries, so the exact counts live in the list beside it. Region and city come from IP lookup — VPNs and carriers misplace people — so read a single city as a lead, not a fact.">i</span></h2>
+        <span class="hint" data-slot="map.hint">—</span>
+      </div>
+      <div class="locgrid">
+        <div>
+          <div class="mapwrap" data-slot="map.svg"><p class="empty">Loading…</p></div>
+          <div class="legend">
+            <span class="cap">Visitors</span>
+            <span class="lg">fewer<span class="sw" style="background:var(--seq-0)"></span><span class="sw" style="background:var(--seq-1)"></span><span class="sw" style="background:var(--seq-2)"></span><span class="sw" style="background:var(--seq-3)"></span><span class="sw" style="background:var(--seq-4)"></span>more</span>
+          </div>
+        </div>
+        <div class="locside">
+          <div class="seg sm listtabs" role="tablist" aria-label="Location detail">
+            <button type="button" role="tab" data-level="country" aria-selected="true">Countries</button>
+            <button type="button" role="tab" data-level="region" aria-selected="false">Regions</button>
+            <button type="button" role="tab" data-level="city" aria-selected="false">Cities</button>
+          </div>
+          <div class="clist" data-slot="places.rows"><p class="empty">Loading…</p></div>
+        </div>
+      </div>
+    </section>
     <section class="card c6">
       <div class="head">
         <h2 class="t-h1">How far each device gets
@@ -629,6 +650,7 @@ body.demo{padding-top:34px}
   });
 }());
 </script>
-<script src="dashboard-data.js?v=12" defer></script>
+<script src="world-map.js?v=2" defer></script>
+<script src="dashboard-data.js?v=15" defer></script>
 </body>
 </html>
