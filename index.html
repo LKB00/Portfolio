@@ -2281,8 +2281,28 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    selector and outranks a bare class, which left the +1 at --faint on
    accent blue — 1.01:1, invisible. Same trap that hid the footer credit. */
 #notes .rp-faces i.rp-me{background:#FFFFFF;color:var(--rp-bg)}
-#notes .readpill.is-in .rp-me{animation:rpPop .62s cubic-bezier(.22,1.4,.36,1) .25s forwards}
+/* Arrival, in the order the sentence is read: the three of them land
+   first, the number climbs (in JS -- it counts to the real total),
+   and the +1 drops on the end of the climb. Attendance being taken
+   rather than a figure that was always sitting there.
+
+   Every one of these only exists under .is-in, which the script adds.
+   With no JS the pill is simply finished: nothing here is a from-state
+   that could strand a face at scale 0. And i.rp-me, not .rp-me --
+   `.rp-faces i` carries an element selector and outranks a bare class,
+   which is what put the +1 at 1.01:1 once already. */
+@keyframes rpFaceIn{0%{transform:scale(.4);opacity:0}
+  70%{transform:scale(1.07);opacity:1}100%{transform:scale(1);opacity:1}}
+#notes .readpill.is-in .rp-faces i{animation:rpFaceIn .5s cubic-bezier(.22,1.4,.36,1) both}
+#notes .readpill.is-in .rp-faces i:nth-child(1){animation-delay:.04s}
+#notes .readpill.is-in .rp-faces i:nth-child(2){animation-delay:.12s}
+#notes .readpill.is-in .rp-faces i:nth-child(3){animation-delay:.20s}
+#notes .readpill.is-in .rp-faces i.rp-me{animation:rpPop .62s cubic-bezier(.22,1.4,.36,1) .8s both}
 @keyframes rpPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+/* while the digits are moving they are the only thing on the pill
+   that is, so they get the weight; it comes back off when it lands */
+#notes .rp-n{display:inline-block;transition:transform .3s var(--ease)}
+#notes .readpill.is-rolling .rp-n{transform:scale(1.06)}
 #notes .rp-txt{display:flex;flex-direction:column;gap:1px;min-width:0}
 #notes .rp-txt b{font-size:var(--t-mono-lg);font-weight:500;letter-spacing:var(--tr-body);white-space:nowrap}
 #notes .rp-sub{display:grid;font-size:var(--t-mono);color:rgba(255,255,255,.78);white-space:nowrap}
@@ -2308,7 +2328,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   #notes .readpill:hover .rp-sub-b{color:#FFFFFF}
 }
 @media (prefers-reduced-motion:reduce){
-  #notes .rp-me{animation:none}
+  #notes .rp-faces i,
+  #notes .readpill.is-in .rp-faces i,
+  #notes .readpill.is-in .rp-faces i.rp-me{animation:none}
+  #notes .rp-n{transition:none;transform:none}
 }
 @media (max-width:400px){
   #notes .readpill{gap:var(--s-3);padding:7px 13px 7px 9px}

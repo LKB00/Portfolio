@@ -23,7 +23,15 @@
 
   var line = pill.querySelector("[data-rp-line]");
   var KEY = "lb-readers-all";
+  var SEEN = "lb-readers-rolled";
   var TIMEOUT_MS = 6000;
+  var ROLL_MS = 900;
+
+  var still = false;
+  try {
+    still = window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch (e) {}
 
   // Same rule as the dashboard: the apex loses POST bodies to its redirect, a
   // local page has no /api of its own, and a preview deployment does.
@@ -54,6 +62,47 @@
     fig.textContent = num(n);
     line.appendChild(fig);
     line.appendChild(document.createTextNode(" so far."));
+    roll(fig, n);
+  }
+
+  // The number climbs to the total instead of appearing at it, so the
+  // count reads as something being taken rather than something already
+  // written down. It lands on the real figure -- nothing here invents a
+  // value or claims the visit has been added; only the arrival is staged.
+  //
+  // Once a session. Rolling on all six pages would turn a moment into a
+  // tic, and the second time you see it you already know what it says.
+  function roll(el, target) {
+    var again = false;
+    try { again = sessionStorage.getItem(SEEN) === "1"; } catch (e) {}
+    if (again || still || target < 8 || !window.requestAnimationFrame) return;
+    try { sessionStorage.setItem(SEEN, "1"); } catch (e) {}
+
+    pill.classList.add("is-rolling");
+    var t0 = 0;
+    // rAF does not run in a background tab, and the pill would sit on a
+    // part-counted number for as long as the tab stayed there. This puts
+    // the true figure up regardless; the animation is the thing that is
+    // allowed to fail, never the number.
+    var settle = setTimeout(function () { finish(); }, ROLL_MS + 400);
+
+    function finish() {
+      clearTimeout(settle);
+      el.textContent = num(target);
+      pill.classList.remove("is-rolling");
+      pill.classList.add("is-counted");
+    }
+
+    function frame(t) {
+      if (!t0) t0 = t;
+      var p = Math.min(1, (t - t0) / ROLL_MS);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = num(Math.round(target * eased));
+      if (p < 1) requestAnimationFrame(frame);
+      else finish();
+    }
+    el.textContent = num(0);
+    requestAnimationFrame(frame);
   }
 
   function cached() {
