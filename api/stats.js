@@ -41,7 +41,10 @@ const SESSION_SAMPLE = 8; // per-session activity lookups are N+1; cap them
 // floors rather than totals — so it is flagged instead of reported as fact.
 const ACTIVITY_PAGE_CAP = 500;
 
-const CASE_STUDIES = ["/app-merge.html", "/rise-portal.html"];
+// Every page with a labelled funnel. The home page earns its place: it
+// takes the most traffic, and hero -> work -> experience -> notes is a
+// drop-off curve like any other.
+const TRACKED_PAGES = ["/", "/app-merge.html", "/rise-portal.html"];
 
 // The section labels each case study carries, in the order a reader meets
 // them. This is the authored order from the markup, not a guess.
@@ -55,6 +58,7 @@ const CASE_STUDIES = ["/app-merge.html", "/rise-portal.html"];
 // count; a drop-off curve has to be in document order, or the shape is
 // meaningless. Reading the map in order gives that for free.
 const PAGE_SECTIONS = {
+  "/": ["Notes board", "Selected work", "Experience"],
   "/app-merge.html": [
     "Two apps, one customer", "Who was in the room", "Revenue at risk",
     "Not a merge", "Fast version first", "Three constraints",
@@ -273,6 +277,14 @@ export default async function handler(req, res) {
       get(`${site}/sessions?${range}&pageSize=${SESSION_SAMPLE}`, "sessions"),
     ]);
 
+    // The daily series. Without it the traffic chart has no source at all —
+    // and it fails silently, because the front end guards with
+    // Array.isArray() and renders an empty chart rather than an error.
+    const series = await get(
+      `${site}/pageviews?${range}&unit=day&timezone=Asia%2FKolkata`,
+      "pageviews (daily series)"
+    );
+
     // --- shaping helpers ---------------------------------------------------
     const num = (v) => (v && typeof v === "object" ? v.value : v) || 0;
     const rows = (j) => (Array.isArray(j) ? j : (j && Array.isArray(j.data) ? j.data : null));
@@ -398,7 +410,7 @@ export default async function handler(req, res) {
         ? null
         : {
             all: toList(sectionsAll),
-            byPage: CASE_STUDIES.map((path) => {
+            byPage: TRACKED_PAGES.map((path) => {
               const labels = PAGE_SECTIONS[path] || [];
               const counts = labels.map((name) => sectionsAll[name] || 0);
 
@@ -658,10 +670,44 @@ export default async function handler(req, res) {
       );
     }
 
+    // Umami returns pageviews and sessions as two separate series of
+    // {x: date, y: n}. Zipped by date here so the front end plots one array
+    // instead of joining two. Named `daily`, not `days`: `days` already means
+    // the window length, and one key with two meanings is how a chart ends up
+    // silently empty.
+    const seriesMap = (arr) => {
+      const m = {};
+      (Array.isArray(arr) ? arr : []).forEach((p) => {
+        const d = String(p.x || "").slice(0, 10);
+        if (d) m[d] = Number(p.y) || 0;
+      });
+      return m;
+    };
+    const pv = seriesMap(series && series.pageviews);
+    const sv = seriesMap(series && series.sessions);
+    const allDates = Array.from(new Set([...Object.keys(pv), ...Object.keys(sv)])).sort();
+    const daily = !series
+      ? null
+      : allDates.map((date) => ({
+          date,
+          visitors: sv[date] || 0,
+          pageviews: pv[date] || 0,
+        }));
+
     return res.status(200).json({
       ok: true,
       updated: new Date().toISOString(),
       days,
+      // The window, spelled out, so the front end formats dates instead of
+      // recomputing which dates it is looking at.
+      range: {
+        from: new Date(startAt).toISOString(),
+        to: new Date(endAt).toISOString(),
+        days,
+        prevFrom: new Date(prevStart).toISOString(),
+        prevTo: new Date(prevEnd).toISOString(),
+      },
+      daily,
       headline,
       sources: (rows(referrers) || [])
         .map((r) => ({ name: r.x || "direct", count: Number(r.y) || 0 }))
