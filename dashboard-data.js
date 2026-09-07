@@ -50,6 +50,33 @@
   var pct = function (n) { return Math.max(0, Math.min(100, n)); };
   var rnd = Math.round;
   var num = function (n) { return (n == null ? 0 : n).toLocaleString('en-GB'); };
+
+  /* The dashboard was showing readers' paths -- "/", "/app-merge.html" --
+     set in mono, which is the site's code voice. But these are pages, not
+     code, and every one of them already has a name that Lokesh chose and
+     the reader saw. Reading "/rise-portal.html did well" means translating
+     back to the thing it was; reading "Rise Portal did well" does not.
+
+     The names are the portfolio's own, shortened to fit a table cell: the
+     work-grid heading for the case studies, the nav label otherwise. The
+     path stays on the row as a title attribute, so the mapping can always
+     be checked against what was actually recorded.
+
+     An unmapped path falls through to itself. A new page appearing here as
+     "/notes.html" is a page that wants a name, which is a better failure
+     than one silently labelled "Unknown". */
+  var PAGE_NAME = {
+    '/': 'Home',
+    '/app-merge.html': 'Two apps into one',
+    '/rise-portal.html': 'Rise Portal',
+    '/about.html': 'About',
+    '/resume.html': 'Resume',
+    '/404.html': 'Page not found'
+  };
+  function pname(path) {
+    if (path == null) return '';
+    return PAGE_NAME[path] || PAGE_NAME[String(path).replace(/\/index\.html?$/i, '/')] || String(path);
+  }
   function secs(s) { return s == null ? '—' : s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's'; }
   /* This appended 'T00:00:00' unconditionally, which assumes a date-only
      string. The demo builds one (toISOString().slice(0,10)); the real
@@ -144,7 +171,7 @@
       return '<button class="chip" data-clear="' + kind + '">' + esc(label) + '<span class="x">×</span></button>';
     };
     if (f.source) out.push(chip('source', f.source));
-    if (f.page) out.push(chip('page', f.page));
+    if (f.page) out.push(chip('page', pname(f.page)));
     if (f.day) out.push(chip('day', day(f.day)));
     if (f.country) out.push(chip('country', cname(f.country)));
     html('filters', any
@@ -226,7 +253,7 @@
 
     return {
       svg: '<svg viewBox="0 0 ' + CH.W + ' ' + CH.H + '" role="img" aria-label="Retention through ' +
-        esc(p.page) + '">' + grid +
+        esc(pname(p.page)) + '">' + grid +
         '<path d="' + area + '" style="fill:var(--ink);fill-opacity:.07"/>' +
         '<polyline points="' + pts + '" style="fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round"/>' +
         '<line x1="' + x(worst - 1) + '" y1="' + y(s[worst - 1].reach) + '" x2="' + x(worst) +
@@ -250,7 +277,7 @@
       var thin = p.visitors < MIN_N;
       var on = state.filters.page === p.page;
       return '<button class="cell" data-filter-page="' + esc(p.page) + '" aria-pressed="' + on + '">' +
-        '<span class="top"><span class="nm">' + esc(p.page) + '</span>' +
+        '<span class="top"><span class="nm" title="' + esc(p.page) + '">' + esc(pname(p.page)) + '</span>' +
           '<span class="cnt">' + p.visitors + (thin ? ' · thin' : '') + '</span></span>' +
         '<span class="chartwrap">' + c.svg + '</span>' +
         '<span class="xlab"><span>' + esc(p.sections[0].name) + '</span>' +
@@ -394,7 +421,7 @@
       ? ', the hero was passed ' + hero + (hero === 1 ? ' time' : ' times')
       : ', nobody scrolled past the hero';
     if (deepest && deepest.n) {
-      out += ', ' + deepest.page + ' was read to the end ' +
+      out += ', ' + pname(deepest.page) + ' was read to the end ' +
         deepest.n + (deepest.n === 1 ? ' time' : ' times');
     }
     out += act ? ', and ' + act + (act === 1 ? ' got in touch.' : ' got in touch.') : ', and nobody got in touch.';
@@ -633,7 +660,7 @@
 
     html('pages.rows', d.pages.map(function (r) {
       return '<tr data-filter-page="' + esc(r.path) + '" aria-pressed="' + (state.filters.page === r.path) + '">' +
-        '<td class="trunc mono">' + esc(r.path) + '</td>' +
+        '<td class="trunc" title="' + esc(r.path) + '">' + esc(pname(r.path)) + '</td>' +
         '<td class="r">' + r.visitors + '</td>' +
         '<td class="r">' + (r.median == null ? '—' : secs(r.median)) + '</td>' +
         '<td class="r">' + (r.read == null ? '—' : r.read + '%') + '</td></tr>';
