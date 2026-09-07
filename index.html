@@ -1890,14 +1890,18 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   background:transparent;
   font-family:inherit;color:var(--ink);
   transition:border-color .3s var(--ease),background-color .2s var(--ease),
-    box-shadow .3s var(--ease),
     opacity .18s linear,visibility 0s linear .18s}
 .padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
   border-radius:50%;background:var(--accent);color:#FFFFFF}
 .padtriggertext{font-size:15px;font-weight:500;letter-spacing:-.012em}
 .padtriggerhint{font-size:13px;color:var(--faint);letter-spacing:-.005em}
+/* :hover still matches a disabled button, so the open header picked up
+   the accent edge and wash the moment the pointer crossed it -- a
+   control lighting up for something it can no longer do. It is only a
+   control while the board is shut. */
 @media (hover:hover){
-  .padtrigger:hover{border-color:color-mix(in srgb,var(--accent) 60%,transparent);
+  .padwrap:not(.is-open) .padtrigger:hover{
+    border-color:color-mix(in srgb,var(--accent) 60%,transparent);
     background-color:color-mix(in srgb,var(--accent) 5%,transparent)}
 }
 
@@ -1969,9 +1973,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    the same radius the whole time and only its COLOUR moves, which does
    animate; the separator is an inset shadow rather than a border edge
    for the same reason. */
-.padwrap.is-open .padtrigger{cursor:default;
-  border-color:transparent;
-  box-shadow:inset 0 -1px 0 color-mix(in srgb,var(--muted) 26%,transparent)}
+.padwrap.is-open .padtrigger{cursor:default;border-color:transparent}
 .padwrap.is-open .padtriggerplus{opacity:0;width:0;margin-right:-12px}
 .padtrigger:disabled{opacity:1;color:var(--ink)}
 .padtriggerplus{transition:opacity .2s var(--ease),width .3s var(--ease),
@@ -2041,7 +2043,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      they are silently dropped and open/close snaps. */
   transition:clip-path .7s cubic-bezier(.16,.84,.24,1),
     border-color .3s var(--ease),background-color .2s var(--ease),
-    box-shadow .3s var(--ease),
     opacity .18s linear,visibility 0s linear .18s}
 #notes .padwrap[data-reveal].shown .padtrigger{
   clip-path:inset(0 0 0 0 round var(--r-card));transition-delay:.18s}
