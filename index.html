@@ -310,6 +310,8 @@ html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='h
 #palette .list{max-height:46vh;overflow:auto;padding:var(--s-2)}
 #palette .list a{display:block;padding:var(--s-3) var(--s-4);border-radius:4px;color:var(--ink);font-size:var(--t-body)}
 #palette .list a.active,#palette .list a:hover{background:var(--tint)}
+#palette .list a{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3)}
+#palette .ptag{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--faint)}
 #palette .hint{display:flex;justify-content:space-between;gap:var(--s-3);padding:var(--s-3) var(--s-5);font-size:var(--t-mono);color:var(--faint);box-shadow:inset 0 1px 0 var(--tint)}
 /* card hover tilt */
 .cardframe img[data-mock]{transition:transform .9s cubic-bezier(.2,.85,.25,1)}
@@ -2769,14 +2771,19 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     { label: "About", href: "./about.html" },
     { label: "App Merge case study", href: "./app-merge.html" },
     { label: "Rise Portal case study", href: "./rise-portal.html" },
-    { label: "Resume", href: "./resume.html" }
+    { label: "Resume", href: "./resume.html" },
+    { label: "Readership", href: "./dashboard.html", tag: "PRIVATE" }
   ];
   var paletteActive = 0;
   function renderPalette(q){
     var items = paletteItems.filter(function(it){ return it.label.toLowerCase().indexOf((q||"").toLowerCase()) > -1; });
     paletteActive = 0;
     paletteList.innerHTML = items.map(function(it, i){
-      return '<a href="' + it.href + '" class="' + (i===0?"active":"") + '" data-i="' + i + '">' + it.label + '</a>';
+      // The tag is the whole reason a private destination can sit in a public
+      // list: it says what you are about to hit before you hit it.
+      var tag = it.tag ? '<span class="ptag">' + it.tag + '</span>' : '';
+      return '<a href="' + it.href + '" class="' + (i===0?"active":"") + '" data-i="' + i + '">' +
+             it.label + tag + '</a>';
     }).join("");
   }
   function openPalette(){

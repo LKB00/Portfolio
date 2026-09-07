@@ -587,7 +587,12 @@
   });
 
   /* ================= sample data ================= */
-  var OFFLINE = !/lokeshbhatia\.com$/.test(location.hostname), DEMO_ON = false;
+  // Demo mode fills the page with synthetic numbers off-domain so the layout
+  // can be worked on without a password. ?gate opts out of it, because the
+  // gate is a designed surface and there was otherwise no way to look at it
+  // anywhere except production.
+  var SHOW_GATE = /[?&]gate\b/.test(location.search);
+  var OFFLINE = !SHOW_GATE && !/lokeshbhatia\.com$/.test(location.hostname), DEMO_ON = false;
 
   // deterministic per-segment jitter, so filtering visibly changes the page
   function seed(str) { var h = 2166136261; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = (h * 16777619) >>> 0; } return h; }
