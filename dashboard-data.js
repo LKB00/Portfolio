@@ -77,7 +77,6 @@
     if (path == null) return '';
     return PAGE_NAME[path] || PAGE_NAME[String(path).replace(/\/index\.html?$/i, '/')] || String(path);
   }
-  function secs(s) { return s == null ? '—' : s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's'; }
   /* This appended 'T00:00:00' unconditionally, which assumes a date-only
      string. The demo builds one (toISOString().slice(0,10)); the real
      endpoint returns a full timestamp, and '...582ZT00:00:00' is not a
@@ -541,8 +540,26 @@
       days: (a.daily || []).map(function (x) {
         return { date: x.date, visitors: x.visitors, pageviews: x.pageviews };
       }),
+      /* `read` was hardcoded null here while the number sat one field away.
+         The last section's ofPeak IS the read-through rate: of everyone who
+         reached this page's best-read section, the share who got to its
+         last one. Both sides are section-reached events, so it divides like
+         with like and cannot exceed 100 -- the same reason the drop-off
+         curves use ofPeak rather than section one.
+
+         Null, not zero, for a page with no section map. /about and /resume
+         are not instrumented for sections, and a hard 0% would read as
+         "nobody finished it" rather than "this was never measured". */
       pages: (a.pages || []).map(function (p) {
-        return { path: p.path, visitors: p.views, median: null, read: null };
+        var r = null;
+        for (var i = 0; i < retention.length; i++) {
+          if (retention[i].page === p.path) {
+            var secs = retention[i].sections;
+            r = Math.round(secs[secs.length - 1].reach);
+            break;
+          }
+        }
+        return { path: p.path, visitors: p.views, read: r };
       }),
       cta: (a.ctas && a.ctas.byName ? a.ctas.byName : []).map(function (c) {
         return { label: c.name, clicks: c.count };
@@ -662,7 +679,6 @@
       return '<tr data-filter-page="' + esc(r.path) + '" aria-pressed="' + (state.filters.page === r.path) + '">' +
         '<td class="trunc" title="' + esc(r.path) + '">' + esc(pname(r.path)) + '</td>' +
         '<td class="r">' + r.visitors + '</td>' +
-        '<td class="r">' + (r.median == null ? '—' : secs(r.median)) + '</td>' +
         '<td class="r">' + (r.read == null ? '—' : r.read + '%') + '</td></tr>';
     }).join(''));
 
@@ -860,11 +876,11 @@
         };
       }()),
       pages: [
-        { path: '/', visitors: n(63), median: 42, read: rate(18) },
-        { path: '/app-merge', visitors: n(31), median: 214, read: rate(41) },
-        { path: '/rise-portal', visitors: n(20), median: 176, read: rate(33) },
-        { path: '/about', visitors: n(17), median: 88, read: rate(47) },
-        { path: '/resume', visitors: n(12), median: 61, read: rate(52) }
+        { path: '/', visitors: n(63), read: rate(18) },
+        { path: '/app-merge.html', visitors: n(31), read: rate(41) },
+        { path: '/rise-portal.html', visitors: n(20), read: rate(33) },
+        { path: '/about.html', visitors: n(17), read: null },
+        { path: '/resume.html', visitors: n(12), read: null }
       ],
       cta: [
         { label: 'card · app-merge', clicks: n(26) }, { label: 'card · rise-portal', clicks: n(17) },
