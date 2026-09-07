@@ -2038,31 +2038,18 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #work .workrow:nth-child(3){--rd:.16s}
 #work .workrow:nth-child(4){--rd:.24s}
 
-/* ── the note board: the row unrolls out of the plus ── */
+/* ── the note board arrives like every other section ──
+   The row used to unroll: a clip-path swept the dashed outline open from
+   a 54px stub, and the words slid in behind it on their own delays. Three
+   staged animations to put one row on screen. It fades and lifts with the
+   rest of the page now.
+
+   Deleting the rule takes a hazard with it. It restated `transition` as a
+   shorthand, so every property the open and close depend on had to be
+   repeated inside it or they were silently dropped -- the base
+   .padtrigger transition is the only one now. */
 #notes .padwrap[data-reveal]{transform:translateY(12px);
   transition:opacity .45s var(--ease),transform .45s var(--ease)}
-#notes .padwrap[data-reveal] .padtrigger{
-  clip-path:inset(0 calc(100% - 54px) 0 0 round var(--r-card));
-  /* not var(--ease): that curve is spent in its first fifth, which
-     makes an unroll snap open and then crawl. This one keeps moving. */
-  /* this rule outranks the base .padtrigger one, and `transition` is a
-     shorthand — so the collapse properties have to be listed HERE too or
-     they are silently dropped and open/close snaps. */
-  transition:clip-path .7s cubic-bezier(.16,.84,.24,1),
-    border-color .3s var(--ease),background-color .2s var(--ease),
-    opacity .18s linear,visibility 0s linear .18s}
-#notes .padwrap[data-reveal].shown .padtrigger{
-  clip-path:inset(0 0 0 0 round var(--r-card));transition-delay:.18s}
-/* the words arrive after the room has been made for them */
-#notes .padwrap[data-reveal] .padtriggertext,
-#notes .padwrap[data-reveal] .padtriggerhint{opacity:0;transform:translateX(-8px);
-  transition:opacity .45s var(--ease),transform .45s var(--ease)}
-#notes .padwrap[data-reveal].shown .padtriggertext{opacity:1;transform:none;
-  transition-delay:.44s}
-#notes .padwrap[data-reveal].shown .padtriggerhint{opacity:1;transform:none;
-  transition-delay:.54s}
-/* once it is open the clip has no job and must not cut the board */
-.padwrap.is-open .padtrigger{clip-path:none}
 
 /* ── experience: the rail draws, the nodes land on it ── */
 #experience .exptimeline[data-reveal]{opacity:1;transform:none;transition:none}
@@ -2096,9 +2083,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   #experience .exprow:before,
   #experience .exptimeline:before,
   #notes .padwrap[data-reveal],
-  #notes .padwrap[data-reveal] .padtrigger,
-  #notes .padwrap[data-reveal] .padtriggertext,
-  #notes .padwrap[data-reveal] .padtriggerhint,
   #contact footer[data-reveal]{
     transition:none!important;transition-delay:0s!important;
     opacity:1!important;transform:none!important;clip-path:none!important}
