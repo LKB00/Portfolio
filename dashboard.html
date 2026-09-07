@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Readership — Lokesh Bhatia</title>
+<title>Read receipts — Lokesh Bhatia</title>
 <link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -482,7 +482,7 @@ body.demo{padding-top:34px}
 
 <header>
   <div class="appbar">
-    <span class="brand">Readership</span>
+    <span class="brand">Read receipts</span>
     <div class="filters" data-slot="filters"><span class="scope">All visitors</span></div>
     <span class="spacer"></span>
     <div class="seg" role="group" aria-label="Date range">
@@ -513,15 +513,15 @@ body.demo{padding-top:34px}
   <!-- clickable figures — they choose what the traffic chart plots -->
   <div class="figs">
     <div class="fig">
-      <span class="lab">Visitors</span>
+      <span class="lab">Readers</span>
       <span class="row"><span class="val" data-slot="f.visitors.value">—</span><span class="dlt" data-slot="f.visitors.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Past the hero</span>
+      <span class="lab">Scrolled past hello</span>
       <span class="row"><span class="val" data-slot="f.passedHero.value">—</span><span class="dlt" data-slot="f.passedHero.delta">—</span></span>
     </div>
     <div class="fig">
-      <span class="lab">Got in touch</span>
+      <span class="lab">Said hello back</span>
       <span class="row"><span class="val" data-slot="f.contacts.value">—</span><span class="dlt" data-slot="f.contacts.delta">—</span></span>
     </div>
     <div class="fig">
@@ -534,22 +534,22 @@ body.demo{padding-top:34px}
 
     <section class="card invert c12">
       <div class="head">
-        <h2 class="t-h1">Where readers stop
+        <h2 class="t-h1">Where people give up
           <span class="i" data-tip="Every section of every page, in the order a reader meets them, measured against the section that reached the most people. Same scale on all three, so the shapes compare directly: a gentle slope is normal attrition, a cliff is a section to rewrite. Click a chart to filter.">i</span></h2>
-        <span class="hint">Click a chart to filter</span>
+        <span class="hint">Pick one to zoom in</span>
       </div>
-      <div class="mult" data-slot="retention.cells"><p class="empty">Loading…</p></div>
+      <div class="mult" data-slot="retention.cells"><p class="empty">Counting…</p></div>
     </section>
 
     <section class="card c12">
       <div class="head">
-        <h2 class="t-h1">Location
+        <h2 class="t-h1">Where in the world
           <span class="i" data-tip="Shaded by how many visitors each country sends, in one hue: five steps, no verdict. Area on a map exaggerates large countries, so the exact counts live in the list beside it. Region and city come from IP lookup — VPNs and carriers misplace people — so read a single city as a lead, not a fact.">i</span></h2>
         <span class="hint" data-slot="map.hint">—</span>
       </div>
       <div class="locgrid">
         <div>
-          <div class="mapwrap" data-slot="map.svg"><p class="empty">Loading…</p></div>
+          <div class="mapwrap" data-slot="map.svg"><p class="empty">Counting…</p></div>
           <div class="legend">
             <span class="cap">Visitors</span>
             <span class="lg">fewer<span class="sw" style="background:var(--seq-0)"></span><span class="sw" style="background:var(--seq-1)"></span><span class="sw" style="background:var(--seq-2)"></span><span class="sw" style="background:var(--seq-3)"></span><span class="sw" style="background:var(--seq-4)"></span>more</span>
@@ -561,26 +561,26 @@ body.demo{padding-top:34px}
             <button type="button" role="tab" data-level="region" aria-selected="false">Regions</button>
             <button type="button" role="tab" data-level="city" aria-selected="false">Cities</button>
           </div>
-          <div class="clist" data-slot="places.rows"><p class="empty">Loading…</p></div>
+          <div class="clist" data-slot="places.rows"><p class="empty">Counting…</p></div>
         </div>
       </div>
     </section>
     <section class="card c6">
       <div class="head">
-        <h2 class="t-h1">How far each device gets
+        <h2 class="t-h1">Phones vs laptops
           <span class="i" data-tip="Counts, not rates. Umami reports event totals, and dividing those by unique visitors is what once produced a 400% completion rate. Sections reached is the honest comparison: if phones reach a fraction of what laptops do, that is a layout problem.">i</span></h2>
-        <span class="hint">Sections reached</span>
+        <span class="hint">how far each one got</span>
       </div>
-      <div data-slot="devices.rows"><p class="empty">Loading…</p></div>
+      <div data-slot="devices.rows"><p class="empty">Counting…</p></div>
     </section>
 
     <section class="card c6">
       <div class="head">
-        <h2 class="t-h1">Where they came from
+        <h2 class="t-h1">How they found me
           <span class="i" data-tip="Referrers, as the browser reports them. Anyone arriving by typing the address, from a private message, or from an app that strips the referrer counts as direct — which is most of it, and is not a gap in the tracking.">i</span></h2>
-        <span class="hint">Visitors</span>
+        <span class="hint">readers each</span>
       </div>
-      <div data-slot="sources.rows"><p class="empty">Loading…</p></div>
+      <div data-slot="sources.rows"><p class="empty">Counting…</p></div>
     </section>
 
 
@@ -592,26 +592,26 @@ body.demo{padding-top:34px}
       <div class="head">
         <div class="seg sm" role="tablist" aria-label="Detail">
           <button type="button" role="tab" id="tab-pages" aria-controls="panel-pages" aria-selected="true"
-                  data-hint="Paths normalised"
+                  data-hint="One page, counted once"
                   data-info="Paths are normalised before send, so /, /index.html, /#top and /index.html#top count as one page instead of four.">Pages</button>
           <button type="button" role="tab" id="tab-clicks" aria-controls="panel-clicks" aria-selected="false"
-                  data-hint="Events fired, all pages"
+                  data-hint="Every click, all pages"
                   data-info="Each CTA emits its own event name. Umami's summary endpoint returns totals only, so shared names would collapse into one meaningless number.">Clicks</button>
         </div>
         <span class="headctl">
-          <span class="hint" data-slot="detail.hint">Click a row to filter</span>
+          <span class="hint" data-slot="detail.hint">One page, counted once</span>
           <span class="i" id="detail-info" data-tip="">i</span>
         </span>
       </div>
       <div id="panel-pages" role="tabpanel" aria-labelledby="tab-pages">
         <table>
           <thead><tr><th>Page</th><th class="r">Visitors</th><th class="r">Read to the end</th></tr></thead>
-          <tbody data-slot="pages.rows"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody>
+          <tbody data-slot="pages.rows"><tr><td colspan="4" class="empty">Counting…</td></tr></tbody>
         </table>
       </div>
 
       <div id="panel-clicks" role="tabpanel" aria-labelledby="tab-clicks" hidden>
-        <table class="fixed"><tbody data-slot="cta.rows"><tr><td class="empty">Loading…</td></tr></tbody></table>
+        <table class="fixed"><tbody data-slot="cta.rows"><tr><td class="empty">Counting…</td></tr></tbody></table>
       </div>
     </section>
 

@@ -192,7 +192,7 @@
     var thin = o.n != null && o.n < MIN_N;
     set('f.' + key + '.value', thin && isRate ? '—' : (isRate ? o.v : num(o.v)));
     var d = slot('f.' + key + '.delta'); if (!d) return;
-    if (thin) { d.className = 'dlt thin'; d.textContent = o.n + ' sessions'; }
+    if (thin) { d.className = 'dlt thin'; d.textContent = o.n + ' so far'; }
     else if (!o.prev) { d.className = 'dlt'; d.textContent = '—'; }
     else {
       var ch = rnd(((o.v - o.prev) / o.prev) * 100);
@@ -264,7 +264,7 @@
 
   function renderRetention(list) {
     var el = slot('retention.cells');
-    if (!list.length) { el.innerHTML = '<p class="empty">No case-study sessions in this segment</p>'; return; }
+    if (!list.length) { el.innerHTML = '<p class="empty">No case-study reading in here yet</p>'; return; }
     // the end-of-page dot is judged against the other case studies, not itself
     var tv = list.reduce(function (a, p) { return a + p.visitors; }, 0);
     var avgEnd = tv ? list.reduce(function (a, p) {
@@ -277,7 +277,7 @@
       var on = state.filters.page === p.page;
       return '<button class="cell" data-filter-page="' + esc(p.page) + '" aria-pressed="' + on + '">' +
         '<span class="top"><span class="nm" title="' + esc(p.page) + '">' + esc(pname(p.page)) + '</span>' +
-          '<span class="cnt">' + p.visitors + (thin ? ' · thin' : '') + '</span></span>' +
+          '<span class="cnt">' + p.visitors + (thin ? ' · a handful' : '') + '</span></span>' +
         '<span class="chartwrap">' + c.svg + '</span>' +
         '<span class="xlab"><span>' + esc(p.sections[0].name) + '</span>' +
           '<span>' + esc(p.sections[p.sections.length - 1].name) + '</span></span>' +
@@ -285,7 +285,7 @@
           ? '<span class="drop">−' + c.fall + ' at ' + esc(c.worst) + '</span>'
           // a single reader who saw every section leaves every step equal,
           // and "−0 at Who I was working with" named a drop that is not there
-          : '<span class="drop">no single drop-off</span>') +
+          : '<span class="drop">nobody dropped off</span>') +
       '</button>';
     }).join('');
   }
@@ -314,8 +314,8 @@
           '<small>/' + num(n) + '</small></span>' +
       '</div>';
     };
-    html(target, row('Read to end', dr, A, deepC, deepN, 'deep') +
-                 row('Did not', sr, B, shalC, shalN, 'shallow'));
+    html(target, row('Finished it', dr, A, deepC, deepN, 'deep') +
+                 row('Gave up early', sr, B, shalC, shalN, 'shallow'));
     return { dr: dr, sr: sr, thin: thin, A: A, B: B, separable: !overlap(A, B) };
   }
 
@@ -361,7 +361,7 @@
     var tgt = places.reduce(function (a, c) {
       return a + (c.code === 'US' || c.code === 'GB' ? c.visitors : 0); }, 0);
     set('map.hint', places.length + (places.length === 1 ? ' country · ' : ' countries · ') +
-      (tot ? Math.round((tgt / tot) * 100) + '% from the US and UK' : 'no visitors yet'));
+      (tot ? Math.round((tgt / tot) * 100) + '% from the US and UK' : 'nobody yet'));
   }
 
   function renderPlaces(places) {
@@ -403,7 +403,7 @@
    */
   function renderVerdict(d) {
     var v = d.totals.visitors.v, hero = d.totals.passedHero.v, act = d.totals.contacts.v;
-    if (!v) { set('verdict', 'Nothing recorded in this window yet.'); return; }
+    if (!v) { set('verdict', "Nobody's been by yet. Early days."); return; }
 
     var deepest = null;
     (d.retention || []).forEach(function (p) {
@@ -415,16 +415,21 @@
        six pages passes the hero six times. Against 6 visitors it printed
        "17 got past the hero", which reads as seventeen people and cannot
        be true. Events are counted in times; only `visitors` is people. */
-    var out = v + (v === 1 ? ' visitor' : ' visitors');
+    /* Same four facts, said by a person. Every clause still drops when its
+       number is zero, and events are still counted in times rather than in
+       people -- the voice changed, nothing it claims did. */
+    var out = (v === 1 ? 'One person' : v + ' people') + ' stopped by';
     out += hero
-      ? ', the hero was passed ' + hero + (hero === 1 ? ' time' : ' times')
-      : ', nobody scrolled past the hero';
+      ? '. The hero got scrolled past ' + hero + (hero === 1 ? ' time' : ' times')
+      : '. Nobody made it past the hero';
     if (deepest && deepest.n) {
-      out += ', ' + pname(deepest.page) + ' was read to the end ' +
+      out += ', ' + pname(deepest.page) + ' was read all the way down ' +
         deepest.n + (deepest.n === 1 ? ' time' : ' times');
     }
-    out += act ? ', and ' + act + (act === 1 ? ' got in touch.' : ' got in touch.') : ', and nobody got in touch.';
-    set('verdict', out.charAt(0).toUpperCase() + out.slice(1));
+    out += act
+      ? ', and ' + (act === 1 ? 'one of you said hello back.' : act + ' of you said hello back.')
+      : ", and nobody's said hello back yet.";
+    set('verdict', out);
   }
 
   /* ================= where they came from ================= */
@@ -433,7 +438,7 @@
     if (!el) return;
     rows = (rows || []).filter(function (r) { return r.visitors > 0; })
       .sort(function (a, b) { return b.visitors - a.visitors; }).slice(0, 7);
-    if (!rows.length) { el.innerHTML = '<p class="empty">No referrers in this segment</p>'; return; }
+    if (!rows.length) { el.innerHTML = '<p class="empty">Everyone came here directly</p>'; return; }
     var max = rows[0].visitors || 1;
     el.innerHTML = rows.map(function (r) {
       var on = state.filters.source === r.label;
@@ -449,7 +454,7 @@
     if (!el) return;
     rows = (rows || []).filter(function (r) { return r.visitors > 0; })
       .sort(function (a, b) { return (b.sectionsReached || 0) - (a.sectionsReached || 0); });
-    if (!rows.length) { el.innerHTML = '<p class="empty">No devices in this segment</p>'; return; }
+    if (!rows.length) { el.innerHTML = '<p class="empty">No devices to show yet</p>'; return; }
 
     // One bar, one scale. Plotting visitors beside sections reached put an
     // 8x magnitude gap on a shared axis and squashed the smaller series into
@@ -659,11 +664,11 @@
     payoff('pay.contact', p.deep.n, p.deep.contact, p.shallow.n, p.shallow.contact, axisMax);
     html('pay.axis', payAxis(axisMax));
     set('pay.line', r1.thin
-      ? 'Counts, not rates — under ' + MIN_N + ' sessions.'
+      ? 'Counts, not percentages — fewer than ' + MIN_N + ' readers so far.'
       : r1.separable
-        ? 'Finishers are roughly ' + Math.round(r1.sr ? r1.dr / r1.sr : 0) +
-          '× likelier to open the CV. The 95% intervals do not overlap, so the gap is real.'
-        : 'The two intervals overlap — at this sample size the difference is not yet real.');
+        ? 'People who finish a case study are about ' + Math.round(r1.sr ? r1.dr / r1.sr : 0) +
+          '× likelier to open the CV — and there are enough of them for that to mean something.'
+        : "The two ranges overlap, so at this handful of readers the gap isn't real yet.");
 
     renderDevices(d.devices);
     renderSources(d.sources);
@@ -727,7 +732,7 @@
   function refresh() {
     if (DEMO_ON) {
       try { render(demo(state.range, state.filters)); }
-      catch (ex) { console.error(ex); fail('Could not draw this view — the figures above are from the previous one.'); }
+      catch (ex) { console.error(ex); fail("Couldn't draw that one — the figures above are from the last view."); }
       return Promise.resolve();
     }
     return load().catch(function (ex) { console.error(ex); fail(ex.message); });
@@ -753,7 +758,7 @@
   function boot() {
     load().catch(function (ex) {
       if (OFFLINE) return startDemo();
-      fail('Could not load the numbers: ' + ex.message);
+      fail("Couldn't reach the numbers — " + ex.message);
     });
   }
 
