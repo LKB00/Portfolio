@@ -336,7 +336,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* Everything except the credit and the readership line. This rule exists
    because older footer content kept reappearing; it now has to name what
    it keeps, or the next thing added here vanishes silently too. */
-#contact footer > *:not(.footcredit):not(.footread){display:none!important}
+#contact footer > *:not(.footcredit):not(.readpill){display:none!important}
 
 @media (max-width:504px){#contact footer{gap:0}}
 
@@ -544,11 +544,54 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* every page ends with a way to reach him: on desktop these pages had
    exactly three links on them — Home, About, Resume — and no contact at
    all, so anyone who finished reading had nowhere to go */
-#contact .footread{margin:0 0 var(--s-3);font-size:var(--t-mono-lg);color:var(--faint);text-align:center}
-#contact .footread a{display:inline-flex;align-items:center;gap:5px;color:var(--accent)}
-#contact .footread svg{transition:transform .25s var(--ease)}
-@media (hover:hover){#contact .footread a:hover svg{transform:translate(2px,-2px)}}
-@media (max-width:400px){#contact .footread{font-size:11.5px}}
+/* ── the readership pill ─────────────────────────────────────────────
+   A line of prose asks to be read; a stack of faces with a +1 asks to be
+   clicked. Same trick as a like count: the reader is already IN the thing
+   being counted, and the badge says so before any words do.
+
+   It renders complete and animates on arrival with no data at all — the
+   count is a lazy upgrade, so a slow or failed request costs nothing and
+   never moves the layout. */
+#contact .readpill{display:inline-flex;align-items:center;gap:var(--s-4);
+  margin:0 auto var(--s-5);padding:8px 16px 8px 10px;border-radius:var(--r-pill);
+  background:var(--card);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(16,16,24,.04);
+  color:var(--ink);text-align:left;transition:box-shadow .25s var(--ease),transform .25s var(--ease)}
+#contact .rp-faces{display:inline-flex;flex:none}
+#contact .rp-faces i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--mono);font-size:10px;font-weight:500;font-style:normal;
+  box-shadow:0 0 0 2px var(--card);background:var(--surface);color:var(--faint)}
+#contact .rp-faces i + i{margin-left:-9px}
+/* the three behind are quiet on purpose: they are other people, and the one
+   that matters is the reader's own */
+#contact .rp-faces i:nth-child(1){background:color-mix(in srgb,var(--ink) 13%,transparent)}
+#contact .rp-faces i:nth-child(2){background:color-mix(in srgb,var(--ink) 9%,transparent)}
+#contact .rp-faces i:nth-child(3){background:color-mix(in srgb,var(--ink) 6%,transparent)}
+/* Visible by default. If the observer never fires — a background tab, a
+   browser without it, a reader who lands at the footer already — the pill is
+   still finished, and the animation is the thing that is missing rather than
+   the badge. */
+/* i.rp-me, not .rp-me: `#contact .rp-faces i` carries an extra element
+   selector and outranks a bare class, which left the +1 at --faint on
+   accent blue — 1.01:1, invisible. Same trap that hid the footer credit. */
+#contact .rp-faces i.rp-me{background:var(--accent);color:var(--onAccent)}
+#contact .readpill.is-in .rp-me{animation:rpPop .62s cubic-bezier(.22,1.4,.36,1) .25s forwards}
+@keyframes rpPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+#contact .rp-txt{display:flex;flex-direction:column;gap:1px;min-width:0}
+#contact .rp-txt b{font-size:var(--t-mono-lg);font-weight:500;letter-spacing:var(--tr-body);white-space:nowrap}
+#contact .rp-sub{font-size:var(--t-mono);color:var(--faint);white-space:nowrap}
+#contact .rp-go{flex:none;color:var(--faint);transition:transform .25s var(--ease)}
+@media (hover:hover){
+  #contact .readpill:hover{box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent),0 4px 14px -6px rgba(16,16,24,.18);transform:translateY(-1px)}
+  #contact .readpill:hover .rp-go{transform:translate(2px,-2px)}
+}
+@media (prefers-reduced-motion:reduce){
+  #contact .rp-me{animation:none}
+  #contact .readpill:hover{transform:none}
+}
+@media (max-width:400px){
+  #contact .readpill{gap:var(--s-3);padding:7px 13px 7px 9px}
+  #contact .rp-txt b{font-size:11.5px} #contact .rp-sub{font-size:10.5px}
+}
 /* ── the footer credit ───────────────────────────────────────────────
    Two round tokens instead of the two nouns: a face for "me", a spark
    for the AI. They are the same size and the same shape, so the line
@@ -621,6 +664,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   white-space:nowrap;border:0}
 </style>
 <script defer src="./analytics.js?v=3"></script>
+<script defer src="./readpill.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
 <body>
@@ -777,7 +821,11 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
   <section id="contact">
     <footer>
-      <p class="footread">This site measures how far people read it. <a href="./dashboard.html">The numbers are public<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a></p>
+    <a class="readpill" href="./dashboard.html" data-readpill>
+      <span class="rp-faces" aria-hidden="true"><i></i><i></i><i></i><i class="rp-me">+1</i></span>
+      <span class="rp-txt"><b data-rp-line>You&#8217;ve just been counted</b><span class="rp-sub" data-rp-sub>See what the numbers say</span></span>
+      <svg class="rp-go" width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </a>
     <p class="footcredit">Designed and built by <span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.png" width="96" height="96" alt="" loading="lazy" decoding="async"></span><span class="fsr">me</span>, with <span class="fmark fai" aria-hidden="true">&#10022;</span><span class="fsr">an AI</span> that argued back.</p>
     </footer>
   </section>
