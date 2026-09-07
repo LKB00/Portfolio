@@ -97,6 +97,24 @@ const CTA_EVENTS = [
 const TIME_BUCKETS = ["0-10s", "10-30s", "30-60s", "1-3m", "3m+"];
 
 export default async function handler(req, res) {
+  // Open to any origin. The endpoint is public and every field it returns is
+  // an aggregate, so there is nothing here an origin check would protect —
+  // and without this the dashboard can only ever show real numbers when it is
+  // served from the live domain, which makes the page impossible to develop
+  // against its own data.
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Vary", "Origin");
+
+  // A POST carrying application/json is not a simple request, so the browser
+  // asks first. Answering after the method guard would have returned 405 to
+  // the preflight and failed every cross-origin call.
+  if (req.method === "OPTIONS") {
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Max-Age", "86400");
+    return res.status(204).end();
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Use POST." });
   }

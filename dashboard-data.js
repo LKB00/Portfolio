@@ -21,8 +21,19 @@
   'use strict';
 
   var MIN_N = 20;
-  var API = /(^|\.)lokeshbhatia\.com$/.test(location.hostname)
-    ? 'https://www.lokeshbhatia.com/api/stats' : '/api/stats';
+  /* Where to ask.
+   *
+   * On the live domain the absolute www URL is mandatory, not tidiness: the
+   * apex 302-redirects to www and a POST body does not survive the redirect.
+   *
+   * Locally and on file:// there is no /api to hit, so it asks production
+   * directly — which works because the endpoint sends
+   * Access-Control-Allow-Origin. Anywhere else (a Vercel preview) same-origin
+   * is right, since that deployment ships its own copy of the function. */
+  var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname) ||
+              location.protocol === 'file:';
+  var LIVE_HOST = /(^|\.)lokeshbhatia\.com$/.test(location.hostname);
+  var API = (LIVE_HOST || LOCAL) ? 'https://www.lokeshbhatia.com/api/stats' : '/api/stats';
 
   var state = { range: 28, metric: 'visitors', level: 'country', filters: { source: null, page: null, day: null, country: null } };
   var last = null, lastPlaces = {};
