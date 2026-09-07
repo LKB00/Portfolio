@@ -896,7 +896,9 @@
     // what stops an invented number being read as a real one.
     document.body.classList.add('demo');
     render(demo(state.range, state.filters));
-    set('meta.footer', 'SAMPLE DATA — api/stats.js not reachable from this host. Filtering is live; the numbers are synthetic.');
+    // The footer that carried the second warning is gone; #demobar is the
+    // one that matters -- fixed to the top of the window, always in view,
+    // where the footer only warned a reader who had scrolled to the end.
   }
 
   // Countries / Regions / Cities are the same rows at three zoom levels. Only

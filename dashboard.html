@@ -177,9 +177,6 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
 .hint{font-size:var(--fs-small);line-height:var(--lh-small);letter-spacing:var(--tr-body);
   color:var(--muted);text-align:right;flex:none}
 .invert .hint{color:var(--onDeep);opacity:.6}
-.line{font-size:var(--fs-small);line-height:var(--lh-small);letter-spacing:var(--tr-body);
-  color:var(--muted);margin-top:var(--s-4)}
-.invert .line{color:var(--onDeep);opacity:.7}
 .line b{font-weight:500;color:var(--ink)} .invert .line b{color:var(--onDeep);opacity:1}
 .i{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:var(--r-pill);
   box-shadow:inset 0 0 0 1px var(--line);font-family:var(--mono);font-size:9px;font-weight:400;
@@ -431,18 +428,6 @@ table.fixed .trunc{width:auto;max-width:none}
 #tip .m{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-mono);opacity:.7;display:block}
 
 /* ── method ──────────────────────────────────────────────── */
-details{background:var(--panel);border-radius:var(--r-card);box-shadow:var(--shadow-card);margin-top:var(--s-4)}
-summary{list-style:none;cursor:pointer;padding:var(--s-5) var(--s-6);font-size:var(--fs-small);
-  letter-spacing:var(--tr-body);color:var(--muted);display:flex;justify-content:space-between;align-items:center;
-  transition:color .2s var(--ease)}
-summary:hover{color:var(--ink)}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-family:var(--mono);color:var(--faint)}
-details[open] summary::after{content:"–"}
-details .body{padding:0 var(--s-6) var(--s-6);font-size:var(--fs-small);line-height:1.7;
-  letter-spacing:var(--tr-body);color:var(--muted);max-width:74ch}
-details .body p{margin-bottom:var(--s-4)}
-details .body b{color:var(--ink);font-weight:500}
 mark{background:var(--markWash);color:inherit;padding:0 2px;border-radius:2px}
 
 /* Demo mode fills this page with synthetic numbers. A hostname regex is the
@@ -632,17 +617,7 @@ body.demo{padding-top:34px}
 
   </div>
 
-  <details>
-    <summary>Method, and what this cannot tell me</summary>
-    <div class="body">
-      <p><b>The first read was mostly me.</b> 381 views from 17 visitors — 22 pages each. Local files were being tracked, one page was counted four ways (<span class="mono">/</span>, <span class="mono">/index.html</span>, <span class="mono">/#top</span>, <span class="mono">/index.html#top</span>), and event properties never reached the reports. I fixed collection and reset the dataset rather than clean it.</p>
-      <p><b>Small numbers do not get percentages.</b> Any rate on fewer than <span class="mono">20</span> sessions shows as a raw count and is flagged. Two to four is not <mark>+100%</mark>, it is two more people.</p>
-      <p><b>Encoding.</b> Position on a common scale for every comparison, length where position will not do. The retention charts share one vertical axis; the source chart is a lollipop on a single axis. No donuts, no gauges, no dual axes.</p>
-      <p><b>What it cannot tell me.</b> Reading depth is a proxy for attention, not interest. An untagged direct visit is unattributable. A company link opening does not prove a person opened it — some applicant tracking systems fetch every link in a submission. At this volume a two-visit difference is not a trend.</p>
-    </div>
-  </details>
 
-  <p class="line"><span data-slot="meta.footer">Self-hosted Umami · own-device and local-file traffic excluded at collection.</span></p>
 
 </div>
 
