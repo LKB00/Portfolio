@@ -496,6 +496,61 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 .labelrow p{margin:10px 0 0;font-size:13px;line-height:1.55;color:var(--muted)}
 @media (max-width:684px){.labelrow{gap:10px}}
+
+/* ── the trio proves itself instead of describing itself ──
+   Each card used to just say what it does. Now it does it, in
+   miniature, right under the sentence that makes the claim -- a live
+   number instead of the word "live", a dot that actually travels from
+   concept to shipped instead of the word "0→1", a control that actually
+   resists being handed the decision instead of a sentence promising it
+   will. */
+.aiproof{margin-top:14px;display:flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--faint)}
+.aiproof b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* Built with it -- reads from the same cache and the same endpoint the
+   footer pill uses, so the two numbers are structurally the same number,
+   never two claims that happen to agree. */
+.aiproof-live .aiproof-dot{position:relative;width:6px;height:6px;flex:0 0 auto;
+  border-radius:50%;background:var(--accent)}
+.aiproof-live .aiproof-dot:after{content:"";position:absolute;inset:-4px;
+  border-radius:50%;border:1px solid var(--accent);opacity:0;
+  animation:aiPulse 2.4s ease-out infinite}
+@keyframes aiPulse{0%{opacity:.55;transform:scale(.6)}100%{opacity:0;transform:scale(1.9)}}
+
+/* Designed for it -- the same 0→1 the hero states in words, walked in
+   front of you once the row is actually on screen. */
+.aiproof-path{gap:9px}
+.aiproof-path .aiproof-end{flex:0 0 auto;font-size:10px}
+.aiproof-track{position:relative;flex:1 1 auto;min-width:36px;height:2px;
+  border-radius:2px;background:var(--line)}
+.aiproof-path .aiproof-fill{position:absolute;left:0;top:0;bottom:0;width:0;
+  border-radius:2px;background:var(--accent);transition:width 1.1s var(--ease) .3s}
+.aiproof-path .aiproof-dot{position:absolute;top:50%;left:0;width:7px;height:7px;
+  margin:-3.5px 0 0 -3.5px;border-radius:50%;background:var(--accent);
+  transition:left 1.1s var(--ease) .3s}
+.labelrow.shown .aiproof-path .aiproof-fill{width:100%}
+.labelrow.shown .aiproof-path .aiproof-dot{left:100%}
+
+/* Don't use it for -- the one claim a reader can actually go test. It
+   always answers the same way, which is the whole point of it. */
+.aiproof-toggle{border:0;background:none;padding:0;cursor:pointer;
+  font-family:var(--mono)}
+.aiproof-toggle .aiproof-track{flex:0 0 auto;min-width:0;width:30px;height:17px;
+  border-radius:1000px;background:var(--line);transition:background-color .2s var(--ease)}
+.aiproof-toggle .aiproof-knob{position:absolute;top:2px;left:2px;width:13px;height:13px;
+  border-radius:50%;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.16);
+  transition:transform .2s var(--ease)}
+.aiproof-toggle.is-on .aiproof-track{background:var(--neg)}
+.aiproof-toggle.is-on .aiproof-knob{transform:translateX(13px)}
+.aiproof-toggle.is-snap .aiproof-track{animation:aiShake .4s var(--ease)}
+@keyframes aiShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
+@media (hover:hover){.aiproof-toggle:hover .aiproof-track{background:color-mix(in srgb,var(--line) 60%,var(--faint))}}
+@media (prefers-reduced-motion:reduce){
+  .aiproof-path .aiproof-fill,.aiproof-path .aiproof-dot,.aiproof-toggle .aiproof-knob{transition:none}
+  .aiproof-live .aiproof-dot:after{animation:none}
+  .aiproof-toggle.is-snap .aiproof-track{animation:none}
+}
 /* ══ ABOUT ═══════════════════════════════════════════════════════════
    The page had no visible headline at all — the only h1 was .sr-only,
    so a reader landed on a badge and then four paragraphs of grey prose.
@@ -1142,9 +1197,31 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
       <p>Two of my last three roles were at AI companies. This site is the third.</p>
     </div>
     <div class="labelrow" style="--cols:3;margin-bottom:0" data-reveal>
-      <div><span class="cap">Built with it</span><p>This site, end to end. The interactive navigation demo, the before/after slider, the analytics underneath. I’m not a developer. I direct, I check, I push back when it looks generated.</p></div>
-      <div><span class="cap">Designed for it</span><p>An AI agent platform from concept to public launch. The hard part wasn’t the model. It was making its work visible enough to trust.</p></div>
-      <div class="is-no"><span class="cap">Don’t use it for</span><p>Deciding. It’s fast at the average answer. The decision that costs something, the constraint nobody wants to design around, is still mine.</p></div>
+      <div>
+        <span class="cap">Built with it</span>
+        <p>This site, end to end. The interactive navigation demo, the before/after slider, the analytics underneath. I’m not a developer. I direct, I check, I push back when it looks generated.</p>
+        <div class="aiproof aiproof-live" aria-hidden="true">
+          <span class="aiproof-dot"></span>
+          <span><b data-ai-live>—</b> reads of this site, live.</span>
+        </div>
+      </div>
+      <div>
+        <span class="cap">Designed for it</span>
+        <p>An AI agent platform from concept to public launch. The hard part wasn’t the model. It was making its work visible enough to trust.</p>
+        <div class="aiproof aiproof-path" aria-hidden="true">
+          <span class="aiproof-end">Concept</span>
+          <span class="aiproof-track"><span class="aiproof-fill"></span><span class="aiproof-dot"></span></span>
+          <span class="aiproof-end">Shipped</span>
+        </div>
+      </div>
+      <div class="is-no">
+        <span class="cap">Don’t use it for</span>
+        <p>Deciding. It’s fast at the average answer. The decision that costs something, the constraint nobody wants to design around, is still mine.</p>
+        <button type="button" class="aiproof aiproof-toggle" data-ai-toggle aria-label="Try letting it decide — see what happens">
+          <span class="aiproof-track"><span class="aiproof-knob"></span></span>
+          <span data-ai-toggle-label>Let it decide?</span>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -1367,6 +1444,68 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
 })();
 </script>
 <script>
+/* "Built with it" names the readership pill's analytics as an example
+ * and then just describes them in prose -- so the description sat right
+ * next to the thing it was describing without ever pointing at it. This
+ * reads the same cache key and the same endpoint the footer pill uses
+ * (see readpill.js), so the figure here and the figure in the footer
+ * are never two numbers that happen to match -- they're one number,
+ * shown twice.
+ */
+(function(){
+  "use strict";
+  var el = document.querySelector("[data-ai-live]");
+  if (!el) return;
+  var KEY = "lb-readers-all";
+  function num(n){ try{ return Number(n).toLocaleString("en-GB"); }catch(e){ return String(n); } }
+  function show(n){ if (n) el.textContent = num(n); }
+  try{
+    var raw = sessionStorage.getItem(KEY);
+    if (raw){ var cached = JSON.parse(raw); if (cached && typeof cached.n === "number") show(cached.n); }
+  }catch(e){}
+  var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname) || location.protocol === "file:";
+  var LIVE_HOST = /(^|\.)lokeshbhatia\.com$/.test(location.hostname);
+  var API = (LIVE_HOST || LOCAL) ? "https://www.lokeshbhatia.com/api/readers" : "/api/readers";
+  var ctl = window.AbortController ? new AbortController() : null;
+  var timer = setTimeout(function(){ if (ctl) ctl.abort(); }, 9000);
+  fetch(API, { signal: ctl ? ctl.signal : undefined })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){
+      var n = j && j.ok && j.views;
+      if (n){ try{ sessionStorage.setItem(KEY, JSON.stringify({ n: n })); }catch(e){} show(n); }
+    })
+    .catch(function(){ /* the cached figure, or the dash, is already there */ })
+    .then(function(){ clearTimeout(timer); });
+})();
+
+/* "Don't use it for: deciding." A sentence like that is easy to write
+ * and free to break. This is the same claim built as a control instead
+ * of a promise -- flip it, and it flips back on its own, every time,
+ * because that's the one behaviour that was never negotiable. */
+(function(){
+  "use strict";
+  var t = document.querySelector("[data-ai-toggle]");
+  if (!t) return;
+  var label = t.querySelector("[data-ai-toggle-label]");
+  var REST = "Let it decide?";
+  var busy = false;
+  t.addEventListener("click", function(){
+    if (busy) return;
+    busy = true;
+    t.classList.add("is-on");
+    label.textContent = "Deciding…";
+    setTimeout(function(){
+      t.classList.remove("is-on");
+      t.classList.add("is-snap");
+      label.textContent = "Nope. Still me.";
+      setTimeout(function(){
+        t.classList.remove("is-snap");
+        label.textContent = REST;
+        busy = false;
+      }, 1400);
+    }, 260);
+  });
+})();
 </script>
 </body>
 </html>
