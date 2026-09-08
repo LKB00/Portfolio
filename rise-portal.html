@@ -221,8 +221,16 @@ p,.labelrow p,.card p,.decision dd{font-family:var(--display)}
   font-family:var(--mono);font-size:clamp(8px,1.18cqw,11px);white-space:nowrap}
 .safari-pill svg{width:clamp(7px,1.1cqw,10px);height:clamp(7px,1.1cqw,10px);opacity:.6}
 
-.safari-imgbox{position:relative;aspect-ratio:16/9}
-.safari-imgbox img{width:100%;height:100%;object-fit:cover;display:block}
+/* The box forced 16/9 and cropped to fill it. None of these shots are
+   16/9 -- the hero is 1200x825, the page shots are 1200x750, the
+   eligibility crop is 604x327 -- so every one of them lost a band top and
+   bottom, which on the Clients screen took the Rise header off. The image
+   sets the height now, from its own width/height attributes, so nothing
+   is cut. Only the iframe needs a ratio declared, having no intrinsic one
+   to offer. */
+.safari-imgbox{position:relative}
+.safari-imgbox img{display:block;width:100%;height:auto}
+.safari-imgbox:has(iframe){aspect-ratio:16/9}
 .safari-imgbox iframe{display:block;width:100%;height:100%;border:0;background:transparent}
 .caption,figcaption{font-family:var(--display);font-size:var(--t-small);line-height:1.4;color:var(--faint);font-style:normal;letter-spacing:0}
 .shortver{background:var(--tint);border-radius:0;border-left:3px solid var(--accent);padding:clamp(24px,4vw,42px) clamp(21px,3.5vw,36px);max-width:none}
