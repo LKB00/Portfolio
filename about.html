@@ -549,12 +549,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .aiproof-live-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);
   font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
   color:var(--live)}
-.aiproof-live-badge .aiproof-dot{position:relative;width:6px;height:6px;flex:0 0 auto;
-  border-radius:50%;background:var(--live)}
-.aiproof-live-badge .aiproof-dot:after{content:"";position:absolute;inset:-4px;
-  border-radius:50%;border:1px solid var(--live);opacity:0;
-  animation:aiPulse 2.4s ease-out infinite}
-@keyframes aiPulse{0%{opacity:.55;transform:scale(.6)}100%{opacity:0;transform:scale(1.9)}}
+/* Was a ring expanding out from the dot -- at scale(1.9) on a 14px box
+   that's nearly a 27px circle, which had nowhere to go but over "92" on
+   one side and "Live" on the other in a badge this size. A blink stays
+   inside the 6px dot it belongs to. */
+.aiproof-live-badge .aiproof-dot{width:6px;height:6px;flex:0 0 auto;
+  border-radius:50%;background:var(--live);
+  animation:aiBlink 1.8s ease-in-out infinite}
+@keyframes aiBlink{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* Designed for it -- two mockups, not a progress bar: a sketch (dashed
    outline, tilted like a rough pass, grey content lines) and a shipped
@@ -598,7 +600,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (hover:hover){.aiproof-toggle:hover .aiproof-track{background:color-mix(in srgb,var(--line) 60%,var(--faint))}}
 @media (prefers-reduced-motion:reduce){
   .aiproof-toggle .aiproof-knob{transition:none}
-  .aiproof-live-badge .aiproof-dot:after{animation:none}
+  .aiproof-live-badge .aiproof-dot{animation:none}
   .aiproof-toggle.is-snap .aiproof-track{animation:none}
 }
 /* ══ ABOUT ═══════════════════════════════════════════════════════════
