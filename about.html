@@ -695,61 +695,92 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .mmail{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
 .mailbtn{min-height:0;font-size:16px;font-weight:500}
 /* ══ THE TWO PHOTO SECTIONS ══════════════════════════════════════════
-   They were two identical 4-up grids back to back, which flattened the
-   difference between them. They are not the same thing:
+   They used to make two different arguments -- tilted loose prints for
+   the casual set, a stepped editorial grid for the portfolio set -- and
+   ended up looking like two different people's photos. They're the same
+   claim ("these are mine") made twice, so they now share one grammar:
+   same radius, same gap, same hover, same click. What's still allowed
+   to differ is the shape of the film -- the "log off" set is four
+   vertical phone shots at their own ~9:16, the older set is four frames
+   already cropped to 4:5 -- because forcing a photo's own proportions
+   to match a neighbour is exactly the kind of unearned difference this
+   was supposed to remove, just moved one level down.
 
-   · "When I log off" is casual — snapshots. Drawn as loose prints,
-     tilted and overlapping, the way photos actually land on a table.
-   · "Before design, there was a camera" is evidence for the claim the
-     hero makes. It gets an editorial edit: one lead frame, the rest
-     stepped down beside it, so it reads as work rather than a dump.
+   Both sets also feed one lightbox (below), so a reader who opens any
+   one photo can arrow through all eight in page order -- there is one
+   gallery here, not two. Grid over masonry, on purpose: a masonry pack
+   reorders items by leftover space rather than by the page's own order,
+   which breaks keyboard and screen-reader navigation; a plain grid
+   keeps DOM order and visual order the same thing.
    ═══════════════════════════════════════════════════════════════════ */
-
-/* ── loose prints ────────────────────────────────────────────────── */
-.photogrid4{display:flex;flex-wrap:nowrap;gap:0;padding:14px 0 26px;
-  grid-template-columns:none}
-.photogrid4 .ph{flex:0 0 auto;width:25.5%;aspect-ratio:auto;
-  background:var(--card);padding:7px 7px 26px;border-radius:3px;overflow:visible;
-  box-shadow:0 1px 2px rgba(20,20,20,.10),0 10px 22px -10px rgba(20,20,20,.28);
-  transition:transform .45s var(--ease),box-shadow .45s var(--ease);
-  transform-origin:50% 90%}
-.photogrid4 .ph img{aspect-ratio:3/4;width:100%;height:auto;object-fit:cover;
-  display:block;border-radius:1px}
-.photogrid4 .ph:nth-child(1){transform:rotate(-3.2deg)}
-.photogrid4 .ph:nth-child(2){transform:rotate(2.1deg);margin-left:-3.5%;z-index:2}
-.photogrid4 .ph:nth-child(3){transform:rotate(-1.4deg);margin-left:-3.5%;z-index:3}
-.photogrid4 .ph:nth-child(4){transform:rotate(3deg);margin-left:-3.5%;z-index:4}
+.photogrid4,.photogrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(8px,1.6vw,14px);padding-bottom:clamp(20px,3.6vw,32px)}
+.photogrid4 .ph,.photogrid .ph{position:relative;display:block;width:100%;
+  margin:0;padding:0;border:0;background:var(--surface);cursor:zoom-in;
+  border-radius:var(--r-card);overflow:hidden;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.photogrid4 .ph{aspect-ratio:2268/4032}
+.photogrid .ph{aspect-ratio:4/5}
+.photogrid4 .ph img,.photogrid .ph img{width:100%;height:100%;object-fit:cover;
+  display:block;transition:transform .6s var(--ease)}
+/* the hint that a photo opens: a small expand mark, not a whole
+   scrim -- it should read as an affordance, not a warning */
+.ph .ph-zoom{position:absolute;right:8px;bottom:8px;width:26px;height:26px;
+  display:grid;place-items:center;border-radius:50%;
+  background:rgba(10,10,10,.55);color:#fff;
+  opacity:0;transform:scale(.8);
+  transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.ph .ph-zoom svg{width:12px;height:12px}
+.ph:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (hover:hover){
-  .photogrid4 .ph:hover{z-index:9;transform:rotate(0deg) translateY(-10px) scale(1.04);
-    box-shadow:0 2px 4px rgba(20,20,20,.12),0 22px 40px -14px rgba(20,20,20,.38)}
-}
-
-/* ── the photographer's edit ─────────────────────────────────────
-   Not a lead-plus-thumbnails: spanning one frame across three portrait
-   crops made it 391x937, which mangles the photograph. The edit is a
-   stagger instead — the right column dropped half a frame, so the eye
-   moves down the page rather than reading two flat rows. Done with a
-   transform so the grid rows stay aligned and nothing is re-cropped. */
-.photogrid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);
-  gap:clamp(12px,2vw,22px);align-items:start;
-  padding-bottom:clamp(28px,5vw,56px)}
-.photogrid .ph{aspect-ratio:4/5;width:100%;position:relative;overflow:hidden;
-  border-radius:var(--r-card);background:var(--surface);
-  transition:transform .6s var(--ease)}
-.photogrid .ph img{width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform .7s var(--ease)}
-.photogrid .ph:nth-child(even){transform:translateY(clamp(26px,4.5vw,52px))}
-@media (hover:hover){
-  .photogrid .ph:hover img{transform:scale(1.04)}
+  .photogrid4 .ph:hover,.photogrid .ph:hover{box-shadow:0 10px 26px -14px rgba(20,20,20,.4)}
+  .photogrid4 .ph:hover img,.photogrid .ph:hover img{transform:scale(1.045)}
+  .ph:hover .ph-zoom,.ph:focus-visible .ph-zoom{opacity:1;transform:scale(1)}
 }
 
 @media (max-width:760px){
-  .photogrid{grid-template-columns:minmax(0,1fr);padding-bottom:0}
-  .photogrid .ph:nth-child(even){transform:none}
+  .photogrid4,.photogrid{grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:clamp(8px,2.6vw,12px)}
 }
+@media (prefers-reduced-motion:reduce){
+  .photogrid4 .ph,.photogrid .ph,.photogrid4 .ph img,.photogrid .ph img,.ph .ph-zoom{transition:none}
+}
+
+/* ── the lightbox: one viewer for both sets ──────────────────────── */
+/* Fixed colours, not --dark/--card: those two flip in dark theme (--dark
+   goes near-white, --card goes near-black, so buttons stay high-contrast
+   against the *page*), but a photo scrim isn't the page -- it should
+   read as a dark room regardless of which theme the site is in, the way
+   Photos and every other viewer does it. Using the theme tokens here
+   would have handed dark-theme readers a light-grey scrim with white
+   icons on it -- invisible on invisible. */
+.lightbox{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:clamp(16px,4vw,40px);
+  background:rgba(10,10,10,.92);
+  backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .25s var(--ease),visibility 0s linear .25s}
+.lightbox.show{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
+.lb-figure{position:relative;display:flex;flex-direction:column;align-items:center;
+  gap:12px;max-width:min(92vw,920px);max-height:86vh}
+.lightbox img{max-width:100%;max-height:74vh;width:auto;height:auto;
+  border-radius:var(--r-sm);object-fit:contain;background:#0c0c0c;
+  box-shadow:var(--shadow-float)}
+.lb-figure figcaption{max-width:64ch;text-align:center;font-size:13px;
+  line-height:1.5;color:rgba(255,255,255,.72)}
+.lb-count{margin-top:2px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.lb-close,.lb-nav{position:fixed;display:grid;place-items:center;
+  width:42px;height:42px;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#fff;
+  backdrop-filter:blur(8px);transition:background-color .2s var(--ease)}
+.lb-close:hover,.lb-nav:hover{background:rgba(255,255,255,.26)}
+.lb-close{top:clamp(14px,3vw,28px);right:clamp(14px,3vw,28px)}
+.lb-prev{left:clamp(10px,2.4vw,26px);top:50%;transform:translateY(-50%)}
+.lb-next{right:clamp(10px,2.4vw,26px);top:50%;transform:translateY(-50%)}
+.lb-close svg,.lb-nav svg{width:16px;height:16px}
 @media (max-width:640px){
-  .photogrid4{flex-wrap:wrap;gap:12px;justify-content:center}
-  .photogrid4 .ph{width:45%;margin-left:0!important;transform:none!important}
+  .lb-prev,.lb-next{width:36px;height:36px}
 }
 
 /* every page ends with a way to reach him: on desktop these pages had
@@ -1132,6 +1163,23 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
 
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
 
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+    <button type="button" class="lb-close" data-lb-close aria-label="Close">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <button type="button" class="lb-nav lb-prev" data-lb-prev aria-label="Previous photo">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3.5L5 8l5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button type="button" class="lb-nav lb-next" data-lb-next aria-label="Next photo">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5L11 8l-5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <figure class="lb-figure">
+      <img id="lbImg" src="" alt="">
+      <figcaption id="lbCaption"></figcaption>
+      <div class="lb-count" id="lbCount" aria-hidden="true"></div>
+    </figure>
+  </div>
+
   <section id="top">
     <div class="abouthero">
     <div class="lanyard" data-reveal>
@@ -1241,10 +1289,10 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
       <p>Gym, sport, and travel when I can.</p>
     </div>
     <div class="photogrid4" data-reveal>
-      <div class="ph"><img width="2268" height="4032" decoding="async" data-src="./assets/off-sky.jpeg" alt="Looking up at a kite circling overhead against a clear blue sky" loading="eager"></div>
-      <div class="ph"><img width="2268" height="4032" decoding="async" data-src="./assets/off-waterfall.jpeg" alt="Photographing a waterfall from below, light breaking through the canopy" loading="eager"></div>
-      <div class="ph"><img width="2268" height="4032" decoding="async" data-src="./assets/off-backwaters.jpeg" alt="Evening by the backwaters, palms against a dusk sky" loading="eager"></div>
-      <div class="ph"><img width="1737" height="3088" decoding="async" data-src="./assets/off-holi.jpeg" alt="Holi on the office terrace with the team, everyone covered in colour" loading="eager"></div>
+      <button type="button" class="ph"><img width="2268" height="4032" decoding="async" data-src="./assets/off-sky.jpeg" alt="Looking up at a kite circling overhead against a clear blue sky" loading="eager"><span class="ph-zoom" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6.5 2.5h-4v4M9.5 13.5h4v-4M2.5 2.5l4.5 4.5M13.5 13.5l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      <button type="button" class="ph"><img width="2268" height="4032" decoding="async" data-src="./assets/off-waterfall.jpeg" alt="Photographing a waterfall from below, light breaking through the canopy" loading="eager"><span class="ph-zoom" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6.5 2.5h-4v4M9.5 13.5h4v-4M2.5 2.5l4.5 4.5M13.5 13.5l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      <button type="button" class="ph"><img width="2268" height="4032" decoding="async" data-src="./assets/off-backwaters.jpeg" alt="Evening by the backwaters, palms against a dusk sky" loading="eager"><span class="ph-zoom" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6.5 2.5h-4v4M9.5 13.5h4v-4M2.5 2.5l4.5 4.5M13.5 13.5l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      <button type="button" class="ph"><img width="1737" height="3088" decoding="async" data-src="./assets/off-holi.jpeg" alt="Holi on the office terrace with the team, everyone covered in colour" loading="eager"><span class="ph-zoom" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6.5 2.5h-4v4M9.5 13.5h4v-4M2.5 2.5l4.5 4.5M13.5 13.5l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
     </div>
   </section>
 
@@ -1255,10 +1303,10 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
       <p>I stopped after graduating. The eye didn’t.</p>
     </div>
     <div class="photogrid" data-reveal>
-      <div class="ph"><img width="1200" height="1500" decoding="async" data-src="./assets/about-ph-1.jpg" alt="A stream of water frozen mid-pour from a glass, against blurred green foliage" loading="eager"></div>
-      <div class="ph"><img width="1200" height="1500" decoding="async" data-src="./assets/about-ph-2.jpg" alt="Black-and-white triptych of a boy crouched outdoors, playing with cards" loading="eager"></div>
-      <div class="ph"><img width="1200" height="1500" decoding="async" data-src="./assets/about-ph-3.jpg" alt="A sunset landscape refracted upside down inside a glass on a pink surface" loading="eager"></div>
-      <div class="ph"><img width="1200" height="1500" decoding="async" data-src="./assets/about-ph-4.jpg" alt="Traffic on an Indian street reflected in the window of a moving bus" loading="eager"></div>
+      <button type="button" class="ph"><img width="1200" height="1500" decoding="async" data-src="./assets/about-ph-1.jpg" alt="A stream of water frozen mid-pour from a glass, against blurred green foliage" loading="eager"><span class="ph-zoom" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6.5 2.5h-4v4M9.5 13.5h4v-4M2.5 2.5l4.5 4.5M13.5 13.5l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      <button type="button" class="ph"><img width="1200" height="1500" decoding="async" data-src="./assets/about-ph-2.jpg" alt="Black-and-white triptych of a boy crouched outdoors, playing with cards" loading="eager"><span class="ph-zoom" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6.5 2.5h-4v4M9.5 13.5h4v-4M2.5 2.5l4.5 4.5M13.5 13.5l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      <button type="button" class="ph"><img width="1200" height="1500" decoding="async" data-src="./assets/about-ph-3.jpg" alt="A sunset landscape refracted upside down inside a glass on a pink surface" loading="eager"><span class="ph-zoom" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6.5 2.5h-4v4M9.5 13.5h4v-4M2.5 2.5l4.5 4.5M13.5 13.5l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      <button type="button" class="ph"><img width="1200" height="1500" decoding="async" data-src="./assets/about-ph-4.jpg" alt="Traffic on an Indian street reflected in the window of a moving bus" loading="eager"><span class="ph-zoom" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6.5 2.5h-4v4M9.5 13.5h4v-4M2.5 2.5l4.5 4.5M13.5 13.5l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
     </div>
   </section>
 
@@ -1515,6 +1563,95 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
       }, 1400);
     }, 260);
   });
+})();
+
+/* One lightbox for both photo sets, in page order -- "log off" first,
+ * then "before design" -- so arrowing past the last casual snapshot
+ * carries straight into the older work instead of stopping at a section
+ * boundary the reader never asked for. That's the point of unifying
+ * them: there is one gallery here, not two.
+ */
+(function(){
+  "use strict";
+  var cells = Array.prototype.slice.call(
+    document.querySelectorAll(".photogrid4 .ph, .photogrid .ph")
+  );
+  if (!cells.length) return;
+
+  var lb = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lbImg");
+  var lbCaption = document.getElementById("lbCaption");
+  var lbCount = document.getElementById("lbCount");
+  var closeBtn = lb.querySelector("[data-lb-close]");
+  var prevBtn = lb.querySelector("[data-lb-prev]");
+  var nextBtn = lb.querySelector("[data-lb-next]");
+
+  var photos = cells.map(function(cell){
+    var img = cell.querySelector("img");
+    return {
+      src: img.currentSrc || img.src || img.getAttribute("data-src") || "",
+      alt: img.getAttribute("alt") || ""
+    };
+  });
+
+  var idx = 0, isOpen = false, lastFocused = null;
+
+  function render(){
+    var p = photos[idx];
+    lbImg.src = p.src;
+    lbImg.alt = p.alt;
+    lbCaption.textContent = p.alt;
+    lbCount.textContent = (idx + 1) + " / " + photos.length;
+  }
+  function show(i){
+    idx = (i + photos.length) % photos.length;
+    render();
+  }
+  function open(i, trigger){
+    lastFocused = trigger || document.activeElement;
+    show(i);
+    lb.classList.add("show");
+    lb.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    isOpen = true;
+    closeBtn.focus();
+  }
+  function close(){
+    lb.classList.remove("show");
+    lb.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    isOpen = false;
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  cells.forEach(function(cell, i){
+    cell.addEventListener("click", function(){ open(i, cell); });
+  });
+  closeBtn.addEventListener("click", close);
+  prevBtn.addEventListener("click", function(){ show(idx - 1); });
+  nextBtn.addEventListener("click", function(){ show(idx + 1); });
+  lb.addEventListener("click", function(e){ if (e.target === lb) close(); });
+
+  document.addEventListener("keydown", function(e){
+    if (!isOpen) return;
+    if (e.key === "Escape"){ close(); return; }
+    if (e.key === "ArrowRight"){ show(idx + 1); return; }
+    if (e.key === "ArrowLeft"){ show(idx - 1); return; }
+    if (e.key !== "Tab") return;
+    var f = lb.querySelectorAll("button");
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+
+  var touchX = null;
+  lb.addEventListener("touchstart", function(e){ touchX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", function(e){
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
+    touchX = null;
+  }, { passive: true });
 })();
 </script>
 </body>
