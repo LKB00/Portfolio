@@ -717,8 +717,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   gap:clamp(8px,1.6vw,14px);padding-bottom:clamp(20px,3.6vw,32px)}
 .photogrid4 .ph,.photogrid .ph{position:relative;display:block;width:100%;
   margin:0;padding:0;border:0;background:var(--surface);cursor:zoom-in;
-  border-radius:var(--r-card);overflow:hidden;
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+  border-radius:var(--r-card);overflow:hidden}
 .photogrid4 .ph{aspect-ratio:2268/4032}
 .photogrid .ph{aspect-ratio:4/5}
 .photogrid4 .ph img,.photogrid .ph img{width:100%;height:100%;object-fit:cover;
@@ -733,7 +732,8 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .ph .ph-zoom svg{width:12px;height:12px}
 .ph:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (hover:hover){
-  .photogrid4 .ph:hover,.photogrid .ph:hover{box-shadow:0 10px 26px -14px rgba(20,20,20,.4)}
+  /* no lift, no drop shadow on hover -- consistent with the rest of the
+     site. Just the image itself moving, and the zoom mark appearing. */
   .photogrid4 .ph:hover img,.photogrid .ph:hover img{transform:scale(1.045)}
   .ph:hover .ph-zoom,.ph:focus-visible .ph-zoom{opacity:1;transform:scale(1)}
 }
