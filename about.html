@@ -511,28 +511,48 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   font-family:var(--mono);font-size:12px;letter-spacing:.01em;color:var(--muted)}
 .aiproof b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
 
-/* Built with it -- shaped like the thing it's a fact about: a browser
-   window, chrome and all, the same traffic-light-and-URL language the
-   Rise Portal case study already uses for real screenshots. This one's
-   "screenshot" is the live figure itself -- reads from the same cache
-   and the same endpoint the footer pill uses, so the two numbers are
-   structurally the same number, never two claims that happen to agree. */
-.aiproof-live{flex-direction:column;align-items:stretch;padding:0;gap:0;overflow:hidden}
+/* Built with it -- takes from two places already on this site rather
+   than inventing a third language:
+
+   The chrome is the Rise Portal Safari window's own grammar -- scoped
+   tokens on the component, a dedicated toolbar tone instead of just the
+   surrounding surface colour, and the real traffic-light hexes (#FF5F57
+   / #FEBC2E / #28C840), not grey stand-ins. Not the same component --
+   this one's four lines of CSS, not forty -- but the same idea: a
+   toolbar reads as a toolbar when it has its own ground to sit on.
+
+   The number is the dashboard's own stat grammar -- a small mono label
+   over a big value, with a coloured indicator riding the baseline next
+   to it. There it's a delta (green up, red down); here there's no
+   delta, so the same slot carries a live badge instead, in var(--live) --
+   the colour this page already uses once for exactly this meaning, on
+   the "since then" dot below. */
+.aiproof-live{--frameBar:#EDEDEB;--frameEdge:#D3D3CF;
+  flex-direction:column;align-items:stretch;padding:0;gap:0;overflow:hidden}
+:root[data-theme="dark"] .aiproof-live{--frameBar:#2C2C2E;--frameEdge:#1E1E20}
 .aiproof-bar{display:flex;align-items:center;gap:8px;padding:8px 11px;
-  background:var(--surface);border-bottom:1px solid var(--line)}
-.aiproof-lights{display:flex;gap:4px;flex:0 0 auto}
-.aiproof-lights i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+  background:var(--frameBar);border-bottom:.5px solid var(--frameEdge)}
+.aiproof-lights{display:flex;gap:5px;flex:0 0 auto}
+.aiproof-lights i{width:7px;height:7px;border-radius:50%}
+.aiproof-lights i:nth-child(1){background:#FF5F57}
+.aiproof-lights i:nth-child(2){background:#FEBC2E}
+.aiproof-lights i:nth-child(3){background:#28C840}
 .aiproof-url{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   font-family:var(--mono);font-size:10px;letter-spacing:.02em;color:var(--faint)}
-.aiproof-body{padding:14px 14px 15px;display:flex;flex-direction:column;gap:5px}
-.aiproof-body b{font-size:clamp(28px,5.4vw,36px);font-weight:600;letter-spacing:-.03em;
-  line-height:.95;color:var(--ink)}
-.aiproof-unit{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);
-  font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.aiproof-unit .aiproof-dot{position:relative;width:7px;height:7px;flex:0 0 auto;
-  border-radius:50%;background:var(--accent)}
-.aiproof-unit .aiproof-dot:after{content:"";position:absolute;inset:-4px;
-  border-radius:50%;border:1px solid var(--accent);opacity:0;
+
+.aiproof-body{padding:14px 14px 15px;display:flex;flex-direction:column;gap:6px}
+.aiproof-lab{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--faint)}
+.aiproof-row{display:flex;align-items:baseline;gap:9px}
+.aiproof-row b{font-size:clamp(28px,5.4vw,36px);font-weight:600;letter-spacing:-.03em;
+  line-height:1;color:var(--ink)}
+.aiproof-live-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);
+  font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--live)}
+.aiproof-live-badge .aiproof-dot{position:relative;width:6px;height:6px;flex:0 0 auto;
+  border-radius:50%;background:var(--live)}
+.aiproof-live-badge .aiproof-dot:after{content:"";position:absolute;inset:-4px;
+  border-radius:50%;border:1px solid var(--live);opacity:0;
   animation:aiPulse 2.4s ease-out infinite}
 @keyframes aiPulse{0%{opacity:.55;transform:scale(.6)}100%{opacity:0;transform:scale(1.9)}}
 
@@ -578,7 +598,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (hover:hover){.aiproof-toggle:hover .aiproof-track{background:color-mix(in srgb,var(--line) 60%,var(--faint))}}
 @media (prefers-reduced-motion:reduce){
   .aiproof-toggle .aiproof-knob{transition:none}
-  .aiproof-dot:after{animation:none}
+  .aiproof-live-badge .aiproof-dot:after{animation:none}
   .aiproof-toggle.is-snap .aiproof-track{animation:none}
 }
 /* ══ ABOUT ═══════════════════════════════════════════════════════════
@@ -1312,8 +1332,11 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
             <span class="aiproof-url">lokeshbhatia.com</span>
           </div>
           <div class="aiproof-body">
-            <b data-ai-live>—</b>
-            <span class="aiproof-unit"><span class="aiproof-dot"></span>reads, live</span>
+            <span class="aiproof-lab">Reads</span>
+            <span class="aiproof-row">
+              <b data-ai-live>—</b>
+              <span class="aiproof-live-badge"><span class="aiproof-dot"></span>Live</span>
+            </span>
           </div>
         </div>
         <p>This site, end to end — nav, slider, analytics. I don’t code; I direct, check, and push back when it looks generated.</p>
