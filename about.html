@@ -511,12 +511,21 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   font-family:var(--mono);font-size:12px;letter-spacing:.01em;color:var(--muted)}
 .aiproof b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
 
-/* Built with it -- reads from the same cache and the same endpoint the
-   footer pill uses, so the two numbers are structurally the same number,
-   never two claims that happen to agree. The figure gets to be the size
-   the fact deserves instead of sitting at caption scale. */
-.aiproof-live{flex-direction:column;align-items:flex-start;gap:5px}
-.aiproof-live b{font-size:clamp(32px,6vw,42px);font-weight:600;letter-spacing:-.03em;
+/* Built with it -- shaped like the thing it's a fact about: a browser
+   window, chrome and all, the same traffic-light-and-URL language the
+   Rise Portal case study already uses for real screenshots. This one's
+   "screenshot" is the live figure itself -- reads from the same cache
+   and the same endpoint the footer pill uses, so the two numbers are
+   structurally the same number, never two claims that happen to agree. */
+.aiproof-live{flex-direction:column;align-items:stretch;padding:0;gap:0;overflow:hidden}
+.aiproof-bar{display:flex;align-items:center;gap:8px;padding:8px 11px;
+  background:var(--surface);border-bottom:1px solid var(--line)}
+.aiproof-lights{display:flex;gap:4px;flex:0 0 auto}
+.aiproof-lights i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+.aiproof-url{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-family:var(--mono);font-size:10px;letter-spacing:.02em;color:var(--faint)}
+.aiproof-body{padding:14px 14px 15px;display:flex;flex-direction:column;gap:5px}
+.aiproof-body b{font-size:clamp(28px,5.4vw,36px);font-weight:600;letter-spacing:-.03em;
   line-height:.95;color:var(--ink)}
 .aiproof-unit{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);
   font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
@@ -527,28 +536,28 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   animation:aiPulse 2.4s ease-out infinite}
 @keyframes aiPulse{0%{opacity:.55;transform:scale(.6)}100%{opacity:0;transform:scale(1.9)}}
 
-/* Designed for it -- the same 0→1 the hero states in words, walked in
-   front of you once the row is actually on screen, at a scale that
-   reads as a graphic rather than a hairline. "Shipped" is set in ink
-   rather than the muted grey "Concept" gets, so the destination reads
-   as reached. */
-.aiproof-path{padding-top:26px;padding-bottom:26px}
-.aiproof-path .aiproof-end{flex:0 0 auto;font-size:12px;color:var(--faint)}
-.aiproof-path .aiproof-end:last-child{color:var(--ink);font-weight:500}
-.aiproof-track{position:relative;flex:1 1 auto;min-width:36px;height:4px;
-  border-radius:2px;background:var(--line)}
-.aiproof-path .aiproof-fill{position:absolute;left:0;top:0;bottom:0;width:0;
-  border-radius:2px;background:var(--accent);transition:width 1.1s var(--ease) .3s}
-.aiproof-path .aiproof-dot{position:absolute;top:50%;left:0;width:12px;height:12px;
-  margin:-6px 0 0 -6px;border-radius:50%;background:var(--accent);
-  box-shadow:0 0 0 3px var(--card);transition:left 1.1s var(--ease) .3s}
-.labelrow.shown .aiproof-path .aiproof-fill{width:100%}
-.labelrow.shown .aiproof-path .aiproof-dot{left:100%;
-  animation:aiDotArrive .5s cubic-bezier(.22,1.4,.36,1) 1.4s both}
-/* The travel (1.1s + .3s delay) lands exactly as this starts -- a small
-   bounce at "Shipped" instead of the dot just quietly stopping, the same
-   arrival beat the footer pill's own +1 gets on landing (rpPop). */
-@keyframes aiDotArrive{0%{transform:scale(1)}55%{transform:scale(1.45)}100%{transform:scale(1)}}
+/* Designed for it -- two mockups, not a progress bar: a sketch (dashed
+   outline, tilted like a rough pass, grey content lines) and a shipped
+   screen (solid, dark, filled -- the same "dark chip" treatment
+   .btn-primary and .mresume already use for a finished, settled state).
+   The claim is "concept to public launch" -- these are the two ends of
+   that, drawn, not a hairline standing in for them. */
+.aiproof-path{flex-direction:column;gap:10px}
+.aiproof-frames{display:flex;align-items:center;gap:12px}
+.aiproof-frame{width:46px;height:34px;border-radius:6px;padding:8px 7px;
+  flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.aiproof-frame.is-sketch{border:1.5px dashed var(--line);transform:rotate(-3deg)}
+.aiproof-frame.is-sketch .aiproof-frame-line{background:var(--line)}
+.aiproof-frame.is-shipped{background:var(--ink);box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
+.aiproof-frame.is-shipped .aiproof-frame-line{background:var(--onDark)}
+.aiproof-frame-line{height:3px;border-radius:2px;width:100%}
+.aiproof-frame-line.short{width:55%}
+.aiproof-arrow{flex:0 0 auto;width:20px;height:9px;color:var(--faint)}
+.aiproof-frame-labels{display:flex;align-items:center;gap:12px;font-family:var(--mono);
+  font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.aiproof-frame-labels span{width:46px;text-align:center}
+.aiproof-frame-labels .aiproof-arrow-spacer{width:20px;flex:0 0 auto}
+.aiproof-frame-labels .is-hi{color:var(--ink);font-weight:500}
 
 /* Don't use it for -- the one claim a reader can actually go test. It
    always answers the same way, which is the whole point of it. Sized up
@@ -556,8 +565,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    this one has to carry a card on its own rather than sit in a nav bar. */
 .aiproof-toggle{cursor:pointer;width:100%;border:0;font:inherit;text-align:left;
   font-family:var(--mono);color:var(--ink)}
-.aiproof-toggle .aiproof-track{flex:0 0 auto;min-width:0;width:38px;height:21px;
-  border-radius:1000px;background:var(--line);transition:background-color .2s var(--ease)}
+.aiproof-toggle .aiproof-track{position:relative;flex:0 0 auto;min-width:0;
+  width:38px;height:21px;border-radius:1000px;background:var(--line);
+  transition:background-color .2s var(--ease)}
 .aiproof-toggle .aiproof-knob{position:absolute;top:2px;left:2px;width:17px;height:17px;
   border-radius:50%;background:var(--bg);box-shadow:0 1px 2px rgba(0,0,0,.16);
   transition:transform .2s var(--ease)}
@@ -567,8 +577,8 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @keyframes aiShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
 @media (hover:hover){.aiproof-toggle:hover .aiproof-track{background:color-mix(in srgb,var(--line) 60%,var(--faint))}}
 @media (prefers-reduced-motion:reduce){
-  .aiproof-path .aiproof-fill,.aiproof-path .aiproof-dot,.aiproof-toggle .aiproof-knob{transition:none}
-  .aiproof-dot:after,.labelrow.shown .aiproof-path .aiproof-dot{animation:none}
+  .aiproof-toggle .aiproof-knob{transition:none}
+  .aiproof-dot:after{animation:none}
   .aiproof-toggle.is-snap .aiproof-track{animation:none}
 }
 /* ══ ABOUT ═══════════════════════════════════════════════════════════
@@ -1297,17 +1307,30 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
       <div>
         <span class="cap">Built with it</span>
         <div class="aiproof aiproof-live" aria-hidden="true">
-          <b data-ai-live>—</b>
-          <span class="aiproof-unit"><span class="aiproof-dot"></span>reads, live</span>
+          <div class="aiproof-bar">
+            <span class="aiproof-lights"><i></i><i></i><i></i></span>
+            <span class="aiproof-url">lokeshbhatia.com</span>
+          </div>
+          <div class="aiproof-body">
+            <b data-ai-live>—</b>
+            <span class="aiproof-unit"><span class="aiproof-dot"></span>reads, live</span>
+          </div>
         </div>
         <p>This site, end to end — nav, slider, analytics. I don’t code; I direct, check, and push back when it looks generated.</p>
       </div>
       <div>
         <span class="cap">Designed for it</span>
         <div class="aiproof aiproof-path" aria-hidden="true">
-          <span class="aiproof-end">Concept</span>
-          <span class="aiproof-track"><span class="aiproof-fill"></span><span class="aiproof-dot"></span></span>
-          <span class="aiproof-end">Shipped</span>
+          <div class="aiproof-frames">
+            <span class="aiproof-frame is-sketch"><span class="aiproof-frame-line"></span><span class="aiproof-frame-line short"></span></span>
+            <svg class="aiproof-arrow" viewBox="0 0 20 9" fill="none" aria-hidden="true"><path d="M1 4.5h13.5M10.5 1l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="aiproof-frame is-shipped"><span class="aiproof-frame-line"></span><span class="aiproof-frame-line short"></span></span>
+          </div>
+          <div class="aiproof-frame-labels">
+            <span>Concept</span>
+            <span class="aiproof-arrow-spacer"></span>
+            <span class="is-hi">Shipped</span>
+          </div>
         </div>
         <p>An AI agent platform, concept to public launch. The hard part wasn’t the model — it was making the work visible enough to trust.</p>
       </div>
