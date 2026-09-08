@@ -24,6 +24,12 @@
   var line = pill.querySelector("[data-rp-line]");
   var KEY = "lb-readers-all";
   var SEEN = "lb-readers-rolled";
+  /* Polled while the tab is watched, so the number is live rather than a
+     snapshot from page load. 20s is cheaper than it sounds: /api/readers is
+     edge-cached for 30s, so most of these never leave the CDN, and the ones
+     that do are answered from stale-while-revalidate while the new figure
+     is fetched behind them. Nobody waits. */
+  var POLL_MS = 20000;
   /* 6s, and the endpoint answers in 5 to 11: the pill was aborting its own
      request just before the reply arrived, which is why it sat on its
      resting copy on the live site while the API was working perfectly.
@@ -43,7 +49,13 @@
   var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname) ||
               location.protocol === "file:";
   var LIVE_HOST = /(^|\.)lokeshbhatia\.com$/.test(location.hostname);
-  var API = (LIVE_HOST || LOCAL) ? "https://www.lokeshbhatia.com/api/stats" : "/api/stats";
+  /* /api/readers, not /api/stats. stats makes fifteen upstream calls to
+     build a dashboard and cannot be cached, because it is a POST; readers
+     makes one and is a GET, which is the whole difference between eight
+     seconds and fifty milliseconds. */
+  var API = (LIVE_HOST || LOCAL)
+    ? "https://www.lokeshbhatia.com/api/readers"
+    : "/api/readers";
 
   function num(n) {
     try { return Number(n).toLocaleString("en-GB"); } catch (e) { return String(n); }
@@ -59,8 +71,15 @@
   // Built as nodes rather than a string so the figure can carry its own
   // numeral treatment: tabular, so the pill holds its width when the
   // count gains a digit.
+  var shownValue = null;
+
   function show(n) {
     if (!n || !line) return;
+    // A poll that returns the same number must not rebuild the line: it
+    // would restart the animation every twenty seconds for no news.
+    if (n === shownValue) return;
+    var moved = shownValue !== null && n !== shownValue;
+    shownValue = n;
     line.textContent = "";
     var fig = document.createElement("span");
     fig.className = "rp-n";
@@ -71,6 +90,16 @@
     // one of them.
     line.appendChild(document.createTextNode(
       n === 1 ? " person has stopped by." : " people have stopped by."));
+
+    // Someone arrived while this page was open. That is the one moment the
+    // pill exists for, so it gets the +1 again rather than silently
+    // swapping a digit.
+    if (moved) {
+      pill.classList.remove("is-in");
+      void pill.offsetWidth;
+      pill.classList.add("is-in");
+      return;
+    }
     roll(fig, n);
   }
 
@@ -131,35 +160,53 @@
     try { sessionStorage.setItem(KEY, JSON.stringify({ n: n })); } catch (e) {}
   }
 
+  /* The stored number is a head start, not the answer: it goes up
+     immediately so the pill is never blank, and the network overwrites it a
+     moment later. Before, a session cache meant the first figure you saw
+     was the only one you ever saw. */
   function load() {
     var hit = cached();
-    if (hit) { show(hit); return; }
+    if (hit) show(hit);
 
-    // Bounded, because a cold database must not leave a request hanging off
-    // every page on the site.
     var ctl = window.AbortController ? new AbortController() : null;
     var timer = setTimeout(function () { if (ctl) ctl.abort(); }, TIMEOUT_MS);
 
-    fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ days: 3650 }),
-      signal: ctl ? ctl.signal : undefined
-    })
+    return fetch(API, { signal: ctl ? ctl.signal : undefined })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
-        var n = j && j.headline && j.headline.visitors;
+        var n = j && j.ok && j.visitors;
         if (n) { remember(n); show(n); }
       })
       .catch(function () { /* the resting copy is already true */ })
       .then(function () { clearTimeout(timer); });
   }
 
+  /* Only while the tab is being looked at. A backgrounded tab polling every
+     twenty seconds forever is somebody's battery, and there is nobody there
+     to see the number change. Coming back to the tab asks straight away,
+     which is also the moment the count is most likely to have moved. */
+  var pollTimer = null;
+  function startPolling() {
+    if (pollTimer) return;
+    pollTimer = setInterval(load, POLL_MS);
+  }
+  function stopPolling() {
+    if (!pollTimer) return;
+    clearInterval(pollTimer);
+    pollTimer = null;
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { stopPolling(); return; }
+    load();
+    startPolling();
+  });
+
   // Fire on arrival, not on load: the +1 should land while the pill is being
   // looked at, which is the whole point of it.
   function arrive() {
     pill.classList.add("is-in");
     load();
+    if (!document.hidden) startPolling();
   }
 
   var fired = false;
