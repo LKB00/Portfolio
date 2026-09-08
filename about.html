@@ -498,20 +498,24 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (max-width:684px){.labelrow{gap:10px}}
 
 /* ── the trio proves itself instead of describing itself ──
-   Each card used to just say what it does. Now it does it, in
-   miniature, right under the sentence that makes the claim -- a live
-   number instead of the word "live", a dot that actually travels from
-   concept to shipped instead of the word "0→1", a control that actually
-   resists being handed the decision instead of a sentence promising it
-   will. */
-.aiproof{margin-top:14px;display:flex;align-items:center;gap:8px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--faint)}
+   Each card used to just say what it does, and the three proof rows
+   landed at three different heights -- whichever line the paragraph
+   above them happened to end on. Pinned to the same edge instead: each
+   card is a flex column already, so margin-top:auto pushes every proof
+   flush to the same padding-bottom regardless of how long its sentence
+   runs, and a shared rule above it turns "some text under a paragraph"
+   into one consistent instrument strip, repeated three times. */
+.aiproof{margin-top:auto;padding-top:13px;border-top:1px solid var(--line);
+  display:flex;align-items:center;gap:9px;min-height:19px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.01em;color:var(--muted)}
 .aiproof b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
 
 /* Built with it -- reads from the same cache and the same endpoint the
    footer pill uses, so the two numbers are structurally the same number,
-   never two claims that happen to agree. */
-.aiproof-live .aiproof-dot{position:relative;width:6px;height:6px;flex:0 0 auto;
+   never two claims that happen to agree. Kept to one short line on
+   purpose: a figure that wraps is the fastest way back to looking like
+   an afterthought. */
+.aiproof-live .aiproof-dot{position:relative;width:7px;height:7px;flex:0 0 auto;
   border-radius:50%;background:var(--accent)}
 .aiproof-live .aiproof-dot:after{content:"";position:absolute;inset:-4px;
   border-radius:50%;border:1px solid var(--accent);opacity:0;
@@ -519,30 +523,36 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @keyframes aiPulse{0%{opacity:.55;transform:scale(.6)}100%{opacity:0;transform:scale(1.9)}}
 
 /* Designed for it -- the same 0→1 the hero states in words, walked in
-   front of you once the row is actually on screen. */
+   front of you once the row is actually on screen. "Shipped" is set in
+   ink rather than the muted grey "Concept" gets, so the destination
+   reads as reached and the two ends of the card get the same weight the
+   bold figure gives card one. */
 .aiproof-path{gap:9px}
-.aiproof-path .aiproof-end{flex:0 0 auto;font-size:10px}
-.aiproof-track{position:relative;flex:1 1 auto;min-width:36px;height:2px;
+.aiproof-path .aiproof-end{flex:0 0 auto;font-size:11px;color:var(--faint)}
+.aiproof-path .aiproof-end:last-child{color:var(--ink);font-weight:500}
+.aiproof-track{position:relative;flex:1 1 auto;min-width:36px;height:3px;
   border-radius:2px;background:var(--line)}
 .aiproof-path .aiproof-fill{position:absolute;left:0;top:0;bottom:0;width:0;
   border-radius:2px;background:var(--accent);transition:width 1.1s var(--ease) .3s}
-.aiproof-path .aiproof-dot{position:absolute;top:50%;left:0;width:7px;height:7px;
-  margin:-3.5px 0 0 -3.5px;border-radius:50%;background:var(--accent);
-  transition:left 1.1s var(--ease) .3s}
+.aiproof-path .aiproof-dot{position:absolute;top:50%;left:0;width:9px;height:9px;
+  margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 3px var(--surface);transition:left 1.1s var(--ease) .3s}
 .labelrow.shown .aiproof-path .aiproof-fill{width:100%}
 .labelrow.shown .aiproof-path .aiproof-dot{left:100%}
 
 /* Don't use it for -- the one claim a reader can actually go test. It
-   always answers the same way, which is the whole point of it. */
-.aiproof-toggle{border:0;background:none;padding:0;cursor:pointer;
-  font-family:var(--mono)}
-.aiproof-toggle .aiproof-track{flex:0 0 auto;min-width:0;width:30px;height:17px;
+   always answers the same way, which is the whole point of it. Sized to
+   match the theme toggle's own switch rather than inventing a second
+   switch language for the same page. */
+.aiproof-toggle{background:none;padding:0;padding-top:13px;cursor:pointer;width:100%;
+  border:0;border-top:1px solid var(--line);font-family:var(--mono);color:var(--ink)}
+.aiproof-toggle .aiproof-track{flex:0 0 auto;min-width:0;width:34px;height:19px;
   border-radius:1000px;background:var(--line);transition:background-color .2s var(--ease)}
-.aiproof-toggle .aiproof-knob{position:absolute;top:2px;left:2px;width:13px;height:13px;
+.aiproof-toggle .aiproof-knob{position:absolute;top:2px;left:2px;width:15px;height:15px;
   border-radius:50%;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.16);
   transition:transform .2s var(--ease)}
 .aiproof-toggle.is-on .aiproof-track{background:var(--neg)}
-.aiproof-toggle.is-on .aiproof-knob{transform:translateX(13px)}
+.aiproof-toggle.is-on .aiproof-knob{transform:translateX(15px)}
 .aiproof-toggle.is-snap .aiproof-track{animation:aiShake .4s var(--ease)}
 @keyframes aiShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
 @media (hover:hover){.aiproof-toggle:hover .aiproof-track{background:color-mix(in srgb,var(--line) 60%,var(--faint))}}
@@ -1202,7 +1212,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
         <p>This site, end to end. The interactive navigation demo, the before/after slider, the analytics underneath. I’m not a developer. I direct, I check, I push back when it looks generated.</p>
         <div class="aiproof aiproof-live" aria-hidden="true">
           <span class="aiproof-dot"></span>
-          <span><b data-ai-live>—</b> reads of this site, live.</span>
+          <span><b data-ai-live>—</b> reads, live.</span>
         </div>
       </div>
       <div>
