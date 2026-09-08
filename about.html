@@ -590,24 +590,45 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 }
 
 /* ── how I got here: a path, not four paragraphs.
-      the filled dot is LAST — the route leads to now, not away from it ── */
+      the filled dot is LAST — the route leads to now, not away from it.
+
+      The rail draws itself in rather than just appearing -- it's the one
+      element on the page that IS a progress bar, so it gets to behave
+      like one: it grows from the top the moment the section is actually
+      on screen, in step-order, arriving at "now" as the reader does.
+      The last dot gets the same live-pulse treatment as the readership
+      pill's dot elsewhere on this page -- same meaning, "still ongoing",
+      reused rather than invented twice. Nothing here lifts or shadows on
+      hover; this page doesn't do that anywhere. ── */
 .path{position:relative;padding-left:20px;max-width:738px}
-.path:before{content:"";display:block;position:absolute;left:4px;top:9px;bottom:10px;
-  width:1px;background:var(--line)}
+.path:before{content:"";display:block;position:absolute;left:3.5px;top:9px;bottom:10px;
+  width:2px;border-radius:2px;background:var(--line)}
+.path:after{content:"";display:block;position:absolute;left:3.5px;top:9px;bottom:10px;
+  width:2px;border-radius:2px;background:var(--ink);
+  transform:scaleY(0);transform-origin:50% 0%;
+  transition:transform 1.1s var(--ease) .15s}
+.path.shown:after{transform:scaleY(1)}
 .path-step{position:relative;display:grid;
   grid-template-columns:minmax(0,146px) minmax(0,1fr);
   gap:0 clamp(13px,2.4vw,24px);padding:0 0 clamp(20px,3vw,26px);align-items:start}
 .path-step:last-child{padding-bottom:0}
 .path-step:before{content:"";display:block;position:absolute;left:-20px;top:5px;
-  width:9px;height:9px;border-radius:50%;background:var(--bg);
-  box-shadow:0 0 0 1.5px var(--line)}
-.path-step:last-child:before{background:var(--ink);box-shadow:0 0 0 1.5px var(--ink)}
+  width:10px;height:10px;border-radius:50%;background:var(--bg);
+  box-shadow:0 0 0 2px var(--line);z-index:1}
+.path-step:last-child:before{background:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.path-step:last-child:after{content:"";position:absolute;left:-20px;top:5px;
+  width:10px;height:10px;border-radius:50%;border:1px solid var(--ink);
+  opacity:0;animation:aiPulse 2.4s ease-out infinite}
 .path-when{margin:0;font-size:11px;font-weight:500;letter-spacing:.09em;
   text-transform:uppercase;color:var(--faint)}
 .path-body p{margin:0;font-size:14px;line-height:1.65;color:var(--muted);max-width:58ch}
 .path-body .emph{font-weight:500;color:var(--ink)}
 @media (max-width:576px){
   .path-step{grid-template-columns:minmax(0,1fr);gap:7px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  .path:after{transition:none;transform:scaleY(1)}
+  .path-step:last-child:after{animation:none}
 }
 
 
