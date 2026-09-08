@@ -1722,13 +1722,13 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    removes the band without touching the card grammar. */
 @media (max-width:640px){
   .heroprint{max-width:none;width:auto;margin:0}
-  /* Below this the portrait filled the frame edge to edge, which was fine
-     against a 20px radius and is not against a shape whose curves reach
-     well inside the corners -- the blob was trimming the desk shadow. The
-     image is inset and contained instead, so the shape is drawn around it
-     rather than through it. */
-  .hp-frame{aspect-ratio:3/2;min-height:0;padding:7% 6%;box-sizing:border-box}
-  .hp-frame img{width:100%;height:100%;object-fit:contain}
+  /* Square here too, not 3/2. The arch is built from percentage radii, so
+     on a 3:2 box they sweep the whole width and it stops being an arch --
+     it reads as a lozenge, and the short frame took the top of his head
+     with it. Above 576 the frame is already 1/1 and the shape works, so
+     the phone simply keeps it: one shape at every width, which is the
+     point of having designed one. */
+  .hp-frame{min-height:0}
 }
 /* ══ LINKEDIN CTA ════════════════════════════════════════════════════
    LinkedIn's own brand values: #0A66C2, #004182 on hover, white mark.
