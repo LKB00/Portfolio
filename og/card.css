@@ -1,0 +1,87 @@
+/* The source of og-image.png. 1200x630 exactly.
+ *
+ * The card is built in HTML rather than drawn, for one reason: when the
+ * hero line changes again, the thumbnail should change with one edit and
+ * one command, not with a trip to a design tool. `./build.sh` renders
+ * this file to the PNG the meta tags point at.
+ *
+ * Everything below is the site's own tokens. Nothing here invents a
+ * colour, a radius or a typeface -- the thumbnail is the site's first
+ * impression, so it has to be made of the same material.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg:#FAFAFA; --surface:#F2F2F2; --line:#E8E8E8;
+  --lavender:#E7E0F8;
+  --ink:#141414; --muted:#5C5C5C; --faint:#6D6D6D;
+  --link:#006AD4; --dark:#171717;
+  /* The hero's arch, token for token. Percentage radii make each corner
+     an ellipse, so the top two dome and the bottom-left keeps its right
+     angle: the shape has a foot, and it is the one shape on this site
+     that nobody else's portfolio has. */
+  --hero-shape:50% 50% 50% 8% / 42% 42% 46% 8%;
+  --display:'Geist','Inter',Helvetica,Arial,sans-serif;
+  --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --ground:var(--bg); --fg:var(--ink); --fg-2:var(--muted); --fg-3:var(--faint);
+  --rule:var(--line); --chip:var(--surface); --dot:var(--link);
+}
+/* The dark tone. A dark card is the rarest object in a feed of light
+   ones, and against it the lavender arch becomes the brightest thing in
+   the frame instead of competing with the number. */
+body.dark{
+  --ground:var(--dark); --fg:#FFFFFF;
+  --fg-2:rgba(255,255,255,.62); --fg-3:rgba(255,255,255,.52);
+  --rule:rgba(255,255,255,.14); --chip:rgba(255,255,255,.08); --dot:#4DA3FF;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{font-family:var(--display); background:var(--ground); color:var(--fg);
+  -webkit-font-smoothing:antialiased}
+.card{width:1200px;height:630px;display:flex;flex-direction:column;
+  padding:52px 64px 46px}
+
+/* Rails. Mono and tracked out, the treatment the site gives every label
+   it does not want read first. Both sit inside 60px of every edge --
+   LinkedIn and WhatsApp trim the outer band hardest. */
+.rail{display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:14px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--fg-3)}
+.rail b{font-weight:500;color:var(--fg-2)}
+.url{display:inline-flex;align-items:center;gap:9px;text-transform:none;
+  letter-spacing:.02em;font-size:15px;color:var(--fg-2)}
+.url::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--dot)}
+
+.mid{flex:1;display:flex;align-items:center;gap:56px;padding:22px 0 0 8px}
+.arch{position:relative;overflow:hidden;flex:0 0 auto;
+  width:288px;height:344px;
+  border-radius:var(--hero-shape);background:var(--lavender)}
+.arch img{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);
+  display:block;width:392px;height:auto}
+
+/* The number is the only thing that has to survive being 360px wide in
+   somebody's chat list. Everything else in the frame is there to make it
+   credible once they have stopped. */
+.fig{display:flex;align-items:flex-end;gap:16px}
+.fig b{font-size:158px;font-weight:600;letter-spacing:-.05em;line-height:.8;
+  font-variant-numeric:tabular-nums}
+.fig s{text-decoration:none;font-family:var(--mono);font-size:14px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);
+  padding-bottom:9px}
+.claim p{margin-top:24px;font-size:29px;line-height:1.28;letter-spacing:-.018em;
+  color:var(--fg-2);max-width:19ch}
+.claim p b{font-weight:500;color:var(--fg)}
+
+.foot{display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--rule);padding-top:20px}
+.chips{display:flex;gap:10px}
+.chip{font-family:var(--mono);font-size:14px;letter-spacing:.03em;
+  padding:8px 14px;border-radius:1000px;background:var(--chip);color:var(--fg-2)}
+.chip b{color:var(--fg);font-weight:500}
+/* The one line whose job is the click. */
+.go{display:inline-flex;align-items:center;gap:10px;font-size:19px;
+  font-weight:500;letter-spacing:-.01em;color:var(--fg)}
+body.dark .go{color:var(--dark);background:#fff;padding:11px 20px;
+  border-radius:1000px;font-size:18px}
