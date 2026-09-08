@@ -2407,6 +2407,38 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    joke, and hovering the face while the spark sat still would break it.
    The whole thing is transform and colour, so nothing reflows a footer
    that sits at the very bottom of a long page. */
+/* ── who's who, on hover ─────────────────────────────────────────────
+   The bubble cannot live on .fmark: that element clips to a circle with
+   overflow:hidden, and the spark rotates 180deg on hover, so a ::after
+   inside it would be both cut off and upside down. A wrapper takes the
+   bubble and leaves the mark free to keep spinning inside it.
+
+   --ink on --bg, so it inverts with the theme on its own: dark bubble on
+   the light page, light bubble on the dark one, and the text is always
+   the page's own ground colour. */
+.fbub{position:relative;display:inline-block;vertical-align:middle;line-height:0}
+.fbub::before,.fbub::after{opacity:0;pointer-events:none;
+  transition:opacity .16s var(--ease),transform .22s var(--ease)}
+.fbub::after{content:attr(data-bub);position:absolute;left:50%;bottom:calc(100% + 9px);
+  transform:translateX(-50%) translateY(3px);
+  white-space:nowrap;border-radius:6px;padding:5px 9px;
+  background:var(--ink);color:var(--bg);
+  font-family:var(--display);font-size:11px;font-weight:500;
+  letter-spacing:-.005em;line-height:1.2;box-shadow:var(--shadow-float);z-index:6}
+/* the tail, rotated square rather than a border triangle, so it takes the
+   same background variable and cannot drift out of sync with the bubble */
+.fbub::before{content:"";position:absolute;left:50%;bottom:calc(100% + 5px);
+  width:7px;height:7px;background:var(--ink);
+  transform:translateX(-50%) translateY(3px) rotate(45deg);z-index:5}
+@media (hover:hover){
+  .fbub:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
+  .fbub:hover::before{opacity:1;transform:translateX(-50%) translateY(0) rotate(45deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .fbub::before,.fbub::after{transition:opacity .16s linear}
+  .fbub:hover::after{transform:translateX(-50%)}
+  .fbub:hover::before{transform:translateX(-50%) rotate(45deg)}
+}
 .fmark{transition:transform .34s var(--ease),background .34s var(--ease)}
 /* each one answers for itself: the face leans in when you point at the
    face, the spark spins when you point at the spark. Hovering one and
@@ -2675,7 +2707,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   <section id="contact">
     <footer data-reveal>
-    <p class="footcredit">Designed and built by <span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.png" width="96" height="96" alt="" loading="lazy" decoding="async"></span><span class="fsr">me</span>, with <span class="fmark fai" aria-hidden="true">&#10022;</span><span class="fsr">an AI</span> that argued back.</p>
+    <p class="footcredit">Designed and built by <span class="fbub" data-bub="The decision maker"><span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.png" width="96" height="96" alt="" loading="lazy" decoding="async"></span></span><span class="fsr">me</span>, with <span class="fbub" data-bub="The OG assistant"><span class="fmark fai" aria-hidden="true">&#10022;</span></span><span class="fsr">an AI</span> that argued back.</p>
     </footer>
   </section>
   </main>

@@ -1890,6 +1890,38 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    joke, and hovering the face while the spark sat still would break it.
    The whole thing is transform and colour, so nothing reflows a footer
    that sits at the very bottom of a long page. */
+/* ── who's who, on hover ─────────────────────────────────────────────
+   The bubble cannot live on .fmark: that element clips to a circle with
+   overflow:hidden, and the spark rotates 180deg on hover, so a ::after
+   inside it would be both cut off and upside down. A wrapper takes the
+   bubble and leaves the mark free to keep spinning inside it.
+
+   --ink on --bg, so it inverts with the theme on its own: dark bubble on
+   the light page, light bubble on the dark one, and the text is always
+   the page's own ground colour. */
+.fbub{position:relative;display:inline-block;vertical-align:middle;line-height:0}
+.fbub::before,.fbub::after{opacity:0;pointer-events:none;
+  transition:opacity .16s var(--ease),transform .22s var(--ease)}
+.fbub::after{content:attr(data-bub);position:absolute;left:50%;bottom:calc(100% + 9px);
+  transform:translateX(-50%) translateY(3px);
+  white-space:nowrap;border-radius:6px;padding:5px 9px;
+  background:var(--ink);color:var(--bg);
+  font-family:var(--display);font-size:11px;font-weight:500;
+  letter-spacing:-.005em;line-height:1.2;box-shadow:var(--shadow-float);z-index:6}
+/* the tail, rotated square rather than a border triangle, so it takes the
+   same background variable and cannot drift out of sync with the bubble */
+.fbub::before{content:"";position:absolute;left:50%;bottom:calc(100% + 5px);
+  width:7px;height:7px;background:var(--ink);
+  transform:translateX(-50%) translateY(3px) rotate(45deg);z-index:5}
+@media (hover:hover){
+  .fbub:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
+  .fbub:hover::before{opacity:1;transform:translateX(-50%) translateY(0) rotate(45deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .fbub::before,.fbub::after{transition:opacity .16s linear}
+  .fbub:hover::after{transform:translateX(-50%)}
+  .fbub:hover::before{transform:translateX(-50%) rotate(45deg)}
+}
 .fmark{transition:transform .34s var(--ease),background .34s var(--ease)}
 /* each one answers for itself: the face leans in when you point at the
    face, the spark spins when you point at the spark. Hovering one and
@@ -2417,7 +2449,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
       <span class="rp-faces" aria-hidden="true"><i style="background:#D8E4F2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.6 0-6 2.5-6 6.1 0 2.7.3 5.5-.5 7.7h3c-.7-2-.9-4.3-.9-6.4 0-2.7 1.9-4.1 4.4-4.1s4.4 1.4 4.4 4.1c0 2.1-.2 4.4-.9 6.4h3c-.8-2.2-.5-5-.5-7.7 0-3.6-2.4-6.1-6-6.1Z" fill="#2B2320"/><circle cx="12" cy="25.6" r="8.6" fill="#2A6BB0"/><circle cx="12" cy="10.6" r="4.9" fill="#F2CBA8"/><path d="M12 5.3c-2.9 0-4.5 1.8-4.5 4.1 0 .5.1 1 .2 1.5.7-1.7 2.4-2.6 4.3-2.6s3.6.9 4.3 2.6c.1-.5.2-1 .2-1.5 0-2.3-1.6-4.1-4.5-4.1Z" fill="#2B2320"/></svg></i><i style="background:#F5E2CC"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="2.9" r="2.3" fill="#3E2A20"/><circle cx="12" cy="25.6" r="8.6" fill="#C4762A"/><circle cx="12" cy="10.6" r="4.9" fill="#E0AC80"/><path d="M12 4.6c-3 0-5 2-5 4.8 0 .7.1 1.4.3 2 .6-2 2.4-3.1 4.7-3.1s4.1 1.1 4.7 3.1c.2-.6.3-1.3.3-2 0-2.8-2-4.8-5-4.8Z" fill="#3E2A20"/></svg></i><i style="background:#D9E9DC"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.7 0-6.1 2.5-6.1 6.2 0 1.9.2 3.7.2 5.4h2.6c-.5-1.6-.7-3.4-.7-5 0-2.7 1.7-4.3 4-4.3s4 1.6 4 4.3c0 1.6-.2 3.4-.7 5h2.6c0-1.7.2-3.5.2-5.4 0-3.7-2.4-6.2-6.1-6.2Z" fill="#1E1A17"/><circle cx="12" cy="25.6" r="8.6" fill="#4E8A5F"/><circle cx="12" cy="10.6" r="4.9" fill="#C08457"/><path d="M12 5.4c-2.9 0-4.6 1.8-4.6 4.2 0 .6.1 1.1.3 1.6.9-1.4 2.4-2.1 4.3-2.1s3.4.7 4.3 2.1c.2-.5.3-1 .3-1.6 0-2.4-1.7-4.2-4.6-4.2Z" fill="#1E1A17"/></svg></i><i class="rp-me">+1</i></span>
       <span class="rp-txt"><b data-rp-line>You&#8217;re in the count.</b><span class="rp-sub"><span class="rp-sub-a">That +1 was you.</span><span class="rp-sub-b" aria-hidden="true">Still building the page that shows the rest</span></span></span>
     </span>
-    <p class="footcredit">Designed and built by <span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.png" width="96" height="96" alt="" loading="lazy" decoding="async"></span><span class="fsr">me</span>, with <span class="fmark fai" aria-hidden="true">&#10022;</span><span class="fsr">an AI</span> that argued back.</p>
+    <p class="footcredit">Designed and built by <span class="fbub" data-bub="The decision maker"><span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.png" width="96" height="96" alt="" loading="lazy" decoding="async"></span></span><span class="fsr">me</span>, with <span class="fbub" data-bub="The OG assistant"><span class="fmark fai" aria-hidden="true">&#10022;</span></span><span class="fsr">an AI</span> that argued back.</p>
     </footer>
   </section>
 </div>
