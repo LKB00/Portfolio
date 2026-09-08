@@ -85,11 +85,11 @@
     fig.className = "rp-n";
     fig.textContent = num(n);
     line.appendChild(fig);
-    // "9 so far." never said nine of what. The noun matters more than the
-    // brevity: it is people, and the line under it is already addressing
-    // one of them.
+    // The noun has to be the one being counted. "people have stopped by"
+    // was wrong for a pageview total: nine people had opened sixty-five
+    // pages, and the pill was reporting the pages as people.
     line.appendChild(document.createTextNode(
-      n === 1 ? " person has stopped by." : " people have stopped by."));
+      n === 1 ? " view so far." : " views so far."));
 
     // Someone arrived while this page was open. That is the one moment the
     // pill exists for, so it gets the +1 again rather than silently
@@ -113,10 +113,8 @@
   function roll(el, target) {
     var again = false;
     try { again = sessionStorage.getItem(SEEN) === "1"; } catch (e) {}
-    // 25, not 8. The line names its noun now, so a roll that starts at zero
-    // spends its first frames asserting "0 people have stopped by" -- false,
-    // and legible at this size. Below 25 the climb is over before it reads
-    // as a climb anyway, so there is nothing to lose by showing the number.
+    // Below 25 the climb is over before it reads as a climb, so there is
+    // nothing to lose by showing the number outright.
     if (again || still || target < 25 || !window.requestAnimationFrame) return;
     try { sessionStorage.setItem(SEEN, "1"); } catch (e) {}
 
@@ -135,15 +133,21 @@
       pill.classList.add("is-counted");
     }
 
+    // Starts at a third of the way up, not at zero. A count-up that begins
+    // at 0 spends its first frames printing "0 views so far", which is a
+    // sentence, and a false one. From a third the climb still reads as a
+    // climb and never says nothing is there.
+    var from = Math.max(1, Math.round(target * 0.34));
+
     function frame(t) {
       if (!t0) t0 = t;
       var p = Math.min(1, (t - t0) / ROLL_MS);
       var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = num(Math.round(target * eased));
+      el.textContent = num(Math.round(from + (target - from) * eased));
       if (p < 1) requestAnimationFrame(frame);
       else finish();
     }
-    el.textContent = num(0);
+    el.textContent = num(from);
     requestAnimationFrame(frame);
   }
 
@@ -174,7 +178,9 @@
     return fetch(API, { signal: ctl ? ctl.signal : undefined })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
-        var n = j && j.ok && j.visitors;
+        // views, not visitors. They are different numbers -- 9 people had
+        // opened 65 pages between them -- and the pill counts the opening.
+        var n = j && j.ok && j.views;
         if (n) { remember(n); show(n); }
       })
       .catch(function () { /* the resting copy is already true */ })

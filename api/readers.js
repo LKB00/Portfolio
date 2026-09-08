@@ -1,4 +1,4 @@
-/* GET /api/readers  ->  { ok, visitors, updated }
+/* GET /api/readers  ->  { ok, views, visitors, updated }
  *
  * One number, and nothing else. api/stats.js answers the same question, but
  * it makes fifteen upstream calls to build a whole dashboard and logs in
@@ -125,17 +125,23 @@ export default async function handler(req, res) {
     if (!r.ok) throw new Error(`stats ${r.status}`);
 
     const j = await r.json();
-    // Umami has returned both {visitors:{value}} and {visitors:N} across
+    // Umami has returned both {pageviews:{value}} and {pageviews:N} across
     // versions. Read either rather than trusting one shape.
-    const raw = j && j.visitors;
-    const visitors =
-      raw && typeof raw === "object" ? Number(raw.value) : Number(raw);
+    const one = (v) =>
+      v && typeof v === "object" ? Number(v.value) : Number(v);
 
-    if (!Number.isFinite(visitors)) throw new Error("no visitor count");
+    const views = one(j && j.pageviews);
+    const visitors = one(j && j.visitors);
 
+    if (!Number.isFinite(views)) throw new Error("no pageview count");
+
+    // Both, because they answer different questions and the caller should
+    // not have to pick one at the server. The pill wants views; anything
+    // counting people wants the other.
     return res.status(200).json({
       ok: true,
-      visitors,
+      views,
+      visitors: Number.isFinite(visitors) ? visitors : null,
       updated: new Date().toISOString(),
     });
   } catch (err) {
