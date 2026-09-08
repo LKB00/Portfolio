@@ -630,7 +630,15 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .aiproof-toggle.is-on .aiproof-knob{transform:translateX(17px)}
 .aiproof-toggle.is-snap .aiproof-track{animation:aiShake .4s var(--ease)}
 @keyframes aiShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
-@media (hover:hover){.aiproof-toggle:hover .aiproof-track{background:color-mix(in srgb,var(--line) 60%,var(--faint))}}
+/* :not(.is-on):not(.is-snap) isn't decoration -- .aiproof-toggle:hover
+   .aiproof-track and .aiproof-toggle.is-on .aiproof-track carry the same
+   specificity (two class-level selectors deep), and hover comes later in
+   the file, so it was quietly winning: the cursor is still sitting on the
+   button right after the click that triggered .is-on, which is exactly
+   when the track was supposed to turn red. The switch was flipping and
+   the copy was changing while the track itself just kept its hover tint,
+   which is the "states conflicting" the mismatch actually was. */
+@media (hover:hover){.aiproof-toggle:hover:not(.is-on):not(.is-snap) .aiproof-track{background:color-mix(in srgb,var(--line) 60%,var(--faint))}}
 @media (prefers-reduced-motion:reduce){
   .aiproof-toggle .aiproof-knob{transition:none}
   .aiproof-live-badge .aiproof-dot{animation:none}
@@ -1724,6 +1732,10 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
     busy = true;
     t.classList.add("is-on");
     label.textContent = "Deciding…";
+    // The knob's own slide is .2s; at 260ms total there was barely 60ms
+    // between it arriving and the reversal starting, and "Deciding…" was
+    // gone before it could be read. 480ms gives the knob time to finish,
+    // sit for a beat so the "on" state actually registers, then reverse.
     setTimeout(function(){
       t.classList.remove("is-on");
       t.classList.add("is-snap");
@@ -1733,7 +1745,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
         label.textContent = REST;
         busy = false;
       }, 1400);
-    }, 260);
+    }, 480);
   });
 })();
 
