@@ -66,7 +66,11 @@
     fig.className = "rp-n";
     fig.textContent = num(n);
     line.appendChild(fig);
-    line.appendChild(document.createTextNode(" so far."));
+    // "9 so far." never said nine of what. The noun matters more than the
+    // brevity: it is people, and the line under it is already addressing
+    // one of them.
+    line.appendChild(document.createTextNode(
+      n === 1 ? " person has stopped by." : " people have stopped by."));
     roll(fig, n);
   }
 
@@ -80,7 +84,11 @@
   function roll(el, target) {
     var again = false;
     try { again = sessionStorage.getItem(SEEN) === "1"; } catch (e) {}
-    if (again || still || target < 8 || !window.requestAnimationFrame) return;
+    // 25, not 8. The line names its noun now, so a roll that starts at zero
+    // spends its first frames asserting "0 people have stopped by" -- false,
+    // and legible at this size. Below 25 the climb is over before it reads
+    // as a climb anyway, so there is nothing to lose by showing the number.
+    if (again || still || target < 25 || !window.requestAnimationFrame) return;
     try { sessionStorage.setItem(SEEN, "1"); } catch (e) {}
 
     pill.classList.add("is-rolling");
