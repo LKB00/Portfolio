@@ -24,7 +24,12 @@
   var line = pill.querySelector("[data-rp-line]");
   var KEY = "lb-readers-all";
   var SEEN = "lb-readers-rolled";
-  var TIMEOUT_MS = 6000;
+  /* 6s, and the endpoint answers in 5 to 11: the pill was aborting its own
+     request just before the reply arrived, which is why it sat on its
+     resting copy on the live site while the API was working perfectly.
+     Fifteen, because nothing waits on this -- the pill is already complete
+     when the request starts and nothing moves when it lands. */
+  var TIMEOUT_MS = 15000;
   var ROLL_MS = 900;
 
   var still = false;
