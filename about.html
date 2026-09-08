@@ -70,7 +70,7 @@
   --accent:#5EA9F5; --accentLine:#5EA9F5; --accentWash:rgba(94,169,245,.12);
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
   --tint:var(--surface); --bg2:var(--surface); --deep:#EDEDED; --onDeep:#141414;
-  --gain:#4ED07F; --gainWash:rgba(78,208,127,.14);
+  --gain:#4ED07F; --gainWash:rgba(78,208,127,.14); --live:#4ED07F;
   --card-tint-01:#1A1A1A; --card-tint-02:#1A1A1A; --card-tint-03:#1A1A1A;
   --navOff:#A1A1A1; --navOn:var(--ink);
 }
@@ -623,9 +623,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .path-step:before{content:"";display:block;position:absolute;left:-20px;top:5px;
   width:10px;height:10px;border-radius:50%;background:var(--bg);
   box-shadow:0 0 0 2px var(--line);z-index:1}
-.path-step:last-child:before{background:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.path-step:last-child:before{background:var(--live);box-shadow:0 0 0 2px var(--live)}
 .path-step:last-child:after{content:"";position:absolute;left:-20px;top:5px;
-  width:10px;height:10px;border-radius:50%;border:1px solid var(--ink);
+  width:10px;height:10px;border-radius:50%;border:1px solid var(--live);
   opacity:0;animation:aiPulse 2.4s ease-out infinite}
 .path-when{margin:0;font-size:11px;font-weight:500;letter-spacing:.09em;
   text-transform:uppercase;color:var(--faint)}
