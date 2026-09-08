@@ -570,19 +570,26 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:5px}
 .aiproof-frame.is-sketch{border:1.5px dashed var(--line);transform:rotate(-3deg)}
 .aiproof-frame.is-sketch .aiproof-frame-line{background:var(--line)}
-/* Green, not ink -- the same #28C840 the Safari mockup's own third dot
-   uses in "Built with it", so "shipped" borrows the colour that already
-   means done/live on this card row rather than making a second, unrelated
-   colour decision. Fixed rather than a theme token, for the same reason
-   the traffic lights are fixed: it's true to the object it's borrowed
-   from. The lines flip to dark against it -- white read at barely 2:1 on
-   a green this bright, dark ink clears 9:1. The "Shipped" caption below
-   uses var(--live) instead of the same raw hex -- the dot's green is
-   a fill colour and never has to be read as text, but the caption does,
-   and #28C840 as text sits under 2:1; var(--live) is the site's other
-   green, already tuned to clear 4.5:1 as text in both themes. */
-.aiproof-frame.is-shipped{background:#28C840;box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
-.aiproof-frame.is-shipped .aiproof-frame-line{background:rgba(0,0,0,.55)}
+/* Yellow -- var(--yellow)/var(--onYellow), the pair this site already
+   uses for its one highlight colour (the hero's marked phrase, the
+   dashboard's yellow card), not a fixed hex the way the traffic-light
+   green was. It needs to be a token here rather than a literal: unlike
+   the green, which was borrowed from an actual real-world object (a
+   macOS dot that never changes), this yellow has no such fixed source
+   to be true to, so it should behave like every other colour on the
+   page and adapt to the theme. --onYellow already exists specifically
+   to sit on top of --yellow, so the content lines reuse it as-is.
+
+   The "Shipped" caption below is the harder case: --yellow itself
+   measures under 1.2:1 as text on the light surface (a fill colour
+   doesn't need to survive being read; a caption does), so it can't just
+   repeat the frame's colour the way the caption did for green. Its
+   fix has to run opposite ways in the two themes -- --onYellow (dark)
+   for the caption on the light surface, --yellow (bright) on the dark
+   one -- because yellow itself only reads as text once there's a dark
+   background under it. */
+.aiproof-frame.is-shipped{background:var(--yellow);box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
+.aiproof-frame.is-shipped .aiproof-frame-line{background:var(--onYellow)}
 .aiproof-frame-line{height:3px;border-radius:2px;width:100%}
 .aiproof-frame-line.short{width:55%}
 .aiproof-arrow{flex:0 0 auto;width:20px;height:9px;color:var(--faint)}
@@ -590,7 +597,8 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .aiproof-frame-labels span{width:46px;text-align:center}
 .aiproof-frame-labels .aiproof-arrow-spacer{width:20px;flex:0 0 auto}
-.aiproof-frame-labels .is-hi{color:var(--live);font-weight:500}
+.aiproof-frame-labels .is-hi{color:var(--onYellow);font-weight:500}
+:root[data-theme="dark"] .aiproof-frame-labels .is-hi{color:var(--yellow)}
 
 /* Don't use it for -- the one claim a reader can actually go test. It
    always answers the same way, which is the whole point of it. Sized up
