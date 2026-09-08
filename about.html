@@ -570,8 +570,19 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:5px}
 .aiproof-frame.is-sketch{border:1.5px dashed var(--line);transform:rotate(-3deg)}
 .aiproof-frame.is-sketch .aiproof-frame-line{background:var(--line)}
-.aiproof-frame.is-shipped{background:var(--ink);box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
-.aiproof-frame.is-shipped .aiproof-frame-line{background:var(--onDark)}
+/* Green, not ink -- the same #28C840 the Safari mockup's own third dot
+   uses in "Built with it", so "shipped" borrows the colour that already
+   means done/live on this card row rather than making a second, unrelated
+   colour decision. Fixed rather than a theme token, for the same reason
+   the traffic lights are fixed: it's true to the object it's borrowed
+   from. The lines flip to dark against it -- white read at barely 2:1 on
+   a green this bright, dark ink clears 9:1. The "Shipped" caption below
+   uses var(--live) instead of the same raw hex -- the dot's green is
+   a fill colour and never has to be read as text, but the caption does,
+   and #28C840 as text sits under 2:1; var(--live) is the site's other
+   green, already tuned to clear 4.5:1 as text in both themes. */
+.aiproof-frame.is-shipped{background:#28C840;box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
+.aiproof-frame.is-shipped .aiproof-frame-line{background:rgba(0,0,0,.55)}
 .aiproof-frame-line{height:3px;border-radius:2px;width:100%}
 .aiproof-frame-line.short{width:55%}
 .aiproof-arrow{flex:0 0 auto;width:20px;height:9px;color:var(--faint)}
@@ -579,7 +590,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .aiproof-frame-labels span{width:46px;text-align:center}
 .aiproof-frame-labels .aiproof-arrow-spacer{width:20px;flex:0 0 auto}
-.aiproof-frame-labels .is-hi{color:var(--ink);font-weight:500}
+.aiproof-frame-labels .is-hi{color:var(--live);font-weight:500}
 
 /* Don't use it for -- the one claim a reader can actually go test. It
    always answers the same way, which is the whole point of it. Sized up
