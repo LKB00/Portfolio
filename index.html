@@ -34,6 +34,10 @@
 :root{
   --ease:cubic-bezier(.22,1,.36,1);
   --bg:#FAFAFA; --surface:#F2F2F2; --card:#FFFFFF; --line:#E8E8E8;
+  /* the hero frame's ground. Not a new colour: 16% of the readership
+     pill's purple on white, so the two purples on the page are the
+     same purple at different strengths. */
+  --lavender:#E7E0F8;
   --ink:#141414; --muted:#5C5C5C; --faint:#6D6D6D;
   --link:#006AD4; --dark:#171717; --onDark:#FFFFFF;
   --yellow:#FBE14D; --onYellow:#3D3400;
@@ -65,6 +69,10 @@
 }
 :root[data-theme="dark"]{
   --bg:#0F0F0F; --surface:#1A1A1A; --card:#161616; --line:#262626;
+  /* 22% rather than 16%: the same tint over #1A1A1A instead of white,
+     mixed harder so the frame keeps the separation from the page that
+     it has in the light theme (1.29 against 1.23). */
+  --lavender:#2C2243;
   --ink:#EDEDED; --muted:#A1A1A1; --faint:#8A8A8A;
   --link:#5EA9F5; --dark:#EDEDED; --onDark:#141414;
   --yellow:#E5CB3C; --onYellow:#2A2400;
@@ -1648,7 +1656,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 /* the well — same rule set as .cardframe, height driven by the row */
 .hp-frame{position:relative;width:100%;height:100%;min-height:250px;
-  overflow:hidden;border-radius:var(--r-card);background:var(--surface);
+  overflow:hidden;border-radius:var(--r-card);background:var(--lavender);
   display:grid;align-items:center;justify-items:center}
 /* contained at its own 3:2, centred in whatever height the row gives it */
 .hp-frame img{display:block;width:92%;height:auto;aspect-ratio:3/2;
@@ -2241,19 +2249,23 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    dark theme adds a hairline so the edge never depends on it. Hover
    deepens to #5B34C7 and takes the second line to full white, which
    holds 7.61 there. */
-#notes .readpill{--rp-bg:#6B3FD4;--rp-bg-h:#5B34C7;
+/* Inverted against the page, not coloured: black on the light theme,
+   white on the dark one. Two tokens rather than a hardcoded pair, because
+   everything on the pill is one or the other -- the type, the +1, the
+   rings between the faces -- and they all have to turn over together. */
+#notes .readpill{--rp-bg:#141414;--rp-fg:#FFFFFF;
   display:inline-flex;align-items:center;gap:var(--s-4);
   margin:0;padding:9px 16px 9px 10px;border-radius:var(--r-card);
   background:var(--rp-bg);
-  color:#FFFFFF;text-align:left;cursor:default;
+  color:var(--rp-fg);text-align:left;cursor:default;
   transition:background-color .25s var(--ease)}
-/* 3.00 against #0F0F0F is the threshold and nothing more, so the edge
-   gets drawn rather than inferred from the fill. */
-:root[data-theme="dark"] #notes .readpill{box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+:root[data-theme="dark"] #notes .readpill{--rp-bg:#FFFFFF;--rp-fg:#141414}
+
 #notes .rp-faces{display:inline-flex;flex:none}
 #notes .rp-faces i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
   font-family:var(--mono);font-size:10px;font-weight:500;font-style:normal;
-  box-shadow:0 0 0 2px var(--rp-bg);background:var(--surface);color:var(--faint)}
+  box-shadow:0 0 0 2px var(--rp-bg),inset 0 0 0 1px rgba(0,0,0,.14);
+  background:var(--surface);color:var(--faint)}
 #notes .rp-faces i + i{margin-left:-9px}
 /* One tone, not a fade. The original ramp ran 13/9/6% ink, which measured
    1.32, 1.20 and 1.13 against the white pill — three circles nobody could
@@ -2280,7 +2292,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 /* i.rp-me, not .rp-me: `#notes .rp-faces i` carries an extra element
    selector and outranks a bare class, which left the +1 at --faint on
    accent blue — 1.01:1, invisible. Same trap that hid the footer credit. */
-#notes .rp-faces i.rp-me{background:#FFFFFF;color:var(--rp-bg)}
+#notes .rp-faces i.rp-me{background:var(--rp-fg);color:var(--rp-bg)}
 /* Arrival, in the order the sentence is read: the three of them land
    first, the number climbs (in JS -- it counts to the real total),
    and the +1 drops on the end of the climb. Attendance being taken
@@ -2305,7 +2317,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #notes .readpill.is-rolling .rp-n{transform:scale(1.06)}
 #notes .rp-txt{display:flex;flex-direction:column;gap:1px;min-width:0}
 #notes .rp-txt b{font-size:var(--t-mono-lg);font-weight:500;letter-spacing:var(--tr-body);white-space:nowrap}
-#notes .rp-sub{display:grid;font-size:var(--t-mono);color:rgba(255,255,255,.78);white-space:nowrap}
+#notes .rp-sub{display:grid;font-size:var(--t-mono);
+  color:color-mix(in srgb,var(--rp-fg) 72%,transparent);white-space:nowrap}
 #notes .rp-sub > span{grid-area:1/1;transition:opacity .2s var(--ease)}
 #notes .rp-sub-b{opacity:0}
 @media (hover:hover){
@@ -2320,9 +2333,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    in colour: the outline and the arrow take the pill's own purple,
    and it stays exactly where it is. */
 @media (hover:hover){
-  #notes .readpill:hover .rp-faces i{box-shadow:0 0 0 2px var(--rp-bg-h)}
-  #notes .readpill:hover .rp-faces i.rp-me{color:var(--rp-bg-h)}
-  #notes .readpill:hover .rp-sub-b{color:#FFFFFF}
+  #notes .readpill:hover .rp-sub-b{color:var(--rp-fg)}
 }
 @media (prefers-reduced-motion:reduce){
   #notes .rp-faces i,
