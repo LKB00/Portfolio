@@ -38,6 +38,21 @@
      pill's purple on white, so the two purples on the page are the
      same purple at different strengths. */
   --lavender:#E7E0F8;
+  /* The hero frame's shape. Percentage radii make each corner an
+     ellipse rather than a quarter-circle, and giving the two axes
+     different values is what stops it reading as a rounded rectangle:
+     no two corners are the same curve. One line to change, so the
+     shape is a decision rather than eight numbers buried in a rule. */
+  /* An arch that stands on one square corner, not a blob. Percentage
+     radii make each corner an ellipse, so the top two domes and the
+     bottom-left stays a right angle -- the shape has a foot, and the
+     foot lines up with the left edge of the type beside it.
+
+     On hover the foot moves to the other side. border-radius
+     interpolates, so the arch shifts its weight rather than cutting
+     to a second shape. Two tokens, one line each. */
+  --hero-shape:50% 50% 50% 8% / 42% 42% 46% 8%;
+  --hero-shape-alt:50% 50% 8% 50% / 42% 42% 8% 46%;
   --ink:#141414; --muted:#5C5C5C; --faint:#6D6D6D;
   --link:#006AD4; --dark:#171717; --onDark:#FFFFFF;
   --yellow:#FBE14D; --onYellow:#3D3400;
@@ -1666,12 +1681,21 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 /* the well — same rule set as .cardframe, height driven by the row */
 .hp-frame{position:relative;width:100%;height:100%;min-height:250px;
-  overflow:hidden;border-radius:var(--r-card);background:var(--lavender);
+  overflow:hidden;border-radius:var(--hero-shape);background:var(--lavender);
+  transition:border-radius 1.1s cubic-bezier(.22,1,.36,1);
   display:grid;align-items:center;justify-items:center}
 /* contained at its own 3:2, centred in whatever height the row gives it */
 .hp-frame img{display:block;width:92%;height:auto;aspect-ratio:3/2;
   object-fit:contain;transition:transform .6s var(--ease)}
-@media (hover:hover){.heroprint:hover .hp-frame img{transform:scale(1.03)}}
+@media (hover:hover){
+  .heroprint:hover .hp-frame img{transform:scale(1.03)}
+  .heroprint:hover .hp-frame{border-radius:var(--hero-shape-alt)}
+}
+/* the shape is the point, not the movement: it settles on the alternate
+   arch immediately rather than being taken away entirely */
+@media (prefers-reduced-motion:reduce){
+  .hp-frame{transition:none}
+}
 
 #top h1{font-size:clamp(25px,2.9vw,32px)}
 
@@ -1693,8 +1717,13 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    removes the band without touching the card grammar. */
 @media (max-width:640px){
   .heroprint{max-width:none;width:auto;margin:0}
-  .hp-frame{aspect-ratio:3/2;min-height:0}
-  .hp-frame img{width:100%;height:100%;object-fit:cover}
+  /* Below this the portrait filled the frame edge to edge, which was fine
+     against a 20px radius and is not against a shape whose curves reach
+     well inside the corners -- the blob was trimming the desk shadow. The
+     image is inset and contained instead, so the shape is drawn around it
+     rather than through it. */
+  .hp-frame{aspect-ratio:3/2;min-height:0;padding:7% 6%;box-sizing:border-box}
+  .hp-frame img{width:100%;height:100%;object-fit:contain}
 }
 /* ══ LINKEDIN CTA ════════════════════════════════════════════════════
    LinkedIn's own brand values: #0A66C2, #004182 on hover, white mark.
