@@ -176,14 +176,51 @@ p,.labelrow p,.card p,.decision dd{font-family:var(--display)}
 .shotframe{position:relative;border-radius:4px;overflow:hidden;padding:clamp(13px,7%,59px)}
 .shotframe-hero{position:relative;border-radius:4px;overflow:hidden;padding:clamp(13px,7%,59px)}
 .shotframe img.bg,.shotframe-hero img.bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06)}
-.safari{position:relative;z-index:1;display:block;width:100%;container-type:inline-size;line-height:0;border-radius:4px;overflow:hidden;box-shadow:0 8px 20px -14px rgba(0,0,0,.28)}
-.safari-bar{display:flex;align-items:center;gap:clamp(7px,1.55cqw,11px);position:relative;height:clamp(26px,4.2cqw,38px);padding:0 clamp(7px,1.55cqw,11px);background:var(--frameBar);border-bottom:.5px solid var(--frameEdge2)}
+/* ── Safari window ───────────────────────────────────────────────────
+   The bar used to be three dots and a floating URL: --frameBar,
+   --framePill, --frameUrl and --frameEdge2 were never defined anywhere in
+   this file, so the toolbar and the address field both computed to
+   transparent and the chrome only read as a bar because the pale
+   .shotframe sat behind it. On any other ground it was three dots and some
+   loose text.
+
+   The tokens exist now, and the toolbar has what a toolbar has: back and
+   forward, a lock on the address, share and tabs on the right. Everything
+   scales with cqw off .safari's container, so one component works at hero
+   width and at a 604px crop without a second set of numbers. */
+.safari{--frameBar:#EDEDEB;--framePill:#DFDFDC;--frameUrl:#4E4E4C;
+  --frameEdge2:#D3D3CF;--frameIcon:#8C8C89;
+  position:relative;z-index:1;display:block;width:100%;container-type:inline-size;
+  line-height:0;border-radius:4px;overflow:hidden;
+  box-shadow:0 8px 20px -14px rgba(0,0,0,.28)}
+:root[data-theme="dark"] .safari{--frameBar:#2C2C2E;--framePill:#3A3A3C;
+  --frameUrl:#C7C7C9;--frameEdge2:#1E1E20;--frameIcon:#8E8E93}
+
+.safari-bar{display:flex;align-items:center;gap:clamp(6px,1.3cqw,10px);
+  position:relative;height:clamp(26px,4.2cqw,38px);
+  padding:0 clamp(7px,1.55cqw,11px);
+  background:var(--frameBar);border-bottom:.5px solid var(--frameEdge2)}
 .safari-dots{display:flex;align-items:center;gap:clamp(5px,.9cqw,7px);flex:0 0 auto}
 .safari-dots i{display:block;width:clamp(8px,1.33cqw,12px);height:clamp(8px,1.33cqw,12px);border-radius:999px}
 .safari-dots i:nth-child(1){background:#FF5F57}
 .safari-dots i:nth-child(2){background:#FEBC2E}
 .safari-dots i:nth-child(3){background:#28C840}
-.safari-pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;gap:4px;min-width:150px;height:clamp(16px,2.7cqw,24px);padding:0 clamp(7px,1.4cqw,10px);border-radius:999px;background:var(--framePill);color:var(--frameUrl);font-family:var(--mono);font-size:clamp(8px,1.18cqw,11px);white-space:nowrap}
+
+.safari-nav,.safari-tools{display:flex;align-items:center;
+  gap:clamp(6px,1.25cqw,10px);flex:0 0 auto;color:var(--frameIcon)}
+.safari-tools{margin-left:auto}
+.safari-bar svg{display:block;width:clamp(9px,1.5cqw,13px);height:clamp(9px,1.5cqw,13px)}
+/* forward is always the dimmer of the pair: nothing has been gone back from */
+.safari-nav svg:nth-child(2){opacity:.42}
+
+.safari-pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex;align-items:center;justify-content:center;gap:clamp(3px,.6cqw,5px);
+  min-width:clamp(120px,26cqw,260px);height:clamp(16px,2.7cqw,24px);
+  padding:0 clamp(7px,1.4cqw,10px);border-radius:999px;
+  background:var(--framePill);color:var(--frameUrl);
+  font-family:var(--mono);font-size:clamp(8px,1.18cqw,11px);white-space:nowrap}
+.safari-pill svg{width:clamp(7px,1.1cqw,10px);height:clamp(7px,1.1cqw,10px);opacity:.6}
+
 .safari-imgbox{position:relative;aspect-ratio:16/9}
 .safari-imgbox img{width:100%;height:100%;object-fit:cover;display:block}
 .safari-imgbox iframe{display:block;width:100%;height:100%;border:0;background:transparent}
@@ -1893,7 +1930,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
     <div data-reveal style="margin-top:clamp(40px,5vw,64px)">
       <div class="shotframe-hero">
         <div class="safari">
-          <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+          <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div><div class="safari-pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.4"/><path d="M5.6 7V5.2a2.4 2.4 0 0 1 4.8 0V7"/></svg><span>rise.rupeezy.in</span></div><div class="safari-tools"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10.5V2.8M5.4 5.4 8 2.8l2.6 2.6M3.2 9.6v3.6h9.6V9.6"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2"/><path d="M6.2 2.6v10.8"/></svg></div></div>
           <div class="safari-imgbox"><iframe src="./assets/rp-refer-animation.html" loading="eager" scrolling="no" title="Rise Portal, the refer modal, animated"></iframe></div>
         </div>
       </div>
@@ -2060,7 +2097,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
           <div class="shotframe">
             <div class="safari">
-              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div><div class="safari-pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.4"/><path d="M5.6 7V5.2a2.4 2.4 0 0 1 4.8 0V7"/></svg><span>rise.rupeezy.in</span></div><div class="safari-tools"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10.5V2.8M5.4 5.4 8 2.8l2.6 2.6M3.2 9.6v3.6h9.6V9.6"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2"/><path d="M6.2 2.6v10.8"/></svg></div></div>
               <div class="safari-imgbox"><img width="1200" height="825" decoding="async" data-src="./assets/rp-hero.webp" alt="Rise Portal Dashboard, desktop" loading="eager"></div>
             </div>
           </div>
@@ -2082,7 +2119,12 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
         <h3 data-reveal class="subhead">One: making “X and (Y or Z)” readable</h3>
         <p data-reveal>Partners don’t get paid automatically every cycle. Ten active clients, mandatory, AND either 30% of total clients active OR five new clients that cycle. The rule came from the business. Partners needed to read their own status, not parse a logic expression.</p>
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
-          <div class="shotframe"><div class="imgbox" style="position:relative;z-index:1"><img width="604" height="327" loading="eager" decoding="async" data-src="./assets/rp-eligibility.webp" alt="Payout Eligibility card, cropped"></div></div>
+          <div class="shotframe">
+            <div class="safari">
+              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div><div class="safari-pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.4"/><path d="M5.6 7V5.2a2.4 2.4 0 0 1 4.8 0V7"/></svg><span>rise.rupeezy.in</span></div><div class="safari-tools"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10.5V2.8M5.4 5.4 8 2.8l2.6 2.6M3.2 9.6v3.6h9.6V9.6"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2"/><path d="M6.2 2.6v10.8"/></svg></div></div>
+              <div class="safari-imgbox"><img width="604" height="327" decoding="async" data-src="./assets/rp-eligibility.webp" alt="Payout Eligibility card, cropped" loading="eager"></div>
+            </div>
+          </div>
           <figcaption>Each condition its own fraction, with the AND/OR relationship visible. Someone three clients short can see exactly which lever to pull.</figcaption>
         </figure>
         <p data-reveal class="pquote">“A message saying only ‘you’re not eligible for payout’ would produce exactly the phone call the whole product was built to remove.”</p>
@@ -2099,7 +2141,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
           <div class="shotframe">
             <div class="safari">
-              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div><div class="safari-pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.4"/><path d="M5.6 7V5.2a2.4 2.4 0 0 1 4.8 0V7"/></svg><span>rise.rupeezy.in</span></div><div class="safari-tools"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10.5V2.8M5.4 5.4 8 2.8l2.6 2.6M3.2 9.6v3.6h9.6V9.6"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2"/><path d="M6.2 2.6v10.8"/></svg></div></div>
               <div class="safari-imgbox"><img width="1200" height="750" decoding="async" data-src="./assets/rp-masked-number.webp" alt="Masked phone number column on the Clients screen" loading="eager"></div>
             </div>
           </div>
@@ -2127,7 +2169,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
           <div class="shotframe">
             <div class="safari">
-              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div><div class="safari-pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.4"/><path d="M5.6 7V5.2a2.4 2.4 0 0 1 4.8 0V7"/></svg><span>rise.rupeezy.in</span></div><div class="safari-tools"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10.5V2.8M5.4 5.4 8 2.8l2.6 2.6M3.2 9.6v3.6h9.6V9.6"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2"/><path d="M6.2 2.6v10.8"/></svg></div></div>
               <div class="safari-imgbox"><img width="1200" height="750" decoding="async" data-src="./assets/rp-earnings.webp" alt="Rise Portal Earnings page, with payout history table" loading="eager"></div>
             </div>
           </div>
@@ -2139,7 +2181,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
         <figure data-reveal style="display:flex;flex-direction:column;gap:var(--s-4)">
           <div class="shotframe">
             <div class="safari">
-              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-pill"><span>rise.rupeezy.in</span></div></div>
+              <div class="safari-bar" aria-hidden="true"><div class="safari-dots"><i></i><i></i><i></i></div><div class="safari-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div><div class="safari-pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.4"/><path d="M5.6 7V5.2a2.4 2.4 0 0 1 4.8 0V7"/></svg><span>rise.rupeezy.in</span></div><div class="safari-tools"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10.5V2.8M5.4 5.4 8 2.8l2.6 2.6M3.2 9.6v3.6h9.6V9.6"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2"/><path d="M6.2 2.6v10.8"/></svg></div></div>
               <div class="safari-imgbox"><img width="1200" height="750" decoding="async" data-src="./assets/rp-funnel.webp" alt="Rise Portal Clients page" loading="eager"></div>
             </div>
           </div>
