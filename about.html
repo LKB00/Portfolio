@@ -560,11 +560,16 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 /* Designed for it -- two mockups, not a progress bar: a sketch (dashed
    outline, tilted like a rough pass, grey content lines) and a shipped
-   screen (solid, dark, filled -- the same "dark chip" treatment
-   .btn-primary and .mresume already use for a finished, settled state).
-   The claim is "concept to public launch" -- these are the two ends of
-   that, drawn, not a hairline standing in for them. */
-.aiproof-path{flex-direction:column;gap:10px}
+   screen (solid, filled, yellow). The claim is "concept to public
+   launch" -- these are the two ends of that, drawn, not a hairline
+   standing in for them.
+
+   align-items:flex-start overrides the row's own centering: every other
+   proof in this trio -- the browser bar, the number, the toggle -- sits
+   flush against the card's left edge the way the rest of the page does,
+   and this was the one still centred, which is what actually read as
+   inconsistent rather than "different enough to be its own thing." */
+.aiproof-path{flex-direction:column;align-items:flex-start;gap:10px}
 .aiproof-frames{display:flex;align-items:center;gap:12px}
 .aiproof-frame{width:46px;height:34px;border-radius:6px;padding:8px 7px;
   flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:5px}
@@ -603,9 +608,18 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* Don't use it for -- the one claim a reader can actually go test. It
    always answers the same way, which is the whole point of it. Sized up
    from the theme toggle's own switch (same shape, bigger stage) since
-   this one has to carry a card on its own rather than sit in a nav bar. */
-.aiproof-toggle{cursor:pointer;width:100%;border:0;font:inherit;text-align:left;
-  font-family:var(--mono);color:var(--ink)}
+   this one has to carry a card on its own rather than sit in a nav bar.
+
+   font:inherit here was quietly resetting font-size to whatever this
+   button's parent happened to use, overriding the 12px every other
+   proof in the row shares -- the actual reason this one read as a
+   different size from "READS"/"92"/"Live" and "Concept"/"Shipped"
+   instead of a deliberate emphasis. Explicit size instead, one notch up
+   from the row's shared 12px base rather than inherited from nowhere,
+   since this line is this card's one piece of content the way the
+   number and the two frames are theirs. */
+.aiproof-toggle{cursor:pointer;width:100%;border:0;text-align:left;
+  font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
 .aiproof-toggle .aiproof-track{position:relative;flex:0 0 auto;min-width:0;
   width:38px;height:21px;border-radius:1000px;background:var(--line);
   transition:background-color .2s var(--ease)}
