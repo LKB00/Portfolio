@@ -56,15 +56,10 @@
   --ink:#141414; --muted:#5C5C5C; --faint:#6D6D6D;
   --link:#006AD4; --dark:#171717; --onDark:#FFFFFF;
   --yellow:#FBE14D; --onYellow:#3D3400;
-  /* The Next card's ground. It was a mint derived from --ok, which came
-     out a desaturated blue-green -- correct by construction and grey in
-     practice. This is a leaf green instead: warmer, and actually reads as
-     green rather than as a tinted grey.
-
-     Still matched to the yellow card it replaced, so the card carries the
-     same weight in the grid: 9.43 for the text against 9.46, 3.49 for the
-     label at .62 against 3.48, 1.24 against the page against 1.26. */
-  --mint:#CDEBC5; --onMint:#1B3D18;
+  /* The Next card's ground: the same violet family as the hero frame's
+     --lavender wash, at a stronger tint so it can carry a solid card on
+     its own rather than sit behind a photo. */
+  --violet:#E3D9F8; --onViolet:#3B2A6B;
   --ok:#1F9D4D; --warn:#E9A417; --crit:#E0392B;
   --r-pill:1000px; --r-card:20px; --r-float:16px; --r-sm:10px;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
@@ -101,9 +96,8 @@
   --link:#5EA9F5; --dark:#EDEDED; --onDark:#141414;
   --yellow:#E5CB3C; --onYellow:#2A2400;
   /* deepened for the dark theme, the way --yellow is, so the card still
-     reads as a lit panel rather than glaring: 9.43 for the text against
-     the dark yellow's 9.58. */
-  --mint:#BFE3B6; --onMint:#193612;
+     reads as a lit panel rather than glaring */
+  --violet:#D7C7F5; --onViolet:#2E2050;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
   --dot:rgba(237,237,237,.10); --frameSh:rgba(0,0,0,.6);
   --accent:#5EA9F5; --accentLine:#5EA9F5; --accentWash:rgba(94,169,245,.12);
@@ -1530,22 +1524,37 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    that does nothing. What it gets instead is a quieter tell that it's
    still "on": the tint deepens and the label wakes up on hover, the
    same colour-only move the rest of the page's chrome uses. */
-.soonframe{display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:10px;text-align:center;padding:24px;
-  /* the site's own green, and its own ink for that green — derived from
-     --ok rather than picked, so it belongs to the page rather than
-     arriving from outside it */
-  background:var(--mint)!important;
+.soonframe{position:relative;overflow:hidden;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;
+  background:var(--violet)!important;
   transition:background .3s var(--ease)}
-.soonlabel{font-family:var(--mono);font-size:11px;font-weight:500;
-  letter-spacing:.09em;text-transform:uppercase;color:var(--onMint);opacity:.62;
+.soonlabel{position:relative;z-index:1;font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--onViolet);opacity:.62;
   transition:opacity .3s var(--ease)}
-.soontext{margin:0;font-size:15px;font-weight:400;line-height:1.45;
-  color:var(--onMint);max-width:24ch}
+.soontext{position:relative;z-index:1;margin:0;font-size:15px;font-weight:400;line-height:1.45;
+  color:var(--onViolet);max-width:24ch;transition:opacity .3s var(--ease)}
+/* the hover state: two soft blurred discs standing in for the not-yet-
+   real screenshots, drifting apart the way the other cards' mocks
+   settle apart on hover. The long sentence steps aside for one that
+   reads at a glance while they move. */
+.soonorb{position:absolute;z-index:0;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle at 35% 35%,var(--accent) 0%,transparent 70%);
+  filter:blur(28px);opacity:0;
+  transition:opacity .6s var(--ease),transform 5s var(--ease)}
+.soonorb-a{width:150px;height:150px;top:-40px;left:-30px}
+.soonorb-b{width:120px;height:120px;bottom:-30px;right:-20px}
+.soonhover{position:absolute;z-index:1;left:24px;right:24px;top:50%;
+  transform:translateY(-50%);margin:0;font-size:15px;font-weight:500;
+  color:var(--onViolet);opacity:0;transition:opacity .3s var(--ease) .1s}
 .workrow.soonrow:hover .cardframe{transform:none}
 @media (hover:hover){
-  .workrow.soonrow:hover .soonframe{background:color-mix(in srgb,var(--mint) 84%,var(--onMint) 16%)!important}
+  .workrow.soonrow:hover .soonframe{background:color-mix(in srgb,var(--violet) 84%,var(--onViolet) 16%)!important}
   .workrow.soonrow:hover .soonlabel{opacity:1}
+  .workrow.soonrow:hover .soonorb{opacity:.5}
+  .workrow.soonrow:hover .soonorb-a{transform:translate(16px,12px)}
+  .workrow.soonrow:hover .soonorb-b{transform:translate(-14px,-10px)}
+  .workrow.soonrow:hover .soontext{opacity:0}
+  .workrow.soonrow:hover .soonhover{opacity:1}
 }
 
 @media (max-width:684px){
@@ -1972,14 +1981,13 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   border-radius:50%;background:var(--accent);color:#FFFFFF}
 .padtriggertext{font-size:15px;font-weight:500;letter-spacing:-.012em}
 .padtriggerhint{font-size:13px;color:var(--faint);letter-spacing:-.005em}
-/* :hover still matches a disabled button, so the open header picked up
-   the accent edge and wash the moment the pointer crossed it -- a
-   control lighting up for something it can no longer do. It is only a
-   control while the board is shut. */
+/* :hover still matches a disabled button, so this only has to work
+   while the board is shut. No colour change -- the dashed edge is
+   "empty slot, put something here"; solid on hover is "this one's
+   ready", the same distinction without reaching for a new hue. */
 @media (hover:hover){
   .padwrap:not(.is-open) .padtrigger:hover{
-    border-color:color-mix(in srgb,var(--accent) 60%,transparent);
-    background-color:color-mix(in srgb,var(--accent) 5%,transparent)}
+    border-style:solid}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -2694,8 +2702,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       <div class="workrow soonrow" data-reveal>
         <div style="min-width:0">
           <div class="cardframe soonframe">
+            <div class="soonorb soonorb-a" aria-hidden="true"></div>
+            <div class="soonorb soonorb-b" aria-hidden="true"></div>
             <span class="soonlabel">Next</span>
             <p class="soontext">More case studies are being written up.</p>
+            <p class="soonhover" aria-hidden="true">Coming soon</p>
           </div>
         </div>
       </div>
