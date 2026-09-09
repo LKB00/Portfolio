@@ -133,12 +133,9 @@ body.menu-open header{z-index:70}
 .mrow.current svg{color:var(--accent);opacity:.6}
 .mrow .mlabel{flex:1;font-size:21px;line-height:1.15;letter-spacing:var(--tr-display)}
 .mrow svg{flex:0 0 auto;color:var(--faint)}
-.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:var(--s-4);padding:21px var(--pad) 21px}
-.availbadge svg{width:104px;height:104px}
-.availbadge{position:relative;width:104px;height:104px;flex:none;border-radius:50%;display:grid;place-items:center}
-.availring{animation:spin 16s linear infinite;transform-origin:50% 50%}
-@keyframes spin{to{transform:rotate(360deg)}}
-.mailbtn{display:inline-flex;align-items:center;min-height:48px;padding:0;border:0;background:transparent;font-size:var(--t-body-lg);font-weight:500;color:var(--accent);cursor:pointer}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:var(--s-3);padding:21px var(--pad) 21px}
+.mailbtn{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;padding:0;border-radius:4px;box-shadow:inset 0 0 0 1px var(--line);background:transparent;font-size:var(--t-btn);font-weight:500;color:var(--ink);cursor:pointer}
+.mailbtn:hover{box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent)}
 .mresume{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;border-radius:4px;background:var(--ink);color:var(--card);font-size:var(--t-btn);font-weight:500}
 .mresume:hover{background:var(--accent);color:var(--onAccent)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:var(--s-3);padding:11px 16px;border-radius:4px;background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 18px 40px -20px rgba(16,16,24,.32);white-space:nowrap}
@@ -342,7 +339,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 #palette .list a,.mrow{border-radius:var(--r-sm)}
 .mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:-.01em}
 .mresume{border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:13px}
-.mailbtn{font-family:var(--display);font-size:14px;color:var(--link)}
+.mailbtn{border-radius:var(--r-pill);font-family:var(--display);font-size:13px}
 .mobilenav{background:var(--bg)}
 #loader{background:var(--bg)}
 #loader .name span{font-family:var(--display);font-size:15px;font-weight:400;letter-spacing:-.01em;color:var(--ink)}
@@ -801,11 +798,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .mcase[aria-current="page"] .mcase-x:before{content:"";position:absolute;
   left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
 
-/* tier 3 — the ways to reach him */
-.mfoot{text-align:left;gap:clamp(16px,2.4vh,22px);padding-bottom:clamp(22px,4vh,30px)}
-.availbadge{align-self:flex-start}
-.mmail{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
-.mailbtn{min-height:0;font-size:16px;font-weight:500}
+/* tier 3 — the ways to reach him: two equal-weight buttons, nothing else */
+.mfoot{gap:var(--s-3);padding-bottom:clamp(22px,4vh,30px)}
+.mailbtn{font-size:15px}
 /* ══ THE TWO PHOTO SECTIONS ══════════════════════════════════════════
    They used to make two different arguments -- tilted loose prints for
    the casual set, a stepped editorial grid for the portfolio set -- and
@@ -1259,15 +1254,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
       <a class="mcase" href="./rise-portal.html"><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
         <div class="mfoot">
-      <div class="availbadge" role="img" aria-label="Open to work, available now">
-        <svg class="availring" viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><defs><path id="aAvailPath" d="M46,46 m-33,0 a33,33 0 1,1 66,0 a33,33 0 1,1 -66,0"></path></defs><text style="font-family:var(--mono);font-size:8.2px;letter-spacing:.1em;text-transform:uppercase;fill:var(--accent)"><textPath href="#aAvailPath" startOffset="0">OPEN TO WORK · AVAILABLE NOW · </textPath></text></svg>
-        <svg viewBox="0 0 92 92" width="130" height="130" aria-hidden="true" style="position:absolute;inset:0"><circle cx="46" cy="46" r="25.5" fill="none" stroke="var(--accent)" stroke-opacity=".45" stroke-width="1"></circle></svg>
-        <span aria-hidden="true" style="position:relative;font-size:16px;color:var(--accent)">✦</span>
-      </div>
-      <div class="mmail">
-        <p class="mgroup">Email</p>
-        <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
-      </div>
+      <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
       <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
   </div>
@@ -1339,7 +1326,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
         <div class="path-body"><p>A camera, then Photoshop, then Adobe XD, and no idea that what I was doing already had a name. I found out it did, and that people were paid to do it. <span class="emph">No degree, no bootcamp.</span></p></div>
       </div>
       <div class="path-step">
-        <p class="path-when">December 2022</p>
+        <p class="path-when">2022</p>
         <div class="path-body"><p>I graduated into a market with no appetite for juniors. It took <span class="emph">four months of making work nobody asked for</span> before someone paid me for it.</p></div>
       </div>
       <div class="path-step">
