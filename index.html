@@ -23,8 +23,8 @@
 <link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
@@ -2517,6 +2517,107 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .fsr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
   white-space:nowrap;border:0}
+
+/* ══ HARVEY LAYER ════════════════════════════════════════════════════
+   A visual identity taken from harvey.ai, applied at the token level so
+   it reaches the whole page instead of being painted on one section at
+   a time. Four moves, and everything else follows from them:
+
+   1. WARM MONOCHROME. Harvey has no accent colour at all -- #0F0E0D on
+      #FAFAF9, with #706D66 doing the work blue used to do here. Every
+      decorative hue on this page (lavender, violet, yellow, mint) folds
+      into that one warm family.
+   2. A SERIF THAT CARRIES THE PAGE. Newsreader stands in for Harvey's
+      licensed display face: same job, same weight (400, light for its
+      size), same tight tracking. Geist stays for body, UI and mono, so
+      the pairing is serif headline / neutral grotesque everywhere else.
+   3. SCALE, NOT WEIGHT. Harvey's hierarchy is a 72px headline over 14px
+      body. Nothing is bold; the size gap does it.
+   4. SQUARE. Every radius goes to zero -- pills, cards, the hero frame.
+      This is the single change that most makes it read as Harvey.
+
+   Delete this block to get the previous design back untouched.
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  /* the warm ground and the warm near-black, straight off harvey.ai */
+  --bg:#FAFAF9; --surface:#F1F0ED; --card:#FFFFFF; --line:#E3E1DC;
+  --ink:#0F0E0D; --muted:#57544E; --faint:#706D66;
+  /* no accent colour: links are ink, and weight/underline mark them */
+  --link:#0F0E0D; --accent:#0F0E0D; --accentLine:#0F0E0D;
+  --accentWash:rgba(15,14,13,.06); --onAccent:#FAFAF9;
+  --dark:#0F0E0D; --onDark:#FAFAF9; --deep:#0F0E0D; --onDeep:#FAFAF9;
+  --tint:var(--surface); --bg2:var(--surface);
+  /* the decorative hues collapse into the one warm family */
+  --lavender:#EBE9E4; --violet:#EBE9E4; --onViolet:#0F0E0D;
+  --yellow:#E8E5DE; --onYellow:#0F0E0D; --mint:#EBE9E4; --onMint:#0F0E0D;
+  --markWash:rgba(15,14,13,.10);
+  --dot:rgba(15,14,13,.09); --frameSh:rgba(15,14,13,.16);
+  --navOn:#0F0E0D; --navOff:#706D66;
+  /* square: the one change that most reads as Harvey */
+  --r-pill:0px; --r-card:0px; --r-float:0px; --r-sm:0px;
+  --hero-shape:0; --hero-shape-alt:0;
+  --shadow-float:0 1px 2px rgba(15,14,13,.06),0 12px 32px -18px rgba(15,14,13,.22);
+}
+:root[data-theme="dark"]{
+  --bg:#0F0E0D; --surface:#1A1917; --card:#161513; --line:#2A2825;
+  --ink:#FAFAF9; --muted:#A8A49B; --faint:#8B877E;
+  --link:#FAFAF9; --accent:#FAFAF9; --accentLine:#FAFAF9;
+  --accentWash:rgba(250,250,249,.08); --onAccent:#0F0E0D;
+  --dark:#FAFAF9; --onDark:#0F0E0D; --deep:#FAFAF9; --onDeep:#0F0E0D;
+  --lavender:#211F1C; --violet:#211F1C; --onViolet:#FAFAF9;
+  --yellow:#262421; --onYellow:#FAFAF9; --mint:#211F1C; --onMint:#FAFAF9;
+  --markWash:rgba(250,250,249,.14);
+  --dot:rgba(250,250,249,.08); --frameSh:rgba(0,0,0,.6);
+  --navOn:#FAFAF9; --navOff:#8B877E;
+}
+
+/* ── the serif does the headlines, Geist keeps everything else ── */
+#top h1,.sechead h2,.worktext h3,#contact h2,.exp-co,.soontext{
+  font-family:var(--serif);font-weight:400;letter-spacing:-.012em}
+
+/* Harvey's hierarchy is one enormous headline over small body copy.
+   72px at 1280 is their measurement; this tracks it and comes down
+   gracefully rather than stopping at a laptop width. */
+#top h1{font-size:clamp(38px,6.4vw,72px);line-height:1.05;letter-spacing:-.015em;
+  max-width:15ch}
+#top .hero-sub{font-size:15px;line-height:1.5;color:var(--faint);max-width:46ch}
+
+.sechead h2{font-size:clamp(26px,3.4vw,40px);line-height:1.1}
+.sechead p{font-size:14px;line-height:1.5;color:var(--faint)}
+.worktext h3{font-size:clamp(19px,1.9vw,23px);line-height:1.2;font-weight:400}
+.worktext .desc{font-size:13px;color:var(--faint)}
+#contact h2{font-size:clamp(26px,3.4vw,40px);line-height:1.1}
+.exp-co{font-size:clamp(18px,1.8vw,22px);line-height:1.2}
+.impactnum{font-family:var(--serif);font-weight:400;color:var(--ink);letter-spacing:-.01em}
+
+/* ── square, and no shadow doing a border's job ── */
+.cardframe,.impactcol,.navpill,.pill,.btn-primary,.btn-secondary,
+.splitcta,.mresume,.mailbtn,.workcta,.expchip,.metrics span,
+.totop,.toast,#palette .box,.figcard,.shotcard,.notebox{border-radius:0}
+.heroportrait{border-radius:0}
+
+/* ── nav: a hairline rule instead of a floating capsule ── */
+header,header.scrolled{top:0}
+.navpill{background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  width:100%;max-width:none;justify-content:center;padding:13px var(--pad)}
+header.scrolled .navpill{background:color-mix(in srgb,var(--bg) 94%,transparent)}
+.navlink{font-size:13px;color:var(--navOff)}
+.navlink:hover{background:transparent;color:var(--ink)}
+
+/* ── buttons: solid ink rectangle, 14px sans, no radius ── */
+.pill-primary,.splitcta,.mresume{background:var(--ink);color:var(--bg)}
+.pill-primary:hover,.mresume:hover{background:var(--muted);color:var(--bg);opacity:1}
+.pill-ghost,.mailbtn{background:transparent;color:var(--ink);
+  box-shadow:inset 0 0 0 1px var(--ink)}
+.pill-ghost:hover,.mailbtn:hover{background:var(--ink);color:var(--bg)}
+.pill,.mresume,.mailbtn{font-size:13px;letter-spacing:0}
+
+/* ── the highlight loses its yellow and becomes a rule under the line ── */
+.mark{background-image:linear-gradient(transparent 92%,var(--ink) 92%,var(--ink) 96%,transparent 96%)}
+
+@media (prefers-reduced-motion:reduce){.navpill{backdrop-filter:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -2614,7 +2715,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         </span>
         <span class="padtriggertext">The floor is yours.</span>
-        <span class="padtriggerhint">Leave a note &#8212; anonymous, and I read every one.</span>
+        <span class="padtriggerhint">Leave a note, anonymous, and I read every one.</span>
       </button>
 
       <div class="padboard" id="padBoard">
