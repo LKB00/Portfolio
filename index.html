@@ -509,6 +509,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
    between columns, so the same white space read as two different
    measurements depending on which way you looked */
 .workgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap)}
+.workgrid + #notes{margin-top:var(--gap)}
 .workrow{display:block;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
 .workrow:hover{border:0;box-shadow:none}
 .workrow > div:first-child{grid-row:auto!important;grid-column:auto!important}
@@ -629,7 +630,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 
 /* section labels get room, not a sentence */
 .seclabel{margin-bottom:var(--s-5)}
-#work,#notes,#experience,#contact{padding-top:var(--s-2)}
+#work,#experience,#contact{padding-top:var(--s-2)}
 .exprow,.expnext{padding-bottom:var(--s-6)}
 .exp-date{margin-bottom:var(--s-2)}
 .exp-role{margin-top:1px}
@@ -781,7 +782,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* 2. RHYTHM. The gaps between sections decayed 94 -> 69 -> 52px, so the
    page visibly ran out of breath on the way down. The hero keeps the
    larger opening gap; every band after it is spaced the same. */
-#work,#notes,#experience{padding-bottom:clamp(46px,7vw,72px)}
+#work,#experience{padding-bottom:clamp(46px,7vw,72px)}
 #experience:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
 
 /* 3. THE END OF THE PAGE. #contact carried nothing but a copyright: the
@@ -1044,16 +1045,12 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .hero-id b + span:before{content:"\00B7";margin-right:8px;color:var(--faint);opacity:.6}
 
 #top h1{max-width:none;font-size:clamp(22px,3.2vw,35px);font-weight:500;
-  line-height:1.16;letter-spacing:-.026em;color:var(--ink);text-wrap:pretty}
-/* two beats, one per line: the observation sets it up in muted, the claim
-   lands in ink. Breaking anywhere else drops the rhetorical structure. */
-#top h1 .h1-a,#top h1 .h1-b{display:block}
-/* These are two sentences, not one sentence that wrapped. At 1.16 the
-   line box gave them 0px between — set solid, so they read as a block of
-   text rather than as a setup and a claim. The gap is added between the
-   two lines only; the line-height inside each stays tight so a line that
-   wraps on a narrow screen still holds together. */
-#top h1 .h1-a{color:var(--muted);margin-bottom:clamp(7px,.9vw,12px)}
+  line-height:1.36;letter-spacing:-.026em;
+  color:color-mix(in srgb,var(--muted) 65%,var(--bg) 35%);text-wrap:pretty}
+/* one continuous line, wrapping naturally on width. The sentence reads
+   muted by default; only the words that carry the claim — what gets
+   made, and what it does — land in ink. */
+#top h1 .h1-key{color:var(--ink)}
 #top h1 + .hero-sub{margin-top:clamp(14px,2vw,18px)}
 #top .hero-sub{max-width:66ch;font-size:var(--t-lead);line-height:1.55;color:var(--muted)}
 #top .cta{margin-top:clamp(18px,2.8vw,24px)}
@@ -1480,18 +1477,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   .workrow .worktext,
   .workrow .cardframe{transition:none!important;transform:none!important}
 }
-/* ══ ROW TWO — Runable, and the slot after it ════════════════════════
+/* ══ RUNABLE, AND THE SLOT AFTER IT ═══════════════════════════════════
    Runable was a full-width feature card. With more studies coming, the
    grid reads better as a plain 2x2: same two column widths on both
    rows, same frame height on all four cards, so the page has one
-   rhythm instead of a rhythm plus an exception.
-
-   Runable takes the 58 column because a browser screenshot is a wide
-   object and would have swum in the 42; the "next" slot takes the 42.
-   Explicit placement, so the DOM can still lead with the real work.
+   rhythm instead of a rhythm plus an exception. Plain source-order
+   auto-placement drops this pair into row two — no explicit column/row
+   needed. The notes board sits below the whole grid, not inside it.
    ═══════════════════════════════════════════════════════════════════ */
-.workrow.runrow{grid-column:1;grid-row:2}
-.workrow.soonrow{grid-column:2;grid-row:2}
 
 /* 41.49 is the denominator the two cards above already share, so every
    frame on the grid resolves to the same height at every width */
@@ -1555,10 +1548,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   .workrow.soonrow:hover .soonorb-b{transform:translate(-14px,-10px)}
   .workrow.soonrow:hover .soontext{opacity:0}
   .workrow.soonrow:hover .soonhover{opacity:1}
-}
-
-@media (max-width:684px){
-  .workrow.runrow,.workrow.soonrow{grid-column:auto;grid-row:auto}
 }
 
 /* hero emphasis: the figures in ink against muted prose — the same
@@ -1729,7 +1718,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   .hp-frame{transition:none}
 }
 
-#top h1{font-size:clamp(25px,2.9vw,32px)}
+#top h1{font-size:clamp(26px,3.6vw,36px)}
 
 @media (max-width:860px){
   #top .hero-c{grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,32px)}
@@ -1824,21 +1813,11 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
      · and it does not run at all for prefers-reduced-motion
    ═══════════════════════════════════════════════════════════════════ */
 
-/* The mask exists ONLY while the lines are moving. A permanent
-   overflow:hidden is a trap: the day the headline wraps — a longer
-   sentence, a narrower column, a fallback font that sets wider before
-   Geist loads — the mask silently eats the second line. It is applied
-   for the length of the animation and then released, so at rest the
-   headline is a plain block of text with nothing clipping it.
-   The padding gives descenders room while it is on. */
-#top h1 .h1-line{display:block;padding-bottom:.2em;margin-bottom:-.2em}
-body.arriving #top h1 .h1-line{overflow:hidden}
-
-.heroin #top h1 .h1-a,.heroin #top h1 .h1-b{
-  animation:lineRise .46s cubic-bezier(.22,.9,.28,1) backwards}
-.heroin #top h1 .h1-a{animation-delay:.32s}
-.heroin #top h1 .h1-b{animation-delay:.41s}
-@keyframes lineRise{from{transform:translateY(108%)}to{transform:none}}
+/* One continuous run of text, so the greeting and the claim wrap onto
+   the same line whenever there's room — no forced break between them.
+   The whole headline arrives as one unit rather than line-by-line, since
+   there's no longer a fixed line to mask. */
+.heroin #top h1{animation:settle .4s ease-out .32s backwards}
 
 /* everything else simply settles: no travel worth noticing, just enough
    to arrive in reading order behind the sentence */
@@ -1870,10 +1849,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 @keyframes settle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 @media (prefers-reduced-motion:reduce){
-  .heroin #top h1 .h1-a,.heroin #top h1 .h1-b,
+  .heroin #top h1,
   .heroin .hp-frame img,
   .heroin .hero-sub,.heroin #top .cta{animation:none!important}
-  #top h1 .h1-line{overflow:visible}
 }
 
 /* ══ THE BOARD, RESTAGED ═════════════════════════════════════════════
@@ -1966,7 +1944,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    elsewhere. Taller, a larger plus, and the label a step up so the
    invitation and the reassurance stop reading as one grey line. */
 .padtrigger{position:relative;display:flex;align-items:center;gap:12px;width:100%;
-  margin:0;padding:19px 20px;cursor:pointer;text-align:left;
+  margin:0;padding:clamp(14px,2.2vw,20px) 20px;cursor:pointer;text-align:left;
   border:1px dashed color-mix(in srgb,var(--muted) 55%,transparent);
   border-radius:var(--r-card);
   /* the same ground the board opens onto — surface tint and the same
@@ -1979,6 +1957,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     opacity .18s linear,visibility 0s linear .18s}
 .padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
   border-radius:50%;background:var(--accent);color:#FFFFFF}
+/* the heading and its supporting line, one container, always stacked —
+   this no longer depends on viewport width the way it used to */
+.padtriggercopy{display:flex;flex-direction:column;gap:2px;min-width:0}
 .padtriggertext{font-size:15px;font-weight:500;letter-spacing:-.012em}
 .padtriggerhint{font-size:13px;color:var(--faint);letter-spacing:-.005em}
 /* :hover still matches a disabled button, so this only has to work
@@ -2071,13 +2052,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .padwrap:not(.is-ready) .padtrigger{transition:none!important}
 
 @media (max-width:560px){
-  .padtrigger{flex-wrap:wrap;gap:8px 11px}
-  .padtriggerhint{flex:1 0 100%;padding-left:37px;
-    transition:padding-left .3s var(--ease)}
-  /* the indent cleared the plus. Open, there is no plus to clear, and the
-     hint was left hanging off the title it belongs under. */
-  .padwrap.is-open .padtriggerhint{padding-left:0}
-
   /* This lived with the other phone rules, 1000 lines above the
      unconditional .padwrap.is-open .padstack rule — same specificity,
      so the later one won and the phone board has been 300px, not the
@@ -2294,14 +2268,17 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    here is what makes the two pills the same height while the pad is
    shut, at every width, including the phone where the row wraps to two
    lines -- rather than a number copied from one viewport. */
-.notesrow{display:flex;align-items:flex-start;gap:var(--s-4)}
-.notesrow > .padstack{flex:1 1 auto;min-width:0}
-#notes .readpill{flex:0 0 auto;min-height:var(--trig-h,70px)}
+.notesrow{display:flex;align-items:flex-start;gap:var(--gap)}
+.notesrow > .padstack{flex:1 1 0;min-width:0}
+#notes .readpill{flex:1 1 0;min-width:0;min-height:var(--trig-h,70px)}
 
 /* Below this the pad has no width to spare, so they stack and the pill
    goes full width -- a row of its own rather than a squeezed column. */
 @media (max-width:700px){
   .notesrow{flex-direction:column;align-items:stretch;gap:var(--s-3)}
+  /* stacked, so each pill sizes to its own content height rather than
+     splitting a shared height meant for side-by-side columns */
+  .notesrow > .padstack,#notes .readpill{flex:none}
   /* full width now, so the arrow goes to the far edge rather than
      trailing the text and stranding itself in the middle */
   #notes .readpill{min-height:0}
@@ -2325,7 +2302,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    rings between the faces -- and they all have to turn over together. */
 #notes .readpill{--rp-bg:#141414;--rp-fg:#FFFFFF;
   display:inline-flex;align-items:center;gap:var(--s-4);
-  margin:0;padding:9px 16px 9px 10px;border-radius:var(--r-card);
+  margin:0;padding:clamp(14px,2.2vw,20px) 16px clamp(14px,2.2vw,20px) 10px;border-radius:var(--r-card);
   background:var(--rp-bg);
   color:var(--rp-fg);text-align:left;cursor:default;
   transition:background-color .25s var(--ease)}
@@ -2592,63 +2569,13 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         </div>
       </figure>
       <div class="hero-t">
-      <h1><span class="h1-line"><span class="h1-a">Hi, I’m Lokesh,</span></span><span class="h1-line"><span class="h1-b">I turn user needs into products that drive growth.</span></span></h1>
+      <h1>Hi, I’m Lokesh, I turn <span class="h1-key">user needs</span> into <span class="h1-key">products</span> that <span class="h1-key">drive growth</span>.</h1>
       <p class="hero-sub">Product designer with 3 years of experience. I’ve owned a trading app responsible for 97% of company revenue, built our first referral-partner B2B product, and taken an AI agent platform from 0&#8594;1.</p>
       <div class="cta">
         <a class="pill pill-primary" href="mailto:hi.lokeshux@gmail.com">Email me<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       
         <a class="pill pill-li" href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="notes" data-section="Notes board">
-    <div class="padwrap" data-reveal>
-      <h2 class="sr-only">The floor is yours.</h2>
-
-      <div class="notesrow">
-      <div class="padstack">
-      <button type="button" class="padtrigger" id="padTrigger">
-        <span class="padtriggerplus" aria-hidden="true">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        </span>
-        <span class="padtriggertext">The floor is yours.</span>
-        <span class="padtriggerhint">Leave a note &#8212; anonymous, and I read every one.</span>
-      </button>
-
-      <div class="padboard" id="padBoard">
-        <div class="padblank" id="padBlank">
-          <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
-            <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          </button>
-          <p class="padblanktext">A thought, a question, something you&#8217;d have done differently. Whatever you want to say.</p>
-        </div>
-
-        <div class="padtoast" id="padToast" role="status" hidden>
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span id="padToastText">Sent. Thank you &#8212; I read every one.</span>
-        </div>
-
-        <div class="padbar" role="toolbar" aria-label="Board tools">
-          <button type="button" class="padtool" id="padAdd" title="Add a note" aria-label="Add a note">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
-          <span class="padcount" id="padCount" aria-live="polite">1</span>
-          <span class="padsep" aria-hidden="true"></span>
-          <button type="button" class="padtool padtrash" id="padClear" title="Clear the board" aria-label="Clear the board">
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 4.5h9M6.5 4.5V3.2h3v1.3M5 4.5l.6 8h4.8l.6-8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <button type="button" class="padsend" id="padSend" title="Send these to me" aria-label="Send these notes to Lokesh">
-            <svg class="ico-send" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14 2 7.4 8.6M14 2l-4.3 12-2.3-5.4L2 6.3 14 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-            <svg class="ico-done" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="sendlabel">Send</span></button>
-        </div>
-      </div>
-      </div>
-
-      <span class="readpill" data-readpill>
-        <span class="rp-faces" aria-hidden="true"><i style="background:#D8E4F2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.6 0-6 2.5-6 6.1 0 2.7.3 5.5-.5 7.7h3c-.7-2-.9-4.3-.9-6.4 0-2.7 1.9-4.1 4.4-4.1s4.4 1.4 4.4 4.1c0 2.1-.2 4.4-.9 6.4h3c-.8-2.2-.5-5-.5-7.7 0-3.6-2.4-6.1-6-6.1Z" fill="#2B2320"/><circle cx="12" cy="25.6" r="8.6" fill="#2A6BB0"/><circle cx="12" cy="10.6" r="4.9" fill="#F2CBA8"/><path d="M12 5.3c-2.9 0-4.5 1.8-4.5 4.1 0 .5.1 1 .2 1.5.7-1.7 2.4-2.6 4.3-2.6s3.6.9 4.3 2.6c.1-.5.2-1 .2-1.5 0-2.3-1.6-4.1-4.5-4.1Z" fill="#2B2320"/></svg></i><i style="background:#F5E2CC"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="2.9" r="2.3" fill="#3E2A20"/><circle cx="12" cy="25.6" r="8.6" fill="#C4762A"/><circle cx="12" cy="10.6" r="4.9" fill="#E0AC80"/><path d="M12 4.6c-3 0-5 2-5 4.8 0 .7.1 1.4.3 2 .6-2 2.4-3.1 4.7-3.1s4.1 1.1 4.7 3.1c.2-.6.3-1.3.3-2 0-2.8-2-4.8-5-4.8Z" fill="#3E2A20"/></svg></i><i style="background:#D9E9DC"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.7 0-6.1 2.5-6.1 6.2 0 1.9.2 3.7.2 5.4h2.6c-.5-1.6-.7-3.4-.7-5 0-2.7 1.7-4.3 4-4.3s4 1.6 4 4.3c0 1.6-.2 3.4-.7 5h2.6c0-1.7.2-3.5.2-5.4 0-3.7-2.4-6.2-6.1-6.2Z" fill="#1E1A17"/><circle cx="12" cy="25.6" r="8.6" fill="#4E8A5F"/><circle cx="12" cy="10.6" r="4.9" fill="#C08457"/><path d="M12 5.4c-2.9 0-4.6 1.8-4.6 4.2 0 .6.1 1.1.3 1.6.9-1.4 2.4-2.1 4.3-2.1s3.4.7 4.3 2.1c.2-.5.3-1 .3-1.6 0-2.4-1.7-4.2-4.6-4.2Z" fill="#1E1A17"/></svg></i><i class="rp-me">+1</i></span>
-        <span class="rp-txt"><b data-rp-line>You&#8217;re in the count.</b><span class="rp-sub"><span class="rp-sub-a">That +1 was you.</span><span class="rp-sub-b" aria-hidden="true">Still building the page that shows the rest</span></span></span>
-      </span>
       </div>
     </div>
   </section>
@@ -2693,7 +2620,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         <div class="worktext">
           <h3>An AI agent platform, concept to public launch</h3>
           <span class="desc">Runable &#183; Founding designer &#183; AI product</span>
-          
+
           <p class="workfacts"><b>~$1M</b> run-rate in month one <i>&#183;</i> <b>0&#8594;1</b> concept to launch</p>
           <span class="workcta livecta"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>View live<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         </div>
@@ -2709,6 +2636,58 @@ body:not(.arriving) .hp-frame img{will-change:auto}
             <p class="soonhover" aria-hidden="true">Coming soon</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div id="notes" data-section="Notes board">
+      <div class="padwrap" data-reveal>
+      <h2 class="sr-only">The floor is yours.</h2>
+
+      <div class="notesrow">
+      <div class="padstack">
+      <button type="button" class="padtrigger" id="padTrigger">
+        <span class="padtriggerplus" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </span>
+        <span class="padtriggercopy">
+          <span class="padtriggertext">The floor is yours.</span>
+          <span class="padtriggerhint">Leave a note &#8212; anonymous, and I read every one.</span>
+        </span>
+      </button>
+
+      <div class="padboard" id="padBoard">
+        <div class="padblank" id="padBlank">
+          <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
+            <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+          <p class="padblanktext">A thought, a question, something you&#8217;d have done differently. Whatever you want to say.</p>
+        </div>
+
+        <div class="padtoast" id="padToast" role="status" hidden>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="padToastText">Sent. Thank you &#8212; I read every one.</span>
+        </div>
+
+        <div class="padbar" role="toolbar" aria-label="Board tools">
+          <button type="button" class="padtool" id="padAdd" title="Add a note" aria-label="Add a note">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+          <span class="padcount" id="padCount" aria-live="polite">1</span>
+          <span class="padsep" aria-hidden="true"></span>
+          <button type="button" class="padtool padtrash" id="padClear" title="Clear the board" aria-label="Clear the board">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 4.5h9M6.5 4.5V3.2h3v1.3M5 4.5l.6 8h4.8l.6-8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="padsend" id="padSend" title="Send these to me" aria-label="Send these notes to Lokesh">
+            <svg class="ico-send" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14 2 7.4 8.6M14 2l-4.3 12-2.3-5.4L2 6.3 14 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <svg class="ico-done" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="sendlabel">Send</span></button>
+        </div>
+      </div>
+      </div>
+
+      <span class="readpill" data-readpill>
+        <span class="rp-faces" aria-hidden="true"><i style="background:#D8E4F2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.6 0-6 2.5-6 6.1 0 2.7.3 5.5-.5 7.7h3c-.7-2-.9-4.3-.9-6.4 0-2.7 1.9-4.1 4.4-4.1s4.4 1.4 4.4 4.1c0 2.1-.2 4.4-.9 6.4h3c-.8-2.2-.5-5-.5-7.7 0-3.6-2.4-6.1-6-6.1Z" fill="#2B2320"/><circle cx="12" cy="25.6" r="8.6" fill="#2A6BB0"/><circle cx="12" cy="10.6" r="4.9" fill="#F2CBA8"/><path d="M12 5.3c-2.9 0-4.5 1.8-4.5 4.1 0 .5.1 1 .2 1.5.7-1.7 2.4-2.6 4.3-2.6s3.6.9 4.3 2.6c.1-.5.2-1 .2-1.5 0-2.3-1.6-4.1-4.5-4.1Z" fill="#2B2320"/></svg></i><i style="background:#F5E2CC"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="2.9" r="2.3" fill="#3E2A20"/><circle cx="12" cy="25.6" r="8.6" fill="#C4762A"/><circle cx="12" cy="10.6" r="4.9" fill="#E0AC80"/><path d="M12 4.6c-3 0-5 2-5 4.8 0 .7.1 1.4.3 2 .6-2 2.4-3.1 4.7-3.1s4.1 1.1 4.7 3.1c.2-.6.3-1.3.3-2 0-2.8-2-4.8-5-4.8Z" fill="#3E2A20"/></svg></i><i style="background:#D9E9DC"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.7 0-6.1 2.5-6.1 6.2 0 1.9.2 3.7.2 5.4h2.6c-.5-1.6-.7-3.4-.7-5 0-2.7 1.7-4.3 4-4.3s4 1.6 4 4.3c0 1.6-.2 3.4-.7 5h2.6c0-1.7.2-3.5.2-5.4 0-3.7-2.4-6.2-6.1-6.2Z" fill="#1E1A17"/><circle cx="12" cy="25.6" r="8.6" fill="#4E8A5F"/><circle cx="12" cy="10.6" r="4.9" fill="#C08457"/><path d="M12 5.4c-2.9 0-4.6 1.8-4.6 4.2 0 .6.1 1.1.3 1.6.9-1.4 2.4-2.1 4.3-2.1s3.4.7 4.3 2.1c.2-.5.3-1 .3-1.6 0-2.4-1.7-4.2-4.6-4.2Z" fill="#1E1A17"/></svg></i><i class="rp-me">+1</i></span>
+        <span class="rp-txt"><b data-rp-line>You&#8217;re in the count.</b><span class="rp-sub"><span class="rp-sub-a">That +1 was you.</span><span class="rp-sub-b" aria-hidden="true">Still building the page that shows the rest</span></span></span>
+      </span>
+      </div>
       </div>
     </div>
   </section>
