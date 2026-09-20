@@ -2077,6 +2077,12 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    ~1.4s, inside a 1.75s hold, so it finishes and can be read before it
    leaves.
    ═══════════════════════════════════════════════════════════════════ */
+/* Figma's selection blue, quoted literally. The site accent (#006AD4) is
+   a deeper navy and reads as "a blue box"; #0D99FF is the exact hue a
+   designer sees a hundred times a day, and the recognition is the whole
+   point of the gesture. It is the one piece of chrome here that does not
+   theme — it is the same blue in Figma's light and dark UI. */
+#loader{--fig:#0D99FF}
 #loader .box{padding:clamp(13px,1.8vw,18px) clamp(18px,2.6vw,26px)}
 
 /* the object being selected. 400, not 500: at this size the heavier
@@ -2088,62 +2094,98 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   font-size:clamp(22px,3.6vw,34px);font-weight:400;
   letter-spacing:-.022em;line-height:1.12;color:var(--ink)}
 
-/* the marquee: a rectangle pulled out of the top-left corner. width and
-   height rather than a transform, because a scaled border thins on one
-   axis and thickens on the other — this keeps a true 1.5px edge at
-   every moment of the drag. It is one absolutely-positioned box, so
-   nothing else on the page relays out while it grows. */
+/* the frame being drawn: a rectangle pulled out of the top-left corner.
+   width and height rather than a transform, because a scaled border
+   thins on one axis and thickens on the other — this keeps a true
+   hairline edge at every moment of the drag.
+
+   1px, not 1.5: Figma's frame outline is a hairline, and the half-pixel
+   was what made this read as a drawn box rather than a tool's chrome.
+   The wash inside is Figma's too — while you are dragging, the area is
+   filled at ~8%, and it clears the instant you let go. */
 #loader .sel{position:absolute;left:0;top:0;width:0;height:0;
-  border:1.5px solid var(--accent);background:transparent;
-  animation:lodDraw .45s cubic-bezier(.32,.72,.3,1) .56s both}
+  border:1px solid var(--fig);
+  background:color-mix(in srgb,var(--fig) 8%,transparent);
+  animation:lodDraw .45s cubic-bezier(.32,.72,.3,1) .56s both,
+            lodWash .18s linear 1.01s both}
 
-/* square handles, the way a design tool draws them — after the release */
-#loader .dot{width:8px;height:8px;border-radius:2px;
-  background:var(--bg);box-shadow:0 0 0 1.5px var(--accent);opacity:0;
-  animation:lodHandle .24s cubic-bezier(.3,1.6,.5,1) both}
-#loader .dot.tl{top:-4px;left:-4px;animation-delay:1.02s}
-#loader .dot.tr{top:-4px;right:-4px;animation-delay:1.05s}
-#loader .dot.bl{bottom:-4px;left:-4px;animation-delay:1.08s}
-#loader .dot.br{bottom:-4px;right:-4px;animation-delay:1.11s}
+/* the live dimension badge. It lives INSIDE .sel, so it hangs off the
+   bottom edge and travels with the corner the whole way down — which is
+   what Figma does, and what a badge parked at a fixed spot cannot fake.
+   It leaves on release, because Figma's does: once the frame exists you
+   get its name, not its size. */
+#loader .dims{position:absolute;top:100%;left:50%;margin-top:7px;
+  padding:2px 6px;border-radius:2px;white-space:nowrap;
+  background:var(--fig);color:#fff;
+  font-family:var(--display);font-size:11px;font-weight:500;
+  letter-spacing:0;line-height:1.45;
+  opacity:0;transform:translateX(-50%);
+  /* .82s, not .74: earlier than this the frame is still narrower than
+     the badge, so the badge sat across the name instead of under an
+     edge. By .82 the drag is far enough out to carry it. */
+  animation:lodDims .16s linear .82s both,
+            lodDimsOut .14s linear 1.01s both}
 
-/* the dimension chip, saying something truer than a width and a height.
-   Bottom-left, because the cursor finishes on the right corner and two
-   objects on one corner reads as a collision. */
-#loader .tag.bot{top:auto;bottom:-32px;left:0;right:auto;
-  padding:3px 7px;border-radius:4px;
-  background:var(--accent);color:var(--onAccent);
-  font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.02em;
-  opacity:0;transform-origin:0 0;
-  animation:lodChip .28s cubic-bezier(.16,.84,.24,1) 1.10s both}
+/* square handles, the way a design tool draws them — after the release.
+   White fill and a 1px ring, 7px: Figma's are squares, and the 8px/2px
+   radius they had before rounded into dots at this size. */
+#loader .dot{width:7px;height:7px;border-radius:1px;
+  background:#fff;box-shadow:0 0 0 1px var(--fig);opacity:0;
+  animation:lodHandle .2s cubic-bezier(.3,1.5,.5,1) both}
+#loader .dot.tl{top:-3.5px;left:-3.5px;animation-delay:1.04s}
+#loader .dot.tr{top:-3.5px;right:-3.5px;animation-delay:1.07s}
+#loader .dot.bl{bottom:-3.5px;left:-3.5px;animation-delay:1.10s}
+#loader .dot.br{bottom:-3.5px;right:-3.5px;animation-delay:1.13s}
+
+/* the frame's name, above its top-left corner — plain blue text, no
+   pill. This is the single most recognisable mark Figma leaves on a
+   canvas, and without it the composition reads as "something selected"
+   rather than "a frame that was just drawn". It says what the frame is,
+   which is the same trick the dimension badge was doing, now in the
+   place Figma actually puts a name. */
+#loader .tag.top{top:auto;bottom:100%;left:0;right:auto;
+  margin-bottom:6px;padding:0;background:none;
+  font-family:var(--display);font-size:11px;font-weight:400;
+  letter-spacing:0;color:var(--fig);
+  opacity:0;animation:lodLabel .22s cubic-bezier(.16,.84,.24,1) 1.06s both}
 
 /* the cursor travels in left/top rather than translate: percentages
-   there resolve against the frame, so it tracks the corner of the
-   marquee it is pulling instead of a guessed pixel distance */
+   there resolve against the frame, so it tracks the corner of the frame
+   it is pulling instead of a guessed pixel distance. It is a crosshair,
+   not an arrow, because that is the cursor the frame tool puts under
+   your hand — and it carries a background-coloured halo so it stays
+   legible where it crosses the name. Centred on its own point via the
+   negative margin, since a crosshair's hotspot is its middle. */
 #loader .curwrap{position:absolute;inset:0;pointer-events:none;z-index:3}
-#loader .cur{position:absolute;left:0;top:0;width:17px;height:17px;
-  color:var(--ink);opacity:0;
+#loader .cur{position:absolute;left:0;top:0;width:18px;height:18px;
+  margin:-9px 0 0 -9px;color:var(--ink);opacity:0;
   animation:lodCur .88s cubic-bezier(.3,.7,.32,1) .2s both}
 #loader .cur svg{display:block;width:100%;height:100%}
 #loader.hide .cur{opacity:0;transition:opacity .2s linear}
 
 @keyframes lodName{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
 @keyframes lodDraw{from{width:0;height:0}to{width:100%;height:100%}}
+@keyframes lodWash{from{background-color:color-mix(in srgb,var(--fig) 8%,transparent)}
+  to{background-color:transparent}}
+@keyframes lodDims{from{opacity:0}to{opacity:1}}
+@keyframes lodDimsOut{from{opacity:1}to{opacity:0}}
 @keyframes lodHandle{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
-@keyframes lodChip{from{opacity:0;transform:translateY(-5px) scale(.88)}
-  to{opacity:1;transform:none}}
+@keyframes lodLabel{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 /* in from off-corner, press, then drag to the opposite corner */
 @keyframes lodCur{
   0%{opacity:0;left:-62px;top:-48px;transform:scale(1)}
   24%{opacity:1;left:0;top:0;transform:scale(1)}
-  32%{transform:scale(.8)}
+  32%{transform:scale(.82)}
   40%{left:0;top:0;transform:scale(1)}
   92%{left:100%;top:100%;transform:scale(1)}
   100%{opacity:1;left:100%;top:100%;transform:scale(1)}}
 
 @media (prefers-reduced-motion:reduce){
-  #loader .name,#loader .sel,#loader .dot,#loader .tag.bot,#loader .cur{
+  #loader .name,#loader .sel,#loader .dot,#loader .tag.top,#loader .dims,#loader .cur{
     animation:none!important;opacity:1!important;transform:none!important}
-  #loader .sel{width:100%;height:100%}
+  #loader .sel{width:100%;height:100%;background:transparent}
+  #loader .dims{display:none}
+  #loader .tag.top{transform:none!important}
 }
 
 /* ── the live-product pill ───────────────────────────────────────────
@@ -2437,11 +2479,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 <div class="halftone halftone-down" aria-hidden="true"></div>
 <div id="loader" aria-hidden="true">
   <div class="box">
-    <span class="sel" aria-hidden="true"></span>
+    <span class="sel" aria-hidden="true"><span class="dims" id="loaderDims"></span></span>
+    <span class="tag top">Product Designer</span>
     <span class="dot tl"></span><span class="dot tr"></span><span class="dot bl"></span><span class="dot br"></span>
-    <span class="tag bot">Product Designer</span>
     <span class="name"><span>Lokesh Bhatia</span></span>
-    <span class="curwrap" aria-hidden="true"><span class="cur"><svg viewBox="0 0 16 16" fill="none"><path d="M3.2 1.8 12.6 7.5l-4 .9-1.7 4.1z" fill="currentColor" stroke="var(--bg)" stroke-width="1.1" stroke-linejoin="round"/></svg></span></span>
+    <span class="curwrap" aria-hidden="true"><span class="cur"><svg viewBox="0 0 18 18" fill="none"><path d="M9 .9v5.3M9 11.8v5.3M.9 9h5.3M11.8 9h5.3" stroke="var(--bg)" stroke-width="3.2" stroke-linecap="round"/><path d="M9 .9v5.3M9 11.8v5.3M.9 9h5.3M11.8 9h5.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></span>
   </div>
 </div>
 <div id="bgwash" aria-hidden="true"></div>
@@ -2860,6 +2902,17 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   try { if (sessionStorage.getItem("lb-intro") === "1") seen = true; } catch (e) {}
   try { sessionStorage.setItem("lb-intro", "1"); } catch (e) {}
   var hidden = false;
+  /* The badge reads the frame's real size. Figma's says what you have
+     actually dragged out, so a hardcoded pair of numbers would be the
+     one false note in an otherwise literal quotation. Measured off the
+     box the frame is drawn around, before the intro plays. */
+  (function(){
+    var box = loader && loader.querySelector(".box");
+    var dims = document.getElementById("loaderDims");
+    if (!box || !dims) return;
+    var r = box.getBoundingClientRect();
+    dims.textContent = Math.round(r.width) + " × " + Math.round(r.height);
+  })();
   /* Start the hero AFTER the loader has actually cleared.
      Both paths used to fire it at the same instant the loader began to
      go, and the loader takes 500ms to fade: the whole 600ms arrival
