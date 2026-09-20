@@ -154,7 +154,6 @@ html[data-theme="dark"] .icon-sun{display:none}
 @media (max-width:576px){
   nav.navlinks a{display:none}
   .navdiv{display:none}
-  .burger{display:grid}
 }
 :focus{outline:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
@@ -456,9 +455,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 .themebtn{width:28px;height:28px;margin-left:2px;border-radius:var(--r-pill);background:transparent;color:var(--navOff);display:inline-grid;place-items:center}
 .themebtn::before{display:none}
 .themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
-.burger{border-radius:var(--r-pill);background:transparent;color:var(--ink);width:28px;height:28px}
+.burger{position:relative;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
 @media (min-width:641px){header .burger{display:none}}
-@media (max-width:576px){nav.navlinks a{display:none}header .themebtn,header .burger{width:28px;height:28px;border-radius:var(--r-pill);background:transparent}}
+@media (max-width:576px){nav.navlinks a{display:none}}
 
 /* ── contact tab: peels off the top-right corner ── */
   transform:rotate(5deg) translateY(-10px);transform-origin:top right;
@@ -757,11 +756,10 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   background:transparent;color:var(--navOff);display:inline-grid;place-items:center;cursor:pointer}
 .themebtn::before{display:none}
 .themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
-.burger{width:28px;height:28px;border:0;border-radius:var(--r-pill);background:transparent;color:var(--ink)}
+.burger{position:relative;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
 @media (min-width:641px){header .burger{display:none}}
 @media (max-width:576px){
   nav.navlinks a{display:none}
-  header .themebtn,header .burger{width:28px;height:28px;border-radius:var(--r-pill);background:transparent}
 }
 
 /* ── footer ── */
