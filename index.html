@@ -145,7 +145,6 @@ header.scrolled .navlink{min-width:34px}
 .icon-sun,.icon-moon{line-height:0}
 html:not([data-theme="dark"]) .icon-moon{display:none}
 html[data-theme="dark"] .icon-sun{display:none}
-.burger{display:grid;width:44px;height:44px;border:0;background:var(--tint);border-radius:4px;color:var(--ink);cursor:pointer;place-items:center;position:relative}
 .burger span.bars{display:flex;flex-direction:column;gap:var(--s-1)}
 .burger span.bars span{width:18px;height:2px;background:currentColor;border-radius:2px;display:block}
 .burger .bicon-bars,.burger .bicon-x{grid-area:1/1;display:grid;place-items:center;transition:opacity .22s ease,transform .22s ease}
@@ -164,7 +163,7 @@ html[data-theme="dark"] .icon-sun{display:none}
 .mobilenav button:focus:not(:focus-visible){outline:none}
 body.menu-open{overflow:hidden;position:fixed;width:100%}
 .mobilenav{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s;overscroll-behavior:contain;flex-direction:column;min-height:100dvh;overflow-y:auto;padding-top:calc(59px + env(safe-area-inset-top))}
-@media (max-width:576px){header .themebtn,header .burger{width:44px;height:44px;display:grid;place-items:center;border-radius:6px;background:var(--tint);border:0;color:var(--ink)}header .themebtn::before{display:none}nav.navlinks{gap:8px}}
+@media (max-width:576px){nav.navlinks{gap:8px}header .themebtn::before{display:none}}
 body.menu-open header{z-index:70}
 @media (min-width:641px){header .burger{display:none}}
 .mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
