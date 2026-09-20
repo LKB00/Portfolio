@@ -2111,30 +2111,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      something drawn. The drag is the whole story — it gets the time. */
   animation:lodDraw .6s cubic-bezier(.32,.72,.3,1) .6s both}
 
-/* the live dimension badge. It lives INSIDE .sel, so it hangs off the
-   bottom edge and travels with the corner the whole way down — which is
-   what Figma does, and what a badge parked at a fixed spot cannot fake.
-   It leaves on release, because Figma's does: once the frame exists you
-   get its name, not its size.
-
-   Sized off a real screenshot: 13px semibold in a 6px-radius pill, not
-   the 11px/2px chip this was. At the smaller size it read as a tooltip;
-   Figma's is a confident, legible label. */
-#loader .dims{position:absolute;top:100%;left:50%;margin-top:13px;
-  padding:5px 11px;border-radius:6px;white-space:nowrap;
-  background:var(--fig);color:#fff;
-  font-family:var(--display);font-size:13px;font-weight:500;
-  letter-spacing:0;line-height:1.35;
-  opacity:0;transform:translateX(-50%);
-  /* In and out on ONE timeline. As two animations it was broken: the
-     fade-out carried fill:both, so its backwards fill held opacity:1
-     from frame zero and won on the property — the badge was on screen
-     before the drag had started, floating over the name.
-
-     .92s in: earlier than that the frame is still narrower than the
-     badge, and it sits across the name instead of under an edge. */
-  animation:lodDims .42s linear .92s both}
-
 /* The corner handles, and the two things that were wrong with them.
 
    They are children of .sel, not of .box. That is what lets them show
@@ -2180,14 +2156,12 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
 @keyframes lodName{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
 @keyframes lodDraw{from{width:0;height:0}to{width:100%;height:100%}}
-@keyframes lodDims{0%{opacity:0}38%{opacity:1}67%{opacity:1}100%{opacity:0}}
 @keyframes lodHandle{from{opacity:0}to{opacity:1}}
 @keyframes lodLabel{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){
-  #loader .name,#loader .sel,#loader .dot,#loader .tag.top,#loader .dims{
+  #loader .name,#loader .sel,#loader .dot,#loader .tag.top{
     animation:none!important;opacity:1!important}
   #loader .sel{width:100%;height:100%}
-  #loader .dims{display:none}
   #loader .tag.top{transform:none!important}
 }
 
@@ -2482,7 +2456,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 <div class="halftone halftone-down" aria-hidden="true"></div>
 <div id="loader" aria-hidden="true">
   <div class="box">
-    <span class="sel" aria-hidden="true"><span class="dims" id="loaderDims"></span><span class="dot tl"></span><span class="dot tr"></span><span class="dot bl"></span><span class="dot br"></span></span>
+    <span class="sel" aria-hidden="true"><span class="dot tl"></span><span class="dot tr"></span><span class="dot bl"></span><span class="dot br"></span></span>
     <span class="tag top">Product Designer</span>
     <span class="name"><span>Lokesh Bhatia</span></span>
   </div>
@@ -2903,17 +2877,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   try { if (sessionStorage.getItem("lb-intro") === "1") seen = true; } catch (e) {}
   try { sessionStorage.setItem("lb-intro", "1"); } catch (e) {}
   var hidden = false;
-  /* The badge reads the frame's real size. Figma's says what you have
-     actually dragged out, so a hardcoded pair of numbers would be the
-     one false note in an otherwise literal quotation. Measured off the
-     box the frame is drawn around, before the intro plays. */
-  (function(){
-    var box = loader && loader.querySelector(".box");
-    var dims = document.getElementById("loaderDims");
-    if (!box || !dims) return;
-    var r = box.getBoundingClientRect();
-    dims.textContent = Math.round(r.width) + " × " + Math.round(r.height);
-  })();
   /* Start the hero AFTER the loader has actually cleared.
      Both paths used to fire it at the same instant the loader began to
      go, and the loader takes 500ms to fade: the whole 600ms arrival
