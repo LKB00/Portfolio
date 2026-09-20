@@ -2084,14 +2084,19 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #loader{--fig:#0D99FF}
 #loader .box{padding:clamp(13px,1.8vw,18px) clamp(18px,2.6vw,26px)}
 
-/* the object being selected. 400, not 500: at this size the heavier
-   cut read as a headline competing with the hero it hands over to —
-   this is a name, set quietly. */
+/* the object being selected. Serif, because every heading on this site
+   is serif and this is the first word of it — in the sans it read as
+   UI chrome rather than as the page's own voice.
+
+   400, not 500: at this size the heavier cut read as a headline
+   competing with the hero it hands over to — this is a name, set
+   quietly. Tracking is the h1's -.02em; the -.022em it carried was
+   tuned for Geist and pulls STIX too tight. */
 #loader .name{overflow:visible;max-width:none;
   animation:lodName .4s cubic-bezier(.16,.84,.24,1) both}
-#loader .name span{font-family:var(--display);
-  font-size:clamp(22px,3.6vw,34px);font-weight:400;
-  letter-spacing:-.022em;line-height:1.12;color:var(--ink)}
+#loader .name span{font-family:var(--serif);
+  font-size:clamp(24px,3.8vw,36px);font-weight:400;
+  letter-spacing:-.02em;line-height:1.12;color:var(--ink)}
 
 /* the frame being drawn: a rectangle pulled out of the top-left corner.
    width and height rather than a transform, because a scaled border
