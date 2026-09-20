@@ -23,17 +23,17 @@
 <link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
-::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.6s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
 @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
 
 /* ── design tokens: jaimec.co-inspired ── */
 :root{
   --ease:cubic-bezier(.22,1,.36,1);
-  --bg:#FAFAFA; --surface:#F2F2F2; --card:#FFFFFF; --line:#E8E8E8;
+  --bg:#FAFAFA; --surface:#F2F2F2; --card:#FFFFFF; --line:rgba(36,32,32,.10);
   /* the hero frame's ground. Not a new colour: 16% of the readership
      pill's purple on white, so the two purples on the page are the
      same purple at different strengths. */
@@ -53,7 +53,7 @@
      to a second shape. Two tokens, one line each. */
   --hero-shape:50% 50% 50% 8% / 42% 42% 46% 8%;
   --hero-shape-alt:50% 50% 8% 50% / 42% 42% 8% 46%;
-  --ink:#141414; --muted:#5C5C5C; --faint:#6D6D6D;
+  --ink:#242020; --muted:#7A7676; --faint:#B0ACAC;
   --link:#006AD4; --dark:#171717; --onDark:#FFFFFF;
   --yellow:#FBE14D; --onYellow:#3D3400;
   /* The Next card's ground: the same violet family as the hero frame's
@@ -64,17 +64,20 @@
   --r-pill:1000px; --r-card:20px; --r-float:16px; --r-sm:10px;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
   --display:'Geist','Inter',Helvetica,Arial,sans-serif;
-  --serif:var(--display); --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --t-display:24px; --t-lead:15px; --t-body:15px; --t-title:14px; --t-meta:13px; --t-ui:13px; --t-small:12px; --t-micro:11px; --t-xs:11px;
-  --t-h1:24px; --t-h2:14px; --t-h3:13px;
+  --serif:'STIX Two Text','STIX Two Math',Georgia,serif; --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --t-display:40px; --t-lead:16px; --t-body:16px; --t-title:14px; --t-meta:13px; --t-ui:13px; --t-small:12px; --t-micro:11px; --t-xs:11px;
+  --t-h1:40px; --t-h2:26px; --t-h3:13px;
   --t-body-lg:15px; --t-btn:13px; --t-mono:11px; --t-mono-lg:12px; --t-mono-sm:11px; --t-statement:15px;
   --lh-body:1.42; --lh-head:1.2; --lh-display:1.2; --lh-snug:1.3;
   --tr-display:-.01em; --tr-head:-.01em; --tr-body:-.01em; --tr-label:.02em; --tr-mono:0;
   /* one frame shape for every work card: as landscape as the phone
      mockups can stand, so the two web shots keep tight even air */
   --card-ar:100/77;
-  --s-1:4px; --s-2:7px; --s-3:10px; --s-4:13px; --s-5:18px;
-  --s-6:24px; --s-7:36px; --s-8:45px; --s-9:67px;
+  /* redefined to resolve to the case-study pages' 5-step scale
+     (8/16/32/56/96px) — old step names kept so every declaration
+     across the file picks up the shared values automatically */
+  --s-1:8px; --s-2:8px; --s-3:8px; --s-4:16px; --s-5:16px;
+  --s-6:32px; --s-7:32px; --s-8:56px; --s-9:56px;
   --col:821px; --card-w:400px; --gap:24px;
   --pad:18px; --w-content:821px; --w-text:468px; --measure:468px; --secY:67px;
   --dot:rgba(20,20,20,.10); --frameSh:rgba(0,0,0,.14);
@@ -82,17 +85,17 @@
   --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
   --tint:var(--surface); --bg2:var(--surface); --deep:var(--dark); --onDeep:var(--onDark);
   --gain:#1F9D4D; --gainWash:rgba(31,157,77,.10); --live:#177A3C;
-  --neg:#C62A1D; --negWash:rgba(198,42,29,.10);
+  --neg:#C64B3D; --negWash:rgba(198,42,29,.10);
   --card-tint-01:#F2F2F2; --card-tint-02:#F2F2F2; --card-tint-03:#F2F2F2;
   --navOn:var(--ink); --navOff:#5C5C5C;
 }
 :root[data-theme="dark"]{
-  --bg:#0F0F0F; --surface:#1A1A1A; --card:#161616; --line:#262626;
+  --bg:#0F0F0F; --surface:#1A1A1A; --card:#161616; --line:rgba(255,255,255,.10);
   /* 22% rather than 16%: the same tint over #1A1A1A instead of white,
      mixed harder so the frame keeps the separation from the page that
      it has in the light theme (1.29 against 1.23). */
   --lavender:#2C2243;
-  --ink:#EDEDED; --muted:#A1A1A1; --faint:#8A8A8A;
+  --ink:#F3EEEE; --muted:#A69E9E; --faint:#6E6666;
   --link:#5EA9F5; --dark:#EDEDED; --onDark:#141414;
   --yellow:#E5CB3C; --onYellow:#2A2400;
   /* deepened for the dark theme, the way --yellow is, so the card still
@@ -104,6 +107,7 @@
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
   --tint:var(--surface); --bg2:var(--surface); --deep:#EDEDED; --onDeep:#141414;
   --gain:#4ED07F; --gainWash:rgba(78,208,127,.14); --live:#4ED07F;
+  --neg:#E0665A;
   --card-tint-01:#1A1A1A; --card-tint-02:#1A1A1A; --card-tint-03:#1A1A1A;
   --navOff:#A1A1A1; --navOn:var(--ink);
 }
@@ -380,8 +384,6 @@ html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='h
 img.bg{opacity:0;transition:opacity .5s ease}
 img.bg.loaded{opacity:1}
 
-::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
-
 #noticeBanner{--nb-bg:#0E4A47;--nb-ink:#F3F7F5;--nb-muted:#AFC9C5;--nb-line:#17605C;--nb-btn:#F5F1E8;--nb-btnInk:#0B3B39;position:fixed;left:16px;right:16px;bottom:16px;z-index:60;width:auto;max-width:792px;margin:0 auto;display:flex;align-items:center;gap:13px;padding:16px 18px;background:var(--nb-bg);border:1px solid var(--nb-line);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.20),0 6px 16px rgba(0,0,0,.26),0 28px 64px -12px rgba(0,0,0,.42);opacity:0;transform:translateY(12px);transition:opacity .24s ease-out,transform .24s ease-out;pointer-events:none}
 :root[data-theme="dark"] #noticeBanner{box-shadow:0 0 0 1px rgba(255,255,255,.10),0 2px 8px rgba(0,0,0,.5),0 16px 40px rgba(0,0,0,.6)}
 #noticeBanner.show{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -427,7 +429,7 @@ section{position:relative;z-index:2;padding-bottom:clamp(42px,7vw,62px)}
 #top,#work,#impact,#notes,#experience,#contact{max-width:var(--col);margin:0 auto}
 
 /* ── type: small, quiet, uniform ── */
-h1,h2,h3,.subhead,.lead,.statement,.exp-co,.worktext h3,#contact h2{
+h1,h2,h3,.subhead,.lead,.statement,#contact h2{
   font-family:var(--display);font-size:var(--t-body);font-weight:400;
   line-height:var(--lh-body);letter-spacing:var(--tr-body);color:var(--ink);margin:0}
 .eyebrow,.prooflabel,.exp-date,.worktext .num{
@@ -513,7 +515,11 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 .workrow{display:block;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
 .workrow:hover{border:0;box-shadow:none}
 .workrow > div:first-child{grid-row:auto!important;grid-column:auto!important}
-.cardframe{position:relative;aspect-ratio:1/1;width:100%;border-radius:var(--r-card);background:var(--surface)!important;overflow:hidden;transition:transform .5s var(--ease)}
+/* 8px, not the shared --r-card (20px): matches the corner radius the
+   case-study pages use on their own screenshots (.shot{border-radius:8px}
+   in app-merge-v2/rise-portal/web-terminal), so a card's preview reads
+   as the same rounding the reader will see once they open it. */
+.cardframe{position:relative;aspect-ratio:1/1;width:100%;border-radius:8px;background:var(--surface)!important;overflow:hidden;transition:transform .5s var(--ease)}
 .cardframe img.bg{display:none!important}
 .cardframe > img:not(.bg){transition:transform .6s var(--ease)}
 @media (hover:hover){.workrow:hover .cardframe > img:not(.bg){transform:scale(1.03)}}
@@ -722,7 +728,7 @@ a:hover{color:var(--link);opacity:.7}
 ::selection{background:var(--markWash)}
 
 /* ── type scale: 30 display · 18 lead · 16 title · 15 ui · 14 meta · 12 label ── */
-h1,h2,h3,h4{font-family:var(--display);color:var(--ink);margin:0}
+h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0}
 .t-display{font-size:24px;font-weight:500;line-height:1.14;letter-spacing:-.022em;color:var(--ink)}
 .t-lead{font-size:15px;font-weight:400;line-height:1.5;color:var(--muted)}
 .t-title{font-size:14px;font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
@@ -922,7 +928,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   background:var(--card);color:var(--muted);box-shadow:var(--shadow-float);
   font-size:12.5px;line-height:1.35}
 .padtoast svg{flex:0 0 auto;color:var(--accent)}
-.padwrap [hidden]{display:none}
+/* scoped to the board itself, not .padwrap: the board is a direct
+   child of <body> while it floats open, outside .padwrap entirely */
+#padBoard [hidden]{display:none}
 
 @media (max-width:560px){
   /* 16px or iOS zooms the page the moment a note is focused, so the note
@@ -993,7 +1001,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* ══ WHERE I'VE WORKED — a rail, read top to bottom ══════════════ */
 #experience .exptimeline{position:relative;display:block;padding-left:20px;margin-top:2px;
   grid-template-columns:none;gap:0}
-#experience .exptimeline:before{content:"";display:block;position:absolute;left:4px;top:9px;bottom:12px;
+#experience .exptimeline:before{content:"";display:block;position:absolute;left:4px;top:9px;bottom:82px;
   width:1px;background:var(--line)}
 
 /* current status: where the rail starts */
@@ -1198,7 +1206,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .workrow .worktext{margin-top:14px!important}
 .workrow .cardframe{margin-bottom:0}
 
-.worktext h3{font-size:18px;font-weight:500;line-height:1.3;letter-spacing:-.018em;color:var(--ink)}
+.worktext h3{font-size:18px;font-weight:500;line-height:1.3;letter-spacing:-.018em;color:var(--muted)}
 .worktext .desc{display:block;margin-top:5px;font-size:13px;font-weight:400;
   line-height:1.45;color:var(--faint)}
 
@@ -1368,7 +1376,8 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 }
 @keyframes expblink{0%,100%{opacity:1}50%{opacity:0}}
 
-#experience .expacts{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto}
+#experience .expacts{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-height:24px}
+#experience .expbtn.no-ring:focus-visible{outline:none}
 #experience .expbtn{display:none;width:24px;height:24px;padding:0;border:0;cursor:pointer;
   border-radius:6px;background:transparent;color:var(--faint);
   align-items:center;justify-content:center;transition:background .18s ease,color .18s ease}
@@ -1385,8 +1394,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 #experience .expslot[data-state="editing"] .expbtn.is-done{display:inline-flex}
 
 /* ── filled: stop looking like a form, start looking like a role ── */
-#experience .expslot[data-state="filled"]{border-color:transparent;background:transparent;
-  padding-left:0;padding-right:2px}
+#experience .expslot[data-state="filled"]{border-color:transparent;background:transparent;padding-left:0}
 #experience .expslot[data-state="filled"] .expcaret,
 #experience .expslot[data-state="filled"] .expinput{display:none}
 #experience .expslot[data-state="filled"] .expname{display:inline-block}
@@ -1415,68 +1423,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   #experience .expinput,#experience .expname{font-size:16px}
   #experience .expslot{min-width:0;width:100%}
 }
-/* ══ WORK CARDS — hover overlay ══════════════════════════════════════
-   Default is the work alone: no title, no copy, just three images. On
-   hover the text rises over the image behind a gradient scrim.
-
-   The mechanism: .worktext goes position:absolute, which takes it OUT
-   of flow — so the card's height collapses to the image's height, and
-   the overlay lands exactly on the frame with inset:0. No reserved
-   space, no layout shift, and the grid becomes a clean row of images.
-
-   Scoped to (hover:hover) — touch devices, which cannot hover, keep the
-   text below the image exactly as before. :focus-within carries it for
-   keyboard users so they never tab into an invisible link.
-   ═══════════════════════════════════════════════════════════════════ */
-@media (hover:hover) and (min-width:901px){
-  .workrow{position:relative}
-
-  /* A sheet, not a scrim.
-     Both earlier attempts changed the whole card to show three lines of
-     text: first a black gradient over the full frame, then a frosted
-     wash over two thirds of it. Either way the picture was the thing
-     being altered, which is why it read as heavy-handed.
-
-     This alters nothing. A small panel — the page's own float material,
-     the one the toast, the palette and the annotation chips are made of
-     (var(--card), --r-float, --shadow-float) — rises 10px into place at
-     the foot of the frame, inset 12px so the artwork is still framed on
-     all four sides. The mock is untouched and stays sharp; the type sits
-     on its own opaque ground, so it keeps the page's normal ink and
-     faint colours and needs no white-on-black inversion.
-
-     One movement, one surface, nothing dimmed. */
-  .workrow .worktext{
-    position:absolute;left:12px;right:12px;bottom:12px;top:auto;
-    z-index:5;margin:0!important;display:block;
-    padding:14px 16px 15px;
-    border-radius:var(--r-float);background:var(--card);
-    box-shadow:var(--shadow-float);
-    opacity:0;transform:translateY(10px);
-    transition:opacity .3s var(--ease),transform .38s var(--ease)}
-
-  .workrow:hover .worktext,
-  .workrow:focus-within .worktext{opacity:1;transform:none}
-
-  /* the title stays 18px here: the same object — a case-study title —
-     was 18px on the wide card and 16px inside this panel, so identical
-     things were ranked differently on one screen */
-  .workrow .worktext h3{font-size:18px;line-height:1.3}
-  .workrow .worktext .desc{margin-top:3px}
-  .workrow .worktext .workfacts{margin-top:7px}
-  /* the whole card is the link and the cursor already says "open", so a
-     button inside the panel is one affordance too many */
-  .workrow .worktext .workcta{display:none}
-
-  /* the frame lifts very slightly to meet the cursor */
-  .workrow .cardframe{transition:transform .55s var(--ease)}
-  .workrow:hover .cardframe{transform:translateY(-3px)}
-}
-
-@media (prefers-reduced-motion:reduce){
-  .workrow .worktext,
-  .workrow .cardframe{transition:none!important;transform:none!important}
-}
 /* ══ RUNABLE, AND THE SLOT AFTER IT ═══════════════════════════════════
    Runable was a full-width feature card. With more studies coming, the
    grid reads better as a plain 2x2: same two column widths on both
@@ -1503,12 +1449,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   .workrow:hover .cardframe.runshot > img[data-mock="single"],
   .workrow:focus-within .cardframe.runshot > img[data-mock="single"]{
     transform:translate(-50%,-50%) translateY(-8px) scale(1.03)}
-}
-
-/* Runable has no case study to open, so its sheet keeps the one thing
-   the other two can drop: a visible way out to the live product. */
-@media (hover:hover) and (min-width:901px){
-  .workrow .worktext .workcta.livecta{display:inline-flex}
 }
 
 /* ── the next slot ──────────────────────────────────────────────────
@@ -1554,72 +1494,30 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    pattern the work cards use for their numbers, so a figure reads the
    same way everywhere on the page. */
 .hero-sub b{font-weight:500;color:var(--ink)}
-/* ══ APP MERGE CARD — two into one ═══════════════════════════════════
-   "Two apps into one, built to hold the third." So the card performs a
-   merge, and it performs it in 3D, because a flat slide-together reads
-   as two mockups placed next to each other rather than as a gesture.
+/* ══ APP MERGE CARD — one home screen, both products ══════════════════
+   "Two apps into one, built to hold the third." The merged Home screen
+   makes that argument on its own — Overall Portfolio, then IPO and NFO
+   side by side — so the card shows that one screen rather than staging
+   a merge gesture out of two unrelated ones.
 
-   At rest the screens are hinged open like two panels of a book — each
-   pivots on its INNER edge (transform-origin 100%/0%), swung back in Y
-   so the outer edges recede from the viewer. They breathe on a slow,
-   offset float so the card is alive before you touch it.
-
-   On hover the panels swing shut: rotateY resolves to 0, they slide
-   over one another, scale up, and the front screen lifts 34px toward
-   the viewer in Z so the stack has real depth rather than flat overlap.
-   The float pauses on hover so the closing gesture reads cleanly.
+   Sized larger than the frame and pinned to the top-left, the same way
+   the web cards let their screenshot bleed past the frame edge rather
+   than shrinking a portrait phone down to fit with empty gutters on
+   both sides.
    ═══════════════════════════════════════════════════════════════════ */
 .cardframe.merge2{overflow:hidden;aspect-ratio:var(--card-ar)}
 
-/* No perspective, no rotateY, no translateZ. The screens are known
-   shapes — a phone with straight edges — so any Y-axis foreshortening
-   reads as the image being stretched rather than as depth.
-   Depth is carried instead by SIZE, SHADOW and OVERLAP, which the eye
-   reads just as readily and which distorts nothing.
+.workrow .cardframe.merge2 .mgphone-single{
+  position:absolute;top:15.3%;left:11.75%;width:76.5%;height:auto;
+  filter:drop-shadow(-14px 22px 26px rgba(18,18,22,.24));
+  transition:transform .45s var(--ease)}
 
-   No will-change / backface-visibility either: those promote the node
-   to a composited layer, so the browser rasterises it once and then
-   GPU-scales the bitmap — which is what made the screens soft. Without
-   them each frame is rasterised at its real size and stays crisp.
-
-   The embedded artwork is 388x800, so the rendered width is held at or
-   under ~194px: exactly 2x on a retina display, never upscaled. */
-/* the frame is shorter now — the web cards were shortened so the air
-   around their screenshots is even on all four sides, and this card has
-   to match their height — so the phones are scaled to suit it rather
-   than being cropped by it */
-.workrow .cardframe.merge2 .mgphone{
-  position:absolute;top:12%;left:50%;width:30%;height:auto;
-  transition:transform 1s cubic-bezier(.16,1,.3,1),filter .8s ease;
-  animation:mgFloat 8s ease-in-out infinite}
-
-/* behind: smaller and softer-shadowed, so it sits back */
-.workrow .cardframe.merge2 .mg-a{
-  z-index:2;
-  transform:translateX(-96%) rotate(-7deg) scale(.9);
-  filter:drop-shadow(-8px 16px 20px rgba(18,18,22,.14))}
-/* in front: full size, deeper shadow */
-.workrow .cardframe.merge2 .mg-b{
-  z-index:3;animation-delay:-4s;
-  transform:translateX(-6%) rotate(4.5deg) scale(1);
-  filter:drop-shadow(-14px 22px 26px rgba(18,18,22,.24))}
-
-/* closed into one stack — upright, still stepped in size for depth */
-.workrow:hover .cardframe.merge2 .mg-a,
-.workrow:focus-within .cardframe.merge2 .mg-a{
-  transform:translateX(-58%) rotate(0deg) scale(.95)}
-.workrow:hover .cardframe.merge2 .mg-b,
-.workrow:focus-within .cardframe.merge2 .mg-b{
-  transform:translateX(-42%) rotate(0deg) scale(1);
-  filter:drop-shadow(-18px 26px 32px rgba(18,18,22,.30))}
-
-.workrow:hover .cardframe.merge2 .mgphone,
-.workrow:focus-within .cardframe.merge2 .mgphone{animation-play-state:paused}
-
-@keyframes mgFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}
+.workrow:hover .cardframe.merge2 .mgphone-single,
+.workrow:focus-within .cardframe.merge2 .mgphone-single{
+  transform:translateY(-8px) scale(1.015)}
 
 @media (prefers-reduced-motion:reduce){
-  .workrow .cardframe.merge2 .mgphone{animation:none;transition:none}
+  .workrow .cardframe.merge2 .mgphone-single{transition:none}
 }
 /* ══ RISE PORTAL CARD ════════════════════════════════════════════════
    Same shape as the App Merge card: alive at rest with a slow float,
@@ -1946,7 +1844,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .padtrigger{position:relative;display:flex;align-items:center;gap:12px;width:100%;
   margin:0;padding:clamp(14px,2.2vw,20px) 20px;cursor:pointer;text-align:left;
   border:1px dashed color-mix(in srgb,var(--muted) 55%,transparent);
-  border-radius:var(--r-card);
+  border-radius:8px;
   /* the same ground the board opens onto — surface tint and the same
      18px dot grid — so the closed row is a slice of the artboard rather
      than a different object standing in front of it. Opening it reads
@@ -1956,19 +1854,28 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   transition:border-color .3s var(--ease),background-color .2s var(--ease),
     opacity .18s linear,visibility 0s linear .18s}
 .padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
-  border-radius:50%;background:var(--accent);color:#FFFFFF}
+  border-radius:50%;background:var(--accent);color:#FFFFFF;
+  transform:scale(1)}
 /* the heading and its supporting line, one container, always stacked —
    this no longer depends on viewport width the way it used to */
 .padtriggercopy{display:flex;flex-direction:column;gap:2px;min-width:0}
 .padtriggertext{font-size:15px;font-weight:500;letter-spacing:-.012em}
 .padtriggerhint{font-size:13px;color:var(--faint);letter-spacing:-.005em}
 /* :hover still matches a disabled button, so this only has to work
-   while the board is shut. No colour change -- the dashed edge is
-   "empty slot, put something here"; solid on hover is "this one's
-   ready", the same distinction without reaching for a new hue. */
+   while the board is shut. The dashed edge is "empty slot, put
+   something here" throughout -- border-style cannot transition (it
+   snaps, the same reason the open/close animation only ever moves the
+   border's colour, never its style), so hover leaves the dash alone
+   and moves the colour instead: onto the accent, with a matching tint
+   behind it. Every property that changes here is one that can actually
+   ease, so the whole thing arrives together rather than the border
+   jumping ahead of the fade. */
 @media (hover:hover){
   .padwrap:not(.is-open) .padtrigger:hover{
-    border-style:solid}
+    border-color:var(--accent);
+    background:color-mix(in srgb,var(--accent) 6%,transparent)}
+  .padwrap:not(.is-open) .padtrigger:hover .padtriggerplus{
+    transform:scale(1.08)}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -2014,20 +1921,44 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    row's height so the board itself is the size it was designed at. */
 .padstack{position:relative;display:grid;grid-template-rows:auto 1fr;
   overflow:hidden;
-  height:var(--trig-h,auto);border-radius:var(--r-card);
+  height:var(--trig-h,auto);border-radius:8px;
+  background-color:var(--surface);
+  background-image:radial-gradient(circle at 1px 1px,
+    color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
+  background-size:18px 18px;background-position:9px 9px}
+.padstack > *{min-height:0}
+.padstack > .padtrigger{grid-row:1}
+.padstack > .padboard{grid-row:2}
+
+/* The board used to grow in place, taking the row's height with it —
+   which meant everything below the section shoved down the page the
+   moment someone pressed the trigger. It opens as a floating card now,
+   centred over the page on a dimmed backdrop, so the row that opens it
+   never changes size and nothing else on the page moves. */
+.padoverlay{position:fixed;inset:0;z-index:88;
+  background:rgba(20,20,22,.28);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .2s var(--ease),visibility 0s linear .2s}
+.padoverlay.is-open{opacity:1;visibility:visible;pointer-events:auto;
+  transition:opacity .2s var(--ease)}
+
+/* .is-floating is set on #padBoard itself, not on .padwrap: the board
+   moves to be a direct child of <body> while open, so a descendant
+   selector off .padwrap would stop matching it the moment it moved. */
+.padboard{height:100%;opacity:0;visibility:hidden;
+  transition:opacity .2s var(--ease),visibility 0s linear .2s}
+.padboard.is-floating{
+  position:fixed;top:50%;left:50%;z-index:89;
+  width:min(560px,calc(100vw - 32px));
+  height:clamp(300px,34vw,364px);
+  transform:translate(-50%,-50%);
+  border-radius:8px;
   background-color:var(--surface);
   background-image:radial-gradient(circle at 1px 1px,
     color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
   background-size:18px 18px;background-position:9px 9px;
-  transition:height .45s cubic-bezier(.4,0,.2,1)}
-.padstack > *{min-height:0}
-.padstack > .padtrigger{grid-row:1}
-.padstack > .padboard{grid-row:2}
-.padwrap.is-open .padstack{height:calc(var(--trig-h,62px) + clamp(300px,34vw,364px))}
-
-.padboard{height:100%;opacity:0;visibility:hidden;
-  transition:opacity .2s var(--ease),visibility 0s linear .2s}
-.padwrap.is-open .padboard{opacity:1;visibility:visible;
+  box-shadow:0 24px 70px -30px rgba(20,24,45,.4);
+  opacity:1;visibility:visible;
   transition:opacity .26s var(--ease) .16s,visibility 0s}
 
 /* Open, it is no longer a control: the dashed "empty slot" edge fades
@@ -2039,11 +1970,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    the same radius the whole time and only its COLOUR moves, which does
    animate; the separator is an inset shadow rather than a border edge
    for the same reason. */
-.padwrap.is-open .padtrigger{cursor:default;border-color:transparent}
-.padwrap.is-open .padtriggerplus{opacity:0;width:0;margin-right:-12px}
+.padwrap.is-open .padtrigger{cursor:default}
 .padtrigger:disabled{opacity:1;color:var(--ink)}
 .padtriggerplus{transition:opacity .2s var(--ease),width .3s var(--ease),
-  margin-right .3s var(--ease)}
+  margin-right .3s var(--ease),transform .2s var(--ease)}
 
 /* the first paint must not animate: a visitor returning to saved notes
    would watch the board unfold for no reason */
@@ -2052,11 +1982,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .padwrap:not(.is-ready) .padtrigger{transition:none!important}
 
 @media (max-width:560px){
-  /* This lived with the other phone rules, 1000 lines above the
-     unconditional .padwrap.is-open .padstack rule — same specificity,
-     so the later one won and the phone board has been 300px, not the
-     345 intended here. It has to sit after that rule to take effect. */
-  .padwrap.is-open .padstack{height:calc(var(--trig-h,62px) + clamp(330px,92vw,392px))}
+  .padboard.is-floating{width:calc(100vw - 32px);height:clamp(330px,92vw,392px)}
 }
 /* ══ ARRIVAL, SECTION BY SECTION ═════════════════════════════════════
    Every section shared one entrance: fade up 10px. Correct, and
@@ -2302,7 +2228,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    rings between the faces -- and they all have to turn over together. */
 #notes .readpill{--rp-bg:#141414;--rp-fg:#FFFFFF;
   display:inline-flex;align-items:center;gap:var(--s-4);
-  margin:0;padding:clamp(14px,2.2vw,20px) 16px clamp(14px,2.2vw,20px) 10px;border-radius:var(--r-card);
+  margin:0;padding:clamp(14px,2.2vw,20px) 20px;border-radius:8px;
   background:var(--rp-bg);
   color:var(--rp-fg);text-align:left;cursor:default;
   transition:background-color .25s var(--ease)}
@@ -2366,7 +2292,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #notes .rp-txt b{font-size:var(--t-mono-lg);font-weight:500;letter-spacing:var(--tr-body);white-space:nowrap}
 #notes .rp-sub{display:grid;font-size:var(--t-mono);
   color:color-mix(in srgb,var(--rp-fg) 72%,transparent);white-space:nowrap}
-#notes .rp-sub > span{grid-area:1/1;transition:opacity .2s var(--ease)}
+#notes .rp-sub > span{grid-area:1/1;transition:opacity .2s var(--ease),color .2s var(--ease)}
 #notes .rp-sub-b{opacity:0}
 @media (hover:hover){
   #notes .readpill:hover .rp-sub-a{opacity:0}
@@ -2389,7 +2315,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   #notes .rp-n{transition:none;transform:none}
 }
 @media (max-width:400px){
-  #notes .readpill{gap:var(--s-3);padding:7px 13px 7px 9px}
+  #notes .readpill{gap:var(--s-3);padding:7px 20px}
   #notes .rp-txt b{font-size:11.5px} #notes .rp-sub{font-size:10.5px}
 }
 /* ── the footer credit ───────────────────────────────────────────────
@@ -2494,6 +2420,16 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .fsr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
   white-space:nowrap;border:0}
+
+/* ══ HOME PAGE SECTION RHYTHM ═══════════════════════════════════════
+   Equal air between all four sections a reader actually perceives —
+   Hero, case-study cards, notes+analytics, Experience. Each gap is
+   just the padding-bottom of the section before it (#notes is now a
+   sibling section rather than nested inside #work, so this is the
+   same rule for all three gaps, not special-cased per boundary).
+   Placed last so these ID selectors win over the earlier, duplicated
+   generic section{padding-bottom} rule without needing !important. */
+#top,#work,#notes{padding-bottom:clamp(90px,12vw,130px)}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -2520,6 +2456,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     <div class="hint"><span>↑↓ to move · ↵ to open</span><span>esc to close</span></div>
   </div>
 </div>
+<div class="padoverlay" id="padOverlay"></div>
 <div class="wrap">
 
   <button type="button" class="totop" id="totop" aria-label="Back to top" data-cursor-label="top">
@@ -2548,7 +2485,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     </div>
     <div class="mcases">
       <p class="mgroup">Case studies</p>
-      <a class="mcase" href="./app-merge.html"><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mcase" href="./app-merge-v2.html"><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
       <a class="mcase" href="./rise-portal.html"><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
         <div class="mfoot">
@@ -2582,18 +2519,14 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   <section id="work" data-section="Selected work">
     <div class="workgrid">
-      <a href="./app-merge.html" class="workrow" data-reveal data-cursor-label="open">
+      <a href="./app-merge-v2.html" class="workrow" data-reveal data-cursor-label="open">
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe merge2" style="background:var(--card-tint-01)">
-            <img class="mgphone mg-a" src="./assets/AM-B-1.svg" width="396" height="816" loading="eager" decoding="async" alt="Rupeezy Trade watchlist screen">
-            <img class="mgphone mg-b" src="./assets/AM-B-2.svg" width="396" height="816" loading="eager" decoding="async" alt="The merged app&#8217;s account and funds screen">
+            <img class="mgphone-single" src="./assets/am-home-after-framed.webp" width="1600" height="3299" loading="eager" decoding="async" alt="The merged app&#8217;s home screen, with one overall portfolio card and IPO and NFO entry points side by side">
           </div>
         </div>
         <div class="worktext">
           <h3>Two apps into one, built to hold the third</h3>
-          <span class="desc">Rupeezy &#183; Sole designer &#183; Consumer app</span>
-          <p class="workfacts"><b>200K+</b> registered users <i>&#183;</i> <b>97%</b> of company revenue</p>
-          <span class="workcta">Read case study<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         </div>
       </a>
 
@@ -2605,9 +2538,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         </div>
         <div class="worktext">
           <h3>The first product Rupeezy’s partners ever had</h3>
-          <span class="desc">Rupeezy &#183; Sole designer &#183; B2B platform</span>
-          <p class="workfacts"><b>2.4&#215;</b> lead-to-client <i>&#183;</i> <b>48%</b> fewer support tickets</p>
-          <span class="workcta">Read case study<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         </div>
       </a>
 
@@ -2619,27 +2549,23 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         </div>
         <div class="worktext">
           <h3>An AI agent platform, concept to public launch</h3>
-          <span class="desc">Runable &#183; Founding designer &#183; AI product</span>
-
-          <p class="workfacts"><b>~$1M</b> run-rate in month one <i>&#183;</i> <b>0&#8594;1</b> concept to launch</p>
-          <span class="workcta livecta"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>View live<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         </div>
       </a>
 
-      <div class="workrow soonrow" data-reveal>
-        <div style="min-width:0">
-          <div class="cardframe soonframe">
-            <div class="soonorb soonorb-a" aria-hidden="true"></div>
-            <div class="soonorb soonorb-b" aria-hidden="true"></div>
-            <span class="soonlabel">Next</span>
-            <p class="soontext">More case studies are being written up.</p>
-            <p class="soonhover" aria-hidden="true">Coming soon</p>
+      <a href="./web-terminal.html" class="workrow" data-reveal data-cursor-label="open">
+        <div style="grid-row:1;grid-column:1;min-width:0">
+          <div class="cardframe runshot" style="background:var(--card-tint-01)">
+            <img loading="eager" decoding="async" data-mock="single" data-src="./assets/watchlist-shell-card-1050.webp" data-srcset="./assets/watchlist-shell-card-700.webp 700w, ./assets/watchlist-shell-card-1050.webp 1050w, ./assets/watchlist-shell-card-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="747" alt="The Rupeezy web trading terminal, with the watchlist, index ticker and order window">
           </div>
         </div>
-      </div>
+        <div class="worktext">
+          <h3>The desktop trading terminal: chart, watchlist, and orders on one screen.</h3>
+        </div>
+      </a>
     </div>
+  </section>
 
-    <div id="notes" data-section="Notes board">
+  <section id="notes" data-section="Notes board">
       <div class="padwrap" data-reveal>
       <h2 class="sr-only">The floor is yours.</h2>
 
@@ -2689,7 +2615,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       </span>
       </div>
       </div>
-    </div>
   </section>
 
   <section id="experience" data-section="Experience">
@@ -2702,7 +2627,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
           <input class="expinput" id="expInput" type="text" maxlength="26" autocomplete="off" spellcheck="false"
                  placeholder="Your company here" aria-label="Type your company name into the timeline">
           <span class="expname" id="expName" aria-live="polite"></span>
-          <span class="exphint" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M10.9 2.9a1.55 1.55 0 0 1 2.2 2.2L6 12.2l-3 .8.8-3z" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="exphint" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/></svg></span>
         </span>
         <span class="expacts">
           <button type="button" class="expbtn is-done" id="expDone" aria-label="Save" title="Save"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -2710,7 +2635,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
           <button type="button" class="expbtn is-del" id="expDel" aria-label="Remove" title="Remove"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 4.2 11.8 11.8M11.8 4.2 4.2 11.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
         </span>
       </div>
-      <p class="exp-role">Product Designer</p>
       <p class="exp-desc">Open to work. The problem matters more than the industry.</p>
     </div>
     <div class="exprow" data-reveal>
@@ -3050,8 +2974,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     { label: "Experience", href: "#experience" },
     { label: "Contact", href: "#contact" },
     { label: "About", href: "./about.html" },
-    { label: "App Merge case study", href: "./app-merge.html" },
+    { label: "App Merge case study", href: "./app-merge-v2.html" },
     { label: "Rise Portal case study", href: "./rise-portal.html" },
+    { label: "Web Terminal case study", href: "./web-terminal.html" },
     { label: "Resume", href: "./resume.html" }
     /* No Readership entry while the pill is delinked: taking the pill's
        link away and leaving the command palette pointing at the same page
@@ -3133,9 +3058,15 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   function fill(v){
     name.textContent=v; input.value=v; store(v); setState("filled");
   }
+  var mouseCommit=false;
   function commit(){
     var v=input.value.trim().replace(/\s+/g," ");
-    if(v){ fill(v); bEdit.focus(); } else { clear(); }
+    if(v){
+      fill(v);
+      if(mouseCommit) bEdit.classList.add("no-ring");
+      bEdit.focus();
+      if(mouseCommit) bEdit.addEventListener("blur",function h(){ bEdit.classList.remove("no-ring"); bEdit.removeEventListener("blur",h); });
+    } else { clear(); }
   }
   function clear(){ input.value=""; name.textContent=""; store(""); setState("empty"); }
 
@@ -3149,10 +3080,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     if(slot.getAttribute("data-state")==="editing" && !input.value.trim()) setState("empty");
   });
   input.addEventListener("keydown",function(e){
-    if(e.key==="Enter"){ e.preventDefault(); commit(); }
+    if(e.key==="Enter"){ e.preventDefault(); mouseCommit=false; commit(); }
     else if(e.key==="Escape"){ e.preventDefault(); input.value=read(); read()?fill(read()):clear(); input.blur(); }
   });
-  bDone.addEventListener("mousedown",function(e){ e.preventDefault(); });
+  bDone.addEventListener("mousedown",function(e){ e.preventDefault(); mouseCommit=true; });
   bDone.addEventListener("click",commit);
   bEdit.addEventListener("click",function(){
     setState("editing"); input.focus(); input.select();
@@ -3181,6 +3112,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 (function(){
   var board=document.getElementById("padBoard"); if(!board) return;
   var wrap=board.closest(".padwrap"),
+      overlay=document.getElementById("padOverlay"),
       trigger=document.getElementById("padTrigger"),
       addBtn=document.getElementById("padAdd"),
       blankAdd=document.getElementById("padBlankAdd"),
@@ -3190,6 +3122,12 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       toast=document.getElementById("padToast"),
       toastText=document.getElementById("padToastText");
   if(!addBtn||!blankAdd||!sendBtn||!clearBtn||!count||!toast) return;
+
+  /* the board's own spot on the page, so it can be moved back to it on
+     close — it floats as a direct child of <body> while open, which is
+     the only way position:fixed centres it on the viewport rather than
+     on some transformed ancestor further up the tree */
+  var boardHome=board.parentNode, boardAnchor=board.nextSibling;
 
   var KEY="lb.notes", MAIL="hi.lokeshux@gmail.com", MAX=12, BAR=52;
 
@@ -3221,6 +3159,14 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     /* it stays on screen as the header, so it has to stop being a
        control — otherwise it keeps taking focus and doing nothing */
     if(trigger) trigger.disabled=true;
+    document.body.appendChild(board);
+    board.classList.add("is-floating");
+    if(overlay){ document.body.appendChild(overlay); overlay.classList.add("is-open"); }
+    /* notes restored from a previous visit were positioned against a
+       closed board that had no real size yet — re-clamp them now that
+       the board has one */
+    var els=board.querySelectorAll(".padnote");
+    notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
   }
   /* A successful send empties the board, and sync() closes an empty
      board — which used to hide the thank-you in the same tick it was
@@ -3231,13 +3177,20 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     if(wrap && toast.hidden){
       wrap.classList.remove("is-open");
       if(trigger) trigger.disabled=false;
+      board.classList.remove("is-floating");
+      boardHome.insertBefore(board,boardAnchor);
+      if(overlay) overlay.classList.remove("is-open");
     }
   }
 
   function sync(){
     var n=notes.length, w=written().length;
-    /* an empty board is just space: give it back */
-    if(n===0) close(); else open();
+    /* an empty board is just space: give it back. It never opens itself
+       the other way — that used to also fire on the very first render
+       for a returning visitor with saved notes, popping the modal open
+       over whatever they'd actually scrolled to. Opening is always a
+       click now: the trigger, explicitly. */
+    if(n===0) close();
     board.classList.toggle("has-notes",n>0);   /* hides the empty state */
     board.classList.toggle("has-text",w>0);    /* brings up the toolbar */
     count.textContent=String(n);
@@ -3393,6 +3346,13 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   blankAdd.addEventListener("click",function(){ add(8,12) });
   /* one move: open the board and start the note */
   if(trigger) trigger.addEventListener("click",function(){ open(); add(8,12) });
+  /* floating card, so it dismisses the way every other overlay on this
+     page does: a click on the backdrop, or Escape — the notes already
+     written stay put in localStorage either way, nothing is lost */
+  if(overlay) overlay.addEventListener("click",close);
+  window.addEventListener("keydown",function(e){
+    if(e.key==="Escape" && wrap && wrap.classList.contains("is-open")) close();
+  });
   addBtn.addEventListener("click",function(){
     var n=notes.length; add(6+(n%4)*21, 8+(Math.floor(n/4)%3)*24);
   });
@@ -3484,8 +3444,12 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   var stored=read();
   if(Array.isArray(stored)&&stored.length){
     notes=stored;
-    open();                                  /* size the board before placing */
-    notes.forEach(function(n){ settle(render(n),n) });
+    /* rendered, not opened — the board is a popup now, and a returning
+       visitor should not have it land on top of whatever they actually
+       scrolled to. It stays tucked behind the trigger, ready, until
+       that gets clicked; open() re-clamps these positions properly
+       once the board has a real size to clamp them against. */
+    notes.forEach(function(n){ render(n) });
   }
   sync();
   measureTrigger();
@@ -3503,13 +3467,60 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     clearTimeout(rt);
     rt=setTimeout(function(){
       measureTrigger();
-      var els=board.querySelectorAll(".padnote");
-      notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
-      save();
+      /* closed, the board has no real size to clamp against — open()
+         re-settles everything against the real thing the moment it's
+         actually asked for */
+      if(wrap && wrap.classList.contains("is-open")){
+        var els=board.querySelectorAll(".padnote");
+        notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
+        save();
+      }
     },160);
   });
 })();
 
+</script>
+<script src="./ask.js"></script>
+<script>
+(function(){
+  var el = document.getElementById("askHome");
+  if (!el || !window.AskWidget) return;
+  var QUESTIONS = [
+    { id: "why-many-companies", question: "Why so many companies in three years?",
+      keywords: ["companies", "jobs", "hopping", "many", "short", "tenure", "switch"],
+      answer: "Four companies, three years. Rupeezy was 18 months, and I'd have stayed longer if a founding-designer role hadn't opened up. Runable was 3 months, the working model turned out different from what was agreed at offer stage, so I left. ZZAZZ wasn't my decision, the whole product and design team was cut when funding fell through." },
+    { id: "why-runable-short", question: "Why only 3 months at Runable?",
+      keywords: ["runable", "months", "left", "quit", "exit"],
+      answer: "The role's actual working model turned out to be different from what was agreed at offer stage. I raised it with the founders directly, finished the launch, then decided it wasn't sustainable for me." },
+    { id: "what-looking-for", question: "What are you looking for?",
+      keywords: ["looking", "want", "next", "role", "seeking"],
+      answer: "A product company where design has a seat in decisions, not just execution, and where I can go deep on one product for several years. For an early-stage company, I'm also open to a founding designer role, I've done that once already and know what it costs." },
+    { id: "how-use-ai", question: "How do you actually use AI in your work?",
+      keywords: ["ai", "claude", "tools", "workflow", "vibe", "code"],
+      answer: "Daily, for specific things. This entire site, the nav, the analytics, the interactive demos, is built with Claude. I'm not a developer, I direct it and push back when the output looks generated. For UX copy I use ChatGPT for first drafts I then rewrite. I don't use it for deciding." },
+    { id: "available-when", question: "Are you available to start?",
+      keywords: ["available", "start", "notice", "join", "when"],
+      answer: "Immediately." },
+    { id: "biggest-gap", question: "What's the biggest gap in your experience?",
+      keywords: ["weakness", "gap", "missing", "lacking", "dont"],
+      answer: "I've never run a usability test, a user interview, or a proper A/B experiment. I haven't been on a team that ran them either. It's the first thing I want to fix wherever I land next." },
+    { id: "fintech-experience", question: "Do you have experience with regulated or fintech products?",
+      keywords: ["fintech", "regulated", "compliance", "finance", "kyc", "sebi"],
+      answer: "Yes, it's my strongest domain. I owned a trading app at Rupeezy through KYC, order flows, and a SEBI-driven compliance disclaimer that has to stop a trade before it completes. Regulation isn't an edge case for me, it's a normal design constraint I've worked inside for two years." },
+    { id: "resume", question: "Can I see your resume?",
+      keywords: ["resume", "cv", "pdf"],
+      answer: "Yes, it's linked at the top of the site, or ask me directly and I'll send it over." },
+    { id: "measure-success", question: "How do you measure success in your work?",
+      keywords: ["metrics", "measure", "success", "data", "impact"],
+      answer: "Honestly, this is a real gap. Rupeezy tracked usage in Firebase and MoEngage, but agreeing a target metric before design started wasn't part of how we worked. So most of my numbers exist because I went and asked the business and support teams afterward, not because I planned for them upfront." }
+  ];
+  /* the four default-visible chips, in this order — the rest of the
+     array above stays reachable by typing, matching only widens the
+     set the chip row already promises */
+  AskWidget.mount(el, QUESTIONS, {
+    chips: ["why-many-companies", "what-looking-for", "how-use-ai", "available-when"]
+  });
+})();
 </script>
 </body>
 </html>
