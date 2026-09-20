@@ -23,8 +23,8 @@
 <link rel="icon" href="./assets/lokesh-face.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
@@ -41,7 +41,7 @@
   --r-pill:1000px; --r-card:20px; --r-float:16px; --r-sm:10px;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
   --display:'Geist','Inter',Helvetica,Arial,sans-serif;
-  --serif:var(--display); --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:'STIX Two Text','STIX Two Math',Georgia,serif; --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
   --t-display:24px; --t-lead:15px; --t-body:15px; --t-title:14px; --t-meta:13px; --t-ui:13px; --t-small:12px; --t-micro:11px; --t-xs:11px;
   --t-h1:24px; --t-h2:14px; --t-h3:13px;
   --t-body-lg:15px; --t-btn:13px; --t-mono:11px; --t-mono-lg:12px; --t-mono-sm:11px; --t-statement:15px;
@@ -290,7 +290,7 @@ a:hover{color:var(--link);opacity:.7}
 ::selection{background:var(--markWash)}
 
 /* ── type scale: 30 display · 18 lead · 16 title · 15 ui · 14 meta · 12 label ── */
-h1,h2,h3,h4{font-family:var(--display);color:var(--ink);margin:0}
+h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0}
 .t-display{font-size:24px;font-weight:500;line-height:1.14;letter-spacing:-.022em;color:var(--ink)}
 .t-lead{font-size:15px;font-weight:400;line-height:1.5;color:var(--muted)}
 .t-title{font-size:14px;font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
@@ -336,10 +336,10 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 #contact footer{display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:0;width:auto;margin:0;padding:24px 0 36px;background:transparent;
   text-align:center;position:relative}
-/* Everything except the credit and the readership line. This rule exists
-   because older footer content kept reappearing; it now has to name what
-   it keeps, or the next thing added here vanishes silently too. */
-#contact footer > *:not(.footcredit):not(.readpill){display:none!important}
+/* Everything except the credit. This rule exists because older footer
+   content kept reappearing; it now has to name what it keeps, or the
+   next thing added here vanishes silently too. */
+#contact footer > *:not(.footcredit){display:none!important}
 
 @media (max-width:504px){#contact footer{gap:0}}
 
@@ -545,119 +545,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* every page ends with a way to reach him: on desktop these pages had
    exactly three links on them — Home, About, Resume — and no contact at
    all, so anyone who finished reading had nowhere to go */
-/* ── the readership pill ─────────────────────────────────────────────
-   A line of prose asks to be read; a stack of faces with a +1 asks to be
-   clicked. Same trick as a like count: the reader is already IN the thing
-   being counted, and the badge says so before any words do.
-
-   It renders complete and animates on arrival with no data at all — the
-   count is a lazy upgrade, so a slow or failed request costs nothing and
-   never moves the layout. */
-/* A filled purple block, not a white card with a purple mark on it.
-   The pad beside it is a dashed empty slot on the page's own surface,
-   so the two now differ in substance rather than in trim: one is the
-   space you are invited to write in, the other is a thing to go and
-   look at.
-
-   #6B3FD4 carries the type at 6.39 for white and 4.54 for the second
-   line at 78%, and the block itself reads 6.12 against the light page
-   and 3.00 against the dark one -- exactly the floor, which is why the
-   dark theme adds a hairline so the edge never depends on it. Hover
-   deepens to #5B34C7 and takes the second line to full white, which
-   holds 7.61 there. */
-#contact .readpill{--rp-bg:#6B3FD4;--rp-bg-h:#5B34C7;
-  display:inline-flex;align-items:center;gap:var(--s-4);
-  margin:0 auto var(--s-5);padding:9px 16px 9px 10px;border-radius:var(--r-card);
-  background:var(--rp-bg);
-  color:#FFFFFF;text-align:left;cursor:default;
-  transition:background-color .25s var(--ease)}
-/* 3.00 against #0F0F0F is the threshold and nothing more, so the edge
-   gets drawn rather than inferred from the fill. */
-:root[data-theme="dark"] #contact .readpill{box-shadow:0 0 0 1px rgba(255,255,255,.14)}
-#contact .rp-faces{display:inline-flex;flex:none}
-#contact .rp-faces i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
-  font-family:var(--mono);font-size:10px;font-weight:500;font-style:normal;
-  box-shadow:0 0 0 2px var(--rp-bg);background:var(--surface);color:var(--faint)}
-#contact .rp-faces i + i{margin-left:-9px}
-/* One tone, not a fade. The original ramp ran 13/9/6% ink, which measured
-   1.32, 1.20 and 1.13 against the white pill — three circles nobody could
-   see, carrying the meaning "other people". A facepile does not gradient
-   away; overlap and the ring already say which is in front. 52% is 3.69 on
-   white and 4.97 on the dark pill. */
-#contact .rp-faces i{background:var(--tint);overflow:hidden}
-/* Three empty discs said "some people" and showed nobody. A generic figure
-   knocked out of the disc is the honest version: it reads as a person
-   without claiming to be one, which is all the site knows about them. The
-   shoulders run past the circle and are clipped by it, the way an avatar
-   crop works, so these are heads in a pile rather than icons in a row. */
-#contact .rp-faces i svg{width:100%;height:100%;display:block}
-#contact .rp-faces i.rp-me svg{display:none}
-/* Tabular, not mono: Geist Mono gives the group separator a full digit
-   advance, so 1,284 came out as "1 , 284". Tabular figures give the even
-   columns -- the pill keeps its width as the count gains a digit --
-   without breaking the number in half. */
-#contact .rp-n{font-variant-numeric:tabular-nums}
-/* Visible by default. If the observer never fires — a background tab, a
-   browser without it, a reader who lands at the footer already — the pill is
-   still finished, and the animation is the thing that is missing rather than
-   the badge. */
-/* i.rp-me, not .rp-me: `#contact .rp-faces i` carries an extra element
-   selector and outranks a bare class, which left the +1 at --faint on
-   accent blue — 1.01:1, invisible. Same trap that hid the footer credit. */
-#contact .rp-faces i.rp-me{background:#FFFFFF;color:var(--rp-bg)}
-/* Arrival, in the order the sentence is read: the three of them land
-   first, the number climbs (in JS -- it counts to the real total),
-   and the +1 drops on the end of the climb. Attendance being taken
-   rather than a figure that was always sitting there.
-
-   Every one of these only exists under .is-in, which the script adds.
-   With no JS the pill is simply finished: nothing here is a from-state
-   that could strand a face at scale 0. And i.rp-me, not .rp-me --
-   `.rp-faces i` carries an element selector and outranks a bare class,
-   which is what put the +1 at 1.01:1 once already. */
-@keyframes rpFaceIn{0%{transform:scale(.4);opacity:0}
-  70%{transform:scale(1.07);opacity:1}100%{transform:scale(1);opacity:1}}
-#contact .readpill.is-in .rp-faces i{animation:rpFaceIn .5s cubic-bezier(.22,1.4,.36,1) both}
-#contact .readpill.is-in .rp-faces i:nth-child(1){animation-delay:.04s}
-#contact .readpill.is-in .rp-faces i:nth-child(2){animation-delay:.12s}
-#contact .readpill.is-in .rp-faces i:nth-child(3){animation-delay:.20s}
-#contact .readpill.is-in .rp-faces i.rp-me{animation:rpPop .62s cubic-bezier(.22,1.4,.36,1) .8s both}
-@keyframes rpPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
-/* while the digits are moving they are the only thing on the pill
-   that is, so they get the weight; it comes back off when it lands */
-#contact .rp-n{display:inline-block;transition:transform .3s var(--ease)}
-#contact .readpill.is-rolling .rp-n{transform:scale(1.06)}
-#contact .rp-txt{display:flex;flex-direction:column;gap:1px;min-width:0}
-#contact .rp-txt b{font-size:var(--t-mono-lg);font-weight:500;letter-spacing:var(--tr-body);white-space:nowrap}
-#contact .rp-sub{display:grid;font-size:var(--t-mono);color:rgba(255,255,255,.78);white-space:nowrap}
-#contact .rp-sub > span{grid-area:1/1;transition:opacity .2s var(--ease)}
-#contact .rp-sub-b{opacity:0}
-@media (hover:hover){
-  #contact .readpill:hover .rp-sub-a{opacity:0}
-  #contact .readpill:hover .rp-sub-b{opacity:1}
-}
-@media (prefers-reduced-motion:reduce){
-  #contact .rp-sub > span{transition:none}
-}
-/* The pill used to rise 1px and throw a shadow. It sits in the page,
-   not on top of it -- nothing else here lifts -- so hovering says so
-   in colour: the outline and the arrow take the pill's own purple,
-   and it stays exactly where it is. */
-@media (hover:hover){
-  #contact .readpill:hover .rp-faces i{box-shadow:0 0 0 2px var(--rp-bg-h)}
-  #contact .readpill:hover .rp-faces i.rp-me{color:var(--rp-bg-h)}
-  #contact .readpill:hover .rp-sub-b{color:#FFFFFF}
-}
-@media (prefers-reduced-motion:reduce){
-  #contact .rp-faces i,
-  #contact .readpill.is-in .rp-faces i,
-  #contact .readpill.is-in .rp-faces i.rp-me{animation:none}
-  #contact .rp-n{transition:none;transform:none}
-}
-@media (max-width:400px){
-  #contact .readpill{gap:var(--s-3);padding:7px 13px 7px 9px}
-  #contact .rp-txt b{font-size:11.5px} #contact .rp-sub{font-size:10.5px}
-}
 /* ── the footer credit ───────────────────────────────────────────────
    Two round tokens instead of the two nouns: a face for "me", a spark
    for the AI. They are the same size and the same shape, so the line
@@ -762,7 +649,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   white-space:nowrap;border:0}
 </style>
 <script defer src="./analytics.js?v=3"></script>
-<script defer src="./readpill.js?v=11"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
 <body>
@@ -795,7 +681,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
     </div>
     <div class="mcases">
       <p class="mgroup">Case studies</p>
-      <a class="mcase" href="./app-merge.html"><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a class="mcase" href="./app-merge-v2.html"><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
       <a class="mcase" href="./rise-portal.html"><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     </div>
         <div class="mfoot">
@@ -912,10 +798,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
   <section id="contact">
     <footer>
-    <span class="readpill" data-readpill>
-      <span class="rp-faces" aria-hidden="true"><i style="background:#D8E4F2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.6 0-6 2.5-6 6.1 0 2.7.3 5.5-.5 7.7h3c-.7-2-.9-4.3-.9-6.4 0-2.7 1.9-4.1 4.4-4.1s4.4 1.4 4.4 4.1c0 2.1-.2 4.4-.9 6.4h3c-.8-2.2-.5-5-.5-7.7 0-3.6-2.4-6.1-6-6.1Z" fill="#2B2320"/><circle cx="12" cy="25.6" r="8.6" fill="#2A6BB0"/><circle cx="12" cy="10.6" r="4.9" fill="#F2CBA8"/><path d="M12 5.3c-2.9 0-4.5 1.8-4.5 4.1 0 .5.1 1 .2 1.5.7-1.7 2.4-2.6 4.3-2.6s3.6.9 4.3 2.6c.1-.5.2-1 .2-1.5 0-2.3-1.6-4.1-4.5-4.1Z" fill="#2B2320"/></svg></i><i style="background:#F5E2CC"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="2.9" r="2.3" fill="#3E2A20"/><circle cx="12" cy="25.6" r="8.6" fill="#C4762A"/><circle cx="12" cy="10.6" r="4.9" fill="#E0AC80"/><path d="M12 4.6c-3 0-5 2-5 4.8 0 .7.1 1.4.3 2 .6-2 2.4-3.1 4.7-3.1s4.1 1.1 4.7 3.1c.2-.6.3-1.3.3-2 0-2.8-2-4.8-5-4.8Z" fill="#3E2A20"/></svg></i><i style="background:#D9E9DC"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.7 0-6.1 2.5-6.1 6.2 0 1.9.2 3.7.2 5.4h2.6c-.5-1.6-.7-3.4-.7-5 0-2.7 1.7-4.3 4-4.3s4 1.6 4 4.3c0 1.6-.2 3.4-.7 5h2.6c0-1.7.2-3.5.2-5.4 0-3.7-2.4-6.2-6.1-6.2Z" fill="#1E1A17"/><circle cx="12" cy="25.6" r="8.6" fill="#4E8A5F"/><circle cx="12" cy="10.6" r="4.9" fill="#C08457"/><path d="M12 5.4c-2.9 0-4.6 1.8-4.6 4.2 0 .6.1 1.1.3 1.6.9-1.4 2.4-2.1 4.3-2.1s3.4.7 4.3 2.1c.2-.5.3-1 .3-1.6 0-2.4-1.7-4.2-4.6-4.2Z" fill="#1E1A17"/></svg></i><i class="rp-me">+1</i></span>
-      <span class="rp-txt"><b data-rp-line>You&#8217;re in the count.</b><span class="rp-sub"><span class="rp-sub-a">That +1 was you.</span><span class="rp-sub-b" aria-hidden="true">Still building the page that shows the rest</span></span></span>
-    </span>
     <p class="footcredit">Designed and built by <span class="fbub" data-bub="The decision maker"><span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.png" width="96" height="96" alt="" loading="lazy" decoding="async"></span></span><span class="fsr">me</span>, with <span class="fbub" data-bub="The OG assistant"><span class="fmark fai" aria-hidden="true">&#10022;</span></span><span class="fsr">an AI</span> that argued back.</p>
     </footer>
   </section>
