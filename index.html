@@ -930,6 +930,17 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   background:var(--card);color:var(--muted);box-shadow:var(--shadow-float);
   font-size:12.5px;line-height:1.35}
 .padtoast svg{flex:0 0 auto;color:var(--accent)}
+/* ── the always-on notice, pinned to the top of the board ──
+   Unlike .padblank (only visible with zero notes, which the trigger
+   button never actually leaves the board in — it opens and adds a
+   note in the same click), this sits above the canvas at all times
+   so the anonymity/reply line is never state-dependent. */
+.padinfo{position:absolute;left:50%;top:12px;transform:translateX(-50%);
+  z-index:8;max-width:calc(100% - 28px);padding:7px 13px;
+  border-radius:var(--r-pill);background:var(--card);color:var(--muted);
+  box-shadow:var(--shadow-float);font-size:12px;line-height:1.35;
+  text-align:center;white-space:nowrap;pointer-events:none}
+@media (max-width:560px){.padinfo{font-size:11.5px;white-space:normal;padding:7px 12px}}
 /* scoped to the board itself, not .padwrap: the board is a direct
    child of <body> while it floats open, outside .padwrap entirely */
 #padBoard [hidden]{display:none}
@@ -2584,11 +2595,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       </button>
 
       <div class="padboard" id="padBoard">
+        <p class="padinfo" id="padInfo">It&#8217;s anonymous. Want a reply? Add your email or contact info.</p>
         <div class="padblank" id="padBlank">
           <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
             <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </button>
-          <p class="padblanktext">Feedback is anonymous. If you&#8217;d like me to reply, add your email or contact details.</p>
         </div>
 
         <div class="padtoast" id="padToast" role="status" hidden>
@@ -3131,7 +3142,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      on some transformed ancestor further up the tree */
   var boardHome=board.parentNode, boardAnchor=board.nextSibling;
 
-  var KEY="lb.notes", MAIL="hi.lokeshux@gmail.com", MAX=12, BAR=52;
+  var KEY="lb.notes", MAIL="hi.lokeshux@gmail.com", MAX=12, BAR=52, TOPBAR=44;
 
   /* ─────────────────────────────────────────────────────────────────
      PASTE YOUR APPS SCRIPT WEB APP URL HERE.
@@ -3217,7 +3228,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     var pad=6,
         maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
         maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
-        minX=pad/bb.width*100, minY=pad/bb.height*100;
+        minX=pad/bb.width*100, minY=(pad+TOPBAR)/bb.height*100;
     note.x=Math.max(minX,Math.min(note.x,Math.max(minX,maxX)));
     note.y=Math.max(minY,Math.min(note.y,Math.max(minY,maxY)));
     el.style.left=note.x+"%"; el.style.top=note.y+"%";
