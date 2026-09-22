@@ -578,7 +578,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
    a closer crop than the default sit -- bigger frame, less air around
    it -- rather than a rotation, which just made the two cards look
    like the same asset skewed two ways */
-.macframe.zoom{left:2%;bottom:4%;width:96%}
+.macframe.zoom{left:4%;top:4%;bottom:auto;width:96%;
+  transform-origin:0 0;transform:scale(1.5)}
+@media (hover:hover){.workrow:hover .macframe.zoom{transform:scale(1.5) translateY(-6px)}}
 
 
 /* ── built mock: Rise Portal partner dashboard ── */
