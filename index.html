@@ -578,7 +578,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
    a closer crop than the default sit -- bigger frame, less air around
    it -- rather than a rotation, which just made the two cards look
    like the same asset skewed two ways */
-.macframe.zoom{left:-3.43%;top:4.16%;bottom:2.05%;width:119.11%;height:93.79%}
+.macframe.zoom{left:8%;top:8%;bottom:-7.08%;width:124.8%;height:99.08%;aspect-ratio:auto}
 @media (hover:hover){.workrow:hover .macframe.zoom{transform:translateY(-6px)}}
 
 
@@ -2954,8 +2954,26 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      arrival and must not also fade in. */
   var revealed = false, revealStarted = false;
   var revealEls = document.querySelectorAll("[data-reveal]");
+  /* Chromium sometimes leaves a position:absolute descendant painted at its
+     pre-transition spot after the ancestor's own reveal transform (translateY
+     + scale, on .workrow) settles to none -- the computed layout is correct
+     (offsetTop matches) but the compositor never repaints it there. Toggling
+     display forces a synchronous reflow that corrects it. 750ms covers this
+     section's longest reveal transition (.7s) plus its stagger delay. */
+  function fixMacframes(container){
+    var frames = container.querySelectorAll ? container.querySelectorAll(".macframe") : [];
+    if (!frames.length) return;
+    setTimeout(function(){
+      for (var i = 0; i < frames.length; i++){
+        var f = frames[i];
+        f.style.display = "none";
+        void f.offsetHeight;
+        f.style.display = "";
+      }
+    }, 750);
+  }
   function showAllReveals(){
-    for (var i = 0; i < revealEls.length; i++) revealEls[i].classList.add("shown");
+    for (var i = 0; i < revealEls.length; i++){ revealEls[i].classList.add("shown"); fixMacframes(revealEls[i]); }
   }
   function startReveal(){
     if (revealStarted) return;
@@ -2968,8 +2986,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         if (en.isIntersecting){
           revealed = true;
           var el = en.target, im = el.querySelector("img");
-          if (im && !im.complete){ im.addEventListener("load", function(){ el.classList.add("shown"); }, { once: true }); im.addEventListener("error", function(){ el.classList.add("shown"); }, { once: true }); }
-          else el.classList.add("shown");
+          if (im && !im.complete){ im.addEventListener("load", function(){ el.classList.add("shown"); fixMacframes(el); }, { once: true }); im.addEventListener("error", function(){ el.classList.add("shown"); fixMacframes(el); }, { once: true }); }
+          else { el.classList.add("shown"); fixMacframes(el); }
           io.unobserve(el);
         }
       });
