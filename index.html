@@ -935,12 +935,11 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    button never actually leaves the board in — it opens and adds a
    note in the same click), this sits above the canvas at all times
    so the anonymity/reply line is never state-dependent. */
-.padinfo{position:absolute;left:50%;top:12px;transform:translateX(-50%);
-  z-index:8;max-width:calc(100% - 28px);padding:7px 13px;
-  border-radius:var(--r-pill);background:var(--card);color:var(--muted);
-  box-shadow:var(--shadow-float);font-size:12px;line-height:1.35;
+.padinfo{position:absolute;left:50%;top:14px;transform:translateX(-50%);
+  z-index:8;max-width:calc(100% - 28px);margin:0;padding:0;
+  color:var(--faint);font-size:12px;line-height:1.35;
   text-align:center;white-space:nowrap;pointer-events:none}
-@media (max-width:560px){.padinfo{font-size:11.5px;white-space:normal;padding:7px 12px}}
+@media (max-width:560px){.padinfo{font-size:11.5px;white-space:normal}}
 /* scoped to the board itself, not .padwrap: the board is a direct
    child of <body> while it floats open, outside .padwrap entirely */
 #padBoard [hidden]{display:none}
