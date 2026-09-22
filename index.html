@@ -570,12 +570,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 .macframe{position:absolute;left:9%;bottom:13%;width:82%;aspect-ratio:800/489;z-index:1;
   transition:transform .4s var(--ease)}
 .macframe .macshot{position:absolute;left:9.6%;top:4.1%;width:80.6%;height:85.3%;
-  object-fit:contain;background:#fff;display:block}
-/* the watchlist screenshot is narrower (1.41:1) than the screen cutout
-   (1.55:1) -- contain alone would centre it with visible white bars
-   either side. Sizing the box to the image's own ratio instead removes
-   the bars without cropping anything, at the same full cutout height. */
-.macframe .macshot.narrow{left:13.3%;width:73.3%}
+  object-fit:cover;object-position:50% 0%;display:block}
 .macframe .macdevice{position:absolute;inset:0;width:100%;height:100%;z-index:2;
   display:block;pointer-events:none;user-select:none}
 @media (hover:hover){.workrow:hover .macframe{transform:translateY(-8px) scale(1.015)}}
@@ -2595,7 +2590,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe runshot" style="background:var(--card-tint-01)">
             <div class="macframe zoom">
-              <img class="macshot narrow" loading="eager" decoding="async" data-src="./assets/watchlist-shell-card-1050.webp" data-srcset="./assets/watchlist-shell-card-700.webp 700w, ./assets/watchlist-shell-card-1050.webp 1050w, ./assets/watchlist-shell-card-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="747" alt="The Rupeezy web trading terminal, with the watchlist, index ticker and order window">
+              <img class="macshot" loading="eager" decoding="async" data-src="./assets/watchlist-shell-card-1050.webp" data-srcset="./assets/watchlist-shell-card-700.webp 700w, ./assets/watchlist-shell-card-1050.webp 1050w, ./assets/watchlist-shell-card-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="747" alt="The Rupeezy web trading terminal, with the watchlist, index ticker and order window">
               <img class="macdevice" src="./assets/macbook-mockup.webp" alt="" aria-hidden="true" loading="eager" decoding="async">
             </div>
           </div>
