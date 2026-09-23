@@ -116,31 +116,39 @@ body.menu-open header{z-index:70}
   background:var(--bg);visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s}
 .mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
 .mobilenav a:focus:not(:focus-visible),.mobilenav button:focus:not(:focus-visible){outline:none}
-.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(13px,3vh,24px);padding:0 18px}
-.mrow{display:flex;align-items:center;gap:13px;min-height:58px;padding:10px 0;
+/* ══ MOBILE MENU — the work leads, the wayfinding follows ═══════════════
+   Home/About is upkeep, not content -- you're already on one of them
+   once this sheet is open. The work is the actual reason a stranger
+   opens this menu, so it's promoted and given the page's own voice
+   back: a serif title, a small sans index number standing in for the
+   screenshot there's no room for here. Wayfinding drops to one quiet
+   line each. */
+.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:2px;padding:0 18px}
+.mrow{display:flex;align-items:center;gap:13px;min-height:48px;padding:12px 0;
   color:var(--ink);border-bottom:1px solid var(--line);text-decoration:none}
 .mrow:last-child{border-bottom:0}
 .mrow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px}
-.mrow .mlabel{flex:1;font-size:22px;font-weight:500;line-height:1.2;letter-spacing:-.02em}
-.mrow svg{flex:0 0 auto;width:18px;height:18px;color:var(--faint)}
-.mrow.current,.mrow.current .mlabel{color:var(--ink)}
-.mrow.current .mlabel{position:relative;padding-left:16px}
-.mrow.current .mlabel:before{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;
-  margin-top:-3px;border-radius:50%;background:var(--accent)}
+.mrow .mlabel{flex:1;font-family:var(--sans);font-size:16px;font-weight:400;line-height:1.2;
+  letter-spacing:-.01em;color:var(--faint)}
+.mrow svg{flex:0 0 auto;width:13px;height:13px;color:var(--faint);opacity:.7}
+.mrow.current .mlabel{color:var(--ink);font-weight:500;position:relative;padding-left:14px}
+.mrow.current .mlabel:before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;
+  margin-top:-2.5px;border-radius:50%;background:var(--accent)}
 .mrow.current svg{display:none}
-.mcases{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(26px,4.5vh,38px);padding:0 18px}
-.mgroup{margin:0 0 10px;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.09em;
+.mcases{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(30px,5.5vh,42px);padding:0 18px}
+.mgroup{margin:0 0 14px;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.09em;
   text-transform:uppercase;color:var(--faint)}
-.mcase{display:flex;align-items:center;gap:13px;padding:14px 0;color:var(--ink);border-bottom:1px solid var(--line);text-decoration:none}
+.mcase{display:flex;align-items:flex-start;gap:14px;padding:16px 0;color:var(--ink);border-bottom:1px solid var(--line);text-decoration:none}
 .mcase:last-child{border-bottom:0}
+.mcase-num{flex:0 0 auto;padding-top:4px;font-family:var(--sans);font-size:11px;font-weight:500;
+  letter-spacing:.03em;color:var(--faint)}
 .mcase-x{flex:1;min-width:0}
-.mcase-t{display:block;font-size:15px;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--ink)}
-.mcase-m{display:block;margin-top:2px;font-size:12.5px;line-height:1.4;color:var(--faint)}
-.mcase svg{flex:0 0 auto;width:15px;height:15px;color:var(--faint);opacity:.7}
-.mcase[aria-current="page"] svg{display:none}
-.mcase[aria-current="page"] .mcase-x{position:relative;padding-left:16px}
-.mcase[aria-current="page"] .mcase-x:before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;
-  border-radius:50%;background:var(--accent)}
+.mcase-t{display:block;font-family:var(--serif);font-size:19px;font-weight:400;line-height:1.32;
+  letter-spacing:-.008em;color:var(--ink)}
+.mcase-m{display:block;margin-top:6px;font-family:var(--sans);font-size:10.5px;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.mcase[aria-current="page"] .mcase-num,
+.mcase[aria-current="page"] .mcase-t{color:var(--accent)}
 .mfoot{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding:21px 18px clamp(22px,4vh,30px)}
 /* The header stays elevated above this full-screen menu so its own
    close (X) button stays reachable -- but with the header now at the
@@ -148,6 +156,30 @@ body.menu-open header{z-index:70}
    the sheet leaves room for it. */
 @media (max-width:576px){
   .mfoot{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+}
+/* ══ BOTTOM SHEET ═══════════════════════════════════════════════════
+   The header pill already lives at the bottom of the screen on phones
+   -- that's where the burger/close control sits -- so a full-screen
+   takeover panel opening from there reads backwards. A sheet that
+   rises from the same edge as its own trigger, leaves the rest of the
+   screen dimmed but glanceable, and can be dismissed with a downward
+   swipe or a tap outside is the pattern a thumb already expects. */
+@media (max-width:576px){
+  .mobilenav{justify-content:flex-end;padding-top:0;background:rgba(20,18,16,.42);overflow-y:hidden}
+  html[data-theme="dark"] .mobilenav{background:rgba(0,0,0,.6)}
+  .msheet{width:100%;max-height:84vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    background:var(--bg);border-radius:20px 20px 0 0;
+    box-shadow:0 -14px 34px -18px rgba(0,0,0,.32);
+    padding-bottom:env(safe-area-inset-bottom);
+    transform:translateY(100%);transition:transform .34s cubic-bezier(.32,.72,0,1)}
+  .mobilenav.open .msheet{transform:translateY(0)}
+  .mhandle-zone{display:flex;justify-content:center;align-items:center;
+    padding:10px 0 6px;touch-action:none;cursor:grab}
+  .mhandle{width:36px;height:4px;border-radius:2px;background:var(--line)}
+  .mlinks{margin-top:2px}
+}
+@media (prefers-reduced-motion:reduce){
+  .msheet{transition:none}
 }
 .mailbtn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:52px;padding:0;border:0;
   border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);background:transparent;
@@ -390,20 +422,23 @@ p.body b{color:var(--ink);font-weight:400}
   </div>
 </header>
 
-<div class="mobilenav" id="mobileNav">
-  <div class="mlinks">
+<div class="mobilenav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile menu">
+  <div class="msheet">
+    <div class="mhandle-zone" aria-hidden="true"><span class="mhandle"></span></div>
+    <nav class="mlinks" aria-label="Primary">
     <a class="mrow" href="./index.html"><span class="mlabel">Home</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     <a class="mrow" href="./about.html"><span class="mlabel">About</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-  </div>
-  <div class="mcases">
+  </nav>
+    <div class="mcases">
     <p class="mgroup">Case studies</p>
-    <a class="mcase" href="./app-merge.html"><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &middot; Consumer app</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <a class="mcase" href="./rise-portal.html"><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&rsquo;s partners ever had</span><span class="mcase-m">Rupeezy &middot; B2B platform</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <a class="mcase" href="./web-terminal.html" aria-current="page"><span class="mcase-x"><span class="mcase-t">The desktop trading terminal: chart, watchlist, and orders on one screen.</span><span class="mcase-m">Rupeezy &middot; Web trading terminal</span></span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a class="mcase" href="./app-merge.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &middot; Consumer app</span></span></a>
+    <a class="mcase" href="./rise-portal.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&rsquo;s partners ever had</span><span class="mcase-m">Rupeezy &middot; B2B platform</span></span></a>
+    <a class="mcase" href="./web-terminal.html" aria-current="page"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">The desktop trading terminal: chart, watchlist, and orders on one screen.</span><span class="mcase-m">Rupeezy &middot; Web trading terminal</span></span></a>
   </div>
-  <div class="mfoot">
+    <div class="mfoot">
     <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
     <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
   </div>
 </div>
 
@@ -669,6 +704,35 @@ p.body b{color:var(--ink);font-weight:400}
     else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
   });
   window.addEventListener('resize',function(){ if(window.innerWidth>640) closeMenu(); });
+
+  // bottom-sheet: tap the dimmed backdrop, or swipe the handle down, to dismiss
+  mobileNav.addEventListener('click', function(e){
+    if (e.target === mobileNav) closeMenu();
+  });
+  var msheet = mobileNav.querySelector('.msheet');
+  var mhandle = mobileNav.querySelector('.mhandle-zone');
+  if (msheet && mhandle){
+    var dragStartY = 0, dragY = 0, dragging = false;
+    mhandle.addEventListener('touchstart', function(e){
+      dragging = true; dragY = 0;
+      dragStartY = e.touches[0].clientY;
+      msheet.style.transition = 'none';
+    }, { passive: true });
+    mhandle.addEventListener('touchmove', function(e){
+      if (!dragging) return;
+      dragY = Math.max(0, e.touches[0].clientY - dragStartY);
+      msheet.style.transform = 'translateY(' + dragY + 'px)';
+    }, { passive: true });
+    function endSheetDrag(){
+      if (!dragging) return;
+      dragging = false;
+      msheet.style.transition = '';
+      msheet.style.transform = '';
+      if (dragY > 70) closeMenu();
+    }
+    mhandle.addEventListener('touchend', endSheetDrag);
+    mhandle.addEventListener('touchcancel', endSheetDrag);
+  }
   var here=location.pathname.split('/').pop()||'index.html';
   mobileNav.querySelectorAll('.mrow, .mcase').forEach(function(el){
     var href=el.getAttribute('href');
