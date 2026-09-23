@@ -2666,6 +2666,51 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aitext blockquote p{margin:0 0 8px}
 .aitext blockquote p:last-child,.aitext blockquote:last-child{margin-bottom:0}
 .aitext.is-error{color:var(--muted)}
+
+/* ── answer blocks ─────────────────────────────────────────────────
+   Each kind of question gets its own mix (api/data/answer-format.js):
+   the lead is the hero's own device — the sentence muted, the words
+   that carry it in ink; figures borrow the serif numerals; facts read
+   as a spec sheet; a case study arrives as the menu's numbered row. */
+.aitext .ailead{margin:0 0 14px;font-family:var(--display);font-size:17px;font-weight:500;line-height:1.42;
+  letter-spacing:-.018em;color:var(--ink);text-wrap:pretty}
+.aitext .ailead.has-key{color:color-mix(in srgb,var(--muted) 65%,var(--bg) 35%)}
+.aitext .ailead b{font-weight:500;color:var(--ink)}
+.aitext .ailead:last-child{margin-bottom:0}
+
+.aifigs{display:flex;flex-wrap:wrap;gap:14px 30px;margin:2px 0 16px;padding:14px 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.aifig{min-width:0}
+.aifig b{display:block;font-family:var(--serif);font-size:28px;font-weight:400;line-height:1;
+  letter-spacing:-.02em;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.aifig span{display:block;margin-top:7px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint)}
+
+.aifacts{display:grid;grid-template-columns:minmax(0,max-content) minmax(0,1fr);column-gap:18px;margin:2px 0 14px}
+.aifacts dt,.aifacts dd{margin:0;padding:9px 0;border-top:1px solid var(--line)}
+.aifacts dt:first-of-type,.aifacts dt:first-of-type + dd{border-top:0;padding-top:2px}
+.aifacts dt{padding-top:12px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--faint);line-height:1.5;white-space:nowrap}
+.aifacts dt:first-of-type{padding-top:5px}
+.aifacts dd{font-size:14px;color:var(--ink)}
+.aifacts:last-child{margin-bottom:0}
+
+.aitext ol.aisteps li{padding-left:28px;margin-bottom:12px}
+.aistep-k{display:block;margin-bottom:2px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint);line-height:1.6}
+.aitext ol.aisteps li::before{top:.42em}
+
+.aitext a.aicase{display:flex;align-items:flex-start;gap:14px;margin:18px 0 0;padding:14px 16px;border-radius:12px;
+  background:var(--card);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);text-decoration:none;
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+.aitext a.aicase:hover{background:var(--surface);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent)}
+.aicase-num{flex:0 0 auto;padding-top:3px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.aicase-x{flex:1;min-width:0}
+.aicase-t{display:block;font-family:var(--serif);font-size:17px;line-height:1.3;letter-spacing:-.008em}
+.aicase-m{display:block;margin-top:5px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--faint)}
+.aicase svg{flex:0 0 auto;margin-top:4px;color:var(--faint);transition:transform .3s var(--ease),color .2s var(--ease)}
+.aitext a.aicase:hover svg{color:var(--accent);transform:translate(1px,-1px)}
 .aithinking{color:var(--faint)}
 /* the timeline's open-slot caret, reused as the writing cursor */
 .aicaret{display:inline-block;width:1.5px;height:1.05em;margin-left:2px;vertical-align:-.16em;border-radius:1px;
@@ -4082,35 +4127,122 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
       .replace(/`([^`]+)`/g, "<code>$1</code>"));
   }
-  // Just enough markdown for what the model sends: bold, short lists, the
-  // odd heading, and his own words quoted. Re-run on every token.
-  function renderRich(el, text, streaming){
-    var out = [], block = null;
-    function closeBlock(){ if (block){ out.push("</" + block + ">"); block = null; } }
-    text.replace(/\r/g, "").split("\n").forEach(function(line){
-      var bq = line.match(/^\s*>\s?(.*)/);
-      if (bq){
-        if (block !== "blockquote"){ closeBlock(); out.push("<blockquote>"); block = "blockquote"; }
-        if (bq[1].trim()) out.push("<p>" + inline(bq[1]) + "</p>");
-        return;
-      }
-      var ul = line.match(/^\s*[-•*]\s+(.*)/), ol = line.match(/^\s*\d+[.)]\s+(.*)/);
-      if (ul || ol){
-        var tag = ul ? "ul" : "ol";
-        if (block !== tag){ closeBlock(); out.push("<" + tag + ">"); block = tag; }
-        out.push("<li>" + inline((ul || ol)[1]) + "</li>");
-        return;
-      }
-      closeBlock();
-      var h = line.match(/^\s*#{1,4}\s+(.*)/);
-      if (h) out.push('<p class="aitext-h">' + inline(h[1]) + "</p>");
-      else if (line.trim()) out.push("<p>" + inline(line) + "</p>");
+  // The blocks the model is told to use (api/data/answer-format.js):
+  // a lead line, figures {{n|label}}, a "Label: value" facts list,
+  // labelled steps, a quote, and [case:id] cards. Re-run on every token.
+  var CASES = {
+    "app-merge":    { n: "01", t: "Two apps into one, built to hold the third", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
+    "rise-portal":  { n: "02", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
+    "web-terminal": { n: "03", t: "The desktop trading terminal: chart, watchlist, and orders on one screen", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" }
+  };
+  var FIG_RE = /\{\{\s*([^|}]+?)\s*\|\s*([^}]+?)\s*\}\}/g;
+  var FACT_RE = /^\s*(?:\*\*)?([^:*]{1,30}?)(?:\*\*)?\s*:\s+(.+)$/;
+  var CARD_ARROW = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function caseCard(id){
+    var c = CASES[id];
+    if (!c) return "";
+    return '<a class="aicase" href="' + c.href + '"><span class="aicase-num">' + c.n + '</span>' +
+      '<span class="aicase-x"><span class="aicase-t">' + escapeHtml(c.t) + '</span>' +
+      '<span class="aicase-m">Case study \u00b7 ' + c.m + '</span></span>' + CARD_ARROW + '</a>';
+  }
+  // a half-arrived token would flash as raw syntax, so while streaming
+  // the tail is held back until it closes
+  function holdPartial(text){
+    return text.replace(/\{\{[^}]*\}?$/, "").replace(/\{$/, "").replace(/\[(?:c(?:a(?:s(?:e(?::[a-z-]*)?)?)?)?)?$/, "");
+  }
+  // for Copy and screen readers: the same answer as plain sentences
+  function toPlain(text){
+    return text
+      .replace(FIG_RE, "$1 $2")
+      .replace(/\[case:([a-z-]+)\]/g, function(m, id){ var c = CASES[id]; return c ? c.t + " (" + new URL(c.href, location.href).href + ")" : ""; })
+      .replace(/\*\*/g, "").replace(/`/g, "");
+  }
+  function inlineCase(html){
+    return html.replace(/\[case:([a-z-]+)\]/g, function(m, id){
+      var c = CASES[id];
+      return c ? '<a href="' + c.href + '">' + escapeHtml(c.t) + "</a>" : "";
     });
-    closeBlock();
+  }
+
+  function renderRich(el, text, streaming){
+    if (streaming) text = holdPartial(text);
+    var blocks = [], cur = null;
+    function push(type){ cur = { t: type, items: [] }; blocks.push(cur); return cur; }
+    text.replace(/\r/g, "").split("\n").forEach(function(line){
+      var m;
+      if ((m = line.match(/^\s*\[case:([a-z-]+)\]\s*$/))){ push("case").id = m[1]; cur = null; return; }
+      if (/^\s*(\{\{[^}]+\}\}[\s,·]*)+$/.test(line)){
+        var figs = []; line.replace(FIG_RE, function(_, n, l){ figs.push([n, l]); });
+        push("figs").items = figs; cur = null; return;
+      }
+      if ((m = line.match(/^\s*>\s?(.*)/))){ if (!cur || cur.t !== "bq") push("bq"); if (m[1].trim()) cur.items.push(m[1]); return; }
+      var ul = line.match(/^\s*[-\u2022*]\s+(.*)/), ol = line.match(/^\s*\d+[.)]\s+(.*)/);
+      if (ul || ol){ var t = ul ? "ul" : "ol"; if (!cur || cur.t !== t) push(t); cur.items.push((ul || ol)[1]); return; }
+      cur = null;
+      if ((m = line.match(/^\s*#{1,4}\s+(.*)/))){ push("h").text = m[1]; cur = null; return; }
+      if (line.trim()){ push("p").text = line; cur = null; }
+    });
+
+    // the lead is one sentence; when the model runs straight on into the
+    // rest of its answer, split there so only the answer itself is set big
+    if (blocks[0] && blocks[0].t === "p" && blocks[0].text.length > 130){
+      var sm = blocks[0].text.match(/^(.+?[.!?])\s+(?=["\u201c\u2018']?[A-Z])/);
+      if (sm && (sm[1].match(/\*\*/g) || []).length % 2 === 0){
+        blocks.splice(1, 0, { t: "p", text: blocks[0].text.slice(sm[0].length) });
+        blocks[0] = { t: "p", text: sm[1] };
+      }
+    }
+
+    var out = [];
+    blocks.forEach(function(b, i){
+      if (b.t === "p"){
+        if (i === 0){
+          var lead = inline(b.text);
+          // the device only works when a few words carry it; a sentence
+          // bolded end to end is just the sentence, in ink
+          var keyLen = (b.text.match(/\*\*(.+?)\*\*/g) || []).join("").length;
+          var keyed = keyLen > 0 && keyLen < b.text.length * 0.6;
+          if (!keyed) lead = lead.replace(/<\/?b>/g, "");
+          out.push('<p class="ailead' + (keyed ? " has-key" : "") + '">' + inlineCase(lead) + "</p>");
+        } else {
+          out.push("<p>" + inlineCase(inline(b.text).replace(/<\/?b>/g, "")) + "</p>");
+        }
+      } else if (b.t === "h"){
+        out.push('<p class="aitext-h">' + inline(b.text) + "</p>");
+      } else if (b.t === "figs"){
+        out.push('<div class="aifigs">' + b.items.map(function(f){
+          return '<div class="aifig"><b>' + escapeHtml(f[0]) + "</b><span>" + escapeHtml(f[1]) + "</span></div>";
+        }).join("") + "</div>");
+      } else if (b.t === "case"){
+        out.push(caseCard(b.id));
+      } else if (b.t === "bq"){
+        out.push("<blockquote>" + b.items.map(function(l){ return "<p>" + inline(l) + "</p>"; }).join("") + "</blockquote>");
+      } else if (b.t === "ul"){
+        var facts = b.items.length > 1 && b.items.every(function(it){ return FACT_RE.test(it); });
+        if (facts){
+          out.push('<dl class="aifacts">' + b.items.map(function(it){
+            var f = it.match(FACT_RE);
+            return "<dt>" + escapeHtml(f[1].trim()) + "</dt><dd>" + inlineCase(inline(f[2])) + "</dd>";
+          }).join("") + "</dl>");
+        } else {
+          out.push("<ul>" + b.items.map(function(it){ return "<li>" + inlineCase(inline(it)) + "</li>"; }).join("") + "</ul>");
+        }
+      } else if (b.t === "ol"){
+        var steps = b.items.every(function(it){ return FACT_RE.test(it); });
+        out.push('<ol' + (steps ? ' class="aisteps"' : "") + ">" + b.items.map(function(it){
+          if (!steps) return "<li>" + inlineCase(inline(it)) + "</li>";
+          var f = it.match(FACT_RE);
+          var body = f[2].charAt(0).toUpperCase() + f[2].slice(1);
+          return '<li><span class="aistep-k">' + escapeHtml(f[1].trim()) + "</span>" + inlineCase(inline(body).replace(/<\/?b>/g, "")) + "</li>";
+        }).join("") + "</ol>");
+      }
+    });
     el.innerHTML = out.join("") || "<p></p>";
     if (streaming){
       var tail = el.lastElementChild;
-      if (tail && /^(UL|OL|BLOCKQUOTE)$/.test(tail.tagName)) tail = tail.lastElementChild || tail;
+      if (tail && /^(UL|OL|BLOCKQUOTE|DL)$/.test(tail.tagName)) tail = tail.lastElementChild || tail;
+      if (tail && /^(A|DIV)$/.test(tail.tagName)) tail = null;
       (tail || el).insertAdjacentHTML("beforeend", '<span class="aicaret" aria-hidden="true"></span>');
     }
   }
@@ -4138,7 +4270,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     copy.textContent = "Copy";
     copy.addEventListener("click", function(){
       if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-      navigator.clipboard.writeText(answer.replace(/\*\*/g, "").replace(/`/g, "")).then(function(){
+      navigator.clipboard.writeText(toPlain(answer)).then(function(){
         copy.classList.add("is-done");
         copy.textContent = "Copied";
         setTimeout(function(){ copy.classList.remove("is-done"); copy.textContent = "Copy"; }, 1600);

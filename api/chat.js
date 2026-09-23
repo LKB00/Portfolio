@@ -22,6 +22,10 @@
 // small regardless of how long a visitor keeps typing.
 
 import { LOKESH_CONTEXT } from "./data/lokesh-context.js";
+import { ANSWER_FORMAT } from "./data/answer-format.js";
+
+// what I know, then how to lay it out
+const SYSTEM_PROMPT = LOKESH_CONTEXT + "\n" + ANSWER_FORMAT;
 
 export const config = { maxDuration: 30 };
 
@@ -43,7 +47,8 @@ export const config = { maxDuration: 30 };
 const MODELS = (process.env.GROQ_MODELS || "openai/gpt-oss-120b,openai/gpt-oss-20b,qwen/qwen3.8-27b")
   .split(",").map((m) => m.trim()).filter(Boolean);
 const MAX_TURNS = 16; // user+assistant messages, not counting the system prompt
-const MAX_MESSAGE_CHARS = 600;
+const MAX_MESSAGE_CHARS = 600;   // per visitor message
+const MAX_ANSWER_CHARS = 6000;   // per assistant message echoed back in history
 const MAX_TOKENS = 1024;
 
 export default async function handler(req, res) {
@@ -77,8 +82,13 @@ export default async function handler(req, res) {
     if (!m || (m.role !== "user" && m.role !== "assistant") || typeof m.content !== "string") {
       return res.status(400).json({ error: "Each message needs a role of user/assistant and string content" });
     }
-    if (m.content.length > MAX_MESSAGE_CHARS) {
+    // the cap is for what visitors type; the assistant's own earlier
+    // answers come back in history and are routinely longer than that
+    if (m.role === "user" && m.content.length > MAX_MESSAGE_CHARS) {
       return res.status(400).json({ error: `Keep each message under ${MAX_MESSAGE_CHARS} characters` });
+    }
+    if (m.content.length > MAX_ANSWER_CHARS) {
+      return res.status(400).json({ error: "That conversation got long — start a new chat." });
     }
   }
 
@@ -96,7 +106,7 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           model,
-          messages: [{ role: "system", content: LOKESH_CONTEXT }, ...messages],
+          messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
           stream: true,
           temperature: 0.5,
           max_completion_tokens: MAX_TOKENS,
