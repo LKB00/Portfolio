@@ -2641,8 +2641,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aiasked{margin:0;font-family:var(--serif);font-size:20px;line-height:1.3;letter-spacing:-.012em;
   color:var(--ink);overflow-wrap:anywhere;white-space:pre-wrap}
 .aians{margin-top:22px}
-.aitext{font-family:var(--display);font-size:14.5px;line-height:1.62;letter-spacing:-.005em;color:var(--ink);overflow-wrap:anywhere}
-.aitext p{margin:0 0 11px}
+.aitext{font-family:var(--display);font-size:14px;line-height:1.6;letter-spacing:-.005em;color:var(--ink);overflow-wrap:anywhere}
+.aitext p{margin:0 0 11px;color:var(--muted)}
 .aitext p:last-child{margin-bottom:0}
 .aitext .aitext-h{font-weight:500}
 .aitext ul,.aitext ol{margin:0 0 11px;padding:0;list-style:none}
@@ -2672,20 +2672,21 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    the lead is the hero's own device — the sentence muted, the words
    that carry it in ink; figures borrow the serif numerals; facts read
    as a spec sheet; a case study arrives as the menu's numbered row. */
-.aitext .ailead{margin:0 0 14px;font-family:var(--display);font-size:17px;font-weight:500;line-height:1.42;
-  letter-spacing:-.018em;color:var(--ink);text-wrap:pretty}
+.aitext .ailead{margin:0 0 16px;font-family:var(--display);font-size:19px;font-weight:500;line-height:1.36;
+  letter-spacing:-.022em;color:var(--ink);text-wrap:pretty}
 .aitext .ailead.has-key{color:color-mix(in srgb,var(--muted) 65%,var(--bg) 35%)}
 .aitext .ailead b{font-weight:500;color:var(--ink)}
 .aitext .ailead:last-child{margin-bottom:0}
 
-.aifigs{display:flex;flex-wrap:wrap;gap:14px 30px;margin:2px 0 16px;padding:14px 0;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.aifig{min-width:0}
-.aitext .aifigs-src{flex-basis:100%;margin:-4px 0 0;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
-.aifig b{display:block;font-family:var(--serif);font-size:28px;font-weight:400;line-height:1;
+.aifigs-wrap{margin:0 0 16px}
+.aifigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;overflow:hidden;
+  border-radius:12px;background:var(--line);box-shadow:0 0 0 1px var(--line)}
+.aifig{min-width:0;padding:12px 14px 13px;background:var(--card)}
+.aifig b{display:block;font-family:var(--serif);font-size:26px;font-weight:400;line-height:1;
   letter-spacing:-.02em;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
-.aifig span{display:block;margin-top:7px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+.aifig span{display:block;margin-top:7px;font-family:var(--mono);font-size:9.5px;line-height:1.45;letter-spacing:.05em;
   text-transform:uppercase;color:var(--faint)}
+.aitext .aifigs-src{margin:8px 2px 0;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
 
 .aifacts{display:grid;grid-template-columns:minmax(0,max-content) minmax(0,1fr);column-gap:18px;margin:2px 0 14px}
 .aifacts dt,.aifacts dd{margin:0;padding:9px 0;border-top:1px solid var(--line)}
@@ -2693,15 +2694,21 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aifacts dt{padding-top:12px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--faint);line-height:1.5;white-space:nowrap}
 .aifacts dt:first-of-type{padding-top:5px}
-.aifacts dd{font-size:14px;color:var(--ink)}
+.aifacts dd{font-size:13.5px;line-height:1.5;color:var(--ink)}
 .aifacts:last-child{margin-bottom:0}
 
-.aitext ol.aisteps li{padding-left:28px;margin-bottom:12px}
-.aistep-k{display:block;margin-bottom:2px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+.aitext ol.aisteps{margin-bottom:4px}
+.aitext ol.aisteps li{padding:0 0 13px 22px;margin:0;font-size:13.5px;line-height:1.5}
+.aitext ol.aisteps li::before{content:"";top:5px;left:0;width:7px;height:7px;border-radius:50%;
+  background:var(--bg);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--faint) 70%,transparent)}
+.aitext ol.aisteps li::after{content:"";position:absolute;left:3px;top:16px;bottom:1px;width:1px;background:var(--line)}
+.aitext ol.aisteps li:last-child{padding-bottom:0}
+.aitext ol.aisteps li:last-child::after{display:none}
+.aitext ol.aisteps li:last-child::before{background:var(--ink);box-shadow:none}
+.aistep-k{display:block;margin-bottom:1px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
   text-transform:uppercase;color:var(--faint);line-height:1.6}
-.aitext ol.aisteps li::before{top:.42em}
 
-.aitext a.aicase{display:flex;align-items:flex-start;gap:14px;margin:18px 0 0;padding:14px 16px;border-radius:12px;
+.aitext a.aicase{display:flex;align-items:flex-start;gap:14px;margin:16px 0 0;padding:14px 16px;border-radius:12px;
   background:var(--card);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);text-decoration:none;
   transition:background .2s var(--ease),box-shadow .2s var(--ease)}
 .aitext a.aicase:hover{background:var(--surface);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent)}
@@ -2717,12 +2724,42 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aicaret{display:inline-block;width:1.5px;height:1.05em;margin-left:2px;vertical-align:-.16em;border-radius:1px;
   background:var(--link);animation:expblink 1.15s step-end infinite}
 
-.aiacts{display:flex;align-items:center;gap:18px;margin-top:16px}
-.aiact{padding:0;border:0;background:transparent;cursor:pointer;text-decoration:none;
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);
-  transition:color .2s var(--ease)}
-.aiact:hover{color:var(--ink);opacity:1}
-.aiact.is-done{color:var(--live)}
+/* ── the agent at work ──────────────────────────────────────────────
+   What an assistant is doing should be visible, not implied: a live
+   "Thinking" that settles into how long it took, then what the answer
+   is based on, as links to the pages it came from. */
+.aiproc{display:inline-flex;align-items:center;gap:8px;text-transform:none;letter-spacing:.02em}
+.aiproc::before{content:"";width:3px;height:3px;border-radius:50%;background:var(--line)}
+.aiproc:empty{display:none}
+.aiproc.is-live .aiproc-t{background:linear-gradient(90deg,var(--faint) 0%,var(--faint) 40%,var(--ink) 50%,var(--faint) 60%,var(--faint) 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.6s linear infinite}
+@keyframes aiShimmer{from{background-position:120% 0}to{background-position:-100% 0}}
+.aiproc-n{font-variant-numeric:tabular-nums}
+.aisrc{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-2px 0 14px}
+.aisrc[hidden]{display:none}
+.aisrc-k{margin-right:2px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.aisrc a{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:var(--r-pill);
+  background:var(--surface);color:var(--ink);font-size:12px;line-height:1.3;text-decoration:none;
+  animation:aiRise .4s var(--ease) both;animation-delay:calc(var(--i,0) * 90ms);
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+.aisrc a svg{flex:0 0 auto;color:var(--faint)}
+.aisrc a:hover{background:var(--card);box-shadow:inset 0 0 0 1px var(--line);opacity:1}
+
+/* actions that fit this answer, not the same two on every one */
+.aiacts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:18px}
+.aipill{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:0;border-radius:var(--r-pill);
+  background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);cursor:pointer;
+  font-family:var(--display);font-size:12.5px;line-height:1.3;text-decoration:none;
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+.aipill:hover{background:var(--surface);opacity:1}
+.aipill.is-primary{background:var(--ink);color:var(--bg);box-shadow:none}
+.aipill.is-primary:hover{background:color-mix(in srgb,var(--ink) 86%,var(--bg))}
+.aipill svg{flex:0 0 auto}
+.aiicon{display:grid;place-items:center;width:30px;height:30px;margin-left:auto;padding:0;border:0;border-radius:50%;
+  background:transparent;color:var(--faint);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
+.aiicon:hover{background:var(--surface);color:var(--ink)}
+.aiicon.is-done{color:var(--live)}
+.aipill:focus-visible,.aiicon:focus-visible,.aisrc a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .ainext{padding:2px 0 30px;animation:aiRise .5s var(--ease) .1s both}
 .ainext .aieyebrow{margin-bottom:10px}
@@ -2774,7 +2811,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 }
 @media (prefers-reduced-motion:reduce){
   .aichat-panel,.aichat-scrim,.askbtn-mark{transition:none}
-  .aispark.is-busy,.aime.is-busy,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
+  .aispark.is-busy,.aime.is-busy,.aiproc-t,.aisrc a,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
   .aichat .ai-in{opacity:1}
 }
 
@@ -4156,10 +4193,33 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   }
   // for Copy and screen readers: the same answer as plain sentences
   function toPlain(text){
-    return text
+    return stripMeta(text)
       .replace(FIG_RE, "$1 $2")
       .replace(/\[case:([a-z-]+)\]/g, function(m, id){ var c = CASES[id]; return c ? c.t + " (" + new URL(c.href, location.href).href + ")" : ""; })
       .replace(/\*\*/g, "").replace(/`/g, "");
+  }
+  // the two meta lines every answer carries (answer-format.js): what it
+  // drew on, and what to ask next. Never shown as text.
+  var SOURCES = {
+    "app-merge":    { t: "App Merge case study", href: "./app-merge.html" },
+    "rise-portal":  { t: "Rise Portal case study", href: "./rise-portal.html" },
+    "web-terminal": { t: "Trading terminal case study", href: "./web-terminal.html" },
+    "resume":       { t: "R\u00e9sum\u00e9", href: "./resume.html" },
+    "about":        { t: "About me", href: "./about.html" }
+  };
+  var DOC = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.8V5.2h3.4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  function readMeta(text){
+    var meta = { used: null, next: null };
+    var u = text.match(/<<\s*used\s*:\s*([^>]*)>>/i);
+    if (u) meta.used = u[1].split(",").map(function(x){ return x.trim().toLowerCase(); })
+      .filter(function(x, i, a){ return SOURCES[x] && a.indexOf(x) === i; });
+    var n = text.match(/<<\s*next\s*:\s*([^>]*)>>/i);
+    if (n) meta.next = n[1].split("|").map(function(x){ return x.trim(); })
+      .filter(function(x){ return x && x.length < 90; }).slice(0, 3);
+    return meta;
+  }
+  function stripMeta(text){
+    return text.replace(/<<[^>]*>>/g, "").replace(/<<[^>]*$/, "").replace(/<$/, "").replace(/^\s+/, "");
   }
   function inlineCase(html){
     return html.replace(/\[case:([a-z-]+)\]/g, function(m, id){
@@ -4169,6 +4229,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   }
 
   function renderRich(el, text, streaming){
+    text = stripMeta(text);
     if (streaming) text = holdPartial(text);
     var blocks = [], cur = null;
     function push(type){ cur = { t: type, items: [] }; blocks.push(cur); return cur; }
@@ -4222,9 +4283,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       } else if (b.t === "h"){
         out.push('<p class="aitext-h">' + inline(b.text) + "</p>");
       } else if (b.t === "figs"){
-        out.push('<div class="aifigs">' + b.items.map(function(f){
+        out.push('<div class="aifigs-wrap"><div class="aifigs">' + b.items.map(function(f){
           return '<div class="aifig"><b>' + escapeHtml(f[0]) + "</b><span>" + escapeHtml(f[1]) + "</span></div>";
-        }).join("") + (b.source ? '<p class="aifigs-src">Source: ' + escapeHtml(b.source.replace(/\*\*/g, "")) + "</p>" : "") + "</div>");
+        }).join("") + "</div>" + (b.source ? '<p class="aifigs-src">Source: ' + escapeHtml(b.source.replace(/\*\*/g, "")) + "</p>" : "") + "</div>");
       } else if (b.t === "case"){
         out.push(caseCard(b.id));
       } else if (b.t === "bq"){
@@ -4266,41 +4327,78 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     x.className = "aix";
     x.innerHTML =
       '<p class="aiwho">You</p><p class="aiasked"></p>' +
-      '<div class="aians"><p class="aiwho"><span class="aime is-busy" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh</p>' +
-      '<div class="aitext"><p class="aithinking">Thinking<span class="aicaret" aria-hidden="true"></span></p></div></div>';
+      '<div class="aians"><p class="aiwho"><span class="aime is-busy" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh' +
+      '<span class="aiproc is-live"><span class="aiproc-t">Thinking <span class="aiproc-n">0.0s</span></span></span></p>' +
+      '<div class="aisrc" hidden></div><div class="aitext"></div></div>';
     x.querySelector(".aiasked").textContent = question;
     body.appendChild(x);
-    return { el: x, ans: x.querySelector(".aians"), text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aime") };
+    return { el: x, ans: x.querySelector(".aians"), text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aime"),
+             proc: x.querySelector(".aiproc"), src: x.querySelector(".aisrc"), shownSrc: false };
   }
-  function addActions(ex, answer){
+  function showSources(ex, used){
+    if (ex.shownSrc || !used || !used.length) return;
+    ex.shownSrc = true;
+    ex.src.innerHTML = '<span class="aisrc-k">Based on</span>' + used.map(function(id, i){
+      var c = SOURCES[id];
+      return '<a href="' + c.href + '" style="--i:' + i + '">' + DOC + escapeHtml(c.t) + "</a>";
+    }).join("");
+    ex.src.hidden = false;
+  }
+  var ICON_COPY = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.2" y="5.2" width="8.3" height="8.3" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M10.8 3.2A1.6 1.6 0 0 0 9.2 2H4a2 2 0 0 0-2 2v5.2a1.6 1.6 0 0 0 1.2 1.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+  var ICON_DONE = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var ICON_MAIL = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.8" y="3.3" width="12.4" height="9.4" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 4.5 8 8.6l5.5-4.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var HIRING = /\b(salary|pay|compensation|ctc|interview|hire|hiring|role|offer|start|notice|available|availability|reach|contact|email|call|relocat)/i;
+
+  // what's worth doing next depends on what was just said: the page it
+  // came from if it isn't already on screen, the résumé when the answer
+  // is about roles and dates, email when it's about working together
+  function addActions(ex, answer, meta, question){
     var bar = document.createElement("div");
     bar.className = "aiacts";
+    var plain = stripMeta(answer), used = meta.used || [];
+    function pill(label, href, icon, primary){
+      var a = document.createElement("a");
+      a.className = "aipill" + (primary ? " is-primary" : "");
+      a.href = href;
+      a.innerHTML = (icon || "") + "<span></span>";
+      a.lastChild.textContent = label;
+      bar.appendChild(a);
+    }
+    if (plain.indexOf(MAIL) > -1 || HIRING.test(question)) pill("Email me", "mailto:" + MAIL, ICON_MAIL, true);
+    if (!/\[case:[a-z-]+\]/.test(plain)){
+      var cs = used.filter(function(id){ return CASES[id]; })[0];
+      if (cs) pill("Read the case study", CASES[cs].href, CARD_ARROW);
+    }
+    if (used.indexOf("resume") > -1) pill("Open r\u00e9sum\u00e9", "./resume.html", CARD_ARROW);
+    if (used.indexOf("about") > -1 && !bar.children.length) pill("More about me", "./about.html", CARD_ARROW);
+
     var copy = document.createElement("button");
     copy.type = "button";
-    copy.className = "aiact";
-    copy.textContent = "Copy";
+    copy.className = "aiicon";
+    copy.setAttribute("aria-label", "Copy answer");
+    copy.title = "Copy answer";
+    copy.innerHTML = ICON_COPY;
     copy.addEventListener("click", function(){
       if (!navigator.clipboard || !navigator.clipboard.writeText) return;
       navigator.clipboard.writeText(toPlain(answer)).then(function(){
         copy.classList.add("is-done");
-        copy.textContent = "Copied";
-        setTimeout(function(){ copy.classList.remove("is-done"); copy.textContent = "Copy"; }, 1600);
+        copy.innerHTML = ICON_DONE;
+        copy.setAttribute("aria-label", "Copied");
+        setTimeout(function(){ copy.classList.remove("is-done"); copy.innerHTML = ICON_COPY; copy.setAttribute("aria-label", "Copy answer"); }, 1600);
       }, function(){});
     });
-    var mail = document.createElement("a");
-    mail.className = "aiact";
-    mail.href = "mailto:" + MAIL;
-    mail.textContent = "Email me";
     bar.appendChild(copy);
-    bar.appendChild(mail);
     ex.ans.appendChild(bar);
   }
-  function addNext(){
+  // follow-ups the answer itself suggests; the pool only if it gave none
+  function addNext(next){
     var box = document.createElement("div");
     box.className = "ainext";
     box.innerHTML = '<p class="aieyebrow">Ask next</p><div class="aichips"></div>';
     var row = box.querySelector(".aichips");
-    pick(3).forEach(function(item){ row.appendChild(chip(item)); });
+    var items = (next && next.length) ? next.filter(function(q){ return asked.indexOf(q) === -1; }).map(function(q){ return { q: q }; }) : [];
+    if (!items.length) items = pick(3);
+    items.forEach(function(item){ row.appendChild(chip(item)); });
     body.appendChild(box);
   }
 
@@ -4362,6 +4460,18 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
     var controller = window.AbortController ? new AbortController() : null;
     var full = "", stopped = false, done = false;
+    // the wait before the first word is the model reasoning; count it
+    // out loud, then say how long it took
+    var t0 = Date.now(), firstAt = 0;
+    var procN = ex.proc.querySelector(".aiproc-n");
+    var tick = setInterval(function(){ procN.textContent = ((Date.now() - t0) / 1000).toFixed(1) + "s"; }, 100);
+    function thought(){
+      if (firstAt) return;
+      firstAt = Date.now();
+      clearInterval(tick);
+      ex.proc.classList.remove("is-live");
+      ex.proc.textContent = "Thought for " + Math.max(0.1, (firstAt - t0) / 1000).toFixed(1) + "s";
+    }
     stopCurrent = function(){
       stopped = true;
       if (controller) controller.abort();
@@ -4369,6 +4479,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     syncSend();
 
     function settle(){
+      clearInterval(tick);
       done = true;
       busy = false;
       stopCurrent = null;
@@ -4381,6 +4492,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       // the question never got an answer, so it shouldn't sit in history
       // unanswered — a retry would otherwise send it twice in a row
       history.pop();
+      clearInterval(tick);
+      ex.proc.textContent = "";
       ex.text.classList.add("is-error");
       ex.text.innerHTML = "<p>" + inline(message) + "</p>";
       settle();
@@ -4389,11 +4502,14 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     function finish(){
       if (done) return;
       if (!full) return fail(stopped ? "Stopped." : FALLBACK);
+      thought();
+      var meta = readMeta(full);
+      showSources(ex, meta.used);
       renderRich(ex.text, full, false);
       history.push({ role: "assistant", content: full });
-      addActions(ex, full);
+      addActions(ex, full, meta, text);
       settle();
-      addNext();
+      addNext(meta.next);
       live.textContent = ex.text.textContent;
       scrollDown();
     }
@@ -4425,6 +4541,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
               var delta = json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
               if (delta){
                 full += delta;
+                thought();
+                if (!ex.shownSrc && /<<\s*used[^>]*>>/i.test(full)) showSources(ex, readMeta(full).used);
                 renderRich(ex.text, full, true);
                 scrollDown();
               }
