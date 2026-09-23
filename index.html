@@ -1914,6 +1914,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   background:transparent;
   font-family:inherit;color:var(--ink);
   transition:border-color .3s var(--ease),background-color .2s var(--ease),
+    transform .5s cubic-bezier(.34,1.56,.64,1),
     opacity .18s linear,visibility 0s linear .18s}
 .padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
   border-radius:50%;background:var(--accent);color:#FFFFFF;
@@ -1935,7 +1936,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 @media (hover:hover){
   .padwrap:not(.is-open) .padtrigger:hover{
     border-color:var(--accent);
-    background:color-mix(in srgb,var(--accent) 6%,transparent)}
+    background:color-mix(in srgb,var(--accent) 6%,transparent);
+    transform:translateY(-3px)}
   .padwrap:not(.is-open) .padtrigger:hover .padtriggerplus{
     transform:scale(1.08)}
 }
@@ -2035,7 +2037,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .padwrap.is-open .padtrigger{cursor:default}
 .padtrigger:disabled{opacity:1;color:var(--ink)}
 .padtriggerplus{transition:opacity .2s var(--ease),width .3s var(--ease),
-  margin-right .3s var(--ease),transform .2s var(--ease)}
+  margin-right .3s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
 
 /* the first paint must not animate: a visitor returning to saved notes
    would watch the board unfold for no reason */
@@ -2318,7 +2320,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   margin:0;padding:clamp(14px,2.2vw,20px) 20px;border-radius:8px;
   background:var(--rp-bg);
   color:var(--rp-fg);text-align:left;cursor:default;
-  transition:background-color .25s var(--ease)}
+  transition:background-color .25s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
 :root[data-theme="dark"] #notes .readpill{--rp-bg:#FFFFFF;--rp-fg:#141414}
 
 #notes .rp-faces{display:inline-flex;flex:none}
@@ -2382,11 +2384,12 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #notes .rp-sub > span{grid-area:1/1;transition:opacity .2s var(--ease),color .2s var(--ease)}
 #notes .rp-sub-b{opacity:0}
 @media (hover:hover){
+  #notes .readpill:hover{transform:translateY(-3px)}
   #notes .readpill:hover .rp-sub-a{opacity:0}
   #notes .readpill:hover .rp-sub-b{opacity:1}
 }
 @media (prefers-reduced-motion:reduce){
-  #notes .rp-sub > span{transition:none}
+  #notes .readpill,#notes .rp-sub > span{transition:none}
 }
 /* The pill used to rise 1px and throw a shadow. It sits in the page,
    not on top of it -- nothing else here lifts -- so hovering says so
