@@ -2562,6 +2562,20 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    started and the loop has no seam. */
 .aispark.is-busy{animation:aiTurn 1s var(--ease) infinite}
 @keyframes aiTurn{from{transform:rotate(0)}to{transform:rotate(90deg)}}
+/* me, speaking: the footer's avatar mark wherever the chat talks. While
+   an answer is coming, a soft accent ring breathes around it — the
+   "typing…" of a person, not the spinner of a machine. */
+.aime{display:inline-block;flex:0 0 auto;width:20px;height:20px;border-radius:50%;overflow:hidden;
+  box-shadow:0 0 0 1px var(--line)}
+.aime img{display:block;width:100%!important;height:100%!important;object-fit:cover}
+.aichat-head .aime{width:28px;height:28px}
+.aiwho .aime,.aimodel .aime{width:18px;height:18px}
+.aime.is-busy{animation:aiBreathe 1.4s var(--ease) infinite}
+@keyframes aiBreathe{0%,100%{box-shadow:0 0 0 1px var(--line),0 0 0 0 color-mix(in srgb,var(--accent) 35%,transparent)}
+  50%{box-shadow:0 0 0 1px var(--accent),0 0 0 4px color-mix(in srgb,var(--accent) 14%,transparent)}}
+.aitag{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:var(--r-pill);vertical-align:2px;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+  font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.06em;line-height:1.3}
 
 /* ── the panel: the command palette's grammar, stood up on the right ── */
 .aichat{position:fixed;inset:0;z-index:85;visibility:hidden;pointer-events:none}
@@ -2718,7 +2732,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 }
 @media (prefers-reduced-motion:reduce){
   .aichat-panel,.aichat-scrim,.askbtn-mark{transition:none}
-  .aispark.is-busy,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
+  .aispark.is-busy,.aime.is-busy,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
   .aichat .ai-in{opacity:1}
 }
 
@@ -2773,7 +2787,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         <a class="navlink" href="./index.html" aria-current="page"><span class="navtext">Home</span></a>
         <a class="navlink" href="./about.html"><span class="navtext">About</span></a>
         <a class="navlink" href="./resume.html"><span class="navtext">Resume</span></a>
-        <button type="button" class="askbtn" id="askAiBtn"><span class="askbtn-mark" aria-hidden="true">&#10022;</span>Ask AI</button>
+        <button type="button" class="askbtn" id="askAiBtn"><span class="askbtn-mark" aria-hidden="true">&#10022;</span>Ask me</button>
         <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span><span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span></button>
         <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2l-12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button>
       </nav>
@@ -2788,7 +2802,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       <div class="asksheet-row">
         <button type="button" class="asksheet-btn" id="askAiBtnMobile">
           <span class="askbtn-mark" aria-hidden="true">&#10022;</span>
-          <span class="asksheet-x"><span class="asksheet-t">Ask about Lokesh</span><span class="asksheet-m">The AI that helped build this site</span></span>
+          <span class="asksheet-x"><span class="asksheet-t">Ask me anything</span><span class="asksheet-m">An AI version of me, trained on my work</span></span>
         </button>
       </div>
       <nav class="mlinks" aria-label="Primary">
@@ -2816,8 +2830,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     <div class="aichat-panel" tabindex="-1">
       <span class="aichat-handle" aria-hidden="true"></span>
       <div class="aichat-head">
-        <span class="aispark" id="aiChatSpark" aria-hidden="true">&#10022;</span>
-        <p class="aichat-title" id="aiChatTitle">Ask about Lokesh</p>
+        <span class="aime" id="aiChatSpark" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>
+        <p class="aichat-title" id="aiChatTitle">Lokesh <span class="aitag">AI</span></p>
         <button type="button" class="aichat-iconbtn" id="aiChatReset" aria-label="Start over" title="Start over">
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 8a5.4 5.4 0 1 0 1.6-3.85M2.6 2.6v3.2h3.2" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
@@ -2827,9 +2841,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       </div>
       <div class="aichat-body" id="aiChatBody">
         <div class="aichat-intro" id="aiChatIntro">
-          <p class="aieyebrow ai-in" style="--i:0">The OG assistant</p>
-          <p class="aichat-greet ai-in" style="--i:1">Ask me anything<br>about <em>Lokesh</em>.</p>
-          <p class="aichat-lede ai-in" style="--i:2">I&#8217;m the AI that helped build this site. I know his work, how he got here, and the straight answers he&#8217;d give in an interview.</p>
+          <p class="aieyebrow ai-in" style="--i:0">An AI version of me</p>
+          <p class="aichat-greet ai-in" style="--i:1">Hi, I&#8217;m <em>Lokesh</em>.<br>Ask me anything.</p>
+          <p class="aichat-lede ai-in" style="--i:2">Well, an AI version of me. It knows my work, how I got here, and the straight answers I&#8217;d give you in an interview. If anything sounds off, email me and I&#8217;ll reply myself.</p>
           <div class="aitry ai-in" style="--i:3">
             <p class="aieyebrow">Try asking</p>
             <div class="aichips" id="aiChatSuggest"></div>
@@ -2839,16 +2853,16 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       <p class="fsr" id="aiChatLive" aria-live="polite"></p>
       <div class="aichat-foot">
         <form class="aicomposer" id="aiChatForm">
-          <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask anything about Lokesh&#8230;" aria-label="Ask about Lokesh"></textarea>
+          <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask me anything&#8230;" aria-label="Ask me anything"></textarea>
           <div class="aicomposer-row">
-            <span class="aimodel"><span class="aispark" aria-hidden="true">&#10022;</span>OG assistant</span>
+            <span class="aimodel"><span class="aime" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh &#183; AI</span>
             <button type="submit" class="aichat-send" id="aiChatSend" aria-label="Send" disabled>
               <svg class="ico-send" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3.2M3.8 7.4 8 3.2l4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
               <svg class="ico-stop" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="2.2" fill="currentColor"></rect></svg>
             </button>
           </div>
         </form>
-        <div class="aihint"><span class="aihint-keys">&#8629; to send &#183; &#8679;&#8629; new line</span><span>AI &#183; can be wrong</span></div>
+        <div class="aihint"><span class="aihint-keys">&#8629; to send &#183; &#8679;&#8629; new line</span><span>AI version of me &#183; can be wrong</span></div>
       </div>
     </div>
   </div>
@@ -3936,24 +3950,24 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   var live = document.getElementById("aiChatLive");
 
   var MAIL = "hi.lokeshux@gmail.com";
-  var FALLBACK = "Sorry, I couldn't get an answer just then. Try again, or email " + MAIL + ".";
+  var FALLBACK = "Sorry, I lost my train of thought there. Try again, or email me at " + MAIL + ".";
   var ARROW = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   // Wider than one visit shows. The opening four are one per topic, so
   // the list itself tells a reader the range of what they can ask.
   var QUESTION_POOL = [
-    { q: "What has he shipped recently?", tag: "Work" },
-    { q: "What's his best project?", tag: "Work" },
-    { q: "Does he have fintech experience?", tag: "Work" },
-    { q: "What tools does he design with?", tag: "Craft" },
-    { q: "Is he good at coding?", tag: "Craft" },
-    { q: "What does he actually think about AI?", tag: "AI" },
-    { q: "Why did he leave Rupeezy?", tag: "Career" },
+    { q: "What have you shipped recently?", tag: "Work" },
+    { q: "What's your best project?", tag: "Work" },
+    { q: "Do you have fintech experience?", tag: "Work" },
+    { q: "What tools do you design with?", tag: "Craft" },
+    { q: "Can you code?", tag: "Craft" },
+    { q: "What do you actually think about AI?", tag: "AI" },
+    { q: "Why did you leave Rupeezy?", tag: "Career" },
     { q: "Why four companies in three years?", tag: "Career" },
-    { q: "What's his biggest weakness?", tag: "Career" },
-    { q: "What's he looking for next?", tag: "Hiring" },
-    { q: "Is he available to start now?", tag: "Hiring" },
-    { q: "How do I get in touch?", tag: "Hiring" }
+    { q: "What's your biggest weakness?", tag: "Career" },
+    { q: "What are you looking for next?", tag: "Hiring" },
+    { q: "Can you start right away?", tag: "Hiring" },
+    { q: "How do I reach you directly?", tag: "Hiring" }
   ];
 
   var history = [], asked = [], busy = false, lastFocus = null, stopCurrent = null;
@@ -4113,11 +4127,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     x.className = "aix";
     x.innerHTML =
       '<p class="aiwho">You</p><p class="aiasked"></p>' +
-      '<div class="aians"><p class="aiwho"><span class="aispark is-busy" aria-hidden="true">&#10022;</span>OG assistant</p>' +
-      '<div class="aitext"><p class="aithinking">Reading his work<span class="aicaret" aria-hidden="true"></span></p></div></div>';
+      '<div class="aians"><p class="aiwho"><span class="aime is-busy" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh</p>' +
+      '<div class="aitext"><p class="aithinking">Thinking<span class="aicaret" aria-hidden="true"></span></p></div></div>';
     x.querySelector(".aiasked").textContent = question;
     body.appendChild(x);
-    return { el: x, ans: x.querySelector(".aians"), text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aispark") };
+    return { el: x, ans: x.querySelector(".aians"), text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aime") };
   }
   function addActions(ex, answer){
     var bar = document.createElement("div");
@@ -4137,7 +4151,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     var mail = document.createElement("a");
     mail.className = "aiact";
     mail.href = "mailto:" + MAIL;
-    mail.textContent = "Email Lokesh";
+    mail.textContent = "Email me";
     bar.appendChild(copy);
     bar.appendChild(mail);
     ex.ans.appendChild(bar);
@@ -4251,7 +4265,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       body: JSON.stringify({ messages: history }),
       signal: controller ? controller.signal : undefined
     }).then(function(res){
-      if (res.status === 429) return fail("A few people are asking at once. Give it a minute and try again.");
+      if (res.status === 429) return fail("A few people are asking me things at once. Give it a minute and try again.");
       if (!res.ok || !res.body) return fail(FALLBACK);
       var reader = res.body.getReader();
       var decoder = new TextDecoder();
@@ -4285,7 +4299,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       // a stop lands here as an abort: whatever was written stands as
       // the answer; nothing written means there's nothing to keep
       if (stopped) return finish();
-      fail("Something went wrong reaching the assistant. Try again, or email " + MAIL + ".");
+      fail("Something went wrong on my end. Try again, or email me at " + MAIL + ".");
     });
   }
 })();
