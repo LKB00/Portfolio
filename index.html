@@ -2541,241 +2541,184 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    mobile nav's own sheet, since that's already the site's answer to
    "a focused task on a small screen"). Both are the same markup; only
    which edge it opens from changes. */
-.askbtn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px 0 9px;
-  border:0;border-radius:var(--r-pill);background:color-mix(in srgb,var(--accent) 12%,transparent);
-  color:var(--accent);font-family:var(--display);font-size:var(--t-ui);font-weight:500;
-  letter-spacing:var(--tr-body);cursor:pointer;transition:background .25s var(--ease)}
-.askbtn:hover{background:color-mix(in srgb,var(--accent) 20%,transparent)}
-.askbtn-mark{font-size:13px;line-height:1;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
-.askbtn:hover .askbtn-mark{transform:rotate(180deg)}
+/* ── the nav entry: a navlink like its neighbours, carrying the footer's
+   spark. It doesn't need to shout; the spark already means "the AI"
+   everywhere else on this site. */
+.askbtn{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 7px;border:0;
+  border-radius:var(--r-pill);background:transparent;color:var(--navOff);cursor:pointer;
+  font-family:var(--display);font-size:13px;font-weight:500;letter-spacing:var(--tr-body);
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.askbtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.askbtn-mark{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);font-size:10px;line-height:1;
+  transition:transform .34s var(--ease),background .34s var(--ease)}
+.askbtn:hover .askbtn-mark{transform:rotate(180deg);background:color-mix(in srgb,var(--accent) 22%,transparent)}
 
-.askbtn{position:relative;overflow:hidden;isolation:isolate}
-/* a slow sheen every few seconds: enough to say "this one is alive"
-   without turning the nav into an ad */
-.askbtn::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);
-  transform:translateX(-130%);animation:askSheen 6s ease-in-out 2.5s infinite}
-html[data-theme="dark"] .askbtn::after{background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%)}
-@keyframes askSheen{0%,72%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+/* ── the spark, as the footer draws it ─────────────────────────────── */
+.aispark{display:inline-grid;place-items:center;flex:0 0 auto;width:20px;height:20px;border-radius:50%;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);font-size:11px;line-height:1}
+/* thinking is the hover gesture on repeat: a quarter turn, a rest, a
+   quarter turn. The spark is four-fold, so each turn lands where it
+   started and the loop has no seam. */
+.aispark.is-busy{animation:aiTurn 1s var(--ease) infinite}
+@keyframes aiTurn{from{transform:rotate(0)}to{transform:rotate(90deg)}}
 
-/* ── the panel: a floating card, not a wall ─────────────────────────── */
-.aichat{position:fixed;inset:0;z-index:85;visibility:hidden;pointer-events:none;
-  --orb-a:#2F7BFF;--orb-b:#8A5CFF;--orb-c:#3CC8FF;
-  --ai-border:color-mix(in srgb,var(--ink) 9%,transparent);
-  --ai-card:var(--card);
-  --ai-spring:cubic-bezier(.32,.72,0,1)}
-html[data-theme="dark"] .aichat{--ai-border:color-mix(in srgb,var(--ink) 11%,transparent);--ai-card:var(--surface)}
+/* ── the panel: the command palette's grammar, stood up on the right ── */
+.aichat{position:fixed;inset:0;z-index:85;visibility:hidden;pointer-events:none}
 .aichat.open{visibility:visible;pointer-events:auto}
-.aichat-scrim{position:absolute;inset:0;background:rgba(18,16,14,.26);
-  -webkit-backdrop-filter:blur(7px) saturate(1.15);backdrop-filter:blur(7px) saturate(1.15);
-  opacity:0;transition:opacity .35s ease}
-html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
+.aichat-scrim{position:absolute;inset:0;background:rgba(20,20,22,.28);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s ease}
 .aichat.open .aichat-scrim{opacity:1}
-
-.aichat-panel{position:absolute;top:12px;right:12px;bottom:12px;width:min(440px,calc(100vw - 24px));
-  display:flex;flex-direction:column;overflow:hidden;isolation:isolate;
-  background:var(--bg);border-radius:22px;
-  box-shadow:0 0 0 1px var(--ai-border),0 2px 6px -2px rgba(0,0,0,.06),0 44px 100px -34px rgba(12,24,60,.5);
-  opacity:0;transform:translateX(30px) scale(.985);transform-origin:100% 50%;
-  transition:transform .6s var(--ai-spring),opacity .3s ease}
-.aichat.open .aichat-panel{opacity:1;transform:none}
-/* the orb's colour, breathed faintly across the top of the card, so the
-   panel reads as belonging to the thing speaking rather than a form */
-.aichat-panel::before{content:"";position:absolute;inset:0 0 auto 0;height:240px;z-index:-1;pointer-events:none;
-  background:radial-gradient(110% 85% at 88% -25%,color-mix(in srgb,var(--orb-a) 15%,transparent),transparent 62%),
-             radial-gradient(80% 70% at 6% -35%,color-mix(in srgb,var(--orb-b) 11%,transparent),transparent 62%)}
+.aichat-panel{position:absolute;top:0;right:0;bottom:0;width:min(460px,100vw);
+  display:flex;flex-direction:column;background:var(--bg);
+  box-shadow:-1px 0 0 var(--line),0 24px 70px -30px rgba(20,24,45,.4);
+  transform:translateX(100%);transition:transform .5s var(--ease)}
+.aichat.open .aichat-panel{transform:none}
 .aichat-handle{display:none}
 
-/* ── the orb: the footer's spark, given a body ─────────────────────── */
-.aiorb{position:relative;flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px;
-  border-radius:50%;color:#FFFFFF;font-size:13px;line-height:1;isolation:isolate;user-select:none}
-.aiorb::before{content:"";position:absolute;inset:0;border-radius:50%;z-index:-1;
-  background:conic-gradient(from 210deg,var(--orb-a),var(--orb-b),var(--orb-c),var(--orb-a));
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 -6px 10px -4px rgba(10,20,60,.35);
-  animation:aiorbSpin 10s linear infinite}
-.aiorb::after{content:"";position:absolute;inset:-6px;border-radius:50%;z-index:-2;
-  background:radial-gradient(circle,color-mix(in srgb,var(--orb-a) 40%,transparent),transparent 68%);
-  opacity:.5;filter:blur(5px)}
-.aiorb.sm{width:22px;height:22px;font-size:8.5px}
-.aiorb.sm::after{inset:-3px;opacity:.35}
-.aiorb.lg{width:58px;height:58px;font-size:21px}
-.aiorb.lg::after{inset:-14px;opacity:.6;filter:blur(10px);animation:aiorbBreathe 4.5s ease-in-out infinite}
-.aichat.is-thinking .aichat-head .aiorb::before,
-.aimsg.is-live .aiorb::before{animation-duration:1.3s}
-.aichat.is-thinking .aichat-head .aiorb::after,
-.aimsg.is-live .aiorb::after{animation:aiorbPulse 1.3s ease-in-out infinite}
-@keyframes aiorbSpin{to{transform:rotate(360deg)}}
-@keyframes aiorbPulse{0%,100%{opacity:.3;transform:scale(.9)}50%{opacity:.85;transform:scale(1.15)}}
-@keyframes aiorbBreathe{0%,100%{opacity:.45;transform:scale(.94)}50%{opacity:.75;transform:scale(1.06)}}
-
-/* ── header ─────────────────────────────────────────────────────────── */
-.aichat-head{position:relative;display:flex;align-items:center;gap:12px;padding:16px 12px 14px 16px;flex:0 0 auto}
-.aichat-head::after{content:"";position:absolute;left:16px;right:16px;bottom:0;height:1px;
-  background:var(--ai-border);opacity:0;transition:opacity .25s ease}
-.aichat.is-scrolled .aichat-head::after{opacity:1}
-.aichat-headtext{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-.aichat-title{font-family:var(--display);font-size:14.5px;font-weight:500;letter-spacing:-.012em;color:var(--ink);line-height:1.1}
-.aichat-status{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9.5px;
-  letter-spacing:.07em;text-transform:uppercase;color:var(--faint);transition:color .25s ease}
-.aichat-status i{flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:#22A861;
-  box-shadow:0 0 0 3px color-mix(in srgb,#22A861 18%,transparent);transition:background .25s ease,box-shadow .25s ease}
-.aichat.is-thinking .aichat-status{color:var(--accent)}
-.aichat.is-thinking .aichat-status i{background:var(--accent);
-  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent);animation:aiorbPulse 1.2s ease-in-out infinite}
-.aichat-iconbtn{flex:0 0 auto;display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:10px;
-  background:transparent;color:var(--faint);cursor:pointer;
-  transition:background .2s var(--ease),color .2s var(--ease),transform .2s var(--ease)}
-.aichat-iconbtn svg{transition:transform .45s var(--ai-spring)}
+.aichat-head{display:flex;align-items:center;gap:10px;height:56px;padding:0 10px 0 20px;flex:0 0 auto;
+  box-shadow:inset 0 -1px 0 var(--line)}
+.aichat-title{flex:1;min-width:0;margin:0;font-family:var(--display);font-size:13px;font-weight:500;
+  letter-spacing:var(--tr-body);color:var(--ink)}
+.aichat-iconbtn{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;border:0;border-radius:var(--r-pill);
+  background:transparent;color:var(--faint);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
 .aichat-iconbtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
-.aichat-iconbtn:active{transform:scale(.9)}
-#aiChatReset:hover svg{transform:rotate(-70deg)}
-#aiChatClose:hover svg{transform:rotate(90deg)}
 
-/* ── body ───────────────────────────────────────────────────────────── */
-.aichat-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:6px 18px 22px;
-  scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--ink) 16%,transparent) transparent}
+.aichat-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 24px}
 
-/* the empty state: an introduction, not a form */
-.aichat-intro{padding:26px 2px 4px}
-.aichat-intro .aiorb.lg{margin:0 0 24px 4px}
-.aichat-greet{margin:0;font-family:var(--serif);font-size:27px;font-weight:400;line-height:1.14;
+/* ── the empty state: the page's own voice, set like the page ─────── */
+.aichat-intro{padding:40px 0 32px}
+.aieyebrow{margin:0 0 14px;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:var(--tr-label);
+  text-transform:uppercase;color:var(--faint)}
+.aichat-greet{margin:0;max-width:13em;font-family:var(--serif);font-size:28px;font-weight:400;line-height:1.16;
   letter-spacing:-.02em;color:var(--ink)}
-.aichat-greet em{font-style:italic;color:var(--accent)}
-.aichat-lede{margin:12px 0 0;max-width:36ch;font-family:var(--display);font-size:13.5px;line-height:1.6;color:var(--muted)}
-.aichat-suggest{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:24px}
-.aicard{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:16px;
-  min-height:94px;padding:12px 12px 12px 13px;border:0;border-radius:14px;text-align:left;cursor:pointer;
-  background:var(--ai-card);color:var(--ink);font-family:var(--display);
-  box-shadow:0 0 0 1px var(--ai-border),0 1px 2px rgba(0,0,0,.03);
-  transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .25s var(--ease)}
-.aicard-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);transition:color .2s ease}
-.aicard-q{font-size:13px;line-height:1.38;letter-spacing:-.005em;color:var(--ink)}
-.aicard-go{position:absolute;top:10px;right:10px;display:grid;color:var(--accent);opacity:0;
-  transform:translate(-4px,4px);transition:opacity .2s ease,transform .35s var(--ai-spring)}
-.aicard:hover{transform:translateY(-2px);
-  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent),0 14px 30px -16px color-mix(in srgb,var(--accent) 55%,transparent)}
-.aicard:hover .aicard-tag{color:var(--accent)}
-.aicard:hover .aicard-go{opacity:1;transform:none}
-.aicard:active{transform:scale(.98)}
-.aicard:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.aichat-lede{margin:14px 0 0;max-width:34em;font-family:var(--display);font-size:14px;line-height:1.55;color:var(--muted)}
+.aitry{margin-top:36px}
+.aitry .aieyebrow{margin-bottom:4px}
 
-/* staggered arrival — each element carries its own --i */
+/* the mobile menu's case-study row, reused: mono index, serif line,
+   hairlines, and the work cards' hover — the title goes blue */
+.aiq{display:flex;align-items:baseline;gap:14px;width:100%;padding:14px 0;border:0;
+  border-bottom:1px solid var(--line);background:transparent;text-align:left;cursor:pointer;color:var(--ink)}
+.aiq-n{flex:0 0 22px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.aiq-x{flex:1;min-width:0}
+.aiq-t{display:block;font-family:var(--serif);font-size:17px;line-height:1.3;letter-spacing:-.01em;
+  color:var(--ink);transition:color .2s var(--ease)}
+.aiq-m{display:block;margin-top:4px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint)}
+.aiq-go{flex:0 0 auto;align-self:center;display:grid;color:var(--accent);opacity:0;transform:translateX(-4px);
+  transition:opacity .2s var(--ease),transform .3s var(--ease)}
+.aiq:hover .aiq-t{color:var(--accent)}
+.aiq:hover .aiq-go{opacity:1;transform:none}
+.aiq:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* arrival, the way [data-reveal] arrives everywhere else */
 .aichat .ai-in{opacity:0}
-.aichat.open .ai-in{animation:aiIn .7s var(--ai-spring) both;animation-delay:calc(var(--i,0) * 55ms + 140ms)}
-@keyframes aiIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.aichat.open .ai-in{animation:aiRise .7s var(--ease) both;animation-delay:calc(var(--i,0) * 70ms + 160ms)}
+@keyframes aiRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* ── messages ───────────────────────────────────────────────────────── */
-.aimsg{margin:0 0 20px;animation:aiIn .5s var(--ai-spring) both}
-.aimsg.user{display:flex;justify-content:flex-end;margin-top:6px}
-.aimsg-bubble{max-width:84%;padding:9px 14px 10px;border-radius:18px 18px 6px 18px;
-  background:var(--ink);color:var(--bg);font-family:var(--display);font-size:13.5px;line-height:1.5;
-  white-space:pre-wrap;overflow-wrap:anywhere}
-.aimsg.bot{display:flex;gap:11px;align-items:flex-start}
-.aimsg.bot > .aiorb{margin-top:1px}
-.aimsg-body{flex:1;min-width:0}
-.aimsg-text{font-family:var(--display);font-size:14px;line-height:1.66;letter-spacing:-.004em;color:var(--ink);overflow-wrap:anywhere}
-.aimsg-text p{margin:0 0 10px}
-.aimsg-text p:last-child{margin-bottom:0}
-.aimsg-text .aimsg-h{font-weight:500}
-.aimsg-text ul,.aimsg-text ol{margin:0 0 10px;padding:0}
-.aimsg-text ul:last-child,.aimsg-text ol:last-child{margin-bottom:0}
-.aimsg-text ul{list-style:none}
-.aimsg-text ol{padding-left:19px}
-.aimsg-text li{margin-bottom:6px}
-.aimsg-text li:last-child{margin-bottom:0}
-.aimsg-text ul li{position:relative;padding-left:16px}
-.aimsg-text ul li::before{content:"";position:absolute;left:3px;top:.68em;width:5px;height:5px;border-radius:50%;
-  background:var(--accent);opacity:.8}
-.aimsg-text ol li::marker{font-family:var(--mono);font-size:11px;color:var(--faint)}
-.aimsg-text b{font-weight:500;color:var(--ink)}
-.aimsg-text code{font-family:var(--mono);font-size:12px;padding:1px 5px;border-radius:5px;background:color-mix(in srgb,var(--ink) 6%,transparent)}
-.aimsg-text a{color:var(--accent);text-decoration:none;
-  background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;transition:opacity .2s ease}
-.aimsg-text a:hover{opacity:.7}
-.aimsg-text.is-error{color:var(--muted)}
-.aimsg-text blockquote{position:relative;margin:4px 0 14px;padding:2px 0 2px 16px;
-  font-family:var(--serif);font-size:16px;line-height:1.5;letter-spacing:-.006em;color:var(--ink)}
-.aimsg-text blockquote::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:2px;border-radius:2px;
-  background:linear-gradient(to bottom,var(--orb-a),var(--orb-b))}
-.aimsg-text blockquote p{margin:0 0 8px}
-.aimsg-text blockquote p:last-child{margin-bottom:0}
-.aimsg-text blockquote:last-child{margin-bottom:0}
-.aicaret{display:inline-block;width:2px;height:1.05em;margin-left:2px;vertical-align:-.16em;border-radius:1px;
-  background:var(--accent);animation:aiCaret 1s steps(1) infinite}
-@keyframes aiCaret{50%{opacity:0}}
-/* "Thinking", with light passing through it — says work is happening
-   without pretending to be three dots of fake typing */
-.aithink{display:inline-block;font-family:var(--display);font-size:13.5px;font-weight:500;line-height:22px;
-  background:linear-gradient(90deg,var(--faint) 0%,var(--faint) 38%,var(--ink) 50%,var(--faint) 62%,var(--faint) 100%);
-  background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:aiShimmer 1.7s linear infinite}
-@keyframes aiShimmer{from{background-position:115% 0}to{background-position:-115% 0}}
+/* ── the transcript ──────────────────────────────────────────────────
+   Set like a printed interview, not a messenger: who's speaking in mono,
+   the question in the serif (the same face the timeline gives whatever
+   a visitor types), the answer as plain reading text. */
+.aix{padding:28px 0 26px;animation:aiRise .5s var(--ease) both}
+.aix + .aix{border-top:1px solid var(--line)}
+.aiwho{display:flex;align-items:center;gap:8px;margin:0 0 9px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.aiwho .aispark{width:18px;height:18px;font-size:10px}
+.aiasked{margin:0;font-family:var(--serif);font-size:20px;line-height:1.3;letter-spacing:-.012em;
+  color:var(--ink);overflow-wrap:anywhere;white-space:pre-wrap}
+.aians{margin-top:22px}
+.aitext{font-family:var(--display);font-size:14.5px;line-height:1.62;letter-spacing:-.005em;color:var(--ink);overflow-wrap:anywhere}
+.aitext p{margin:0 0 11px}
+.aitext p:last-child{margin-bottom:0}
+.aitext .aitext-h{font-weight:500}
+.aitext ul,.aitext ol{margin:0 0 11px;padding:0;list-style:none}
+.aitext ul:last-child,.aitext ol:last-child{margin-bottom:0}
+.aitext li{position:relative;margin-bottom:6px}
+.aitext li:last-child{margin-bottom:0}
+.aitext ul li{padding-left:18px}
+.aitext ul li::before{content:"\2013";position:absolute;left:0;color:var(--faint)}
+.aitext ol{counter-reset:ai}
+.aitext ol li{padding-left:28px;counter-increment:ai}
+.aitext ol li::before{content:counter(ai,decimal-leading-zero);position:absolute;left:0;top:.28em;
+  font-family:var(--mono);font-size:11px;line-height:1;color:var(--faint)}
+.aitext b{font-weight:500}
+.aitext code{font-family:var(--mono);font-size:12.5px}
+.aitext a{color:var(--link);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;
+  text-decoration-color:color-mix(in srgb,var(--link) 35%,transparent);transition:text-decoration-color .2s ease}
+.aitext a:hover{opacity:1;text-decoration-color:var(--link)}
+/* his own words: the serif, on the site's one highlight colour */
+.aitext blockquote{margin:4px 0 14px;padding:1px 0 1px 15px;border-left:2px solid var(--yellow);
+  font-family:var(--serif);font-size:16.5px;line-height:1.5;letter-spacing:-.008em;color:var(--ink)}
+.aitext blockquote p{margin:0 0 8px}
+.aitext blockquote p:last-child,.aitext blockquote:last-child{margin-bottom:0}
+.aitext.is-error{color:var(--muted)}
+.aithinking{color:var(--faint)}
+/* the timeline's open-slot caret, reused as the writing cursor */
+.aicaret{display:inline-block;width:1.5px;height:1.05em;margin-left:2px;vertical-align:-.16em;border-radius:1px;
+  background:var(--link);animation:expblink 1.15s step-end infinite}
 
-.aimsg-actions{display:flex;gap:2px;margin:8px 0 0 -8px;opacity:0;transition:opacity .2s ease}
-.aimsg.bot:hover .aimsg-actions,.aimsg.bot:focus-within .aimsg-actions,.aimsg.bot.is-last .aimsg-actions{opacity:1}
-.aiact{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;border:0;border-radius:8px;
-  background:transparent;color:var(--faint);font-family:var(--display);font-size:11.5px;cursor:pointer;
-  transition:background .2s ease,color .2s ease}
-.aiact:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
-.aiact.is-done{color:#22A861}
+.aiacts{display:flex;align-items:center;gap:18px;margin-top:16px}
+.aiact{padding:0;border:0;background:transparent;cursor:pointer;text-decoration:none;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);
+  transition:color .2s var(--ease)}
+.aiact:hover{color:var(--ink);opacity:1}
+.aiact.is-done{color:var(--live)}
 
-.airelated{margin:-4px 0 22px 33px;animation:aiIn .55s var(--ai-spring) .08s both}
-.airelated-h{margin:0 0 4px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.airel{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:10px 2px;
-  border:0;border-top:1px solid var(--ai-border);background:transparent;text-align:left;cursor:pointer;
-  font-family:var(--display);font-size:13px;line-height:1.4;color:var(--muted);transition:color .2s ease}
-.airel svg{flex:0 0 auto;color:var(--faint);transition:transform .35s var(--ai-spring),color .2s ease}
-.airel:hover{color:var(--ink)}
-.airel:hover svg{color:var(--accent);transform:translateX(3px)}
+.ainext{padding:4px 0 30px;animation:aiRise .5s var(--ease) .1s both}
+.ainext .aieyebrow{margin-bottom:2px}
+.ainext .aiq{padding:12px 0}
+.ainext .aiq-t{font-size:15.5px}
 
-/* ── composer ───────────────────────────────────────────────────────── */
-.aichat-foot{position:relative;flex:0 0 auto;padding:6px 12px calc(10px + env(safe-area-inset-bottom))}
-.aichat-foot::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:26px;pointer-events:none;
-  background:linear-gradient(to top,var(--bg),transparent)}
-.aicomposer{display:flex;flex-direction:column;gap:6px;padding:11px 10px 9px 14px;border-radius:18px;
-  background:var(--ai-card);
-  box-shadow:0 0 0 1px var(--ai-border),0 10px 28px -18px rgba(0,0,0,.3);transition:box-shadow .25s var(--ease)}
-.aicomposer:focus-within{box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent),
-  0 0 0 5px color-mix(in srgb,var(--accent) 13%,transparent),0 10px 28px -18px rgba(0,0,0,.3)}
-.aichat-input{display:block;width:100%;min-height:23px;max-height:132px;padding:1px 0;resize:none;border:0;
-  background:transparent;color:var(--ink);font-family:var(--display);font-size:14px;line-height:1.6;overflow-y:auto}
-.aichat-input::placeholder{color:var(--faint)}
-.aichat-input:focus{outline:none}
-.aicomposer-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.aikbd{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9.5px;letter-spacing:.02em;color:var(--faint)}
-.aikbd kbd{font-family:inherit;font-size:9.5px;line-height:1;padding:3px 5px;border-radius:5px;
-  background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--muted)}
-.aikbd kbd + span{margin-right:6px}
-.aichat-send{flex:0 0 auto;display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:10px;
-  background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--faint);cursor:default;
-  transition:background .25s ease,color .25s ease,box-shadow .25s ease,transform .4s cubic-bezier(.34,1.56,.64,1)}
-.aichat-send.is-ready{background:var(--accent);color:#FFFFFF;cursor:pointer;
-  box-shadow:0 6px 16px -6px color-mix(in srgb,var(--accent) 75%,transparent)}
-.aichat-send.is-ready:hover{transform:translateY(-1px) scale(1.05)}
-.aichat-send.is-ready:active{transform:scale(.92)}
-.aichat-note{margin:9px 0 0;text-align:center;font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:var(--faint)}
+/* ── the input: the timeline's open slot ─────────────────────────────
+   Dashed, lightly tinted — this site's standing sign for "an empty
+   place, put something here". Typed text goes in the serif, exactly as
+   it does when a visitor writes their company into the timeline. */
+.aichat-foot{flex:0 0 auto;padding:14px 20px calc(12px + env(safe-area-inset-bottom));
+  background:var(--bg);box-shadow:inset 0 1px 0 var(--line)}
+.aislot{display:flex;align-items:flex-end;gap:10px;margin:0;padding:8px 8px 8px 14px;border-radius:8px;
+  border:1px dashed color-mix(in srgb,var(--link) 40%,transparent);
+  background:color-mix(in srgb,var(--link) 4%,transparent);
+  transition:border-color .25s ease,background .25s ease}
+.aislot:hover{border-color:color-mix(in srgb,var(--link) 66%,transparent);background:color-mix(in srgb,var(--link) 7%,transparent)}
+.aislot:focus-within{border-color:var(--link);background:var(--card)}
+.aichat-input{flex:1;min-width:0;display:block;min-height:24px;max-height:128px;margin:0;padding:5px 0;resize:none;
+  border:0;outline:0;background:transparent;overflow-y:auto;
+  font-family:var(--serif);font-size:15.5px;line-height:1.4;letter-spacing:-.01em;color:var(--ink);caret-color:var(--link)}
+.aichat-input::placeholder{color:var(--faint);opacity:1}
+/* the hero's primary action, at the slot's scale: ink when there's
+   something to send, the quiet surface pill when there isn't */
+.aichat-send{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 12px 0 13px;
+  border:0;border-radius:var(--r-pill);cursor:default;
+  background:var(--surface);color:var(--faint);font-family:var(--display);font-size:13px;font-weight:500;
+  transition:background .2s var(--ease),color .2s var(--ease),opacity .2s var(--ease)}
+.aichat-send.is-ready{background:var(--ink);color:var(--bg);cursor:pointer}
+.aichat-send.is-ready:hover{opacity:.88}
+.aihint{display:flex;justify-content:space-between;gap:12px;margin:9px 2px 0;
+  font-family:var(--mono);font-size:10.5px;color:var(--faint)}
 
-/* ── phones: the same card, as a sheet from the bottom edge ─────────── */
+/* ── phones: the mobile menu's own sheet ─────────────────────────────── */
 @media (max-width:640px){
-  .aichat-panel{top:auto;right:0;left:0;bottom:0;width:100%;height:92dvh;border-radius:24px 24px 0 0;
-    opacity:1;transform:translateY(100%);transition:transform .55s var(--ai-spring)}
-  .aichat.open .aichat-panel{transform:none}
-  .aichat-handle{display:block;flex:0 0 auto;width:38px;height:4px;margin:9px auto 0;border-radius:2px;
-    background:color-mix(in srgb,var(--ink) 16%,transparent)}
-  .aichat-head{padding-top:10px}
-  .aichat-greet{font-size:25px}
-  .aichat-suggest{grid-template-columns:1fr}
-  .aicard{min-height:0;gap:6px;padding:12px 40px 12px 14px}
-  .aicard-go{top:50%;margin-top:-7px;opacity:.55;transform:none}
+  .aichat-scrim{background:rgba(20,18,16,.42);-webkit-backdrop-filter:none;backdrop-filter:none}
+  html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
+  .aichat-panel{top:auto;left:0;width:100%;height:92dvh;border-radius:20px 20px 0 0;
+    box-shadow:0 -14px 34px -18px rgba(0,0,0,.32);transform:translateY(100%)}
+  .aichat-handle{display:block;flex:0 0 auto;width:36px;height:4px;margin:10px auto 0;border-radius:2px;background:var(--line)}
+  .aichat-head{height:50px;padding-left:var(--pad);box-shadow:none}
+  .aichat-body{padding:0 var(--pad)}
+  .aichat-intro{padding-top:20px}
+  .aichat-greet{font-size:26px}
+  .aichat-foot{padding-left:var(--pad);padding-right:var(--pad)}
 }
 @media (hover:none){
-  .aikbd{visibility:hidden}
-  .aimsg-actions{opacity:1}
+  .aihint-keys{display:none}
+  .aihint{justify-content:flex-end}
+  .aiq-go{opacity:.6;transform:none;color:var(--faint)}
 }
 @media (prefers-reduced-motion:reduce){
-  .aichat-panel,.aichat-scrim,.askbtn-mark,.aicard,.aichat-send{transition:none}
-  .askbtn::after,.aiorb::before,.aiorb::after,.aithink,.aicaret,.aimsg,.airelated,
-  .aichat.open .ai-in{animation:none!important}
+  .aichat-panel,.aichat-scrim,.askbtn-mark{transition:none}
+  .aispark.is-busy,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
   .aichat .ai-in{opacity:1}
 }
 
@@ -2783,17 +2726,15 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
 
-.asksheet-row{padding:2px var(--pad) 0}
-.asksheet-btn{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;
-  border:0;border-radius:8px;cursor:pointer;text-align:left;
-  background:color-mix(in srgb,var(--accent) 9%,transparent)}
-.asksheet-btn .askbtn-mark{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
-  border-radius:50%;color:#FFFFFF;font-size:13px;
-  background:conic-gradient(from 210deg,#2F7BFF,#8A5CFF,#3CC8FF,#2F7BFF);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),0 6px 14px -6px rgba(47,123,255,.7)}
+.asksheet-row{padding:2px var(--pad) 6px}
+.asksheet-btn{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:8px;
+  cursor:pointer;text-align:left;
+  border:1px dashed color-mix(in srgb,var(--link) 40%,transparent);
+  background:color-mix(in srgb,var(--link) 4%,transparent)}
+.asksheet-btn .askbtn-mark{width:24px;height:24px;font-size:12px}
 .asksheet-x{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.asksheet-t{font-family:var(--display);font-size:15px;font-weight:500;color:var(--accent)}
-.asksheet-m{font-family:var(--display);font-size:12px;color:var(--faint)}
+.asksheet-t{font-family:var(--serif);font-size:16px;line-height:1.25;letter-spacing:-.01em;color:var(--ink)}
+.asksheet-m{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -2847,7 +2788,7 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
       <div class="asksheet-row">
         <button type="button" class="asksheet-btn" id="askAiBtnMobile">
           <span class="askbtn-mark" aria-hidden="true">&#10022;</span>
-          <span class="asksheet-x"><span class="asksheet-t">Ask about Lokesh</span><span class="asksheet-m">Chat with the AI that helped build this site</span></span>
+          <span class="asksheet-x"><span class="asksheet-t">Ask about Lokesh</span><span class="asksheet-m">The AI that helped build this site</span></span>
         </button>
       </div>
       <nav class="mlinks" aria-label="Primary">
@@ -2870,43 +2811,38 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
 
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
 
-  <div class="aichat" id="aiChat" role="dialog" aria-modal="true" aria-label="Ask about Lokesh" aria-hidden="true">
+  <div class="aichat" id="aiChat" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle" aria-hidden="true">
     <div class="aichat-scrim" data-aichat-close></div>
     <div class="aichat-panel">
       <span class="aichat-handle" aria-hidden="true"></span>
       <div class="aichat-head">
-        <span class="aiorb" aria-hidden="true">&#10022;</span>
-        <div class="aichat-headtext">
-          <span class="aichat-title">The OG Assistant</span>
-          <span class="aichat-status"><i aria-hidden="true"></i><span id="aiChatStatus">Online &#183; trained on this site</span></span>
-        </div>
-        <button type="button" class="aichat-iconbtn" id="aiChatReset" aria-label="New chat" title="New chat">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 8a5.4 5.4 0 1 0 1.6-3.85M2.6 2.6v3.2h3.2" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span class="aispark" id="aiChatSpark" aria-hidden="true">&#10022;</span>
+        <p class="aichat-title" id="aiChatTitle">Ask about Lokesh</p>
+        <button type="button" class="aichat-iconbtn" id="aiChatReset" aria-label="Start over" title="Start over">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 8a5.4 5.4 0 1 0 1.6-3.85M2.6 2.6v3.2h3.2" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
-        <button type="button" class="aichat-iconbtn" id="aiChatClose" aria-label="Close chat" title="Close">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+        <button type="button" class="aichat-iconbtn" id="aiChatClose" aria-label="Close" title="Close">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
         </button>
       </div>
       <div class="aichat-body" id="aiChatBody">
         <div class="aichat-intro" id="aiChatIntro">
-          <span class="aiorb lg ai-in" style="--i:0" aria-hidden="true">&#10022;</span>
-          <p class="aichat-greet ai-in" style="--i:1">Ask me anything<br>about <em>Lokesh</em>.</p>
-          <p class="aichat-lede ai-in" style="--i:2">I&#8217;m the AI that helped build this site. I know his work, how he got here, and the straight answers he&#8217;d give in an interview.</p>
-          <div class="aichat-suggest" id="aiChatSuggest"></div>
+          <p class="aieyebrow ai-in" style="--i:0">The OG assistant</p>
+          <p class="aichat-greet ai-in" style="--i:1">Ask it what you&#8217;d ask him in an interview.</p>
+          <p class="aichat-lede ai-in" style="--i:2">It helped build this site and knows what&#8217;s on it: the work, why he left each job, what he&#8217;s still bad at. When it doesn&#8217;t know, it says so.</p>
+          <div class="aitry ai-in" style="--i:3">
+            <p class="aieyebrow">Try asking</p>
+            <div id="aiChatSuggest"></div>
+          </div>
         </div>
       </div>
       <p class="fsr" id="aiChatLive" aria-live="polite"></p>
       <div class="aichat-foot">
-        <form class="aicomposer" id="aiChatForm">
-          <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask anything about Lokesh&#8230;" aria-label="Ask about Lokesh"></textarea>
-          <div class="aicomposer-row">
-            <span class="aikbd" aria-hidden="true"><kbd>&#8629;</kbd><span>send</span><kbd>&#8679; &#8629;</kbd><span>new line</span></span>
-            <button type="submit" class="aichat-send" id="aiChatSend" aria-label="Send" disabled>
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M3.8 7.2 8 3l4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            </button>
-          </div>
+        <form class="aislot" id="aiChatForm">
+          <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask anything about Lokesh" aria-label="Ask about Lokesh"></textarea>
+          <button type="submit" class="aichat-send" id="aiChatSend" disabled>Ask<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
         </form>
-        <p class="aichat-note">Answers are AI-generated from this site &#183; may be imperfect</p>
+        <div class="aihint"><span class="aihint-keys">&#8629; to ask &#183; esc to close</span><span>AI &#183; can be wrong</span></div>
       </div>
     </div>
   </div>
@@ -3972,9 +3908,8 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
 /* ══ THE OG ASSISTANT — chat client ═══════════════════════════════════
    Talks to /api/chat, which proxies Groq with Lokesh's facts as a system
    prompt (see api/data/lokesh-context.js) and streams the reply back as
-   plain OpenAI-style SSE. Everything here is presentation: the panel,
-   the orb's states, rendering tokens as they land. The thinking happens
-   server-side. */
+   plain OpenAI-style SSE. Everything here is presentation: the panel, a
+   transcript of question-and-answer exchanges, tokens as they land. */
 (function(){
   var panel = document.getElementById("aiChat");
   if (!panel) return;
@@ -3983,6 +3918,7 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
   var sheet = panel.querySelector(".aichat-panel");
   var head = panel.querySelector(".aichat-head");
   var scrim = panel.querySelector(".aichat-scrim");
+  var headSpark = document.getElementById("aiChatSpark");
   var closeBtn = document.getElementById("aiChatClose");
   var resetBtn = document.getElementById("aiChatReset");
   var body = document.getElementById("aiChatBody");
@@ -3991,18 +3927,14 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
   var form = document.getElementById("aiChatForm");
   var input = document.getElementById("aiChatInput");
   var sendBtn = document.getElementById("aiChatSend");
-  var statusEl = document.getElementById("aiChatStatus");
   var live = document.getElementById("aiChatLive");
 
-  var STATUS = { idle: "Online · trained on this site", thinking: "Thinking…", writing: "Writing…" };
-  var FALLBACK = "Sorry, I couldn't get an answer just then — try again, or email hi.lokeshux@gmail.com.";
-  var ARROW_UR = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var ARROW_R = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var COPY = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.2" y="5.2" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M10.8 5.2V4a1.2 1.2 0 0 0-1.2-1.2H4A1.2 1.2 0 0 0 2.8 4v5.6A1.2 1.2 0 0 0 4 10.8h1.2" stroke="currentColor" stroke-width="1.4"/></svg>';
-  var CHECK = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var MAIL = "hi.lokeshux@gmail.com";
+  var FALLBACK = "Sorry, I couldn't get an answer just then. Try again, or email " + MAIL + ".";
+  var ARROW = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-  // Wider than any one visit shows. The opening four are one per topic,
-  // so the first thing a reader sees is the range of what they can ask.
+  // Wider than one visit shows. The opening four are one per topic, so
+  // the list itself tells a reader the range of what they can ask.
   var QUESTION_POOL = [
     { q: "What has he shipped recently?", tag: "Work" },
     { q: "What's his best project?", tag: "Work" },
@@ -4034,27 +3966,23 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
     fresh.forEach(function(x){ if (out.length < n && out.indexOf(x) === -1) out.push(x); });
     return out;
   }
-
-  function renderCards(){
+  function questionRow(item, i, withTag){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "aiq";
+    b.innerHTML = '<span class="aiq-n"></span><span class="aiq-x"><span class="aiq-t"></span>' +
+      (withTag ? '<span class="aiq-m"></span>' : "") + '</span><span class="aiq-go">' + ARROW + "</span>";
+    b.querySelector(".aiq-n").textContent = (i < 9 ? "0" : "") + (i + 1);
+    b.querySelector(".aiq-t").textContent = item.q;
+    if (withTag) b.querySelector(".aiq-m").textContent = item.tag;
+    b.addEventListener("click", function(){ sendMessage(item.q); });
+    return b;
+  }
+  function renderTry(){
     suggest.innerHTML = "";
-    pick(4, true).forEach(function(item, i){
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "aicard ai-in";
-      b.style.setProperty("--i", 3 + i);
-      b.innerHTML = '<span class="aicard-tag"></span><span class="aicard-q"></span><span class="aicard-go">' + ARROW_UR + "</span>";
-      b.querySelector(".aicard-tag").textContent = item.tag;
-      b.querySelector(".aicard-q").textContent = item.q;
-      b.addEventListener("click", function(){ sendMessage(item.q); });
-      suggest.appendChild(b);
-    });
+    pick(4, true).forEach(function(item, i){ suggest.appendChild(questionRow(item, i, true)); });
   }
-  renderCards();
-
-  function setStatus(state){
-    panel.classList.toggle("is-thinking", state !== "idle");
-    statusEl.textContent = STATUS[state];
-  }
+  renderTry();
 
   // ── open / close ──────────────────────────────────────────────────────
   function releaseMobileNav(){
@@ -4099,12 +4027,8 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
     else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   });
 
-  // the header only earns its hairline once something has scrolled under it
-  body.addEventListener("scroll", function(){
-    panel.classList.toggle("is-scrolled", body.scrollTop > 4);
-  }, { passive: true });
-
-  // on phones the card is a sheet — pull it down by its top edge to dismiss
+  // on phones the panel is the mobile menu's sheet — pull it down by its
+  // top edge to dismiss, the same gesture the menu takes
   (function(){
     var startY = 0, dy = 0, dragging = false;
     head.addEventListener("touchstart", function(e){
@@ -4145,33 +4069,31 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
       .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
       .replace(/`([^`]+)`/g, "<code>$1</code>"));
   }
-  // Just enough markdown for what the model actually sends — bold, short
-  // lists, the odd heading. Re-run on every token; answers are short.
+  // Just enough markdown for what the model sends: bold, short lists, the
+  // odd heading, and his own words quoted. Re-run on every token.
   function renderRich(el, text, streaming){
-    var out = [], list = null;
-    function closeList(){ if (list){ out.push("</" + list + ">"); list = null; } }
+    var out = [], block = null;
+    function closeBlock(){ if (block){ out.push("</" + block + ">"); block = null; } }
     text.replace(/\r/g, "").split("\n").forEach(function(line){
-      // his own words, quoted, get the site's serif — a pull-quote,
-      // not a grey indented block
       var bq = line.match(/^\s*>\s?(.*)/);
       if (bq){
-        if (list !== "blockquote"){ closeList(); out.push("<blockquote>"); list = "blockquote"; }
+        if (block !== "blockquote"){ closeBlock(); out.push("<blockquote>"); block = "blockquote"; }
         if (bq[1].trim()) out.push("<p>" + inline(bq[1]) + "</p>");
         return;
       }
       var ul = line.match(/^\s*[-•*]\s+(.*)/), ol = line.match(/^\s*\d+[.)]\s+(.*)/);
       if (ul || ol){
         var tag = ul ? "ul" : "ol";
-        if (list !== tag){ closeList(); out.push("<" + tag + ">"); list = tag; }
+        if (block !== tag){ closeBlock(); out.push("<" + tag + ">"); block = tag; }
         out.push("<li>" + inline((ul || ol)[1]) + "</li>");
         return;
       }
-      closeList();
+      closeBlock();
       var h = line.match(/^\s*#{1,4}\s+(.*)/);
-      if (h) out.push('<p class="aimsg-h">' + inline(h[1]) + "</p>");
+      if (h) out.push('<p class="aitext-h">' + inline(h[1]) + "</p>");
       else if (line.trim()) out.push("<p>" + inline(line) + "</p>");
     });
-    closeList();
+    closeBlock();
     el.innerHTML = out.join("") || "<p></p>";
     if (streaming){
       var tail = el.lastElementChild;
@@ -4183,75 +4105,52 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
   function nearBottom(){ return body.scrollHeight - body.scrollTop - body.clientHeight < 96; }
   function scrollDown(force){ if (force || nearBottom()) body.scrollTop = body.scrollHeight; }
 
-  function orb(){
-    var o = document.createElement("span");
-    o.className = "aiorb sm";
-    o.setAttribute("aria-hidden", "true");
-    o.innerHTML = "&#10022;";
-    return o;
+  function addExchange(question){
+    var x = document.createElement("section");
+    x.className = "aix";
+    x.innerHTML =
+      '<p class="aiwho">You</p><p class="aiasked"></p>' +
+      '<div class="aians"><p class="aiwho"><span class="aispark is-busy" aria-hidden="true">&#10022;</span>OG assistant</p>' +
+      '<div class="aitext"><p class="aithinking">Reading his work<span class="aicaret" aria-hidden="true"></span></p></div></div>';
+    x.querySelector(".aiasked").textContent = question;
+    body.appendChild(x);
+    return { el: x, ans: x.querySelector(".aians"), text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aispark") };
   }
-  function addUser(text){
-    var row = document.createElement("div");
-    row.className = "aimsg user";
-    var b = document.createElement("div");
-    b.className = "aimsg-bubble";
-    b.textContent = text;
-    row.appendChild(b);
-    body.appendChild(row);
-  }
-  function addBot(){
-    var row = document.createElement("div");
-    row.className = "aimsg bot is-live";
-    var wrap = document.createElement("div");
-    wrap.className = "aimsg-body";
-    var text = document.createElement("div");
-    text.className = "aimsg-text";
-    text.innerHTML = '<span class="aithink">Thinking</span>';
-    wrap.appendChild(text);
-    row.appendChild(orb());
-    row.appendChild(wrap);
-    body.appendChild(row);
-    return { row: row, wrap: wrap, text: text };
-  }
-  function addActions(bot, answer){
+  function addActions(ex, answer){
     var bar = document.createElement("div");
-    bar.className = "aimsg-actions";
+    bar.className = "aiacts";
     var copy = document.createElement("button");
     copy.type = "button";
     copy.className = "aiact";
-    copy.innerHTML = COPY + "<span>Copy</span>";
+    copy.textContent = "Copy";
     copy.addEventListener("click", function(){
-      var plain = answer.replace(/\*\*/g, "").replace(/`/g, "");
       if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-      navigator.clipboard.writeText(plain).then(function(){
+      navigator.clipboard.writeText(answer.replace(/\*\*/g, "").replace(/`/g, "")).then(function(){
         copy.classList.add("is-done");
-        copy.innerHTML = CHECK + "<span>Copied</span>";
-        setTimeout(function(){ copy.classList.remove("is-done"); copy.innerHTML = COPY + "<span>Copy</span>"; }, 1600);
+        copy.textContent = "Copied";
+        setTimeout(function(){ copy.classList.remove("is-done"); copy.textContent = "Copy"; }, 1600);
       }, function(){});
     });
+    var mail = document.createElement("a");
+    mail.className = "aiact";
+    mail.href = "mailto:" + MAIL;
+    mail.textContent = "Email Lokesh";
     bar.appendChild(copy);
-    bot.wrap.appendChild(bar);
+    bar.appendChild(mail);
+    ex.ans.appendChild(bar);
   }
-  function addRelated(){
+  function addNext(){
     var box = document.createElement("div");
-    box.className = "airelated";
-    box.innerHTML = '<p class="airelated-h">Related</p>';
-    pick(3).forEach(function(item){
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "airel";
-      b.innerHTML = "<span></span>" + ARROW_R;
-      b.firstChild.textContent = item.q;
-      b.addEventListener("click", function(){ sendMessage(item.q); });
-      box.appendChild(b);
-    });
+    box.className = "ainext";
+    box.innerHTML = '<p class="aieyebrow">Ask next</p>';
+    pick(2).forEach(function(item, i){ box.appendChild(questionRow(item, i, false)); });
     body.appendChild(box);
   }
 
-  // ── composer ──────────────────────────────────────────────────────────
+  // ── the slot ──────────────────────────────────────────────────────────
   function autosize(){
     input.style.height = "auto";
-    input.style.height = Math.min(input.scrollHeight, 132) + "px";
+    input.style.height = Math.min(input.scrollHeight, 128) + "px";
   }
   function syncSend(){
     var ready = !busy && input.value.trim().length > 0;
@@ -4274,48 +4173,44 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
     if (busy) return;
     history = [];
     asked = [];
-    Array.prototype.slice.call(body.querySelectorAll(".aimsg, .airelated")).forEach(function(m){ m.remove(); });
+    Array.prototype.slice.call(body.querySelectorAll(".aix, .ainext")).forEach(function(m){ m.remove(); });
     intro.style.display = "";
-    renderCards();
+    renderTry();
     body.scrollTop = 0;
-    panel.classList.remove("is-scrolled");
     if (canHover) input.focus({ preventScroll: true });
   }
   resetBtn.addEventListener("click", resetChat);
 
-  // ── sending ───────────────────────────────────────────────────────────
+  // ── asking ────────────────────────────────────────────────────────────
   function sendMessage(raw){
     var text = (raw || "").trim();
     if (!text || busy) return;
     if (asked.indexOf(text) === -1) asked.push(text);
-    var oldRelated = body.querySelector(".airelated");
-    if (oldRelated) oldRelated.remove();
-    Array.prototype.forEach.call(body.querySelectorAll(".aimsg.is-last"), function(r){ r.classList.remove("is-last"); });
+    var oldNext = body.querySelector(".ainext");
+    if (oldNext) oldNext.remove();
     intro.style.display = "none";
 
-    addUser(text);
+    var ex = addExchange(text);
     history.push({ role: "user", content: text });
     input.value = "";
     autosize();
     busy = true;
     syncSend();
-    setStatus("thinking");
-    var bot = addBot();
+    headSpark.classList.add("is-busy");
     scrollDown(true);
 
     function settle(){
       busy = false;
-      bot.row.classList.remove("is-live");
-      bot.row.classList.add("is-last");
-      setStatus("idle");
+      ex.spark.classList.remove("is-busy");
+      headSpark.classList.remove("is-busy");
       syncSend();
     }
     function fail(message){
       // the question never got an answer, so it shouldn't sit in history
       // unanswered — a retry would otherwise send it twice in a row
       history.pop();
-      bot.text.classList.add("is-error");
-      bot.text.innerHTML = "<p>" + inline(message) + "</p>";
+      ex.text.classList.add("is-error");
+      ex.text.innerHTML = "<p>" + inline(message) + "</p>";
       settle();
       scrollDown();
     }
@@ -4325,7 +4220,7 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages: history })
     }).then(function(res){
-      if (res.status === 429) return fail("A few people are asking at once — give it a minute and try again.");
+      if (res.status === 429) return fail("A few people are asking at once. Give it a minute and try again.");
       if (!res.ok || !res.body) return fail(FALLBACK);
       var reader = res.body.getReader();
       var decoder = new TextDecoder();
@@ -4346,9 +4241,8 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
               var json = JSON.parse(payload);
               var delta = json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
               if (delta){
-                if (!full) setStatus("writing");
                 full += delta;
-                renderRich(bot.text, full, true);
+                renderRich(ex.text, full, true);
                 scrollDown();
               }
             } catch (e) { /* a partial line or a keep-alive — skip it */ }
@@ -4358,17 +4252,17 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.5)}
       }
       function finish(){
         if (!full) return fail(FALLBACK);
-        renderRich(bot.text, full, false);
+        renderRich(ex.text, full, false);
         history.push({ role: "assistant", content: full });
-        addActions(bot, full);
+        addActions(ex, full);
         settle();
-        addRelated();
-        live.textContent = bot.text.textContent;
+        addNext();
+        live.textContent = ex.text.textContent;
         scrollDown();
       }
       return pump();
     }).catch(function(){
-      fail("Something went wrong reaching the assistant — try again, or email hi.lokeshux@gmail.com.");
+      fail("Something went wrong reaching the assistant. Try again, or email " + MAIL + ".");
     });
   }
 })();
