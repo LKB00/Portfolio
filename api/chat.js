@@ -25,10 +25,26 @@ import { LOKESH_CONTEXT } from "./data/lokesh-context.js";
 
 export const config = { maxDuration: 30 };
 
-const MODEL = "llama-3.3-70b-versatile";
+// A fallback chain, not one model. Groq's free tier caps each model at
+// 8,000 tokens a minute, and every question here carries ~2,500 tokens of
+// context — so one model alone serves about three questions a minute
+// across ALL visitors. The buckets are per model, though: when the first
+// one answers 429, the next has its own full allowance. Three models,
+// roughly three times the headroom, still at zero cost.
+//
+// Groq also retires model IDs without much notice (llama-3.3-70b-versatile
+// went that way), so the chain is overridable from Vercel as a
+// comma-separated GROQ_MODELS without touching code.
+//
+// The gpt-oss models reason before answering: that streams in
+// delta.reasoning, separate from delta.content, and the client only reads
+// content — so it never reaches the chat, but it does spend tokens, hence
+// the budget and low effort.
+const MODELS = (process.env.GROQ_MODELS || "openai/gpt-oss-120b,openai/gpt-oss-20b,qwen/qwen3.8-27b")
+  .split(",").map((m) => m.trim()).filter(Boolean);
 const MAX_TURNS = 16; // user+assistant messages, not counting the system prompt
 const MAX_MESSAGE_CHARS = 600;
-const MAX_TOKENS = 500;
+const MAX_TOKENS = 1024;
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -66,29 +82,47 @@ export default async function handler(req, res) {
     }
   }
 
-  let upstream;
-  try {
-    upstream = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${GROQ_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [{ role: "system", content: LOKESH_CONTEXT }, ...messages],
-        stream: true,
-        temperature: 0.5,
-        max_tokens: MAX_TOKENS,
-      }),
-    });
-  } catch (e) {
-    return res.status(502).json({ error: "Could not reach the model provider" });
+  let upstream = null;
+  let lastDetail = "";
+  let allBusy = true;
+  for (const model of MODELS) {
+    let r;
+    try {
+      r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: [{ role: "system", content: LOKESH_CONTEXT }, ...messages],
+          stream: true,
+          temperature: 0.5,
+          max_completion_tokens: MAX_TOKENS,
+          ...(model.startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}),
+        }),
+      });
+    } catch (e) {
+      allBusy = false;
+      lastDetail = "Could not reach the model provider";
+      continue;
+    }
+    if (r.ok && r.body) { upstream = r; break; }
+    lastDetail = (await r.text().catch(() => "")).slice(0, 300);
+    // 429 = this model's minute is spent; 503 = it's overloaded. Either way
+    // the next model has its own separate allowance, so move on. Anything
+    // else (a bad request, a retired model ID) is worth trying past too,
+    // but it means the chain isn't just busy — say so if nothing answers.
+    if (r.status !== 429 && r.status !== 503) allBusy = false;
   }
 
-  if (!upstream.ok || !upstream.body) {
-    const detail = await upstream.text().catch(() => "");
-    return res.status(502).json({ error: "Upstream error", detail: detail.slice(0, 300) });
+  if (!upstream) {
+    if (allBusy) {
+      res.setHeader("Retry-After", "30");
+      return res.status(429).json({ error: "busy" });
+    }
+    return res.status(502).json({ error: "Upstream error", detail: lastDetail });
   }
 
   res.writeHead(200, {

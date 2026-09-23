@@ -3965,6 +3965,9 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
     botDiv.appendChild(typing);
 
     function fail(message){
+      // the question never got an answer, so it shouldn't sit in history
+      // unanswered — a retry would otherwise send it twice in a row
+      history.pop();
       botDiv.textContent = message;
       busy = false;
       sendBtn.disabled = false;
@@ -3975,6 +3978,11 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages: history }),
     }).then(function(res){
+      if (res.status === 429){
+        // every model's free-tier minute is spent — true, temporary, and
+        // worth saying plainly rather than dressing up as a failure
+        return fail("A few people are asking at once — give it a minute and try again.");
+      }
       if (!res.ok || !res.body){
         return fail("Sorry, I couldn't get an answer just then — try again, or email hi.lokeshux@gmail.com.");
       }
