@@ -2584,6 +2584,9 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
   font-family:var(--display);font-size:13px;color:var(--muted);cursor:pointer;
   text-align:left;transition:border-color .2s var(--ease),color .2s var(--ease)}
 .aichat-chip:hover{border-color:var(--accent);color:var(--accent)}
+.aichat-followup{display:flex;flex-direction:column;align-items:flex-start;gap:7px;
+  margin:2px 0 14px}
+.aichat-followup .aichat-chip{padding:7px 12px;font-size:12.5px}
 
 .aichat-msg{max-width:88%;margin-bottom:12px;padding:10px 14px;border-radius:14px;
   font-family:var(--display);font-size:13.5px;line-height:1.55}
@@ -2734,11 +2737,7 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
       <div class="aichat-body" id="aiChatBody">
         <div class="aichat-intro" id="aiChatIntro">
           <p class="aichat-greet">Hey — I'm the OG assistant.<br>I helped build this site, and I know everything on it.</p>
-          <div class="aichat-suggest">
-            <button type="button" class="aichat-chip">What has he shipped recently?</button>
-            <button type="button" class="aichat-chip">Why did he leave Rupeezy?</button>
-            <button type="button" class="aichat-chip">What does he actually think about AI?</button>
-          </div>
+          <div class="aichat-suggest" id="aiChatSuggest"></div>
         </div>
       </div>
       <form class="aichat-form" id="aiChatForm">
@@ -3830,6 +3829,51 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
 
   var history = [];
   var busy = false;
+  var suggest = document.getElementById("aiChatSuggest");
+
+  // A wider pool than any one visitor sees — three at open, three more
+  // offered after the first answer, all sampled without repeats so a
+  // reset (or a second visit) doesn't always lead with the same three.
+  var QUESTION_POOL = [
+    "What has he shipped recently?",
+    "Why did he leave Rupeezy?",
+    "What does he actually think about AI?",
+    "What's his best project?",
+    "Is he good at coding?",
+    "Why four companies in three years?",
+    "What's his biggest weakness?",
+    "Does he have fintech experience?",
+    "What's he looking for next?",
+    "Is he available to start now?",
+    "What tools does he design with?",
+    "How do I get in touch?",
+  ];
+  var asked = [];
+
+  function sample(pool, n){
+    var copy = pool.filter(function(q){ return asked.indexOf(q) === -1; });
+    if (copy.length < n) copy = pool.slice();
+    for (var i = copy.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = copy[i]; copy[i] = copy[j]; copy[j] = t;
+    }
+    return copy.slice(0, n);
+  }
+
+  function makeChip(question){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "aichat-chip";
+    b.textContent = question;
+    b.addEventListener("click", function(){ sendMessage(question); });
+    return b;
+  }
+
+  function renderInitialChips(){
+    suggest.innerHTML = "";
+    sample(QUESTION_POOL, 3).forEach(function(q){ suggest.appendChild(makeChip(q)); });
+  }
+  renderInitialChips();
 
   function openChat(){
     var mobileNav = document.getElementById("mobileNav");
@@ -3894,14 +3938,19 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
   function resetChat(){
     if (busy) return;
     history = [];
-    Array.prototype.slice.call(body.querySelectorAll(".aichat-msg")).forEach(function(m){ m.remove(); });
+    asked = [];
+    Array.prototype.slice.call(body.querySelectorAll(".aichat-msg, .aichat-followup")).forEach(function(m){ m.remove(); });
     intro.style.display = "";
+    renderInitialChips();
   }
   resetBtn.addEventListener("click", resetChat);
 
   function sendMessage(raw){
     var text = raw.trim();
     if (!text || busy) return;
+    if (asked.indexOf(text) === -1) asked.push(text);
+    var oldFollowup = body.querySelector(".aichat-followup");
+    if (oldFollowup) oldFollowup.remove();
     intro.style.display = "none";
     addMessage("user", text);
     history.push({ role: "user", content: text });
@@ -3967,6 +4016,11 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
         busy = false;
         sendBtn.disabled = false;
         input.focus();
+        var row = document.createElement("div");
+        row.className = "aichat-followup";
+        sample(QUESTION_POOL, 2).forEach(function(q){ row.appendChild(makeChip(q)); });
+        body.appendChild(row);
+        body.scrollTop = body.scrollHeight;
       }
       return pump();
     }).catch(function(){
@@ -3977,9 +4031,6 @@ html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
   form.addEventListener("submit", function(e){
     e.preventDefault();
     sendMessage(input.value);
-  });
-  Array.prototype.slice.call(intro.querySelectorAll(".aichat-chip")).forEach(function(chip){
-    chip.addEventListener("click", function(){ sendMessage(chip.textContent); });
   });
 })();
 </script>
