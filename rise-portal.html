@@ -56,7 +56,7 @@
   --lav:#332D4A; --sky:#233042; --peach:#4A3A22; --mint:#25352B; --sand:#3E3323;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%}
 @view-transition{navigation:auto}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.6s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
 [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -130,11 +130,7 @@ body.menu-open header{z-index:70}
 .mrow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px}
 .mrow .mlabel{flex:1;font-family:var(--sans);font-size:16px;font-weight:400;line-height:1.2;
   letter-spacing:-.01em;color:var(--faint)}
-.mrow svg{flex:0 0 auto;width:13px;height:13px;color:var(--faint);opacity:.7}
-.mrow.current .mlabel{color:var(--ink);font-weight:500;position:relative;padding-left:14px}
-.mrow.current .mlabel:before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;
-  margin-top:-2.5px;border-radius:50%;background:var(--accent)}
-.mrow.current svg{display:none}
+.mrow.current .mlabel{color:var(--ink);font-weight:500}
 .mcases{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(30px,5.5vh,42px);padding:0 18px}
 .mgroup{margin:0 0 14px;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.09em;
   text-transform:uppercase;color:var(--faint)}
@@ -167,7 +163,8 @@ body.menu-open header{z-index:70}
 @media (max-width:576px){
   .mobilenav{justify-content:flex-end;padding-top:0;background:rgba(20,18,16,.42);overflow-y:hidden}
   html[data-theme="dark"] .mobilenav{background:rgba(0,0,0,.6)}
-  .msheet{width:100%;max-height:84vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  .msheet{width:100%;max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
     background:var(--bg);border-radius:20px 20px 0 0;
     box-shadow:0 -14px 34px -18px rgba(0,0,0,.32);
     padding-bottom:env(safe-area-inset-bottom);
@@ -452,8 +449,8 @@ h3.say.sub{margin-top:var(--s4)}
   <div class="msheet">
     <div class="mhandle-zone" aria-hidden="true"><span class="mhandle"></span></div>
     <nav class="mlinks" aria-label="Primary">
-    <a class="mrow" href="./index.html"><span class="mlabel">Home</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <a class="mrow" href="./about.html"><span class="mlabel">About</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a class="mrow" href="./index.html"><span class="mlabel">Home</span></a>
+    <a class="mrow" href="./about.html"><span class="mlabel">About</span></a>
   </nav>
     <div class="mcases">
     <p class="mgroup">Case studies</p>

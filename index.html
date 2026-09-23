@@ -112,7 +112,7 @@
   --navOff:#A1A1A1; --navOn:var(--ink);
 }
 *{box-sizing:border-box}
-html{overflow-x:clip;scroll-behavior:smooth;scroll-snap-type:y proximity;background:var(--bg);color-scheme:light}
+html{overflow-x:clip;scroll-snap-type:y proximity;background:var(--bg);color-scheme:light}
 html[data-theme="dark"]{color-scheme:dark}
 body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:var(--display);-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto}
@@ -1292,16 +1292,16 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .mrow:last-child{border-bottom:0}
 .mcase:last-child{border-bottom:0}
 
-/* tier 1 — wayfinding: quiet, you're already inside the site */
+/* tier 1 — wayfinding: quiet, you're already inside the site.
+   No arrow (a full-width row is already the tap target -- the case
+   studies below prove the point without one) and no separate dot for
+   "you are here": weight and colour alone say it, the same two knobs
+   every other current-state mark on this site already uses. */
 .mlinks{margin-top:2px}
 .mrow{min-height:48px;padding:12px 0}
 .mrow .mlabel{font-family:var(--display);font-size:16px;font-weight:400;
   letter-spacing:-.01em;color:var(--muted)}
-.mrow svg{width:13px;height:13px;color:var(--faint);opacity:.7}
-.mrow.current .mlabel{color:var(--ink);font-weight:500;position:relative;padding-left:14px}
-.mrow.current .mlabel:before{content:"";position:absolute;left:0;top:50%;
-  width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:var(--accent)}
-.mrow.current svg{display:none}
+.mrow.current .mlabel{color:var(--ink);font-weight:500}
 
 /* tier 2 — the work: what this menu is actually for */
 .mcases{display:flex;flex-direction:column;flex:0 0 auto;
@@ -1340,7 +1340,8 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (max-width:576px){
   .mobilenav{justify-content:flex-end;padding-top:0;background:rgba(20,18,16,.42);overflow-y:hidden}
   html[data-theme="dark"] .mobilenav{background:rgba(0,0,0,.6)}
-  .msheet{width:100%;max-height:84vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  .msheet{width:100%;max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
     background:var(--bg);border-radius:20px 20px 0 0;
     box-shadow:0 -14px 34px -18px rgba(0,0,0,.32);
     padding-bottom:env(safe-area-inset-bottom);
@@ -2566,8 +2567,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     <div class="msheet">
       <div class="mhandle-zone" aria-hidden="true"><span class="mhandle"></span></div>
       <nav class="mlinks" aria-label="Primary">
-        <a class="mrow" href="#top" aria-current="page"><span class="mlabel">Home</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-        <a class="mrow" href="./about.html"><span class="mlabel">About</span><svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+        <a class="mrow" href="#top" aria-current="page"><span class="mlabel">Home</span></a>
+        <a class="mrow" href="./about.html"><span class="mlabel">About</span></a>
       </nav>
       <div class="mcases">
         <p class="mgroup">Case studies</p>
