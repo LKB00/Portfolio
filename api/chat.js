@@ -108,7 +108,7 @@ export default async function handler(req, res) {
           model,
           messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
           stream: true,
-          temperature: 0.5,
+          temperature: 0.3, // low: answers are retold facts, not ideas
           max_completion_tokens: MAX_TOKENS,
           ...(model.startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}),
         }),

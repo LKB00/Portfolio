@@ -2681,6 +2681,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aifigs{display:flex;flex-wrap:wrap;gap:14px 30px;margin:2px 0 16px;padding:14px 0;
   border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .aifig{min-width:0}
+.aitext .aifigs-src{flex-basis:100%;margin:-4px 0 0;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
 .aifig b{display:block;font-family:var(--serif);font-size:28px;font-weight:400;line-height:1;
   letter-spacing:-.02em;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
 .aifig span{display:block;margin-top:7px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
@@ -3994,22 +3995,24 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   var FALLBACK = "Sorry, I lost my train of thought there. Try again, or email me at " + MAIL + ".";
   var ARROW = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-  // Wider than one visit shows. The opening four are one per topic, so
-  // the list itself tells a reader the range of what they can ask.
-  var QUESTION_POOL = [
-    { q: "What have you shipped recently?", tag: "Work" },
-    { q: "What's your best project?", tag: "Work" },
-    { q: "Do you have fintech experience?", tag: "Work" },
-    { q: "What tools do you design with?", tag: "Craft" },
-    { q: "Can you code?", tag: "Craft" },
-    { q: "What do you actually think about AI?", tag: "AI" },
-    { q: "Why did you leave Rupeezy?", tag: "Career" },
+  // The opening four are fixed and in this order: the questions a
+  // recruiter screening a designer actually has, strongest story first.
+  var STARTERS = [
+    { q: "What's the project you're proudest of?", tag: "Work" },
+    { q: "What have you actually designed for AI?", tag: "AI" },
     { q: "Why four companies in three years?", tag: "Career" },
-    { q: "What's your biggest weakness?", tag: "Career" },
-    { q: "What are you looking for next?", tag: "Hiring" },
-    { q: "Can you start right away?", tag: "Hiring" },
-    { q: "How do I reach you directly?", tag: "Hiring" }
+    { q: "How do you work with PMs and engineers?", tag: "Craft" }
   ];
+  // "Ask next" draws from these plus any starter not yet asked
+  var QUESTION_POOL = STARTERS.concat([
+    { q: "What did Rise Portal actually change?", tag: "Work" },
+    { q: "Do you have fintech experience?", tag: "Work" },
+    { q: "Can you code?", tag: "Craft" },
+    { q: "Why did you leave Runable?", tag: "Career" },
+    { q: "What's your biggest gap?", tag: "Career" },
+    { q: "When can you start?", tag: "Hiring" },
+    { q: "How do I reach you directly?", tag: "Hiring" }
+  ]);
 
   var history = [], asked = [], busy = false, lastFocus = null, stopCurrent = null;
   var canHover = window.matchMedia && window.matchMedia("(hover:hover)").matches;
@@ -4038,7 +4041,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   }
   function renderTry(){
     suggest.innerHTML = "";
-    pick(4, true).forEach(function(item){ suggest.appendChild(chip(item)); });
+    STARTERS.forEach(function(item){ suggest.appendChild(chip(item)); });
   }
   renderTry();
 
@@ -4136,7 +4139,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     "web-terminal": { n: "03", t: "The desktop trading terminal: chart, watchlist, and orders on one screen", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" }
   };
   var FIG_RE = /\{\{\s*([^|}]+?)\s*\|\s*([^}]+?)\s*\}\}/g;
-  var FACT_RE = /^\s*(?:\*\*)?([^:*]{1,30}?)(?:\*\*)?\s*:\s+(.+)$/;
+  var FACT_RE = /^\s*(?:\*\*)?([^:*]{1,44}?)(?:\*\*)?\s*:\s+(.+)$/;
   var CARD_ARROW = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   function caseCard(id){
@@ -4194,6 +4197,14 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       }
     }
 
+    // a "Source: …" line straight after a figures row belongs to it
+    for (var k = blocks.length - 1; k > 0; k--){
+      if (blocks[k].t === "p" && blocks[k - 1].t === "figs" && /^\s*source\s*:/i.test(blocks[k].text)){
+        blocks[k - 1].source = blocks[k].text.replace(/^\s*source\s*:\s*/i, "");
+        blocks.splice(k, 1);
+      }
+    }
+
     var out = [];
     blocks.forEach(function(b, i){
       if (b.t === "p"){
@@ -4213,7 +4224,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       } else if (b.t === "figs"){
         out.push('<div class="aifigs">' + b.items.map(function(f){
           return '<div class="aifig"><b>' + escapeHtml(f[0]) + "</b><span>" + escapeHtml(f[1]) + "</span></div>";
-        }).join("") + "</div>");
+        }).join("") + (b.source ? '<p class="aifigs-src">Source: ' + escapeHtml(b.source.replace(/\*\*/g, "")) + "</p>" : "") + "</div>");
       } else if (b.t === "case"){
         out.push(caseCard(b.id));
       } else if (b.t === "bq"){
