@@ -2710,7 +2710,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aichat-send.is-busy .ico-send{opacity:0;transform:scale(.6)}
 .aichat-send.is-busy .ico-stop{opacity:1;transform:none}
 .aichat-send:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.aihint{display:flex;justify-content:space-between;gap:12px;margin:8px 4px 0;
+.aihint{display:flex;justify-content:flex-end;gap:12px;margin:8px 4px 0;
   font-family:var(--mono);font-size:10px;color:var(--faint)}
 
 /* ── phones: the mobile menu's own sheet ─────────────────────────────── */
@@ -2725,10 +2725,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   .aichat-intro{padding-top:20px}
   .aichat-greet{font-size:26px}
   .aichat-foot{padding-left:12px;padding-right:12px}
-}
-@media (hover:none){
-  .aihint-keys{display:none}
-  .aihint{justify-content:flex-end}
 }
 @media (prefers-reduced-motion:reduce){
   .aichat-panel,.aichat-scrim,.askbtn-mark{transition:none}
@@ -2862,7 +2858,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
             </button>
           </div>
         </form>
-        <div class="aihint"><span class="aihint-keys">&#8629; to send &#183; &#8679;&#8629; new line</span><span>AI version of me &#183; can be wrong</span></div>
+        <div class="aihint"><span>AI version of me &#183; can be wrong</span></div>
       </div>
     </div>
   </div>
