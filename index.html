@@ -2767,17 +2767,35 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   // nav icon swap + pill shrink on scroll
   var header = document.getElementById("siteHeader");
   var totop = document.getElementById("totop");
+  var navpill = document.querySelector(".navpill");
   // The ring around the arrow: how far down the page a reader is, not
   // just whether the button should show. 157.08 is 2πr for the ring's
   // r=25, matching the stroke-dasharray in CSS -- a full circumference
   // held back by stroke-dashoffset until there is something to report.
   var totopRing = totop.querySelector(".totop-prog");
   var TOTOP_C = 157.08;
+  /* Chromium sometimes leaves this pair's transform painted at its
+     pre-toggle spot even though layout is already correct by the time
+     the transition should have finished (proven by forcing a reflow
+     and watching it snap to the right place). A plain offsetHeight
+     read only flushes layout, not the compositor, so it doesn't fix
+     this -- toggling display does, but doing that on every scroll tick
+     would fight the transition and could flash the element, so it only
+     runs once, right after a real show/hide flip. */
+  var totopWasOn = false;
+  function fixTotopPaint(){
+    setTimeout(function(){
+      totop.style.display="none"; void totop.offsetHeight; totop.style.display="";
+      navpill.style.display="none"; void navpill.offsetHeight; navpill.style.display="";
+    }, 550);
+  }
   function onScroll(){
     if (window.scrollY > 70) header.classList.add("scrolled");
     else header.classList.remove("scrolled");
-    if (window.scrollY > 400){ totop.classList.add("show"); header.classList.add("totop-on"); }
+    var totopOn = window.scrollY > 400;
+    if (totopOn){ totop.classList.add("show"); header.classList.add("totop-on"); }
     else { totop.classList.remove("show"); header.classList.remove("totop-on"); }
+    if (totopOn !== totopWasOn){ totopWasOn = totopOn; fixTotopPaint(); }
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
     totopRing.style.strokeDashoffset = (TOTOP_C * (1 - p)).toFixed(2);

@@ -71,6 +71,14 @@ p{margin:0}
 
 /* ══ NAV ════════════════════════════════════════════════════════════ */
 header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;margin:0;padding:0;z-index:50;pointer-events:none}
+/* On a phone the pill sits over the top status bar / notch and is a
+   long thumb-reach from where the hand actually holds the device.
+   Anchoring it to the bottom instead — same one-handed-reach logic as
+   iOS/Android's own bottom tab bars — fixes both. env() keeps it clear
+   of the home-indicator gesture area on notched phones. */
+@media (max-width:576px){
+  header,header.scrolled{top:auto;bottom:calc(16px + env(safe-area-inset-bottom))}
+}
 .navpill{pointer-events:auto;position:relative;width:max-content;margin:0 auto;display:flex;align-items:center;gap:2px;
   padding:4px 5px;border:0;border-radius:999px;box-shadow:none;
   background:color-mix(in srgb,var(--surface) 85%,transparent);
@@ -134,6 +142,13 @@ body.menu-open header{z-index:70}
 .mcase[aria-current="page"] .mcase-x:before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;
   border-radius:50%;background:var(--accent)}
 .mfoot{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding:21px 18px clamp(22px,4vh,30px)}
+/* The header stays elevated above this full-screen menu so its own
+   close (X) button stays reachable -- but with the header now at the
+   bottom on phones, that puts it right on top of these buttons unless
+   the sheet leaves room for it. */
+@media (max-width:576px){
+  .mfoot{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+}
 .mailbtn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:52px;padding:0;border:0;
   border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);background:transparent;
   font-size:15px;font-weight:500;color:var(--ink);cursor:pointer}
@@ -154,7 +169,23 @@ body.menu-open header{z-index:70}
 .totop-track{stroke:var(--line)}
 .totop-prog{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;transition:stroke-dashoffset .1s linear}
 @media (prefers-reduced-motion:reduce){.totop-prog{transition:none}}
-@media (max-width:576px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg:not(.totop-ring){width:14px;height:14px}}
+@media (max-width:576px){.totop{width:44px;height:44px;left:50%;right:auto}.totop svg:not(.totop-ring){width:14px;height:14px}}
+/* Mobile back-to-top used to stack directly above the nav pill. Now
+   they share one row, pill on the left, button on the right: the pill
+   sits centred on its own until there's something to scroll back to,
+   then steps aside to make room. Both sides use each element's own
+   -50%/+50% (not a guessed pixel width) so this holds regardless of
+   how wide the pill ends up. header.totop-on mirrors #totop's own
+   .show condition (same scrollY>400 check, toggled together in JS) so
+   the CSS never has to guess the button's visibility from outside it. */
+@media (max-width:576px){
+  .totop{bottom:calc(16px + env(safe-area-inset-bottom));
+    transform:translateX(4px) scale(.86);
+    transition:opacity .2s ease,transform .5s cubic-bezier(.34,1.56,.64,1),visibility 0s linear .2s}
+  .totop.show{transform:translateX(4px) scale(1)}
+  .navpill{transition:background .2s var(--ease),box-shadow .2s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
+  header.totop-on .navpill{transform:translateX(calc(-50% - 4px))}
+}
 
 /* ---------------- LAYOUT — fixed left TOC rail, single reading column ---------------- */
 /* bottom padding dropped to 0: #contact footer already carries its own
@@ -568,10 +599,29 @@ p.body b{color:var(--ink);font-weight:400}
 
   // back-to-top button with scroll-progress ring
   var totop=document.getElementById('totop');
+  var navpill=document.querySelector('.navpill');
   if(totop){
     var totopRing=totop.querySelector('.totop-prog'), TOTOP_C=157.08;
+    /* Chromium sometimes leaves this pair's transform painted at its
+       pre-toggle spot even though layout is already correct by the time
+       the transition should have finished (proven by forcing a reflow
+       and watching it snap to the right place). A plain offsetHeight
+       read only flushes layout, not the compositor, so it doesn't fix
+       this -- toggling display does, but doing that on every scroll
+       tick would fight the transition and could flash the element, so
+       it only runs once, right after a real show/hide flip. */
+    var totopWasOn=false;
+    function fixTotopPaint(){
+      setTimeout(function(){
+        totop.style.display='none'; void totop.offsetHeight; totop.style.display='';
+        navpill.style.display='none'; void navpill.offsetHeight; navpill.style.display='';
+      },550);
+    }
     function onTotopScroll(){
-      if(window.scrollY>400) totop.classList.add('show'); else totop.classList.remove('show');
+      var totopOn=window.scrollY>400;
+      if(totopOn) totop.classList.add('show'); else totop.classList.remove('show');
+      header.classList.toggle('totop-on', totopOn);
+      if(totopOn!==totopWasOn){ totopWasOn=totopOn; fixTotopPaint(); }
       var max=document.documentElement.scrollHeight-window.innerHeight;
       var p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
       totopRing.style.strokeDashoffset=(TOTOP_C*(1-p)).toFixed(2);
