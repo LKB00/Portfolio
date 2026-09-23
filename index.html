@@ -145,8 +145,7 @@ header.scrolled .navlink{min-width:34px}
 .icon-sun,.icon-moon{line-height:0}
 html:not([data-theme="dark"]) .icon-moon{display:none}
 html[data-theme="dark"] .icon-sun{display:none}
-.burger{display:grid;width:44px;height:44px;border:0;background:var(--tint);border-radius:4px;color:var(--ink);cursor:pointer;place-items:center;position:relative}
-.burger span.bars{display:flex;flex-direction:column;gap:var(--s-1)}
+.burger span.bars{display:flex;flex-direction:column;gap:4px}
 .burger span.bars span{width:18px;height:2px;background:currentColor;border-radius:2px;display:block}
 .burger .bicon-bars,.burger .bicon-x{grid-area:1/1;display:grid;place-items:center;transition:opacity .22s ease,transform .22s ease}
 .burger .bicon-x{opacity:0;transform:rotate(-45deg)}
@@ -155,7 +154,6 @@ html[data-theme="dark"] .icon-sun{display:none}
 @media (max-width:576px){
   nav.navlinks a{display:none}
   .navdiv{display:none}
-  .burger{display:grid}
 }
 :focus{outline:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
@@ -164,7 +162,7 @@ html[data-theme="dark"] .icon-sun{display:none}
 .mobilenav button:focus:not(:focus-visible){outline:none}
 body.menu-open{overflow:hidden;position:fixed;width:100%}
 .mobilenav{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s;overscroll-behavior:contain;flex-direction:column;min-height:100dvh;overflow-y:auto;padding-top:calc(59px + env(safe-area-inset-top))}
-@media (max-width:576px){header .themebtn,header .burger{width:44px;height:44px;display:grid;place-items:center;border-radius:6px;background:var(--tint);border:0;color:var(--ink)}header .themebtn::before{display:none}nav.navlinks{gap:8px}}
+@media (max-width:576px){nav.navlinks{gap:8px}header .themebtn::before{display:none}}
 body.menu-open header{z-index:70}
 @media (min-width:641px){header .burger{display:none}}
 .mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
@@ -208,7 +206,7 @@ section{position:relative;z-index:2;padding-bottom:clamp(50px,16vw,84px);scroll-
 h1,h2,h3,.subhead,.lead,.statement{font-family:var(--serif)}
 #noticeBanner h3,#noticeBanner p{font-family:var(--display)}
 h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;letter-spacing:-.02em;font-weight:400}
-.hero-sub{margin:clamp(5px,1vw,10px) 0 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+.hero-sub{margin:clamp(8px,1vw,16px) 0 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
 .cta{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:clamp(10px,1.8vw,16px)}
 .splitcta{display:inline-flex;align-items:stretch;background:var(--ink);border-radius:4px;overflow:hidden}
 .splitcta a{display:inline-flex;align-items:center;gap:var(--s-3);padding:10px 13px;color:var(--card);font-size:var(--t-mono-lg);font-weight:500}
@@ -227,26 +225,26 @@ h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;lett
   .heroportrait{width:min(100%,420px)}
 }
 #work,#impact{max-width:792px;margin:0 auto}
-.workgrid{display:grid;grid-template-columns:minmax(0,1fr);row-gap:42px}
+.workgrid{display:grid;grid-template-columns:minmax(0,1fr);row-gap:56px}
 .workrow{position:relative;display:grid;gap:clamp(21px,4vw,45px);align-items:end;color:inherit;grid-template-columns:minmax(0,57fr) minmax(0,43fr)}
 .cardframe{overflow:hidden;position:relative;aspect-ratio:16/9;border-radius:4px;transition:transform .3s cubic-bezier(.2,.85,.25,1)}
 .cardframe img.bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06);pointer-events:none}
 .worktext{display:flex;flex-direction:column;align-items:flex-start;gap:0}
 .worktext .num{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--faint)}
-.worktext h3{margin:13px 0 0;font-family:var(--serif);font-size:clamp(20px,2vw,26px);line-height:1.15;letter-spacing:-.012em;font-weight:400}
+.worktext h3{margin:16px 0 0;font-family:var(--serif);font-size:clamp(20px,2vw,26px);line-height:1.15;letter-spacing:-.012em;font-weight:400}
 .worktext .desc{margin:10px 0 0;font-family:var(--mono);font-size:var(--t-mono-lg);letter-spacing:var(--tr-mono);color:var(--muted)}
-.workcta{display:inline-flex;align-items:center;justify-content:center;min-width:180px;gap:var(--s-3);margin-top:18px;padding:8px 11px;border-radius:4px;box-shadow:0 0 0 1px var(--line);font-size:var(--t-mono-lg);font-weight:500;color:var(--accent)}
+.workcta{display:inline-flex;align-items:center;justify-content:center;min-width:180px;gap:var(--s-3);margin-top:16px;padding:8px 16px;border-radius:4px;box-shadow:0 0 0 1px var(--line);font-size:var(--t-mono-lg);font-weight:500;color:var(--accent)}
 .livecta{color:var(--live)}
 .livecta:hover{background:var(--live);color:var(--card)}
 @media (max-width:684px){
   .workrow{grid-template-columns:minmax(0,1fr)!important;align-items:start}
   .workrow + .workrow{padding-top:30px}
 }
-.impactgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.impactgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .impactcol{background:var(--tint);border-radius:6px;padding:clamp(16px,2.4vw,22px)}
 .impactnum{font-size:42px;line-height:1;letter-spacing:var(--tr-display);font-variant-numeric:tabular-nums;color:var(--accent)}
-.impactcol p{margin:13px 0 0;max-width:34ch;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
-@media (max-width:810px){.impactgrid{grid-template-columns:minmax(0,1fr);row-gap:18px}.impactnum{font-size:35px}}
+.impactcol p{margin:16px 0 0;max-width:34ch;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
+@media (max-width:810px){.impactgrid{grid-template-columns:minmax(0,1fr);row-gap:16px}.impactnum{font-size:35px}}
 #experience{max-width:792px;margin:0 auto}
 .exptimeline{position:relative;padding-left:30px}
 .exptimeline:before{content:"";position:absolute;left:5px;top:calc(20px + clamp(40px,5vw,64px) + 22px);bottom:12px;width:1px;background:var(--line)}
@@ -256,13 +254,13 @@ h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;lett
 .expnext{position:relative;padding:0 0 clamp(30px,5vw,45px) 0}
 .expnext:before{content:"";position:absolute;left:-40px;top:9px;width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accentWash)}
 .expnext:after{content:"";position:absolute;left:-35px;top:20px;bottom:0;width:1px;background:repeating-linear-gradient(to bottom,var(--line) 0 4px,transparent 4px 8px)}
-.expchip{display:inline-block;text-decoration:none;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--accent);background:var(--accentWash);border:1px dashed var(--accentLine);border-radius:4px;padding:7px 13px;transition:background .25s ease,color .25s ease}
+.expchip{display:inline-block;text-decoration:none;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--accent);background:var(--accentWash);border:1px dashed var(--accentLine);border-radius:4px;padding:8px 16px;transition:background .25s ease,color .25s ease}
 .expchip:hover{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--ink)}
 @media (max-width:576px){.expnext:before{left:-28px;width:9px;height:9px}.expnext:after{left:-24px}}
-.exp-date{margin:0 0 8px;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
+.exp-date{margin:0 0 16px;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
 .exp-co{margin:0;font-family:var(--serif);font-size:clamp(17px,2vw,21px);line-height:1.2;font-weight:400;color:var(--ink)}
-.exp-role{margin:5px 0 0;font-size:var(--t-body);color:var(--accent)}
-.exp-desc{margin:11px 0 0;font-size:var(--t-body);line-height:1.65;color:var(--muted);max-width:52ch}
+.exp-role{margin:8px 0 0;font-size:var(--t-body);color:var(--accent)}
+.exp-desc{margin:16px 0 0;font-size:var(--t-body);line-height:1.65;color:var(--muted);max-width:52ch}
 .exp-chips{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
 .exp-chips span{font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint);border:0;padding:0}
 @media (max-width:576px){.exptimeline{padding-left:21px}.exptimeline:before{left:4px}.exprow:before{left:-28px;width:9px;height:9px}}
@@ -344,7 +342,6 @@ html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='h
 #loader .dot.br{bottom:-3.5px;right:-3.5px;animation:popIn .22s cubic-bezier(.3,1.5,.5,1) .97s both}
 #loader .tag{position:absolute;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--accent);opacity:0;white-space:nowrap}
 #loader .tag.top{top:-26px;left:0;animation:fadeUp .34s cubic-bezier(.33,.9,.24,1) .86s both}
-#loader .tag.bot{bottom:-26px;right:0;animation:fadeUp .34s cubic-bezier(.33,.9,.24,1) .96s both}
 /* command palette */
 #palette{display:none;position:fixed;inset:0;z-index:95;background:rgba(20,20,22,.28);backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:12vh 16px 16px}
 #palette.open{display:flex}
@@ -464,9 +461,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 .themebtn{width:28px;height:28px;margin-left:2px;border-radius:var(--r-pill);background:transparent;color:var(--navOff);display:inline-grid;place-items:center}
 .themebtn::before{display:none}
 .themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
-.burger{border-radius:var(--r-pill);background:transparent;color:var(--ink);width:34px;height:34px}
+.burger{position:relative;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
 @media (min-width:641px){header .burger{display:none}}
-@media (max-width:576px){nav.navlinks a{display:none}header .themebtn,header .burger{width:34px;height:34px;border-radius:var(--r-pill);background:transparent}}
+@media (max-width:576px){nav.navlinks a{display:none}}
 
 /* ── contact tab: peels off the top-right corner ── */
   transform:rotate(5deg) translateY(-10px);transform-origin:top right;
@@ -538,7 +535,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 .metrics span{font-family:var(--display);font-size:var(--t-small);font-weight:400;letter-spacing:0;
   color:var(--muted);background:var(--surface);border:0;border-radius:var(--r-pill);padding:4px 9px}
 .workcta{display:none}
-@media (max-width:684px){.workgrid{grid-template-columns:minmax(0,1fr);row-gap:30px}}
+@media (max-width:684px){.workgrid{grid-template-columns:minmax(0,1fr);row-gap:32px}}
 
 /* floating annotation chips inside a card */
 .anno{position:absolute;z-index:4;display:flex;align-items:center;gap:8px;
@@ -669,7 +666,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 .exp-desc{margin-top:var(--s-2)}
 
 /* the hero gets the most air on the page */
-#top{padding-bottom:clamp(50px,9vw,77px)}
+#top{padding-bottom:clamp(72px,12vw,96px)}
 .hero-sub{margin-top:var(--s-4)}
 #top h1 + .hero-sub{margin-top:var(--s-5)}
 #top .cta{margin-top:var(--s-7)}
@@ -794,11 +791,10 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   background:transparent;color:var(--navOff);display:inline-grid;place-items:center;cursor:pointer}
 .themebtn::before{display:none}
 .themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
-.burger{width:34px;height:34px;border:0;border-radius:var(--r-pill);background:transparent;color:var(--ink)}
+.burger{position:relative;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
 @media (min-width:641px){header .burger{display:none}}
 @media (max-width:576px){
   nav.navlinks a{display:none}
-  header .themebtn,header .burger{width:34px;height:34px;border-radius:var(--r-pill);background:transparent}
 }
 
 /* ── footer ── */
@@ -1422,10 +1418,10 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 #experience .expfield{position:relative;display:inline-flex;align-items:center;min-width:0;flex:1}
 
 #experience .expinput{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:0;
-  font-family:var(--display);font-size:14px;font-weight:400;line-height:1.3;
+  font-family:var(--serif);font-size:14px;font-weight:500;line-height:1.3;
   letter-spacing:-.012em;color:var(--ink)}
 #experience .expinput::placeholder{color:var(--faint);opacity:1}
-#experience .expname{display:none;font-family:var(--display);font-size:14px;font-weight:500;
+#experience .expname{display:none;font-family:var(--serif);font-size:14px;font-weight:500;
   line-height:1.3;letter-spacing:-.012em;color:var(--ink);white-space:nowrap;
   overflow:hidden;text-overflow:ellipsis}
 
@@ -2146,73 +2142,98 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    ~1.4s, inside a 1.75s hold, so it finishes and can be read before it
    leaves.
    ═══════════════════════════════════════════════════════════════════ */
+/* Figma's selection blue, quoted literally. The site accent (#006AD4) is
+   a deeper navy and reads as "a blue box"; #0D99FF is the exact hue a
+   designer sees a hundred times a day, and the recognition is the whole
+   point of the gesture. It is the one piece of chrome here that does not
+   theme — it is the same blue in Figma's light and dark UI. */
+#loader{--fig:#0D99FF}
 #loader .box{padding:clamp(13px,1.8vw,18px) clamp(18px,2.6vw,26px)}
 
-/* the object being selected. 400, not 500: at this size the heavier
-   cut read as a headline competing with the hero it hands over to —
-   this is a name, set quietly. */
+/* the object being selected. Serif, because every heading on this site
+   is serif and this is the first word of it — in the sans it read as
+   UI chrome rather than as the page's own voice.
+
+   400, not 500: at this size the heavier cut read as a headline
+   competing with the hero it hands over to — this is a name, set
+   quietly. Tracking is the h1's -.02em; the -.022em it carried was
+   tuned for Geist and pulls STIX too tight. */
 #loader .name{overflow:visible;max-width:none;
   animation:lodName .4s cubic-bezier(.16,.84,.24,1) both}
-#loader .name span{font-family:var(--display);
-  font-size:clamp(22px,3.6vw,34px);font-weight:400;
-  letter-spacing:-.022em;line-height:1.12;color:var(--ink)}
+#loader .name span{font-family:var(--serif);
+  font-size:clamp(24px,3.8vw,36px);font-weight:400;
+  letter-spacing:-.02em;line-height:1.12;color:var(--ink)}
 
-/* the marquee: a rectangle pulled out of the top-left corner. width and
-   height rather than a transform, because a scaled border thins on one
-   axis and thickens on the other — this keeps a true 1.5px edge at
-   every moment of the drag. It is one absolutely-positioned box, so
-   nothing else on the page relays out while it grows. */
+/* the frame being drawn: a rectangle pulled out of the top-left corner.
+   width and height rather than a transform, because a scaled border
+   thins on one axis and thickens on the other — this keeps a true
+   hairline edge at every moment of the drag.
+
+   No fill. An earlier pass washed the interior blue on the theory that
+   a marquee does; a frame does not — Figma leaves the area clear while
+   you pull it out, and the wash was the loudest wrong note here.
+
+   1.5px, not the 1px hairline it was: at 1px on this ground the edge
+   went faint enough to read as a guide rather than as the object. */
 #loader .sel{position:absolute;left:0;top:0;width:0;height:0;
-  border:1.5px solid var(--accent);background:transparent;
-  animation:lodDraw .45s cubic-bezier(.32,.72,.3,1) .56s both}
+  border:1.5px solid var(--fig);background:transparent;
+  /* .60s, not .45: at .45 the rectangle was finished before the eye had
+     found it, so the frame read as something that appeared rather than
+     something drawn. The drag is the whole story — it gets the time. */
+  animation:lodDraw .6s cubic-bezier(.32,.72,.3,1) .6s both}
 
-/* square handles, the way a design tool draws them — after the release */
-#loader .dot{width:8px;height:8px;border-radius:2px;
-  background:var(--bg);box-shadow:0 0 0 1.5px var(--accent);opacity:0;
-  animation:lodHandle .24s cubic-bezier(.3,1.6,.5,1) both}
-#loader .dot.tl{top:-4px;left:-4px;animation-delay:1.02s}
-#loader .dot.tr{top:-4px;right:-4px;animation-delay:1.05s}
-#loader .dot.bl{bottom:-4px;left:-4px;animation-delay:1.08s}
-#loader .dot.br{bottom:-4px;right:-4px;animation-delay:1.11s}
+/* The corner handles, and the two things that were wrong with them.
 
-/* the dimension chip, saying something truer than a width and a height.
-   Bottom-left, because the cursor finishes on the right corner and two
-   objects on one corner reads as a collision. */
-#loader .tag.bot{top:auto;bottom:-32px;left:0;right:auto;
-  padding:3px 7px;border-radius:4px;
-  background:var(--accent);color:var(--onAccent);
-  font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.02em;
-  opacity:0;transform-origin:0 0;
-  animation:lodChip .28s cubic-bezier(.16,.84,.24,1) 1.10s both}
+   They are children of .sel, not of .box. That is what lets them show
+   the moment the drag starts and ride the corners out as the rectangle
+   grows — in Figma the handles are on the shape from the first pixel,
+   not snapped on at the end. Parented to .box they could only appear
+   at the finished corners, so they had to wait for the release.
 
-/* the cursor travels in left/top rather than translate: percentages
-   there resolve against the frame, so it tracks the corner of the
-   marquee it is pulling instead of a guessed pixel distance */
-#loader .curwrap{position:absolute;inset:0;pointer-events:none;z-index:3}
-#loader .cur{position:absolute;left:0;top:0;width:17px;height:17px;
-  color:var(--ink);opacity:0;
-  animation:lodCur .88s cubic-bezier(.3,.7,.32,1) .2s both}
-#loader .cur svg{display:block;width:100%;height:100%}
-#loader.hide .cur{opacity:0;transition:opacity .2s linear}
+   And they are SHARP. 9px, square, white, 1px blue edge — a real
+   border rather than a box-shadow ring, which renders crisper at
+   fractional pixel ratios and actually fills white against an
+   off-white ground instead of reading as a hollow outline.
+
+   The shorthand is repeated per corner rather than set once on .dot,
+   because an older generation of this loader still sets
+   `#loader .dot.tl{animation:popIn ...}` further up the sheet. That is
+   one class more specific than `#loader .dot`, so a name declared there
+   loses and the handles were silently still running popIn — only the
+   delays overrode. Matching its specificity is what makes these win. */
+#loader .dot{width:10px;height:10px;border-radius:0;box-sizing:border-box;
+  background:#fff;border:1.5px solid var(--fig);box-shadow:none;opacity:0;z-index:2}
+#loader .dot.tl{top:-5px;left:-5px;animation:lodHandle .14s linear .6s both}
+#loader .dot.tr{top:-5px;right:-5px;animation:lodHandle .14s linear .6s both}
+#loader .dot.bl{bottom:-5px;left:-5px;animation:lodHandle .14s linear .6s both}
+#loader .dot.br{bottom:-5px;right:-5px;animation:lodHandle .14s linear .6s both}
+
+/* the frame's name, above its top-left corner — plain blue text, no
+   pill. This is the single most recognisable mark Figma leaves on a
+   canvas, and without it the composition reads as "something selected"
+   rather than "a frame that was just drawn". It says what the frame is,
+   which is the same trick the dimension badge was doing, now in the
+   place Figma actually puts a name. */
+#loader .tag.top{top:auto;bottom:100%;left:0;right:auto;
+  margin-bottom:7px;padding:0;background:none;
+  /* 500, not 600, and 12 rather than 12.5. This page loads Geist at 400
+     and 500 only: asking for 600 got synthetic bold, which the browser
+     fakes by stroking the outlines — that was the "outlined" look. The
+     half-pixel size compounded it by landing the glyphs off the pixel
+     grid. Both are real weights and whole pixels now. */
+  font-family:var(--display);font-size:12px;font-weight:500;
+  letter-spacing:0;color:var(--fig);
+  opacity:0;animation:lodLabel .22s cubic-bezier(.16,.84,.24,1) 1.26s both}
 
 @keyframes lodName{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
 @keyframes lodDraw{from{width:0;height:0}to{width:100%;height:100%}}
-@keyframes lodHandle{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
-@keyframes lodChip{from{opacity:0;transform:translateY(-5px) scale(.88)}
-  to{opacity:1;transform:none}}
-/* in from off-corner, press, then drag to the opposite corner */
-@keyframes lodCur{
-  0%{opacity:0;left:-62px;top:-48px;transform:scale(1)}
-  24%{opacity:1;left:0;top:0;transform:scale(1)}
-  32%{transform:scale(.8)}
-  40%{left:0;top:0;transform:scale(1)}
-  92%{left:100%;top:100%;transform:scale(1)}
-  100%{opacity:1;left:100%;top:100%;transform:scale(1)}}
-
+@keyframes lodHandle{from{opacity:0}to{opacity:1}}
+@keyframes lodLabel{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){
-  #loader .name,#loader .sel,#loader .dot,#loader .tag.bot,#loader .cur{
-    animation:none!important;opacity:1!important;transform:none!important}
+  #loader .name,#loader .sel,#loader .dot,#loader .tag.top{
+    animation:none!important;opacity:1!important}
   #loader .sel{width:100%;height:100%}
+  #loader .tag.top{transform:none!important}
 }
 
 /* ── the live-product pill ───────────────────────────────────────────
@@ -2506,11 +2527,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 <div class="halftone halftone-down" aria-hidden="true"></div>
 <div id="loader" aria-hidden="true">
   <div class="box">
-    <span class="sel" aria-hidden="true"></span>
-    <span class="dot tl"></span><span class="dot tr"></span><span class="dot bl"></span><span class="dot br"></span>
-    <span class="tag bot">Product Designer</span>
+    <span class="sel" aria-hidden="true"><span class="dot tl"></span><span class="dot tr"></span><span class="dot bl"></span><span class="dot br"></span></span>
+    <span class="tag top">Product Designer</span>
     <span class="name"><span>Lokesh Bhatia</span></span>
-    <span class="curwrap" aria-hidden="true"><span class="cur"><svg viewBox="0 0 16 16" fill="none"><path d="M3.2 1.8 12.6 7.5l-4 .9-1.7 4.1z" fill="currentColor" stroke="var(--bg)" stroke-width="1.1" stroke-linejoin="round"/></svg></span></span>
   </div>
 </div>
 <div id="bgwash" aria-hidden="true"></div>
@@ -2532,7 +2551,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   <header id="siteHeader">
     <div class="navpill">
-      <nav class="navlinks">
+      <nav class="navlinks" aria-label="Main">
         <a class="navlink" href="./index.html" aria-current="page"><span class="navtext">Home</span></a>
         <a class="navlink" href="./about.html"><span class="navtext">About</span></a>
         <a class="navlink" href="./resume.html"><span class="navtext">Resume</span></a>
@@ -2555,6 +2574,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         <p class="mgroup">Case studies</p>
         <a class="mcase" href="./app-merge.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
         <a class="mcase" href="./rise-portal.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span></a>
+        <a class="mcase" href="./web-terminal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">The desktop trading terminal: chart, watchlist, and orders on one screen.</span><span class="mcase-m">Rupeezy &#183; Web trading terminal</span></span></a>
       </div>
       <div class="mfoot">
         <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
@@ -3017,8 +3037,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     loader.classList.add("hide");
     startHero();
   } else {
-    window.addEventListener("load", function(){ setTimeout(hideLoader, 1750); });
-    setTimeout(hideLoader, 2550);
+    /* the sequence now lands at ~1.48s; 1750 left barely a quarter-second
+       on the finished frame, which is the one still image worth reading */
+    window.addEventListener("load", function(){ setTimeout(hideLoader, 2150); });
+    setTimeout(hideLoader, 2950);
     ["click","keydown","touchstart"].forEach(function(ev){
       document.addEventListener(ev, function(){ hideLoader(); }, { once: true });
     });

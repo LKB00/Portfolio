@@ -159,7 +159,7 @@ h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;lett
 .badges{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-top:clamp(18px,3.2vw,26px)}
 .badges span{font-family:var(--mono);font-size:var(--t-mono);color:var(--ink);background:var(--tint);border-radius:4px;padding:var(--s-2) var(--s-4)}
 @media (max-width:774px){.top2col{grid-template-columns:minmax(0,1fr)}.portrait{max-width:378px;margin:0 auto}}
-.section{max-width:792px;margin:0 auto;padding:0 0 56px;text-align:left}
+.section{max-width:792px;margin:0 auto;padding:0 0 96px;text-align:left}
 .bio{display:flex;flex-direction:column;gap:clamp(14px,2.2vw,20px);font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
 .bio p{margin:0}
 h2{margin:0;font-family:var(--serif);font-size:var(--t-h2);line-height:1.15;letter-spacing:-.012em;font-weight:400}
@@ -254,7 +254,7 @@ section{padding-bottom:0}
 #top{text-align:center;padding:clamp(84px,15vh,115px) 0 clamp(30px,5vw,42px)}
 #top h1{max-width:none;margin:0 auto;text-align:center;font-size:clamp(21px,3.4vw,26px);font-weight:400;line-height:1.16;letter-spacing:-.02em;color:var(--ink)}
 #top .lead,#top .herosub,#top .hero-sub{max-width:46em;margin:14px auto 0;text-align:center;font-size:15px;line-height:1.5;color:var(--muted)}
-.section{max-width:648px;margin:0 auto;padding:0 0 clamp(50px,9vw,78px);text-align:left}
+.section{max-width:648px;margin:0 auto;padding:0 0 96px;text-align:left}
 .section > *,.bio,.photogrid,.photogrid4,.previewfig,.btnrow{max-width:none;margin-left:0;margin-right:0}
 .section h2{max-width:576px;font-size:clamp(18px,2.6vw,22px);font-weight:500;line-height:1.32;letter-spacing:-.018em;color:var(--ink)}
 .section p,.bio p{max-width:576px;font-size:14px;line-height:1.6;color:var(--muted)}
@@ -510,13 +510,13 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .notecard p + p{margin-top:10px}
 
 /* ── "What I do with AI" trio: cards, same surface as the rest ── */
-.labelrow{gap:13px}
+.labelrow{gap:16px}
 .labelrow > div{background:var(--surface);border:0;border-radius:var(--r-card);
   padding:clamp(16px,2.4vw,20px);gap:0;justify-content:flex-start}
 .labelrow .cap{display:block;font-family:var(--mono);font-size:11px;font-weight:500;
   letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 .labelrow p{margin:10px 0 0;font-size:13px;line-height:1.55;color:var(--muted)}
-@media (max-width:684px){.labelrow{gap:10px}}
+@media (max-width:684px){.labelrow{gap:16px}}
 
 /* ── the trio proves itself instead of describing itself ──
    First pass fixed the alignment but not the actual complaint: each
@@ -527,7 +527,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    in the card, built up into its own panel rather than a thin strip,
    and the sentence that used to carry the whole card is now one short
    line underneath it -- caption, not copy. */
-.aiproof{margin-top:14px;padding:16px 14px;border-radius:var(--r-sm);
+.aiproof{margin-top:16px;padding:16px 16px;border-radius:var(--r-sm);
   background:var(--card);display:flex;align-items:center;gap:10px;
   font-family:var(--mono);font-size:12px;letter-spacing:.01em;color:var(--muted)}
 .aiproof b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
@@ -553,7 +553,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 :root[data-theme="dark"] .aiproof-live{--frameBar:#2C2C2E;--frameEdge:#1E1E20}
 .aiproof-bar{display:flex;align-items:center;gap:8px;padding:8px 11px;
   background:var(--frameBar);border-bottom:.5px solid var(--frameEdge)}
-.aiproof-lights{display:flex;gap:5px;flex:0 0 auto}
+.aiproof-lights{display:flex;gap:8px;flex:0 0 auto}
 .aiproof-lights i{width:7px;height:7px;border-radius:50%}
 .aiproof-lights i:nth-child(1){background:#FF5F57}
 .aiproof-lights i:nth-child(2){background:#FEBC2E}
@@ -561,13 +561,13 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .aiproof-url{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   font-family:var(--mono);font-size:10px;letter-spacing:.02em;color:var(--faint)}
 
-.aiproof-body{padding:14px 14px 15px;display:flex;flex-direction:column;gap:6px}
+.aiproof-body{padding:16px 16px 16px;display:flex;flex-direction:column;gap:8px}
 .aiproof-lab{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.09em;
   text-transform:uppercase;color:var(--faint)}
-.aiproof-row{display:flex;align-items:baseline;gap:9px}
+.aiproof-row{display:flex;align-items:baseline;gap:8px}
 .aiproof-row b{font-size:clamp(28px,5.4vw,36px);font-weight:600;letter-spacing:-.03em;
   line-height:1;color:var(--ink)}
-.aiproof-live-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);
+.aiproof-live-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
   font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
   color:var(--live)}
 /* Was a ring expanding out from the dot -- at scale(1.9) on a 14px box
@@ -590,8 +590,8 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    flush against the card's left edge the way the rest of the page does,
    and this was the one still centred, which is what actually read as
    inconsistent rather than "different enough to be its own thing." */
-.aiproof-path{flex-direction:column;align-items:flex-start;gap:10px}
-.aiproof-frames{display:flex;align-items:center;gap:12px}
+.aiproof-path{flex-direction:column;align-items:flex-start;gap:16px}
+.aiproof-frames{display:flex;align-items:center;gap:16px}
 .aiproof-frame{width:46px;height:34px;border-radius:6px;padding:8px 7px;
   flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:5px}
 .aiproof-frame.is-sketch{border:1.5px dashed var(--line);transform:rotate(-3deg)}
@@ -619,7 +619,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .aiproof-frame-line{height:3px;border-radius:2px;width:100%}
 .aiproof-frame-line.short{width:55%}
 .aiproof-arrow{flex:0 0 auto;width:20px;height:9px;color:var(--faint)}
-.aiproof-frame-labels{display:flex;align-items:center;gap:12px;font-family:var(--mono);
+.aiproof-frame-labels{display:flex;align-items:center;gap:16px;font-family:var(--mono);
   font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .aiproof-frame-labels span{width:46px;text-align:center}
 .aiproof-frame-labels .aiproof-arrow-spacer{width:20px;flex:0 0 auto}
@@ -1223,9 +1223,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
       </div>
     </div>
     <div class="abouthero-t">
-      <p class="cs-eyebrow" data-reveal>About</p>
       <h1 data-reveal>I learned to look before I learned to design.</h1>
-      <p class="herosub" data-reveal>No design degree, no bootcamp. I taught myself.</p>
     </div>
     </div>
   </section>

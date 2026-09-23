@@ -272,13 +272,13 @@ p.body b{color:var(--ink);font-weight:400}
 h3.say.sub{margin-top:var(--s4)}
 
 /* ---------------- QUOTE / CALLOUT BOX ---------------- */
-.quote{background:var(--quote);border-radius:0 2px 2px 0;padding:20px 28px 20px 24px;margin-top:var(--s3)}
+.quote{background:rgba(210,227,243,.3);border-radius:0 2px 2px 0;padding:20px 28px 20px 24px;margin-top:var(--s3)}
 .quote p:not(.cite){font-family:var(--sans);font-size:var(--t-body);font-weight:400;color:var(--value);line-height:1.6}
 .quote p b{color:var(--ink);font-weight:400}
 .cite{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--faint);margin-top:10px}
 
 /* labeled surface card, reused for the vocabulary/decision/notecard blocks */
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin-top:var(--s3)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin-top:var(--s2)}
 @media(max-width:600px){.pair{grid-template-columns:1fr}}
 .pair>div{background:var(--surface);border-radius:8px;padding:clamp(18px,2.6vw,28px)}
 .pair .cap{margin-top:0}
@@ -419,6 +419,15 @@ h3.say.sub{margin-top:var(--s4)}
 .fsr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
   white-space:nowrap;border:0}
+
+/* ════ STICKY NOTES ════ */
+.stickynotes{display:flex;align-items:flex-start;gap:var(--s2);margin-top:var(--s4);line-height:1.4}
+.stickynote{flex:1 1 0;min-width:0;background:#D2E3F3;border-radius:3px;
+  padding:18px 20px 16px;box-shadow:0 10px 24px -6px rgba(0,0,0,.16),0 3px 8px rgba(0,0,0,.06);
+  display:flex;flex-direction:column;aspect-ratio:1}
+.stickynote h4{font-family:var(--serif);font-weight:400;font-size:18px;line-height:1.3;color:#000;margin:0 0 6px}
+.stickynote .sn-body{font-family:var(--sans);font-size:14px;line-height:1.6;color:#000;margin:0}
+.stickynote .sn-sig{align-self:flex-end;margin:14px 0 0;font-family:var(--sans);font-size:13px;color:#B08C68}
 
 @media(max-width:860px){
   :root{--s5:64px;--s4:44px}
@@ -584,16 +593,28 @@ h3.say.sub{margin-top:var(--s4)}
       <p>&ldquo;Last month I referred 100 people and earned X. This month I referred 200 and earned less. Why?&rdquo;</p>
       <p class="cite">The call the support team took most.</p>
     </div>
-    <div class="blackbox">
-      <p class="blackbox-h">What the payout actually depended on</p>
-      <div class="blackbox-row">
-        <div class="blackbox-cell"><span>Leads</span><b>completed KYC</b></div>
-        <div class="blackbox-cell"><span>Clients</span><b>actually traded</b></div>
-        <div class="blackbox-cell"><span>Volume</span><b>how much they traded</b></div>
-        <div class="blackbox-cell"><span>Rate</span><b>the share that month</b></div>
+    <p class="beat" style="font-weight:500;color:var(--ink)">What the payout actually depended on</p>
+    <div style="background:#F2F2F2;border-radius:8px;padding:var(--s3);margin-top:var(--s2)">
+      <div class="stickynotes" style="margin-top:0">
+        <div class="stickynote">
+          <h4>Leads</h4>
+          <p class="sn-body">Who verified their identity</p>
+        </div>
+        <div class="stickynote">
+          <h4>Clients</h4>
+          <p class="sn-body">Who actively invested</p>
+        </div>
+        <div class="stickynote">
+          <h4>Volume</h4>
+          <p class="sn-body">Total investment amount</p>
+        </div>
+        <div class="stickynote">
+          <h4>Rate</h4>
+          <p class="sn-body">Monthly earnings share</p>
+        </div>
       </div>
-      <p class="blackbox-foot">The partner could see none of it. Only the total, once a month, on the 15th.</p>
     </div>
+    <p class="beat body">The partner could see none of it. Only the total, once a month, on the 15th.</p>
     <p class="beat body">When a third of your revenue runs through people who cannot check their own income, that is not a reporting gap. That is a trust problem.</p>
   </section>
 
@@ -619,6 +640,11 @@ h3.say.sub{margin-top:var(--s4)}
     <h2 class="say">Show the calculation, not just the total</h2>
     <p class="body">If a partner can see how a number was made, they do not need to ring anyone to ask.</p>
     <p class="body">Responsive web, both ends. The same sections in a bottom navigation on mobile, with charts and tables restacked for one thumb.</p>
+    <div class="beat">
+      <div class="shot card">
+        <img width="1601" height="1102" src="./assets/rise-dashboard.svg" alt="Rise Portal dashboard interface" loading="lazy" decoding="async">
+      </div>
+    </div>
     <h3 class="say sub">The dashboard</h3>
     <p class="body">Earnings three ways, current cycle, last payout and all time, with a daily chart. Below it the funnel: total leads, then the three states a lead can be in.</p>
     <div class="beat">
