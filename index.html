@@ -192,7 +192,7 @@ body.menu-open header{z-index:70}
 .totop-track{stroke:var(--line)}
 .totop-prog{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;transition:stroke-dashoffset .1s linear}
 @media (prefers-reduced-motion:reduce){.totop-prog{transition:none}}
-@media (max-width:576px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg:not(.totop-ring){width:14px;height:14px}}
+@media (max-width:576px){.totop{width:44px;height:44px;bottom:calc(74px + env(safe-area-inset-bottom));left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg:not(.totop-ring){width:14px;height:14px}}
 /* Typing a note pops the keyboard, which shrinks the visible page from
    the bottom -- exactly where this button sits. Fixed positioning keeps
    it pinned above the keyboard rather than off-screen with it, so it
@@ -403,6 +403,13 @@ img.bg.loaded{opacity:1}
   #noticeBanner .notice-text{padding:0}
   #noticeBanner .notice-actions{width:auto;margin:0;padding:0}
   #noticeBanner .notice-btn{width:100%}
+}
+/* Only below 576px does the header itself move to the bottom (see the
+   nav pill rule above) — clear it here rather than in the 630px block
+   above, so tablet-width phones where the header is still up top don't
+   get pushed up for no reason. */
+@media (max-width:576px){
+  #noticeBanner{bottom:calc(74px + env(safe-area-inset-bottom))}
 }
 
 /* resume modal */
@@ -760,6 +767,14 @@ h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0}
 
 /* ── nav pill ── */
 header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;padding:0;z-index:50;pointer-events:none;transition:none}
+/* On a phone the pill sits over the top status bar / notch and is a
+   long thumb-reach from where the hand actually holds the device.
+   Anchoring it to the bottom instead — same one-handed-reach logic as
+   iOS/Android's own bottom tab bars — fixes both. env() keeps it clear
+   of the home-indicator gesture area on notched phones. */
+@media (max-width:576px){
+  header,header.scrolled{top:auto;bottom:calc(16px + env(safe-area-inset-bottom))}
+}
 .navpill{pointer-events:auto;width:max-content;margin:0 auto;display:flex;align-items:center;gap:2px;
   padding:4px 5px;border:0;border-radius:var(--r-pill);box-shadow:none;
   background:color-mix(in srgb,var(--surface) 85%,transparent);
@@ -1323,6 +1338,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 /* tier 3 — the ways to reach him: two equal-weight buttons, nothing else */
 .mfoot{gap:var(--s-3);padding-bottom:clamp(22px,4vh,30px)}
+/* The header (with the menu's own close button) stays elevated above
+   the mobile menu overlay so that button stays reachable -- but now
+   that the header pill lives at the bottom on phones, "elevated" means
+   it sits right on top of these two buttons unless the sheet leaves
+   room for it. */
+@media (max-width:576px){
+  .mfoot{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+}
 .mailbtn{font-size:15px}
 /* ══ THE OPEN SLOT ═══════════════════════════════════════════════════
    "Open to new work" was a line of blue text floating above the job
