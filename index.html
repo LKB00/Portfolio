@@ -1914,7 +1914,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   background:transparent;
   font-family:inherit;color:var(--ink);
   transition:border-color .3s var(--ease),background-color .2s var(--ease),
-    transform .5s cubic-bezier(.34,1.56,.64,1),
     opacity .18s linear,visibility 0s linear .18s}
 .padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
   border-radius:50%;background:var(--accent);color:#FFFFFF;
@@ -1936,10 +1935,16 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 @media (hover:hover){
   .padwrap:not(.is-open) .padtrigger:hover{
     border-color:var(--accent);
-    background:color-mix(in srgb,var(--accent) 6%,transparent);
-    transform:translateY(-3px)}
+    background:color-mix(in srgb,var(--accent) 6%,transparent)}
   .padwrap:not(.is-open) .padtrigger:hover .padtriggerplus{
     transform:scale(1.08)}
+  /* the lift lives on .padstack, not .padtrigger: .padstack clips its
+     own contents (needed so the board's height animation doesn't spill
+     over before it's grown), and any transform on the trigger inside
+     that box gets its top edge cut off by that same clip. .padstack's
+     own parent has nothing clipping it, so moving the outer box instead
+     gives the same lift without losing the border. */
+  .padwrap:not(.is-open) .padstack:hover{transform:translateY(-3px)}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -1989,7 +1994,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   background-color:var(--surface);
   background-image:radial-gradient(circle at 1px 1px,
     color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
-  background-size:18px 18px;background-position:9px 9px}
+  background-size:18px 18px;background-position:9px 9px;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
 .padstack > *{min-height:0}
 .padstack > .padtrigger{grid-row:1}
 .padstack > .padboard{grid-row:2}
