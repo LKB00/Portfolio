@@ -61,8 +61,19 @@ function serveStatic(req, res, urlPath){
   let rel = decodeURIComponent(urlPath.split("?")[0]);
   if (rel === "/") rel = "/index.html";
   const filePath = path.normalize(path.join(__dirname, rel));
-  if (!filePath.startsWith(__dirname)) {
-    res.writeHead(403); res.end("Forbidden"); return;
+  // Other devices on the Wi-Fi can reach this server (that's how a phone
+  // previews it), so never hand out anything that isn't the site itself:
+  // dotfiles (.env.local holds the Groq key, .git the history), the
+  // server-side code, or this file. The trailing separator stops a
+  // sibling folder like "Portfolio-Live-sandbox" matching the prefix.
+  const relPath = path.relative(__dirname, filePath);
+  const blocked =
+    !filePath.startsWith(__dirname + path.sep) ||
+    relPath.split(path.sep).some((part) => part.startsWith(".")) ||
+    relPath.startsWith("api" + path.sep) ||
+    ["dev-server.js", "package.json"].includes(relPath);
+  if (blocked) {
+    res.writeHead(404, { "Content-Type": "text/plain" }); res.end("Not found"); return;
   }
   fs.readFile(filePath, (err, data) => {
     if (err) {
