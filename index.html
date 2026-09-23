@@ -2642,7 +2642,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   color:var(--ink);overflow-wrap:anywhere;white-space:pre-wrap}
 .aians{margin-top:22px}
 .aitext{font-family:var(--display);font-size:14px;line-height:1.6;letter-spacing:-.005em;color:var(--ink);overflow-wrap:anywhere}
-.aitext p{margin:0 0 11px;color:var(--muted)}
+.aitext p{margin:0 0 16px;color:var(--muted)}
 .aitext p:last-child{margin-bottom:0}
 .aitext .aitext-h{font-weight:500}
 .aitext ul,.aitext ol{margin:0 0 11px;padding:0;list-style:none}
@@ -2674,15 +2674,17 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    as a spec sheet; a case study arrives as the menu's numbered row. */
 /* the answer itself: everything in it is information, so all of it is
    ink; the words that carry it are set heavier, not the rest fainter */
-.aitext .ailead{margin:0 0 16px;font-family:var(--display);font-size:19px;font-weight:400;line-height:1.38;
+.aitext .ailead{margin:0 0 14px;font-family:var(--display);font-size:19px;font-weight:400;line-height:1.38;
   letter-spacing:-.02em;color:var(--ink);text-wrap:pretty}
 .aitext .ailead b{font-weight:600}
 .aitext .ailead:last-child{margin-bottom:0}
 
+/* One rule for the whole answer: a box means you can tap it. Link cards
+   and error cards are boxed; everything that's only read is plain,
+   left-aligned, in the same rhythm (16px between blocks). */
 .aifigs-wrap{margin:0 0 16px}
-.aifigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;overflow:hidden;
-  border-radius:12px;background:var(--line);box-shadow:0 0 0 1px var(--line)}
-.aifig{min-width:0;padding:12px 14px 13px;background:var(--card)}
+.aifigs{display:flex;flex-wrap:wrap;gap:12px 32px}
+.aifig{min-width:0;max-width:18ch}
 .aifig b{display:block;font-family:var(--serif);font-size:26px;font-weight:400;line-height:1;
   letter-spacing:-.02em;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
 .aifig span{display:block;margin-top:7px;font-family:var(--mono);font-size:9.5px;line-height:1.45;letter-spacing:.05em;
@@ -2691,15 +2693,14 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
 /* facts: one grouped box, the way a settings list groups rows — a
    single hairline between rows, edge to edge, nothing else */
-.aifacts{margin:0 0 16px;padding:0 14px;border-radius:12px;background:var(--card);box-shadow:0 0 0 1px var(--line)}
-.aifact{display:grid;grid-template-columns:minmax(72px,30%) minmax(0,1fr);gap:14px;align-items:baseline;padding:11px 0}
-.aifact + .aifact{border-top:1px solid var(--line)}
-.aifacts dt{margin:0;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+.aifacts{display:flex;flex-direction:column;gap:14px;margin:0 0 16px}
+.aifacts dt{margin:0 0 3px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--faint);line-height:1.5}
-.aifacts dd{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink)}
+.aifacts dd{margin:0;font-size:14px;line-height:1.55;color:var(--ink)}
 .aifacts:last-child{margin-bottom:0}
 
-.aitext ol.aisteps{margin-bottom:4px}
+.aitext ol.aisteps{margin-bottom:16px}
+.aitext ol.aisteps:last-child{margin-bottom:0}
 .aitext ol.aisteps li{padding:0 0 13px 22px;margin:0;font-size:13.5px;line-height:1.5}
 .aitext ol.aisteps li::before{content:"";top:5px;left:0;width:7px;height:7px;border-radius:50%;
   background:var(--bg);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--faint) 70%,transparent)}
@@ -4301,7 +4302,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         if (facts){
           out.push('<dl class="aifacts">' + b.items.map(function(it){
             var f = it.match(FACT_RE);
-            return '<div class="aifact"><dt>' + escapeHtml(f[1].trim()) + "</dt><dd>" + inlineCase(inline(f[2])) + "</dd></div>";
+            var val = f[2].charAt(0).toUpperCase() + f[2].slice(1);
+            return '<div class="aifact"><dt>' + escapeHtml(f[1].trim()) + "</dt><dd>" + inlineCase(inline(val)) + "</dd></div>";
           }).join("") + "</dl>");
         } else {
           out.push("<ul>" + b.items.map(function(it){ return "<li>" + inlineCase(inline(it)) + "</li>"; }).join("") + "</ul>");
