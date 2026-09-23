@@ -991,6 +991,22 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 /* ── overlays + chrome ── */
 .totop{border:0;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);box-shadow:none}
+/* Mobile back-to-top used to stack directly above the nav pill. Now
+   they share one row, pill on the left, button on the right: the pill
+   sits centred on its own until there's something to scroll back to,
+   then steps aside to make room. Both sides use each element's own
+   -50%/+50% (not a guessed pixel width) so this holds regardless of
+   how wide the pill ends up. header.totop-on mirrors #totop's own
+   .show condition (same scrollY>400 check, toggled together in JS) so
+   the CSS never has to guess the button's visibility from outside it. */
+@media (max-width:576px){
+  .totop{bottom:calc(16px + env(safe-area-inset-bottom));left:50%;right:auto;
+    transform:translateX(4px) scale(.86);
+    transition:opacity .2s ease,transform .5s cubic-bezier(.34,1.56,.64,1)}
+  .totop.show{transform:translateX(4px) scale(1)}
+  .navpill{transition:transform .5s cubic-bezier(.34,1.56,.64,1),background .3s var(--ease)}
+  header.totop-on .navpill{transform:translateX(calc(-50% - 4px))}
+}
 .toast,#palette .box{border-radius:var(--r-float);background:var(--card);box-shadow:var(--shadow-float)}
 #palette .list a,.mrow{border-radius:var(--r-sm)}
 .mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:-.01em}
@@ -2760,8 +2776,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   function onScroll(){
     if (window.scrollY > 70) header.classList.add("scrolled");
     else header.classList.remove("scrolled");
-    if (window.scrollY > 400) totop.classList.add("show");
-    else totop.classList.remove("show");
+    if (window.scrollY > 400){ totop.classList.add("show"); header.classList.add("totop-on"); }
+    else { totop.classList.remove("show"); header.classList.remove("totop-on"); }
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
     totopRing.style.strokeDashoffset = (TOTOP_C * (1 - p)).toFixed(2);
