@@ -2574,6 +2574,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   box-shadow:-1px 0 0 var(--line),0 24px 70px -30px rgba(20,24,45,.4);
   transform:translateX(100%);transition:transform .5s var(--ease)}
 .aichat.open .aichat-panel{transform:none}
+.aichat-panel:focus{outline:none}
 .aichat-handle{display:none}
 
 .aichat-head{display:flex;align-items:center;gap:10px;height:56px;padding:0 10px 0 20px;flex:0 0 auto;
@@ -2594,24 +2595,20 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   letter-spacing:-.02em;color:var(--ink)}
 .aichat-greet em{font-style:italic;color:var(--accent)}
 .aichat-lede{margin:14px 0 0;max-width:34em;font-family:var(--display);font-size:14px;line-height:1.55;color:var(--muted)}
-.aitry{margin-top:36px}
-.aitry .aieyebrow{margin-bottom:4px}
-
-/* the mobile menu's case-study row, reused: mono index, serif line,
-   hairlines, and the work cards' hover — the title goes blue */
-.aiq{display:flex;align-items:baseline;gap:14px;width:100%;padding:14px 0;border:0;
-  border-bottom:1px solid var(--line);background:transparent;text-align:left;cursor:pointer;color:var(--ink)}
-.aiq-n{flex:0 0 22px;font-family:var(--mono);font-size:11px;color:var(--faint)}
-.aiq-x{flex:1;min-width:0}
-.aiq-t{display:block;font-family:var(--serif);font-size:17px;line-height:1.3;letter-spacing:-.01em;
-  color:var(--ink);transition:color .2s var(--ease)}
-.aiq-m{display:block;margin-top:4px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--faint)}
-.aiq-go{flex:0 0 auto;align-self:center;display:grid;color:var(--accent);opacity:0;transform:translateX(-4px);
-  transition:opacity .2s var(--ease),transform .3s var(--ease)}
-.aiq:hover .aiq-t{color:var(--accent)}
-.aiq:hover .aiq-go{opacity:1;transform:none}
-.aiq:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.aitry{margin-top:30px}
+.aitry .aieyebrow{margin-bottom:12px}
+/* suggested prompts: the site's ghost pill (the hero's LinkedIn button),
+   wrapping — the shape people already read as "tap to ask this" */
+.aichips{display:flex;flex-wrap:wrap;gap:8px}
+.aichip{display:inline-flex;align-items:center;gap:7px;max-width:100%;padding:8px 14px 8px 12px;border:0;
+  border-radius:var(--r-pill);background:transparent;box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;
+  font-family:var(--display);font-size:13px;font-weight:400;line-height:1.35;letter-spacing:var(--tr-body);
+  color:var(--ink);text-align:left;
+  transition:background .2s var(--ease),box-shadow .2s var(--ease),color .2s var(--ease)}
+.aichip svg{flex:0 0 auto;color:var(--faint);transition:color .2s var(--ease),transform .3s var(--ease)}
+.aichip:hover{background:var(--surface);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 26%,transparent)}
+.aichip:hover svg{color:var(--accent);transform:translate(1px,-1px)}
+.aichip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* arrival, the way [data-reveal] arrives everywhere else */
 .aichat .ai-in{opacity:0}
@@ -2667,37 +2664,40 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aiact:hover{color:var(--ink);opacity:1}
 .aiact.is-done{color:var(--live)}
 
-.ainext{padding:4px 0 30px;animation:aiRise .5s var(--ease) .1s both}
-.ainext .aieyebrow{margin-bottom:2px}
-.ainext .aiq{padding:12px 0}
-.ainext .aiq-t{font-size:15.5px}
+.ainext{padding:2px 0 30px;animation:aiRise .5s var(--ease) .1s both}
+.ainext .aieyebrow{margin-bottom:10px}
 
-/* ── the input: the timeline's open slot ─────────────────────────────
-   Dashed, lightly tinted — this site's standing sign for "an empty
-   place, put something here". Typed text goes in the serif, exactly as
-   it does when a visitor writes their company into the timeline. */
-.aichat-foot{flex:0 0 auto;padding:14px 20px calc(12px + env(safe-area-inset-bottom));
-  background:var(--bg);box-shadow:inset 0 1px 0 var(--line)}
-.aislot{display:flex;align-items:flex-end;gap:10px;margin:0;padding:8px 8px 8px 14px;border-radius:8px;
-  border:1px dashed color-mix(in srgb,var(--link) 40%,transparent);
-  background:color-mix(in srgb,var(--link) 4%,transparent);
-  transition:border-color .25s ease,background .25s ease}
-.aislot:hover{border-color:color-mix(in srgb,var(--link) 66%,transparent);background:color-mix(in srgb,var(--link) 7%,transparent)}
-.aislot:focus-within{border-color:var(--link);background:var(--card)}
-.aichat-input{flex:1;min-width:0;display:block;min-height:24px;max-height:128px;margin:0;padding:5px 0;resize:none;
+/* ── the composer ────────────────────────────────────────────────────
+   The shape every AI tool has taught people to type into — a solid box,
+   the text on top, what's answering named bottom-left, a round send
+   bottom-right that becomes stop while it writes — made from this site's
+   materials: the card ground, the hairline, the ink primary. */
+.aichat-foot{flex:0 0 auto;padding:10px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg)}
+.aicomposer{display:flex;flex-direction:column;gap:8px;margin:0;padding:12px 10px 10px 14px;border-radius:var(--r-float);
+  background:var(--card);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.04),0 10px 26px -18px rgba(0,0,0,.28);
+  transition:box-shadow .2s var(--ease)}
+.aicomposer:focus-within{box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 28%,transparent),0 1px 2px rgba(0,0,0,.04),0 10px 26px -18px rgba(0,0,0,.28)}
+.aichat-input{display:block;width:100%;min-height:24px;max-height:140px;margin:0;padding:1px 2px 0 0;resize:none;
   border:0;outline:0;background:transparent;overflow-y:auto;
-  font-family:var(--serif);font-size:15.5px;line-height:1.4;letter-spacing:-.01em;color:var(--ink);caret-color:var(--link)}
+  font-family:var(--display);font-size:14.5px;line-height:1.55;letter-spacing:var(--tr-body);color:var(--ink);caret-color:var(--accent)}
 .aichat-input::placeholder{color:var(--faint);opacity:1}
-/* the hero's primary action, at the slot's scale: ink when there's
-   something to send, the quiet surface pill when there isn't */
-.aichat-send{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 12px 0 13px;
-  border:0;border-radius:var(--r-pill);cursor:default;
-  background:var(--surface);color:var(--faint);font-family:var(--display);font-size:13px;font-weight:500;
-  transition:background .2s var(--ease),color .2s var(--ease),opacity .2s var(--ease)}
-.aichat-send.is-ready{background:var(--ink);color:var(--bg);cursor:pointer}
-.aichat-send.is-ready:hover{opacity:.88}
-.aihint{display:flex;justify-content:space-between;gap:12px;margin:9px 2px 0;
-  font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.aicomposer-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.aimodel{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
+.aimodel .aispark{width:18px;height:18px;font-size:10px}
+.aichat-send{position:relative;flex:0 0 auto;display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:50%;
+  background:var(--surface);color:var(--faint);cursor:default;
+  transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
+.aichat-send svg{grid-area:1/1;transition:opacity .15s ease,transform .2s var(--ease)}
+.aichat-send .ico-stop{opacity:0;transform:scale(.6)}
+.aichat-send.is-ready,.aichat-send.is-busy{background:var(--ink);color:var(--bg);cursor:pointer}
+.aichat-send.is-ready:hover,.aichat-send.is-busy:hover{opacity:.88}
+.aichat-send.is-ready:active,.aichat-send.is-busy:active{transform:scale(.92)}
+.aichat-send.is-busy .ico-send{opacity:0;transform:scale(.6)}
+.aichat-send.is-busy .ico-stop{opacity:1;transform:none}
+.aichat-send:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.aihint{display:flex;justify-content:space-between;gap:12px;margin:8px 4px 0;
+  font-family:var(--mono);font-size:10px;color:var(--faint)}
 
 /* ── phones: the mobile menu's own sheet ─────────────────────────────── */
 @media (max-width:640px){
@@ -2710,12 +2710,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   .aichat-body{padding:0 var(--pad)}
   .aichat-intro{padding-top:20px}
   .aichat-greet{font-size:26px}
-  .aichat-foot{padding-left:var(--pad);padding-right:var(--pad)}
+  .aichat-foot{padding-left:12px;padding-right:12px}
 }
 @media (hover:none){
   .aihint-keys{display:none}
   .aihint{justify-content:flex-end}
-  .aiq-go{opacity:.6;transform:none;color:var(--faint)}
 }
 @media (prefers-reduced-motion:reduce){
   .aichat-panel,.aichat-scrim,.askbtn-mark{transition:none}
@@ -2814,7 +2813,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   <div class="aichat" id="aiChat" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle" aria-hidden="true">
     <div class="aichat-scrim" data-aichat-close></div>
-    <div class="aichat-panel">
+    <div class="aichat-panel" tabindex="-1">
       <span class="aichat-handle" aria-hidden="true"></span>
       <div class="aichat-head">
         <span class="aispark" id="aiChatSpark" aria-hidden="true">&#10022;</span>
@@ -2833,17 +2832,23 @@ body:not(.arriving) .hp-frame img{will-change:auto}
           <p class="aichat-lede ai-in" style="--i:2">I&#8217;m the AI that helped build this site. I know his work, how he got here, and the straight answers he&#8217;d give in an interview.</p>
           <div class="aitry ai-in" style="--i:3">
             <p class="aieyebrow">Try asking</p>
-            <div id="aiChatSuggest"></div>
+            <div class="aichips" id="aiChatSuggest"></div>
           </div>
         </div>
       </div>
       <p class="fsr" id="aiChatLive" aria-live="polite"></p>
       <div class="aichat-foot">
-        <form class="aislot" id="aiChatForm">
-          <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask anything about Lokesh" aria-label="Ask about Lokesh"></textarea>
-          <button type="submit" class="aichat-send" id="aiChatSend" disabled>Ask<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <form class="aicomposer" id="aiChatForm">
+          <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask anything about Lokesh&#8230;" aria-label="Ask about Lokesh"></textarea>
+          <div class="aicomposer-row">
+            <span class="aimodel"><span class="aispark" aria-hidden="true">&#10022;</span>OG assistant</span>
+            <button type="submit" class="aichat-send" id="aiChatSend" aria-label="Send" disabled>
+              <svg class="ico-send" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3.2M3.8 7.4 8 3.2l4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <svg class="ico-stop" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="2.2" fill="currentColor"></rect></svg>
+            </button>
+          </div>
         </form>
-        <div class="aihint"><span class="aihint-keys">&#8629; to ask &#183; esc to close</span><span>AI &#183; can be wrong</span></div>
+        <div class="aihint"><span class="aihint-keys">&#8629; to send &#183; &#8679;&#8629; new line</span><span>AI &#183; can be wrong</span></div>
       </div>
     </div>
   </div>
@@ -3932,7 +3937,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   var MAIL = "hi.lokeshux@gmail.com";
   var FALLBACK = "Sorry, I couldn't get an answer just then. Try again, or email " + MAIL + ".";
-  var ARROW = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var ARROW = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   // Wider than one visit shows. The opening four are one per topic, so
   // the list itself tells a reader the range of what they can ask.
@@ -3951,7 +3956,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     { q: "How do I get in touch?", tag: "Hiring" }
   ];
 
-  var history = [], asked = [], busy = false, lastFocus = null;
+  var history = [], asked = [], busy = false, lastFocus = null, stopCurrent = null;
   var canHover = window.matchMedia && window.matchMedia("(hover:hover)").matches;
 
   function shuffle(a){
@@ -3967,21 +3972,18 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     fresh.forEach(function(x){ if (out.length < n && out.indexOf(x) === -1) out.push(x); });
     return out;
   }
-  function questionRow(item, i, withTag){
+  function chip(item){
     var b = document.createElement("button");
     b.type = "button";
-    b.className = "aiq";
-    b.innerHTML = '<span class="aiq-n"></span><span class="aiq-x"><span class="aiq-t"></span>' +
-      (withTag ? '<span class="aiq-m"></span>' : "") + '</span><span class="aiq-go">' + ARROW + "</span>";
-    b.querySelector(".aiq-n").textContent = (i < 9 ? "0" : "") + (i + 1);
-    b.querySelector(".aiq-t").textContent = item.q;
-    if (withTag) b.querySelector(".aiq-m").textContent = item.tag;
+    b.className = "aichip";
+    b.innerHTML = "<span></span>" + ARROW;
+    b.firstChild.textContent = item.q;
     b.addEventListener("click", function(){ sendMessage(item.q); });
     return b;
   }
   function renderTry(){
     suggest.innerHTML = "";
-    pick(4, true).forEach(function(item, i){ suggest.appendChild(questionRow(item, i, true)); });
+    pick(4, true).forEach(function(item){ suggest.appendChild(chip(item)); });
   }
   renderTry();
 
@@ -4004,7 +4006,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     panel.setAttribute("aria-hidden", "false");
     // a phone keyboard would cover the introduction the moment it opened,
     // so only reach for the input where there's a real keyboard already
-    setTimeout(function(){ (canHover ? input : closeBtn).focus({ preventScroll: true }); }, 380);
+    setTimeout(function(){ (canHover ? input : sheet).focus({ preventScroll: true }); }, 380);
   }
   function closeChat(){
     panel.classList.remove("open");
@@ -4143,8 +4145,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   function addNext(){
     var box = document.createElement("div");
     box.className = "ainext";
-    box.innerHTML = '<p class="aieyebrow">Ask next</p>';
-    pick(2).forEach(function(item, i){ box.appendChild(questionRow(item, i, false)); });
+    box.innerHTML = '<p class="aieyebrow">Ask next</p><div class="aichips"></div>';
+    var row = box.querySelector(".aichips");
+    pick(3).forEach(function(item){ row.appendChild(chip(item)); });
     body.appendChild(box);
   }
 
@@ -4153,10 +4156,14 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     input.style.height = "auto";
     input.style.height = Math.min(input.scrollHeight, 128) + "px";
   }
+  // one button, three states: quiet when empty, ink when there's a
+  // question, and a stop square while an answer is being written
   function syncSend(){
     var ready = !busy && input.value.trim().length > 0;
-    sendBtn.disabled = !ready;
+    sendBtn.disabled = !busy && !ready;
     sendBtn.classList.toggle("is-ready", ready);
+    sendBtn.classList.toggle("is-busy", busy);
+    sendBtn.setAttribute("aria-label", busy ? "Stop" : "Send");
   }
   input.addEventListener("input", function(){ autosize(); syncSend(); });
   input.addEventListener("keydown", function(e){
@@ -4167,6 +4174,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   });
   form.addEventListener("submit", function(e){
     e.preventDefault();
+    if (busy){ if (stopCurrent) stopCurrent(); return; }
     sendMessage(input.value);
   });
 
@@ -4196,17 +4204,27 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     input.value = "";
     autosize();
     busy = true;
-    syncSend();
     headSpark.classList.add("is-busy");
     scrollDown(true);
 
+    var controller = window.AbortController ? new AbortController() : null;
+    var full = "", stopped = false, done = false;
+    stopCurrent = function(){
+      stopped = true;
+      if (controller) controller.abort();
+    };
+    syncSend();
+
     function settle(){
+      done = true;
       busy = false;
+      stopCurrent = null;
       ex.spark.classList.remove("is-busy");
       headSpark.classList.remove("is-busy");
       syncSend();
     }
     function fail(message){
+      if (done) return;
       // the question never got an answer, so it shouldn't sit in history
       // unanswered — a retry would otherwise send it twice in a row
       history.pop();
@@ -4215,18 +4233,29 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       settle();
       scrollDown();
     }
+    function finish(){
+      if (done) return;
+      if (!full) return fail(stopped ? "Stopped." : FALLBACK);
+      renderRich(ex.text, full, false);
+      history.push({ role: "assistant", content: full });
+      addActions(ex, full);
+      settle();
+      addNext();
+      live.textContent = ex.text.textContent;
+      scrollDown();
+    }
 
     fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history })
+      body: JSON.stringify({ messages: history }),
+      signal: controller ? controller.signal : undefined
     }).then(function(res){
       if (res.status === 429) return fail("A few people are asking at once. Give it a minute and try again.");
       if (!res.ok || !res.body) return fail(FALLBACK);
       var reader = res.body.getReader();
       var decoder = new TextDecoder();
-      var buffer = "", full = "";
-
+      var buffer = "";
       function pump(){
         return reader.read().then(function(step){
           if (step.done){ finish(); return; }
@@ -4251,18 +4280,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
           return pump();
         });
       }
-      function finish(){
-        if (!full) return fail(FALLBACK);
-        renderRich(ex.text, full, false);
-        history.push({ role: "assistant", content: full });
-        addActions(ex, full);
-        settle();
-        addNext();
-        live.textContent = ex.text.textContent;
-        scrollDown();
-      }
       return pump();
     }).catch(function(){
+      // a stop lands here as an abort: whatever was written stands as
+      // the answer; nothing written means there's nothing to keep
+      if (stopped) return finish();
       fail("Something went wrong reaching the assistant. Try again, or email " + MAIL + ".");
     });
   }
