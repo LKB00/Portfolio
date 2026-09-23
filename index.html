@@ -4203,7 +4203,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     return meta;
   }
   function stripMeta(text){
-    return text.replace(/<<[^>]*>>/g, "").replace(/<<[^>]*$/, "").replace(/<$/, "").replace(/^\s+/, "");
+    // (and an "A:" the model sometimes copies from the prompt's examples)
+    return text.replace(/<<[^>]*>>/g, "").replace(/<<[^>]*$/, "").replace(/<$/, "").replace(/^\s+/, "").replace(/^A:\s*/, "");
   }
   function inlineCase(html){
     return html.replace(/\[(?:case|page):([a-z-]+)\]/g, function(m, id){
