@@ -2754,6 +2754,19 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aiicon.is-done{color:var(--live)}
 .aipill:focus-visible,.aiicon:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
+/* a failed answer is never a dead end: say what happened in plain words,
+   then the way forward — a retry that runs itself when it can, and a
+   person to email when it can't */
+.aierr{position:relative;overflow:hidden;padding:14px 16px 15px;border-radius:12px;background:var(--card);
+  box-shadow:0 0 0 1px var(--line);animation:aiRise .4s var(--ease) both}
+.aierr-m{margin:0 0 12px;font-size:14px;line-height:1.5;color:var(--ink)}
+.aierr-a{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.aierr-a .aipill svg{flex:0 0 auto}
+.aierr-n{font-variant-numeric:tabular-nums}
+.aierr-bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);transform-origin:left center;
+  animation:aiDrain var(--t,20s) linear forwards}
+@keyframes aiDrain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+
 .ainext{padding:2px 0 30px;animation:aiRise .5s var(--ease) .1s both}
 .ainext .aieyebrow{margin-bottom:10px}
 
@@ -2804,7 +2817,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 }
 @media (prefers-reduced-motion:reduce){
   .aichat-panel,.aichat-scrim,.askbtn-mark{transition:none}
-  .aispark.is-busy,.aime.is-busy,.aiproc-t,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
+  .aispark.is-busy,.aime.is-busy,.aiproc-t,.aierr-bar,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
   .aichat .ai-in{opacity:1}
 }
 
@@ -4022,7 +4035,16 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   var live = document.getElementById("aiChatLive");
 
   var MAIL = "hi.lokeshux@gmail.com";
-  var FALLBACK = "Sorry, I lost my train of thought there. Try again, or email me at " + MAIL + ".";
+  var FALLBACK = "Sorry, I lost my train of thought there.";
+  var BUSY = "Lots of people are asking me things right now. I\u2019ll try again in a moment.";
+  var OFFLINE = "You seem to be offline. I\u2019ll ask again as soon as you\u2019re back.";
+  var BROKEN = "Something went wrong on my end.";
+  var LONG = "This chat has got long. Start a fresh one and I\u2019ll pick up your question.";
+  var ICON_RETRY = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 8a5.4 5.4 0 1 0 1.6-3.85M2.6 2.6v3.2h3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // a retry waiting to happen (countdown or back-online); anything the
+  // visitor does next cancels it
+  var cancelRetry = null;
+  function dropRetry(){ if (cancelRetry){ var c = cancelRetry; cancelRetry = null; c(); } }
   var ARROW = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   // The opening four are fixed and in this order: the questions a
@@ -4371,6 +4393,61 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     body.appendChild(box);
   }
 
+  function showError(ex, kind, message, question, wait){
+    var box = document.createElement("div");
+    box.className = "aierr";
+    box.setAttribute("role", "status");
+    box.innerHTML = '<p class="aierr-m"></p><div class="aierr-a"></div>';
+    box.firstChild.textContent = message;
+    var acts = box.lastChild;
+    function button(label, icon, primary, onClick){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "aipill" + (primary ? " is-primary" : "");
+      b.innerHTML = (icon || "") + "<span></span>";
+      b.lastChild.textContent = label;
+      b.addEventListener("click", onClick);
+      acts.appendChild(b);
+      return b;
+    }
+    function again(){
+      dropRetry();
+      ex.el.remove();
+      sendMessage(question);
+    }
+    if (kind === "long"){
+      button("Start a new chat", ICON_RETRY, true, function(){ dropRetry(); resetChat(); sendMessage(question); });
+    } else {
+      var main = button(kind === "stopped" ? "Ask again" : "Try again", ICON_RETRY, true, again);
+      if (kind === "busy" && wait){
+        // count down on the button itself, then go
+        var left = wait, label = main.lastChild;
+        label.innerHTML = 'Try now <span class="aierr-n">\u00b7 ' + left + "s</span>";
+        box.style.setProperty("--t", wait + "s");
+        box.insertAdjacentHTML("beforeend", '<span class="aierr-bar" aria-hidden="true"></span>');
+        var timer = setInterval(function(){
+          left -= 1;
+          if (left <= 0){ clearInterval(timer); cancelRetry = null; again(); return; }
+          label.querySelector(".aierr-n").textContent = "\u00b7 " + left + "s";
+        }, 1000);
+        cancelRetry = function(){ clearInterval(timer); var bar = box.querySelector(".aierr-bar"); if (bar) bar.remove(); label.textContent = "Try again"; };
+      }
+      if (kind === "offline"){
+        var back = function(){ cancelRetry = null; again(); };
+        window.addEventListener("online", back, { once: true });
+        cancelRetry = function(){ window.removeEventListener("online", back); };
+      }
+    }
+    if (kind !== "stopped"){
+      var mail = document.createElement("a");
+      mail.className = "aipill";
+      mail.href = "mailto:" + MAIL;
+      mail.innerHTML = ICON_MAIL + "<span>Email me instead</span>";
+      acts.appendChild(mail);
+    }
+    ex.ans.appendChild(box);
+  }
+
   // ── the slot ──────────────────────────────────────────────────────────
   function autosize(){
     input.style.height = "auto";
@@ -4400,6 +4477,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   function resetChat(){
     if (busy) return;
+    dropRetry();
     history = [];
     asked = [];
     Array.prototype.slice.call(body.querySelectorAll(".aix, .ainext")).forEach(function(m){ m.remove(); });
@@ -4414,6 +4492,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   function sendMessage(raw){
     var text = (raw || "").trim();
     if (!text || busy) return;
+    dropRetry();
     if (asked.indexOf(text) === -1) asked.push(text);
     var oldNext = body.querySelector(".ainext");
     if (oldNext) oldNext.remove();
@@ -4456,21 +4535,22 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       headSpark.classList.remove("is-busy");
       syncSend();
     }
-    function fail(message){
+    function fail(message, kind, wait){
       if (done) return;
       // the question never got an answer, so it shouldn't sit in history
       // unanswered — a retry would otherwise send it twice in a row
       history.pop();
       clearInterval(tick);
-      ex.proc.textContent = "";
-      ex.text.classList.add("is-error");
-      ex.text.innerHTML = "<p>" + inline(message) + "</p>";
+      ex.proc.textContent = kind === "stopped" ? "Stopped" : "Didn\u2019t get through";
+      ex.text.innerHTML = "";
       settle();
+      showError(ex, kind || "error", message, text, wait);
+      live.textContent = message;
       scrollDown();
     }
     function finish(){
       if (done) return;
-      if (!full) return fail(stopped ? "Stopped." : FALLBACK);
+      if (!full) return stopped ? fail("Stopped before I could answer.", "stopped") : fail(FALLBACK, "error");
       thought();
       var meta = readMeta(full);
       renderRich(ex.text, full, false);
@@ -4488,8 +4568,16 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       body: JSON.stringify({ messages: history }),
       signal: controller ? controller.signal : undefined
     }).then(function(res){
-      if (res.status === 429) return fail("A few people are asking me things at once. Give it a minute and try again.");
-      if (!res.ok || !res.body) return fail(FALLBACK);
+      if (res.status === 429){
+        var ra = parseInt(res.headers.get("Retry-After"), 10);
+        return fail(BUSY, "busy", isFinite(ra) ? Math.min(Math.max(ra, 8), 45) : 20);
+      }
+      if (res.status === 400){
+        return res.json().catch(function(){ return {}; }).then(function(j){
+          return /new chat/i.test((j && j.error) || "") ? fail(LONG, "long") : fail(FALLBACK, "error");
+        });
+      }
+      if (!res.ok || !res.body) return fail(FALLBACK, "error");
       var reader = res.body.getReader();
       var decoder = new TextDecoder();
       var buffer = "";
@@ -4523,7 +4611,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       // a stop lands here as an abort: whatever was written stands as
       // the answer; nothing written means there's nothing to keep
       if (stopped) return finish();
-      fail("Something went wrong on my end. Try again, or email me at " + MAIL + ".");
+      if (navigator.onLine === false) return fail(OFFLINE, "offline");
+      fail(BROKEN, "error");
     });
   }
 })();
