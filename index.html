@@ -2715,6 +2715,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   transition:background .2s var(--ease),box-shadow .2s var(--ease)}
 .aitext a.aicase:hover{background:var(--surface);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent)}
 .aicase-num{flex:0 0 auto;padding-top:3px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.aicase-num svg{display:block;margin-top:1px}
 .aicase-x{flex:1;min-width:0}
 .aicase-t{display:block;font-family:var(--serif);font-size:17px;line-height:1.3;letter-spacing:-.008em}
 .aicase-m{display:block;margin-top:5px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;
@@ -2737,25 +2738,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.6s linear infinite}
 @keyframes aiShimmer{from{background-position:120% 0}to{background-position:-100% 0}}
 .aiproc-n{font-variant-numeric:tabular-nums}
-/* sources: after the answer, the way a cited answer lists them —
-   each a page on this site, named and addressed, one tap to open */
-.aisrc{margin-top:18px}
-.aisrc[hidden]{display:none}
-.aisrc-k{margin:0 0 8px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
-.aisrc-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px}
-.aisrc a{display:flex;align-items:center;gap:10px;min-width:0;padding:9px 12px 9px 9px;border-radius:12px;
-  background:var(--card);box-shadow:0 0 0 1px var(--line);color:var(--ink);text-decoration:none;
-  animation:aiRise .4s var(--ease) both;animation-delay:calc(var(--i,0) * 80ms);
-  transition:box-shadow .2s var(--ease),background .2s var(--ease)}
-.aisrc a:hover{background:var(--surface);opacity:1}
-.aisrc-ic{display:grid;place-items:center;flex:0 0 auto;width:28px;height:28px;border-radius:8px;
-  background:var(--surface);color:var(--muted)}
-.aisrc a:hover .aisrc-ic{background:var(--card)}
-.aisrc-x{min-width:0}
-.aisrc-t{display:block;font-size:13px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.aisrc-u{display:block;margin-top:2px;font-family:var(--mono);font-size:10px;color:var(--faint);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
 /* actions that fit this answer, not the same two on every one */
 .aiacts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
 .aipill{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:0;border-radius:var(--r-pill);
@@ -2770,7 +2752,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   background:transparent;color:var(--faint);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
 .aiicon:hover{background:var(--surface);color:var(--ink)}
 .aiicon.is-done{color:var(--live)}
-.aipill:focus-visible,.aiicon:focus-visible,.aisrc a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.aipill:focus-visible,.aiicon:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .ainext{padding:2px 0 30px;animation:aiRise .5s var(--ease) .1s both}
 .ainext .aieyebrow{margin-bottom:10px}
@@ -2822,7 +2804,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 }
 @media (prefers-reduced-motion:reduce){
   .aichat-panel,.aichat-scrim,.askbtn-mark{transition:none}
-  .aispark.is-busy,.aime.is-busy,.aiproc-t,.aisrc a,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
+  .aispark.is-busy,.aime.is-busy,.aiproc-t,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
   .aichat .ai-in{opacity:1}
 }
 
@@ -4184,7 +4166,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   var CASES = {
     "app-merge":    { n: "01", t: "Two apps into one, built to hold the third", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
     "rise-portal":  { n: "02", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
-    "web-terminal": { n: "03", t: "The desktop trading terminal: chart, watchlist, and orders on one screen", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" }
+    "web-terminal": { n: "03", t: "The desktop trading terminal: chart, watchlist, and orders on one screen", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
+    "resume":       { t: "My r\u00e9sum\u00e9", k: "R\u00e9sum\u00e9", m: "Roles, dates and tools", href: "./resume.html" }
   };
   var FIG_RE = /\{\{\s*([^|}]+?)\s*\|\s*([^}]+?)\s*\}\}/g;
   var FACT_RE = /^\s*(?:\*\*)?([^:*]{1,44}?)(?:\*\*)?\s*:\s+(.+)$/;
@@ -4193,37 +4176,27 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   function caseCard(id){
     var c = CASES[id];
     if (!c) return "";
-    return '<a class="aicase" href="' + c.href + '"><span class="aicase-num">' + c.n + '</span>' +
+    return '<a class="aicase" href="' + c.href + '"><span class="aicase-num">' + (c.n || DOC) + '</span>' +
       '<span class="aicase-x"><span class="aicase-t">' + escapeHtml(c.t) + '</span>' +
-      '<span class="aicase-m">Case study \u00b7 ' + c.m + '</span></span>' + CARD_ARROW + '</a>';
+      '<span class="aicase-m">' + (c.k || "Case study") + ' \u00b7 ' + c.m + '</span></span>' + CARD_ARROW + '</a>';
   }
   // a half-arrived token would flash as raw syntax, so while streaming
   // the tail is held back until it closes
   function holdPartial(text){
-    return text.replace(/\{\{[^}]*\}?$/, "").replace(/\{$/, "").replace(/\[(?:c(?:a(?:s(?:e(?::[a-z-]*)?)?)?)?)?$/, "");
+    return text.replace(/\{\{[^}]*\}?$/, "").replace(/\{$/, "").replace(/\[[a-z]{0,4}(?::[a-z-]*)?$/, "");
   }
   // for Copy and screen readers: the same answer as plain sentences
   function toPlain(text){
     return stripMeta(text)
       .replace(FIG_RE, "$1 $2")
-      .replace(/\[case:([a-z-]+)\]/g, function(m, id){ var c = CASES[id]; return c ? c.t + " (" + new URL(c.href, location.href).href + ")" : ""; })
+      .replace(/\[(?:case|page):([a-z-]+)\]/g, function(m, id){ var c = CASES[id]; return c ? c.t + " (" + new URL(c.href, location.href).href + ")" : ""; })
       .replace(/\*\*/g, "").replace(/`/g, "");
   }
-  // the two meta lines every answer carries (answer-format.js): what it
-  // drew on, and what to ask next. Never shown as text.
-  var SOURCES = {
-    "app-merge":    { t: "App Merge case study", href: "./app-merge.html" },
-    "rise-portal":  { t: "Rise Portal case study", href: "./rise-portal.html" },
-    "web-terminal": { t: "Trading terminal case study", href: "./web-terminal.html" },
-    "resume":       { t: "R\u00e9sum\u00e9", href: "./resume.html" },
-    "about":        { t: "About me", href: "./about.html" }
-  };
+  // the meta line every answer ends with (answer-format.js): what to
+  // ask next. Never shown as text.
   var DOC = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.8V5.2h3.4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   function readMeta(text){
-    var meta = { used: null, next: null };
-    var u = text.match(/<<\s*used\s*:\s*([^>]*)>>/i);
-    if (u) meta.used = u[1].split(",").map(function(x){ return x.trim().toLowerCase(); })
-      .filter(function(x, i, a){ return SOURCES[x] && a.indexOf(x) === i; });
+    var meta = { next: null };
     var n = text.match(/<<\s*next\s*:\s*([^>]*)>>/i);
     if (n) meta.next = n[1].split("|").map(function(x){ return x.trim(); })
       .filter(function(x){ return x && x.length < 90; }).slice(0, 3);
@@ -4233,7 +4206,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     return text.replace(/<<[^>]*>>/g, "").replace(/<<[^>]*$/, "").replace(/<$/, "").replace(/^\s+/, "");
   }
   function inlineCase(html){
-    return html.replace(/\[case:([a-z-]+)\]/g, function(m, id){
+    return html.replace(/\[(?:case|page):([a-z-]+)\]/g, function(m, id){
       var c = CASES[id];
       return c ? '<a href="' + c.href + '">' + escapeHtml(c.t) + "</a>" : "";
     });
@@ -4246,7 +4219,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     function push(type){ cur = { t: type, items: [] }; blocks.push(cur); return cur; }
     text.replace(/\r/g, "").split("\n").forEach(function(line){
       var m;
-      if ((m = line.match(/^\s*\[case:([a-z-]+)\]\s*$/))){ push("case").id = m[1]; cur = null; return; }
+      if ((m = line.match(/^\s*\[(?:case|page):([a-z-]+)\]\s*$/))){ push("case").id = m[1]; cur = null; return; }
       if (/^\s*(\{\{[^}]+\}\}[\s,·]*)+$/.test(line)){
         var figs = []; line.replace(FIG_RE, function(_, n, l){ figs.push([n, l]); });
         push("figs").items = figs; cur = null; return;
@@ -4339,28 +4312,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       '<p class="aiwho">You</p><p class="aiasked"></p>' +
       '<div class="aians"><p class="aiwho"><span class="aime is-busy" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh' +
       '<span class="aiproc is-live"><span class="aiproc-t">Thinking <span class="aiproc-n">0.0s</span></span></span></p>' +
-      '<div class="aitext"></div><div class="aisrc" hidden></div></div>';
+      '<div class="aitext"></div></div>';
     x.querySelector(".aiasked").textContent = question;
     body.appendChild(x);
     return { el: x, ans: x.querySelector(".aians"), text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aime"),
-             proc: x.querySelector(".aiproc"), src: x.querySelector(".aisrc"), shownSrc: false };
-  }
-  var SITE = "lokeshbhatia.com";
-  function showSources(ex, used, answer){
-    if (ex.shownSrc) return;
-    ex.shownSrc = true;
-    // a case study already on screen as a card doesn't need citing twice
-    var shown = (stripMeta(answer).match(/\[case:[a-z-]+\]/g) || []).map(function(t){ return t.slice(6, -1); });
-    var list = (used || []).filter(function(id){ return shown.indexOf(id) === -1; });
-    if (!list.length) return;
-    ex.src.innerHTML = '<p class="aisrc-k">' + (list.length > 1 ? "Sources" : "Source") + '</p><div class="aisrc-list">' +
-      list.map(function(id, i){
-        var c = SOURCES[id];
-        return '<a href="' + c.href + '" style="--i:' + i + '"><span class="aisrc-ic">' + DOC + '</span>' +
-          '<span class="aisrc-x"><span class="aisrc-t">' + escapeHtml(c.t) + '</span>' +
-          '<span class="aisrc-u">' + SITE + "/" + c.href.replace("./", "").replace(".html", "") + "</span></span></a>";
-      }).join("") + "</div>";
-    ex.src.hidden = false;
+             proc: x.querySelector(".aiproc") };
   }
   var ICON_COPY = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.2" y="5.2" width="8.3" height="8.3" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M10.8 3.2A1.6 1.6 0 0 0 9.2 2H4a2 2 0 0 0-2 2v5.2a1.6 1.6 0 0 0 1.2 1.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
   var ICON_DONE = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -4373,7 +4329,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   function addActions(ex, answer, meta, question){
     var bar = document.createElement("div");
     bar.className = "aiacts";
-    var plain = stripMeta(answer), used = meta.used || [];
+    var plain = stripMeta(answer);
     function pill(label, href, icon, primary){
       var a = document.createElement("a");
       a.className = "aipill" + (primary ? " is-primary" : "");
@@ -4517,7 +4473,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       thought();
       var meta = readMeta(full);
       renderRich(ex.text, full, false);
-      showSources(ex, meta.used, full);
       history.push({ role: "assistant", content: full });
       addActions(ex, full, meta, text);
       settle();
@@ -4554,10 +4509,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
               if (delta){
                 full += delta;
                 thought();
-                if (!ex.srcCount && /<<\s*used[^>]*>>/i.test(full)){
-                  ex.srcCount = (readMeta(full).used || []).length;
-                  if (ex.srcCount) ex.proc.textContent += " \u00b7 " + ex.srcCount + (ex.srcCount > 1 ? " sources" : " source");
-                }
                 renderRich(ex.text, full, true);
                 scrollDown();
               }
