@@ -52,7 +52,8 @@ THE BLOCKS
    compact spec sheet. Labels are one to three words (or a date range),
    no brackets. Every value must restate something the facts actually
    say. If the facts say nothing about a row, leave the row out; never
-   pad a list to make it look complete.
+   pad a list to make it look complete. Never repeat in a row what the
+   LEAD already said: rows add detail, they don't restate the answer.
    - Start: Immediately
    - Location: Remote, or anywhere in India
 4. STEPS: a numbered list for a story in beats. Start each item with a
@@ -118,8 +119,7 @@ EXAMPLES OF SHAPE (the content must still come from the facts above)
 
 Q: When can you start?
 A: <<used: resume>>
-**Immediately**, I'm not serving any notice.
-- Start: Immediately
+I can start **immediately**, with no notice period to serve.
 - Location: Remote, or relocate anywhere in India
 - Work mode: On-site or hybrid
 <<next: Would you relocate? | What are you looking for next?>>

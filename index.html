@@ -2672,10 +2672,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    the lead is the hero's own device — the sentence muted, the words
    that carry it in ink; figures borrow the serif numerals; facts read
    as a spec sheet; a case study arrives as the menu's numbered row. */
-.aitext .ailead{margin:0 0 16px;font-family:var(--display);font-size:19px;font-weight:500;line-height:1.36;
-  letter-spacing:-.022em;color:var(--ink);text-wrap:pretty}
-.aitext .ailead.has-key{color:color-mix(in srgb,var(--muted) 65%,var(--bg) 35%)}
-.aitext .ailead b{font-weight:500;color:var(--ink)}
+/* the answer itself: everything in it is information, so all of it is
+   ink; the words that carry it are set heavier, not the rest fainter */
+.aitext .ailead{margin:0 0 16px;font-family:var(--display);font-size:19px;font-weight:400;line-height:1.38;
+  letter-spacing:-.02em;color:var(--ink);text-wrap:pretty}
+.aitext .ailead b{font-weight:600}
 .aitext .ailead:last-child{margin-bottom:0}
 
 .aifigs-wrap{margin:0 0 16px}
@@ -2688,13 +2689,14 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   text-transform:uppercase;color:var(--faint)}
 .aitext .aifigs-src{margin:8px 2px 0;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
 
-.aifacts{display:grid;grid-template-columns:minmax(0,max-content) minmax(0,1fr);column-gap:18px;margin:2px 0 14px}
-.aifacts dt,.aifacts dd{margin:0;padding:9px 0;border-top:1px solid var(--line)}
-.aifacts dt:first-of-type,.aifacts dt:first-of-type + dd{border-top:0;padding-top:2px}
-.aifacts dt{padding-top:12px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--faint);line-height:1.5;white-space:nowrap}
-.aifacts dt:first-of-type{padding-top:5px}
-.aifacts dd{font-size:13.5px;line-height:1.5;color:var(--ink)}
+/* facts: one grouped box, the way a settings list groups rows — a
+   single hairline between rows, edge to edge, nothing else */
+.aifacts{margin:0 0 16px;padding:0 14px;border-radius:12px;background:var(--card);box-shadow:0 0 0 1px var(--line)}
+.aifact{display:grid;grid-template-columns:minmax(72px,30%) minmax(0,1fr);gap:14px;align-items:baseline;padding:11px 0}
+.aifact + .aifact{border-top:1px solid var(--line)}
+.aifacts dt{margin:0;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--faint);line-height:1.5}
+.aifacts dd{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink)}
 .aifacts:last-child{margin-bottom:0}
 
 .aitext ol.aisteps{margin-bottom:4px}
@@ -2735,18 +2737,27 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.6s linear infinite}
 @keyframes aiShimmer{from{background-position:120% 0}to{background-position:-100% 0}}
 .aiproc-n{font-variant-numeric:tabular-nums}
-.aisrc{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-2px 0 14px}
+/* sources: after the answer, the way a cited answer lists them —
+   each a page on this site, named and addressed, one tap to open */
+.aisrc{margin-top:18px}
 .aisrc[hidden]{display:none}
-.aisrc-k{margin-right:2px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
-.aisrc a{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:var(--r-pill);
-  background:var(--surface);color:var(--ink);font-size:12px;line-height:1.3;text-decoration:none;
-  animation:aiRise .4s var(--ease) both;animation-delay:calc(var(--i,0) * 90ms);
-  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
-.aisrc a svg{flex:0 0 auto;color:var(--faint)}
-.aisrc a:hover{background:var(--card);box-shadow:inset 0 0 0 1px var(--line);opacity:1}
+.aisrc-k{margin:0 0 8px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.aisrc-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px}
+.aisrc a{display:flex;align-items:center;gap:10px;min-width:0;padding:9px 12px 9px 9px;border-radius:12px;
+  background:var(--card);box-shadow:0 0 0 1px var(--line);color:var(--ink);text-decoration:none;
+  animation:aiRise .4s var(--ease) both;animation-delay:calc(var(--i,0) * 80ms);
+  transition:box-shadow .2s var(--ease),background .2s var(--ease)}
+.aisrc a:hover{background:var(--surface);opacity:1}
+.aisrc-ic{display:grid;place-items:center;flex:0 0 auto;width:28px;height:28px;border-radius:8px;
+  background:var(--surface);color:var(--muted)}
+.aisrc a:hover .aisrc-ic{background:var(--card)}
+.aisrc-x{min-width:0}
+.aisrc-t{display:block;font-size:13px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aisrc-u{display:block;margin-top:2px;font-family:var(--mono);font-size:10px;color:var(--faint);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* actions that fit this answer, not the same two on every one */
-.aiacts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:18px}
+.aiacts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
 .aipill{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:0;border-radius:var(--r-pill);
   background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);cursor:pointer;
   font-family:var(--display);font-size:12.5px;line-height:1.3;text-decoration:none;
@@ -4207,7 +4218,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     "resume":       { t: "R\u00e9sum\u00e9", href: "./resume.html" },
     "about":        { t: "About me", href: "./about.html" }
   };
-  var DOC = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.8V5.2h3.4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  var DOC = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.8V5.2h3.4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   function readMeta(text){
     var meta = { used: null, next: null };
     var u = text.match(/<<\s*used\s*:\s*([^>]*)>>/i);
@@ -4274,9 +4285,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
           // the device only works when a few words carry it; a sentence
           // bolded end to end is just the sentence, in ink
           var keyLen = (b.text.match(/\*\*(.+?)\*\*/g) || []).join("").length;
-          var keyed = keyLen > 0 && keyLen < b.text.length * 0.6;
-          if (!keyed) lead = lead.replace(/<\/?b>/g, "");
-          out.push('<p class="ailead' + (keyed ? " has-key" : "") + '">' + inlineCase(lead) + "</p>");
+          if (!(keyLen > 0 && keyLen < b.text.length * 0.6)) lead = lead.replace(/<\/?b>/g, "");
+          out.push('<p class="ailead">' + inlineCase(lead) + "</p>");
         } else {
           out.push("<p>" + inlineCase(inline(b.text).replace(/<\/?b>/g, "")) + "</p>");
         }
@@ -4295,7 +4305,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         if (facts){
           out.push('<dl class="aifacts">' + b.items.map(function(it){
             var f = it.match(FACT_RE);
-            return "<dt>" + escapeHtml(f[1].trim()) + "</dt><dd>" + inlineCase(inline(f[2])) + "</dd>";
+            return '<div class="aifact"><dt>' + escapeHtml(f[1].trim()) + "</dt><dd>" + inlineCase(inline(f[2])) + "</dd></div>";
           }).join("") + "</dl>");
         } else {
           out.push("<ul>" + b.items.map(function(it){ return "<li>" + inlineCase(inline(it)) + "</li>"; }).join("") + "</ul>");
@@ -4329,19 +4339,27 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       '<p class="aiwho">You</p><p class="aiasked"></p>' +
       '<div class="aians"><p class="aiwho"><span class="aime is-busy" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh' +
       '<span class="aiproc is-live"><span class="aiproc-t">Thinking <span class="aiproc-n">0.0s</span></span></span></p>' +
-      '<div class="aisrc" hidden></div><div class="aitext"></div></div>';
+      '<div class="aitext"></div><div class="aisrc" hidden></div></div>';
     x.querySelector(".aiasked").textContent = question;
     body.appendChild(x);
     return { el: x, ans: x.querySelector(".aians"), text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aime"),
              proc: x.querySelector(".aiproc"), src: x.querySelector(".aisrc"), shownSrc: false };
   }
-  function showSources(ex, used){
-    if (ex.shownSrc || !used || !used.length) return;
+  var SITE = "lokeshbhatia.com";
+  function showSources(ex, used, answer){
+    if (ex.shownSrc) return;
     ex.shownSrc = true;
-    ex.src.innerHTML = '<span class="aisrc-k">Based on</span>' + used.map(function(id, i){
-      var c = SOURCES[id];
-      return '<a href="' + c.href + '" style="--i:' + i + '">' + DOC + escapeHtml(c.t) + "</a>";
-    }).join("");
+    // a case study already on screen as a card doesn't need citing twice
+    var shown = (stripMeta(answer).match(/\[case:[a-z-]+\]/g) || []).map(function(t){ return t.slice(6, -1); });
+    var list = (used || []).filter(function(id){ return shown.indexOf(id) === -1; });
+    if (!list.length) return;
+    ex.src.innerHTML = '<p class="aisrc-k">' + (list.length > 1 ? "Sources" : "Source") + '</p><div class="aisrc-list">' +
+      list.map(function(id, i){
+        var c = SOURCES[id];
+        return '<a href="' + c.href + '" style="--i:' + i + '"><span class="aisrc-ic">' + DOC + '</span>' +
+          '<span class="aisrc-x"><span class="aisrc-t">' + escapeHtml(c.t) + '</span>' +
+          '<span class="aisrc-u">' + SITE + "/" + c.href.replace("./", "").replace(".html", "") + "</span></span></a>";
+      }).join("") + "</div>";
     ex.src.hidden = false;
   }
   var ICON_COPY = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.2" y="5.2" width="8.3" height="8.3" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M10.8 3.2A1.6 1.6 0 0 0 9.2 2H4a2 2 0 0 0-2 2v5.2a1.6 1.6 0 0 0 1.2 1.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
@@ -4365,12 +4383,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       bar.appendChild(a);
     }
     if (plain.indexOf(MAIL) > -1 || HIRING.test(question)) pill("Email me", "mailto:" + MAIL, ICON_MAIL, true);
-    if (!/\[case:[a-z-]+\]/.test(plain)){
-      var cs = used.filter(function(id){ return CASES[id]; })[0];
-      if (cs) pill("Read the case study", CASES[cs].href, CARD_ARROW);
-    }
-    if (used.indexOf("resume") > -1) pill("Open r\u00e9sum\u00e9", "./resume.html", CARD_ARROW);
-    if (used.indexOf("about") > -1 && !bar.children.length) pill("More about me", "./about.html", CARD_ARROW);
 
     var copy = document.createElement("button");
     copy.type = "button";
@@ -4504,8 +4516,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       if (!full) return fail(stopped ? "Stopped." : FALLBACK);
       thought();
       var meta = readMeta(full);
-      showSources(ex, meta.used);
       renderRich(ex.text, full, false);
+      showSources(ex, meta.used, full);
       history.push({ role: "assistant", content: full });
       addActions(ex, full, meta, text);
       settle();
@@ -4542,7 +4554,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
               if (delta){
                 full += delta;
                 thought();
-                if (!ex.shownSrc && /<<\s*used[^>]*>>/i.test(full)) showSources(ex, readMeta(full).used);
+                if (!ex.srcCount && /<<\s*used[^>]*>>/i.test(full)){
+                  ex.srcCount = (readMeta(full).used || []).length;
+                  if (ex.srcCount) ex.proc.textContent += " \u00b7 " + ex.srcCount + (ex.srcCount > 1 ? " sources" : " source");
+                }
                 renderRich(ex.text, full, true);
                 scrollDown();
               }
