@@ -112,7 +112,7 @@
   --navOff:#A1A1A1; --navOn:var(--ink);
 }
 *{box-sizing:border-box}
-html{overflow-x:clip;scroll-snap-type:y proximity;background:var(--bg);color-scheme:light}
+html{overflow-x:clip;background:var(--bg);color-scheme:light}
 html[data-theme="dark"]{color-scheme:dark}
 body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:var(--display);-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto}
@@ -198,8 +198,8 @@ body.menu-open header{z-index:70}
    nothing to do while a note is being written, so it stands down. */
 body.notewriting .totop{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 
-section{position:relative;z-index:2;padding-bottom:clamp(50px,16vw,84px);scroll-snap-align:start;scroll-snap-stop:always}
-#top{padding-top:clamp(42px,8vw,78px);padding-bottom:67px;max-width:792px;margin:0 auto;text-align:left;scroll-snap-align:start;scroll-snap-stop:always}
+section{position:relative;z-index:2;padding-bottom:clamp(50px,16vw,84px)}
+#top{padding-top:clamp(42px,8vw,78px);padding-bottom:67px;max-width:792px;margin:0 auto;text-align:left}
 .hero-grid{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);gap:clamp(24px,4.6vw,45px);align-items:center}
 .hero-left{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(13px,2vw,16px)}
 .eyebrow{margin:0;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--muted)}
@@ -582,7 +582,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
    a closer crop than the default sit -- bigger frame, less air around
    it -- rather than a rotation, which just made the two cards look
    like the same asset skewed two ways */
-.macframe.zoom{left:8%;top:16%;bottom:-15.08%;width:124.8%;height:99.08%;aspect-ratio:auto}
+.macframe.zoom{left:11.75%;top:16%;bottom:-15.08%;width:124.8%;height:99.08%;aspect-ratio:auto}
 @media (hover:hover){.workrow:hover .macframe.zoom{transform:translateY(-6px)}}
 
 
@@ -1938,6 +1938,13 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     background:color-mix(in srgb,var(--accent) 6%,transparent)}
   .padwrap:not(.is-open) .padtrigger:hover .padtriggerplus{
     transform:scale(1.08)}
+  /* the lift lives on .padstack, not .padtrigger: .padstack clips its
+     own contents (needed so the board's height animation doesn't spill
+     over before it's grown), and any transform on the trigger inside
+     that box gets its top edge cut off by that same clip. .padstack's
+     own parent has nothing clipping it, so moving the outer box instead
+     gives the same lift without losing the border. */
+  .padwrap:not(.is-open) .padstack:hover{transform:translateY(-3px)}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -1987,7 +1994,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   background-color:var(--surface);
   background-image:radial-gradient(circle at 1px 1px,
     color-mix(in srgb,var(--muted) 26%,transparent) 1px,transparent 0);
-  background-size:18px 18px;background-position:9px 9px}
+  background-size:18px 18px;background-position:9px 9px;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
 .padstack > *{min-height:0}
 .padstack > .padtrigger{grid-row:1}
 .padstack > .padboard{grid-row:2}
@@ -2035,7 +2043,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .padwrap.is-open .padtrigger{cursor:default}
 .padtrigger:disabled{opacity:1;color:var(--ink)}
 .padtriggerplus{transition:opacity .2s var(--ease),width .3s var(--ease),
-  margin-right .3s var(--ease),transform .2s var(--ease)}
+  margin-right .3s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
 
 /* the first paint must not animate: a visitor returning to saved notes
    would watch the board unfold for no reason */
@@ -2318,7 +2326,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   margin:0;padding:clamp(14px,2.2vw,20px) 20px;border-radius:8px;
   background:var(--rp-bg);
   color:var(--rp-fg);text-align:left;cursor:default;
-  transition:background-color .25s var(--ease)}
+  transition:background-color .25s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
 :root[data-theme="dark"] #notes .readpill{--rp-bg:#FFFFFF;--rp-fg:#141414}
 
 #notes .rp-faces{display:inline-flex;flex:none}
@@ -2382,11 +2390,12 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #notes .rp-sub > span{grid-area:1/1;transition:opacity .2s var(--ease),color .2s var(--ease)}
 #notes .rp-sub-b{opacity:0}
 @media (hover:hover){
+  #notes .readpill:hover{transform:translateY(-3px)}
   #notes .readpill:hover .rp-sub-a{opacity:0}
   #notes .readpill:hover .rp-sub-b{opacity:1}
 }
 @media (prefers-reduced-motion:reduce){
-  #notes .rp-sub > span{transition:none}
+  #notes .readpill,#notes .rp-sub > span{transition:none}
 }
 /* The pill used to rise 1px and throw a shadow. It sits in the page,
    not on top of it -- nothing else here lifts -- so hovering says so
