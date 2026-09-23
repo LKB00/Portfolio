@@ -112,7 +112,7 @@
   --navOff:#A1A1A1; --navOn:var(--ink);
 }
 *{box-sizing:border-box}
-html{overflow-x:clip;scroll-behavior:smooth;background:var(--bg);color-scheme:light}
+html{overflow-x:clip;scroll-behavior:smooth;scroll-snap-type:y proximity;background:var(--bg);color-scheme:light}
 html[data-theme="dark"]{color-scheme:dark}
 body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:var(--display);-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto}
@@ -190,7 +190,7 @@ body.menu-open header{z-index:70}
 .totop-track{stroke:var(--line)}
 .totop-prog{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;transition:stroke-dashoffset .1s linear}
 @media (prefers-reduced-motion:reduce){.totop-prog{transition:none}}
-@media (max-width:576px){.totop{width:44px;height:44px;bottom:64px;left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg:not(.totop-ring){width:14px;height:14px}}
+@media (max-width:576px){.totop{width:44px;height:44px;bottom:calc(74px + env(safe-area-inset-bottom));left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg:not(.totop-ring){width:14px;height:14px}}
 /* Typing a note pops the keyboard, which shrinks the visible page from
    the bottom -- exactly where this button sits. Fixed positioning keeps
    it pinned above the keyboard rather than off-screen with it, so it
@@ -198,8 +198,8 @@ body.menu-open header{z-index:70}
    nothing to do while a note is being written, so it stands down. */
 body.notewriting .totop{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 
-section{position:relative;z-index:2;padding-bottom:clamp(50px,16vw,84px)}
-#top{padding-top:clamp(42px,8vw,78px);padding-bottom:67px;max-width:792px;margin:0 auto;text-align:left}
+section{position:relative;z-index:2;padding-bottom:clamp(50px,16vw,84px);scroll-snap-align:start;scroll-snap-stop:always}
+#top{padding-top:clamp(42px,8vw,78px);padding-bottom:67px;max-width:792px;margin:0 auto;text-align:left;scroll-snap-align:start;scroll-snap-stop:always}
 .hero-grid{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);gap:clamp(24px,4.6vw,45px);align-items:center}
 .hero-left{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(13px,2vw,16px)}
 .eyebrow{margin:0;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--muted)}
@@ -401,6 +401,13 @@ img.bg.loaded{opacity:1}
   #noticeBanner .notice-actions{width:auto;margin:0;padding:0}
   #noticeBanner .notice-btn{width:100%}
 }
+/* Only below 576px does the header itself move to the bottom (see the
+   nav pill rule above) — clear it here rather than in the 630px block
+   above, so tablet-width phones where the header is still up top don't
+   get pushed up for no reason. */
+@media (max-width:576px){
+  #noticeBanner{bottom:calc(74px + env(safe-area-inset-bottom))}
+}
 
 /* resume modal */
 @media (max-width:576px){
@@ -558,6 +565,25 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
   .workrow:hover .cardframe > img[data-mock="anchor"],
   .workrow:hover .cardframe > img[data-mock="single"]{transform:translateY(-8px) scale(1.015)}
 }
+/* ── the MacBook frame, for cards whose capture is a desktop screen ──
+   Same trick as .ad-frame in the case studies: the screenshot sits in
+   the transparent screen cutout, the device PNG lays on top of it, and
+   the two move as one card. Coordinates for .macshot come from the
+   mockup's own alpha channel (its empty screen is x 9.6–90.25%,
+   y 4.1–89.4% of the 800×489 source), not guessed by eye. */
+.macframe{position:absolute;left:9%;bottom:13%;width:82%;aspect-ratio:800/489;z-index:1;
+  transition:transform .4s var(--ease)}
+.macframe .macshot{position:absolute;left:9.6%;top:4.1%;width:80.6%;height:85.3%;
+  object-fit:cover;object-position:50% 0%;display:block}
+.macframe .macdevice{position:absolute;inset:0;width:100%;height:100%;z-index:2;
+  display:block;pointer-events:none;user-select:none}
+@media (hover:hover){.workrow:hover .macframe{transform:translateY(-8px) scale(1.015)}}
+/* the trading-terminal card reads a lot of small numbers, so it gets
+   a closer crop than the default sit -- bigger frame, less air around
+   it -- rather than a rotation, which just made the two cards look
+   like the same asset skewed two ways */
+.macframe.zoom{left:8%;top:16%;bottom:-15.08%;width:124.8%;height:99.08%;aspect-ratio:auto}
+@media (hover:hover){.workrow:hover .macframe.zoom{transform:translateY(-6px)}}
 
 
 /* ── built mock: Rise Portal partner dashboard ── */
@@ -705,9 +731,11 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 #loader .dot{box-shadow:0 0 0 1px var(--line)}
 
 /* ── motion: quieter reveals ── */
-[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+/* buttery smooth: longer duration with a delightful ease-out-back curve
+   that feels like the element is released and settles into place. */
+[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .75s cubic-bezier(.23,1,.320,1.1),transform .75s cubic-bezier(.23,1,.320,1.1)}
 [data-reveal].shown{opacity:1;transform:none}
-h1[data-reveal],h2[data-reveal],.statement[data-reveal]{transform:translateY(12px);transition-duration:.6s}
+h1[data-reveal],h2[data-reveal],.statement[data-reveal]{transform:translateY(12px);transition-duration:.85s}
 .heroin h1{animation:riseIn .6s var(--ease) .04s both}
 .heroin .herosub{animation:riseIn .6s var(--ease) .12s both}
 @media (prefers-reduced-motion:reduce){.anno,[data-reveal],.heroin *{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}}
@@ -736,6 +764,14 @@ h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0}
 
 /* ── nav pill ── */
 header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;padding:0;z-index:50;pointer-events:none;transition:none}
+/* On a phone the pill sits over the top status bar / notch and is a
+   long thumb-reach from where the hand actually holds the device.
+   Anchoring it to the bottom instead — same one-handed-reach logic as
+   iOS/Android's own bottom tab bars — fixes both. env() keeps it clear
+   of the home-indicator gesture area on notched phones. */
+@media (max-width:576px){
+  header,header.scrolled{top:auto;bottom:calc(16px + env(safe-area-inset-bottom))}
+}
 .navpill{pointer-events:auto;width:max-content;margin:0 auto;display:flex;align-items:center;gap:2px;
   padding:4px 5px;border:0;border-radius:var(--r-pill);box-shadow:none;
   background:color-mix(in srgb,var(--surface) 85%,transparent);
@@ -924,6 +960,16 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   background:var(--card);color:var(--muted);box-shadow:var(--shadow-float);
   font-size:12.5px;line-height:1.35}
 .padtoast svg{flex:0 0 auto;color:var(--accent)}
+/* ── the always-on notice, pinned to the top of the board ──
+   Unlike .padblank (only visible with zero notes, which the trigger
+   button never actually leaves the board in — it opens and adds a
+   note in the same click), this sits above the canvas at all times
+   so the anonymity/reply line is never state-dependent. */
+.padinfo{position:absolute;left:50%;top:14px;transform:translateX(-50%);
+  z-index:8;max-width:calc(100% - 28px);margin:0;padding:0;
+  color:var(--faint);font-size:12px;line-height:1.35;
+  text-align:center;white-space:nowrap;pointer-events:none}
+@media (max-width:560px){.padinfo{font-size:11.5px;white-space:normal}}
 /* scoped to the board itself, not .padwrap: the board is a direct
    child of <body> while it floats open, outside .padwrap entirely */
 #padBoard [hidden]{display:none}
@@ -941,6 +987,22 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 /* ── overlays + chrome ── */
 .totop{border:0;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);box-shadow:none}
+/* Mobile back-to-top used to stack directly above the nav pill. Now
+   they share one row, pill on the left, button on the right: the pill
+   sits centred on its own until there's something to scroll back to,
+   then steps aside to make room. Both sides use each element's own
+   -50%/+50% (not a guessed pixel width) so this holds regardless of
+   how wide the pill ends up. header.totop-on mirrors #totop's own
+   .show condition (same scrollY>400 check, toggled together in JS) so
+   the CSS never has to guess the button's visibility from outside it. */
+@media (max-width:576px){
+  .totop{bottom:calc(16px + env(safe-area-inset-bottom));left:50%;right:auto;
+    transform:translateX(4px) scale(.86);
+    transition:opacity .2s ease,transform .5s cubic-bezier(.34,1.56,.64,1)}
+  .totop.show{transform:translateX(4px) scale(1)}
+  .navpill{transition:transform .5s cubic-bezier(.34,1.56,.64,1),background .3s var(--ease)}
+  header.totop-on .navpill{transform:translateX(calc(-50% - 4px))}
+}
 .toast,#palette .box{border-radius:var(--r-float);background:var(--card);box-shadow:var(--shadow-float)}
 #palette .list a,.mrow{border-radius:var(--r-sm)}
 .mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:-.01em}
@@ -968,7 +1030,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .btn-secondary:hover{background:color-mix(in srgb,var(--ink) 10%,transparent)}
 
 /* ── motion ── */
-[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .75s cubic-bezier(.23,1,.320,1.1),transform .75s cubic-bezier(.23,1,.320,1.1)}
 [data-reveal].shown{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none!important}}
 
@@ -1288,6 +1350,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 /* tier 3 — the ways to reach him: two equal-weight buttons, nothing else */
 .mfoot{gap:var(--s-3);padding-bottom:clamp(22px,4vh,30px)}
+/* The header (with the menu's own close button) stays elevated above
+   the mobile menu overlay so that button stays reachable -- but now
+   that the header pill lives at the bottom on phones, "elevated" means
+   it sits right on top of these two buttons unless the sheet leaves
+   room for it. */
+@media (max-width:576px){
+  .mfoot{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+}
 .mailbtn{font-size:15px}
 /* ══ THE OPEN SLOT ═══════════════════════════════════════════════════
    "Open to new work" was a line of blue text floating above the job
@@ -2486,11 +2556,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   <header id="siteHeader">
     <div class="navpill">
       <nav class="navlinks" aria-label="Main">
-        <a class="navlink" href="./index.html" aria-current="page">Home</a>
-        <a class="navlink" href="./about.html">About</a>
-        <a class="navlink" href="./resume.html">Resume</a>
-        <button class="themebtn" id="themeToggle" type="button" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="icon-moon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span></button>
-        <button class="burger" id="burgerBtn" type="button" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></button>
+        <a class="navlink" href="./index.html" aria-current="page"><span class="navtext">Home</span></a>
+        <a class="navlink" href="./about.html"><span class="navtext">About</span></a>
+        <a class="navlink" href="./resume.html"><span class="navtext">Resume</span></a>
+        <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span><span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span></button>
+        <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2l-12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button>
       </nav>
     </div>
 
@@ -2561,25 +2631,31 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         </div>
       </a>
 
-      <a href="https://runable.com/" target="_blank" rel="noreferrer" class="workrow runrow" data-reveal data-cursor-label="visit" aria-label="Runable, an AI agent platform. Visit the live site">
-        <div style="grid-row:1;grid-column:1;min-width:0">
-          <div class="cardframe runshot" style="background:var(--card-tint-03)">
-            <img loading="eager" decoding="async" data-mock="single" data-src="./assets/runable-agent-home-1050.webp" data-srcset="./assets/runable-agent-home-700.webp 700w, ./assets/runable-agent-home-1050.webp 1050w, ./assets/runable-agent-home-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="685" alt="Runable agent home screen in a browser" style="position:absolute;left:14%;bottom:-20px;width:72%;height:auto;z-index:1;box-shadow:0 24px 48px var(--frameSh)">
-          </div>
-        </div>
-        <div class="worktext">
-          <h3>An AI agent platform, concept to public launch</h3>
-        </div>
-      </a>
-
       <a href="./web-terminal.html" class="workrow" data-reveal data-cursor-label="open">
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe runshot" style="background:var(--card-tint-01)">
-            <img loading="eager" decoding="async" data-mock="single" data-src="./assets/watchlist-shell-card-1050.webp" data-srcset="./assets/watchlist-shell-card-700.webp 700w, ./assets/watchlist-shell-card-1050.webp 1050w, ./assets/watchlist-shell-card-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="747" alt="The Rupeezy web trading terminal, with the watchlist, index ticker and order window">
+            <div class="macframe zoom">
+              <img class="macshot" loading="eager" decoding="async" data-src="./assets/watchlist-shell-card-1050.webp" data-srcset="./assets/watchlist-shell-card-700.webp 700w, ./assets/watchlist-shell-card-1050.webp 1050w, ./assets/watchlist-shell-card-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="747" alt="The Rupeezy web trading terminal, with the watchlist, index ticker and order window">
+              <img class="macdevice" src="./assets/macbook-mockup.webp" alt="" aria-hidden="true" loading="eager" decoding="async">
+            </div>
           </div>
         </div>
         <div class="worktext">
           <h3>The desktop trading terminal: chart, watchlist, and orders on one screen.</h3>
+        </div>
+      </a>
+
+      <a href="https://runable.com/" target="_blank" rel="noreferrer" class="workrow runrow" data-reveal data-cursor-label="visit" aria-label="Runable, an AI agent platform. Visit the live site">
+        <div style="grid-row:1;grid-column:1;min-width:0">
+          <div class="cardframe runshot" style="background:var(--card-tint-03)">
+            <div class="macframe">
+              <img class="macshot" loading="eager" decoding="async" data-src="./assets/runable-agent-home-1050.webp" data-srcset="./assets/runable-agent-home-700.webp 700w, ./assets/runable-agent-home-1050.webp 1050w, ./assets/runable-agent-home-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="685" alt="Runable agent home screen in a browser">
+              <img class="macdevice" src="./assets/macbook-mockup.webp" alt="" aria-hidden="true" loading="eager" decoding="async">
+            </div>
+          </div>
+        </div>
+        <div class="worktext">
+          <h3>An AI agent platform, concept to public launch</h3>
         </div>
       </a>
     </div>
@@ -2602,11 +2678,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       </button>
 
       <div class="padboard" id="padBoard">
+        <p class="padinfo" id="padInfo">It&#8217;s anonymous. Want a reply? Add your email or contact info.</p>
         <div class="padblank" id="padBlank">
           <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
             <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </button>
-          <p class="padblanktext">A thought, a question, something you&#8217;d have done differently. Whatever you want to say.</p>
         </div>
 
         <div class="padtoast" id="padToast" role="status" hidden>
@@ -2711,17 +2787,35 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   // nav icon swap + pill shrink on scroll
   var header = document.getElementById("siteHeader");
   var totop = document.getElementById("totop");
+  var navpill = document.querySelector(".navpill");
   // The ring around the arrow: how far down the page a reader is, not
   // just whether the button should show. 157.08 is 2πr for the ring's
   // r=25, matching the stroke-dasharray in CSS -- a full circumference
   // held back by stroke-dashoffset until there is something to report.
   var totopRing = totop.querySelector(".totop-prog");
   var TOTOP_C = 157.08;
+  /* Chromium sometimes leaves this pair's transform painted at its
+     pre-toggle spot even though layout is already correct by the time
+     the transition should have finished (proven by forcing a reflow
+     and watching it snap to the right place). A plain offsetHeight
+     read only flushes layout, not the compositor, so it doesn't fix
+     this -- toggling display does, but doing that on every scroll tick
+     would fight the transition and could flash the element, so it only
+     runs once, right after a real show/hide flip. */
+  var totopWasOn = false;
+  function fixTotopPaint(){
+    setTimeout(function(){
+      totop.style.display="none"; void totop.offsetHeight; totop.style.display="";
+      navpill.style.display="none"; void navpill.offsetHeight; navpill.style.display="";
+    }, 550);
+  }
   function onScroll(){
     if (window.scrollY > 70) header.classList.add("scrolled");
     else header.classList.remove("scrolled");
-    if (window.scrollY > 400) totop.classList.add("show");
-    else totop.classList.remove("show");
+    var totopOn = window.scrollY > 400;
+    if (totopOn){ totop.classList.add("show"); header.classList.add("totop-on"); }
+    else { totop.classList.remove("show"); header.classList.remove("totop-on"); }
+    if (totopOn !== totopWasOn){ totopWasOn = totopOn; fixTotopPaint(); }
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
     totopRing.style.strokeDashoffset = (TOTOP_C * (1 - p)).toFixed(2);
@@ -2939,8 +3033,26 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      arrival and must not also fade in. */
   var revealed = false, revealStarted = false;
   var revealEls = document.querySelectorAll("[data-reveal]");
+  /* Chromium sometimes leaves a position:absolute descendant painted at its
+     pre-transition spot after the ancestor's own reveal transform (translateY
+     + scale, on .workrow) settles to none -- the computed layout is correct
+     (offsetTop matches) but the compositor never repaints it there. Toggling
+     display forces a synchronous reflow that corrects it. 750ms covers this
+     section's longest reveal transition (.7s) plus its stagger delay. */
+  function fixMacframes(container){
+    var frames = container.querySelectorAll ? container.querySelectorAll(".macframe") : [];
+    if (!frames.length) return;
+    setTimeout(function(){
+      for (var i = 0; i < frames.length; i++){
+        var f = frames[i];
+        f.style.display = "none";
+        void f.offsetHeight;
+        f.style.display = "";
+      }
+    }, 750);
+  }
   function showAllReveals(){
-    for (var i = 0; i < revealEls.length; i++) revealEls[i].classList.add("shown");
+    for (var i = 0; i < revealEls.length; i++){ revealEls[i].classList.add("shown"); fixMacframes(revealEls[i]); }
   }
   function startReveal(){
     if (revealStarted) return;
@@ -2953,8 +3065,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
         if (en.isIntersecting){
           revealed = true;
           var el = en.target, im = el.querySelector("img");
-          if (im && !im.complete){ im.addEventListener("load", function(){ el.classList.add("shown"); }, { once: true }); im.addEventListener("error", function(){ el.classList.add("shown"); }, { once: true }); }
-          else el.classList.add("shown");
+          if (im && !im.complete){ im.addEventListener("load", function(){ el.classList.add("shown"); fixMacframes(el); }, { once: true }); im.addEventListener("error", function(){ el.classList.add("shown"); fixMacframes(el); }, { once: true }); }
+          else { el.classList.add("shown"); fixMacframes(el); }
           io.unobserve(el);
         }
       });
@@ -3151,7 +3263,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      on some transformed ancestor further up the tree */
   var boardHome=board.parentNode, boardAnchor=board.nextSibling;
 
-  var KEY="lb.notes", MAIL="hi.lokeshux@gmail.com", MAX=12, BAR=52;
+  var KEY="lb.notes", MAIL="hi.lokeshux@gmail.com", MAX=12, BAR=52, TOPBAR=44;
 
   /* ─────────────────────────────────────────────────────────────────
      PASTE YOUR APPS SCRIPT WEB APP URL HERE.
@@ -3237,7 +3349,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     var pad=6,
         maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
         maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
-        minX=pad/bb.width*100, minY=pad/bb.height*100;
+        minX=pad/bb.width*100, minY=(pad+TOPBAR)/bb.height*100;
     note.x=Math.max(minX,Math.min(note.x,Math.max(minX,maxX)));
     note.y=Math.max(minY,Math.min(note.y,Math.max(minY,maxY)));
     el.style.left=note.x+"%"; el.style.top=note.y+"%";
