@@ -3688,7 +3688,16 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .heroask-links a:hover{color:var(--ink)}
 .heroask-links a svg{display:inline-block;margin-left:3px;vertical-align:-1px;transition:transform .18s cubic-bezier(.2,.7,.2,1)}
 .heroask-links a:hover svg{transform:translate(1px,-1px)}
-.heroin .heroask,.heroin .heroask-links{animation:settle .34s ease-out .60s backwards}
+.heroin .heroask-row{animation:settle .34s ease-out .60s backwards}
+/* the CTA leads; email and LinkedIn sit beside it as quiet round icons */
+.heroask-row{display:flex;align-items:center;gap:8px;margin-top:clamp(18px,2.6vw,26px);flex-wrap:wrap}
+.heroask-row .heroask{margin-top:0}
+.heroicon{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--muted);
+  background:var(--card,#fff);border:.5px solid color-mix(in srgb,var(--ink) 12%,transparent);
+  transition:color .18s,border-color .18s,transform .15s}
+.heroicon:hover{color:var(--ink);border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
+.heroicon:active{transform:scale(.94)}
+.heroicon:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 /* flat and quiet: no shadow, a hairline border, and the send button
    stays soft grey until there's something to send */
 .heroask,.heroask:focus-within{box-shadow:none}
@@ -3972,6 +3981,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       <div class="hero-t">
       <h1>Hi, I’m Lokesh, I turn <span class="h1-key">user needs</span> into <span class="h1-key">products</span> that <span class="h1-key">drive growth</span>.</h1>
       <p class="hero-sub">Product designer with 3 years of experience. I’ve owned a trading app responsible for 97% of company revenue, built our first referral-partner B2B product, and taken an AI agent platform from 0&#8594;1.</p>
+      <div class="heroask-row">
       <button type="button" class="heroask" id="heroAsk">
         <svg class="heroask-ring" aria-hidden="true"><defs><linearGradient id="askRingGrad" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#6c9bff"/><stop offset=".4" stop-color="#b17cff"/><stop offset=".72" stop-color="#ff86b7"/><stop offset="1" stop-color="#ffb070"/>
@@ -3980,7 +3990,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         <span class="heroask-t">Ask my AI about my work</span>
         <span class="heroask-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
       </button>
-      <p class="heroask-links"><a href="mailto:hi.lokeshux@gmail.com">Email me</a><a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 16 16" width="11" height="11" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      <a class="heroicon" href="mailto:hi.lokeshux@gmail.com" aria-label="Email me" title="Email me"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+      <a class="heroicon" href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
       </div>
     </div>
   </section>
