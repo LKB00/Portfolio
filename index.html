@@ -3623,6 +3623,15 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aicomposer .aichat-input{padding:3px 0 3px}
 .aicomposer-row{flex:none;justify-content:flex-end}
 
+
+/* the tray is the opening screen's only; once talking, the composer stands
+   alone and follow-ups sit under the answer they follow */
+.aichat-foot.is-chatting .aitray{padding:0!important;background:none!important;border-radius:0!important;gap:0}
+.aichat-foot.is-chatting .aitray-top{display:none!important}
+.ainext{margin:22px auto 28px;padding:0;background:none;border-radius:0;animation:aiFadeUp .35s cubic-bezier(.2,.7,.2,1) .15s both}
+.ainext .ailabel{padding:0;margin:0 0 6px}
+.ainext .airows{margin-left:-12px}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -5549,22 +5558,15 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     NEIGHBOURS[topic].forEach(function(tp){
       if (out.length < 3 && fresh(TOPICS[tp].entry) && out.indexOf(TOPICS[tp].entry) === -1) out.push(TOPICS[tp].entry);
     });
-    fillTray("You could also ask", out);
-    return;
+    if (!out.length) return;
+    // after an answer, suggestions belong to the answer: right under it,
+    // in the same pill rows as the opening tray
     var box = document.createElement("div");
     box.className = "ainext";
-    box.innerHTML = '<p class="ainext-k">You could also ask</p>';
+    box.innerHTML = '<p class="ailabel">You could also ask</p>';
     var list = document.createElement("div");
-    list.className = "ainext-list";
-    out.forEach(function(q){
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "ainext-q";
-      b.innerHTML = ICON_FOLLOW + "<span></span>";
-      b.lastChild.textContent = q;
-      b.addEventListener("click", function(){ sendMessage(q); });
-      list.appendChild(b);
-    });
+    list.className = "airows";
+    out.forEach(function(q){ list.appendChild(trayRow(q)); });
     box.appendChild(list);
     body.appendChild(box);
   }
