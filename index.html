@@ -2868,7 +2868,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .airail-foot-a{display:flex;flex-wrap:wrap;gap:8px}
 
 /* ── the main area ── */
-.aimain{display:flex;flex-direction:column;min-width:0;min-height:0}
+/* both are <section>s, and the page gives every section bottom padding
+   and a stacking layer; neither belongs inside the chat */
+.aimain{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;min-height:0;padding:0!important;z-index:auto}
+section.aix{z-index:auto}
 .aichat-head{height:64px;padding:0 14px 0 28px;box-shadow:inset 0 -1px 0 var(--line);background:var(--surface)}
 .aichat-head .aime{display:none}
 .aihead-x{flex:1;min-width:0}
@@ -3073,6 +3076,61 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 .aitrace-sum{animation:aiBlockIn .35s cubic-bezier(.22,1,.36,1) both}
 @media (prefers-reduced-motion:reduce){
   .ai-new,.aicard .aiacts,.ainext .aisug-k,.ainext .aisug,.aitrace-sum{animation:none!important}
+}
+
+
+/* ══ PHONES, PROPERLY ════════════════════════════════════════════════
+   · the page behind is pinned while the chat is open (body.chat-open)
+   · text fields are 16px on touch screens: anything smaller makes iOS
+     zoom the whole page in on focus, and it stays zoomed
+   · the sheet rests on the keyboard (--kb) and is never taller than the
+     visible viewport (--vvh), so the composer is always in view
+   · double-tap does nothing inside the chat, so it can't zoom either
+   · every scroll area keeps its scroll to itself */
+body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
+.aichat{touch-action:manipulation}
+.aichat-panel,.aichat-body,.airail{overscroll-behavior:contain}
+.aichat-body{-webkit-overflow-scrolling:touch}
+@media (hover:none),(max-width:640px){
+  .aichat-input{font-size:16px;line-height:1.45}
+}
+@media (max-width:640px){
+  .aichat-panel{bottom:var(--kb,0px);height:min(92dvh,calc(var(--vvh,100dvh) - 10px));max-height:calc(100dvh - 10px);
+    transition:transform .45s var(--ease)}
+  /* with the keyboard up, space goes to the conversation, not chrome */
+  .aichat-panel.kb-open .aichat-handle{display:none}
+  .aichat-panel.kb-open .aichat-head{min-height:46px;padding-top:2px;padding-bottom:2px}
+  .aichat-panel.kb-open .aihint{display:none}
+  .aichat-panel.kb-open .aichat-foot{padding-bottom:8px}
+  .aichat-panel.kb-open .aichat-intro .aichat-lede{display:none}
+
+  /* spacing: one 16px gutter, one rhythm */
+  .aichat-head{padding-left:16px;padding-right:8px}
+  .aichat-body{padding:0 16px}
+  .aichat-foot{padding:8px 12px calc(10px + env(safe-area-inset-bottom))}
+  .aichat-intro{padding:12px 0 4px}
+  .aichat-greet{font-size:27px;line-height:1.14}
+  .aichat-lede{margin-top:10px;font-size:14px}
+  .aistart{padding-top:18px}
+  .aisug{grid-template-columns:18px minmax(0,1fr) 14px;gap:10px;padding:12px 2px;font-size:14.5px}
+  .aix{padding-top:22px}
+  .aiq{margin-bottom:14px}
+  .aiq .aiasked{max-width:88%;font-size:15px}
+  .aitext .ailead{font-size:18px}
+  .aifigs{gap:12px 24px}
+  .aifig b{font-size:24px}
+  .aitext a.aicase{padding:12px 14px;gap:12px}
+  .aicase-t{font-size:16px}
+  .aierr{padding:12px 14px 13px}
+  .ainext{padding:14px 0 18px}
+  .aicomposer{padding:10px 8px 8px 12px}
+  .aichat-input{max-height:120px}
+}
+@media (max-width:360px){
+  .aichat-greet{font-size:24px}
+  .aitext .ailead{font-size:17px}
+  .aifigs{gap:10px 18px}
+  .aifig{max-width:14ch}
 }
 
 /* the pill has no room for a fourth item once the burger takes over --
@@ -4427,9 +4485,49 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     var burger = document.getElementById("burgerBtn");
     if (burger) burger.setAttribute("aria-expanded", "false");
   }
+  // While the chat is open the page underneath must not move: pin the
+  // body where it is (the same technique the mobile menu uses, which is
+  // the one iOS Safari respects), and put it back exactly on close.
+  var lockedY = 0;
+  function lockPage(){
+    lockedY = window.scrollY || window.pageYOffset || 0;
+    var gap = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.top = -lockedY + "px";
+    if (gap > 0) document.body.style.paddingRight = gap + "px";
+    document.body.classList.add("chat-open");
+  }
+  function unlockPage(){
+    if (!document.body.classList.contains("chat-open")) return;
+    document.body.classList.remove("chat-open");
+    document.body.style.top = "";
+    document.body.style.paddingRight = "";
+    window.scrollTo(0, lockedY);
+  }
+  // On a phone the keyboard covers the bottom of the layout viewport, and
+  // a sheet pinned to that bottom would sit behind it, composer and all.
+  // Track the visible viewport instead: the sheet rests on top of the
+  // keyboard and never grows taller than what's actually visible.
+  function fitViewport(){
+    var vv = window.visualViewport;
+    if (!vv) return;
+    var kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    sheet.style.setProperty("--vvh", vv.height + "px");
+    sheet.style.setProperty("--kb", kb + "px");
+    panel.classList.toggle("kb-open", kb > 80);
+    if (kb > 80) scrollDown(true);
+  }
+  if (window.visualViewport){
+    window.visualViewport.addEventListener("resize", function(){ if (panel.classList.contains("open")) fitViewport(); });
+    window.visualViewport.addEventListener("scroll", function(){ if (panel.classList.contains("open")) fitViewport(); });
+  }
+  // the dimmed page behind the sheet isn't scrollable either
+  panel.querySelector(".aichat-scrim").addEventListener("touchmove", function(e){ e.preventDefault(); }, { passive: false });
+
   function openChat(){
     lastFocus = document.activeElement;
     releaseMobileNav();
+    lockPage();
+    fitViewport();
     panel.classList.add("open");
     panel.setAttribute("aria-hidden", "false");
     // a phone keyboard would cover the introduction the moment it opened,
@@ -4439,6 +4537,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   function closeChat(){
     panel.classList.remove("open");
     panel.setAttribute("aria-hidden", "true");
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    unlockPage();
     if (lastFocus && lastFocus.focus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
   }
   [askBtn, askBtnMobile].forEach(function(b){ if (b) b.addEventListener("click", openChat); });
