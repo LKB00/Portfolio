@@ -1581,6 +1581,13 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (prefers-reduced-motion:reduce){
   .workrow .cardframe.merge2 .mgphone-single{transition:none}
 }
+/* fluid mode (JS): one continuous motion instead of a hover jump. The
+   phone rises into the frame the first time the card is seen, drifts
+   gently with the scroll, and on hover lifts and leans toward the
+   cursor. Every value eases toward its target each frame, so nothing
+   snaps: moving the mouse away lets it settle back like it has weight. */
+.cardframe.merge2.is-fluid{perspective:1400px}
+.cardframe.merge2.is-fluid .mgphone-single{transition:none!important;will-change:transform,opacity;transform-origin:50% 40%;backface-visibility:hidden}
 /* ══ RISE PORTAL CARD ════════════════════════════════════════════════
    Same shape as the App Merge card: alive at rest with a slow float,
    then one clean move on hover. The auto-playing cursor tour is gone —
@@ -6403,6 +6410,66 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       fail(BROKEN, "error");
     });
   }
+})();
+</script>
+<script>
+/* App Merge card: fluid phone (entrance, scroll drift, cursor lean) */
+(function(){
+  var frame = document.querySelector(".cardframe.merge2"), img = frame && frame.querySelector(".mgphone-single");
+  if (!img || !window.requestAnimationFrame) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var row = frame.closest(".workrow") || frame;
+  var fine = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  frame.classList.add("is-fluid");
+  // current and target values; each frame current moves a fraction of the way to target
+  var cur = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 }, tgt = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 };
+  var inView = false, entered = false, raf = 0, last = 0;
+  function measure(){
+    var r = frame.getBoundingClientRect(), vh = window.innerHeight || 1;
+    var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2); // -1 above … 1 below
+    tgt.drift = Math.max(-1, Math.min(1, p));
+    if (!entered && r.top < vh * 0.85 && r.bottom > 0){ entered = true; tgt.enter = 0; }
+  }
+  function apply(){
+    var h = frame.clientHeight || 1;
+    var y = cur.enter * h * 0.22 + cur.drift * h * 0.045 - cur.lift * 10;
+    var sc = 1 + cur.lift * 0.018;
+    img.style.transform = "translate3d(0," + y.toFixed(2) + "px,0) rotateX(" + cur.rx.toFixed(3) + "deg) rotateY(" + cur.ry.toFixed(3) + "deg) scale(" + sc.toFixed(4) + ")";
+    img.style.opacity = (1 - cur.enter * 0.9).toFixed(3);
+  }
+  function tick(now){
+    raf = 0;
+    var dt = last ? Math.min(64, now - last) : 16; last = now;
+    measure();
+    var moving = false;
+    // frame-rate independent smoothing: slower for the entrance, quicker for the hand
+    var rates = { enter: 0.045, drift: 0.09, lift: 0.1, rx: 0.1, ry: 0.1 };
+    for (var k in cur){
+      var a = 1 - Math.pow(1 - rates[k], dt / 16.67);
+      cur[k] += (tgt[k] - cur[k]) * a;
+      if (Math.abs(tgt[k] - cur[k]) > 0.0005) moving = true; else cur[k] = tgt[k];
+    }
+    apply();
+    if (moving || inView) raf = requestAnimationFrame(tick); else last = 0;
+  }
+  function kick(){ if (!raf) raf = requestAnimationFrame(tick); }
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){ inView = es[es.length - 1].isIntersecting; if (inView) kick(); }, { rootMargin: "80px 0px" }).observe(frame);
+  } else { inView = true; }
+  window.addEventListener("scroll", kick, { passive: true });
+  window.addEventListener("resize", kick);
+  if (fine){
+    row.addEventListener("pointermove", function(e){
+      var r = frame.getBoundingClientRect();
+      var mx = (e.clientX - r.left) / r.width - 0.5, my = (e.clientY - r.top) / r.height - 0.5;
+      tgt.lift = 1; tgt.ry = Math.max(-1, Math.min(1, mx)) * 7; tgt.rx = -Math.max(-1, Math.min(1, my)) * 5;
+      kick();
+    });
+    row.addEventListener("pointerleave", function(){ tgt.lift = 0; tgt.rx = 0; tgt.ry = 0; kick(); });
+  }
+  row.addEventListener("focusin", function(){ tgt.lift = 1; kick(); });
+  row.addEventListener("focusout", function(){ tgt.lift = 0; kick(); });
+  apply(); kick();
 })();
 </script>
 </body>
