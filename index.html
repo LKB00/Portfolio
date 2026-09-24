@@ -3131,6 +3131,33 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   .aifig{max-width:14ch}
 }
 
+
+/* ══ ONE COLUMN ══════════════════════════════════════════════════════
+   The rail is gone: a list of every question competed with the chat.
+   What it did well, saying whose assistant this is, moves into the
+   header as a profile: photo, name in the serif, the AI badge, role. */
+.aichat-panel{width:min(780px,calc(100vw - 48px));grid-template-columns:minmax(0,1fr)}
+.aichat-head{height:auto;min-height:72px;padding:14px 14px 14px 24px;gap:12px}
+.aichat-head .aime{display:inline-block;width:40px;height:40px}
+.aichat-title{display:flex;align-items:center;gap:8px;font-size:inherit}
+.aihead-name{font-family:var(--serif);font-size:18px;font-weight:400;line-height:1.2;letter-spacing:-.012em;color:var(--ink)}
+.aichat-title .aitag{margin-left:0;vertical-align:0}
+.aihead-sub{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+.aichat-body{padding:0 32px}
+.aichat-foot{padding-left:32px;padding-right:32px}
+@media (max-width:900px){.aichat-head{padding-left:20px}}
+@media (max-width:640px){
+  .aichat-panel{width:100%}
+  .aichat-head{min-height:56px;padding:8px 8px 8px 16px;gap:10px}
+  .aichat-head .aime{width:34px;height:34px}
+  .aihead-name{font-size:16.5px}
+  .aihead-sub{display:block;font-size:12px}
+  .aichat-panel.kb-open .aihead-sub{display:none}
+  .aichat-panel.kb-open .aichat-head .aime{width:28px;height:28px}
+  .aichat-body{padding:0 16px}
+  .aichat-foot{padding-left:12px;padding-right:12px}
+}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -3225,29 +3252,13 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     <div class="aichat-panel" tabindex="-1">
       <span class="aichat-handle" aria-hidden="true"></span>
 
-      <aside class="airail" aria-label="About Lokesh">
-        <div class="airail-me">
-          <div class="airail-photo"><img src="./assets/avatar-96.webp" width="96" height="96" alt="Lokesh Bhatia" decoding="async"></div>
-          <p class="airail-name">Lokesh Bhatia</p>
-          <p class="airail-role">Product designer &#183; AI and fintech</p>
-          <p class="airail-status"><span class="airail-dot" aria-hidden="true"></span>Open to work &#183; Bengaluru</p>
-        </div>
-        <nav class="airail-topics" id="aiRailTopics" aria-label="Things you can ask"></nav>
-        <div class="airail-foot">
-          <p class="airail-foot-t">Prefer the real me?</p>
-          <div class="airail-foot-a">
-            <a class="aipill is-primary" href="mailto:hi.lokeshux@gmail.com"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.8" y="3.3" width="12.4" height="9.4" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 4.5 8 8.6l5.5-4.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Email me</span></a>
-            <a class="aipill" href="./resume.html"><span>R&#233;sum&#233;</span></a>
-          </div>
-        </div>
-      </aside>
 
       <section class="aimain">
         <div class="aichat-head">
           <span class="aime" id="aiChatSpark" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>
           <div class="aihead-x">
-            <p class="aichat-title" id="aiChatTitle">Ask Lokesh <span class="aitag">AI</span></p>
-            <p class="aihead-sub">An AI version of me, answering from my own words</p>
+            <p class="aichat-title" id="aiChatTitle"><span class="aihead-name">Lokesh Bhatia</span><span class="aitag">AI</span></p>
+            <p class="aihead-sub">Product designer &#183; AI and fintech</p>
           </div>
           <button type="button" class="aichat-iconbtn" id="aiChatReset" aria-label="Start over" title="Start over">
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 8a5.4 5.4 0 1 0 1.6-3.85M2.6 2.6v3.2h3.2" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"></path></svg>
