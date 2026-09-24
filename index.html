@@ -4,22 +4,24 @@
 <script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lokesh Bhatia, Product Designer</title>
-<meta name="description" content="Product designer, 3 years across fintech and AI. A trading app at 200K+ users, an AI agent platform taken 0 to 1, and a B2B partner platform built from scratch.">
-<link rel="canonical" href="https://lokeshbhatia.com/">
+<title>Lokesh Bhatia · Product Designer, Fintech &amp; AI</title>
+<meta name="description" content="Product designer in Bengaluru. I owned a trading app behind 97% of company revenue, took an AI agent platform from 0 to 1, and built a B2B partner product from scratch.">
+<link rel="canonical" href="https://www.lokeshbhatia.com/">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.lokeshbhatia.com/#site","url":"https://www.lokeshbhatia.com/","name":"Lokesh Bhatia","inLanguage":"en"},{"@type":"Person","@id":"https://www.lokeshbhatia.com/#me","name":"Lokesh Bhatia","jobTitle":"Product Designer","url":"https://www.lokeshbhatia.com/","image":"https://www.lokeshbhatia.com/assets/lokesh-face.webp","email":"mailto:hi.lokeshux@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Bengaluru","addressCountry":"IN"},"alumniOf":{"@type":"CollegeOrUniversity","name":"IIT Guwahati"},"knowsAbout":["Product design","Fintech","AI products","Design systems"],"sameAs":["https://www.linkedin.com/in/lkb01/"]}]}</script>
+
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
-<meta property="og:title" content="Lokesh Bhatia, Product Designer">
-<meta property="og:description" content="Product designer, 3 years across fintech and AI. A trading app at 200K+ users, an AI agent platform taken 0 to 1, and a B2B partner platform built from scratch.">
-<meta property="og:url" content="https://lokeshbhatia.com/">
-<meta property="og:image" content="https://lokeshbhatia.com/og-image-v2.webp">
+<meta property="og:title" content="Lokesh Bhatia · Product Designer, Fintech &amp; AI">
+<meta property="og:description" content="Product designer in Bengaluru. I owned a trading app behind 97% of company revenue, took an AI agent platform from 0 to 1, and built a B2B partner product from scratch.">
+<meta property="og:url" content="https://www.lokeshbhatia.com/">
+<meta property="og:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Lokesh Bhatia at his desk, beside the words: 97% of company revenue went through one app. I was the only designer on it.">
+<meta property="og:image:alt" content="Lokesh Bhatia at his desk beside the line: I turn user needs into products that drive growth, and a button reading See how I design for AI.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://lokeshbhatia.com/og-image-v2.webp">
-<meta name="twitter:title" content="Lokesh Bhatia, Product Designer">
-<meta name="twitter:description" content="Product designer, 3 years across fintech and AI. A trading app at 200K+ users, an AI agent platform taken 0 to 1, and a B2B partner platform built from scratch.">
+<meta name="twitter:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
+<meta name="twitter:title" content="Lokesh Bhatia · Product Designer, Fintech &amp; AI">
+<meta name="twitter:description" content="Product designer in Bengaluru. I owned a trading app behind 97% of company revenue, took an AI agent platform from 0 to 1, and built a B2B partner product from scratch.">
 <link rel="icon" href="./assets/lokesh-face.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1581,6 +1583,13 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (prefers-reduced-motion:reduce){
   .workrow .cardframe.merge2 .mgphone-single{transition:none}
 }
+/* fluid mode (JS): one continuous motion instead of a hover jump. The
+   phone rises into the frame the first time the card is seen, drifts
+   gently with the scroll, and on hover lifts and leans toward the
+   cursor. Every value eases toward its target each frame, so nothing
+   snaps: moving the mouse away lets it settle back like it has weight. */
+.cardframe.merge2.is-fluid{perspective:1400px}
+.cardframe.merge2.is-fluid .mgphone-single{transition:none!important;will-change:transform,opacity;transform-origin:50% 40%;backface-visibility:hidden}
 /* ══ RISE PORTAL CARD ════════════════════════════════════════════════
    Same shape as the App Merge card: alive at rest with a slow float,
    then one clean move on hover. The auto-playing cursor tour is gone —
@@ -2526,6 +2535,1423 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    Placed last so these ID selectors win over the earlier, duplicated
    generic section{padding-bottom} rule without needing !important. */
 #top,#work,#notes{padding-bottom:clamp(90px,12vw,130px)}
+
+/* ══ THE OG ASSISTANT ════════════════════════════════════════════════
+   The footer already has a character: "Designed and built by me, with
+   an AI that argued back" — a spark mark (&#10022;, .fai) standing in
+   for whoever helped build the thing. This gives that character a job:
+   it's the same assistant, now answering questions about Lokesh
+   directly instead of just taking a credit line. Not a generic
+   "chat with AI" widget bolted onto the page — the one that already
+   lived here, made reachable.
+
+   A right-side panel on wide screens (there's room to keep the page
+   visible behind it), a near-full bottom sheet on phones (matching the
+   mobile nav's own sheet, since that's already the site's answer to
+   "a focused task on a small screen"). Both are the same markup; only
+   which edge it opens from changes. */
+/* ── the nav entry: a navlink like its neighbours, carrying the footer's
+   spark. It doesn't need to shout; the spark already means "the AI"
+   everywhere else on this site. */
+.askbtn{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 7px;border:0;
+  border-radius:var(--r-pill);background:transparent;color:var(--navOff);cursor:pointer;
+  font-family:var(--display);font-size:13px;font-weight:500;letter-spacing:var(--tr-body);
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.askbtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.askbtn-mark{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);font-size:10px;line-height:1;
+  transition:transform .34s var(--ease),background .34s var(--ease)}
+.askbtn:hover .askbtn-mark{transform:rotate(180deg);background:color-mix(in srgb,var(--accent) 22%,transparent)}
+
+/* ── the spark, as the footer draws it ─────────────────────────────── */
+.aispark{display:inline-grid;place-items:center;flex:0 0 auto;width:20px;height:20px;border-radius:50%;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);font-size:11px;line-height:1}
+/* thinking is the hover gesture on repeat: a quarter turn, a rest, a
+   quarter turn. The spark is four-fold, so each turn lands where it
+   started and the loop has no seam. */
+.aispark.is-busy{animation:aiTurn 1s var(--ease) infinite}
+@keyframes aiTurn{from{transform:rotate(0)}to{transform:rotate(90deg)}}
+/* me, speaking: the footer's avatar mark wherever the chat talks. While
+   an answer is coming, a soft accent ring breathes around it — the
+   "typing…" of a person, not the spinner of a machine. */
+.aime{display:inline-block;flex:0 0 auto;width:20px;height:20px;border-radius:50%;overflow:hidden;
+  box-shadow:0 0 0 1px var(--line)}
+.aime img{display:block;width:100%!important;height:100%!important;object-fit:cover}
+.aichat-head .aime{width:28px;height:28px}
+.aiwho .aime,.aimodel .aime{width:18px;height:18px}
+.aime.is-busy{animation:aiBreathe 1.4s var(--ease) infinite}
+@keyframes aiBreathe{0%,100%{box-shadow:0 0 0 1px var(--line),0 0 0 0 color-mix(in srgb,var(--accent) 35%,transparent)}
+  50%{box-shadow:0 0 0 1px var(--accent),0 0 0 4px color-mix(in srgb,var(--accent) 14%,transparent)}}
+.aitag{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:var(--r-pill);vertical-align:2px;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+  font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.06em;line-height:1.3}
+
+/* ── the panel: the command palette's grammar, stood up on the right ── */
+.aichat{position:fixed;inset:0;z-index:85;visibility:hidden;pointer-events:none}
+.aichat.open{visibility:visible;pointer-events:auto}
+.aichat-scrim{position:absolute;inset:0;background:rgba(20,20,22,.28);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s ease}
+.aichat.open .aichat-scrim{opacity:1}
+.aichat-panel{position:absolute;top:0;right:0;bottom:0;width:min(460px,100vw);
+  display:flex;flex-direction:column;background:var(--bg);
+  box-shadow:-1px 0 0 var(--line),0 24px 70px -30px rgba(20,24,45,.4);
+  transform:translateX(100%);transition:transform .5s var(--ease)}
+.aichat.open .aichat-panel{transform:none}
+.aichat-panel:focus{outline:none}
+.aichat-handle{display:none}
+
+.aichat-head{display:flex;align-items:center;gap:10px;height:56px;padding:0 10px 0 20px;flex:0 0 auto;
+  box-shadow:inset 0 -1px 0 var(--line)}
+.aichat-title{flex:1;min-width:0;margin:0;font-family:var(--display);font-size:13px;font-weight:500;
+  letter-spacing:var(--tr-body);color:var(--ink)}
+.aichat-iconbtn{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;border:0;border-radius:var(--r-pill);
+  background:transparent;color:var(--faint);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
+.aichat-iconbtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+
+.aichat-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 24px}
+
+/* ── the empty state: the page's own voice, set like the page ─────── */
+.aichat-intro{padding:40px 0 32px}
+.aieyebrow{margin:0 0 14px;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:var(--tr-label);
+  text-transform:uppercase;color:var(--faint)}
+.aichat-greet{margin:0;font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.12;
+  letter-spacing:-.02em;color:var(--ink)}
+.aichat-greet em{font-style:italic;color:var(--accent)}
+.aichat-lede{margin:14px 0 0;max-width:34em;font-family:var(--display);font-size:14px;line-height:1.55;color:var(--muted)}
+.aitry{margin-top:30px}
+.aitry .aieyebrow{margin-bottom:12px}
+/* suggested prompts: the site's ghost pill (the hero's LinkedIn button),
+   wrapping — the shape people already read as "tap to ask this" */
+.aichips{display:flex;flex-wrap:wrap;gap:8px}
+.aichip{display:inline-flex;align-items:center;gap:7px;max-width:100%;padding:8px 14px 8px 12px;border:0;
+  border-radius:var(--r-pill);background:transparent;box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;
+  font-family:var(--display);font-size:13px;font-weight:400;line-height:1.35;letter-spacing:var(--tr-body);
+  color:var(--ink);text-align:left;
+  transition:background .2s var(--ease),box-shadow .2s var(--ease),color .2s var(--ease)}
+.aichip svg{flex:0 0 auto;color:var(--faint);transition:color .2s var(--ease),transform .3s var(--ease)}
+.aichip:hover{background:var(--surface);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 26%,transparent)}
+.aichip:hover svg{color:var(--accent);transform:translate(1px,-1px)}
+.aichip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* arrival, the way [data-reveal] arrives everywhere else */
+.aichat .ai-in{opacity:0}
+.aichat.open .ai-in{animation:aiRise .7s var(--ease) both;animation-delay:calc(var(--i,0) * 70ms + 160ms)}
+@keyframes aiRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ── the transcript ──────────────────────────────────────────────────
+   Set like a printed interview, not a messenger: who's speaking in mono,
+   the question in the serif (the same face the timeline gives whatever
+   a visitor types), the answer as plain reading text. */
+.aix{padding:28px 0 26px;animation:aiRise .5s var(--ease) both}
+.aix + .aix{border-top:1px solid var(--line)}
+.aiwho{display:flex;align-items:center;gap:8px;margin:0 0 9px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.aiwho .aispark{width:18px;height:18px;font-size:10px}
+.aiasked{margin:0;font-family:var(--serif);font-size:20px;line-height:1.3;letter-spacing:-.012em;
+  color:var(--ink);overflow-wrap:anywhere;white-space:pre-wrap}
+.aians{margin-top:22px}
+.aitext{font-family:var(--display);font-size:14px;line-height:1.6;letter-spacing:-.005em;color:var(--ink);overflow-wrap:anywhere}
+.aitext p{margin:0 0 16px;color:var(--muted)}
+.aitext p:last-child{margin-bottom:0}
+.aitext .aitext-h{font-weight:500}
+.aitext ul,.aitext ol{margin:0 0 11px;padding:0;list-style:none}
+.aitext ul:last-child,.aitext ol:last-child{margin-bottom:0}
+.aitext li{position:relative;margin-bottom:6px}
+.aitext li:last-child{margin-bottom:0}
+.aitext ul li{padding-left:18px}
+.aitext ul li::before{content:"\2013";position:absolute;left:0;color:var(--faint)}
+.aitext ol{counter-reset:ai}
+.aitext ol li{padding-left:28px;counter-increment:ai}
+.aitext ol li::before{content:counter(ai,decimal-leading-zero);position:absolute;left:0;top:.28em;
+  font-family:var(--mono);font-size:11px;line-height:1;color:var(--faint)}
+.aitext b{font-weight:500}
+.aitext code{font-family:var(--mono);font-size:12.5px}
+.aitext a{color:var(--link);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;
+  text-decoration-color:color-mix(in srgb,var(--link) 35%,transparent);transition:text-decoration-color .2s ease}
+.aitext a:hover{opacity:1;text-decoration-color:var(--link)}
+/* his own words: the serif, on the site's one highlight colour */
+.aitext blockquote{margin:4px 0 14px;padding:1px 0 1px 15px;border-left:2px solid var(--yellow);
+  font-family:var(--serif);font-size:16.5px;line-height:1.5;letter-spacing:-.008em;color:var(--ink)}
+.aitext blockquote p{margin:0 0 8px}
+.aitext blockquote p:last-child,.aitext blockquote:last-child{margin-bottom:0}
+.aitext.is-error{color:var(--muted)}
+
+/* ── answer blocks ─────────────────────────────────────────────────
+   Each kind of question gets its own mix (api/data/answer-format.js):
+   the lead is the hero's own device — the sentence muted, the words
+   that carry it in ink; figures borrow the serif numerals; facts read
+   as a spec sheet; a case study arrives as the menu's numbered row. */
+/* the answer itself: everything in it is information, so all of it is
+   ink; the words that carry it are set heavier, not the rest fainter */
+.aitext .ailead{margin:0 0 14px;font-family:var(--display);font-size:19px;font-weight:400;line-height:1.38;
+  letter-spacing:-.02em;color:var(--ink);text-wrap:pretty}
+.aitext .ailead b{font-weight:600}
+.aitext .ailead:last-child{margin-bottom:0}
+
+/* One rule for the whole answer: a box means you can tap it. Link cards
+   and error cards are boxed; everything that's only read is plain,
+   left-aligned, in the same rhythm (16px between blocks). */
+.aifigs-wrap{margin:0 0 16px}
+.aifigs{display:flex;flex-wrap:wrap;gap:12px 32px}
+.aifig{min-width:0;max-width:18ch}
+.aifig b{display:block;font-family:var(--serif);font-size:26px;font-weight:400;line-height:1;
+  letter-spacing:-.02em;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.aifig span{display:block;margin-top:7px;font-family:var(--mono);font-size:9.5px;line-height:1.45;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--faint)}
+.aitext .aifigs-src{margin:8px 2px 0;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
+
+/* facts: one grouped box, the way a settings list groups rows — a
+   single hairline between rows, edge to edge, nothing else */
+.aifacts{display:flex;flex-direction:column;gap:14px;margin:0 0 16px}
+.aifacts dt{margin:0 0 3px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--faint);line-height:1.5}
+.aifacts dd{margin:0;font-size:14px;line-height:1.55;color:var(--ink)}
+.aifacts:last-child{margin-bottom:0}
+
+.aitext ol.aisteps{margin-bottom:16px}
+.aitext ol.aisteps:last-child{margin-bottom:0}
+.aitext ol.aisteps li{padding:0 0 13px 22px;margin:0;font-size:13.5px;line-height:1.5}
+.aitext ol.aisteps li::before{content:"";top:5px;left:0;width:7px;height:7px;border-radius:50%;
+  background:var(--bg);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--faint) 70%,transparent)}
+.aitext ol.aisteps li::after{content:"";position:absolute;left:3px;top:16px;bottom:1px;width:1px;background:var(--line)}
+.aitext ol.aisteps li:last-child{padding-bottom:0}
+.aitext ol.aisteps li:last-child::after{display:none}
+.aitext ol.aisteps li:last-child::before{background:var(--ink);box-shadow:none}
+.aistep-k{display:block;margin-bottom:1px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint);line-height:1.6}
+
+.aitext a.aicase{display:flex;align-items:flex-start;gap:14px;margin:16px 0 0;padding:14px 16px;border-radius:12px;
+  background:var(--card);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);text-decoration:none;
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+.aitext a.aicase:hover{background:var(--surface);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent)}
+.aicase-num{flex:0 0 auto;padding-top:3px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.aicase-num svg{display:block;margin-top:1px}
+.aicase-x{flex:1;min-width:0}
+.aicase-t{display:block;font-family:var(--serif);font-size:17px;line-height:1.3;letter-spacing:-.008em}
+.aicase-m{display:block;margin-top:5px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--faint)}
+.aicase svg{flex:0 0 auto;margin-top:4px;color:var(--faint);transition:transform .3s var(--ease),color .2s var(--ease)}
+.aitext a.aicase:hover svg{color:var(--accent);transform:translate(1px,-1px)}
+.aithinking{color:var(--faint)}
+/* the timeline's open-slot caret, reused as the writing cursor */
+.aicaret{display:inline-block;width:1.5px;height:1.05em;margin-left:2px;vertical-align:-.16em;border-radius:1px;
+  background:var(--link);animation:expblink 1.15s step-end infinite}
+
+/* ── the agent at work ──────────────────────────────────────────────
+   What an assistant is doing should be visible, not implied: a live
+   "Thinking" that settles into how long it took, then what the answer
+   is based on, as links to the pages it came from. */
+.aiproc{display:inline-flex;align-items:center;gap:8px;text-transform:none;letter-spacing:.02em}
+.aiproc::before{content:"";width:3px;height:3px;border-radius:50%;background:var(--line)}
+.aiproc:empty{display:none}
+.aiproc.is-live .aiproc-t{background:linear-gradient(90deg,var(--faint) 0%,var(--faint) 40%,var(--ink) 50%,var(--faint) 60%,var(--faint) 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.6s linear infinite}
+@keyframes aiShimmer{from{background-position:120% 0}to{background-position:-100% 0}}
+.aiproc-n{font-variant-numeric:tabular-nums}
+/* actions that fit this answer, not the same two on every one */
+.aiacts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.aipill{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:0;border-radius:var(--r-pill);
+  background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);cursor:pointer;
+  font-family:var(--display);font-size:12.5px;line-height:1.3;text-decoration:none;
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+.aipill:hover{background:var(--surface);opacity:1}
+.aipill.is-primary{background:var(--ink);color:var(--bg);box-shadow:none}
+.aipill.is-primary:hover{background:color-mix(in srgb,var(--ink) 86%,var(--bg))}
+.aipill svg{flex:0 0 auto}
+.aiicon{display:grid;place-items:center;width:30px;height:30px;margin-left:auto;padding:0;border:0;border-radius:50%;
+  background:transparent;color:var(--faint);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
+.aiicon:hover{background:var(--surface);color:var(--ink)}
+.aiicon.is-done{color:var(--live)}
+.aipill:focus-visible,.aiicon:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* a failed answer is never a dead end: say what happened in plain words,
+   then the way forward — a retry that runs itself when it can, and a
+   person to email when it can't */
+.aierr{position:relative;overflow:hidden;padding:14px 16px 15px;border-radius:12px;background:var(--card);
+  box-shadow:0 0 0 1px var(--line);animation:aiRise .4s var(--ease) both}
+.aierr-m{margin:0 0 12px;font-size:14px;line-height:1.5;color:var(--ink)}
+.aierr-a{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.aierr-a .aipill svg{flex:0 0 auto}
+.aierr-n{font-variant-numeric:tabular-nums}
+.aierr-bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);transform-origin:left center;
+  animation:aiDrain var(--t,20s) linear forwards}
+@keyframes aiDrain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+
+.ainext{padding:2px 0 30px;animation:aiRise .5s var(--ease) .1s both}
+.ainext .aieyebrow{margin-bottom:10px}
+
+/* ── the composer ────────────────────────────────────────────────────
+   The shape every AI tool has taught people to type into — a solid box,
+   the text on top, what's answering named bottom-left, a round send
+   bottom-right that becomes stop while it writes — made from this site's
+   materials: the card ground, the hairline, the ink primary. */
+.aichat-foot{flex:0 0 auto;padding:10px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg)}
+.aicomposer{display:flex;flex-direction:column;gap:8px;margin:0;padding:12px 10px 10px 14px;border-radius:var(--r-float);
+  background:var(--card);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.04),0 10px 26px -18px rgba(0,0,0,.28);
+  transition:box-shadow .2s var(--ease)}
+.aicomposer:focus-within{box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 28%,transparent),0 1px 2px rgba(0,0,0,.04),0 10px 26px -18px rgba(0,0,0,.28)}
+.aichat-input{display:block;width:100%;min-height:24px;max-height:140px;margin:0;padding:1px 2px 0 0;resize:none;
+  border:0;outline:0;background:transparent;overflow-y:auto;
+  font-family:var(--display);font-size:14.5px;line-height:1.55;letter-spacing:var(--tr-body);color:var(--ink);caret-color:var(--accent)}
+.aichat-input::placeholder{color:var(--faint);opacity:1}
+.aicomposer-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.aimodel{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
+.aimodel .aispark{width:18px;height:18px;font-size:10px}
+.aichat-send{position:relative;flex:0 0 auto;display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:50%;
+  background:var(--surface);color:var(--faint);cursor:default;
+  transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
+.aichat-send svg{grid-area:1/1;transition:opacity .15s ease,transform .2s var(--ease)}
+.aichat-send .ico-stop{opacity:0;transform:scale(.6)}
+.aichat-send.is-ready,.aichat-send.is-busy{background:var(--ink);color:var(--bg);cursor:pointer}
+.aichat-send.is-ready:hover,.aichat-send.is-busy:hover{opacity:.88}
+.aichat-send.is-ready:active,.aichat-send.is-busy:active{transform:scale(.92)}
+.aichat-send.is-busy .ico-send{opacity:0;transform:scale(.6)}
+.aichat-send.is-busy .ico-stop{opacity:1;transform:none}
+.aichat-send:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.aihint{display:flex;justify-content:flex-end;gap:12px;margin:8px 4px 0;
+  font-family:var(--mono);font-size:10px;color:var(--faint)}
+
+/* ── phones: the mobile menu's own sheet ─────────────────────────────── */
+@media (max-width:640px){
+  .aichat-scrim{background:rgba(20,18,16,.42);-webkit-backdrop-filter:none;backdrop-filter:none}
+  html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
+  .aichat-panel{top:auto;left:0;width:100%;height:92dvh;border-radius:20px 20px 0 0;
+    box-shadow:0 -14px 34px -18px rgba(0,0,0,.32);transform:translateY(100%)}
+  .aichat-handle{display:block;flex:0 0 auto;width:36px;height:4px;margin:10px auto 0;border-radius:2px;background:var(--line)}
+  .aichat-head{height:50px;padding-left:var(--pad);box-shadow:none}
+  .aichat-body{padding:0 var(--pad)}
+  .aichat-intro{padding-top:20px}
+  .aichat-greet{font-size:26px}
+  .aichat-foot{padding-left:12px;padding-right:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .aichat-panel,.aichat-scrim,.askbtn-mark{transition:none}
+  .aispark.is-busy,.aime.is-busy,.aiproc-t,.aierr-bar,.aicaret,.aix,.ainext,.aichat.open .ai-in{animation:none!important}
+  .aichat .ai-in{opacity:1}
+}
+
+
+/* ══ THE WORKSPACE LAYER ═════════════════════════════════════════════
+   Everything above set the assistant as a narrow transcript. This layer
+   turns it into a workspace, and wins by coming later:
+   · a large centred window, not a drawer: the answer gets room
+   · a rail that is plainly me: the hero's portrait on the hero's
+     lavender, name, role, status, and the real me one tap away
+   · a conversation, not a document: questions as ink bubbles on the
+     right, answers as white cards on a tinted canvas on the left
+   · the agent's work shown as steps that tick off, then fold away */
+.aichat-panel{top:50%;left:50%;right:auto;bottom:auto;
+  width:min(1060px,calc(100vw - 48px));height:min(780px,calc(100dvh - 48px));
+  display:grid;grid-template-columns:272px minmax(0,1fr);overflow:hidden;border-radius:20px;
+  background:var(--surface);
+  box-shadow:0 0 0 1px var(--line),0 40px 100px -40px rgba(20,24,45,.45),0 12px 30px -18px rgba(20,24,45,.25);
+  opacity:0;transform:translate(-50%,-48%) scale(.985);
+  transition:transform .5s var(--ease),opacity .28s ease}
+.aichat.open .aichat-panel{opacity:1;transform:translate(-50%,-50%)}
+.aichat-scrim{background:rgba(20,20,22,.34)}
+
+/* ── the rail ── */
+.airail{display:flex;flex-direction:column;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:18px 18px 16px;background:var(--bg);box-shadow:inset -1px 0 0 var(--line)}
+.airail-photo{height:150px;border-radius:14px;background:var(--lavender);overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+.airail-photo img{display:block;width:108%!important;height:auto!important;max-width:none;margin-bottom:-6px}
+.airail-name{margin:16px 0 0;font-family:var(--serif);font-size:22px;line-height:1.15;letter-spacing:-.015em;color:var(--ink)}
+.airail-role{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.airail-status{display:inline-flex;align-items:center;gap:7px;margin:12px 0 0;padding:4px 10px 4px 8px;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--live) 10%,transparent);color:var(--ink);font-size:12px}
+.airail-dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 0 3px color-mix(in srgb,var(--live) 22%,transparent)}
+.airail-topics{margin-top:24px;flex:1}
+.airail-k{margin:18px 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
+.airail-k:first-child{margin-top:0}
+.airail-q{display:flex;align-items:flex-start;gap:8px;width:100%;margin:0;padding:7px 8px;border:0;border-radius:8px;
+  background:transparent;color:var(--ink);cursor:pointer;text-align:left;font-family:var(--display);font-size:13px;line-height:1.4;
+  transition:background .18s var(--ease)}
+.airail-q::before{content:"";flex:0 0 auto;width:5px;height:5px;margin-top:7px;border-radius:50%;background:var(--line)}
+.airail-q:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.airail-q.is-asked{color:var(--faint)}
+.airail-q.is-asked::before{background:var(--live)}
+.airail-q:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.airail-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.airail-foot-t{margin:0 0 10px;font-size:12.5px;color:var(--muted)}
+.airail-foot-a{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ── the main area ── */
+/* both are <section>s, and the page gives every section bottom padding
+   and a stacking layer; neither belongs inside the chat */
+.aimain{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;min-height:0;padding:0!important;z-index:auto}
+section.aix{z-index:auto}
+.aichat-head{height:64px;padding:0 14px 0 28px;box-shadow:inset 0 -1px 0 var(--line);background:var(--surface)}
+.aichat-head .aime{display:none}
+.aihead-x{flex:1;min-width:0}
+.aichat-title{font-size:14px}
+.aihead-sub{margin:2px 0 0;font-size:12px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aichat-body{padding:0 28px}
+.aichat-body > *{max-width:720px;margin-left:auto;margin-right:auto}
+
+/* empty state */
+.aichat-intro{padding:44px 0 28px}
+.aichat-greet{font-size:36px}
+.aichat-lede{max-width:40em;font-size:14.5px}
+.aistart{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:28px}
+.aistart-b{display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-height:104px;padding:14px 16px;border:0;
+  border-radius:14px;background:var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer;text-align:left;color:var(--ink);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .2s var(--ease)}
+.aistart-b:hover{transform:translateY(-2px);box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 20%,transparent),0 14px 28px -20px rgba(0,0,0,.3)}
+.aistart-k{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--faint)}
+.aistart-k svg{color:var(--faint);transition:color .2s var(--ease),transform .3s var(--ease)}
+.aistart-b:hover .aistart-k svg{color:var(--accent);transform:translate(1px,-1px)}
+.aistart-q{font-family:var(--display);font-size:15px;line-height:1.35;letter-spacing:-.01em}
+.aistart-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ── a conversation ── */
+.aix{padding:24px 0 6px;border:0!important}
+.aiq{display:flex;justify-content:flex-end;margin:0 0 18px}
+.aiq .aiasked{max-width:78%;padding:10px 15px;border-radius:18px 18px 5px 18px;background:var(--ink);color:var(--bg);
+  font-family:var(--display);font-size:14.5px;line-height:1.45;letter-spacing:-.005em}
+.aians{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;margin:0}
+.aians > .aime{width:32px;height:32px;margin-top:0}
+.aians-x{min-width:0}
+.aicard{padding:20px 22px 16px;border-radius:16px;background:var(--card);
+  box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.03),0 16px 34px -28px rgba(0,0,0,.35);animation:aiRise .4s var(--ease) both}
+.aicard[hidden]{display:none}
+.aicard .aitext a.aicase{background:var(--bg)}
+.aicard .aitext a.aicase:hover{background:var(--surface)}
+.aicard .aiacts{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+.aians-x > .aierr{margin-top:0}
+.ainext{padding:14px 0 26px 44px}
+.ainext .aieyebrow{margin-bottom:8px}
+.ainext .aichip{background:var(--card)}
+
+/* ── the agent at work: steps that tick off, then fold into one line ── */
+.aitrace{margin:4px 0 10px}
+.aitrace-sum{display:none;align-items:center;gap:6px;padding:3px 8px 3px 6px;margin-left:-6px;border:0;border-radius:var(--r-pill);
+  background:transparent;color:var(--muted);cursor:pointer;font-family:var(--display);font-size:12.5px;
+  transition:background .2s var(--ease)}
+.aitrace-sum:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.aitrace-sum svg{transition:transform .25s var(--ease)}
+.aitrace.is-done .aitrace-sum{display:inline-flex}
+.aitrace.is-open .aitrace-sum svg{transform:rotate(90deg)}
+.aitrace-list{display:flex;flex-direction:column;gap:7px;margin:0;padding:2px 0 0;list-style:none}
+.aitrace.is-done:not(.is-open) .aitrace-list{display:none}
+.aitrace.is-done.is-open .aitrace-list{margin-top:8px}
+.aistep{display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.3;color:var(--muted);animation:aiRise .3s var(--ease) both}
+.aistep-i{position:relative;flex:0 0 auto;width:15px;height:15px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--line)}
+.aistep.is-live .aistep-i{box-shadow:none;border:1.5px solid var(--line);border-top-color:var(--accent);animation:aiSpin .8s linear infinite}
+@keyframes aiSpin{to{transform:rotate(360deg)}}
+.aistep.is-done .aistep-i{background:var(--ink);box-shadow:none}
+.aistep.is-done .aistep-i::after{content:"";position:absolute;left:4.5px;top:4px;width:5px;height:3px;
+  border-left:1.5px solid var(--bg);border-bottom:1.5px solid var(--bg);transform:rotate(-45deg)}
+.aistep.is-fail .aistep-i{background:var(--faint);box-shadow:none}
+.aistep.is-live .aistep-t{background:linear-gradient(90deg,var(--muted) 0%,var(--muted) 40%,var(--ink) 50%,var(--muted) 60%,var(--muted) 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.6s linear infinite}
+.aistep-n{font-variant-numeric:tabular-nums}
+
+/* composer sits on the canvas */
+.aichat-foot{background:var(--surface);padding:10px 28px calc(14px + env(safe-area-inset-bottom))}
+.aichat-foot > *{max-width:720px;margin-left:auto;margin-right:auto}
+
+/* ── narrower screens: the rail steps aside, the window becomes a sheet ── */
+@media (max-width:900px){
+  .aichat-panel{grid-template-columns:minmax(0,1fr)}
+  .airail{display:none}
+  .aichat-head .aime{display:inline-block}
+  .aichat-head{padding-left:20px}
+}
+@media (max-width:640px){
+  .aichat-panel{top:auto;left:0;right:0;bottom:0;width:100%;height:94dvh;border-radius:20px 20px 0 0;
+    display:flex;flex-direction:column;opacity:1;transform:translateY(100%)}
+  .aichat.open .aichat-panel{transform:none}
+  .aichat-head{height:auto;min-height:52px;padding:6px 10px 6px var(--pad);box-shadow:none}
+  .aihead-sub{display:none}
+  .aichat-body{padding:0 var(--pad)}
+  .aichat-intro{padding-top:14px}
+  .aichat-greet{font-size:28px}
+  .aistart{grid-template-columns:minmax(0,1fr);gap:8px}
+  .aistart-b{min-height:0;gap:8px}
+  .aichat-foot{padding-left:12px;padding-right:12px}
+  .aiq .aiasked{max-width:86%}
+  .aians{grid-template-columns:minmax(0,1fr)}
+  .aians > .aime{display:none}
+  .aicard{padding:16px 16px 14px}
+  .ainext{padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .aichat-panel{transition:none}
+  .aistep,.aicard,.aistep.is-live .aistep-i,.aistep.is-live .aistep-t{animation:none!important}
+  .aistart-b{transition:none}
+}
+
+
+/* ══ THE QUIET LAYER ══════════════════════════════════════════════════
+   What the best assistants share (ChatGPT, Claude, Perplexity): the
+   answer is plain text on the page, and typography does the hierarchy.
+   So: one flat surface for rail and chat, a hairline where two areas
+   meet, no card and no shadow around an answer, the visitor's message
+   as a soft grey bubble, and depth kept for the one thing you act on
+   first, the composer. */
+.aichat-panel{background:var(--bg);box-shadow:0 0 0 1px var(--line),0 30px 80px -40px rgba(20,24,45,.35)}
+.airail{background:var(--bg)}
+.aichat-head{background:var(--bg)}
+.aichat-foot{background:var(--bg)}
+
+/* profile: compact, like an account row, not a hero */
+.airail-me{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:12px;align-items:center}
+.airail-photo{grid-row:1 / span 2;width:44px;height:44px;border-radius:50%;background:var(--lavender)}
+.airail-photo{display:block}
+.airail-photo img{width:100%!important;height:100%!important;max-width:none;margin:0;object-fit:cover}
+.airail-name{margin:0;font-size:17px;align-self:end}
+.airail-role{margin:1px 0 0;font-size:12px;align-self:start}
+.airail-status{grid-column:1 / -1;justify-self:start;margin-top:14px;background:transparent;padding:0;color:var(--muted)}
+.airail-topics{margin-top:26px}
+
+/* answers: plain text on the page */
+.aicard{padding:0;border-radius:0;background:none;box-shadow:none;animation:none}
+.aicard .aiacts{border-top:0;padding-top:0;margin-top:14px}
+.aicard .aiicon{margin-left:0}
+.aicard .aitext a.aicase{background:transparent}
+.aicard .aitext a.aicase:hover{background:var(--surface)}
+.aians{display:block}
+.aians > .aime{display:none}
+.aitrace{margin:0 0 12px}
+.aix{padding:28px 0 4px}
+.ainext{padding:14px 0 22px}
+.ainext .aichip{background:transparent}
+
+/* the visitor's message: soft, so the answer leads */
+.aiq .aiasked{background:var(--surface);color:var(--ink);border-radius:18px}
+
+/* starters: flat, a hairline, a fill on hover, nothing that lifts */
+.aistart-b{box-shadow:inset 0 0 0 1px var(--line);background:transparent;transition:background .2s var(--ease)}
+.aistart-b:hover{transform:none;box-shadow:inset 0 0 0 1px var(--line);background:var(--surface)}
+
+/* errors: a hairline, not a floating card */
+.aierr{box-shadow:inset 0 0 0 1px var(--line);background:transparent}
+
+/* the composer keeps the only depth on the page */
+.aicomposer{box-shadow:0 0 0 1px var(--line),0 4px 16px -10px rgba(0,0,0,.18)}
+.aicomposer:focus-within{box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 30%,transparent),0 4px 16px -10px rgba(0,0,0,.18)}
+@media (max-width:640px){
+  .aicard{padding:0}
+}
+
+
+/* ══ SUGGESTIONS ═════════════════════════════════════════════════════
+   One row component for every "ask this" on the page, starters and
+   follow-ups alike: a familiar icon, the question in plain words, an
+   arrow that wakes on hover, hairlines between rows. A vertical list
+   scans faster than wrapping pills of uneven width. Starters sit
+   directly on the composer, where the visitor is already looking. */
+.aichat-intro{display:flex;flex-direction:column;min-height:100%;padding-bottom:6px}
+.aistart{display:block;margin-top:auto;padding-top:28px}
+.aisug-k{margin:0 0 4px 10px;font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
+.aisug{display:grid;grid-template-columns:18px minmax(0,1fr) 14px;align-items:center;gap:12px;width:100%;margin:0;
+  padding:9px 10px;border:0;border-radius:10px;background:transparent;cursor:pointer;
+  color:var(--ink);text-align:left;font-family:var(--display);font-size:14px;line-height:1.4;letter-spacing:-.005em;
+  transition:background .18s var(--ease)}
+.aisug-i{display:grid;place-items:center;color:var(--faint);transition:color .18s var(--ease)}
+.aisug-a{display:grid;place-items:center;color:var(--faint);opacity:0;transform:translate(-3px,3px);
+  transition:opacity .18s var(--ease),transform .25s var(--ease),color .18s var(--ease)}
+.aisug:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.aisug:hover .aisug-i{color:var(--ink)}
+.aisug:hover .aisug-a{opacity:1;transform:none;color:var(--accent)}
+.aisug:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.aisug:focus-visible .aisug-a{opacity:1;transform:none}
+.ainext{padding:18px 0 24px}
+@media (hover:none){.aisug-a{opacity:1;transform:none}}
+@media (max-width:640px){
+  .aistart{padding-top:22px}
+}
+
+
+/* ══ ARRIVAL ═════════════════════════════════════════════════════════
+   New pieces of an answer ease in rather than appear: a short fade and
+   a few pixels of rise, a touch of blur clearing. Only genuinely new
+   blocks and list items get it (see morph), so nothing already read
+   moves again. When the answer is done, its actions and the follow-ups
+   follow in a gentle stagger. */
+.ai-new{animation:aiBlockIn .5s cubic-bezier(.22,1,.36,1) both}
+@keyframes aiBlockIn{from{opacity:0;transform:translateY(6px);filter:blur(2px)}to{opacity:1;transform:none;filter:none}}
+.aicard .aiacts{animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) .05s both}
+.ainext{animation:none}
+.ainext .aisug-k{animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) .15s both}
+.ainext .aisug{animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) both}
+.ainext .aisug:nth-of-type(1){animation-delay:.22s}
+.ainext .aisug:nth-of-type(2){animation-delay:.30s}
+.ainext .aisug:nth-of-type(3){animation-delay:.38s}
+.aitrace-sum{animation:aiBlockIn .35s cubic-bezier(.22,1,.36,1) both}
+@media (prefers-reduced-motion:reduce){
+  .ai-new,.aicard .aiacts,.ainext .aisug-k,.ainext .aisug,.aitrace-sum{animation:none!important}
+}
+
+
+/* ══ PHONES, PROPERLY ════════════════════════════════════════════════
+   · the page behind is pinned while the chat is open (body.chat-open)
+   · text fields are 16px on touch screens: anything smaller makes iOS
+     zoom the whole page in on focus, and it stays zoomed
+   · the sheet rests on the keyboard (--kb) and is never taller than the
+     visible viewport (--vvh), so the composer is always in view
+   · double-tap does nothing inside the chat, so it can't zoom either
+   · every scroll area keeps its scroll to itself */
+body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
+.aichat{touch-action:manipulation}
+.aichat-panel,.aichat-body,.airail{overscroll-behavior:contain}
+.aichat-body{-webkit-overflow-scrolling:touch}
+@media (hover:none),(max-width:640px){
+  .aichat-input{font-size:16px;line-height:1.45}
+}
+@media (max-width:640px){
+  .aichat-panel{bottom:var(--kb,0px);height:min(92dvh,calc(var(--vvh,100dvh) - 10px));max-height:calc(100dvh - 10px);
+    transition:transform .45s var(--ease)}
+  /* with the keyboard up, space goes to the conversation, not chrome */
+  .aichat-panel.kb-open .aichat-handle{display:none}
+  .aichat-panel.kb-open .aichat-head{min-height:46px;padding-top:2px;padding-bottom:2px}
+  .aichat-panel.kb-open .aihint{display:none}
+  .aichat-panel.kb-open .aichat-foot{padding-bottom:8px}
+  .aichat-panel.kb-open .aichat-intro .aichat-lede{display:none}
+
+  /* spacing: one 16px gutter, one rhythm */
+  .aichat-head{padding-left:16px;padding-right:8px}
+  .aichat-body{padding:0 16px}
+  .aichat-foot{padding:8px 12px calc(10px + env(safe-area-inset-bottom))}
+  .aichat-intro{padding:12px 0 4px}
+  .aichat-greet{font-size:27px;line-height:1.14}
+  .aichat-lede{margin-top:10px;font-size:14px}
+  .aistart{padding-top:18px}
+  .aisug{grid-template-columns:18px minmax(0,1fr) 14px;gap:10px;padding:10px 8px;font-size:14.5px}
+  .aix{padding-top:22px}
+  .aiq{margin-bottom:14px}
+  .aiq .aiasked{max-width:88%;font-size:15px}
+  .aitext .ailead{font-size:18px}
+  .aifigs{gap:12px 24px}
+  .aifig b{font-size:24px}
+  .aitext a.aicase{padding:12px 14px;gap:12px}
+  .aicase-t{font-size:16px}
+  .aierr{padding:12px 14px 13px}
+  .ainext{padding:14px 0 18px}
+  .aicomposer{padding:10px 8px 8px 12px}
+  .aichat-input{max-height:120px}
+}
+@media (max-width:360px){
+  .aichat-greet{font-size:24px}
+  .aitext .ailead{font-size:17px}
+  .aifigs{gap:10px 18px}
+  .aifig{max-width:14ch}
+}
+
+
+/* ══ ONE COLUMN ══════════════════════════════════════════════════════
+   The rail is gone: a list of every question competed with the chat.
+   What it did well, saying whose assistant this is, moves into the
+   header as a profile: photo, name in the serif, the AI badge, role. */
+.aichat-panel{width:min(780px,calc(100vw - 48px));grid-template-columns:minmax(0,1fr)}
+.aichat-head{height:auto;min-height:72px;padding:14px 14px 14px 24px;gap:12px}
+.aichat-head .aime{display:inline-block;width:40px;height:40px}
+.aichat-title{display:flex;align-items:center;gap:8px;font-size:inherit}
+.aihead-name{font-family:var(--serif);font-size:18px;font-weight:400;line-height:1.2;letter-spacing:-.012em;color:var(--ink)}
+.aichat-title .aitag{margin-left:0;vertical-align:0}
+.aihead-sub{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+.aichat-body{padding:0 32px}
+.aichat-foot{padding-left:32px;padding-right:32px}
+@media (max-width:900px){.aichat-head{padding-left:20px}}
+@media (max-width:640px){
+  .aichat-panel{width:100%}
+  .aichat-head{min-height:56px;padding:8px 8px 8px 16px;gap:10px}
+  .aichat-head .aime{width:34px;height:34px}
+  .aihead-name{font-size:16.5px}
+  .aihead-sub{display:block;font-size:12px}
+  .aichat-panel.kb-open .aihead-sub{display:none}
+  .aichat-panel.kb-open .aichat-head .aime{width:28px;height:28px}
+  .aichat-body{padding:0 16px}
+  .aichat-foot{padding-left:12px;padding-right:12px}
+}
+
+
+/* ══ THE TRAY ════════════════════════════════════════════════════════
+   Suggestions and the composer read as one object: a soft tinted tray
+   with the composer docked at its bottom, a quiet header row (label
+   left, a way out right), and rows that are just a dot, the question
+   in ink and a short grey hint. No icons, no rules. Once the talk
+   starts the tray folds away and the composer stands on its own. */
+.aichat-intro{justify-content:flex-end;padding-bottom:28px}
+.aitray{border-radius:24px}
+.aichat-foot.is-chatting .aitray{padding:0;background:transparent}
+.aichat-foot:not(.is-chatting) .aitray{padding:18px 14px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg))}
+.aichat-foot.is-chatting .aitray-top{display:none}
+.aitray-top{padding:0 10px 12px;animation:aiBlockIn .5s cubic-bezier(.22,1,.36,1) .12s both}
+.aitray-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
+.aitray-k{margin:0;font-family:var(--display);font-size:11.5px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.aitray-link{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted);text-decoration:none;transition:color .2s var(--ease)}
+.aitray-link svg{transition:transform .25s var(--ease)}
+.aitray-link:hover{color:var(--ink);opacity:1}
+.aitray-link:hover svg{transform:translateX(2px)}
+.aitray-list{display:flex;flex-direction:column;gap:2px;margin:0 -10px}
+.aitr{display:flex;align-items:baseline;gap:12px;width:100%;margin:0;padding:8px 10px;border:0;border-radius:10px;
+  background:transparent;cursor:pointer;text-align:left;font-family:var(--display);line-height:1.4;
+  transition:background .18s var(--ease)}
+.aitr-dot{flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:var(--accent);transform:translateY(-2px)}
+.aitr-t{flex:0 1 auto;min-width:0;font-size:15px;color:var(--ink);letter-spacing:-.005em}
+.aitr-d{flex:1 1 0;min-width:0;font-size:14.5px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aitr:hover{background:color-mix(in srgb,var(--ink) 4.5%,transparent)}
+.aitr:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.aichat-foot:not(.is-chatting) .aicomposer{box-shadow:0 0 0 1px var(--line),0 2px 10px -6px rgba(0,0,0,.14)}
+/* follow-ups: the same rows, without the tray */
+.ainext .aitray-k{margin:0 0 6px}
+.ainext .aitray-list{margin:0 -10px}
+.ainext .aitr{animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) both}
+.ainext .aitr:nth-child(1){animation-delay:.22s}
+.ainext .aitr:nth-child(2){animation-delay:.30s}
+.ainext .aitr:nth-child(3){animation-delay:.38s}
+@media (max-width:640px){
+  .aichat-foot:not(.is-chatting) .aitray{padding:14px 8px 8px;border-radius:20px}
+  .aitray-top{padding:0 8px 8px}
+  .aitr{flex-wrap:wrap;row-gap:1px;padding:8px}
+  .aitr-t{flex:1 1 0;font-size:15px}
+  .aitr-d{flex:0 0 100%;padding-left:18px;white-space:normal;font-size:13.5px}
+  .aichat-panel.kb-open .aitray-top{display:none}
+  .aichat-panel.kb-open .aichat-foot:not(.is-chatting) .aitray{padding:0;background:none}
+}
+@media (prefers-reduced-motion:reduce){.aitray-top,.ainext .aitr{animation:none!important}}
+
+
+/* the rows are only the question; the arrow says "sends" on hover */
+.aitr{align-items:center;justify-content:space-between}
+.aitr-t{flex:1 1 auto}
+.aitr-a{display:grid;place-items:center;flex:0 0 auto;color:var(--faint);opacity:0;transform:translate(-3px,3px);
+  transition:opacity .18s var(--ease),transform .25s var(--ease),color .18s var(--ease)}
+.aitr:hover .aitr-a,.aitr:focus-visible .aitr-a{opacity:1;transform:none;color:var(--accent)}
+@media (hover:none){.aitr-a{opacity:1;transform:none}}
+@media (max-width:640px){.aitr{flex-wrap:nowrap}}
+
+
+/* ══ TYPE, FROM THE PORTFOLIO ════════════════════════════════════════
+   Every piece of text in the chat now takes one of the portfolio's own
+   roles, measured from the page rather than guessed:
+   · display  STIX Two Text 500 (the hero, card titles, company names)
+   · body     Geist 15px/1.55 (the site's --t-body-lg), muted for
+              supporting text, ink for what is being read
+   · ui       Geist 13px 500 (nav, buttons)
+   · label    Geist Mono 11px 500 uppercase, .09em (section labels, dates)
+   · meta     Geist Mono 10.5px uppercase, .05em (case meta in the menu)
+   Nothing smaller than the site's smallest (10.5px). */
+
+/* display */
+.aihead-name,.aichat-greet,.aicase-t,.aifig b{font-family:var(--serif);font-weight:500}
+.aihead-name{font-size:18px;letter-spacing:-.018em}
+.aichat-greet{letter-spacing:-.026em}
+.aicase-t{font-size:18px;line-height:1.3;letter-spacing:-.018em}
+.aitext .ailead{font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.3;letter-spacing:-.02em}
+.aitext .ailead b{font-weight:700}
+
+/* body */
+.aichat-lede,.aitext,.aitext p,.aifacts dd,.aitext ol.aisteps li,.aiq .aiasked,.aitr-t,.aierr-m{
+  font-family:var(--display);font-size:15px;line-height:1.55;letter-spacing:-.009em}
+.aitr-t{font-weight:400}
+.aichat-input{font-size:15px;line-height:1.55;letter-spacing:-.009em}
+
+/* ui */
+.aipill,.aitrace-sum,.aistep,.aihead-sub{font-family:var(--display);font-size:13px;letter-spacing:-.01em}
+.aipill,.aitrace-sum{font-weight:500}
+
+/* label */
+.aitray-k,.aistep-k,.aifacts dt,.aifig span,.aimodel{
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.aitray-k{color:var(--muted)}
+
+/* meta */
+.aicase-m,.aihint,.aicase-num{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.05em}
+.aicase-m{text-transform:uppercase}
+.aichat-title .aitag{font-size:10.5px;letter-spacing:.05em}
+
+@media (hover:none),(max-width:640px){ .aichat-input{font-size:16px} }
+@media (max-width:640px){
+  .aitext .ailead{font-size:19px}
+  .aihead-name{font-size:17px}
+}
+
+
+/* ══ EVERYTHING EARNS ITS PLACE ══════════════════════════════════════
+   The audit's changes:
+   · one busy signal is enough (step spinner + stop): the header photo
+     no longer pulses
+   · Start over only exists once there is something to start over
+   · the composer is just the field and the send button: nothing to
+     choose, so no model label
+   · copy sits tight under the answer, and only shows on hover where
+     there is hover, so it never costs a row of its own
+   · follow-ups sit in the same tray as the starters: suggestions look
+     like suggestions everywhere, not like paragraphs */
+.aichat-head .aime.is-busy{animation:none}
+.aichat:not(.has-chat) #aiChatReset{visibility:hidden}
+.aicomposer-row{justify-content:flex-end}
+.aicomposer{padding-bottom:8px}
+.aicomposer-row{margin-top:-4px}
+.aitext a.aicase{align-items:center}
+.aicard .aiacts{margin-top:10px;min-height:0}
+.aicard .aiacts:has(.aiicon:only-child){margin-top:6px}
+@media (hover:hover){
+  .aicard .aiicon{opacity:0;transition:opacity .18s var(--ease),background .2s var(--ease),color .2s var(--ease)}
+  .aix:hover .aicard .aiicon,.aicard .aiicon:focus-visible,.aicard .aiicon.is-done{opacity:1}
+}
+.ainext{margin:18px 0 26px;padding:14px 10px 8px;border-radius:20px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg))}
+.ainext .aitray-k{margin:0 10px 6px}
+.ainext .aitray-list{margin:0}
+@media (max-width:640px){.ainext{padding:12px 6px 6px;border-radius:18px}}
+
+
+/* copy on the "Worked for …" line; the composer is one row */
+.aitrace{display:flex;flex-wrap:wrap;align-items:center}
+.aitrace .aitrace-list{flex:0 0 100%}
+.aitrace > .aiicon{margin-left:auto;width:28px;height:28px}
+@media (hover:hover){
+  .aitrace > .aiicon{opacity:0;transition:opacity .18s var(--ease),background .2s var(--ease),color .2s var(--ease)}
+  .aix:hover .aitrace > .aiicon,.aitrace > .aiicon:focus-visible,.aitrace > .aiicon.is-done{opacity:1}
+}
+.aicomposer{flex-direction:row;align-items:flex-end;gap:10px;padding:10px 8px 8px 14px}
+.aicomposer-row{margin:0}
+.aichat-input{padding:5px 0 5px}
+
+
+/* ══ PRESENCE ════════════════════════════════════════════════════════
+   The agent is shown as a presence, built from the portfolio's own
+   material rather than a stock AI orb: the hero portrait's lavender
+   shape (round, with one sharp corner, like a speech bubble) carrying
+   the footer's ✦, the mark this site already uses for its AI.
+   States are honest and live only in the shape:
+     idle      barely drifts
+     thinking  flips between the hero's two shapes; the ✦ turns
+     writing   the flip slows; the ✦ holds
+   Spacing runs on one scale (4 8 12 16 24 32); one radius per kind of
+   thing (shape, 12 tiles, 16 composer, 20 window). */
+.aipres{display:inline-grid;place-items:center;flex:0 0 auto;background:var(--lavender);color:var(--accent);
+  border-radius:var(--hero-shape);animation:aiIdle 9s ease-in-out infinite alternate}
+.aipres-s{display:block;line-height:1}
+.aipres.lg{width:56px;height:56px;font-size:18px}
+.aipres.sm{width:24px;height:24px;font-size:10px}
+@keyframes aiIdle{from{border-radius:var(--hero-shape)}to{border-radius:50% 50% 46% 14% / 44% 44% 48% 14%}}
+@keyframes aiFlip{from{border-radius:var(--hero-shape)}to{border-radius:var(--hero-shape-alt)}}
+.aipres.is-busy{animation:aiFlip 1s cubic-bezier(.45,0,.55,1) infinite alternate}
+.aipres.is-busy .aipres-s{animation:aiTurn 1s var(--ease) infinite}
+.aipres.is-busy.is-writing{animation-duration:2.2s}
+.aipres.is-busy.is-writing .aipres-s{animation:none}
+
+/* header: empty until there is a conversation (the presence is centre
+   stage then); afterwards the small presence, the name, the state */
+.aichat-head{min-height:60px;padding:12px 12px 12px 24px}
+.aichat:not(.has-chat) .aichat-head .aipres,
+.aichat:not(.has-chat) .aichat-head .aihead-x{visibility:hidden}
+.aichat:not(.has-chat) .aichat-head{box-shadow:none}
+.aihead-name{font-size:16px}
+.aihead-sub{font-size:12.5px;color:var(--muted);transition:color .2s var(--ease)}
+.aichat-head .aime{display:none}
+
+/* opening: centred, one column, one rhythm */
+.aichat-intro{align-items:center;justify-content:center;text-align:center;padding:24px 0 16px}
+.aichat-intro .aipres.lg{margin:0 0 12px}
+.aipres-name{display:flex;align-items:center;gap:8px;margin:0 0 24px;font-family:var(--display);font-size:13px;font-weight:500;
+  letter-spacing:-.01em;color:var(--ink)}
+.aipres-name .aitag{margin:0}
+.aichat-intro .aichat-greet{margin:0;font-size:32px;line-height:1.15;letter-spacing:-.026em}
+.aichat-intro .aichat-lede{max-width:44ch;margin:12px auto 0;text-wrap:balance;font-size:15px;line-height:1.55;color:var(--muted)}
+.aicaps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:8px;width:100%;max-width:560px;margin:32px auto 0;text-align:left}
+.aicap{display:flex;flex-direction:column;gap:8px;min-width:0;margin:0;padding:12px 16px 16px;border:0;border-radius:12px;
+  background:transparent;box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;text-align:left;color:var(--ink);
+  transition:background .18s var(--ease),box-shadow .18s var(--ease)}
+.aicap:hover{background:color-mix(in srgb,var(--ink) 3.5%,transparent)}
+.aicap:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.aicap-k{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.aicap-q{font-family:var(--display);font-size:14.5px;line-height:1.4;letter-spacing:-.009em;text-wrap:pretty}
+
+/* the composer stands alone */
+.aitray,.aichat-foot:not(.is-chatting) .aitray{padding:0!important;background:none!important;border-radius:0}
+.aichat-foot:not(.is-chatting) .aicomposer{box-shadow:0 0 0 1px var(--line),0 4px 16px -10px rgba(0,0,0,.18)}
+
+/* in the answer: only the step happening now, marked by the presence */
+.aitrace:not(.is-done) .aistep:not(:last-child){display:none}
+.aistep.is-live .aistep-i{width:13px;height:13px;border:0;box-shadow:none;background:var(--lavender);
+  border-radius:var(--hero-shape);animation:aiFlip 1s cubic-bezier(.45,0,.55,1) infinite alternate}
+
+@media (max-width:640px){
+  .aichat-head{min-height:52px;padding:8px 8px 8px 16px}
+  .aichat-intro{justify-content:flex-end;padding:8px 0 16px}
+  .aichat-intro .aichat-greet{font-size:28px}
+  .aicaps{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto;margin-top:24px}
+  .aicap{flex-direction:row;align-items:baseline;justify-content:space-between;gap:12px;padding:12px 14px}
+  .aicap-k{display:none}
+  .aichat-panel.kb-open .aichat-intro .aipres.lg,
+  .aichat-panel.kb-open .aipres-name,
+  .aichat-panel.kb-open .aicaps{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .aipres,.aipres.is-busy,.aipres.is-busy .aipres-s,.aistep.is-live .aistep-i{animation:none!important}
+}
+
+
+/* ══ AN ANSWER IS WRITING ════════════════════════════════════════════
+   One lead sentence in the serif carries the answer; everything after it
+   is reading text at one size and weight, with numbers bold in the
+   sentence. No uppercase labels inside an answer, no figure rows, no
+   step tracks, no stacked blocks: the only thing that stands out is the
+   thing that answers. A measure of ~64 characters keeps it readable. */
+.aitext{max-width:64ch}
+.aitext .ailead{margin:0 0 14px;font-size:21px;line-height:1.3}
+.aitext p{margin:0 0 12px;color:color-mix(in srgb,var(--ink) 86%,var(--bg));font-size:15px;line-height:1.6}
+.aitext p b,.aitext li b{font-weight:600;color:var(--ink)}
+.aitext ul{margin:0 0 12px}
+.aitext ul li{padding-left:16px;margin-bottom:8px;font-size:15px;line-height:1.6;color:color-mix(in srgb,var(--ink) 86%,var(--bg))}
+.aitext ul li::before{content:"";top:.72em;width:4px;height:4px;border-radius:50%;background:var(--faint)}
+/* anything structured the model still sends is set as text, not as blocks */
+.aifigs-wrap{margin:0 0 12px}
+.aifigs{display:flex;flex-wrap:wrap;gap:4px 16px}
+.aifig{max-width:none;display:flex;align-items:baseline;gap:6px}
+.aifig b{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0}
+.aifig span{font-family:var(--display);font-size:14px;letter-spacing:0;text-transform:none;color:var(--muted)}
+.aitext ol.aisteps li{padding:0 0 10px 0}
+.aitext ol.aisteps li::before,.aitext ol.aisteps li::after{display:none}
+.aistep-k{display:inline;margin-right:6px;font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink)}
+.aistep-k::after{content:":"}
+.aifacts{gap:8px}
+.aifacts dt{display:inline;font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink)}
+.aifacts dt::after{content:": "}
+.aifacts dd{display:inline}
+/* the case study: one line, a place to go next */
+.aitext a.aicase{display:inline-flex;align-items:center;gap:10px;max-width:100%;margin:6px 0 0;padding:8px 12px;border-radius:10px;
+  background:transparent;box-shadow:inset 0 0 0 1px var(--line);text-decoration:none;color:var(--ink)}
+.aitext a.aicase:hover{background:color-mix(in srgb,var(--ink) 3.5%,transparent)}
+.aicase-k{flex:0 0 auto;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.aicase-t{min-width:0;font-family:var(--display);font-size:14px;font-weight:500;letter-spacing:-.005em;line-height:1.35;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aitext a.aicase svg{margin:0;flex:0 0 auto}
+/* follow-ups: quiet, below the answer */
+.ainext{margin:20px 0 28px;padding:0;background:none;border-radius:0}
+.ainext-k{margin:0 0 6px;font-family:var(--display);font-size:13px;color:var(--faint)}
+.ainext-list{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-left:-8px}
+.ainext-q{display:inline-flex;align-items:center;gap:8px;padding:6px 8px;border:0;border-radius:8px;background:transparent;cursor:pointer;
+  font-family:var(--display);font-size:14.5px;line-height:1.4;color:var(--muted);text-align:left;
+  transition:color .18s var(--ease),background .18s var(--ease);animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) both}
+.ainext-q svg{flex:0 0 auto;color:var(--faint)}
+.ainext-q:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.ainext-q:hover svg{color:var(--accent)}
+.ainext-q:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.ainext-q:nth-child(1){animation-delay:.2s}.ainext-q:nth-child(2){animation-delay:.28s}.ainext-q:nth-child(3){animation-delay:.36s}
+@media (max-width:640px){ .aitext .ailead{font-size:19px} }
+@media (prefers-reduced-motion:reduce){ .ainext-q{animation:none!important} }
+
+
+/* ══ EMPHASIS BY SHADE, NOT WEIGHT ═══════════════════════════════════
+   The hero's own device: the sentence sits in a lighter shade and only
+   the words that carry it are in full ink, all at one weight. Reading
+   text is a mid grey (about 5.9:1 on the page, comfortably readable);
+   the lead's grey is lighter still, as the hero's is, since it's set
+   large. Nothing in an answer is bold. */
+.aitext .ailead{color:color-mix(in srgb,var(--ink) 55%,var(--bg))}
+.aitext .ailead b{font-weight:inherit;color:var(--ink)}
+.aitext p,.aitext ul li,.aifacts dd,.aitext ol li{color:color-mix(in srgb,var(--ink) 70%,var(--bg))}
+.aitext p b,.aitext li b,.aitext dd b,.aitext ol li b{font-weight:inherit;color:var(--ink)}
+.aifacts dt,.aistep-k,.aifig b{font-weight:inherit;color:var(--ink)}
+
+
+/* ══ CLEAN RENDERING ═════════════════════════════════════════════════
+   What made it read rough and grainy, and the fix for each:
+   · a light-grey serif breaks up (STIX's hairlines thin out): a lead
+     with no key words is plain ink; a keyed lead's grey is darker
+   · a 3px backdrop blur smears the page instead of frosting it: no blur,
+     a light dim
+   · 10-11px uppercase mono renders spiky: no mono inside the chat
+   · reading grey a touch darker, so paragraphs stay crisp
+   · one "Worked for" line, on the latest answer only */
+.aichat-scrim{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(20,20,22,.24)}
+.aichat-panel{text-rendering:optimizeLegibility}
+.aitext .ailead{color:var(--ink)}
+.aitext .ailead.has-key{color:color-mix(in srgb,var(--ink) 62%,var(--bg))}
+.aitext p,.aitext ul li,.aifacts dd,.aitext ol li{color:color-mix(in srgb,var(--ink) 78%,var(--bg))}
+.aix.is-past .aitrace{display:none}
+.aichat-title .aitag,.aipres-name .aitag{font-family:var(--display);font-size:11px;font-weight:500;letter-spacing:.01em;padding:2px 7px}
+.aihint{font-family:var(--display);font-size:12px;letter-spacing:-.005em;color:var(--faint)}
+.aicase-k{font-family:var(--display);font-size:13px;font-weight:400;letter-spacing:-.005em;text-transform:none;color:var(--muted)}
+.aicap-k{font-family:var(--display);font-size:12px;font-weight:500;letter-spacing:-.005em;text-transform:none;color:var(--muted)}
+.aitrace-sum{font-weight:400;color:var(--muted)}
+
+
+/* ══ THE INSTEAD PATTERN ═════════════════════════════════════════════
+   Rebuilt on Lokesh's own agent design (github.com/LKB00/instead-design-
+   assignment, prototype/): its structure, behaviour, sizes and Lucide
+   icons, in this portfolio's type (STIX for Libre Baskerville, Geist for
+   Lato) and colours (surface for sand, ink for charcoal, accent for lime).
+   · home: the wordmark flips into a serif heading that types itself; a
+     tray docks the composer and holds the suggestions as pill rows
+   · composer: white, a 0.5px rule, 24px radius, a context pill
+   · chat: no bubbles, no avatars. The question is a serif headline; a
+     pulsing status line while it works; the answer fades up whole, in a
+     620px column; three small icons under it */
+
+/* window + header */
+.aichat-panel{background:var(--bg)}
+.aichat-head{height:56px;min-height:0;padding:0 12px 0 22px;gap:4px;box-shadow:none!important;background:var(--bg)}
+.aiwm{flex:1;min-width:0;display:flex;align-items:center;gap:8px;margin:0}
+.aiwm-n{font-family:var(--serif);font-size:16px;font-weight:500;letter-spacing:-.012em;color:var(--ink)}
+.aiwm-b{height:18px;display:inline-flex;align-items:center;padding:0 7px;border-radius:9999px;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);font-family:var(--display);font-size:10.5px;font-weight:500}
+.aichat-iconbtn{width:28px;height:28px;border-radius:9999px;color:var(--muted)}
+.aichat-iconbtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+
+/* column widths: 620 for reading, the tray a little wider */
+.aichat-body{padding:0 24px}
+.aichat-body > *{max-width:620px}
+.aichat-foot{padding:8px 24px calc(10px + env(safe-area-inset-bottom));background:var(--bg)}
+.aichat-foot > *{max-width:660px}
+
+/* home: the hero sits right on the tray */
+.aichat-intro{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:100%;padding:24px 0 24px;text-align:center}
+.aihero{min-height:44px;display:flex;align-items:center;justify-content:center;perspective:600px}
+.aihero-t{margin:0;font-family:var(--serif);font-size:28px;font-weight:500;line-height:1.3;letter-spacing:-.02em;color:var(--ink);
+  text-wrap:balance;transform-origin:50% 50%;transition:opacity .3s,transform .3s}
+.aihero-t.is-mark{font-size:22px;letter-spacing:-.015em}
+.aihero-t.is-leaving{opacity:0;transform:rotateX(90deg)}
+.aihero-t.is-entering{animation:aiFlipIn .3s ease-out;transform-style:preserve-3d}
+@keyframes aiFlipIn{from{opacity:0;transform:rotateX(-90deg)}to{opacity:1;transform:none}}
+.tw-word{display:inline-block;white-space:nowrap}
+.tw-char{display:inline-block;opacity:0;animation:aiTw .05s ease-in forwards}
+@keyframes aiTw{to{opacity:1}}
+
+/* the tray: suggestions, with the composer docked at its foot */
+.aitray,.aichat-foot:not(.is-chatting) .aitray{display:flex!important;flex-direction:column;gap:8px;
+  padding:12px 8px 8px!important;background:var(--surface)!important;border-radius:24px!important}
+.aitray-top,.aichat-foot.is-chatting .aitray-top{display:flex;flex-direction:column;gap:6px;padding:0 8px;animation:none}
+.aitray-top[hidden]{display:none!important}
+.ailabel{margin:0;padding:0 0 0 4px;font-family:var(--display);font-size:10.5px;font-weight:500;line-height:16px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left}
+.airows{display:flex;flex-direction:column;gap:2px}
+.airow{height:34px;display:flex;align-items:center;gap:8px;width:100%;margin:0;padding:0 4px 0 12px;border:0;border-radius:9999px;
+  background:transparent;cursor:pointer;text-align:left;color:var(--ink);font-family:var(--display);font-size:13.5px;line-height:18px;
+  transition:background .15s;animation:aiFadeUp .35s cubic-bezier(.2,.7,.2,1) both}
+.airow:nth-child(2){animation-delay:.04s}.airow:nth-child(3){animation-delay:.08s}.airow:nth-child(4){animation-delay:.12s}
+.airow:hover{background:color-mix(in srgb,var(--ink) 5%,var(--surface))}
+.airow:focus-visible{outline:1.5px solid var(--ink);outline-offset:2px}
+.airow-t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.airow-go{flex:none;height:26px;display:none;align-items:center;gap:4px;padding:0 10px;border-radius:9999px;
+  background:var(--card);box-shadow:0 0 0 .5px var(--line);font-size:12px;font-weight:500;color:var(--ink)}
+.airow-go svg{color:var(--muted)}
+.airow:hover .airow-go,.airow:focus-visible .airow-go{display:inline-flex}
+
+/* composer: white, a 0.5px rule, 24px radius */
+.aicomposer,.aichat-foot:not(.is-chatting) .aicomposer{display:flex;flex-direction:column;align-items:stretch;gap:14px;
+  padding:12px 8px 8px;background:var(--card);border:.5px solid color-mix(in srgb,var(--ink) 34%,transparent);border-radius:24px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.aicomposer:focus-within{box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.aichat-input{display:block;width:100%;min-height:24px;padding:3px 8px 0;font-family:var(--display);font-size:15px;line-height:22px;color:var(--ink)}
+.aichat-input::placeholder{color:var(--faint)}
+.aicomposer-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0}
+.aichat-send{width:28px;height:28px;border-radius:9999px;background:var(--surface);color:var(--faint)}
+.aichat-send.is-ready,.aichat-send.is-busy{background:var(--ink);color:var(--bg)}
+
+/* the context pill and its menu */
+.aictx{position:relative;display:flex}
+.aictx-btn{height:28px;display:inline-flex;align-items:center;gap:6px;padding:0 8px 0 10px;border:0;border-radius:9999px;cursor:pointer;
+  background:var(--card);box-shadow:inset 0 0 0 .5px var(--line);color:var(--muted);font-family:var(--display);font-size:12.5px;font-weight:500;
+  transition:box-shadow .15s,color .15s,background .15s}
+.aictx-btn:hover,.aictx-btn[aria-expanded="true"]{box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--ink) 40%,transparent);color:var(--ink)}
+.aictx-btn.is-scoped{background:var(--surface);box-shadow:none;color:var(--ink)}
+.aictx-i,.aictx-chev{display:flex}
+.aictx-chev{color:var(--faint)}
+.aictx-menu{position:absolute;left:0;bottom:calc(100% + 8px);z-index:6;width:240px;display:flex;flex-direction:column;gap:2px;padding:6px;
+  background:var(--card);border:.5px solid var(--line);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.1);animation:aiPop .18s cubic-bezier(.2,.7,.2,1)}
+.aictx-menu[hidden]{display:none}
+@keyframes aiPop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.aictx-menu .ailabel{padding:6px 8px 4px}
+.aictx-item{display:flex;align-items:center;gap:10px;width:100%;margin:0;padding:6px 8px;border:0;border-radius:10px;background:transparent;cursor:pointer;
+  font-family:var(--display);font-size:13px;color:var(--ink);text-align:left}
+.aictx-item:hover,.aictx-item:focus-visible,.aictx-item[aria-checked="true"]{background:var(--surface);outline:none}
+.aictx-ic{width:24px;height:24px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--surface);color:var(--muted)}
+.aictx-item[aria-checked="true"] .aictx-ic,.aictx-item:hover .aictx-ic{background:var(--card)}
+.aictx-l{flex:1}
+.aictx-ck{display:flex;color:var(--ink)}
+
+/* the conversation: the question is a serif headline, no bubbles */
+.aix,.aix.is-past{padding:24px 0 8px}
+.aix .aiq,.aix .aime{display:none}
+.aiturn{margin:0 0 10px;font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.55;letter-spacing:-.015em;color:var(--ink);
+  overflow-wrap:anywhere;white-space:pre-wrap}
+.aiturn.is-first{font-size:30px;line-height:1.5}
+.aix:first-of-type{padding-top:36px}
+.aistatus{display:inline-flex;align-items:center;gap:4px;height:28px;font-family:var(--display);font-size:12.5px;font-weight:600;
+  line-height:16px;color:var(--muted);animation:aiStat 1.4s ease-in-out infinite}
+.aistatus svg{color:var(--faint)}
+@keyframes aiStat{0%,100%{opacity:1}50%{opacity:.5}}
+.aians-x{min-width:0}
+.aitrace{display:none!important}
+.aicard.is-in{animation:aiFadeUp .35s cubic-bezier(.2,.7,.2,1) both}
+@keyframes aiFadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* the answer: plain sans reading text, emphasis by shade */
+.aitext{max-width:none;font-family:var(--display);font-size:15px;line-height:1.7}
+.aitext .ailead,.aitext .ailead.has-key,.aitext p{margin:0 0 16px;font-family:var(--display);font-size:15px;font-weight:400;
+  line-height:1.7;letter-spacing:-.005em;color:color-mix(in srgb,var(--ink) 80%,var(--bg))}
+.aitext .ailead b,.aitext p b,.aitext li b{font-weight:inherit;color:var(--ink)}
+.aitext ul{margin:0 0 16px;padding:0 0 0 22px;list-style:disc;display:flex;flex-direction:column;gap:10px}
+.aitext ul li{padding:0;margin:0;font-size:15px;line-height:1.65;color:color-mix(in srgb,var(--ink) 80%,var(--bg))}
+.aitext ul li::before{display:none}
+.aitext ul li::marker{color:var(--faint)}
+.aitext > :last-child{margin-bottom:0}
+.aitext a.aicase{display:inline-flex;align-items:center;gap:8px;margin:0;padding:0 12px 0 10px;height:30px;border-radius:9999px;
+  background:var(--card);box-shadow:inset 0 0 0 .5px var(--line);text-decoration:none;color:var(--ink)}
+.aitext a.aicase:hover{box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--ink) 40%,transparent);background:var(--card)}
+.aicase-k{font-family:var(--display);font-size:12.5px;color:var(--muted)}
+.aicase-t{font-family:var(--display);font-size:13px;font-weight:500}
+
+/* three small icons under every answer */
+.aifb{display:flex;gap:6px;margin-top:14px}
+.aifb-b{width:24px;height:24px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:6px;
+  background:transparent;color:var(--muted);cursor:pointer;transition:background .15s,color .15s}
+.aifb-b:hover{background:var(--surface);color:var(--ink)}
+.aifb-b[aria-pressed="true"]{color:var(--ink);background:var(--surface)}
+.aifb-b:focus-visible{outline:1.5px solid var(--ink);outline-offset:1px}
+
+.aihint{justify-content:center;margin:8px 0 0}
+
+@media (max-width:640px){
+  .aichat-head{height:52px;padding:0 8px 0 16px}
+  .aichat-body{padding:0 16px}
+  .aichat-foot{padding:6px 10px calc(8px + env(safe-area-inset-bottom))}
+  .aihero-t{font-size:24px}
+  .aiturn{font-size:20px}.aiturn.is-first{font-size:25px}
+  .airow{height:auto;min-height:40px;padding:8px 12px}
+  .airow-t{white-space:normal}
+  .airow-go{display:none!important}
+  .aichat-panel.kb-open .aitray-top{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){
+  .airow,.aicard.is-in,.aistatus,.aihero-t.is-entering,.tw-char,.aictx-menu{animation:none!important}
+  .tw-char{opacity:1}
+}
+
+
+/* no context pill: the composer is the field and the send button, one row */
+.aicomposer,.aichat-foot:not(.is-chatting) .aicomposer{flex-direction:row;align-items:flex-end;gap:8px;padding:8px 8px 8px 12px}
+.aicomposer .aichat-input{padding:3px 0 3px}
+.aicomposer-row{flex:none;justify-content:flex-end}
+
+
+/* the tray is the opening screen's only; once talking, the composer stands
+   alone and follow-ups sit under the answer they follow */
+.aichat-foot.is-chatting .aitray{padding:0!important;background:none!important;border-radius:0!important;gap:0}
+.aichat-foot.is-chatting .aitray-top{display:none!important}
+.ainext{margin:22px auto 28px;padding:0;background:none;border-radius:0;animation:aiFadeUp .35s cubic-bezier(.2,.7,.2,1) .15s both}
+.ainext .ailabel{padding:0;margin:0 0 6px}
+.ainext .airows{margin-left:-12px}
+
+
+/* the answer comes into focus: each word from a soft blur, in a wave */
+.bw{display:inline-block;animation:aiBlurIn .6s cubic-bezier(.2,.7,.2,1) both;will-change:filter,opacity}
+.bw-block{animation:aiBlurIn .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes aiBlurIn{from{opacity:0;filter:blur(6px);transform:translateY(3px)}to{opacity:1;filter:blur(0);transform:none}}
+.aicard.is-in{animation:none}
+@media (prefers-reduced-motion:reduce){.bw,.bw-block{animation:none!important}}
+
+
+/* ══ THE AGENT'S STEPS ═══════════════════════════════════════════════
+   A short live checklist: the step happening now has a small spinner and
+   a shimmer across its words; done steps take a check and step back.
+   Afterwards only what was read stays, as a quiet line above the answer
+   (and only on the latest answer). Type is the portfolio's meta role:
+   Geist 13px regular. */
+.aistatus{display:block;height:auto;margin:2px 0 14px;animation:none;font-weight:400}
+.aisteps2{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none}
+.as{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:13px;font-weight:400;line-height:18px;
+  letter-spacing:-.005em;color:var(--faint);animation:aiBlurIn .45s cubic-bezier(.2,.7,.2,1) both}
+.as-i{width:14px;height:14px;flex:none;display:grid;place-items:center;color:var(--faint)}
+.as-spin{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--line);border-top-color:var(--accent);animation:aiSpin .8s linear infinite}
+.as.is-now{color:var(--muted)}
+.as.is-now .as-t{background:linear-gradient(90deg,var(--muted) 0%,var(--muted) 38%,var(--ink) 50%,var(--muted) 62%,var(--muted) 100%);
+  background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.8s linear infinite}
+.as.is-done{color:var(--faint)}
+.aistatus.is-summary .as:not(.is-read){display:none}
+.aistatus.is-summary .as{animation:none}
+.aix.is-past .aistatus{display:none}
+
+/* type, checked against the portfolio's roles */
+.ailabel{font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--muted)}
+.airow{font-size:14px;line-height:18px}
+@media (prefers-reduced-motion:reduce){.as,.as-spin,.as.is-now .as-t{animation:none!important}.as.is-now .as-t{color:var(--muted);background:none}}
+
+/* the intro paragraph at the portfolio's reading size: 15px, as on
+   the About and Résumé pages and in the chat's answers */
+#top .hero-sub{font-size:15px;line-height:1.6}
+
+/* ===== COPILOT DOCK (desktop) =====
+   Agents on the web have moved out of the centred modal and into a
+   docked side panel: the page stays visible and usable beside the
+   agent, and the agent can point at things on it. So on a laptop the
+   chat is a 400px column on the right; the page slides over to make
+   room instead of being dimmed or covered, and scrolling it still
+   works. The welcome is compact and sits with the suggestions, next to
+   where you type. Phones keep the full screen. */
+@media (min-width:641px){
+  .aichat{inset:0 0 0 auto;width:436px;pointer-events:none}
+  .aichat.open{pointer-events:none}
+  .aichat-scrim{display:none!important}
+  .aichat-panel{top:12px!important;right:12px!important;bottom:12px!important;left:auto!important;
+    width:412px!important;height:auto!important;max-height:none!important;border-radius:18px!important;
+    display:flex!important;flex-direction:column;pointer-events:auto;
+    background:var(--bg);box-shadow:0 0 0 .5px color-mix(in srgb,var(--ink) 14%,transparent),0 18px 48px -28px rgba(20,24,45,.35)!important;
+    opacity:0;transform:translateX(28px)!important;transition:transform .5s var(--ease),opacity .3s ease!important}
+  .aichat.open .aichat-panel{opacity:1;transform:none!important}
+  .aimain{flex:1;min-height:0}
+  /* the page makes room rather than hiding behind the panel */
+  html.chat-docked body{padding-right:436px}
+  html.chat-docked header,html.chat-docked header.scrolled{right:436px;width:auto!important}
+  html.chat-docked .totop{right:452px}
+  html.chat-docked .askdock{opacity:0!important;pointer-events:none!important}
+  body{transition:padding-right .5s var(--ease)}
+  /* compact welcome: small hand, one line, right above the suggestions */
+  .aichat-intro{justify-content:flex-end!important;padding:16px 0 8px!important}
+  .aihand{width:56px!important;height:56px!important;margin:0 auto 8px!important}
+  .aihero-t{font-size:22px!important}
+  .aichat-body{padding:0 20px}
+  .aichat-foot{padding:6px 16px 10px}
+  .aiturn{font-size:22px!important}
+  .aiturn.is-first{font-size:24px!important}
+  .aichat-head{padding:0 10px 0 16px}
+}
+/* the agent points at the part of the page it's talking about */
+.workrow.ai-pointed .cardframe{box-shadow:0 0 0 2px #fff,0 0 0 4px #b17cff,0 0 32px -4px rgba(177,124,255,.55);transition:box-shadow .3s ease}
+.workrow .cardframe{transition:box-shadow .6s ease}
+@media (prefers-reduced-motion:reduce){ body{transition:none} }
+
+/* ===== PHONES: FULL SCREEN =====
+   On a phone the chat still rises from the bottom like a sheet, but it
+   comes all the way up and takes the whole screen: a conversation
+   needs the room, and a strip of page peeking above it did nothing
+   but invite a mis-tap. It follows the visible viewport, so the
+   keyboard never covers the composer. */
+@media (max-width:640px){
+  .aichat-panel{top:auto;bottom:var(--kb,0px);height:var(--vvh,100dvh);max-height:100dvh;border-radius:0;
+    padding-top:env(safe-area-inset-top)}
+  .aichat-handle{display:none!important}
+  /* nothing behind or around it rubber-bands while it's open */
+  .aichat-panel{overscroll-behavior:none;touch-action:pan-y}
+  .aichat-head{touch-action:none}
+}
+html:has(body.chat-open),body.chat-open{overscroll-behavior:none}
+
+/* ===== PHONES: ONE GUTTER =====
+   Everything in the chat hangs off the same 16px edge: the header, the
+   conversation, the tray and the composer. Inside the tray, the label,
+   the questions and the typed text share one inner line (16 + 8 + 12).
+   Header buttons are 40px targets, and the header gets a hairline once
+   the conversation scrolls under it, so a question never looks cut. */
+@media (max-width:640px){
+  .aichat-head{height:56px;padding:0 8px 0 16px;gap:2px;transition:box-shadow .2s}
+  .aichat-head .aichat-iconbtn{width:40px;height:40px;padding:0;display:grid;place-items:center}
+  .aichat-head .aichat-iconbtn svg{width:18px;height:18px}
+  .aichat-panel.is-scrolled .aichat-head{box-shadow:inset 0 -.5px 0 color-mix(in srgb,var(--ink) 14%,transparent)}
+  .aichat-body{padding:0 16px}
+  .aichat-foot{padding:8px 16px calc(8px + env(safe-area-inset-bottom))}
+  .aitray{padding:12px 8px 8px;border-radius:22px}
+  .aitray-top{padding:0}
+  .aitray .ailabel{padding:0 0 0 12px;margin:0 0 4px}
+  .aitray .airow{padding:8px 12px;margin:0;border-radius:12px}
+  .aicomposer{padding:6px 6px 6px 12px}
+  .aihint{padding:0 16px}
+}
+
+/* ===== ENTRY: ASK BOX + DOCK =====
+   The AI's way in is not a nav item: it's a question box where the
+   call to action used to be, the first thing a recruiter can do. When
+   that box scrolls away, a slim pill rises at the bottom centre so a
+   question is one click away from any project; it steps aside over the
+   footer and while the chat is open. Email and LinkedIn stay, as
+   quieter links under the box. */
+.askhand{display:block;width:20px;height:20px;flex:none}
+.heroask{display:flex;align-items:center;gap:10px;width:100%;max-width:460px;height:50px;margin-top:clamp(18px,2.6vw,26px);
+  padding:0 6px 0 16px;background:var(--card,#fff);border:.5px solid color-mix(in srgb,var(--ink) 16%,transparent);border-radius:9999px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 22px -12px rgba(0,0,0,.16);transition:box-shadow .2s,border-color .2s;cursor:text}
+.heroask:focus-within{border-color:color-mix(in srgb,var(--ink) 34%,transparent);box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 28px -12px rgba(0,0,0,.22)}
+.heroask-in{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:400 14.5px/1 var(--display);color:var(--ink)}
+.heroask-in::placeholder{color:var(--faint);opacity:1}
+.heroask-go{flex:none;width:38px;height:38px;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;
+  background:var(--ink);color:var(--bg);transition:transform .15s,opacity .15s}
+.heroask-go:hover{opacity:.88}.heroask-go:active{transform:scale(.92)}
+.heroask-links{display:flex;gap:16px;margin:12px 0 0 4px;font-size:13px}
+.heroask-links a{color:var(--muted);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 18%,transparent);text-underline-offset:3px;transition:color .15s}
+.heroask-links a:hover{color:var(--ink)}
+.heroask-links a svg{display:inline-block;margin-left:3px;vertical-align:-1px;transition:transform .18s cubic-bezier(.2,.7,.2,1)}
+.heroask-links a:hover svg{transform:translate(1px,-1px)}
+.heroin .heroask-row{animation:settle .34s ease-out .60s backwards}
+/* the CTA leads; email and LinkedIn sit beside it as quiet round icons */
+.heroask-row{display:flex;align-items:center;gap:8px;margin-top:clamp(18px,2.6vw,26px);flex-wrap:wrap}
+.heroask-row .heroask{margin-top:0}
+.heroicon{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--muted);
+  background:var(--card,#fff);border:.5px solid color-mix(in srgb,var(--ink) 12%,transparent);
+  transition:color .18s,border-color .18s,transform .15s}
+.heroicon:hover{color:var(--ink);border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
+.heroicon:active{transform:scale(.94)}
+.heroicon:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* flat and quiet: no shadow, a hairline border, and the send button
+   stays soft grey until there's something to send */
+.heroask,.heroask:focus-within{box-shadow:none}
+.heroask{border-color:color-mix(in srgb,var(--ink) 12%,transparent)}
+.heroask:focus-within{border-color:color-mix(in srgb,var(--ink) 28%,transparent)}
+.heroask-go{width:36px;height:36px;background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--muted);transition:background-color .18s,color .18s,transform .15s}
+.heroask-go:hover{opacity:1;color:var(--ink)}
+/* a call to action, not a text field: hugs its label, opens the chat */
+.heroask{width:auto;max-width:none;height:48px;padding:0 6px 0 14px;gap:10px;cursor:pointer;text-align:left;font:inherit;
+  transition:border-color .2s,background-color .2s}
+.heroask-t{font-size:14.5px;font-weight:500;color:var(--ink);white-space:nowrap}
+.heroask:hover{border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
+.heroask:hover .heroask-go{background:var(--ink);color:var(--bg)}
+.heroask:hover .heroask-go svg{transform:translateX(1px)}
+.heroask-go svg{transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+.heroask:active{transform:scale(.985)}
+.heroask:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* the border draws itself: from nothing, round the whole pill, in the
+   AI colours; holds, fades, and draws again */
+.heroask{position:relative}
+.heroask-ring{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);pointer-events:none;overflow:visible}
+.heroask-ring rect{fill:none;stroke:url(#askRingGrad);stroke-linecap:round}
+/* one 5.5s beat shared with the icon: while the dots gather into the
+   hand, a lit head with a soft glow runs round the pill drawing the
+   line behind it; as it closes, the whole outline blooms once, the
+   hand waves, and everything rests; as the dots drift apart, the
+   line fades with them. JS restarts it with the icon so they never
+   drift out of step. */
+.rg-line{stroke-width:1;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}
+.rg-head{stroke-width:1.5;stroke-dasharray:.03 .97;stroke-dashoffset:.045;opacity:0}
+.rg-glow{stroke-width:3;stroke-dasharray:.05 .95;stroke-dashoffset:.05;opacity:0;filter:blur(2px)}
+.rg-bloom{stroke-width:4;opacity:0;filter:blur(5px)}
+.heroask-ring.run .rg-line{animation:rgLine 5.5s linear both}
+/* the tail dissolves into nothing where the line starts, so it never
+   begins on a hard edge; as the head comes round to meet it, the fade
+   lifts and the outline closes clean */
+@property --tail-in{syntax:"<number>";inherits:false;initial-value:1}
+.heroask-ring{--tail-in:1;
+  -webkit-mask-image:radial-gradient(circle 46px at 25px 1px,rgba(0,0,0,var(--tail-in)) 8%,rgba(0,0,0,calc(.5 + var(--tail-in) * .5)) 55%,#000 100%);
+          mask-image:radial-gradient(circle 46px at 25px 1px,rgba(0,0,0,var(--tail-in)) 8%,rgba(0,0,0,calc(.5 + var(--tail-in) * .5)) 55%,#000 100%)}
+.heroask-ring.run{animation:rgTail 5.5s linear both}
+@keyframes rgTail{0%,34%{--tail-in:0}46%,100%{--tail-in:1}}
+.heroask-ring.run .rg-head{animation:rgHead 5.5s linear both}
+.heroask-ring.run .rg-glow{animation:rgGlow 5.5s linear both}
+.rg-bloom{display:none}
+@keyframes rgLine{0%{stroke-dashoffset:1;opacity:.75;animation-timing-function:cubic-bezier(.45,0,.3,1)}
+  45%{stroke-dashoffset:0;opacity:.75;animation-timing-function:ease}87%{stroke-dashoffset:0;opacity:.75;animation-timing-function:ease-in-out}99%,100%{stroke-dashoffset:0;opacity:0}}
+@keyframes rgHead{0%{stroke-dashoffset:.03;opacity:.9;animation-timing-function:cubic-bezier(.45,0,.3,1)}
+  45%{stroke-dashoffset:-.97;opacity:.9;animation-timing-function:ease-out}53%,100%{stroke-dashoffset:-.97;opacity:0}}
+@keyframes rgGlow{0%{stroke-dashoffset:.05;opacity:.3;animation-timing-function:cubic-bezier(.45,0,.3,1)}
+  45%{stroke-dashoffset:-.95;opacity:.3;animation-timing-function:ease-out}53%,100%{stroke-dashoffset:-.95;opacity:0}}
+@keyframes rgBloom{0%,33%{opacity:0}40%{opacity:.55}58%,100%{opacity:0}}
+.heroask:hover .rg-line{opacity:1!important;stroke-dashoffset:0!important;animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){ .heroask-ring .rg-line{animation:none!important;stroke-dashoffset:0;opacity:.8} .heroask-ring.run .rg-head,.heroask-ring.run .rg-glow,.heroask-ring.run .rg-bloom{animation:none} }
+
+.askdock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:70;display:flex;align-items:center;gap:10px;
+  width:min(360px,calc(100vw - 32px));height:46px;padding:0 6px 0 15px;border-radius:9999px;cursor:pointer;text-align:left;
+  background:var(--card,#fff);border:.5px solid color-mix(in srgb,var(--ink) 16%,transparent);
+  box-shadow:0 2px 4px rgba(0,0,0,.05),0 18px 36px -14px rgba(0,0,0,.28);
+  opacity:0;transform:translate(-50%,24px);pointer-events:none;visibility:hidden;
+  transition:opacity .28s ease,transform .4s cubic-bezier(.2,.8,.2,1),visibility 0s linear .4s,box-shadow .2s}
+.askdock.is-on{opacity:1;transform:translate(-50%,0);pointer-events:auto;visibility:visible;transition-delay:0s}
+.askdock:hover{box-shadow:0 2px 4px rgba(0,0,0,.05),0 22px 40px -14px rgba(0,0,0,.34)}
+.askdock-t{flex:1;min-width:0;font-size:13.5px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.askdock-go{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--muted);
+  background:color-mix(in srgb,var(--ink) 6%,transparent);transition:background-color .2s,color .2s}
+.askdock:hover .askdock-go{background:var(--ink);color:var(--bg)}
+body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
+
+/* phones: the nav pill lives at the bottom centre, so the ask pill
+   rides just above it instead of on top of it */
+/* phones: the bottom edge already carries the nav pill and back-to-top,
+   and a third floating bar stacked on them only covered the work. The
+   hero button is the way in on a phone. */
+@media (max-width:576px){ .askdock{display:none!important} }
+@media (prefers-reduced-motion:reduce){ .askdock{transition:opacity .2s,visibility 0s} .askdock.is-on{transform:translate(-50%,0)} }
+
+/* ===== FOLLOW-UPS, QUIETER =====
+   Under an answer the suggestions are a side note, not a second
+   answer: 13px, muted, each hugging its own text with a small
+   "reply" hook in front. Hover brings the line to ink, nudges the hook
+   and shows an arrow. They arrive one by one, the same soft blur the
+   answer uses. The opening tray keeps its larger rows. */
+.airow-i,.airow-arr{display:none}
+.ainext .ailabel{font-size:10.5px;margin:0 0 4px;color:var(--faint)}
+.ainext .airows{margin-left:-8px;align-items:flex-start;gap:0}
+.ainext .airow{width:auto;max-width:100%;height:30px;padding:0 10px 0 8px;gap:7px;font-size:13px;line-height:18px;color:var(--muted);
+  border-radius:8px;background:transparent;transition:color .18s,background-color .18s;
+  animation:aiRowIn .5s cubic-bezier(.2,.7,.2,1) both}
+.ainext .airow:nth-child(1){animation-delay:calc(var(--d,0ms) + 120ms)}.ainext .airow:nth-child(2){animation-delay:calc(var(--d,0ms) + 220ms)}.ainext .airow:nth-child(3){animation-delay:calc(var(--d,0ms) + 320ms)}
+.ainext .airow-i{display:inline-flex;color:var(--faint);transition:transform .2s cubic-bezier(.2,.7,.2,1),color .18s}
+.ainext .airow-t{flex:0 1 auto}
+.ainext .airow-go{display:none!important}
+.ainext .airow-arr{display:inline-flex;color:var(--ink);opacity:0;transform:translateX(-4px);transition:opacity .18s,transform .2s cubic-bezier(.2,.7,.2,1)}
+.ainext .airow:hover,.ainext .airow:focus-visible{color:var(--ink);background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.ainext .airow:hover .airow-i{color:var(--muted);transform:translateX(1px)}
+.ainext .airow:hover .airow-arr,.ainext .airow:focus-visible .airow-arr{opacity:1;transform:none}
+@keyframes aiRowIn{from{opacity:0;filter:blur(4px);transform:translateY(3px)}to{opacity:1;filter:none;transform:none}}
+@media (max-width:640px){
+  .ainext .airow{height:auto;min-height:34px;padding:7px 10px 7px 8px;align-items:flex-start}
+  .ainext .airow-i{margin-top:3px}
+  .ainext .airow-arr{display:none}
+}
+@media (prefers-reduced-motion:reduce){ .ainext .airow{animation:none} }
+
+/* ===== HEADER IDENTITY =====
+   Who you're talking to, at a glance: my face inside the same AI
+   gradient as the welcome hand, my name, and one live line underneath.
+   At rest the line says what the AI knows; while it works the line
+   says what it's doing and the ring turns, so the header is the
+   "agent is working" signal even when the steps have scrolled away. */
+.aichat-head{height:68px;padding:0 14px 0 20px}
+.aiid{gap:11px}
+.aiav{position:relative;flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center}
+.aiav::before{content:"";position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 200deg,#6c9bff,#b17cff,#ff86b7,#ffb070,#6c9bff);
+  -webkit-mask:radial-gradient(circle,transparent 17.4px,#000 17.9px);mask:radial-gradient(circle,transparent 17.4px,#000 17.9px);
+  opacity:.9}
+.aiav img{position:relative;width:32px;height:32px;border-radius:50%;object-fit:cover;display:block;background:var(--surface)}
+.aiid-t{display:flex;flex-direction:column;min-width:0;gap:1px}
+.aiid-n{display:flex;align-items:center;gap:7px;line-height:1.2}
+.aiid .aiwm-n{font-size:16px}
+.aiid .aiwm-b{height:17px;padding:0 6px;font-size:10px;letter-spacing:.02em}
+.aiid-s{font-size:12px;line-height:16px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .2s}
+.aiid-s.is-swap{opacity:0}
+.aichat.is-working .aiav::before{animation:aiRing 1.6s linear infinite}
+.aichat.is-working .aiid-s{background:linear-gradient(90deg,var(--muted) 0%,var(--muted) 38%,var(--ink) 50%,var(--muted) 62%,var(--muted) 100%);
+  background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.8s linear infinite}
+@keyframes aiRing{to{transform:rotate(360deg)}}
+@media (max-width:640px){
+  .aichat-head{height:60px;padding:0 8px 0 16px}
+  .aiav{width:34px;height:34px}
+  .aiav::before{-webkit-mask:radial-gradient(circle,transparent 15.4px,#000 15.9px);mask:radial-gradient(circle,transparent 15.4px,#000 15.9px)}
+  .aiav img{width:28px;height:28px}
+}
+@media (prefers-reduced-motion:reduce){ .aichat.is-working .aiav::before,.aichat.is-working .aiid-s{animation:none} }
+
+/* ===== WELCOME WAVE =====
+   A hand that assembles from scattered points, the way a model
+   generates, then waves. Points are spaced evenly along the outline
+   (not a pixel grid) so the rest state reads as a drawn, dotted line. */
+/* the greeting sits in the middle of the empty space, not on the tray */
+.aichat-intro{justify-content:center}
+.aihand{display:block;width:88px;height:88px;margin:0 auto 14px;flex:none}
+@media (max-width:640px){ .aihand{width:72px;height:72px;margin-bottom:10px} }
+
+/* the pill has no room for a fourth item once the burger takes over --
+   the same "Ask AI" entry point lives inside the mobile sheet instead */
+@media (max-width:576px){.askbtn{display:none}}
+
+.asksheet-row{padding:2px var(--pad) 6px}
+.asksheet-btn{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:8px;
+  cursor:pointer;text-align:left;
+  border:1px dashed color-mix(in srgb,var(--link) 40%,transparent);
+  background:color-mix(in srgb,var(--link) 4%,transparent)}
+.asksheet-btn .askbtn-mark{width:24px;height:24px;font-size:12px}
+.asksheet-x{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.asksheet-t{font-family:var(--serif);font-size:16px;line-height:1.25;letter-spacing:-.01em;color:var(--ink)}
+.asksheet-m{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+
+/* phones: the nav lives at the bottom of the screen, so the top no
+   longer needs a bar's worth of clearance; the page starts close to the
+   top edge, clear of the notch */
+@media (max-width:576px){ #top{padding-top:calc(40px + env(safe-area-inset-top))} }
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -2595,6 +4021,62 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
 
+  <button type="button" class="askdock" id="askDock" aria-label="Interview my AI twin" tabindex="-1" aria-hidden="true">
+    <canvas class="askhand" aria-hidden="true"></canvas><span class="askdock-t">Interview my AI twin</span><span class="askdock-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></span>
+  </button>
+
+  <div class="aichat" id="aiChat" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle" aria-hidden="true">
+    <div class="aichat-scrim" data-aichat-close></div>
+    <div class="aichat-panel" tabindex="-1">
+      <span class="aichat-handle" aria-hidden="true"></span>
+
+
+      <section class="aimain">
+        <div class="aichat-head">
+          <div class="aiwm aiid">
+            <span class="aiav" aria-hidden="true"><img src="assets/avatar-96.webp" alt="" width="36" height="36"></span>
+            <span class="aiid-t">
+              <span class="aiid-n" id="aiChatTitle"><span class="aiwm-n">Lokesh Bhatia</span><span class="aiwm-b">AI</span></span>
+              <span class="aiid-s" id="aiHeadStatus">Trained on my work and résumé</span>
+            </span>
+          </div>
+          <span id="aiChatSpark" hidden></span>
+          <button type="button" class="aichat-iconbtn" id="aiChatReset" aria-label="New chat" title="New chat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v6"/><path d="M9 10h6"/></svg>
+          </button>
+          <button type="button" class="aichat-iconbtn" id="aiChatClose" aria-label="Close" title="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <div class="aichat-body" id="aiChatBody">
+          <div class="aichat-intro" id="aiChatIntro">
+            <canvas class="aihand" id="aiHand" aria-hidden="true"></canvas>
+            <div class="aihero"><p class="aihero-t" id="aiHero">What would you like to know?</p></div>
+          </div>
+        </div>
+        <p class="fsr" id="aiChatLive" aria-live="polite"></p>
+        <div class="aichat-foot" id="aiChatFoot">
+          <div class="aitray">
+            <div class="aitray-top">
+              <p class="ailabel" id="aiTrayLabel">Ask me about</p>
+              <div class="airows" id="aiChatSuggest"></div>
+            </div>
+            <form class="aicomposer" id="aiChatForm">
+              <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask about my work, my career, or AI&#8230;" aria-label="Ask me a question"></textarea>
+              <div class="aicomposer-row">
+                <button type="submit" class="aichat-send" id="aiChatSend" aria-label="Send" disabled>
+                  <svg class="ico-send" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+                  <svg class="ico-stop" width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="2.2" fill="currentColor"></rect></svg>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="aihint"><span>AI version of me &#183; can be wrong</span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
   <main>
   <section id="top" data-reveal>
     <div class="hero-c">
@@ -2606,10 +4088,15 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       <div class="hero-t">
       <h1>Hi, I’m Lokesh, I turn <span class="h1-key">user needs</span> into <span class="h1-key">products</span> that <span class="h1-key">drive growth</span>.</h1>
       <p class="hero-sub">Product designer with 3 years of experience. I’ve owned a trading app responsible for 97% of company revenue, built our first referral-partner B2B product, and taken an AI agent platform from 0&#8594;1.</p>
-      <div class="cta">
-        <a class="pill pill-primary" href="mailto:hi.lokeshux@gmail.com">Email me<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      
-        <a class="pill pill-li" href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="heroask-row">
+      <button type="button" class="heroask" id="heroAsk">
+        <svg class="heroask-ring" aria-hidden="true"><defs><linearGradient id="askRingGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#6c9bff"/><stop offset=".4" stop-color="#b17cff"/><stop offset=".72" stop-color="#ff86b7"/><stop offset="1" stop-color="#ffb070"/>
+        </linearGradient></defs><rect class="rg-bloom" pathLength="1"/><rect class="rg-line" pathLength="1"/><rect class="rg-glow" pathLength="1"/><rect class="rg-head" pathLength="1"/></svg>
+        <canvas class="askhand" aria-hidden="true"></canvas>
+        <span class="heroask-t">Interview my AI twin</span>
+        <span class="heroask-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </button>
       </div>
       </div>
     </div>
@@ -3653,44 +5140,1436 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 </script>
 
 <script>
+/* ══ THE OG ASSISTANT — chat client ═══════════════════════════════════
+   Talks to /api/chat, which proxies Groq with Lokesh's facts as a system
+   prompt (see api/data/lokesh-context.js) and streams the reply back as
+   plain OpenAI-style SSE. Everything here is presentation: the panel, a
+   transcript of question-and-answer exchanges, tokens as they land. */
 (function(){
-  var el = document.getElementById("askHome");
-  if (!el || !window.AskWidget) return;
-  var QUESTIONS = [
-    { id: "why-many-companies", question: "Why so many companies in three years?",
-      keywords: ["companies", "jobs", "hopping", "many", "short", "tenure", "switch"],
-      answer: "Four companies, three years. Rupeezy was 18 months, and I'd have stayed longer if a founding-designer role hadn't opened up. Runable was 3 months, the working model turned out different from what was agreed at offer stage, so I left. ZZAZZ wasn't my decision, the whole product and design team was cut when funding fell through." },
-    { id: "why-runable-short", question: "Why only 3 months at Runable?",
-      keywords: ["runable", "months", "left", "quit", "exit"],
-      answer: "The role's actual working model turned out to be different from what was agreed at offer stage. I raised it with the founders directly, finished the launch, then decided it wasn't sustainable for me." },
-    { id: "what-looking-for", question: "What are you looking for?",
-      keywords: ["looking", "want", "next", "role", "seeking"],
-      answer: "A product company where design has a seat in decisions, not just execution, and where I can go deep on one product for several years. For an early-stage company, I'm also open to a founding designer role, I've done that once already and know what it costs." },
-    { id: "how-use-ai", question: "How do you actually use AI in your work?",
-      keywords: ["ai", "claude", "tools", "workflow", "vibe", "code"],
-      answer: "Daily, for specific things. This entire site, the nav, the analytics, the interactive demos, is built with Claude. I'm not a developer, I direct it and push back when the output looks generated. For UX copy I use ChatGPT for first drafts I then rewrite. I don't use it for deciding." },
-    { id: "available-when", question: "Are you available to start?",
-      keywords: ["available", "start", "notice", "join", "when"],
-      answer: "Immediately." },
-    { id: "biggest-gap", question: "What's the biggest gap in your experience?",
-      keywords: ["weakness", "gap", "missing", "lacking", "dont"],
-      answer: "I've never run a usability test, a user interview, or a proper A/B experiment. I haven't been on a team that ran them either. It's the first thing I want to fix wherever I land next." },
-    { id: "fintech-experience", question: "Do you have experience with regulated or fintech products?",
-      keywords: ["fintech", "regulated", "compliance", "finance", "kyc", "sebi"],
-      answer: "Yes, it's my strongest domain. I owned a trading app at Rupeezy through KYC, order flows, and a SEBI-driven compliance disclaimer that has to stop a trade before it completes. Regulation isn't an edge case for me, it's a normal design constraint I've worked inside for two years." },
-    { id: "resume", question: "Can I see your resume?",
-      keywords: ["resume", "cv", "pdf"],
-      answer: "Yes, it's linked at the top of the site, or ask me directly and I'll send it over." },
-    { id: "measure-success", question: "How do you measure success in your work?",
-      keywords: ["metrics", "measure", "success", "data", "impact"],
-      answer: "Honestly, this is a real gap. Rupeezy tracked usage in Firebase and MoEngage, but agreeing a target metric before design started wasn't part of how we worked. So most of my numbers exist because I went and asked the business and support teams afterward, not because I planned for them upfront." }
+  var panel = document.getElementById("aiChat");
+  if (!panel) return;
+  var askBtn = document.getElementById("askAiBtn");
+  var askBtnMobile = document.getElementById("askAiBtnMobile");
+  var sheet = panel.querySelector(".aichat-panel");
+  var head = panel.querySelector(".aichat-head");
+  var scrim = panel.querySelector(".aichat-scrim");
+  var headSpark = document.getElementById("aiChatSpark");
+  var closeBtn = document.getElementById("aiChatClose");
+  var resetBtn = document.getElementById("aiChatReset");
+  var body = document.getElementById("aiChatBody");
+  var intro = document.getElementById("aiChatIntro");
+  var suggest = document.getElementById("aiChatSuggest");
+  var form = document.getElementById("aiChatForm");
+  var input = document.getElementById("aiChatInput");
+  var sendBtn = document.getElementById("aiChatSend");
+  var live = document.getElementById("aiChatLive");
+
+  var MAIL = "hi.lokeshux@gmail.com";
+  var FALLBACK = "Sorry, I lost my train of thought there.";
+  var BUSY = "Lots of people are asking me things right now. I\u2019ll try again in a moment.";
+  var OFFLINE = "You seem to be offline. I\u2019ll ask again as soon as you\u2019re back.";
+  var BROKEN = "Something went wrong on my end.";
+  var LONG = "This chat has got long. Start a fresh one and I\u2019ll pick up your question.";
+  var ICON_RETRY = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 8a5.4 5.4 0 1 0 1.6-3.85M2.6 2.6v3.2h3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // a retry waiting to happen (countdown or back-online); anything the
+  // visitor does next cancels it
+  var cancelRetry = null;
+  function dropRetry(){ if (cancelRetry){ var c = cancelRetry; cancelRetry = null; c(); } }
+  var ARROW = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+
+  // Lucide icons, as the Instead prototype uses them: 24-unit paths drawn
+  // at 14px by default (12px inline, 16px for header actions), 1.5 stroke,
+  // round caps and joins.
+  var LP = {
+    thumbsUp: '<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>',
+    thumbsDown: '<path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>',
+    copy: '<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+    check: '<path d="M20 6 9 17l-5-5"/>',
+    chevronDown: '<path d="m6 9 6 6 6-6"/>',
+    arrowUp: '<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>',
+    cornerDownRight: '<path d="m15 10 5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/>',
+    arrowRight: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+    cornerDownLeft: '<path d="M20 4v7a4 4 0 0 1-4 4H4"/><path d="m9 10-5 5 5 5"/>',
+    x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+    messagePlus: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v6"/><path d="M9 10h6"/>',
+    layers: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
+    briefcase: '<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/>',
+    sparkles: '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>',
+    route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+    users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    fileText: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+    arrowUpRight: '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>'
+  };
+  function LI(name, size, stroke){
+    size = size || 14;
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (stroke || 1.5) +
+      '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + LP[name] + "</svg>";
+  }
+
+  // The opening four are fixed and in this order: the questions a
+  // recruiter screening a designer actually has, strongest story first.
+  var STARTERS = [
+    { q: "What's the project you're proudest of?", tag: "Work", hint: "The Rupeezy app merge" },
+    { q: "What have you actually designed for AI?", tag: "AI", hint: "Two products, Runable and ZZAZZ" },
+    { q: "How did you get into design?", tag: "Career", hint: "Self-taught, from chemical science" },
+    { q: "How do you work with PMs and engineers?", tag: "Craft", hint: "One PM, seven engineers" }
   ];
-  /* the four default-visible chips, in this order — the rest of the
-     array above stays reachable by typing, matching only widens the
-     set the chip row already promises */
-  AskWidget.mount(el, QUESTIONS, {
-    chips: ["why-many-companies", "what-looking-for", "how-use-ai", "available-when"]
+  // "Ask next" draws from these plus any starter not yet asked
+  var QUESTION_POOL = STARTERS.concat([
+    { q: "What did Rise Portal actually change?", tag: "Work" },
+    { q: "Do you have fintech experience?", tag: "Work" },
+    { q: "How did you build this site?", tag: "Craft" },
+    { q: "What was it like being the only designer?", tag: "Career" },
+    { q: "What are you looking for next?", tag: "Career" },
+    { q: "When can you start?", tag: "Hiring" },
+    { q: "How do I reach you directly?", tag: "Hiring" }
+  ]);
+
+  var history = [], asked = [], busy = false, lastFocus = null, stopCurrent = null;
+  var canHover = window.matchMedia && window.matchMedia("(hover:hover)").matches;
+  setTimeout(function(){ renderRail(); }, 0);
+
+  function shuffle(a){
+    for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function pick(n, oneEachTag){
+    var fresh = shuffle(QUESTION_POOL.filter(function(x){ return asked.indexOf(x.q) === -1; }));
+    if (fresh.length < n) fresh = shuffle(QUESTION_POOL.slice());
+    if (!oneEachTag) return fresh.slice(0, n);
+    var out = [], tags = [];
+    fresh.forEach(function(x){ if (out.length < n && tags.indexOf(x.tag) === -1){ out.push(x); tags.push(x.tag); } });
+    fresh.forEach(function(x){ if (out.length < n && out.indexOf(x) === -1) out.push(x); });
+    return out;
+  }
+  function chip(item){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "aichip";
+    b.innerHTML = "<span></span>" + ARROW;
+    b.firstChild.textContent = item.q;
+    b.addEventListener("click", function(){ sendMessage(item.q); });
+    return b;
+  }
+  var TOPIC = { Work: "My work", AI: "AI", Craft: "Working together", Career: "Career", Hiring: "Hiring" };
+  // Familiar icons, one per topic (NN/g: recognisable icon + plain label),
+  // so a row says what kind of question it is before it's read.
+  var SVG = function(d){ return '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">' + d + "</svg>"; };
+  var TOPIC_ICON = {
+    Work:   SVG('<rect x="2" y="4.5" width="12" height="9" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M5.8 4.5V3.2c0-.5.4-.9.9-.9h2.6c.5 0 .9.4.9.9v1.3M2 8.5h12" stroke="currentColor" stroke-width="1.4"/>'),
+    AI:     SVG('<path d="M8 1.8c.4 2.9 1.3 3.8 4.2 4.2-2.9.4-3.8 1.3-4.2 4.2-.4-2.9-1.3-3.8-4.2-4.2 2.9-.4 3.8-1.3 4.2-4.2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M12.4 10.6c.2 1.2.6 1.6 1.8 1.8-1.2.2-1.6.6-1.8 1.8-.2-1.2-.6-1.6-1.8-1.8 1.2-.2 1.6-.6 1.8-1.8Z" fill="currentColor"/>'),
+    Craft:  SVG('<circle cx="5.6" cy="5.6" r="2.2" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="6.4" r="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M1.8 13.4c.4-2.2 1.9-3.4 3.8-3.4s3.4 1.2 3.8 3.4M9.6 10.3c1.6-.2 3.8.5 4.6 3.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>'),
+    Career: SVG('<path d="M2.5 13.5h3v-3h3v-3h3v-3h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'),
+    Hiring: SVG('<rect x="2.2" y="3" width="11.6" height="10.5" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M2.2 6.5h11.6M5.5 1.8v2.4M10.5 1.8v2.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>')
+  };
+  var ICON_FOLLOW = SVG('<path d="M3.5 2.5v5.2c0 1.1.9 2 2 2h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M10 7l2.6 2.7L10 12.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>');
+  function sugRow(item, icon){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "aisug";
+    b.innerHTML = '<span class="aisug-i">' + icon + '</span><span class="aisug-t"></span><span class="aisug-a">' + ARROW + "</span>";
+    b.querySelector(".aisug-t").textContent = item.q;
+    if (item.tag) b.title = TOPIC[item.tag] || item.tag;
+    b.addEventListener("click", function(){ sendMessage(item.q); });
+    return b;
+  }
+  function dotRow(item){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "aitr";
+    // just the question: it already says what the answer is about. The
+    // arrow only appears on hover or focus, to say "this sends it".
+    b.innerHTML = '<span class="aitr-t"></span><span class="aitr-a" aria-hidden="true">' + ARROW + "</span>";
+    b.querySelector(".aitr-t").textContent = item.q;
+    b.addEventListener("click", function(){ sendMessage(item.q); });
+    return b;
+  }
+  // Suggestions live in the tray the composer docks into, as pill rows;
+  // hovering a row reveals its action, as in the prototype's "Open".
+  function trayRow(q){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "airow";
+    b.innerHTML = '<span class="airow-i" aria-hidden="true">' + LI("cornerDownRight", 12) + '</span><span class="airow-t"></span>' +
+      '<span class="airow-go">Ask' + LI("cornerDownLeft", 12) + '</span><span class="airow-arr" aria-hidden="true">' + LI("arrowRight", 12) + "</span>";
+    b.querySelector(".airow-t").textContent = q;
+    b.addEventListener("click", function(){ sendMessage(q); });
+    return b;
+  }
+  var trayLabel = document.getElementById("aiTrayLabel");
+  function fillTray(label, qs){
+    suggest.innerHTML = "";
+    if (trayLabel) trayLabel.textContent = label;
+    qs.forEach(function(q){ suggest.appendChild(trayRow(q)); });
+    suggest.parentNode.hidden = !qs.length;
+  }
+  function renderTry(){
+    fillTray("Ask me about", SCOPES[scope].rows);
+  }
+  // The context pill: what the conversation is about, as the prototype's
+  // "All clients ⌄". Choosing one changes the heading, the suggestions,
+  // and tells the model which part of my work to answer from.
+  var SCOPES = {
+    all:    { label: "Everything", icon: "layers", hero: "What would you like to know?",
+              rows: ["What's the project you're proudest of?", "What have you actually designed for AI?", "How did you get into design?", "How do you work with PMs and engineers?"] },
+    work:   { label: "My work", icon: "briefcase", hero: "Which project should we start with?",
+              rows: ["What's the project you're proudest of?", "What did Rise Portal actually change?", "Do you have fintech experience?", "How do you approach a design problem?"] },
+    ai:     { label: "AI", icon: "sparkles", hero: "Ask me how I design for AI.",
+              rows: ["What have you actually designed for AI?", "How do you use AI day to day?", "What won't you use AI for?"] },
+    career: { label: "Career", icon: "route", hero: "Ask me about my career.",
+              rows: ["How did you get into design?", "What was it like being the only designer?", "What are you looking for next?"] },
+    hiring: { label: "Hiring", icon: "users", hero: "Let\u2019s talk about working together.",
+              rows: ["When can you start?", "Would you relocate?", "How do you work with PMs and engineers?", "How do I reach you directly?"] }
+  };
+  var scope = "all";
+  var ctxBtn = document.getElementById("aiCtxBtn"), ctxMenu = document.getElementById("aiCtxMenu");
+  var heroEl = document.getElementById("aiHero");
+  function paintCtx(){
+    if (!ctxBtn) return;
+    document.getElementById("aiCtxIcon").innerHTML = LI(SCOPES[scope].icon, 12);
+    document.getElementById("aiCtxName").textContent = SCOPES[scope].label;
+    ctxBtn.querySelector(".aictx-chev").innerHTML = LI("chevronDown", 12);
+    ctxBtn.classList.toggle("is-scoped", scope !== "all");
+    ctxMenu.innerHTML = '<p class="ailabel">What\u2019s this about?</p>' + Object.keys(SCOPES).map(function(k){
+      return '<button type="button" class="aictx-item" role="menuitemradio" aria-checked="' + (k === scope) + '" data-k="' + k + '">' +
+        '<span class="aictx-ic">' + LI(SCOPES[k].icon, 14) + '</span><span class="aictx-l">' + SCOPES[k].label + "</span>" +
+        (k === scope ? '<span class="aictx-ck">' + LI("check", 12) + "</span>" : "") + "</button>";
+    }).join("");
+  }
+  function setScope(k){
+    scope = k;
+    paintCtx();
+    closeCtx();
+    if (!panel.classList.contains("has-chat")){ renderTry(); typeHero(SCOPES[k].hero, false); }
+    input.focus({ preventScroll: true });
+  }
+  function openCtx(){ ctxMenu.hidden = false; ctxBtn.setAttribute("aria-expanded", "true"); var on = ctxMenu.querySelector('[aria-checked="true"]'); if (on) on.focus(); }
+  function closeCtx(){ ctxMenu.hidden = true; ctxBtn.setAttribute("aria-expanded", "false"); }
+  if (ctxBtn){
+  ctxBtn.addEventListener("click", function(e){ e.stopPropagation(); ctxMenu.hidden ? openCtx() : closeCtx(); });
+  ctxMenu.addEventListener("click", function(e){ var it = e.target.closest(".aictx-item"); if (it) setScope(it.getAttribute("data-k")); });
+  document.addEventListener("click", function(e){ if (!ctxMenu.hidden && !e.target.closest(".aictx")) closeCtx(); });
+  ctxMenu.addEventListener("keydown", function(e){
+    var items = Array.prototype.slice.call(ctxMenu.querySelectorAll(".aictx-item")), i = items.indexOf(document.activeElement);
+    if (e.key === "ArrowDown"){ e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (e.key === "ArrowUp"){ e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+    else if (e.key === "Escape"){ e.stopPropagation(); closeCtx(); ctxBtn.focus(); }
   });
+  }
+  // The prototype's hero: the wordmark flips (rotateX) into the heading,
+  // which then types in at 15ms a character.
+  // ---- the welcome wave --------------------------------------------
+  var handCv = document.getElementById("aiHand"), handRaf = 0, handPts = null;
+  var HAND_D = ["M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2", "M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2",
+    "M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8",
+    "M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"];
+  // two small arcs off the fingertips: the "motion" of the wave
+  var MOTION_D = ["M20.2 1.2a3.2 3.2 0 0 1 2.6 2.6", "M20.6 -1a5.6 5.6 0 0 1 4.4 4.4"];
+  var AI_HUES = [[108,155,255], [177,124,255], [255,134,183], [255,176,112]];
+  function samplePaths(list, gap){
+    var ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg"), out = [];
+    svg.setAttribute("style", "position:absolute;width:0;height:0;visibility:hidden");
+    document.body.appendChild(svg);
+    list.forEach(function(d, pi){
+      var el = document.createElementNS(ns, "path"); el.setAttribute("d", d); svg.appendChild(el);
+      var len = el.getTotalLength(), n = Math.max(2, Math.round(len / gap));
+      for (var i = 0; i <= n; i++){ var pt = el.getPointAtLength(len * i / n); out.push({ x: pt.x, y: pt.y, path: pi }); }
+    });
+    svg.remove();
+    // drop points that land on top of each other where paths meet
+    return out.filter(function(p, i){
+      for (var j = 0; j < i; j++){ var q = out[j]; if ((p.x-q.x)*(p.x-q.x) + (p.y-q.y)*(p.y-q.y) < gap*gap*0.35) return false; }
+      return true;
+    });
+  }
+  function mix(a, b, t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+  function hueAt(t){ t = Math.max(0, Math.min(.999, t)) * (AI_HUES.length - 1); var i = Math.floor(t); return mix(AI_HUES[i], AI_HUES[i+1], t - i); }
+  function inkRgb(){
+    var m = getComputedStyle(heroEl || document.body).color.match(/\d+/g);
+    return m ? [+m[0], +m[1], +m[2]] : [36, 32, 32];
+  }
+  function playHand(quick){
+    if (!handCv) return;
+    cancelAnimationFrame(handRaf);
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var css = handCv.clientWidth || 88, dpr = Math.min(window.devicePixelRatio || 1, 3);
+    handCv.width = Math.round(css * dpr); handCv.height = Math.round(css * dpr);
+    var g = handCv.getContext("2d"), S = css / 30, OX = css / 2 - 12 * S, OY = css / 2 - 11.5 * S;
+    if (!handPts) handPts = { hand: samplePaths(HAND_D, 1.2), motion: samplePaths(MOTION_D, 1.1) };
+    var ink = inkRgb(), N = handPts.hand.length, R = Math.max(1, css / 72);
+    // each point starts somewhere in a loose cloud and swirls in on a curve
+    var P = handPts.hand.map(function(p, i){
+      var a = Math.random() * 6.2832, r = (0.55 + Math.random() * 0.6) * css * 0.5;
+      var sx = css/2 + Math.cos(a) * r, sy = css/2 + Math.sin(a) * r * 0.85;
+      var tx = OX + p.x * S, ty = OY + p.y * S;
+      var bend = (Math.random() - 0.5) * css * 0.5;
+      return { sx: sx, sy: sy, tx: tx, ty: ty,
+        cx: (sx + tx) / 2 - (ty - sy) * 0.001 * bend * 4, cy: (sy + ty) / 2 + (tx - sx) * 0.001 * bend * 4,
+        delay: (quick ? 0 : 1) * ((i / N) * 420 + Math.random() * 180), hue: hueAt(i / N) };
+    });
+    var FLY = quick ? 0 : 900, WAVE_AT = quick ? 0 : 1250, WAVE = 1500;
+    var PX = OX + 12 * S, PY = OY + 22 * S; // the wrist
+    function ease(t){ return t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 4); }
+    var t0 = performance.now();
+    function frame(now){
+      var t = reduce ? 1e5 : now - t0;
+      g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, css, css);
+      var w = (t - WAVE_AT) / WAVE, ang = 0;
+      if (w > 0 && w < 1) ang = Math.sin(w * Math.PI * 4) * Math.pow(1 - w, 1.4) * 0.34;
+      // motion arcs, only while it waves
+      if (w > 0 && w < 1){
+        var ma = Math.sin(Math.min(1, w * 1.6) * Math.PI) * 0.55;
+        g.fillStyle = "rgba(" + ink.join(",") + "," + ma + ")";
+        handPts.motion.forEach(function(p){ g.beginPath(); g.arc(OX + p.x * S, OY + p.y * S, R * 0.8, 0, 6.2832); g.fill(); });
+      }
+      g.save(); g.translate(PX, PY); g.rotate(ang); g.translate(-PX, -PY);
+      var busy = w < 1;
+      for (var i = 0; i < P.length; i++){
+        var p = P[i], k = FLY ? (t - p.delay) / FLY : 1, e = ease(k);
+        if (k <= 0){ busy = true; continue; }
+        var u = 1 - e, x = u*u*p.sx + 2*u*e*p.cx + e*e*p.tx, y = u*u*p.sy + 2*u*e*p.cy + e*e*p.ty;
+        // colour holds its AI hue in flight, then settles into ink on landing
+        var land = FLY ? Math.max(0, Math.min(1, (t - p.delay - FLY * 0.7) / 380)) : 1;
+        var c = mix(p.hue, ink, land), alpha = Math.min(1, 0.15 + e);
+        var pulse = land > 0 && land < 1 ? 1 + Math.sin(land * Math.PI) * 0.45 : 1;
+        if (land < 1) busy = true;
+        g.fillStyle = "rgba(" + Math.round(c[0]) + "," + Math.round(c[1]) + "," + Math.round(c[2]) + "," + alpha + ")";
+        g.beginPath(); g.arc(x, y, R * pulse * (0.7 + 0.3 * e), 0, 6.2832); g.fill();
+      }
+      g.restore();
+      if (busy && !reduce) handRaf = requestAnimationFrame(frame);
+    }
+    handRaf = requestAnimationFrame(frame);
+  }
+
+  var heroPlayed = false;
+  function typeHero(text, withMark){
+    if (!heroEl) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function type(){
+      heroEl.classList.remove("is-mark", "is-leaving");
+      if (reduce){ heroEl.textContent = text; return; }
+      heroEl.innerHTML = text.split(" ").map(function(w, wi, arr){
+        var before = arr.slice(0, wi).join(" ").length + (wi ? 1 : 0);
+        return '<span class="tw-word">' + w.split("").map(function(ch, ci){
+          return '<span class="tw-char" style="animation-delay:' + ((before + ci) * 15) + 'ms">' + escapeHtml(ch) + "</span>";
+        }).join("") + "</span>";
+      }).join(" ");
+      heroEl.classList.add("is-entering");
+      setTimeout(function(){ heroEl.classList.remove("is-entering"); heroEl.textContent = text; }, text.length * 15 + 320);
+    }
+    if (withMark && !reduce){
+      heroEl.textContent = "Lokesh Bhatia";
+      heroEl.classList.add("is-mark");
+      setTimeout(function(){ heroEl.classList.add("is-leaving"); }, 900);
+      setTimeout(type, 1200);
+    } else type();
+  }
+  paintCtx();
+
+  // the header caption: the role at rest, the real state while working
+  var stateEl = document.getElementById("aiState");
+  var ROLE = stateEl ? stateEl.textContent : "";
+  function setState(t){ if (stateEl) stateEl.textContent = t || ROLE; }
+  // the rail: everything you can ask, grouped, ticking off as you go
+  var railTopics = document.getElementById("aiRailTopics");
+  function renderRail(){
+    if (!railTopics) return;
+    railTopics.innerHTML = "";
+    ["Work", "AI", "Craft", "Career", "Hiring"].forEach(function(tag){
+      var items = QUESTION_POOL.filter(function(x){ return x.tag === tag; });
+      if (!items.length) return;
+      var k = document.createElement("p");
+      k.className = "airail-k";
+      k.textContent = TOPIC[tag];
+      railTopics.appendChild(k);
+      items.forEach(function(item){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "airail-q" + (asked.indexOf(item.q) > -1 ? " is-asked" : "");
+        b.textContent = item.q;
+        b.addEventListener("click", function(){ sendMessage(item.q); });
+        railTopics.appendChild(b);
+      });
+    });
+  }
+  renderTry();
+
+  // ── open / close ──────────────────────────────────────────────────────
+  function releaseMobileNav(){
+    var mobileNav = document.getElementById("mobileNav");
+    if (!mobileNav || !mobileNav.classList.contains("open")) return;
+    var lockedAt = -(parseInt(document.body.style.top || "0", 10)) || 0;
+    mobileNav.classList.remove("open");
+    document.body.classList.remove("menu-open");
+    document.body.style.top = "";
+    window.scrollTo(0, lockedAt);
+    var burger = document.getElementById("burgerBtn");
+    if (burger) burger.setAttribute("aria-expanded", "false");
+  }
+  // While the chat is open the page underneath must not move: pin the
+  // body where it is (the same technique the mobile menu uses, which is
+  // the one iOS Safari respects), and put it back exactly on close.
+  var lockedY = 0;
+  function isDocked(){ return window.matchMedia("(min-width:641px)").matches; }
+  function lockPage(){
+    if (isDocked()){ document.documentElement.classList.add("chat-docked"); return; }
+    lockedY = window.scrollY || window.pageYOffset || 0;
+    var gap = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.top = -lockedY + "px";
+    if (gap > 0) document.body.style.paddingRight = gap + "px";
+    document.body.classList.add("chat-open");
+  }
+  function unlockPage(){
+    document.documentElement.classList.remove("chat-docked");
+    if (!document.body.classList.contains("chat-open")) return;
+    document.body.classList.remove("chat-open");
+    document.body.style.top = "";
+    document.body.style.paddingRight = "";
+    window.scrollTo(0, lockedY);
+  }
+  // On a phone the keyboard covers the bottom of the layout viewport, and
+  // a sheet pinned to that bottom would sit behind it, composer and all.
+  // Track the visible viewport instead: the sheet rests on top of the
+  // keyboard and never grows taller than what's actually visible.
+  function fitViewport(){
+    var vv = window.visualViewport;
+    if (!vv) return;
+    var kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    sheet.style.setProperty("--vvh", vv.height + "px");
+    sheet.style.setProperty("--kb", kb + "px");
+    panel.classList.toggle("kb-open", kb > 80);
+    if (kb > 80) scrollDown(true);
+  }
+  if (window.visualViewport){
+    window.visualViewport.addEventListener("resize", function(){ if (panel.classList.contains("open")) fitViewport(); });
+    window.visualViewport.addEventListener("scroll", function(){ if (panel.classList.contains("open")) fitViewport(); });
+  }
+  // the dimmed page behind the sheet isn't scrollable either
+  panel.querySelector(".aichat-scrim").addEventListener("touchmove", function(e){ e.preventDefault(); }, { passive: false });
+
+  function openChat(){
+    lastFocus = document.activeElement;
+    releaseMobileNav();
+    lockPage();
+    fitViewport();
+    if (!heroPlayed && !panel.classList.contains("has-chat")){ heroPlayed = true; heroEl.style.opacity = "0"; requestAnimationFrame(function(){ playHand(false); }); setTimeout(function(){ heroEl.style.opacity = ""; typeHero(SCOPES[scope].hero, false); }, 1000); }
+    panel.classList.add("open");
+    panel.setAttribute("aria-hidden", "false");
+    panel.setAttribute("aria-modal", isDocked() ? "false" : "true");
+    // a phone keyboard would cover the introduction the moment it opened,
+    // so only reach for the input where there's a real keyboard already
+    setTimeout(function(){ (canHover ? input : sheet).focus({ preventScroll: true }); }, 380);
+  }
+  function closeChat(){
+    panel.classList.remove("open");
+    panel.setAttribute("aria-hidden", "true");
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    unlockPage();
+    if (lastFocus && lastFocus.focus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+  }
+  [askBtn, askBtnMobile].forEach(function(b){ if (b) b.addEventListener("click", openChat); });
+
+  // ---- entry points: the hero ask box and the dock --------------------
+  function askFrom(q){
+    q = (q || "").trim();
+    if (q){ heroPlayed = true; }
+    openChat();
+    if (q) setTimeout(function(){ sendMessage(q); }, 60);
+  }
+  var heroAsk = document.getElementById("heroAsk");
+  // the entry icons: the chat's welcome, small and on a loop. Dots
+  // gather into the hand in the AI colours, settle into ink, wave,
+  // rest, then drift apart and gather again. Runs only while visible.
+  function loopHand(cv, onCycle){
+    var css = cv.clientWidth || 20, dpr = Math.min(window.devicePixelRatio || 1, 3);
+    cv.width = Math.round(css * dpr); cv.height = Math.round(css * dpr);
+    var g = cv.getContext("2d"), S = css / 26, OX = css / 2 - 12 * S, OY = css / 2 - 11.5 * S;
+    var pts = samplePaths(HAND_D, 2.2), N = pts.length, R = Math.max(.7, css / 26);
+    var PX = OX + 12 * S, PY = OY + 22 * S, P = [], t0 = 0, raf = 0, visible = true;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var GATHER = 1300, WAVE_AT = 2500, WAVE = 1200, SCATTER_AT = 4800, SCATTER = 650, CYCLE = 5500;
+    function seed(){
+      P = pts.map(function(p, i){
+        var a = Math.random() * 6.2832, r = (0.3 + Math.random() * 0.25) * css;
+        var sx = css/2 + Math.cos(a) * r, sy = css/2 + Math.sin(a) * r, tx = OX + p.x * S, ty = OY + p.y * S;
+        var b = (Math.random() - 0.5) * 0.6;
+        return { sx: sx, sy: sy, tx: tx, ty: ty, cx: (sx+tx)/2 - (ty-sy) * b, cy: (sy+ty)/2 + (tx-sx) * b,
+          ox: tx + (tx - css/2) * (0.35 + Math.random() * 0.35), oy: ty + (ty - css/2) * (0.35 + Math.random() * 0.35) - css * 0.05,
+          d: (i / N) * 260 + Math.random() * 120, hue: hueAt(i / N) };
+      });
+    }
+    function ease(t){ return t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3); }
+    function draw(t){
+      var ink = inkRgb();
+      g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, css, css);
+      var w = (t - WAVE_AT) / WAVE, ang = (w > 0 && w < 1) ? Math.sin(w * Math.PI * 4) * Math.pow(1 - w, 1.3) * 0.32 : 0;
+      g.save(); g.translate(PX, PY); g.rotate(ang); g.translate(-PX, -PY);
+      for (var i = 0; i < P.length; i++){
+        var p = P[i], x, y, c, al;
+        if (t < SCATTER_AT){
+          var e = ease((t - p.d) / GATHER), u = 1 - e;
+          x = u*u*p.sx + 2*u*e*p.cx + e*e*p.tx; y = u*u*p.sy + 2*u*e*p.cy + e*e*p.ty;
+          var land = Math.max(0, Math.min(1, (t - p.d - GATHER * .65) / 320));
+          c = mix(p.hue, ink, land); al = Math.min(1, .35 + e);
+        } else {
+          var k = ease((t - SCATTER_AT - p.d * .5) / SCATTER);
+          x = p.tx + (p.ox - p.tx) * k; y = p.ty + (p.oy - p.ty) * k;
+          c = mix(ink, p.hue, Math.min(1, k * 1.6)); al = 1 - k;
+        }
+        if (al <= 0.01) continue;
+        g.fillStyle = "rgba(" + Math.round(c[0]) + "," + Math.round(c[1]) + "," + Math.round(c[2]) + "," + al + ")";
+        g.beginPath(); g.arc(x, y, R, 0, 6.2832); g.fill();
+      }
+      g.restore();
+    }
+    function frame(now){
+      raf = 0;
+      if (!visible || document.hidden) return;
+      if (!t0) { t0 = now; seed(); if (onCycle) onCycle(); }
+      var t = now - t0;
+      if (t >= CYCLE){ t0 = now; seed(); t = 0; if (onCycle) onCycle(); }
+      draw(t);
+      raf = requestAnimationFrame(frame);
+    }
+    if (reduce){ seed(); draw(SCATTER_AT - 1); return; }
+    function kick(){ if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame); }
+    if ("IntersectionObserver" in window){
+      new IntersectionObserver(function(es){ visible = es[es.length - 1].isIntersecting; if (visible) kick(); }).observe(cv);
+    }
+    document.addEventListener("visibilitychange", kick);
+    kick();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("canvas.askhand"), function(cv){
+    var ring = cv.parentNode.querySelector(".heroask-ring");
+    loopHand(cv, ring ? function(){ ring.classList.remove("run"); void ring.getBoundingClientRect(); ring.classList.add("run"); } : null);
+  });
+  if (heroAsk) heroAsk.addEventListener("click", function(){ askFrom(""); });
+  // the ring is a real rounded rect, sized to the button so its corners match the pill
+  var ringSvg = heroAsk && heroAsk.querySelector(".heroask-ring"), ringRect = ringSvg && ringSvg.querySelectorAll("rect[pathLength]");
+  function sizeRing(){
+    if (!ringRect) return;
+    var w = heroAsk.offsetWidth + 2, h = heroAsk.offsetHeight + 2, sw = 1.25;
+    Array.prototype.forEach.call(ringRect, function(r){
+      r.setAttribute("x", sw / 2); r.setAttribute("y", sw / 2);
+      r.setAttribute("width", Math.max(0, w - sw)); r.setAttribute("height", Math.max(0, h - sw));
+      r.setAttribute("rx", (h - sw) / 2); r.setAttribute("ry", (h - sw) / 2);
+    });
+  }
+  if (ringRect){
+    sizeRing();
+    window.addEventListener("resize", sizeRing);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeRing);
+  }
+  var dock = document.getElementById("askDock");
+  if (dock){
+    dock.addEventListener("click", function(){ askFrom(""); });
+    var heroGone = false, footVisible = false;
+    var syncDock = function(){
+      var on = heroGone && !footVisible;
+      dock.classList.toggle("is-on", on);
+      dock.setAttribute("aria-hidden", on ? "false" : "true");
+      dock.tabIndex = on ? 0 : -1;
+    };
+    var foot = document.querySelector("footer"), dockRaf = 0;
+    var measureDock = function(){
+      dockRaf = 0;
+      heroGone = heroAsk ? heroAsk.getBoundingClientRect().bottom < 0 : true;
+      footVisible = foot ? foot.getBoundingClientRect().top < window.innerHeight - 40 : false;
+      syncDock();
+    };
+    var queueDock = function(){ if (!dockRaf) dockRaf = requestAnimationFrame(measureDock); };
+    window.addEventListener("scroll", queueDock, { passive: true });
+    window.addEventListener("resize", queueDock);
+    measureDock();
+  }
+  closeBtn.addEventListener("click", closeChat);
+  scrim.addEventListener("click", closeChat);
+  document.addEventListener("keydown", function(e){
+    if (!panel.classList.contains("open")) return;
+    if (e.key === "Escape"){ closeChat(); return; }
+    if (e.key !== "Tab" || isDocked()) return;
+    var f = Array.prototype.filter.call(
+      sheet.querySelectorAll("button:not([disabled]), textarea, a[href]"),
+      function(el){ return el.offsetParent !== null; }
+    );
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+
+  // Acting on the page, not just talking: when an answer is about one of
+  // the case studies and the page is visible beside the panel, scroll the
+  // page to that project's card and ring it for a moment.
+  var CASE_PAGES = { "app-merge": "app-merge.html", "rise-portal": "rise-portal.html", "web-terminal": "web-terminal.html" };
+  function pointAtCase(full){
+    if (!isDocked()) return;
+    var m = /\[case:([a-z-]+)\]/.exec(full || ""), href = m && CASE_PAGES[m[1]];
+    if (!href) return;
+    var card = document.querySelector('a.workrow[href$="' + href + '"]');
+    if (!card) return;
+    setTimeout(function(){
+      setHead("Showing it on the page\u2026");
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      card.classList.add("ai-pointed");
+      setTimeout(function(){ card.classList.remove("ai-pointed"); setHead(HEAD_REST); }, 2600);
+    }, Math.min(lastRevealMs, 1800));
+  }
+
+  // the header takes a hairline once the conversation runs under it
+  body.addEventListener("scroll", function(){ sheet.classList.toggle("is-scrolled", body.scrollTop > 4); }, { passive: true });
+
+  // on phones the chat is a full screen that closes only from its ✕:
+  // no pull-to-dismiss, and dragging on the header or the composer's
+  // surround moves nothing (the conversation itself still scrolls)
+  (function(){
+    function hold(e){ if (window.matchMedia("(max-width:640px)").matches && e.cancelable) e.preventDefault(); }
+    head.addEventListener("touchmove", hold, { passive: false });
+    var foot = document.getElementById("aiChatFoot");
+    if (foot) foot.addEventListener("touchmove", function(e){
+      if (e.target.closest && e.target.closest("textarea, .airows")) return;
+      hold(e);
+    }, { passive: false });
+  })();
+
+  // ── rendering ─────────────────────────────────────────────────────────
+  function escapeHtml(s){
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function linkify(html){
+    return html
+      .replace(/([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/g, '<a href="mailto:$1">$1</a>')
+      .replace(/(^|[\s(])((?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/[A-Za-z0-9_-]+\/?)/g, function(m, pre, url){
+        var href = /^https?:/.test(url) ? url : "https://" + url;
+        return pre + '<a href="' + href + '" target="_blank" rel="noreferrer">' + url + "</a>";
+      });
+  }
+  function inline(s){
+    return linkify(escapeHtml(s)
+      .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
+      .replace(/`([^`]+)`/g, "<code>$1</code>"));
+  }
+  // The blocks the model is told to use (api/data/answer-format.js):
+  // a lead line, figures {{n|label}}, a "Label: value" facts list,
+  // labelled steps, a quote, and [case:id] cards. Re-run on every token.
+  var CASES = {
+    "app-merge":    { n: "01", t: "Two apps into one, built to hold the third", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
+    "rise-portal":  { n: "02", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
+    "web-terminal": { n: "03", t: "The desktop trading terminal: chart, watchlist, and orders on one screen", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
+    "resume":       { t: "My r\u00e9sum\u00e9", k: "R\u00e9sum\u00e9", m: "Roles, dates and tools", href: "./resume.html" }
+  };
+  var FIG_RE = /\{\{\s*([^|}]+?)\s*\|\s*([^}]+?)\s*\}\}/g;
+  var FACT_RE = /^\s*(?:\*\*)?([^:*]{1,44}?)(?:\*\*)?\s*:\s+(.+)$/;
+  var CARD_ARROW = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function caseCard(id){
+    var c = CASES[id];
+    if (!c) return "";
+    var kind = c.k || "Case study";
+    return '<a class="aicase" href="' + c.href + '">' + (c.k === "R\u00e9sum\u00e9" ? LI("fileText", 14) : '<span class="aicase-k">' + kind + '</span>') +
+      '<span class="aicase-t">' + escapeHtml(c.t) + '</span>' + CARD_ARROW + '</a>';
+  }
+  // a half-arrived token would flash as raw syntax, so while streaming
+  // the tail is held back until it closes
+  function holdPartial(text){
+    text = text.replace(/\{\{[^}]*\}?$/, "").replace(/\{$/, "").replace(/\[[a-z]{0,4}(?::[a-z-]*)?$/, "");
+    // an unclosed **bold on the line being written would show its stars
+    var last = text.slice(text.lastIndexOf("\n") + 1);
+    if ((last.match(/\*\*/g) || []).length % 2) text = text.slice(0, text.lastIndexOf("**")) + text.slice(text.lastIndexOf("**") + 2);
+    return text.replace(/\*$/, "");
+  }
+  // for Copy and screen readers: the same answer as plain sentences
+  function toPlain(text){
+    return stripMeta(text)
+      .replace(FIG_RE, "$1 $2")
+      .replace(/\[(?:case|page):([a-z-]+)\]/g, function(m, id){ var c = CASES[id]; return c ? c.t + " (" + new URL(c.href, location.href).href + ")" : ""; })
+      .replace(/\*\*/g, "").replace(/`/g, "");
+  }
+  // the meta line every answer ends with (answer-format.js): what to
+  // ask next. Never shown as text.
+  var DOC = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.8V5.2h3.4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  function readMeta(text){
+    var meta = { next: null, used: [] };
+    // tolerant of a sloppy close (">" or none): read to the end of the line
+    var u = text.match(/<<\s*used\s*:\s*([^>\n]*)/i);
+    if (u) meta.used = u[1].split(",").map(function(x){ return x.trim().toLowerCase(); })
+      .filter(function(x, i, a){ return USED[x] && a.indexOf(x) === i; });
+    var n = text.match(/<<\s*next\s*:\s*([^>\n]*)/i);
+    if (n) meta.next = n[1].split("|").map(function(x){ return x.trim(); })
+      .filter(function(x){ return x && x.length < 90; }).slice(0, 3);
+    return meta;
+  }
+  function stripMeta(text){
+    // (and an "A:" the model sometimes copies from the prompt's examples)
+    return text.replace(/^[ \t]*<<[^\n]*$/gm, "").replace(/<<[^>\n]*>>?/g, "").replace(/<<[^>]*$/, "").replace(/<$/, "").replace(/^\s+/, "").replace(/^A:\s*/, "");
+  }
+  function inlineCase(html){
+    return html.replace(/\[(?:case|page):([a-z-]+)\]/g, function(m, id){
+      var c = CASES[id];
+      return c ? '<a href="' + c.href + '">' + escapeHtml(c.t) + "</a>" : "";
+    });
+  }
+
+  function renderRich(el, text, streaming){
+    text = stripMeta(text);
+    if (streaming) text = holdPartial(text);
+    var blocks = [], cur = null;
+    function push(type){ cur = { t: type, items: [] }; blocks.push(cur); return cur; }
+    text.replace(/\r/g, "").split("\n").forEach(function(line){
+      var m;
+      if ((m = line.match(/^\s*\[(?:case|page):([a-z-]+)\]\s*$/))){ push("case").id = m[1]; cur = null; return; }
+      if (/^\s*(\{\{[^}]+\}\}[\s,·]*)+$/.test(line)){
+        var figs = []; line.replace(FIG_RE, function(_, n, l){ figs.push([n, l]); });
+        push("figs").items = figs; cur = null; return;
+      }
+      if ((m = line.match(/^\s*>\s?(.*)/))){ if (!cur || cur.t !== "bq") push("bq"); if (m[1].trim()) cur.items.push(m[1]); return; }
+      var ul = line.match(/^\s*[-\u2022*]\s+(.*)/), ol = line.match(/^\s*\d+[.)]\s+(.*)/);
+      if (ul || ol){ var t = ul ? "ul" : "ol"; if (!cur || cur.t !== t) push(t); cur.items.push((ul || ol)[1]); return; }
+      cur = null;
+      if ((m = line.match(/^\s*#{1,4}\s+(.*)/))){ push("h").text = m[1]; cur = null; return; }
+      if (line.trim()){ push("p").text = line; cur = null; }
+    });
+
+    // the lead is one sentence; when the model runs straight on into the
+    // rest of its answer, split there so only the answer itself is set big
+    if (blocks[0] && blocks[0].t === "p" && blocks[0].text.length > 130){
+      var sm = blocks[0].text.match(/^(.+?[.!?])\s+(?=["\u201c\u2018']?[A-Z])/);
+      if (sm && (sm[1].match(/\*\*/g) || []).length % 2 === 0){
+        blocks.splice(1, 0, { t: "p", text: blocks[0].text.slice(sm[0].length) });
+        blocks[0] = { t: "p", text: sm[1] };
+      }
+    }
+
+    // a "Source: …" line straight after a figures row belongs to it
+    for (var k = blocks.length - 1; k > 0; k--){
+      if (blocks[k].t === "p" && blocks[k - 1].t === "figs" && /^\s*source\s*:/i.test(blocks[k].text)){
+        blocks[k - 1].source = blocks[k].text.replace(/^\s*source\s*:\s*/i, "");
+        blocks.splice(k, 1);
+      }
+    }
+
+    var out = [];
+    blocks.forEach(function(b, i){
+      if (b.t === "p"){
+        if (i === 0){
+          var lead = inline(b.text);
+          // the device only works when a few words carry it; a sentence
+          // bolded end to end is just the sentence, in ink
+          var keyLen = (b.text.match(/\*\*(.+?)\*\*/g) || []).join("").length;
+          var keyed = keyLen > 0 && keyLen < b.text.length * 0.6;
+          if (!keyed) lead = lead.replace(/<\/?b>/g, "");
+          out.push('<p class="ailead' + (keyed ? " has-key" : "") + '">' + inlineCase(lead) + "</p>");
+        } else {
+          out.push("<p>" + inlineCase(inline(b.text)) + "</p>");
+        }
+      } else if (b.t === "h"){
+        out.push('<p class="aitext-h">' + inline(b.text) + "</p>");
+      } else if (b.t === "figs"){
+        out.push('<div class="aifigs-wrap"><div class="aifigs">' + b.items.map(function(f){
+          return '<div class="aifig"><b>' + escapeHtml(f[0]) + "</b><span>" + escapeHtml(f[1]) + "</span></div>";
+        }).join("") + "</div>" + (b.source ? '<p class="aifigs-src">Source: ' + escapeHtml(b.source.replace(/\*\*/g, "")) + "</p>" : "") + "</div>");
+      } else if (b.t === "case"){
+        out.push(caseCard(b.id));
+      } else if (b.t === "bq"){
+        out.push("<blockquote>" + b.items.map(function(l){ return "<p>" + inline(l) + "</p>"; }).join("") + "</blockquote>");
+      } else if (b.t === "ul"){
+        // decided by the settled items, so a half-written last one can't
+        // flip the whole list between styles while it streams
+        var settled = streaming ? b.items.slice(0, -1) : b.items;
+        var facts = FACT_RE.test(b.items[0]) && (streaming || b.items.length > 1) &&
+          settled.every(function(it){ return FACT_RE.test(it); });
+        if (facts){
+          out.push('<dl class="aifacts">' + b.items.map(function(it){
+            var f = it.match(FACT_RE);
+            if (!f) return '<div class="aifact"><dt></dt><dd>' + inlineCase(inline(it)) + "</dd></div>";
+            var val = f[2].charAt(0).toUpperCase() + f[2].slice(1);
+            return '<div class="aifact"><dt>' + escapeHtml(f[1].trim()) + "</dt><dd>" + inlineCase(inline(val)) + "</dd></div>";
+          }).join("") + "</dl>");
+        } else {
+          out.push("<ul>" + b.items.map(function(it){ return "<li>" + inlineCase(inline(it)) + "</li>"; }).join("") + "</ul>");
+        }
+      } else if (b.t === "ol"){
+        var stepsSettled = streaming ? b.items.slice(0, -1) : b.items;
+        var steps = FACT_RE.test(b.items[0]) && stepsSettled.every(function(it){ return FACT_RE.test(it); });
+        out.push('<ol' + (steps ? ' class="aisteps"' : "") + ">" + b.items.map(function(it){
+          if (!steps) return "<li>" + inlineCase(inline(it)) + "</li>";
+          var f = it.match(FACT_RE);
+          if (!f) return '<li><span class="aistep-k">&#8203;</span>' + inlineCase(inline(it)) + "</li>";
+          var body = f[2].charAt(0).toUpperCase() + f[2].slice(1);
+          return '<li><span class="aistep-k">' + escapeHtml(f[1].trim()) + "</span>" + inlineCase(inline(body).replace(/<\/?b>/g, "")) + "</li>";
+        }).join("") + "</ol>");
+      }
+    });
+    var next = document.createElement("div");
+    next.innerHTML = out.join("") || "<p></p>";
+    if (streaming){
+      var tail = next.lastElementChild;
+      if (tail && /^(UL|OL|BLOCKQUOTE|DL)$/.test(tail.tagName)) tail = tail.lastElementChild || tail;
+      if (tail && /^(A|DIV)$/.test(tail.tagName)) tail = null;
+      (tail || next).insertAdjacentHTML("beforeend", '<span class="aicaret" aria-hidden="true"></span>');
+    }
+    morph(el, next, streaming);
+  }
+  // Update only what changed, so a block that's already on screen never
+  // flashes: a growing paragraph has its text patched in place, a list
+  // gains items one by one, and only genuinely new pieces arrive (with a
+  // soft fade and rise). Rebuilding everything on each token is what
+  // made answers jump.
+  function baseClass(n){ return (n.getAttribute("class") || "").replace(/\s*ai-new\b/g, "").trim(); }
+  function morph(el, next, animate){
+    var incoming = Array.prototype.slice.call(next.children);
+    incoming.forEach(function(n, i){
+      var o = el.children[i];
+      if (!o){
+        if (animate) n.classList.add("ai-new");
+        el.appendChild(n);
+        return;
+      }
+      if (o.tagName !== n.tagName){
+        el.replaceChild(n, o);
+        return;
+      }
+      // same kind of block that has just been recognised as something more
+      // specific (a list becoming a story track): restyle it, don't swap it
+      if (baseClass(o) !== baseClass(n)){
+        var fresh = o.classList.contains("ai-new");
+        o.className = n.className;
+        if (fresh) o.classList.add("ai-new");
+      }
+      if (/^(OL|UL|DL|DIV|BLOCKQUOTE)$/.test(o.tagName) && !o.classList.contains("aifig")) morph(o, n, animate);
+      else if (o.innerHTML !== n.innerHTML) o.innerHTML = n.innerHTML;
+    });
+    while (el.children.length > incoming.length) el.removeChild(el.lastElementChild);
+  }
+
+  function nearBottom(){ return body.scrollHeight - body.scrollTop - body.clientHeight < 96; }
+  function scrollDown(force){ if (force || nearBottom()) body.scrollTop = body.scrollHeight; }
+
+  function addExchange(question){
+    var x = document.createElement("section");
+    x.className = "aix";
+    var first = !body.querySelector(".aix");
+    x.innerHTML =
+      '<p class="aiturn' + (first ? " is-first" : "") + '"></p>' +
+      '<div class="aistatus" aria-live="off"><ol class="aisteps2"></ol></div>' +
+      '<div class="aians-x">' +
+        '<div class="aitrace" hidden><button type="button" class="aitrace-sum"><span class="aitrace-sum-t"></span></button><ol class="aitrace-list"></ol></div>' +
+        '<div class="aicard" hidden><div class="aitext"></div></div>' +
+      "</div>";
+    x.querySelector(".aiturn").textContent = question;
+    body.appendChild(x);
+    var trace = x.querySelector(".aitrace");
+    // The agent's steps, shown one at a time and each held long enough to
+    // read (the model moves faster than anyone can follow). The answer
+    // waits for the last step, then the list collapses to what was read.
+    var stepsEl = x.querySelector(".aisteps2"), statusEl = x.querySelector(".aistatus");
+    var queue = [], timer = 0, lastShown = 0, doneCb = null, DWELL = 700;
+    function markDone(li){
+      if (!li) return;
+      li.classList.remove("is-now"); li.classList.add("is-done");
+      li.querySelector(".as-i").innerHTML = LI("check", 12, 2);
+    }
+    function show(label){
+      setHead(label + "\u2026");
+      markDone(stepsEl.querySelector(".is-now"));
+      var li = document.createElement("li");
+      li.className = "as is-now" + (/^(Reading|Checking)/.test(label) ? " is-read" : "");
+      li.innerHTML = '<span class="as-i"><span class="as-spin"></span></span><span class="as-t"></span>';
+      li.lastChild.textContent = label;
+      stepsEl.appendChild(li);
+      lastShown = Date.now();
+      scrollDown();
+    }
+    function pump(){
+      timer = 0;
+      var wait = DWELL - (Date.now() - lastShown);
+      if (wait > 0){ timer = setTimeout(pump, wait); return; }
+      if (queue.length){ show(queue.shift()); timer = setTimeout(pump, DWELL); return; }
+      if (doneCb){ var f = doneCb; doneCb = null; f(); }
+    }
+    var api = {
+      queueStep: function(label){ if (queue[queue.length - 1] === label) return; queue.push(label); if (!timer) pump(); },
+      afterSteps: function(cb){ doneCb = cb; if (!timer) pump(); },
+      cancelSteps: function(){ clearTimeout(timer); timer = 0; queue = []; doneCb = null; },
+      summarize: function(){
+        markDone(stepsEl.querySelector(".is-now"));
+        // what was read stays, in the past tense
+        Array.prototype.forEach.call(stepsEl.querySelectorAll(".is-read .as-t"), function(t){
+          t.textContent = t.textContent.replace(/^Reading /, "Read ").replace(/^Checking /, "Checked ");
+        });
+        if (stepsEl.querySelector(".is-read")) statusEl.classList.add("is-summary"); else statusEl.remove();
+      }
+    };
+    return { queueStep: api.queueStep, afterSteps: api.afterSteps, cancelSteps: api.cancelSteps, summarize: api.summarize,
+             el: x, col: x.querySelector(".aians-x"), ans: x.querySelector(".aicard"), card: x.querySelector(".aicard"),
+             text: x.querySelector(".aitext"), spark: document.createElement("span"),
+             status: x.querySelector(".aistatus"), statusT: x.querySelector(".aistatus-t"),
+             trace: trace, list: trace.querySelector(".aitrace-list"), sum: trace.querySelector(".aitrace-sum-t") };
+  }
+  // The answer emerges from a soft blur, word by word, in a wave. Only
+  // text nodes are wrapped, so bold (shaded) words and links keep working.
+  // The stagger shrinks for long answers so the whole reveal stays ~2s.
+  var lastRevealMs = 0;
+  function blurReveal(el){
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches){ lastRevealMs = 0; return; }
+    var nodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = walker.nextNode())) if (n.nodeValue.trim()) nodes.push(n);
+    var words = 0;
+    nodes.forEach(function(t){ words += (t.nodeValue.match(/\S+/g) || []).length; });
+    var step = Math.max(8, Math.min(32, 1700 / Math.max(1, words))), i = 0;
+    nodes.forEach(function(t){
+      var frag = document.createDocumentFragment();
+      t.nodeValue.split(/(\s+)/).forEach(function(part){
+        if (!part) return;
+        if (/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var w = document.createElement("span");
+        w.className = "bw";
+        w.style.animationDelay = Math.round(i++ * step) + "ms";
+        w.textContent = part;
+        frag.appendChild(w);
+      });
+      t.parentNode.replaceChild(frag, t);
+    });
+    // blocks without words of their own (the case link) arrive at the end
+    var end = Math.round(i * step);
+    Array.prototype.forEach.call(el.querySelectorAll("a.aicase"), function(a){ a.style.animationDelay = end + "ms"; a.classList.add("bw-block"); });
+    lastRevealMs = end + 600;
+  }
+
+  // the status line says what the agent is doing right now, in words
+  var headStatus = document.getElementById("aiHeadStatus"), HEAD_REST = headStatus ? headStatus.textContent : "";
+  function setHead(text){
+    if (!headStatus || headStatus.textContent === text) return;
+    headStatus.classList.add("is-swap");
+    setTimeout(function(){ headStatus.textContent = text; headStatus.classList.remove("is-swap"); }, 160);
+  }
+  function present(label){
+    return label.replace(/^Read /, "Reading ").replace(/^Checked /, "Checking ");
+  }
+  function step(ex, label, live, before){
+    var li = document.createElement("li");
+    li.className = "aistep" + (live ? " is-live" : " is-done");
+    li.innerHTML = '<span class="aistep-i" aria-hidden="true"></span><span class="aistep-t"></span>';
+    li.lastChild.textContent = label;
+    if (before) ex.list.insertBefore(li, before); else ex.list.appendChild(li);
+    if (ex.queueStep) ex.queueStep(present(label));
+    return li;
+  }
+  function stepDone(li, label){
+    if (!li) return;
+    li.classList.remove("is-live");
+    li.classList.add("is-done");
+    if (label) li.lastChild.textContent = label;
+  }
+  function foldTrace(ex, summary, failed){
+    Array.prototype.forEach.call(ex.list.querySelectorAll(".is-live"), function(li){
+      li.classList.remove("is-live"); li.classList.add(failed ? "is-fail" : "is-done");
+    });
+    ex.sum.textContent = summary;
+    ex.trace.classList.add("is-done");
+  }
+  var USED = {
+    "app-merge": "Read the App Merge case study",
+    "rise-portal": "Read the Rise Portal case study",
+    "web-terminal": "Read the trading terminal case study",
+    "resume": "Checked my r\u00e9sum\u00e9",
+    "about": "Read my About page"
+  };
+
+  var ICON_COPY = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.2" y="5.2" width="8.3" height="8.3" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M10.8 3.2A1.6 1.6 0 0 0 9.2 2H4a2 2 0 0 0-2 2v5.2a1.6 1.6 0 0 0 1.2 1.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+  var ICON_DONE = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var ICON_MAIL = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.8" y="3.3" width="12.4" height="9.4" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 4.5 8 8.6l5.5-4.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var HIRING = /\b(salary|pay|compensation|ctc|interview|hire|hiring|role|offer|start|notice|available|availability|reach|contact|email|call|relocat)/i;
+
+  // what's worth doing next depends on what was just said: the page it
+  // came from if it isn't already on screen, the résumé when the answer
+  // is about roles and dates, email when it's about working together
+  // Under every answer, the prototype's three small icons. The thumbs are
+  // real: they go to the site's analytics, so good and bad answers can be
+  // read later; copy copies the answer as plain text.
+  function addActions(ex, answer, meta, question){
+    return; // removed at Lokesh's request: the answer ends cleanly, then the tray
+    var bar = document.createElement("div");
+    bar.className = "aifb";
+    function btn(icon, label){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "aifb-b";
+      b.setAttribute("aria-label", label); b.title = label;
+      b.innerHTML = LI(icon, 14);
+      bar.appendChild(b);
+      return b;
+    }
+    var up = btn("thumbsUp", "Good answer"), down = btn("thumbsDown", "Bad answer"), copy = btn("copy", "Copy answer");
+    function vote(b, other, v){
+      var on = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", String(on)); other.setAttribute("aria-pressed", "false");
+      if (on && window.pfTrack) window.pfTrack("ai_feedback", { vote: v, q: question.slice(0, 80) });
+    }
+    up.setAttribute("aria-pressed", "false"); down.setAttribute("aria-pressed", "false");
+    up.addEventListener("click", function(){ vote(up, down, "up"); });
+    down.addEventListener("click", function(){ vote(down, up, "down"); });
+    copy.addEventListener("click", function(){
+      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+      navigator.clipboard.writeText(toPlain(answer)).then(function(){
+        copy.innerHTML = LI("check", 14); copy.setAttribute("aria-label", "Copied");
+        setTimeout(function(){ copy.innerHTML = LI("copy", 14); copy.setAttribute("aria-label", "Copy answer"); }, 1600);
+      }, function(){});
+    });
+    ex.ans.appendChild(bar);
+  }
+  // follow-ups the answer itself suggests; the pool only if it gave none
+  // Follow-ups come from questions checked against the knowledge file,
+  // so every suggestion has a real answer behind it. (Model-written ones
+  // kept inviting questions the facts can't answer, and each dead end
+  // was an "I don't know, email me".) Relevance comes from the topic of
+  // the question just asked: one to go deeper, two neighbouring topics.
+  // Each topic: an entry question that stands on its own, and deeper
+  // ones that only make sense straight after that topic's answer. After
+  // an answer: one deeper question from its own topic, then the entry
+  // questions of neighbouring topics. Never a deep question out of
+  // context ("Why was your new model paused?" after a Rise Portal answer).
+  var TOPICS = {
+    merge:   { entry: "What's the project you're proudest of?", deep: ["Why was your new model paused?", "Why not just keep the switch?", "How big was the revenue hit?"] },
+    rise:    { entry: "What did Rise Portal actually change?", deep: ["Where do the Rise Portal numbers come from?"] },
+    ai:      { entry: "What have you actually designed for AI?", deep: ["How do you use AI day to day?", "What won't you use AI for?"] },
+    craft:   { entry: "How do you work with PMs and engineers?", deep: ["How do you approach a design problem?", "How did you build this site?"] },
+    career:  { entry: "How did you get into design?", deep: ["What was it like being the only designer?", "What are you looking for next?"] },
+    hiring:  { entry: "When can you start?", deep: ["Would you relocate?", "How do I reach you directly?"] },
+    fintech: { entry: "Do you have fintech experience?", deep: [] }
+  };
+  var NEIGHBOURS = {
+    merge: ["rise", "ai", "career", "hiring"], rise: ["merge", "craft", "ai", "hiring"],
+    ai: ["craft", "merge", "career", "hiring"], craft: ["ai", "merge", "career", "hiring"],
+    career: ["hiring", "merge", "ai", "craft"], hiring: ["career", "merge", "ai", "craft"],
+    fintech: ["merge", "rise", "career", "hiring"]
+  };
+  function topicOf(q, used){
+    var t = q.toLowerCase(); used = used || [];
+    if (/fintech|regulat|sebi|kyc|broking|trading/.test(t)) return "fintech";
+    if (/merge|proudest|switch|investeezy|biggest project|revenue hit|paused/.test(t) || used.indexOf("app-merge") > -1) return "merge";
+    if (/rise|partner/.test(t) || used.indexOf("rise-portal") > -1) return "rise";
+    if (/\bai\b|agent|claude|chatgpt/.test(t)) return "ai";
+    if (/\bpms?\b|engineer|\bcode\b|work with|approach|process|how do you work|build this site/.test(t)) return "craft";
+    if (/start|relocat|remote|reach|contact|email|notice|salary|hire|hiring|available/.test(t)) return "hiring";
+    if (/compan|leave|left|runable|zzazz|gap|weak|looking for|career|experience|background|into design|taught|only designer|founding/.test(t)) return "career";
+    return used.indexOf("about") > -1 ? "craft" : "merge";
+  }
+  function norm(q){ return q.toLowerCase().replace(/[^a-z0-9 ]/g, "").trim(); }
+  function addNext(question, used){
+    var seen = asked.map(norm);
+    var fresh = function(q){ return seen.indexOf(norm(q)) === -1; };
+    var topic = topicOf(question, used), out = [];
+    var deeper = TOPICS[topic].deep.filter(fresh)[0];
+    if (deeper) out.push(deeper);
+    NEIGHBOURS[topic].forEach(function(tp){
+      if (out.length < 3 && fresh(TOPICS[tp].entry) && out.indexOf(TOPICS[tp].entry) === -1) out.push(TOPICS[tp].entry);
+    });
+    if (!out.length) return;
+    // after an answer, suggestions belong to the answer: right under it,
+    // in the same pill rows as the opening tray
+    var box = document.createElement("div");
+    box.className = "ainext";
+    box.style.animationDelay = lastRevealMs + "ms";
+    box.style.setProperty("--d", lastRevealMs + "ms");
+    box.innerHTML = '<p class="ailabel">You could also ask</p>';
+    var list = document.createElement("div");
+    list.className = "airows";
+    out.forEach(function(q){ list.appendChild(trayRow(q)); });
+    box.appendChild(list);
+    body.appendChild(box);
+  }
+
+  function showError(ex, kind, message, question, wait){
+    var box = document.createElement("div");
+    box.className = "aierr";
+    box.setAttribute("role", "status");
+    box.innerHTML = '<p class="aierr-m"></p><div class="aierr-a"></div>';
+    box.firstChild.textContent = message;
+    var acts = box.lastChild;
+    function button(label, icon, primary, onClick){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "aipill" + (primary ? " is-primary" : "");
+      b.innerHTML = (icon || "") + "<span></span>";
+      b.lastChild.textContent = label;
+      b.addEventListener("click", onClick);
+      acts.appendChild(b);
+      return b;
+    }
+    function again(){
+      dropRetry();
+      ex.el.remove();
+      sendMessage(question);
+    }
+    if (kind === "long"){
+      button("Start a new chat", ICON_RETRY, true, function(){ dropRetry(); resetChat(); sendMessage(question); });
+    } else {
+      var main = button(kind === "stopped" ? "Ask again" : "Try again", ICON_RETRY, true, again);
+      if (kind === "busy" && wait){
+        // count down on the button itself, then go
+        var left = wait, label = main.lastChild;
+        label.innerHTML = 'Try now <span class="aierr-n">\u00b7 ' + left + "s</span>";
+        box.style.setProperty("--t", wait + "s");
+        box.insertAdjacentHTML("beforeend", '<span class="aierr-bar" aria-hidden="true"></span>');
+        var timer = setInterval(function(){
+          left -= 1;
+          if (left <= 0){ clearInterval(timer); cancelRetry = null; again(); return; }
+          label.querySelector(".aierr-n").textContent = "\u00b7 " + left + "s";
+        }, 1000);
+        cancelRetry = function(){ clearInterval(timer); var bar = box.querySelector(".aierr-bar"); if (bar) bar.remove(); label.textContent = "Try again"; };
+      }
+      if (kind === "offline"){
+        var back = function(){ cancelRetry = null; again(); };
+        window.addEventListener("online", back, { once: true });
+        cancelRetry = function(){ window.removeEventListener("online", back); };
+      }
+    }
+    if (kind !== "stopped"){
+      var mail = document.createElement("a");
+      mail.className = "aipill";
+      mail.href = "mailto:" + MAIL;
+      mail.innerHTML = ICON_MAIL + "<span>Email me instead</span>";
+      acts.appendChild(mail);
+    }
+    ex.card.hidden = true;
+    ex.col.appendChild(box);
+  }
+
+  // ── the slot ──────────────────────────────────────────────────────────
+  function autosize(){
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 128) + "px";
+  }
+  // one button, three states: quiet when empty, ink when there's a
+  // question, and a stop square while an answer is being written
+  function syncSend(){
+    var ready = !busy && input.value.trim().length > 0;
+    sendBtn.disabled = !busy && !ready;
+    sendBtn.classList.toggle("is-ready", ready);
+    sendBtn.classList.toggle("is-busy", busy);
+    panel.classList.toggle("is-working", busy);
+    if (!busy && HEAD_REST) setHead(HEAD_REST);
+    sendBtn.setAttribute("aria-label", busy ? "Stop" : "Send");
+  }
+  input.addEventListener("input", function(){ autosize(); syncSend(); });
+  input.addEventListener("keydown", function(e){
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing){
+      e.preventDefault();
+      sendMessage(input.value);
+    }
+  });
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (busy){ if (stopCurrent) stopCurrent(); return; }
+    sendMessage(input.value);
+  });
+
+  function resetChat(){
+    if (busy) return;
+    dropRetry();
+    history = [];
+    asked = [];
+    renderRail();
+    Array.prototype.slice.call(body.querySelectorAll(".aix, .ainext")).forEach(function(m){ m.remove(); });
+    intro.style.display = "";
+    playHand(false);
+    typeHero(SCOPES[scope].hero, false);
+    document.getElementById("aiChatFoot").classList.remove("is-chatting");
+    panel.classList.remove("has-chat");
+    renderTry();
+    body.scrollTop = 0;
+    if (canHover) input.focus({ preventScroll: true });
+  }
+  resetBtn.addEventListener("click", resetChat);
+
+  // ── asking ────────────────────────────────────────────────────────────
+  function sendMessage(raw){
+    var text = (raw || "").trim();
+    if (!text || busy) return;
+    dropRetry();
+    if (asked.indexOf(text) === -1) asked.push(text);
+    renderRail();
+    var oldNext = body.querySelector(".ainext");
+    if (oldNext) oldNext.remove();
+    intro.style.display = "none";
+    document.getElementById("aiChatFoot").classList.add("is-chatting");
+    panel.classList.add("has-chat");
+
+    Array.prototype.forEach.call(body.querySelectorAll(".aix"), function(x){ x.classList.add("is-past"); });
+    var ex = addExchange(text);
+    suggest.parentNode.hidden = true;
+    history.push({ role: "user", content: text + (scope !== "all" ? "\n\n(Answer about: " + SCOPES[scope].label + ")" : "") });
+    input.value = "";
+    autosize();
+    busy = true;
+    headSpark.classList.add("is-busy");
+    scrollDown(true);
+
+    var controller = window.AbortController ? new AbortController() : null;
+    var full = "", stopped = false, done = false;
+    // the agent's work, as steps: thinking (the wait before the first
+    // word is the model reasoning, so it's timed), what it read (the
+    // model names it in its first line), then writing
+    var t0 = Date.now(), firstAt = 0, readDone = false, writeStep = null;
+    var thinkStep = step(ex, "Thinking", true);
+    headSpark.classList.remove("is-writing");
+    setState("Thinking\u2026");
+    var tick = setInterval(function(){ thinkStep.lastChild.textContent = "Thinking \u00b7 " + ((Date.now() - t0) / 1000).toFixed(1) + "s"; }, 100);
+    function thought(){
+      if (firstAt) return;
+      firstAt = Date.now();
+      clearInterval(tick);
+      stepDone(thinkStep, "Thought for " + Math.max(0.1, (firstAt - t0) / 1000).toFixed(1) + "s");
+      headSpark.classList.add("is-writing");
+      setState("Writing\u2026");
+    }
+    function reading(force){
+      if (readDone) return;
+      var hasLine = /<<\s*used[^>]*>>/i.test(full);
+      // the first line is still arriving: wait for it to close
+      if (!hasLine && !force && /^\s*</.test(full) && full.length < 160) return;
+      readDone = true;
+      readMeta(full).used.forEach(function(id){ step(ex, USED[id], false); });
+      writeStep = step(ex, "Writing the answer", true);
+    }
+    stopCurrent = function(){
+      stopped = true;
+      if (controller) controller.abort();
+    };
+    syncSend();
+
+    // The network hands text over in bursts; the reader should see it
+    // arrive at an even pace. Everything received goes into `full`, and
+    // each frame reveals a little more of it: a few characters when the
+    // stream is keeping up, more when a burst has built a backlog, so it
+    // never falls far behind.
+    var shown = 0, raf = 0, whenShown = null, lastT = 0, carry = 0;
+    // A calm, steady reading pace, whole words at a time. The model hands
+    // the answer over in well under a second; racing to catch up with it
+    // made answers feel hurried. ~140 characters a second reads as
+    // someone writing to you, a typical answer unfolds over 3 to 4 s,
+    // and only a genuinely long one speeds up a little so it never drags.
+    var CPS = 140;
+    function paint(t){
+      raf = 0;
+      if (document.hidden) shown = Math.max(shown, full.length - 1);
+      // the hidden first line isn't reading material: skip straight past it
+      if (shown === 0 && /^\s*<</.test(full)){
+        var nl = full.indexOf("\n");
+        if (nl > -1) shown = nl + 1; else { raf = requestAnimationFrame(paint); return; }
+      }
+      var dt = lastT ? Math.min(64, t - lastT) : 16;
+      lastT = t;
+      var back = full.length - shown;
+      if (back > 0){
+        var cps = CPS + Math.max(0, back - 500) * 0.25;
+        carry += cps * dt / 1000;
+        // spend the budget a whole word at a time (the word plus the space
+        // after it), so the pace stays exact and nothing appears half-typed
+        var moved = false;
+        while (shown < full.length){
+          var m = /^\s*\S+\s?/.exec(full.slice(shown, shown + 60));
+          var len = m ? m[0].length : full.length - shown;
+          if (len > carry) break;
+          carry -= len; shown += len; moved = true;
+        }
+        if (moved){
+          renderRich(ex.text, full.slice(0, shown), true);
+          scrollDown();
+        }
+      }
+      if (shown < full.length) raf = requestAnimationFrame(paint);
+      else if (whenShown){
+        // a breath after the last word before anything else arrives
+        var f = whenShown; whenShown = null;
+        setTimeout(f, 280);
+      }
+    }
+    function reveal(){
+      if (document.hidden){
+        // no frames to pace with: write it straight in
+        shown = full.length;
+        renderRich(ex.text, full, true);
+        if (whenShown){ var f = whenShown; whenShown = null; f(); }
+        return;
+      }
+      if (!raf) raf = requestAnimationFrame(paint);
+    }
+    function afterReveal(fn){ whenShown = fn; reveal(); }
+    function stopReveal(){ if (raf) cancelAnimationFrame(raf); raf = 0; whenShown = null; }
+
+    function settle(){
+      clearInterval(tick);
+      var steps = ex.list.children.length;
+      if (!ex.trace.classList.contains("is-done"))
+        foldTrace(ex, "Worked for " + ((Date.now() - t0) / 1000).toFixed(1) + "s \u00b7 " + steps + (steps > 1 ? " steps" : " step"));
+      done = true;
+      busy = false;
+      stopCurrent = null;
+      ex.spark.classList.remove("is-busy");
+      headSpark.classList.remove("is-busy");
+      headSpark.classList.remove("is-writing");
+      setState();
+      syncSend();
+    }
+    function fail(message, kind, wait){
+      if (done) return;
+      // the question never got an answer, so it shouldn't sit in history
+      // unanswered — a retry would otherwise send it twice in a row
+      history.pop();
+      clearInterval(tick);
+      stopReveal();
+      foldTrace(ex, kind === "stopped" ? "Stopped" : "Didn\u2019t get through", true);
+      ex.cancelSteps();
+      if (ex.status.parentNode) ex.status.remove();
+      ex.text.innerHTML = "";
+      settle();
+      showError(ex, kind || "error", message, text, wait);
+      live.textContent = message;
+      scrollDown();
+    }
+    function finish(){
+      if (done) return;
+      if (!full) return stopped ? fail("Stopped before I could answer.", "stopped") : fail(FALLBACK, "error");
+      thought();
+      reading(true);
+      stepDone(writeStep, "Wrote the answer");
+      if (ex.finishing) return;
+      ex.finishing = true;
+      var meta = readMeta(full);
+      ex.afterSteps(function(){
+        ex.summarize();
+        // the résumé card only when the question is about the résumé or a
+        // career history: the model adds it too eagerly
+        if (!/r[eé]sum[eé]|\bcv\b|experience|career|background|history|roles?\b|worked/i.test(text))
+          full = full.replace(/^[ \t]*\[page:resume\][ \t]*$/gm, "").replace(/\[page:resume\]/g, "");
+        renderRich(ex.text, full, false);
+        ex.card.hidden = false;
+        blurReveal(ex.text);
+        history.push({ role: "assistant", content: full });
+        addActions(ex, full, meta, text);
+        settle();
+        addNext(text, meta.used);
+        pointAtCase(full);
+        live.textContent = ex.text.textContent;
+        scrollDown();
+      });
+    }
+
+    fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history }),
+      signal: controller ? controller.signal : undefined
+    }).then(function(res){
+      if (res.status === 429){
+        var ra = parseInt(res.headers.get("Retry-After"), 10);
+        return fail(BUSY, "busy", isFinite(ra) ? Math.min(Math.max(ra, 8), 45) : 20);
+      }
+      if (res.status === 400){
+        return res.json().catch(function(){ return {}; }).then(function(j){
+          return /new chat/i.test((j && j.error) || "") ? fail(LONG, "long") : fail(FALLBACK, "error");
+        });
+      }
+      if (!res.ok || !res.body) return fail(FALLBACK, "error");
+      var reader = res.body.getReader();
+      var decoder = new TextDecoder();
+      var buffer = "";
+      function pump(){
+        return reader.read().then(function(step){
+          if (step.done){ finish(); return; }
+          buffer += decoder.decode(step.value, { stream: true });
+          var lines = buffer.split("\n");
+          buffer = lines.pop();
+          lines.forEach(function(line){
+            line = line.trim();
+            if (line.slice(0, 5) !== "data:") return;
+            var payload = line.slice(5).trim();
+            if (!payload || payload === "[DONE]") return;
+            try {
+              var json = JSON.parse(payload);
+              var delta = json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
+              if (delta){
+                full += delta;
+                thought();
+                reading(false);
+              }
+            } catch (e) { /* a partial line or a keep-alive — skip it */ }
+          });
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function(){
+      // a stop lands here as an abort: whatever was written stands as
+      // the answer; nothing written means there's nothing to keep
+      if (stopped){ stopReveal(); return finish(); }
+      if (navigator.onLine === false) return fail(OFFLINE, "offline");
+      fail(BROKEN, "error");
+    });
+  }
+})();
+</script>
+<script>
+/* App Merge card: fluid phone (entrance, scroll drift, cursor lean) */
+(function(){
+  var frame = document.querySelector(".cardframe.merge2"), img = frame && frame.querySelector(".mgphone-single");
+  if (!img || !window.requestAnimationFrame) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var row = frame.closest(".workrow") || frame;
+  var fine = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  frame.classList.add("is-fluid");
+  // current and target values; each frame current moves a fraction of the way to target
+  var cur = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 }, tgt = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 };
+  var inView = false, entered = false, raf = 0, last = 0;
+  function measure(){
+    var r = frame.getBoundingClientRect(), vh = window.innerHeight || 1;
+    var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2); // -1 above … 1 below
+    tgt.drift = Math.max(-1, Math.min(1, p));
+    if (!entered && r.top < vh * 0.85 && r.bottom > 0){ entered = true; tgt.enter = 0; }
+  }
+  function apply(){
+    var h = frame.clientHeight || 1;
+    var y = cur.enter * h * 0.22 + cur.drift * h * 0.045 - cur.lift * 10;
+    var sc = 1 + cur.lift * 0.018;
+    img.style.transform = "translate3d(0," + y.toFixed(2) + "px,0) rotateX(" + cur.rx.toFixed(3) + "deg) rotateY(" + cur.ry.toFixed(3) + "deg) scale(" + sc.toFixed(4) + ")";
+    img.style.opacity = (1 - cur.enter * 0.9).toFixed(3);
+  }
+  function tick(now){
+    raf = 0;
+    var dt = last ? Math.min(64, now - last) : 16; last = now;
+    measure();
+    var moving = false;
+    // frame-rate independent smoothing: slower for the entrance, quicker for the hand
+    var rates = { enter: 0.045, drift: 0.09, lift: 0.1, rx: 0.1, ry: 0.1 };
+    for (var k in cur){
+      var a = 1 - Math.pow(1 - rates[k], dt / 16.67);
+      cur[k] += (tgt[k] - cur[k]) * a;
+      if (Math.abs(tgt[k] - cur[k]) > 0.0005) moving = true; else cur[k] = tgt[k];
+    }
+    apply();
+    if (moving || inView) raf = requestAnimationFrame(tick); else last = 0;
+  }
+  function kick(){ if (!raf) raf = requestAnimationFrame(tick); }
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){ inView = es[es.length - 1].isIntersecting; if (inView) kick(); }, { rootMargin: "80px 0px" }).observe(frame);
+  } else { inView = true; }
+  window.addEventListener("scroll", kick, { passive: true });
+  window.addEventListener("resize", kick);
+  if (fine){
+    row.addEventListener("pointermove", function(e){
+      var r = frame.getBoundingClientRect();
+      var mx = (e.clientX - r.left) / r.width - 0.5, my = (e.clientY - r.top) / r.height - 0.5;
+      tgt.lift = 1; tgt.ry = Math.max(-1, Math.min(1, mx)) * 7; tgt.rx = -Math.max(-1, Math.min(1, my)) * 5;
+      kick();
+    });
+    row.addEventListener("pointerleave", function(){ tgt.lift = 0; tgt.rx = 0; tgt.ry = 0; kick(); });
+  }
+  row.addEventListener("focusin", function(){ tgt.lift = 1; kick(); });
+  row.addEventListener("focusout", function(){ tgt.lift = 0; kick(); });
+  apply(); kick();
 })();
 </script>
 </body>

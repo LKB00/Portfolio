@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>og-image-v3 source — 1200×630</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:wght@500&display=block" rel="stylesheet">
+<style>
+/* The link thumbnail, redrawn from the site as it is now: the same
+   light page, the same lavender portrait shape, the same serif line
+   with its grey-and-ink emphasis, and the one thing no other portfolio
+   thumbnail has, the button that opens the AI twin. Built to be read
+   at 500px wide in a chat, so there are only three things on it. */
+:root{--bg:#FAFAFA;--ink:#242020;--muted:#7A7676;--faint:#A8A3A3;--lavender:#E7E0F8;--line:#E6E3E3}
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;background:var(--bg);overflow:hidden}
+body{font-family:Geist,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.card{position:relative;width:1200px;height:630px;padding:56px 72px}
+
+.rail{display:flex;justify-content:space-between;align-items:center;
+  font:500 15px/1 "Geist Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.rail b{font-weight:500;color:var(--ink)}
+.rail .url{letter-spacing:.04em;text-transform:none}
+
+.mid{position:absolute;left:72px;right:72px;top:118px;bottom:64px;display:grid;grid-template-columns:392px 1fr;gap:64px;align-items:center}
+.frame{width:392px;height:392px;border-radius:50% 50% 50% 8% / 42% 42% 46% 8%;background:var(--lavender);
+  overflow:hidden;display:grid;place-items:center}
+.frame img{width:96%;height:auto;display:block;transform:translateY(4%)}
+
+h1{font-family:"STIX Two Text",serif;font-weight:500;font-size:54px;line-height:1.14;letter-spacing:-.022em;color:#A19D9D}
+h1 em{font-style:normal;color:var(--ink)}
+
+.cta{margin-top:40px;display:inline-flex;align-items:center;gap:16px;height:72px;padding:0 9px 0 22px;border-radius:999px;
+  background:#fff;position:relative}
+.cta svg.ring{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible}
+.cta .hand{width:30px;height:30px;flex:none}
+.cta .t{font-size:24px;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.cta .go{width:54px;height:54px;border-radius:50%;background:#F0EFEF;display:grid;place-items:center;color:var(--muted)}
+.note{margin-top:18px;font-size:18px;color:var(--muted);letter-spacing:-.005em}
+.note b{font-weight:500;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="rail">
+    <span><b>Lokesh Bhatia</b> &nbsp;·&nbsp; AI Product Designer</span>
+    <span class="url">lokeshbhatia.com</span>
+  </div>
+
+  <div class="mid">
+    <div class="frame"><img src="../assets/about-portrait.webp" alt=""></div>
+    <div>
+      <h1>Hi, I’m Lokesh. I turn <em>user needs</em> into <em>products</em> that <em>drive growth</em>.</h1>
+      <div class="cta" id="cta">
+        <svg class="ring" id="ring" aria-hidden="true">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#6c9bff"/><stop offset=".4" stop-color="#b17cff"/><stop offset=".72" stop-color="#ff86b7"/><stop offset="1" stop-color="#ffb070"/>
+          </linearGradient></defs>
+          <rect id="rr" fill="none" stroke="url(#g)" stroke-width="1.6"/>
+        </svg>
+        <svg class="hand" viewBox="0 0 24 24" fill="none" stroke="#242020" stroke-width="1.9" stroke-linecap="round" stroke-dasharray="0.01 2.5" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+        <span class="t">See how I design for AI</span>
+        <span class="go"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </div>
+      <p class="note">Fintech and AI · <b>97%</b> of company revenue through one app I owned</p>
+    </div>
+  </div>
+</div>
+<script>
+// size the gradient outline to the pill so its ends are true semicircles
+(function(){
+  var c = document.getElementById("cta"), r = document.getElementById("rr"), sw = 1.6;
+  function fit(){ var w = c.offsetWidth + 2, h = c.offsetHeight + 2;
+    r.setAttribute("x", sw/2); r.setAttribute("y", sw/2); r.setAttribute("width", w - sw); r.setAttribute("height", h - sw);
+    r.setAttribute("rx", (h - sw)/2); r.setAttribute("ry", (h - sw)/2); }
+  fit(); if (document.fonts) document.fonts.ready.then(fit);
+})();
+</script>
+</body></html>
