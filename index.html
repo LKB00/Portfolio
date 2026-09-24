@@ -3679,6 +3679,46 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
    the About and Résumé pages and in the chat's answers */
 #top .hero-sub{font-size:15px;line-height:1.6}
 
+/* ===== COPILOT DOCK (desktop) =====
+   Agents on the web have moved out of the centred modal and into a
+   docked side panel: the page stays visible and usable beside the
+   agent, and the agent can point at things on it. So on a laptop the
+   chat is a 400px column on the right; the page slides over to make
+   room instead of being dimmed or covered, and scrolling it still
+   works. The welcome is compact and sits with the suggestions, next to
+   where you type. Phones keep the full screen. */
+@media (min-width:641px){
+  .aichat{inset:0 0 0 auto;width:436px;pointer-events:none}
+  .aichat.open{pointer-events:none}
+  .aichat-scrim{display:none!important}
+  .aichat-panel{top:12px!important;right:12px!important;bottom:12px!important;left:auto!important;
+    width:412px!important;height:auto!important;max-height:none!important;border-radius:18px!important;
+    display:flex!important;flex-direction:column;pointer-events:auto;
+    background:var(--bg);box-shadow:0 0 0 .5px color-mix(in srgb,var(--ink) 14%,transparent),0 18px 48px -28px rgba(20,24,45,.35)!important;
+    opacity:0;transform:translateX(28px)!important;transition:transform .5s var(--ease),opacity .3s ease!important}
+  .aichat.open .aichat-panel{opacity:1;transform:none!important}
+  .aimain{flex:1;min-height:0}
+  /* the page makes room rather than hiding behind the panel */
+  html.chat-docked body{padding-right:436px}
+  html.chat-docked header,html.chat-docked header.scrolled{right:436px;width:auto!important}
+  html.chat-docked .totop{right:452px}
+  html.chat-docked .askdock{opacity:0!important;pointer-events:none!important}
+  body{transition:padding-right .5s var(--ease)}
+  /* compact welcome: small hand, one line, right above the suggestions */
+  .aichat-intro{justify-content:flex-end!important;padding:16px 0 8px!important}
+  .aihand{width:56px!important;height:56px!important;margin:0 auto 8px!important}
+  .aihero-t{font-size:22px!important}
+  .aichat-body{padding:0 20px}
+  .aichat-foot{padding:6px 16px 10px}
+  .aiturn{font-size:22px!important}
+  .aiturn.is-first{font-size:24px!important}
+  .aichat-head{padding:0 10px 0 16px}
+}
+/* the agent points at the part of the page it's talking about */
+.workrow.ai-pointed .cardframe{box-shadow:0 0 0 2px #fff,0 0 0 4px #b17cff,0 0 32px -4px rgba(177,124,255,.55);transition:box-shadow .3s ease}
+.workrow .cardframe{transition:box-shadow .6s ease}
+@media (prefers-reduced-motion:reduce){ body{transition:none} }
+
 /* ===== PHONES: FULL SCREEN =====
    On a phone the chat still rises from the bottom like a sheet, but it
    comes all the way up and takes the whole screen: a conversation
@@ -5472,7 +5512,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // body where it is (the same technique the mobile menu uses, which is
   // the one iOS Safari respects), and put it back exactly on close.
   var lockedY = 0;
+  function isDocked(){ return window.matchMedia("(min-width:641px)").matches; }
   function lockPage(){
+    if (isDocked()){ document.documentElement.classList.add("chat-docked"); return; }
     lockedY = window.scrollY || window.pageYOffset || 0;
     var gap = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.top = -lockedY + "px";
@@ -5480,6 +5522,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     document.body.classList.add("chat-open");
   }
   function unlockPage(){
+    document.documentElement.classList.remove("chat-docked");
     if (!document.body.classList.contains("chat-open")) return;
     document.body.classList.remove("chat-open");
     document.body.style.top = "";
@@ -5514,6 +5557,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     if (!heroPlayed && !panel.classList.contains("has-chat")){ heroPlayed = true; heroEl.style.opacity = "0"; requestAnimationFrame(function(){ playHand(false); }); setTimeout(function(){ heroEl.style.opacity = ""; typeHero(SCOPES[scope].hero, false); }, 1000); }
     panel.classList.add("open");
     panel.setAttribute("aria-hidden", "false");
+    panel.setAttribute("aria-modal", isDocked() ? "false" : "true");
     // a phone keyboard would cover the introduction the moment it opened,
     // so only reach for the input where there's a real keyboard already
     setTimeout(function(){ (canHover ? input : sheet).focus({ preventScroll: true }); }, 380);
@@ -5645,7 +5689,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   document.addEventListener("keydown", function(e){
     if (!panel.classList.contains("open")) return;
     if (e.key === "Escape"){ closeChat(); return; }
-    if (e.key !== "Tab") return;
+    if (e.key !== "Tab" || isDocked()) return;
     var f = Array.prototype.filter.call(
       sheet.querySelectorAll("button:not([disabled]), textarea, a[href]"),
       function(el){ return el.offsetParent !== null; }
@@ -5655,6 +5699,24 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   });
+
+  // Acting on the page, not just talking: when an answer is about one of
+  // the case studies and the page is visible beside the panel, scroll the
+  // page to that project's card and ring it for a moment.
+  var CASE_PAGES = { "app-merge": "app-merge.html", "rise-portal": "rise-portal.html", "web-terminal": "web-terminal.html" };
+  function pointAtCase(full){
+    if (!isDocked()) return;
+    var m = /\[case:([a-z-]+)\]/.exec(full || ""), href = m && CASE_PAGES[m[1]];
+    if (!href) return;
+    var card = document.querySelector('a.workrow[href$="' + href + '"]');
+    if (!card) return;
+    setTimeout(function(){
+      setHead("Showing it on the page\u2026");
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      card.classList.add("ai-pointed");
+      setTimeout(function(){ card.classList.remove("ai-pointed"); setHead(HEAD_REST); }, 2600);
+    }, Math.min(lastRevealMs, 1800));
+  }
 
   // the header takes a hairline once the conversation runs under it
   body.addEventListener("scroll", function(){ sheet.classList.toggle("is-scrolled", body.scrollTop > 4); }, { passive: true });
@@ -6390,6 +6452,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         addActions(ex, full, meta, text);
         settle();
         addNext(text, meta.used);
+        pointAtCase(full);
         live.textContent = ex.text.textContent;
         scrollDown();
       });
