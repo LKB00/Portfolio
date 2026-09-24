@@ -3666,6 +3666,10 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .airow{font-size:14px;line-height:18px}
 @media (prefers-reduced-motion:reduce){.as,.as-spin,.as.is-now .as-t{animation:none!important}.as.is-now .as-t{color:var(--muted);background:none}}
 
+/* the intro paragraph at the portfolio's reading size: 15px, as on
+   the About and Résumé pages and in the chat's answers */
+#top .hero-sub{font-size:15px;line-height:1.6}
+
 /* ===== ENTRY: ASK BOX + DOCK =====
    The AI's way in is not a nav item: it's a question box where the
    call to action used to be, the first thing a recruiter can do. When
@@ -3741,7 +3745,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .heroask-ring.run .rg-glow{animation:rgGlow 5.5s linear both}
 .rg-bloom{display:none}
 @keyframes rgLine{0%{stroke-dashoffset:1;opacity:.75;animation-timing-function:cubic-bezier(.45,0,.3,1)}
-  45%{stroke-dashoffset:0;opacity:.75;animation-timing-function:ease}78%{stroke-dashoffset:0;opacity:.75;animation-timing-function:ease-in-out}92%,100%{stroke-dashoffset:0;opacity:0}}
+  45%{stroke-dashoffset:0;opacity:.75;animation-timing-function:ease}87%{stroke-dashoffset:0;opacity:.75;animation-timing-function:ease-in-out}99%,100%{stroke-dashoffset:0;opacity:0}}
 @keyframes rgHead{0%{stroke-dashoffset:.03;opacity:.9;animation-timing-function:cubic-bezier(.45,0,.3,1)}
   45%{stroke-dashoffset:-.97;opacity:.9;animation-timing-function:ease-out}53%,100%{stroke-dashoffset:-.97;opacity:0}}
 @keyframes rgGlow{0%{stroke-dashoffset:.05;opacity:.3;animation-timing-function:cubic-bezier(.45,0,.3,1)}
@@ -5486,14 +5490,14 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var pts = samplePaths(HAND_D, 2.2), N = pts.length, R = Math.max(.7, css / 26);
     var PX = OX + 12 * S, PY = OY + 22 * S, P = [], t0 = 0, raf = 0, visible = true;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var GATHER = 1300, WAVE_AT = 2500, WAVE = 1200, SCATTER_AT = 4300, SCATTER = 800, CYCLE = 5500;
+    var GATHER = 1300, WAVE_AT = 2500, WAVE = 1200, SCATTER_AT = 4800, SCATTER = 650, CYCLE = 5500;
     function seed(){
       P = pts.map(function(p, i){
-        var a = Math.random() * 6.2832, r = (0.55 + Math.random() * 0.5) * css * 0.62;
+        var a = Math.random() * 6.2832, r = (0.3 + Math.random() * 0.25) * css;
         var sx = css/2 + Math.cos(a) * r, sy = css/2 + Math.sin(a) * r, tx = OX + p.x * S, ty = OY + p.y * S;
         var b = (Math.random() - 0.5) * 0.6;
         return { sx: sx, sy: sy, tx: tx, ty: ty, cx: (sx+tx)/2 - (ty-sy) * b, cy: (sy+ty)/2 + (tx-sx) * b,
-          ox: tx + (tx - css/2) * (0.6 + Math.random() * 0.6), oy: ty + (ty - css/2) * (0.6 + Math.random() * 0.6) - css * 0.1,
+          ox: tx + (tx - css/2) * (0.35 + Math.random() * 0.35), oy: ty + (ty - css/2) * (0.35 + Math.random() * 0.35) - css * 0.05,
           d: (i / N) * 260 + Math.random() * 120, hue: hueAt(i / N) };
       });
     }
@@ -5509,7 +5513,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           var e = ease((t - p.d) / GATHER), u = 1 - e;
           x = u*u*p.sx + 2*u*e*p.cx + e*e*p.tx; y = u*u*p.sy + 2*u*e*p.cy + e*e*p.ty;
           var land = Math.max(0, Math.min(1, (t - p.d - GATHER * .65) / 320));
-          c = mix(p.hue, ink, land); al = Math.min(1, .1 + e);
+          c = mix(p.hue, ink, land); al = Math.min(1, .35 + e);
         } else {
           var k = ease((t - SCATTER_AT - p.d * .5) / SCATTER);
           x = p.tx + (p.ox - p.tx) * k; y = p.ty + (p.oy - p.ty) * k;
