@@ -3814,7 +3814,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* phones: the nav pill lives at the bottom centre, so the ask pill
    rides just above it instead of on top of it */
-@media (max-width:576px){ .askdock{bottom:calc(70px + env(safe-area-inset-bottom));height:44px} }
+/* phones: the bottom edge already carries the nav pill and back-to-top,
+   and a third floating bar stacked on them only covered the work. The
+   hero button is the way in on a phone. */
+@media (max-width:576px){ .askdock{display:none!important} }
 @media (prefers-reduced-motion:reduce){ .askdock{transition:opacity .2s,visibility 0s} .askdock.is-on{transform:translate(-50%,0)} }
 
 /* ===== FOLLOW-UPS, QUIETER =====
