@@ -2971,6 +2971,58 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   .aistart-b{transition:none}
 }
 
+
+/* ══ THE QUIET LAYER ══════════════════════════════════════════════════
+   What the best assistants share (ChatGPT, Claude, Perplexity): the
+   answer is plain text on the page, and typography does the hierarchy.
+   So: one flat surface for rail and chat, a hairline where two areas
+   meet, no card and no shadow around an answer, the visitor's message
+   as a soft grey bubble, and depth kept for the one thing you act on
+   first, the composer. */
+.aichat-panel{background:var(--bg);box-shadow:0 0 0 1px var(--line),0 30px 80px -40px rgba(20,24,45,.35)}
+.airail{background:var(--bg)}
+.aichat-head{background:var(--bg)}
+.aichat-foot{background:var(--bg)}
+
+/* profile: compact, like an account row, not a hero */
+.airail-me{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:12px;align-items:center}
+.airail-photo{grid-row:1 / span 2;width:44px;height:44px;border-radius:50%;background:var(--lavender)}
+.airail-photo img{width:170%!important;max-width:none;margin:0 0 -4px -6px}
+.airail-name{margin:0;font-size:17px;align-self:end}
+.airail-role{margin:1px 0 0;font-size:12px;align-self:start}
+.airail-status{grid-column:1 / -1;justify-self:start;margin-top:14px;background:transparent;padding:0;color:var(--muted)}
+.airail-topics{margin-top:26px}
+
+/* answers: plain text on the page */
+.aicard{padding:0;border-radius:0;background:none;box-shadow:none;animation:none}
+.aicard .aiacts{border-top:0;padding-top:0;margin-top:14px}
+.aicard .aiicon{margin-left:0}
+.aicard .aitext a.aicase{background:transparent}
+.aicard .aitext a.aicase:hover{background:var(--surface)}
+.aians{display:block}
+.aians > .aime{display:none}
+.aitrace{margin:0 0 12px}
+.aix{padding:28px 0 4px}
+.ainext{padding:14px 0 22px}
+.ainext .aichip{background:transparent}
+
+/* the visitor's message: soft, so the answer leads */
+.aiq .aiasked{background:var(--surface);color:var(--ink);border-radius:18px}
+
+/* starters: flat, a hairline, a fill on hover, nothing that lifts */
+.aistart-b{box-shadow:inset 0 0 0 1px var(--line);background:transparent;transition:background .2s var(--ease)}
+.aistart-b:hover{transform:none;box-shadow:inset 0 0 0 1px var(--line);background:var(--surface)}
+
+/* errors: a hairline, not a floating card */
+.aierr{box-shadow:inset 0 0 0 1px var(--line);background:transparent}
+
+/* the composer keeps the only depth on the page */
+.aicomposer{box-shadow:0 0 0 1px var(--line),0 4px 16px -10px rgba(0,0,0,.18)}
+.aicomposer:focus-within{box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 30%,transparent),0 4px 16px -10px rgba(0,0,0,.18)}
+@media (max-width:640px){
+  .aicard{padding:0}
+}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
