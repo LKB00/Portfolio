@@ -3710,10 +3710,30 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
    AI colours; holds, fades, and draws again */
 .heroask{position:relative}
 .heroask-ring{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);pointer-events:none;overflow:visible}
-.heroask-ring rect{fill:none;stroke:url(#askRingGrad);stroke-width:1.25;stroke-linecap:round;
-  stroke-dasharray:1 1;stroke-dashoffset:1;animation:askRing 4.3s cubic-bezier(.45,0,.25,1) infinite}
-@keyframes askRing{0%{stroke-dashoffset:1;opacity:1}38%{stroke-dashoffset:0;opacity:1}82%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
-@media (prefers-reduced-motion:reduce){ .heroask-ring rect{animation:none;stroke-dashoffset:0;opacity:.8} }
+.heroask-ring rect{fill:none;stroke:url(#askRingGrad);stroke-linecap:round}
+/* one 4.3s beat shared with the icon: while the dots gather into the
+   hand, a lit head with a soft glow runs round the pill drawing the
+   line behind it; as it closes, the whole outline blooms once, the
+   hand waves, and everything rests; as the dots drift apart, the
+   line fades with them. JS restarts it with the icon so they never
+   drift out of step. */
+.rg-line{stroke-width:1.25;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}
+.rg-head{stroke-width:2.2;stroke-dasharray:.045 .955;stroke-dashoffset:.045;opacity:0}
+.rg-glow{stroke-width:5;stroke-dasharray:.07 .93;stroke-dashoffset:.07;opacity:0;filter:blur(3px)}
+.rg-bloom{stroke-width:4;opacity:0;filter:blur(5px)}
+.heroask-ring.run .rg-line{animation:rgLine 4.3s linear both}
+.heroask-ring.run .rg-head{animation:rgHead 4.3s linear both}
+.heroask-ring.run .rg-glow{animation:rgGlow 4.3s linear both}
+.heroask-ring.run .rg-bloom{animation:rgBloom 4.3s linear both}
+@keyframes rgLine{0%{stroke-dashoffset:1;opacity:1;animation-timing-function:cubic-bezier(.5,0,.2,1)}
+  35%{stroke-dashoffset:0;opacity:1}77%{stroke-dashoffset:0;opacity:1}91%,100%{stroke-dashoffset:0;opacity:0}}
+@keyframes rgHead{0%{stroke-dashoffset:.045;opacity:0;animation-timing-function:cubic-bezier(.5,0,.2,1)}
+  3%{opacity:1}35%{stroke-dashoffset:-.955;opacity:1}42%,100%{stroke-dashoffset:-.955;opacity:0}}
+@keyframes rgGlow{0%{stroke-dashoffset:.07;opacity:0;animation-timing-function:cubic-bezier(.5,0,.2,1)}
+  3%{opacity:.8}35%{stroke-dashoffset:-.93;opacity:.8}42%,100%{stroke-dashoffset:-.93;opacity:0}}
+@keyframes rgBloom{0%,33%{opacity:0}40%{opacity:.55}58%,100%{opacity:0}}
+.heroask:hover .rg-line{opacity:1!important;stroke-dashoffset:0!important;animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){ .heroask-ring .rg-line{animation:none!important;stroke-dashoffset:0;opacity:.8} .heroask-ring.run .rg-head,.heroask-ring.run .rg-glow,.heroask-ring.run .rg-bloom{animation:none} }
 
 .askdock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:70;display:flex;align-items:center;gap:10px;
   width:min(360px,calc(100vw - 32px));height:46px;padding:0 6px 0 15px;border-radius:9999px;cursor:pointer;text-align:left;
@@ -3955,7 +3975,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       <button type="button" class="heroask" id="heroAsk">
         <svg class="heroask-ring" aria-hidden="true"><defs><linearGradient id="askRingGrad" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#6c9bff"/><stop offset=".4" stop-color="#b17cff"/><stop offset=".72" stop-color="#ff86b7"/><stop offset="1" stop-color="#ffb070"/>
-        </linearGradient></defs><rect pathLength="1"/></svg>
+        </linearGradient></defs><rect class="rg-bloom" pathLength="1"/><rect class="rg-line" pathLength="1"/><rect class="rg-glow" pathLength="1"/><rect class="rg-head" pathLength="1"/></svg>
         <canvas class="askhand" aria-hidden="true"></canvas>
         <span class="heroask-t">Ask my AI about my work</span>
         <span class="heroask-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
@@ -5441,14 +5461,14 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // the entry icons: the chat's welcome, small and on a loop. Dots
   // gather into the hand in the AI colours, settle into ink, wave,
   // rest, then drift apart and gather again. Runs only while visible.
-  function loopHand(cv){
+  function loopHand(cv, onCycle){
     var css = cv.clientWidth || 20, dpr = Math.min(window.devicePixelRatio || 1, 3);
     cv.width = Math.round(css * dpr); cv.height = Math.round(css * dpr);
     var g = cv.getContext("2d"), S = css / 26, OX = css / 2 - 12 * S, OY = css / 2 - 11.5 * S;
     var pts = samplePaths(HAND_D, 2.2), N = pts.length, R = Math.max(.7, css / 26);
     var PX = OX + 12 * S, PY = OY + 22 * S, P = [], t0 = 0, raf = 0, visible = true;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var GATHER = 900, WAVE_AT = 1050, WAVE = 1100, SCATTER_AT = 3300, SCATTER = 700, CYCLE = 4300;
+    var GATHER = 900, WAVE_AT = 1500, WAVE = 1100, SCATTER_AT = 3300, SCATTER = 700, CYCLE = 4300;
     function seed(){
       P = pts.map(function(p, i){
         var a = Math.random() * 6.2832, r = (0.55 + Math.random() * 0.5) * css * 0.62;
@@ -5486,9 +5506,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     function frame(now){
       raf = 0;
       if (!visible || document.hidden) return;
-      if (!t0) { t0 = now; seed(); }
+      if (!t0) { t0 = now; seed(); if (onCycle) onCycle(); }
       var t = now - t0;
-      if (t >= CYCLE){ t0 = now; seed(); t = 0; }
+      if (t >= CYCLE){ t0 = now; seed(); t = 0; if (onCycle) onCycle(); }
       draw(t);
       raf = requestAnimationFrame(frame);
     }
@@ -5500,16 +5520,21 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     document.addEventListener("visibilitychange", kick);
     kick();
   }
-  Array.prototype.forEach.call(document.querySelectorAll("canvas.askhand"), loopHand);
+  Array.prototype.forEach.call(document.querySelectorAll("canvas.askhand"), function(cv){
+    var ring = cv.parentNode.querySelector(".heroask-ring");
+    loopHand(cv, ring ? function(){ ring.classList.remove("run"); void ring.getBoundingClientRect(); ring.classList.add("run"); } : null);
+  });
   if (heroAsk) heroAsk.addEventListener("click", function(){ askFrom(""); });
   // the ring is a real rounded rect, sized to the button so its corners match the pill
-  var ringRect = heroAsk && heroAsk.querySelector(".heroask-ring rect");
+  var ringSvg = heroAsk && heroAsk.querySelector(".heroask-ring"), ringRect = ringSvg && ringSvg.querySelectorAll("rect");
   function sizeRing(){
     if (!ringRect) return;
     var w = heroAsk.offsetWidth + 2, h = heroAsk.offsetHeight + 2, sw = 1.25;
-    ringRect.setAttribute("x", sw / 2); ringRect.setAttribute("y", sw / 2);
-    ringRect.setAttribute("width", Math.max(0, w - sw)); ringRect.setAttribute("height", Math.max(0, h - sw));
-    ringRect.setAttribute("rx", (h - sw) / 2); ringRect.setAttribute("ry", (h - sw) / 2);
+    Array.prototype.forEach.call(ringRect, function(r){
+      r.setAttribute("x", sw / 2); r.setAttribute("y", sw / 2);
+      r.setAttribute("width", Math.max(0, w - sw)); r.setAttribute("height", Math.max(0, h - sw));
+      r.setAttribute("rx", (h - sw) / 2); r.setAttribute("ry", (h - sw) / 2);
+    });
   }
   if (ringRect){
     sizeRing();
