@@ -3442,6 +3442,28 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aitext p b,.aitext li b,.aitext dd b,.aitext ol li b{font-weight:inherit;color:var(--ink)}
 .aifacts dt,.aistep-k,.aifig b{font-weight:inherit;color:var(--ink)}
 
+
+/* ══ CLEAN RENDERING ═════════════════════════════════════════════════
+   What made it read rough and grainy, and the fix for each:
+   · a light-grey serif breaks up (STIX's hairlines thin out): a lead
+     with no key words is plain ink; a keyed lead's grey is darker
+   · a 3px backdrop blur smears the page instead of frosting it: no blur,
+     a light dim
+   · 10-11px uppercase mono renders spiky: no mono inside the chat
+   · reading grey a touch darker, so paragraphs stay crisp
+   · one "Worked for" line, on the latest answer only */
+.aichat-scrim{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(20,20,22,.24)}
+.aichat-panel{text-rendering:optimizeLegibility}
+.aitext .ailead{color:var(--ink)}
+.aitext .ailead.has-key{color:color-mix(in srgb,var(--ink) 62%,var(--bg))}
+.aitext p,.aitext ul li,.aifacts dd,.aitext ol li{color:color-mix(in srgb,var(--ink) 78%,var(--bg))}
+.aix.is-past .aitrace{display:none}
+.aichat-title .aitag,.aipres-name .aitag{font-family:var(--display);font-size:11px;font-weight:500;letter-spacing:.01em;padding:2px 7px}
+.aihint{font-family:var(--display);font-size:12px;letter-spacing:-.005em;color:var(--faint)}
+.aicase-k{font-family:var(--display);font-size:13px;font-weight:400;letter-spacing:-.005em;text-transform:none;color:var(--muted)}
+.aicap-k{font-family:var(--display);font-size:12px;font-weight:500;letter-spacing:-.005em;text-transform:none;color:var(--muted)}
+.aitrace-sum{font-weight:400;color:var(--muted)}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -5027,8 +5049,9 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
           // the device only works when a few words carry it; a sentence
           // bolded end to end is just the sentence, in ink
           var keyLen = (b.text.match(/\*\*(.+?)\*\*/g) || []).join("").length;
-          if (!(keyLen > 0 && keyLen < b.text.length * 0.6)) lead = lead.replace(/<\/?b>/g, "");
-          out.push('<p class="ailead">' + inlineCase(lead) + "</p>");
+          var keyed = keyLen > 0 && keyLen < b.text.length * 0.6;
+          if (!keyed) lead = lead.replace(/<\/?b>/g, "");
+          out.push('<p class="ailead' + (keyed ? " has-key" : "") + '">' + inlineCase(lead) + "</p>");
         } else {
           out.push("<p>" + inlineCase(inline(b.text)) + "</p>");
         }
@@ -5387,6 +5410,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     document.getElementById("aiChatFoot").classList.add("is-chatting");
     panel.classList.add("has-chat");
 
+    Array.prototype.forEach.call(body.querySelectorAll(".aix"), function(x){ x.classList.add("is-past"); });
     var ex = addExchange(text);
     history.push({ role: "user", content: text });
     input.value = "";
