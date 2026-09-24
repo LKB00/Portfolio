@@ -3696,7 +3696,16 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .heroask:focus-within{border-color:color-mix(in srgb,var(--ink) 28%,transparent)}
 .heroask-go{width:36px;height:36px;background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--muted);transition:background-color .18s,color .18s,transform .15s}
 .heroask-go:hover{opacity:1;color:var(--ink)}
-.heroask.has-text .heroask-go{background:var(--ink);color:var(--bg)}
+/* a call to action, not a text field: hugs its label, opens the chat */
+.heroask{width:auto;max-width:none;height:48px;padding:0 6px 0 14px;gap:10px;cursor:pointer;text-align:left;font:inherit;
+  transition:border-color .2s,background-color .2s}
+.heroask-t{font-size:14.5px;font-weight:500;color:var(--ink);white-space:nowrap}
+.heroask:hover{border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
+.heroask:hover .heroask-go{background:var(--ink);color:var(--bg)}
+.heroask:hover .heroask-go svg{transform:translateX(1px)}
+.heroask-go svg{transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+.heroask:active{transform:scale(.985)}
+.heroask:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 
 .askdock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:70;display:flex;align-items:center;gap:10px;
   width:min(360px,calc(100vw - 32px));height:46px;padding:0 6px 0 15px;border-radius:9999px;cursor:pointer;text-align:left;
@@ -3711,8 +3720,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   background:color-mix(in srgb,var(--ink) 6%,transparent);transition:background-color .2s,color .2s}
 .askdock:hover .askdock-go{background:var(--ink);color:var(--bg)}
 body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
-@media (hover:none){ .heroask-in{font-size:16px} }
-@media (max-width:640px){ .heroask{max-width:none} }
+
 /* phones: the nav pill lives at the bottom centre, so the ask pill
    rides just above it instead of on top of it */
 @media (max-width:576px){ .askdock{bottom:calc(70px + env(safe-area-inset-bottom));height:44px} }
@@ -3936,12 +3944,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       <div class="hero-t">
       <h1>Hi, I’m Lokesh, I turn <span class="h1-key">user needs</span> into <span class="h1-key">products</span> that <span class="h1-key">drive growth</span>.</h1>
       <p class="hero-sub">Product designer with 3 years of experience. I’ve owned a trading app responsible for 97% of company revenue, built our first referral-partner B2B product, and taken an AI agent platform from 0&#8594;1.</p>
-      <form class="heroask" id="heroAsk" role="search" aria-label="Ask my AI">
+      <button type="button" class="heroask" id="heroAsk">
         <canvas class="askhand" aria-hidden="true"></canvas>
-        <input class="heroask-in" id="heroAskIn" type="text" name="q" autocomplete="off" enterkeyhint="send" maxlength="600"
-          aria-label="Ask me about my work" placeholder="Ask me about my work&hellip;">
-        <button class="heroask-go" type="submit" aria-label="Ask"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
-      </form>
+        <span class="heroask-t">Ask my AI about my work</span>
+        <span class="heroask-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </button>
       <p class="heroask-links"><a href="mailto:hi.lokeshux@gmail.com">Email me</a><a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 16 16" width="11" height="11" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
       </div>
     </div>
@@ -5419,7 +5426,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     openChat();
     if (q) setTimeout(function(){ sendMessage(q); }, 60);
   }
-  var heroAsk = document.getElementById("heroAsk"), heroAskIn = document.getElementById("heroAskIn");
+  var heroAsk = document.getElementById("heroAsk");
   // the entry icons: the chat's welcome, small and on a loop. Dots
   // gather into the hand in the AI colours, settle into ink, wave,
   // rest, then drift apart and gather again. Runs only while visible.
@@ -5483,27 +5490,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     kick();
   }
   Array.prototype.forEach.call(document.querySelectorAll("canvas.askhand"), loopHand);
-  if (heroAsk){
-    heroAsk.addEventListener("submit", function(e){ e.preventDefault(); var q = heroAskIn.value; heroAskIn.value = ""; heroAsk.classList.remove("has-text"); heroAskIn.blur(); askFrom(q); });
-    heroAsk.addEventListener("click", function(e){ if (e.target === heroAsk) heroAskIn.focus(); });
-    heroAskIn.addEventListener("input", function(){ heroAsk.classList.toggle("has-text", !!heroAskIn.value.trim()); });
-    // the placeholder types real questions, so the box shows what it's for
-    var PH = ["Ask about the Rupeezy app merge\u2026", "Ask what I\u2019ve designed for AI\u2026", "Ask how I got into design\u2026",
-      "Ask how I work with PMs and engineers\u2026", "Ask when I can start\u2026"];
-    var reducePh = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reducePh){
-      var pi = 0, pc = 0, pdel = false, phTimer = 0;
-      var phTick = function(){
-        if (document.activeElement === heroAskIn || heroAskIn.value){ phTimer = setTimeout(phTick, 600); return; }
-        var q = PH[pi];
-        if (!pdel){ pc++; if (pc >= q.length){ pc = q.length; pdel = true; heroAskIn.placeholder = q; phTimer = setTimeout(phTick, 1900); return; } }
-        else { pc--; if (pc <= 0){ pc = 0; pdel = false; pi = (pi + 1) % PH.length; } }
-        heroAskIn.placeholder = q.slice(0, pc) || "\u200b";
-        phTimer = setTimeout(phTick, pdel ? 16 : 42);
-      };
-      phTimer = setTimeout(phTick, 1400);
-    }
-  }
+  if (heroAsk) heroAsk.addEventListener("click", function(){ askFrom(""); });
   var dock = document.getElementById("askDock");
   if (dock){
     dock.addEventListener("click", function(){ askFrom(""); });
