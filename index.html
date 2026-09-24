@@ -3666,6 +3666,48 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .airow{font-size:14px;line-height:18px}
 @media (prefers-reduced-motion:reduce){.as,.as-spin,.as.is-now .as-t{animation:none!important}.as.is-now .as-t{color:var(--muted);background:none}}
 
+/* ===== ENTRY: ASK BOX + DOCK =====
+   The AI's way in is not a nav item: it's a question box where the
+   call to action used to be, the first thing a recruiter can do. When
+   that box scrolls away, a slim pill rises at the bottom centre so a
+   question is one click away from any project; it steps aside over the
+   footer and while the chat is open. Email and LinkedIn stay, as
+   quieter links under the box. */
+.askhand{width:18px;height:18px;flex:none;color:var(--ink)}
+.heroask{display:flex;align-items:center;gap:10px;width:100%;max-width:460px;height:50px;margin-top:clamp(18px,2.6vw,26px);
+  padding:0 6px 0 16px;background:var(--card,#fff);border:.5px solid color-mix(in srgb,var(--ink) 16%,transparent);border-radius:9999px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 22px -12px rgba(0,0,0,.16);transition:box-shadow .2s,border-color .2s;cursor:text}
+.heroask:focus-within{border-color:color-mix(in srgb,var(--ink) 34%,transparent);box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 28px -12px rgba(0,0,0,.22)}
+.heroask-in{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:400 14.5px/1 var(--display);color:var(--ink)}
+.heroask-in::placeholder{color:var(--faint);opacity:1}
+.heroask-go{flex:none;width:38px;height:38px;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;
+  background:var(--ink);color:var(--bg);transition:transform .15s,opacity .15s}
+.heroask-go:hover{opacity:.88}.heroask-go:active{transform:scale(.92)}
+.heroask-links{display:flex;gap:16px;margin:12px 0 0 4px;font-size:13px}
+.heroask-links a{color:var(--muted);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 18%,transparent);text-underline-offset:3px;transition:color .15s}
+.heroask-links a:hover{color:var(--ink)}
+.heroin .heroask,.heroin .heroask-links{animation:settle .34s ease-out .60s backwards}
+
+.askdock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:70;display:flex;align-items:center;gap:10px;
+  width:min(360px,calc(100vw - 32px));height:46px;padding:0 6px 0 15px;border-radius:9999px;cursor:pointer;text-align:left;
+  background:var(--card,#fff);border:.5px solid color-mix(in srgb,var(--ink) 16%,transparent);
+  box-shadow:0 2px 4px rgba(0,0,0,.05),0 18px 36px -14px rgba(0,0,0,.28);
+  opacity:0;transform:translate(-50%,24px);pointer-events:none;visibility:hidden;
+  transition:opacity .28s ease,transform .4s cubic-bezier(.2,.8,.2,1),visibility 0s linear .4s,box-shadow .2s}
+.askdock.is-on{opacity:1;transform:translate(-50%,0);pointer-events:auto;visibility:visible;transition-delay:0s}
+.askdock:hover{box-shadow:0 2px 4px rgba(0,0,0,.05),0 22px 40px -14px rgba(0,0,0,.34)}
+.askdock-t{flex:1;min-width:0;font-size:13.5px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.askdock-go{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--muted);
+  background:color-mix(in srgb,var(--ink) 6%,transparent);transition:background-color .2s,color .2s}
+.askdock:hover .askdock-go{background:var(--ink);color:var(--bg)}
+body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
+@media (hover:none){ .heroask-in{font-size:16px} }
+@media (max-width:640px){ .heroask{max-width:none} }
+/* phones: the nav pill lives at the bottom centre, so the ask pill
+   rides just above it instead of on top of it */
+@media (max-width:576px){ .askdock{bottom:calc(70px + env(safe-area-inset-bottom));height:44px} }
+@media (prefers-reduced-motion:reduce){ .askdock{transition:opacity .2s,visibility 0s} .askdock.is-on{transform:translate(-50%,0)} }
+
 /* ===== FOLLOW-UPS, QUIETER =====
    Under an answer the suggestions are a side note, not a second
    answer: 13px, muted, each hugging its own text with a small
@@ -3786,7 +3828,6 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
         <a class="navlink" href="./index.html" aria-current="page"><span class="navtext">Home</span></a>
         <a class="navlink" href="./about.html"><span class="navtext">About</span></a>
         <a class="navlink" href="./resume.html"><span class="navtext">Resume</span></a>
-        <button type="button" class="askbtn" id="askAiBtn"><span class="askbtn-mark" aria-hidden="true">&#10022;</span>Ask me</button>
         <button class="themebtn" id="themeToggle" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span><span class="icon-moon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span></button>
         <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2l-12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span></button>
       </nav>
@@ -3798,12 +3839,6 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   <div class="mobilenav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile menu">
     <div class="msheet">
       <div class="mhandle-zone" aria-hidden="true"><span class="mhandle"></span></div>
-      <div class="asksheet-row">
-        <button type="button" class="asksheet-btn" id="askAiBtnMobile">
-          <span class="askbtn-mark" aria-hidden="true">&#10022;</span>
-          <span class="asksheet-x"><span class="asksheet-t">Ask me anything</span><span class="asksheet-m">An AI version of me, trained on my work</span></span>
-        </button>
-      </div>
       <nav class="mlinks" aria-label="Primary">
         <a class="mrow" href="#top" aria-current="page"><span class="mlabel">Home</span></a>
         <a class="mrow" href="./about.html"><span class="mlabel">About</span></a>
@@ -3823,6 +3858,10 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 
 
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
+
+  <button type="button" class="askdock" id="askDock" aria-label="Ask my AI about my work" tabindex="-1" aria-hidden="true">
+    <svg class="askhand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="0.01 2.6" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><span class="askdock-t">Ask my AI about my work&hellip;</span><span class="askdock-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></span>
+  </button>
 
   <div class="aichat" id="aiChat" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle" aria-hidden="true">
     <div class="aichat-scrim" data-aichat-close></div>
@@ -3887,11 +3926,13 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
       <div class="hero-t">
       <h1>Hi, I’m Lokesh, I turn <span class="h1-key">user needs</span> into <span class="h1-key">products</span> that <span class="h1-key">drive growth</span>.</h1>
       <p class="hero-sub">Product designer with 3 years of experience. I’ve owned a trading app responsible for 97% of company revenue, built our first referral-partner B2B product, and taken an AI agent platform from 0&#8594;1.</p>
-      <div class="cta">
-        <a class="pill pill-primary" href="mailto:hi.lokeshux@gmail.com">Email me<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      
-        <a class="pill pill-li" href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      </div>
+      <form class="heroask" id="heroAsk" role="search" aria-label="Ask my AI">
+        <svg class="askhand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="0.01 2.6" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+        <input class="heroask-in" id="heroAskIn" type="text" name="q" autocomplete="off" enterkeyhint="send" maxlength="600"
+          aria-label="Ask me about my work" placeholder="Ask me about my work&hellip;">
+        <button class="heroask-go" type="submit" aria-label="Ask"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
+      </form>
+      <p class="heroask-links"><a href="mailto:hi.lokeshux@gmail.com">Email me</a><a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn&thinsp;&#8599;</a></p>
       </div>
     </div>
   </section>
@@ -5360,6 +5401,57 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     if (lastFocus && lastFocus.focus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
   }
   [askBtn, askBtnMobile].forEach(function(b){ if (b) b.addEventListener("click", openChat); });
+
+  // ---- entry points: the hero ask box and the dock --------------------
+  function askFrom(q){
+    q = (q || "").trim();
+    if (q){ heroPlayed = true; }
+    openChat();
+    if (q) setTimeout(function(){ sendMessage(q); }, 60);
+  }
+  var heroAsk = document.getElementById("heroAsk"), heroAskIn = document.getElementById("heroAskIn");
+  if (heroAsk){
+    heroAsk.addEventListener("submit", function(e){ e.preventDefault(); var q = heroAskIn.value; heroAskIn.value = ""; heroAskIn.blur(); askFrom(q); });
+    heroAsk.addEventListener("click", function(e){ if (e.target === heroAsk) heroAskIn.focus(); });
+    // the placeholder types real questions, so the box shows what it's for
+    var PH = ["Ask about the Rupeezy app merge\u2026", "Ask what I\u2019ve designed for AI\u2026", "Ask how I got into design\u2026",
+      "Ask how I work with PMs and engineers\u2026", "Ask when I can start\u2026"];
+    var reducePh = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reducePh){
+      var pi = 0, pc = 0, pdel = false, phTimer = 0;
+      var phTick = function(){
+        if (document.activeElement === heroAskIn || heroAskIn.value){ phTimer = setTimeout(phTick, 600); return; }
+        var q = PH[pi];
+        if (!pdel){ pc++; if (pc >= q.length){ pc = q.length; pdel = true; heroAskIn.placeholder = q; phTimer = setTimeout(phTick, 1900); return; } }
+        else { pc--; if (pc <= 0){ pc = 0; pdel = false; pi = (pi + 1) % PH.length; } }
+        heroAskIn.placeholder = q.slice(0, pc) || "\u200b";
+        phTimer = setTimeout(phTick, pdel ? 16 : 42);
+      };
+      phTimer = setTimeout(phTick, 1400);
+    }
+  }
+  var dock = document.getElementById("askDock");
+  if (dock){
+    dock.addEventListener("click", function(){ askFrom(""); });
+    var heroGone = false, footVisible = false;
+    var syncDock = function(){
+      var on = heroGone && !footVisible;
+      dock.classList.toggle("is-on", on);
+      dock.setAttribute("aria-hidden", on ? "false" : "true");
+      dock.tabIndex = on ? 0 : -1;
+    };
+    var foot = document.querySelector("footer"), dockRaf = 0;
+    var measureDock = function(){
+      dockRaf = 0;
+      heroGone = heroAsk ? heroAsk.getBoundingClientRect().bottom < 0 : true;
+      footVisible = foot ? foot.getBoundingClientRect().top < window.innerHeight - 40 : false;
+      syncDock();
+    };
+    var queueDock = function(){ if (!dockRaf) dockRaf = requestAnimationFrame(measureDock); };
+    window.addEventListener("scroll", queueDock, { passive: true });
+    window.addEventListener("resize", queueDock);
+    measureDock();
+  }
   closeBtn.addEventListener("click", closeChat);
   scrim.addEventListener("click", closeChat);
   document.addEventListener("keydown", function(e){
