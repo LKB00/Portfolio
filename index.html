@@ -3689,6 +3689,14 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .heroask-links a svg{display:inline-block;margin-left:3px;vertical-align:-1px;transition:transform .18s cubic-bezier(.2,.7,.2,1)}
 .heroask-links a:hover svg{transform:translate(1px,-1px)}
 .heroin .heroask,.heroin .heroask-links{animation:settle .34s ease-out .60s backwards}
+/* flat and quiet: no shadow, a hairline border, and the send button
+   stays soft grey until there's something to send */
+.heroask,.heroask:focus-within{box-shadow:none}
+.heroask{border-color:color-mix(in srgb,var(--ink) 12%,transparent)}
+.heroask:focus-within{border-color:color-mix(in srgb,var(--ink) 28%,transparent)}
+.heroask-go{width:36px;height:36px;background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--muted);transition:background-color .18s,color .18s,transform .15s}
+.heroask-go:hover{opacity:1;color:var(--ink)}
+.heroask.has-text .heroask-go{background:var(--ink);color:var(--bg)}
 
 .askdock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:70;display:flex;align-items:center;gap:10px;
   width:min(360px,calc(100vw - 32px));height:46px;padding:0 6px 0 15px;border-radius:9999px;cursor:pointer;text-align:left;
@@ -5413,8 +5421,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
   var heroAsk = document.getElementById("heroAsk"), heroAskIn = document.getElementById("heroAskIn");
   if (heroAsk){
-    heroAsk.addEventListener("submit", function(e){ e.preventDefault(); var q = heroAskIn.value; heroAskIn.value = ""; heroAskIn.blur(); askFrom(q); });
+    heroAsk.addEventListener("submit", function(e){ e.preventDefault(); var q = heroAskIn.value; heroAskIn.value = ""; heroAsk.classList.remove("has-text"); heroAskIn.blur(); askFrom(q); });
     heroAsk.addEventListener("click", function(e){ if (e.target === heroAsk) heroAskIn.focus(); });
+    heroAskIn.addEventListener("input", function(){ heroAsk.classList.toggle("has-text", !!heroAskIn.value.trim()); });
     // the placeholder types real questions, so the box shows what it's for
     var PH = ["Ask about the Rupeezy app merge\u2026", "Ask what I\u2019ve designed for AI\u2026", "Ask how I got into design\u2026",
       "Ask how I work with PMs and engineers\u2026", "Ask when I can start\u2026"];
