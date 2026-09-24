@@ -3378,6 +3378,57 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   .aipres,.aipres.is-busy,.aipres.is-busy .aipres-s,.aistep.is-live .aistep-i{animation:none!important}
 }
 
+
+/* ══ AN ANSWER IS WRITING ════════════════════════════════════════════
+   One lead sentence in the serif carries the answer; everything after it
+   is reading text at one size and weight, with numbers bold in the
+   sentence. No uppercase labels inside an answer, no figure rows, no
+   step tracks, no stacked blocks: the only thing that stands out is the
+   thing that answers. A measure of ~64 characters keeps it readable. */
+.aitext{max-width:64ch}
+.aitext .ailead{margin:0 0 14px;font-size:21px;line-height:1.3}
+.aitext p{margin:0 0 12px;color:color-mix(in srgb,var(--ink) 86%,var(--bg));font-size:15px;line-height:1.6}
+.aitext p b,.aitext li b{font-weight:600;color:var(--ink)}
+.aitext ul{margin:0 0 12px}
+.aitext ul li{padding-left:16px;margin-bottom:8px;font-size:15px;line-height:1.6;color:color-mix(in srgb,var(--ink) 86%,var(--bg))}
+.aitext ul li::before{content:"";top:.72em;width:4px;height:4px;border-radius:50%;background:var(--faint)}
+/* anything structured the model still sends is set as text, not as blocks */
+.aifigs-wrap{margin:0 0 12px}
+.aifigs{display:flex;flex-wrap:wrap;gap:4px 16px}
+.aifig{max-width:none;display:flex;align-items:baseline;gap:6px}
+.aifig b{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0}
+.aifig span{font-family:var(--display);font-size:14px;letter-spacing:0;text-transform:none;color:var(--muted)}
+.aitext ol.aisteps li{padding:0 0 10px 0}
+.aitext ol.aisteps li::before,.aitext ol.aisteps li::after{display:none}
+.aistep-k{display:inline;margin-right:6px;font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink)}
+.aistep-k::after{content:":"}
+.aifacts{gap:8px}
+.aifacts dt{display:inline;font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink)}
+.aifacts dt::after{content:": "}
+.aifacts dd{display:inline}
+/* the case study: one line, a place to go next */
+.aitext a.aicase{display:inline-flex;align-items:center;gap:10px;max-width:100%;margin:6px 0 0;padding:8px 12px;border-radius:10px;
+  background:transparent;box-shadow:inset 0 0 0 1px var(--line);text-decoration:none;color:var(--ink)}
+.aitext a.aicase:hover{background:color-mix(in srgb,var(--ink) 3.5%,transparent)}
+.aicase-k{flex:0 0 auto;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.aicase-t{min-width:0;font-family:var(--display);font-size:14px;font-weight:500;letter-spacing:-.005em;line-height:1.35;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aitext a.aicase svg{margin:0;flex:0 0 auto}
+/* follow-ups: quiet, below the answer */
+.ainext{margin:20px 0 28px;padding:0;background:none;border-radius:0}
+.ainext-k{margin:0 0 6px;font-family:var(--display);font-size:13px;color:var(--faint)}
+.ainext-list{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-left:-8px}
+.ainext-q{display:inline-flex;align-items:center;gap:8px;padding:6px 8px;border:0;border-radius:8px;background:transparent;cursor:pointer;
+  font-family:var(--display);font-size:14.5px;line-height:1.4;color:var(--muted);text-align:left;
+  transition:color .18s var(--ease),background .18s var(--ease);animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) both}
+.ainext-q svg{flex:0 0 auto;color:var(--faint)}
+.ainext-q:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.ainext-q:hover svg{color:var(--accent)}
+.ainext-q:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.ainext-q:nth-child(1){animation-delay:.2s}.ainext-q:nth-child(2){animation-delay:.28s}.ainext-q:nth-child(3){animation-delay:.36s}
+@media (max-width:640px){ .aitext .ailead{font-size:19px} }
+@media (prefers-reduced-motion:reduce){ .ainext-q{animation:none!important} }
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -4873,9 +4924,8 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   function caseCard(id){
     var c = CASES[id];
     if (!c) return "";
-    return '<a class="aicase" href="' + c.href + '">' +
-      '<span class="aicase-x"><span class="aicase-t">' + escapeHtml(c.t) + '</span>' +
-      '<span class="aicase-m">' + (c.k || "Case study") + ' \u00b7 ' + c.m + '</span></span>' + CARD_ARROW + '</a>';
+    return '<a class="aicase" href="' + c.href + '"><span class="aicase-k">' + (c.k || "Case study") + '</span>' +
+      '<span class="aicase-t">' + escapeHtml(c.t) + '</span>' + CARD_ARROW + '</a>';
   }
   // a half-arrived token would flash as raw syntax, so while streaming
   // the tail is held back until it closes
@@ -4967,7 +5017,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
           if (!(keyLen > 0 && keyLen < b.text.length * 0.6)) lead = lead.replace(/<\/?b>/g, "");
           out.push('<p class="ailead">' + inlineCase(lead) + "</p>");
         } else {
-          out.push("<p>" + inlineCase(inline(b.text).replace(/<\/?b>/g, "")) + "</p>");
+          out.push("<p>" + inlineCase(inline(b.text)) + "</p>");
         }
       } else if (b.t === "h"){
         out.push('<p class="aitext-h">' + inline(b.text) + "</p>");
@@ -5196,10 +5246,18 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     if (!out.length) return;
     var box = document.createElement("div");
     box.className = "ainext";
-    box.innerHTML = '<p class="aitray-k">You could also ask</p>';
+    box.innerHTML = '<p class="ainext-k">You could also ask</p>';
     var list = document.createElement("div");
-    list.className = "aitray-list";
-    out.forEach(function(q){ list.appendChild(dotRow({ q: q })); });
+    list.className = "ainext-list";
+    out.forEach(function(q){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "ainext-q";
+      b.innerHTML = ICON_FOLLOW + "<span></span>";
+      b.lastChild.textContent = q;
+      b.addEventListener("click", function(){ sendMessage(q); });
+      list.appendChild(b);
+    });
     box.appendChild(list);
     body.appendChild(box);
   }
