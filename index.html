@@ -3632,6 +3632,14 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .ainext .ailabel{padding:0;margin:0 0 6px}
 .ainext .airows{margin-left:-12px}
 
+
+/* the answer comes into focus: each word from a soft blur, in a wave */
+.bw{display:inline-block;animation:aiBlurIn .6s cubic-bezier(.2,.7,.2,1) both;will-change:filter,opacity}
+.bw-block{animation:aiBlurIn .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes aiBlurIn{from{opacity:0;filter:blur(6px);transform:translateY(3px)}to{opacity:1;filter:blur(0);transform:none}}
+.aicard.is-in{animation:none}
+@media (prefers-reduced-motion:reduce){.bw,.bw-block{animation:none!important}}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -5436,6 +5444,36 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
              status: x.querySelector(".aistatus"), statusT: x.querySelector(".aistatus-t"),
              trace: trace, list: trace.querySelector(".aitrace-list"), sum: trace.querySelector(".aitrace-sum-t") };
   }
+  // The answer emerges from a soft blur, word by word, in a wave. Only
+  // text nodes are wrapped, so bold (shaded) words and links keep working.
+  // The stagger shrinks for long answers so the whole reveal stays ~2s.
+  var lastRevealMs = 0;
+  function blurReveal(el){
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches){ lastRevealMs = 0; return; }
+    var nodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = walker.nextNode())) if (n.nodeValue.trim()) nodes.push(n);
+    var words = 0;
+    nodes.forEach(function(t){ words += (t.nodeValue.match(/\S+/g) || []).length; });
+    var step = Math.max(8, Math.min(32, 1700 / Math.max(1, words))), i = 0;
+    nodes.forEach(function(t){
+      var frag = document.createDocumentFragment();
+      t.nodeValue.split(/(\s+)/).forEach(function(part){
+        if (!part) return;
+        if (/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+        var w = document.createElement("span");
+        w.className = "bw";
+        w.style.animationDelay = Math.round(i++ * step) + "ms";
+        w.textContent = part;
+        frag.appendChild(w);
+      });
+      t.parentNode.replaceChild(frag, t);
+    });
+    // blocks without words of their own (the case link) arrive at the end
+    var end = Math.round(i * step);
+    Array.prototype.forEach.call(el.querySelectorAll("a.aicase"), function(a){ a.style.animationDelay = end + "ms"; a.classList.add("bw-block"); });
+    lastRevealMs = end + 600;
+  }
+
   // the status line says what the agent is doing right now, in words
   function present(label){
     return label.replace(/^Read /, "Reading ").replace(/^Checked /, "Checking ").replace(/^Writing the answer$/, "Writing");
@@ -5563,6 +5601,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     // in the same pill rows as the opening tray
     var box = document.createElement("div");
     box.className = "ainext";
+    box.style.animationDelay = lastRevealMs + "ms";
     box.innerHTML = '<p class="ailabel">You could also ask</p>';
     var list = document.createElement("div");
     list.className = "airows";
@@ -5826,7 +5865,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
       renderRich(ex.text, full, false);
       ex.status.remove();
       ex.card.hidden = false;
-      ex.card.classList.add("is-in");
+      blurReveal(ex.text);
       history.push({ role: "assistant", content: full });
       addActions(ex, full, meta, text);
       settle();
