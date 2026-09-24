@@ -3686,6 +3686,8 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .heroask-links{display:flex;gap:16px;margin:12px 0 0 4px;font-size:13px}
 .heroask-links a{color:var(--muted);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 18%,transparent);text-underline-offset:3px;transition:color .15s}
 .heroask-links a:hover{color:var(--ink)}
+.heroask-links a svg{display:inline-block;margin-left:3px;vertical-align:-1px;transition:transform .18s cubic-bezier(.2,.7,.2,1)}
+.heroask-links a:hover svg{transform:translate(1px,-1px)}
 .heroin .heroask,.heroin .heroask-links{animation:settle .34s ease-out .60s backwards}
 
 .askdock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:70;display:flex;align-items:center;gap:10px;
@@ -3932,7 +3934,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           aria-label="Ask me about my work" placeholder="Ask me about my work&hellip;">
         <button class="heroask-go" type="submit" aria-label="Ask"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
       </form>
-      <p class="heroask-links"><a href="mailto:hi.lokeshux@gmail.com">Email me</a><a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn&thinsp;&#8599;</a></p>
+      <p class="heroask-links"><a href="mailto:hi.lokeshux@gmail.com">Email me</a><a href="https://www.linkedin.com/in/lkb01/" target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 16 16" width="11" height="11" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
       </div>
     </div>
   </section>
