@@ -3726,11 +3726,17 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
    hand waves, and everything rests; as the dots drift apart, the
    line fades with them. JS restarts it with the icon so they never
    drift out of step. */
-.rg-line{stroke-width:1;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}
+.rg-line{mask:url(#askTailMask);stroke-width:1;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}
 .rg-head{stroke-width:1.5;stroke-dasharray:.03 .97;stroke-dashoffset:.045;opacity:0}
 .rg-glow{stroke-width:3;stroke-dasharray:.05 .95;stroke-dashoffset:.05;opacity:0;filter:blur(2px)}
 .rg-bloom{stroke-width:4;opacity:0;filter:blur(5px)}
 .heroask-ring.run .rg-line{animation:rgLine 5.5s linear both}
+/* the tail dissolves into nothing where the line starts, so it never
+   begins on a hard edge; as the head comes round to meet it, the fade
+   lifts and the outline closes clean */
+.rg-tail{opacity:1}
+.heroask-ring.run .rg-tail{animation:rgTail 5.5s linear both}
+@keyframes rgTail{0%,34%{opacity:1}46%,100%{opacity:0}}
 .heroask-ring.run .rg-head{animation:rgHead 5.5s linear both}
 .heroask-ring.run .rg-glow{animation:rgGlow 5.5s linear both}
 .rg-bloom{display:none}
@@ -3985,7 +3991,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       <button type="button" class="heroask" id="heroAsk">
         <svg class="heroask-ring" aria-hidden="true"><defs><linearGradient id="askRingGrad" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#6c9bff"/><stop offset=".4" stop-color="#b17cff"/><stop offset=".72" stop-color="#ff86b7"/><stop offset="1" stop-color="#ffb070"/>
-        </linearGradient></defs><rect class="rg-bloom" pathLength="1"/><rect class="rg-line" pathLength="1"/><rect class="rg-glow" pathLength="1"/><rect class="rg-head" pathLength="1"/></svg>
+        </linearGradient>
+          <radialGradient id="askTailGrad"><stop offset="0" stop-color="#000"/><stop offset=".08" stop-color="#000"/><stop offset=".55" stop-color="#777"/><stop offset="1" stop-color="#fff"/></radialGradient>
+          <mask id="askTailMask" maskUnits="userSpaceOnUse" x="-20" y="-20" width="2000" height="400"><rect class="rg-mask-bg" x="-20" y="-20" width="2000" height="400" fill="#fff"/><circle class="rg-tail" r="46" fill="url(#askTailGrad)"/></mask></defs><rect class="rg-bloom" pathLength="1"/><rect class="rg-line" pathLength="1"/><rect class="rg-glow" pathLength="1"/><rect class="rg-head" pathLength="1"/></svg>
         <canvas class="askhand" aria-hidden="true"></canvas>
         <span class="heroask-t">Ask my AI about my work</span>
         <span class="heroask-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
@@ -5542,6 +5550,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   function sizeRing(){
     if (!ringRect) return;
     var w = heroAsk.offsetWidth + 2, h = heroAsk.offsetHeight + 2, sw = 1.25;
+    var tail = ringSvg.querySelector(".rg-tail");
+    if (tail){ tail.setAttribute("cx", sw / 2 + (h - sw) / 2); tail.setAttribute("cy", sw / 2); }
     Array.prototype.forEach.call(ringRect, function(r){
       r.setAttribute("x", sw / 2); r.setAttribute("y", sw / 2);
       r.setAttribute("width", Math.max(0, w - sw)); r.setAttribute("height", Math.max(0, h - sw));
