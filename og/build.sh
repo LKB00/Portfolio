@@ -5,18 +5,19 @@
 # visibly cleaner than the same text rasterised at 1x, and the file is a
 # thumbnail that people will see on retina screens.
 #
-# Usage:  ./og/build.sh [output.png]
+# Usage:  ./og/build.sh [output.png] [source.html]
 # Needs:  Google Chrome, python3 + Pillow, and a network connection the
 #         first time (the card pulls Geist from Google Fonts).
 set -e
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 DIR="${0:A:h}"
-OUT="${1:-$DIR/../og-image.png}"
+SRC="${2:-$DIR/card-v3.html}"
+OUT="${1:-$DIR/../og-image-v3.png}"
 
 "$CHROME" --headless --disable-gpu --hide-scrollbars \
   --force-device-scale-factor=2 --window-size=1200,630 \
   --virtual-time-budget=6000 \
-  --screenshot="$OUT.2x.png" "file://$DIR/card.html" >/dev/null 2>&1
+  --screenshot="$OUT.2x.png" "file://$SRC" >/dev/null 2>&1
 
 python3 - "$OUT" <<'PY'
 import sys
