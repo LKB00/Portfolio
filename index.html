@@ -3215,6 +3215,52 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 @media (hover:none){.aitr-a{opacity:1;transform:none}}
 @media (max-width:640px){.aitr{flex-wrap:nowrap}}
 
+
+/* ══ TYPE, FROM THE PORTFOLIO ════════════════════════════════════════
+   Every piece of text in the chat now takes one of the portfolio's own
+   roles, measured from the page rather than guessed:
+   · display  STIX Two Text 500 (the hero, card titles, company names)
+   · body     Geist 15px/1.55 (the site's --t-body-lg), muted for
+              supporting text, ink for what is being read
+   · ui       Geist 13px 500 (nav, buttons)
+   · label    Geist Mono 11px 500 uppercase, .09em (section labels, dates)
+   · meta     Geist Mono 10.5px uppercase, .05em (case meta in the menu)
+   Nothing smaller than the site's smallest (10.5px). */
+
+/* display */
+.aihead-name,.aichat-greet,.aicase-t,.aifig b{font-family:var(--serif);font-weight:500}
+.aihead-name{font-size:18px;letter-spacing:-.018em}
+.aichat-greet{letter-spacing:-.026em}
+.aicase-t{font-size:18px;line-height:1.3;letter-spacing:-.018em}
+.aitext .ailead{font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.3;letter-spacing:-.02em}
+.aitext .ailead b{font-weight:700}
+
+/* body */
+.aichat-lede,.aitext,.aitext p,.aifacts dd,.aitext ol.aisteps li,.aiq .aiasked,.aitr-t,.aierr-m{
+  font-family:var(--display);font-size:15px;line-height:1.55;letter-spacing:-.009em}
+.aitr-t{font-weight:400}
+.aichat-input{font-size:15px;line-height:1.55;letter-spacing:-.009em}
+
+/* ui */
+.aipill,.aitrace-sum,.aistep,.aihead-sub{font-family:var(--display);font-size:13px;letter-spacing:-.01em}
+.aipill,.aitrace-sum{font-weight:500}
+
+/* label */
+.aitray-k,.aistep-k,.aifacts dt,.aifig span,.aimodel{
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.aitray-k{color:var(--muted)}
+
+/* meta */
+.aicase-m,.aihint,.aicase-num{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.05em}
+.aicase-m{text-transform:uppercase}
+.aichat-title .aitag{font-size:10.5px;letter-spacing:.05em}
+
+@media (hover:none),(max-width:640px){ .aichat-input{font-size:16px} }
+@media (max-width:640px){
+  .aitext .ailead{font-size:19px}
+  .aihead-name{font-size:17px}
+}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
