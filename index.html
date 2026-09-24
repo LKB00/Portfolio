@@ -3711,7 +3711,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .heroask{position:relative}
 .heroask-ring{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);pointer-events:none;overflow:visible}
 .heroask-ring rect{fill:none;stroke:url(#askRingGrad);stroke-linecap:round}
-/* one 4.3s beat shared with the icon: while the dots gather into the
+/* one 5.5s beat shared with the icon: while the dots gather into the
    hand, a lit head with a soft glow runs round the pill drawing the
    line behind it; as it closes, the whole outline blooms once, the
    hand waves, and everything rests; as the dots drift apart, the
@@ -3721,16 +3721,16 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .rg-head{stroke-width:1.5;stroke-dasharray:.03 .97;stroke-dashoffset:.045;opacity:0}
 .rg-glow{stroke-width:3;stroke-dasharray:.05 .95;stroke-dashoffset:.05;opacity:0;filter:blur(2px)}
 .rg-bloom{stroke-width:4;opacity:0;filter:blur(5px)}
-.heroask-ring.run .rg-line{animation:rgLine 4.3s linear both}
-.heroask-ring.run .rg-head{animation:rgHead 4.3s linear both}
-.heroask-ring.run .rg-glow{animation:rgGlow 4.3s linear both}
+.heroask-ring.run .rg-line{animation:rgLine 5.5s linear both}
+.heroask-ring.run .rg-head{animation:rgHead 5.5s linear both}
+.heroask-ring.run .rg-glow{animation:rgGlow 5.5s linear both}
 .rg-bloom{display:none}
-@keyframes rgLine{0%{stroke-dashoffset:1;opacity:1;animation-timing-function:cubic-bezier(.5,0,.2,1)}
-  35%{stroke-dashoffset:0;opacity:.75}77%{stroke-dashoffset:0;opacity:.75}91%,100%{stroke-dashoffset:0;opacity:0}}
-@keyframes rgHead{0%{stroke-dashoffset:.03;opacity:0;animation-timing-function:cubic-bezier(.5,0,.2,1)}
-  3%{opacity:.9}35%{stroke-dashoffset:-.97;opacity:.9}40%,100%{stroke-dashoffset:-.97;opacity:0}}
-@keyframes rgGlow{0%{stroke-dashoffset:.05;opacity:0;animation-timing-function:cubic-bezier(.5,0,.2,1)}
-  3%{opacity:.3}35%{stroke-dashoffset:-.95;opacity:.3}40%,100%{stroke-dashoffset:-.95;opacity:0}}
+@keyframes rgLine{0%{stroke-dashoffset:1;opacity:.75;animation-timing-function:cubic-bezier(.45,0,.3,1)}
+  45%{stroke-dashoffset:0;opacity:.75;animation-timing-function:ease}78%{stroke-dashoffset:0;opacity:.75;animation-timing-function:ease-in-out}92%,100%{stroke-dashoffset:0;opacity:0}}
+@keyframes rgHead{0%{stroke-dashoffset:.03;opacity:.9;animation-timing-function:cubic-bezier(.45,0,.3,1)}
+  45%{stroke-dashoffset:-.97;opacity:.9;animation-timing-function:ease-out}53%,100%{stroke-dashoffset:-.97;opacity:0}}
+@keyframes rgGlow{0%{stroke-dashoffset:.05;opacity:.3;animation-timing-function:cubic-bezier(.45,0,.3,1)}
+  45%{stroke-dashoffset:-.95;opacity:.3;animation-timing-function:ease-out}53%,100%{stroke-dashoffset:-.95;opacity:0}}
 @keyframes rgBloom{0%,33%{opacity:0}40%{opacity:.55}58%,100%{opacity:0}}
 .heroask:hover .rg-line{opacity:1!important;stroke-dashoffset:0!important;animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){ .heroask-ring .rg-line{animation:none!important;stroke-dashoffset:0;opacity:.8} .heroask-ring.run .rg-head,.heroask-ring.run .rg-glow,.heroask-ring.run .rg-bloom{animation:none} }
@@ -5468,7 +5468,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var pts = samplePaths(HAND_D, 2.2), N = pts.length, R = Math.max(.7, css / 26);
     var PX = OX + 12 * S, PY = OY + 22 * S, P = [], t0 = 0, raf = 0, visible = true;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var GATHER = 900, WAVE_AT = 1500, WAVE = 1100, SCATTER_AT = 3300, SCATTER = 700, CYCLE = 4300;
+    var GATHER = 1300, WAVE_AT = 2500, WAVE = 1200, SCATTER_AT = 4300, SCATTER = 800, CYCLE = 5500;
     function seed(){
       P = pts.map(function(p, i){
         var a = Math.random() * 6.2832, r = (0.55 + Math.random() * 0.5) * css * 0.62;
