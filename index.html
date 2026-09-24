@@ -5058,18 +5058,59 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     else ex.trace.insertBefore(copy, ex.list);
   }
   // follow-ups the answer itself suggests; the pool only if it gave none
-  function addNext(next){
+  // Follow-ups come from questions checked against the knowledge file,
+  // so every suggestion has a real answer behind it. (Model-written ones
+  // kept inviting questions the facts can't answer, and each dead end
+  // was an "I don't know, email me".) Relevance comes from the topic of
+  // the question just asked: one to go deeper, two neighbouring topics.
+  // Each topic: an entry question that stands on its own, and deeper
+  // ones that only make sense straight after that topic's answer. After
+  // an answer: one deeper question from its own topic, then the entry
+  // questions of neighbouring topics. Never a deep question out of
+  // context ("Why was your new model paused?" after a Rise Portal answer).
+  var TOPICS = {
+    merge:   { entry: "What's the project you're proudest of?", deep: ["Why was your new model paused?", "Why not just keep the switch?", "How big was the revenue hit?"] },
+    rise:    { entry: "What did Rise Portal actually change?", deep: ["Where do the Rise Portal numbers come from?"] },
+    ai:      { entry: "What have you actually designed for AI?", deep: ["How do you use AI day to day?", "What won't you use AI for?"] },
+    craft:   { entry: "How do you work with PMs and engineers?", deep: ["How do you approach a design problem?", "Can you code?"] },
+    career:  { entry: "Why four companies in three years?", deep: ["Why did you leave Runable?", "What are you looking for next?", "What's your biggest gap?"] },
+    hiring:  { entry: "When can you start?", deep: ["Would you relocate?", "How do I reach you directly?"] },
+    fintech: { entry: "Do you have fintech experience?", deep: [] }
+  };
+  var NEIGHBOURS = {
+    merge: ["rise", "ai", "career", "hiring"], rise: ["merge", "craft", "ai", "hiring"],
+    ai: ["craft", "merge", "career", "hiring"], craft: ["ai", "merge", "career", "hiring"],
+    career: ["hiring", "merge", "ai", "craft"], hiring: ["career", "merge", "ai", "craft"],
+    fintech: ["merge", "rise", "career", "hiring"]
+  };
+  function topicOf(q, used){
+    var t = q.toLowerCase(); used = used || [];
+    if (/fintech|regulat|sebi|kyc|broking|trading/.test(t)) return "fintech";
+    if (/merge|proudest|switch|investeezy|biggest project|revenue hit|paused/.test(t) || used.indexOf("app-merge") > -1) return "merge";
+    if (/rise|partner/.test(t) || used.indexOf("rise-portal") > -1) return "rise";
+    if (/\bai\b|agent|claude|chatgpt/.test(t)) return "ai";
+    if (/\bpms?\b|engineer|\bcode\b|work with|approach|process|how do you work/.test(t)) return "craft";
+    if (/start|relocat|remote|reach|contact|email|notice|salary|hire|hiring|available/.test(t)) return "hiring";
+    if (/compan|leave|left|runable|zzazz|gap|weak|looking for|career|experience|background/.test(t)) return "career";
+    return used.indexOf("about") > -1 ? "craft" : "merge";
+  }
+  function norm(q){ return q.toLowerCase().replace(/[^a-z0-9 ]/g, "").trim(); }
+  function addNext(question, used){
+    var seen = asked.map(norm);
+    var fresh = function(q){ return seen.indexOf(norm(q)) === -1; };
+    var topic = topicOf(question, used), out = [];
+    var deeper = TOPICS[topic].deep.filter(fresh)[0];
+    if (deeper) out.push(deeper);
+    NEIGHBOURS[topic].forEach(function(tp){
+      if (out.length < 3 && fresh(TOPICS[tp].entry) && out.indexOf(TOPICS[tp].entry) === -1) out.push(TOPICS[tp].entry);
+    });
+    if (!out.length) return;
     var box = document.createElement("div");
     box.className = "ainext";
     box.innerHTML = '<p class="aitray-k">You could also ask</p>';
-    var seen = asked.map(function(q){ return q.toLowerCase().replace(/[^a-z0-9 ]/g, ""); });
-    var items = (next && next.length) ? next.filter(function(q){
-      return seen.indexOf(q.toLowerCase().replace(/[^a-z0-9 ]/g, "")) === -1;
-    }).map(function(q){ return { q: q }; }) : [];
-    if (!items.length) items = pick(3);
     var list = document.createElement("div");
     list.className = "aitray-list";
-    items.slice(0, 3).forEach(function(item){ list.appendChild(dotRow({ q: item.q })); });
+    out.forEach(function(q){ list.appendChild(dotRow({ q: q })); });
     box.appendChild(list);
     body.appendChild(box);
   }
@@ -5294,7 +5335,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
       history.push({ role: "assistant", content: full });
       addActions(ex, full, meta, text);
       settle();
-      addNext(meta.next);
+      addNext(text, meta.used);
       live.textContent = ex.text.textContent;
       scrollDown();
     }
