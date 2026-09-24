@@ -3687,7 +3687,11 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   .aichat-panel{top:auto;bottom:var(--kb,0px);height:var(--vvh,100dvh);max-height:100dvh;border-radius:0;
     padding-top:env(safe-area-inset-top)}
   .aichat-handle{display:none!important}
+  /* nothing behind or around it rubber-bands while it's open */
+  .aichat-panel{overscroll-behavior:none;touch-action:pan-y}
+  .aichat-head{touch-action:none}
 }
+html:has(body.chat-open),body.chat-open{overscroll-behavior:none}
 
 /* ===== ENTRY: ASK BOX + DOCK =====
    The AI's way in is not a nav item: it's a question box where the
@@ -5622,29 +5626,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   });
 
-  // on phones the panel is the mobile menu's sheet — pull it down by its
-  // top edge to dismiss, the same gesture the menu takes
+  // on phones the chat is a full screen that closes only from its ✕:
+  // no pull-to-dismiss, and dragging on the header or the composer's
+  // surround moves nothing (the conversation itself still scrolls)
   (function(){
-    var startY = 0, dy = 0, dragging = false;
-    head.addEventListener("touchstart", function(e){
-      if (!window.matchMedia("(max-width:640px)").matches) return;
-      dragging = true; dy = 0; startY = e.touches[0].clientY;
-      sheet.style.transition = "none";
-    }, { passive: true });
-    head.addEventListener("touchmove", function(e){
-      if (!dragging) return;
-      dy = Math.max(0, e.touches[0].clientY - startY);
-      sheet.style.transform = "translateY(" + dy + "px)";
-    }, { passive: true });
-    function end(){
-      if (!dragging) return;
-      dragging = false;
-      sheet.style.transition = "";
-      sheet.style.transform = "";
-      if (dy > 90) closeChat();
-    }
-    head.addEventListener("touchend", end);
-    head.addEventListener("touchcancel", end);
+    function hold(e){ if (window.matchMedia("(max-width:640px)").matches && e.cancelable) e.preventDefault(); }
+    head.addEventListener("touchmove", hold, { passive: false });
+    var foot = document.getElementById("aiChatFoot");
+    if (foot) foot.addEventListener("touchmove", function(e){
+      if (e.target.closest && e.target.closest("textarea, .airows")) return;
+      hold(e);
+    }, { passive: false });
   })();
 
   // ── rendering ─────────────────────────────────────────────────────────
