@@ -3640,6 +3640,32 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aicard.is-in{animation:none}
 @media (prefers-reduced-motion:reduce){.bw,.bw-block{animation:none!important}}
 
+
+/* ══ THE AGENT'S STEPS ═══════════════════════════════════════════════
+   A short live checklist: the step happening now has a small spinner and
+   a shimmer across its words; done steps take a check and step back.
+   Afterwards only what was read stays, as a quiet line above the answer
+   (and only on the latest answer). Type is the portfolio's meta role:
+   Geist 13px regular. */
+.aistatus{display:block;height:auto;margin:2px 0 14px;animation:none;font-weight:400}
+.aisteps2{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none}
+.as{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:13px;font-weight:400;line-height:18px;
+  letter-spacing:-.005em;color:var(--faint);animation:aiBlurIn .45s cubic-bezier(.2,.7,.2,1) both}
+.as-i{width:14px;height:14px;flex:none;display:grid;place-items:center;color:var(--faint)}
+.as-spin{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--line);border-top-color:var(--accent);animation:aiSpin .8s linear infinite}
+.as.is-now{color:var(--muted)}
+.as.is-now .as-t{background:linear-gradient(90deg,var(--muted) 0%,var(--muted) 38%,var(--ink) 50%,var(--muted) 62%,var(--muted) 100%);
+  background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.8s linear infinite}
+.as.is-done{color:var(--faint)}
+.aistatus.is-summary .as:not(.is-read){display:none}
+.aistatus.is-summary .as{animation:none}
+.aix.is-past .aistatus{display:none}
+
+/* type, checked against the portfolio's roles */
+.ailabel{font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--muted)}
+.airow{font-size:14px;line-height:18px}
+@media (prefers-reduced-motion:reduce){.as,.as-spin,.as.is-now .as-t{animation:none!important}.as.is-now .as-t{color:var(--muted);background:none}}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -5431,7 +5457,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     var first = !body.querySelector(".aix");
     x.innerHTML =
       '<p class="aiturn' + (first ? " is-first" : "") + '"></p>' +
-      '<div class="aistatus"><span class="aistatus-t">Thinking</span>' + LI("chevronDown", 12) + "</div>" +
+      '<div class="aistatus" aria-live="off"><ol class="aisteps2"></ol></div>' +
       '<div class="aians-x">' +
         '<div class="aitrace" hidden><button type="button" class="aitrace-sum"><span class="aitrace-sum-t"></span></button><ol class="aitrace-list"></ol></div>' +
         '<div class="aicard" hidden><div class="aitext"></div></div>' +
@@ -5439,7 +5465,48 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     x.querySelector(".aiturn").textContent = question;
     body.appendChild(x);
     var trace = x.querySelector(".aitrace");
-    return { el: x, col: x.querySelector(".aians-x"), ans: x.querySelector(".aicard"), card: x.querySelector(".aicard"),
+    // The agent's steps, shown one at a time and each held long enough to
+    // read (the model moves faster than anyone can follow). The answer
+    // waits for the last step, then the list collapses to what was read.
+    var stepsEl = x.querySelector(".aisteps2"), statusEl = x.querySelector(".aistatus");
+    var queue = [], timer = 0, lastShown = 0, doneCb = null, DWELL = 700;
+    function markDone(li){
+      if (!li) return;
+      li.classList.remove("is-now"); li.classList.add("is-done");
+      li.querySelector(".as-i").innerHTML = LI("check", 12, 2);
+    }
+    function show(label){
+      markDone(stepsEl.querySelector(".is-now"));
+      var li = document.createElement("li");
+      li.className = "as is-now" + (/^(Reading|Checking)/.test(label) ? " is-read" : "");
+      li.innerHTML = '<span class="as-i"><span class="as-spin"></span></span><span class="as-t"></span>';
+      li.lastChild.textContent = label;
+      stepsEl.appendChild(li);
+      lastShown = Date.now();
+      scrollDown();
+    }
+    function pump(){
+      timer = 0;
+      var wait = DWELL - (Date.now() - lastShown);
+      if (wait > 0){ timer = setTimeout(pump, wait); return; }
+      if (queue.length){ show(queue.shift()); timer = setTimeout(pump, DWELL); return; }
+      if (doneCb){ var f = doneCb; doneCb = null; f(); }
+    }
+    var api = {
+      queueStep: function(label){ if (queue[queue.length - 1] === label) return; queue.push(label); if (!timer) pump(); },
+      afterSteps: function(cb){ doneCb = cb; if (!timer) pump(); },
+      cancelSteps: function(){ clearTimeout(timer); timer = 0; queue = []; doneCb = null; },
+      summarize: function(){
+        markDone(stepsEl.querySelector(".is-now"));
+        // what was read stays, in the past tense
+        Array.prototype.forEach.call(stepsEl.querySelectorAll(".is-read .as-t"), function(t){
+          t.textContent = t.textContent.replace(/^Reading /, "Read ").replace(/^Checking /, "Checked ");
+        });
+        if (stepsEl.querySelector(".is-read")) statusEl.classList.add("is-summary"); else statusEl.remove();
+      }
+    };
+    return { queueStep: api.queueStep, afterSteps: api.afterSteps, cancelSteps: api.cancelSteps, summarize: api.summarize,
+             el: x, col: x.querySelector(".aians-x"), ans: x.querySelector(".aicard"), card: x.querySelector(".aicard"),
              text: x.querySelector(".aitext"), spark: document.createElement("span"),
              status: x.querySelector(".aistatus"), statusT: x.querySelector(".aistatus-t"),
              trace: trace, list: trace.querySelector(".aitrace-list"), sum: trace.querySelector(".aitrace-sum-t") };
@@ -5476,7 +5543,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 
   // the status line says what the agent is doing right now, in words
   function present(label){
-    return label.replace(/^Read /, "Reading ").replace(/^Checked /, "Checking ").replace(/^Writing the answer$/, "Writing");
+    return label.replace(/^Read /, "Reading ").replace(/^Checked /, "Checking ");
   }
   function step(ex, label, live, before){
     var li = document.createElement("li");
@@ -5484,7 +5551,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     li.innerHTML = '<span class="aistep-i" aria-hidden="true"></span><span class="aistep-t"></span>';
     li.lastChild.textContent = label;
     if (before) ex.list.insertBefore(li, before); else ex.list.appendChild(li);
-    if (ex.statusT) ex.statusT.textContent = present(label);
+    if (ex.queueStep) ex.queueStep(present(label));
     return li;
   }
   function stepDone(li, label){
@@ -5848,7 +5915,8 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
       clearInterval(tick);
       stopReveal();
       foldTrace(ex, kind === "stopped" ? "Stopped" : "Didn\u2019t get through", true);
-      ex.status.remove();
+      ex.cancelSteps();
+      if (ex.status.parentNode) ex.status.remove();
       ex.text.innerHTML = "";
       settle();
       showError(ex, kind || "error", message, text, wait);
@@ -5861,17 +5929,25 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
       thought();
       reading(true);
       stepDone(writeStep, "Wrote the answer");
+      if (ex.finishing) return;
+      ex.finishing = true;
       var meta = readMeta(full);
-      renderRich(ex.text, full, false);
-      ex.status.remove();
-      ex.card.hidden = false;
-      blurReveal(ex.text);
-      history.push({ role: "assistant", content: full });
-      addActions(ex, full, meta, text);
-      settle();
-      addNext(text, meta.used);
-      live.textContent = ex.text.textContent;
-      scrollDown();
+      ex.afterSteps(function(){
+        ex.summarize();
+        // the résumé card only when the question is about the résumé or a
+        // career history: the model adds it too eagerly
+        if (!/r[eé]sum[eé]|\bcv\b|experience|career|background|history|roles?\b|worked/i.test(text))
+          full = full.replace(/^[ \t]*\[page:resume\][ \t]*$/gm, "").replace(/\[page:resume\]/g, "");
+        renderRich(ex.text, full, false);
+        ex.card.hidden = false;
+        blurReveal(ex.text);
+        history.push({ role: "assistant", content: full });
+        addActions(ex, full, meta, text);
+        settle();
+        addNext(text, meta.used);
+        live.textContent = ex.text.textContent;
+        scrollDown();
+      });
     }
 
     fetch("/api/chat", {
