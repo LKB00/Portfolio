@@ -3907,6 +3907,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .asksheet-x{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .asksheet-t{font-family:var(--serif);font-size:16px;line-height:1.25;letter-spacing:-.01em;color:var(--ink)}
 .asksheet-m{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+
+/* phones: the nav lives at the bottom of the screen, so the top no
+   longer needs a bar's worth of clearance; the page starts close to the
+   top edge, clear of the notch */
+@media (max-width:576px){ #top{padding-top:calc(40px + env(safe-area-inset-top))} }
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>

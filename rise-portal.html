@@ -429,6 +429,11 @@ h3.say.sub{margin-top:var(--s4)}
 @media(max-width:860px){
   :root{--s5:64px;--s4:44px}
 }
+
+/* phones: the nav lives at the bottom of the screen, so the top no
+   longer needs a bar's worth of clearance; the page starts close to the
+   top edge, clear of the notch */
+@media (max-width:576px){ .shell{padding-top:calc(40px + env(safe-area-inset-top))} .shell > .wide:first-child,.shell > .toc + .wide{margin-top:0} }
 </style>
 </head>
 <body>
