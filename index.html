@@ -5434,20 +5434,47 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     // each frame reveals a little more of it: a few characters when the
     // stream is keeping up, more when a burst has built a backlog, so it
     // never falls far behind.
-    var shown = 0, raf = 0, whenShown = null;
-    function paint(){
+    var shown = 0, raf = 0, whenShown = null, lastT = 0, carry = 0;
+    // A calm, steady reading pace, whole words at a time. The model hands
+    // the answer over in well under a second; racing to catch up with it
+    // made answers feel hurried. ~140 characters a second reads as
+    // someone writing to you, a typical answer unfolds over 3 to 4 s,
+    // and only a genuinely long one speeds up a little so it never drags.
+    var CPS = 140;
+    function paint(t){
       raf = 0;
-      // a hidden tab barely runs frames; don't make anyone come back to a
-      // half-written answer
       if (document.hidden) shown = Math.max(shown, full.length - 1);
+      // the hidden first line isn't reading material: skip straight past it
+      if (shown === 0 && /^\s*<</.test(full)){
+        var nl = full.indexOf("\n");
+        if (nl > -1) shown = nl + 1; else { raf = requestAnimationFrame(paint); return; }
+      }
+      var dt = lastT ? Math.min(64, t - lastT) : 16;
+      lastT = t;
       var back = full.length - shown;
       if (back > 0){
-        shown = Math.min(full.length, shown + Math.max(2, Math.ceil(back / 10)));
-        renderRich(ex.text, full.slice(0, shown), true);
-        scrollDown();
+        var cps = CPS + Math.max(0, back - 500) * 0.25;
+        carry += cps * dt / 1000;
+        // spend the budget a whole word at a time (the word plus the space
+        // after it), so the pace stays exact and nothing appears half-typed
+        var moved = false;
+        while (shown < full.length){
+          var m = /^\s*\S+\s?/.exec(full.slice(shown, shown + 60));
+          var len = m ? m[0].length : full.length - shown;
+          if (len > carry) break;
+          carry -= len; shown += len; moved = true;
+        }
+        if (moved){
+          renderRich(ex.text, full.slice(0, shown), true);
+          scrollDown();
+        }
       }
       if (shown < full.length) raf = requestAnimationFrame(paint);
-      else if (whenShown){ var f = whenShown; whenShown = null; f(); }
+      else if (whenShown){
+        // a breath after the last word before anything else arrives
+        var f = whenShown; whenShown = null;
+        setTimeout(f, 280);
+      }
     }
     function reveal(){
       if (document.hidden){
