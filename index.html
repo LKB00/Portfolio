@@ -5470,6 +5470,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   // real: they go to the site's analytics, so good and bad answers can be
   // read later; copy copies the answer as plain text.
   function addActions(ex, answer, meta, question){
+    return; // removed at Lokesh's request: the answer ends cleanly, then the tray
     var bar = document.createElement("div");
     bar.className = "aifb";
     function btn(icon, label){
