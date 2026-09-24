@@ -3261,6 +3261,48 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   .aihead-name{font-size:17px}
 }
 
+
+/* ══ EVERYTHING EARNS ITS PLACE ══════════════════════════════════════
+   The audit's changes:
+   · one busy signal is enough (step spinner + stop): the header photo
+     no longer pulses
+   · Start over only exists once there is something to start over
+   · the composer is just the field and the send button: nothing to
+     choose, so no model label
+   · copy sits tight under the answer, and only shows on hover where
+     there is hover, so it never costs a row of its own
+   · follow-ups sit in the same tray as the starters: suggestions look
+     like suggestions everywhere, not like paragraphs */
+.aichat-head .aime.is-busy{animation:none}
+.aichat:not(.has-chat) #aiChatReset{visibility:hidden}
+.aicomposer-row{justify-content:flex-end}
+.aicomposer{padding-bottom:8px}
+.aicomposer-row{margin-top:-4px}
+.aitext a.aicase{align-items:center}
+.aicard .aiacts{margin-top:10px;min-height:0}
+.aicard .aiacts:has(.aiicon:only-child){margin-top:6px}
+@media (hover:hover){
+  .aicard .aiicon{opacity:0;transition:opacity .18s var(--ease),background .2s var(--ease),color .2s var(--ease)}
+  .aix:hover .aicard .aiicon,.aicard .aiicon:focus-visible,.aicard .aiicon.is-done{opacity:1}
+}
+.ainext{margin:18px 0 26px;padding:14px 10px 8px;border-radius:20px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg))}
+.ainext .aitray-k{margin:0 10px 6px}
+.ainext .aitray-list{margin:0}
+@media (max-width:640px){.ainext{padding:12px 6px 6px;border-radius:18px}}
+
+
+/* copy on the "Worked for …" line; the composer is one row */
+.aitrace{display:flex;flex-wrap:wrap;align-items:center}
+.aitrace .aitrace-list{flex:0 0 100%}
+.aitrace > .aiicon{margin-left:auto;width:28px;height:28px}
+@media (hover:hover){
+  .aitrace > .aiicon{opacity:0;transition:opacity .18s var(--ease),background .2s var(--ease),color .2s var(--ease)}
+  .aix:hover .aitrace > .aiicon,.aitrace > .aiicon:focus-visible,.aitrace > .aiicon.is-done{opacity:1}
+}
+.aicomposer{flex-direction:row;align-items:flex-end;gap:10px;padding:10px 8px 8px 14px}
+.aicomposer-row{margin:0}
+.aichat-input{padding:5px 0 5px}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -3380,15 +3422,11 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
         <div class="aichat-foot" id="aiChatFoot">
           <div class="aitray">
             <div class="aitray-top">
-              <div class="aitray-head">
-                <p class="aitray-k">Ask me about</p>
-              </div>
               <div class="aitray-list" id="aiChatSuggest"></div>
             </div>
             <form class="aicomposer" id="aiChatForm">
               <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask me anything&#8230;" aria-label="Ask me anything"></textarea>
               <div class="aicomposer-row">
-                <span class="aimodel"><span class="aime" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh &#183; AI</span>
                 <button type="submit" class="aichat-send" id="aiChatSend" aria-label="Send" disabled>
                   <svg class="ico-send" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3.2M3.8 7.4 8 3.2l4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                   <svg class="ico-stop" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="2.2" fill="currentColor"></rect></svg>
@@ -4746,7 +4784,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   function caseCard(id){
     var c = CASES[id];
     if (!c) return "";
-    return '<a class="aicase" href="' + c.href + '"><span class="aicase-num">' + (c.n || DOC) + '</span>' +
+    return '<a class="aicase" href="' + c.href + '">' +
       '<span class="aicase-x"><span class="aicase-t">' + escapeHtml(c.t) + '</span>' +
       '<span class="aicase-m">' + (c.k || "Case study") + ' \u00b7 ' + c.m + '</span></span>' + CARD_ARROW + '</a>';
   }
@@ -4771,17 +4809,18 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   var DOC = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.8V5.2h3.4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   function readMeta(text){
     var meta = { next: null, used: [] };
-    var u = text.match(/<<\s*used\s*:\s*([^>]*)>>/i);
+    // tolerant of a sloppy close (">" or none): read to the end of the line
+    var u = text.match(/<<\s*used\s*:\s*([^>\n]*)/i);
     if (u) meta.used = u[1].split(",").map(function(x){ return x.trim().toLowerCase(); })
       .filter(function(x, i, a){ return USED[x] && a.indexOf(x) === i; });
-    var n = text.match(/<<\s*next\s*:\s*([^>]*)>>/i);
+    var n = text.match(/<<\s*next\s*:\s*([^>\n]*)/i);
     if (n) meta.next = n[1].split("|").map(function(x){ return x.trim(); })
       .filter(function(x){ return x && x.length < 90; }).slice(0, 3);
     return meta;
   }
   function stripMeta(text){
     // (and an "A:" the model sometimes copies from the prompt's examples)
-    return text.replace(/<<[^>]*>>/g, "").replace(/<<[^>]*$/, "").replace(/<$/, "").replace(/^\s+/, "").replace(/^A:\s*/, "");
+    return text.replace(/^[ \t]*<<[^\n]*$/gm, "").replace(/<<[^>\n]*>>?/g, "").replace(/<<[^>]*$/, "").replace(/<$/, "").replace(/^\s+/, "").replace(/^A:\s*/, "");
   }
   function inlineCase(html){
     return html.replace(/\[(?:case|page):([a-z-]+)\]/g, function(m, id){
@@ -5013,8 +5052,10 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
         setTimeout(function(){ copy.classList.remove("is-done"); copy.innerHTML = ICON_COPY; copy.setAttribute("aria-label", "Copy answer"); }, 1600);
       }, function(){});
     });
-    bar.appendChild(copy);
-    ex.ans.appendChild(bar);
+    // with no action of its own to sit beside, copy joins the line that
+    // already exists above the answer instead of costing a row below it
+    if (bar.children.length){ bar.appendChild(copy); ex.ans.appendChild(bar); }
+    else ex.trace.insertBefore(copy, ex.list);
   }
   // follow-ups the answer itself suggests; the pool only if it gave none
   function addNext(next){
@@ -5125,6 +5166,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     Array.prototype.slice.call(body.querySelectorAll(".aix, .ainext")).forEach(function(m){ m.remove(); });
     intro.style.display = "";
     document.getElementById("aiChatFoot").classList.remove("is-chatting");
+    panel.classList.remove("has-chat");
     renderTry();
     body.scrollTop = 0;
     if (canHover) input.focus({ preventScroll: true });
@@ -5142,6 +5184,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     if (oldNext) oldNext.remove();
     intro.style.display = "none";
     document.getElementById("aiChatFoot").classList.add("is-chatting");
+    panel.classList.add("has-chat");
 
     var ex = addExchange(text);
     history.push({ role: "user", content: text });

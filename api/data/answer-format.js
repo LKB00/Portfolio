@@ -53,6 +53,10 @@ THE BLOCKS
 2. FIGURES: real numbers from the facts, on their own line:
    {{200,000+|registered users}} {{97%|of company revenue}}
    One row, two or three figures at most. Never invent or round a number.
+   Every figure must be about the exact thing the answer describes: a
+   number from a different product or context is padding and misleads
+   (the trading app's 200,000 users are not a result of the app merge).
+   If no figure is about this thing, leave the row out.
    If the facts give a source for the numbers, put it on the very next
    line as "Source: ...".
 3. FACTS: a list where every item is "Label: value". Rendered as a
