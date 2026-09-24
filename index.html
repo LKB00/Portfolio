@@ -3205,6 +3205,16 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 }
 @media (prefers-reduced-motion:reduce){.aitray-top,.ainext .aitr{animation:none!important}}
 
+
+/* the rows are only the question; the arrow says "sends" on hover */
+.aitr{align-items:center;justify-content:space-between}
+.aitr-t{flex:1 1 auto}
+.aitr-a{display:grid;place-items:center;flex:0 0 auto;color:var(--faint);opacity:0;transform:translate(-3px,3px);
+  transition:opacity .18s var(--ease),transform .25s var(--ease),color .18s var(--ease)}
+.aitr:hover .aitr-a,.aitr:focus-visible .aitr-a{opacity:1;transform:none;color:var(--accent)}
+@media (hover:none){.aitr-a{opacity:1;transform:none}}
+@media (max-width:640px){.aitr{flex-wrap:nowrap}}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -4512,9 +4522,10 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     var b = document.createElement("button");
     b.type = "button";
     b.className = "aitr";
-    b.innerHTML = '<span class="aitr-dot" aria-hidden="true"></span><span class="aitr-t"></span>' + (item.hint ? '<span class="aitr-d"></span>' : "");
+    // just the question: it already says what the answer is about. The
+    // arrow only appears on hover or focus, to say "this sends it".
+    b.innerHTML = '<span class="aitr-t"></span><span class="aitr-a" aria-hidden="true">' + ARROW + "</span>";
     b.querySelector(".aitr-t").textContent = item.q;
-    if (item.hint) b.querySelector(".aitr-d").textContent = item.hint;
     b.addEventListener("click", function(){ sendMessage(item.q); });
     return b;
   }
