@@ -3617,6 +3617,12 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   .tw-char{opacity:1}
 }
 
+
+/* no context pill: the composer is the field and the send button, one row */
+.aicomposer,.aichat-foot:not(.is-chatting) .aicomposer{flex-direction:row;align-items:flex-end;gap:8px;padding:8px 8px 8px 12px}
+.aicomposer .aichat-input{padding:3px 0 3px}
+.aicomposer-row{flex:none;justify-content:flex-end}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -3738,12 +3744,6 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
             <form class="aicomposer" id="aiChatForm">
               <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask about my work, my career, or AI&#8230;" aria-label="Ask me a question"></textarea>
               <div class="aicomposer-row">
-                <div class="aictx">
-                  <button type="button" class="aictx-btn" id="aiCtxBtn" aria-haspopup="menu" aria-expanded="false">
-                    <span class="aictx-i" id="aiCtxIcon"></span><span class="aictx-name" id="aiCtxName">Everything</span><span class="aictx-chev"></span>
-                  </button>
-                  <div class="aictx-menu" id="aiCtxMenu" role="menu" hidden></div>
-                </div>
                 <button type="submit" class="aichat-send" id="aiChatSend" aria-label="Send" disabled>
                   <svg class="ico-send" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
                   <svg class="ico-stop" width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="2.2" fill="currentColor"></rect></svg>
@@ -4998,6 +4998,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   var ctxBtn = document.getElementById("aiCtxBtn"), ctxMenu = document.getElementById("aiCtxMenu");
   var heroEl = document.getElementById("aiHero");
   function paintCtx(){
+    if (!ctxBtn) return;
     document.getElementById("aiCtxIcon").innerHTML = LI(SCOPES[scope].icon, 12);
     document.getElementById("aiCtxName").textContent = SCOPES[scope].label;
     ctxBtn.querySelector(".aictx-chev").innerHTML = LI("chevronDown", 12);
@@ -5017,6 +5018,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   }
   function openCtx(){ ctxMenu.hidden = false; ctxBtn.setAttribute("aria-expanded", "true"); var on = ctxMenu.querySelector('[aria-checked="true"]'); if (on) on.focus(); }
   function closeCtx(){ ctxMenu.hidden = true; ctxBtn.setAttribute("aria-expanded", "false"); }
+  if (ctxBtn){
   ctxBtn.addEventListener("click", function(e){ e.stopPropagation(); ctxMenu.hidden ? openCtx() : closeCtx(); });
   ctxMenu.addEventListener("click", function(e){ var it = e.target.closest(".aictx-item"); if (it) setScope(it.getAttribute("data-k")); });
   document.addEventListener("click", function(e){ if (!ctxMenu.hidden && !e.target.closest(".aictx")) closeCtx(); });
@@ -5026,6 +5028,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     else if (e.key === "ArrowUp"){ e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
     else if (e.key === "Escape"){ e.stopPropagation(); closeCtx(); ctxBtn.focus(); }
   });
+  }
   // The prototype's hero: the wordmark flips (rotateX) into the heading,
   // which then types in at 15ms a character.
   var heroPlayed = false;
