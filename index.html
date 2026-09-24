@@ -3429,6 +3429,19 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 @media (max-width:640px){ .aitext .ailead{font-size:19px} }
 @media (prefers-reduced-motion:reduce){ .ainext-q{animation:none!important} }
 
+
+/* ══ EMPHASIS BY SHADE, NOT WEIGHT ═══════════════════════════════════
+   The hero's own device: the sentence sits in a lighter shade and only
+   the words that carry it are in full ink, all at one weight. Reading
+   text is a mid grey (about 5.9:1 on the page, comfortably readable);
+   the lead's grey is lighter still, as the hero's is, since it's set
+   large. Nothing in an answer is bold. */
+.aitext .ailead{color:color-mix(in srgb,var(--ink) 55%,var(--bg))}
+.aitext .ailead b{font-weight:inherit;color:var(--ink)}
+.aitext p,.aitext ul li,.aifacts dd,.aitext ol li{color:color-mix(in srgb,var(--ink) 70%,var(--bg))}
+.aitext p b,.aitext li b,.aitext dd b,.aitext ol li b{font-weight:inherit;color:var(--ink)}
+.aifacts dt,.aistep-k,.aifig b{font-weight:inherit;color:var(--ink)}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
