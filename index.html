@@ -3666,6 +3666,34 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .airow{font-size:14px;line-height:18px}
 @media (prefers-reduced-motion:reduce){.as,.as-spin,.as.is-now .as-t{animation:none!important}.as.is-now .as-t{color:var(--muted);background:none}}
 
+/* ===== FOLLOW-UPS, QUIETER =====
+   Under an answer the suggestions are a side note, not a second
+   answer: 13px, muted, each hugging its own text with a small
+   "reply" hook in front. Hover brings the line to ink, nudges the hook
+   and shows an arrow. They arrive one by one, the same soft blur the
+   answer uses. The opening tray keeps its larger rows. */
+.airow-i,.airow-arr{display:none}
+.ainext .ailabel{font-size:10.5px;margin:0 0 4px;color:var(--faint)}
+.ainext .airows{margin-left:-8px;align-items:flex-start;gap:0}
+.ainext .airow{width:auto;max-width:100%;height:30px;padding:0 10px 0 8px;gap:7px;font-size:13px;line-height:18px;color:var(--muted);
+  border-radius:8px;background:transparent;transition:color .18s,background-color .18s;
+  animation:aiRowIn .5s cubic-bezier(.2,.7,.2,1) both}
+.ainext .airow:nth-child(1){animation-delay:calc(var(--d,0ms) + 120ms)}.ainext .airow:nth-child(2){animation-delay:calc(var(--d,0ms) + 220ms)}.ainext .airow:nth-child(3){animation-delay:calc(var(--d,0ms) + 320ms)}
+.ainext .airow-i{display:inline-flex;color:var(--faint);transition:transform .2s cubic-bezier(.2,.7,.2,1),color .18s}
+.ainext .airow-t{flex:0 1 auto}
+.ainext .airow-go{display:none!important}
+.ainext .airow-arr{display:inline-flex;color:var(--ink);opacity:0;transform:translateX(-4px);transition:opacity .18s,transform .2s cubic-bezier(.2,.7,.2,1)}
+.ainext .airow:hover,.ainext .airow:focus-visible{color:var(--ink);background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.ainext .airow:hover .airow-i{color:var(--muted);transform:translateX(1px)}
+.ainext .airow:hover .airow-arr,.ainext .airow:focus-visible .airow-arr{opacity:1;transform:none}
+@keyframes aiRowIn{from{opacity:0;filter:blur(4px);transform:translateY(3px)}to{opacity:1;filter:none;transform:none}}
+@media (max-width:640px){
+  .ainext .airow{height:auto;min-height:34px;padding:7px 10px 7px 8px;align-items:flex-start}
+  .ainext .airow-i{margin-top:3px}
+  .ainext .airow-arr{display:none}
+}
+@media (prefers-reduced-motion:reduce){ .ainext .airow{animation:none} }
+
 /* ===== HEADER IDENTITY =====
    Who you're talking to, at a glance: my face inside the same AI
    gradient as the welcome hand, my name, and one live line underneath.
@@ -4954,6 +4982,8 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     check: '<path d="M20 6 9 17l-5-5"/>',
     chevronDown: '<path d="m6 9 6 6 6-6"/>',
     arrowUp: '<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>',
+    cornerDownRight: '<path d="m15 10 5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/>',
+    arrowRight: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
     cornerDownLeft: '<path d="M20 4v7a4 4 0 0 1-4 4H4"/><path d="m9 10-5 5 5 5"/>',
     x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
     messagePlus: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v6"/><path d="M9 10h6"/>',
@@ -5055,7 +5085,8 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     var b = document.createElement("button");
     b.type = "button";
     b.className = "airow";
-    b.innerHTML = '<span class="airow-t"></span><span class="airow-go">Ask' + LI("cornerDownLeft", 12) + "</span>";
+    b.innerHTML = '<span class="airow-i" aria-hidden="true">' + LI("cornerDownRight", 12) + '</span><span class="airow-t"></span>' +
+      '<span class="airow-go">Ask' + LI("cornerDownLeft", 12) + '</span><span class="airow-arr" aria-hidden="true">' + LI("arrowRight", 12) + "</span>";
     b.querySelector(".airow-t").textContent = q;
     b.addEventListener("click", function(){ sendMessage(q); });
     return b;
@@ -5808,6 +5839,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     var box = document.createElement("div");
     box.className = "ainext";
     box.style.animationDelay = lastRevealMs + "ms";
+    box.style.setProperty("--d", lastRevealMs + "ms");
     box.innerHTML = '<p class="ailabel">You could also ask</p>';
     var list = document.createElement("div");
     list.className = "airows";
