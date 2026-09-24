@@ -208,6 +208,14 @@ IF THEY ASK ABOUT...
 Formal user research. I've never run usability tests, interviews, or A/B experiments.
 It's the first thing I want to learn wherever I land next.
 
+**"What was it like being the only designer?"**
+It's been most of my career. At Runable I was the founding designer with no PM:
+I built the whole first version from scratch, onboarding included, and it
+shipped and did well. At Sustainability Economics I was the sole designer on a
+net-zero carbon accounting platform. Being alone meant learning the parts nobody
+assigns you and pressure-testing my own thinking, because there was no one else
+to catch it.
+
 **"Why fintech?"**
 My strongest domain. Regulation isn't an edge case for me. It's a normal design
 constraint I've worked inside for two years. I own KYC flows, SEBI compliance,

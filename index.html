@@ -4928,16 +4928,16 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   var STARTERS = [
     { q: "What's the project you're proudest of?", tag: "Work", hint: "The Rupeezy app merge" },
     { q: "What have you actually designed for AI?", tag: "AI", hint: "Two products, Runable and ZZAZZ" },
-    { q: "Why four companies in three years?", tag: "Career", hint: "Rupeezy, Runable, ZZAZZ" },
+    { q: "How did you get into design?", tag: "Career", hint: "Self-taught, from chemical science" },
     { q: "How do you work with PMs and engineers?", tag: "Craft", hint: "One PM, seven engineers" }
   ];
   // "Ask next" draws from these plus any starter not yet asked
   var QUESTION_POOL = STARTERS.concat([
     { q: "What did Rise Portal actually change?", tag: "Work" },
     { q: "Do you have fintech experience?", tag: "Work" },
-    { q: "Can you code?", tag: "Craft" },
-    { q: "Why did you leave Runable?", tag: "Career" },
-    { q: "What's your biggest gap?", tag: "Career" },
+    { q: "How did you build this site?", tag: "Craft" },
+    { q: "What was it like being the only designer?", tag: "Career" },
+    { q: "What are you looking for next?", tag: "Career" },
     { q: "When can you start?", tag: "Hiring" },
     { q: "How do I reach you directly?", tag: "Hiring" }
   ]);
@@ -5027,13 +5027,13 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   // and tells the model which part of my work to answer from.
   var SCOPES = {
     all:    { label: "Everything", icon: "layers", hero: "What would you like to know?",
-              rows: ["What's the project you're proudest of?", "What have you actually designed for AI?", "Why four companies in three years?", "How do you work with PMs and engineers?"] },
+              rows: ["What's the project you're proudest of?", "What have you actually designed for AI?", "How did you get into design?", "How do you work with PMs and engineers?"] },
     work:   { label: "My work", icon: "briefcase", hero: "Which project should we start with?",
               rows: ["What's the project you're proudest of?", "What did Rise Portal actually change?", "Do you have fintech experience?", "How do you approach a design problem?"] },
     ai:     { label: "AI", icon: "sparkles", hero: "Ask me how I design for AI.",
               rows: ["What have you actually designed for AI?", "How do you use AI day to day?", "What won't you use AI for?"] },
     career: { label: "Career", icon: "route", hero: "Ask me about my career.",
-              rows: ["Why four companies in three years?", "Why did you leave Runable?", "What are you looking for next?", "What's your biggest gap?"] },
+              rows: ["How did you get into design?", "What was it like being the only designer?", "What are you looking for next?"] },
     hiring: { label: "Hiring", icon: "users", hero: "Let\u2019s talk about working together.",
               rows: ["When can you start?", "Would you relocate?", "How do you work with PMs and engineers?", "How do I reach you directly?"] }
   };
@@ -5631,8 +5631,8 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     merge:   { entry: "What's the project you're proudest of?", deep: ["Why was your new model paused?", "Why not just keep the switch?", "How big was the revenue hit?"] },
     rise:    { entry: "What did Rise Portal actually change?", deep: ["Where do the Rise Portal numbers come from?"] },
     ai:      { entry: "What have you actually designed for AI?", deep: ["How do you use AI day to day?", "What won't you use AI for?"] },
-    craft:   { entry: "How do you work with PMs and engineers?", deep: ["How do you approach a design problem?", "Can you code?"] },
-    career:  { entry: "Why four companies in three years?", deep: ["Why did you leave Runable?", "What are you looking for next?", "What's your biggest gap?"] },
+    craft:   { entry: "How do you work with PMs and engineers?", deep: ["How do you approach a design problem?", "How did you build this site?"] },
+    career:  { entry: "How did you get into design?", deep: ["What was it like being the only designer?", "What are you looking for next?"] },
     hiring:  { entry: "When can you start?", deep: ["Would you relocate?", "How do I reach you directly?"] },
     fintech: { entry: "Do you have fintech experience?", deep: [] }
   };
@@ -5648,9 +5648,9 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     if (/merge|proudest|switch|investeezy|biggest project|revenue hit|paused/.test(t) || used.indexOf("app-merge") > -1) return "merge";
     if (/rise|partner/.test(t) || used.indexOf("rise-portal") > -1) return "rise";
     if (/\bai\b|agent|claude|chatgpt/.test(t)) return "ai";
-    if (/\bpms?\b|engineer|\bcode\b|work with|approach|process|how do you work/.test(t)) return "craft";
+    if (/\bpms?\b|engineer|\bcode\b|work with|approach|process|how do you work|build this site/.test(t)) return "craft";
     if (/start|relocat|remote|reach|contact|email|notice|salary|hire|hiring|available/.test(t)) return "hiring";
-    if (/compan|leave|left|runable|zzazz|gap|weak|looking for|career|experience|background/.test(t)) return "career";
+    if (/compan|leave|left|runable|zzazz|gap|weak|looking for|career|experience|background|into design|taught|only designer|founding/.test(t)) return "career";
     return used.indexOf("about") > -1 ? "craft" : "merge";
   }
   function norm(q){ return q.toLowerCase().replace(/[^a-z0-9 ]/g, "").trim(); }
