@@ -2822,6 +2822,155 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   .aichat .ai-in{opacity:1}
 }
 
+
+/* ══ THE WORKSPACE LAYER ═════════════════════════════════════════════
+   Everything above set the assistant as a narrow transcript. This layer
+   turns it into a workspace, and wins by coming later:
+   · a large centred window, not a drawer: the answer gets room
+   · a rail that is plainly me: the hero's portrait on the hero's
+     lavender, name, role, status, and the real me one tap away
+   · a conversation, not a document: questions as ink bubbles on the
+     right, answers as white cards on a tinted canvas on the left
+   · the agent's work shown as steps that tick off, then fold away */
+.aichat-panel{top:50%;left:50%;right:auto;bottom:auto;
+  width:min(1060px,calc(100vw - 48px));height:min(780px,calc(100dvh - 48px));
+  display:grid;grid-template-columns:272px minmax(0,1fr);overflow:hidden;border-radius:20px;
+  background:var(--surface);
+  box-shadow:0 0 0 1px var(--line),0 40px 100px -40px rgba(20,24,45,.45),0 12px 30px -18px rgba(20,24,45,.25);
+  opacity:0;transform:translate(-50%,-48%) scale(.985);
+  transition:transform .5s var(--ease),opacity .28s ease}
+.aichat.open .aichat-panel{opacity:1;transform:translate(-50%,-50%)}
+.aichat-scrim{background:rgba(20,20,22,.34)}
+
+/* ── the rail ── */
+.airail{display:flex;flex-direction:column;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:18px 18px 16px;background:var(--bg);box-shadow:inset -1px 0 0 var(--line)}
+.airail-photo{height:150px;border-radius:14px;background:var(--lavender);overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+.airail-photo img{display:block;width:108%!important;height:auto!important;max-width:none;margin-bottom:-6px}
+.airail-name{margin:16px 0 0;font-family:var(--serif);font-size:22px;line-height:1.15;letter-spacing:-.015em;color:var(--ink)}
+.airail-role{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.airail-status{display:inline-flex;align-items:center;gap:7px;margin:12px 0 0;padding:4px 10px 4px 8px;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--live) 10%,transparent);color:var(--ink);font-size:12px}
+.airail-dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 0 3px color-mix(in srgb,var(--live) 22%,transparent)}
+.airail-topics{margin-top:24px;flex:1}
+.airail-k{margin:18px 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
+.airail-k:first-child{margin-top:0}
+.airail-q{display:flex;align-items:flex-start;gap:8px;width:100%;margin:0;padding:7px 8px;border:0;border-radius:8px;
+  background:transparent;color:var(--ink);cursor:pointer;text-align:left;font-family:var(--display);font-size:13px;line-height:1.4;
+  transition:background .18s var(--ease)}
+.airail-q::before{content:"";flex:0 0 auto;width:5px;height:5px;margin-top:7px;border-radius:50%;background:var(--line)}
+.airail-q:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.airail-q.is-asked{color:var(--faint)}
+.airail-q.is-asked::before{background:var(--live)}
+.airail-q:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.airail-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.airail-foot-t{margin:0 0 10px;font-size:12.5px;color:var(--muted)}
+.airail-foot-a{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ── the main area ── */
+.aimain{display:flex;flex-direction:column;min-width:0;min-height:0}
+.aichat-head{height:64px;padding:0 14px 0 28px;box-shadow:inset 0 -1px 0 var(--line);background:var(--surface)}
+.aichat-head .aime{display:none}
+.aihead-x{flex:1;min-width:0}
+.aichat-title{font-size:14px}
+.aihead-sub{margin:2px 0 0;font-size:12px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aichat-body{padding:0 28px}
+.aichat-body > *{max-width:720px;margin-left:auto;margin-right:auto}
+
+/* empty state */
+.aichat-intro{padding:44px 0 28px}
+.aichat-greet{font-size:36px}
+.aichat-lede{max-width:40em;font-size:14.5px}
+.aistart{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:28px}
+.aistart-b{display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-height:104px;padding:14px 16px;border:0;
+  border-radius:14px;background:var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer;text-align:left;color:var(--ink);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .2s var(--ease)}
+.aistart-b:hover{transform:translateY(-2px);box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 20%,transparent),0 14px 28px -20px rgba(0,0,0,.3)}
+.aistart-k{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--faint)}
+.aistart-k svg{color:var(--faint);transition:color .2s var(--ease),transform .3s var(--ease)}
+.aistart-b:hover .aistart-k svg{color:var(--accent);transform:translate(1px,-1px)}
+.aistart-q{font-family:var(--display);font-size:15px;line-height:1.35;letter-spacing:-.01em}
+.aistart-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ── a conversation ── */
+.aix{padding:24px 0 6px;border:0!important}
+.aiq{display:flex;justify-content:flex-end;margin:0 0 18px}
+.aiq .aiasked{max-width:78%;padding:10px 15px;border-radius:18px 18px 5px 18px;background:var(--ink);color:var(--bg);
+  font-family:var(--display);font-size:14.5px;line-height:1.45;letter-spacing:-.005em}
+.aians{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;margin:0}
+.aians > .aime{width:32px;height:32px;margin-top:0}
+.aians-x{min-width:0}
+.aicard{padding:20px 22px 16px;border-radius:16px;background:var(--card);
+  box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.03),0 16px 34px -28px rgba(0,0,0,.35);animation:aiRise .4s var(--ease) both}
+.aicard[hidden]{display:none}
+.aicard .aitext a.aicase{background:var(--bg)}
+.aicard .aitext a.aicase:hover{background:var(--surface)}
+.aicard .aiacts{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+.aians-x > .aierr{margin-top:0}
+.ainext{padding:14px 0 26px 44px}
+.ainext .aieyebrow{margin-bottom:8px}
+.ainext .aichip{background:var(--card)}
+
+/* ── the agent at work: steps that tick off, then fold into one line ── */
+.aitrace{margin:4px 0 10px}
+.aitrace-sum{display:none;align-items:center;gap:6px;padding:3px 8px 3px 6px;margin-left:-6px;border:0;border-radius:var(--r-pill);
+  background:transparent;color:var(--muted);cursor:pointer;font-family:var(--display);font-size:12.5px;
+  transition:background .2s var(--ease)}
+.aitrace-sum:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.aitrace-sum svg{transition:transform .25s var(--ease)}
+.aitrace.is-done .aitrace-sum{display:inline-flex}
+.aitrace.is-open .aitrace-sum svg{transform:rotate(90deg)}
+.aitrace-list{display:flex;flex-direction:column;gap:7px;margin:0;padding:2px 0 0;list-style:none}
+.aitrace.is-done:not(.is-open) .aitrace-list{display:none}
+.aitrace.is-done.is-open .aitrace-list{margin-top:8px}
+.aistep{display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.3;color:var(--muted);animation:aiRise .3s var(--ease) both}
+.aistep-i{position:relative;flex:0 0 auto;width:15px;height:15px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--line)}
+.aistep.is-live .aistep-i{box-shadow:none;border:1.5px solid var(--line);border-top-color:var(--accent);animation:aiSpin .8s linear infinite}
+@keyframes aiSpin{to{transform:rotate(360deg)}}
+.aistep.is-done .aistep-i{background:var(--ink);box-shadow:none}
+.aistep.is-done .aistep-i::after{content:"";position:absolute;left:4.5px;top:4px;width:5px;height:3px;
+  border-left:1.5px solid var(--bg);border-bottom:1.5px solid var(--bg);transform:rotate(-45deg)}
+.aistep.is-fail .aistep-i{background:var(--faint);box-shadow:none}
+.aistep.is-live .aistep-t{background:linear-gradient(90deg,var(--muted) 0%,var(--muted) 40%,var(--ink) 50%,var(--muted) 60%,var(--muted) 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.6s linear infinite}
+.aistep-n{font-variant-numeric:tabular-nums}
+
+/* composer sits on the canvas */
+.aichat-foot{background:var(--surface);padding:10px 28px calc(14px + env(safe-area-inset-bottom))}
+.aichat-foot > *{max-width:720px;margin-left:auto;margin-right:auto}
+
+/* ── narrower screens: the rail steps aside, the window becomes a sheet ── */
+@media (max-width:900px){
+  .aichat-panel{grid-template-columns:minmax(0,1fr)}
+  .airail{display:none}
+  .aichat-head .aime{display:inline-block}
+  .aichat-head{padding-left:20px}
+}
+@media (max-width:640px){
+  .aichat-panel{top:auto;left:0;right:0;bottom:0;width:100%;height:94dvh;border-radius:20px 20px 0 0;
+    display:flex;flex-direction:column;opacity:1;transform:translateY(100%)}
+  .aichat.open .aichat-panel{transform:none}
+  .aichat-head{height:auto;min-height:52px;padding:6px 10px 6px var(--pad);box-shadow:none}
+  .aihead-sub{display:none}
+  .aichat-body{padding:0 var(--pad)}
+  .aichat-intro{padding-top:14px}
+  .aichat-greet{font-size:28px}
+  .aistart{grid-template-columns:minmax(0,1fr);gap:8px}
+  .aistart-b{min-height:0;gap:8px}
+  .aichat-foot{padding-left:12px;padding-right:12px}
+  .aiq .aiasked{max-width:86%}
+  .aians{grid-template-columns:minmax(0,1fr)}
+  .aians > .aime{display:none}
+  .aicard{padding:16px 16px 14px}
+  .ainext{padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .aichat-panel{transition:none}
+  .aistep,.aicard,.aistep.is-live .aistep-i,.aistep.is-live .aistep-t{animation:none!important}
+  .aistart-b{transition:none}
+}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -2915,41 +3064,60 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     <div class="aichat-scrim" data-aichat-close></div>
     <div class="aichat-panel" tabindex="-1">
       <span class="aichat-handle" aria-hidden="true"></span>
-      <div class="aichat-head">
-        <span class="aime" id="aiChatSpark" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>
-        <p class="aichat-title" id="aiChatTitle">Lokesh <span class="aitag">AI</span></p>
-        <button type="button" class="aichat-iconbtn" id="aiChatReset" aria-label="Start over" title="Start over">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 8a5.4 5.4 0 1 0 1.6-3.85M2.6 2.6v3.2h3.2" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </button>
-        <button type="button" class="aichat-iconbtn" id="aiChatClose" aria-label="Close" title="Close">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
-        </button>
-      </div>
-      <div class="aichat-body" id="aiChatBody">
-        <div class="aichat-intro" id="aiChatIntro">
-          <p class="aieyebrow ai-in" style="--i:0">An AI version of me</p>
-          <p class="aichat-greet ai-in" style="--i:1">Hi, I&#8217;m <em>Lokesh</em>.<br>Ask me anything.</p>
-          <p class="aichat-lede ai-in" style="--i:2">Well, an AI version of me. It knows my work, how I got here, and the straight answers I&#8217;d give you in an interview. If anything sounds off, email me and I&#8217;ll reply myself.</p>
-          <div class="aitry ai-in" style="--i:3">
-            <p class="aieyebrow">Try asking</p>
-            <div class="aichips" id="aiChatSuggest"></div>
+
+      <aside class="airail" aria-label="About Lokesh">
+        <div class="airail-me">
+          <div class="airail-photo"><img src="./assets/about-portrait.webp" width="660" height="440" alt="Lokesh Bhatia at his desk" decoding="async"></div>
+          <p class="airail-name">Lokesh Bhatia</p>
+          <p class="airail-role">Product designer &#183; AI and fintech</p>
+          <p class="airail-status"><span class="airail-dot" aria-hidden="true"></span>Open to work &#183; Bengaluru</p>
+        </div>
+        <nav class="airail-topics" id="aiRailTopics" aria-label="Things you can ask"></nav>
+        <div class="airail-foot">
+          <p class="airail-foot-t">Prefer the real me?</p>
+          <div class="airail-foot-a">
+            <a class="aipill is-primary" href="mailto:hi.lokeshux@gmail.com"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.8" y="3.3" width="12.4" height="9.4" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 4.5 8 8.6l5.5-4.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Email me</span></a>
+            <a class="aipill" href="./resume.html"><span>R&#233;sum&#233;</span></a>
           </div>
         </div>
-      </div>
-      <p class="fsr" id="aiChatLive" aria-live="polite"></p>
-      <div class="aichat-foot">
-        <form class="aicomposer" id="aiChatForm">
-          <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask me anything&#8230;" aria-label="Ask me anything"></textarea>
-          <div class="aicomposer-row">
-            <span class="aimodel"><span class="aime" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh &#183; AI</span>
-            <button type="submit" class="aichat-send" id="aiChatSend" aria-label="Send" disabled>
-              <svg class="ico-send" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3.2M3.8 7.4 8 3.2l4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-              <svg class="ico-stop" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="2.2" fill="currentColor"></rect></svg>
-            </button>
+      </aside>
+
+      <section class="aimain">
+        <div class="aichat-head">
+          <span class="aime" id="aiChatSpark" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>
+          <div class="aihead-x">
+            <p class="aichat-title" id="aiChatTitle">Ask Lokesh <span class="aitag">AI</span></p>
+            <p class="aihead-sub">An AI version of me, answering from my own words</p>
           </div>
-        </form>
-        <div class="aihint"><span>AI version of me &#183; can be wrong</span></div>
-      </div>
+          <button type="button" class="aichat-iconbtn" id="aiChatReset" aria-label="Start over" title="Start over">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 8a5.4 5.4 0 1 0 1.6-3.85M2.6 2.6v3.2h3.2" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <button type="button" class="aichat-iconbtn" id="aiChatClose" aria-label="Close" title="Close">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          </button>
+        </div>
+        <div class="aichat-body" id="aiChatBody">
+          <div class="aichat-intro" id="aiChatIntro">
+            <p class="aichat-greet ai-in" style="--i:0">Hi, I&#8217;m <em>Lokesh</em>.<br>Ask me anything.</p>
+            <p class="aichat-lede ai-in" style="--i:1">Well, an AI version of me. It knows my work, how I got here, and the straight answers I&#8217;d give you in an interview. If anything sounds off, email me and I&#8217;ll reply myself.</p>
+            <div class="aistart ai-in" style="--i:2" id="aiChatSuggest"></div>
+          </div>
+        </div>
+        <p class="fsr" id="aiChatLive" aria-live="polite"></p>
+        <div class="aichat-foot">
+          <form class="aicomposer" id="aiChatForm">
+            <textarea class="aichat-input" id="aiChatInput" rows="1" maxlength="600" placeholder="Ask me anything&#8230;" aria-label="Ask me anything"></textarea>
+            <div class="aicomposer-row">
+              <span class="aimodel"><span class="aime" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh &#183; AI</span>
+              <button type="submit" class="aichat-send" id="aiChatSend" aria-label="Send" disabled>
+                <svg class="ico-send" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3.2M3.8 7.4 8 3.2l4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg class="ico-stop" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="2.2" fill="currentColor"></rect></svg>
+              </button>
+            </div>
+          </form>
+          <div class="aihint"><span>AI version of me &#183; can be wrong</span></div>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -4069,6 +4237,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
   var history = [], asked = [], busy = false, lastFocus = null, stopCurrent = null;
   var canHover = window.matchMedia && window.matchMedia("(hover:hover)").matches;
+  setTimeout(function(){ renderRail(); }, 0);
 
   function shuffle(a){
     for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
@@ -4092,9 +4261,41 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     b.addEventListener("click", function(){ sendMessage(item.q); });
     return b;
   }
+  var TOPIC = { Work: "My work", AI: "AI", Craft: "Working together", Career: "Career", Hiring: "Hiring" };
   function renderTry(){
     suggest.innerHTML = "";
-    STARTERS.forEach(function(item){ suggest.appendChild(chip(item)); });
+    STARTERS.forEach(function(item){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "aistart-b";
+      b.innerHTML = '<span class="aistart-k"><span></span>' + ARROW + '</span><span class="aistart-q"></span>';
+      b.querySelector(".aistart-k span").textContent = TOPIC[item.tag] || item.tag;
+      b.querySelector(".aistart-q").textContent = item.q;
+      b.addEventListener("click", function(){ sendMessage(item.q); });
+      suggest.appendChild(b);
+    });
+  }
+  // the rail: everything you can ask, grouped, ticking off as you go
+  var railTopics = document.getElementById("aiRailTopics");
+  function renderRail(){
+    if (!railTopics) return;
+    railTopics.innerHTML = "";
+    ["Work", "AI", "Craft", "Career", "Hiring"].forEach(function(tag){
+      var items = QUESTION_POOL.filter(function(x){ return x.tag === tag; });
+      if (!items.length) return;
+      var k = document.createElement("p");
+      k.className = "airail-k";
+      k.textContent = TOPIC[tag];
+      railTopics.appendChild(k);
+      items.forEach(function(item){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "airail-q" + (asked.indexOf(item.q) > -1 ? " is-asked" : "");
+        b.textContent = item.q;
+        b.addEventListener("click", function(){ sendMessage(item.q); });
+        railTopics.appendChild(b);
+      });
+    });
   }
   renderTry();
 
@@ -4219,7 +4420,10 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   // ask next. Never shown as text.
   var DOC = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.8V5.2h3.4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   function readMeta(text){
-    var meta = { next: null };
+    var meta = { next: null, used: [] };
+    var u = text.match(/<<\s*used\s*:\s*([^>]*)>>/i);
+    if (u) meta.used = u[1].split(",").map(function(x){ return x.trim().toLowerCase(); })
+      .filter(function(x, i, a){ return USED[x] && a.indexOf(x) === i; });
     var n = text.match(/<<\s*next\s*:\s*([^>]*)>>/i);
     if (n) meta.next = n[1].split("|").map(function(x){ return x.trim(); })
       .filter(function(x){ return x && x.length < 90; }).slice(0, 3);
@@ -4334,15 +4538,54 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     var x = document.createElement("section");
     x.className = "aix";
     x.innerHTML =
-      '<p class="aiwho">You</p><p class="aiasked"></p>' +
-      '<div class="aians"><p class="aiwho"><span class="aime is-busy" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>Lokesh' +
-      '<span class="aiproc is-live"><span class="aiproc-t">Thinking <span class="aiproc-n">0.0s</span></span></span></p>' +
-      '<div class="aitext"></div></div>';
+      '<div class="aiq"><p class="aiasked"></p></div>' +
+      '<div class="aians"><span class="aime is-busy" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" decoding="async"></span>' +
+      '<div class="aians-x">' +
+        '<div class="aitrace"><button type="button" class="aitrace-sum" aria-expanded="false"><span class="aitrace-sum-t"></span>' +
+          '<svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+          '<ol class="aitrace-list"></ol></div>' +
+        '<div class="aicard" hidden><div class="aitext"></div></div>' +
+      '</div></div>';
     x.querySelector(".aiasked").textContent = question;
     body.appendChild(x);
-    return { el: x, ans: x.querySelector(".aians"), text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aime"),
-             proc: x.querySelector(".aiproc") };
+    var trace = x.querySelector(".aitrace");
+    trace.querySelector(".aitrace-sum").addEventListener("click", function(){
+      var open = trace.classList.toggle("is-open");
+      this.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    return { el: x, col: x.querySelector(".aians-x"), ans: x.querySelector(".aicard"), card: x.querySelector(".aicard"),
+             text: x.querySelector(".aitext"), spark: x.querySelector(".aians .aime"),
+             trace: trace, list: trace.querySelector(".aitrace-list"), sum: trace.querySelector(".aitrace-sum-t") };
   }
+  function step(ex, label, live, before){
+    var li = document.createElement("li");
+    li.className = "aistep" + (live ? " is-live" : " is-done");
+    li.innerHTML = '<span class="aistep-i" aria-hidden="true"></span><span class="aistep-t"></span>';
+    li.lastChild.textContent = label;
+    if (before) ex.list.insertBefore(li, before); else ex.list.appendChild(li);
+    return li;
+  }
+  function stepDone(li, label){
+    if (!li) return;
+    li.classList.remove("is-live");
+    li.classList.add("is-done");
+    if (label) li.lastChild.textContent = label;
+  }
+  function foldTrace(ex, summary, failed){
+    Array.prototype.forEach.call(ex.list.querySelectorAll(".is-live"), function(li){
+      li.classList.remove("is-live"); li.classList.add(failed ? "is-fail" : "is-done");
+    });
+    ex.sum.textContent = summary;
+    ex.trace.classList.add("is-done");
+  }
+  var USED = {
+    "app-merge": "Read the App Merge case study",
+    "rise-portal": "Read the Rise Portal case study",
+    "web-terminal": "Read the trading terminal case study",
+    "resume": "Checked my r\u00e9sum\u00e9",
+    "about": "Read my About page"
+  };
+
   var ICON_COPY = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.2" y="5.2" width="8.3" height="8.3" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M10.8 3.2A1.6 1.6 0 0 0 9.2 2H4a2 2 0 0 0-2 2v5.2a1.6 1.6 0 0 0 1.2 1.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
   var ICON_DONE = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var ICON_MAIL = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.8" y="3.3" width="12.4" height="9.4" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 4.5 8 8.6l5.5-4.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -4447,7 +4690,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       mail.innerHTML = ICON_MAIL + "<span>Email me instead</span>";
       acts.appendChild(mail);
     }
-    ex.ans.appendChild(box);
+    ex.card.hidden = true;
+    ex.col.appendChild(box);
   }
 
   // ── the slot ──────────────────────────────────────────────────────────
@@ -4482,6 +4726,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     dropRetry();
     history = [];
     asked = [];
+    renderRail();
     Array.prototype.slice.call(body.querySelectorAll(".aix, .ainext")).forEach(function(m){ m.remove(); });
     intro.style.display = "";
     renderTry();
@@ -4496,6 +4741,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     if (!text || busy) return;
     dropRetry();
     if (asked.indexOf(text) === -1) asked.push(text);
+    renderRail();
     var oldNext = body.querySelector(".ainext");
     if (oldNext) oldNext.remove();
     intro.style.display = "none";
@@ -4510,17 +4756,27 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
     var controller = window.AbortController ? new AbortController() : null;
     var full = "", stopped = false, done = false;
-    // the wait before the first word is the model reasoning; count it
-    // out loud, then say how long it took
-    var t0 = Date.now(), firstAt = 0;
-    var procN = ex.proc.querySelector(".aiproc-n");
-    var tick = setInterval(function(){ procN.textContent = ((Date.now() - t0) / 1000).toFixed(1) + "s"; }, 100);
+    // the agent's work, as steps: thinking (the wait before the first
+    // word is the model reasoning, so it's timed), what it read (the
+    // model names it in its first line), then writing
+    var t0 = Date.now(), firstAt = 0, readDone = false, writeStep = null;
+    var thinkStep = step(ex, "Thinking", true);
+    var tick = setInterval(function(){ thinkStep.lastChild.textContent = "Thinking \u00b7 " + ((Date.now() - t0) / 1000).toFixed(1) + "s"; }, 100);
     function thought(){
       if (firstAt) return;
       firstAt = Date.now();
       clearInterval(tick);
-      ex.proc.classList.remove("is-live");
-      ex.proc.textContent = "Thought for " + Math.max(0.1, (firstAt - t0) / 1000).toFixed(1) + "s";
+      stepDone(thinkStep, "Thought for " + Math.max(0.1, (firstAt - t0) / 1000).toFixed(1) + "s");
+    }
+    function reading(force){
+      if (readDone) return;
+      var hasLine = /<<\s*used[^>]*>>/i.test(full);
+      // the first line is still arriving: wait for it to close
+      if (!hasLine && !force && /^\s*</.test(full) && full.length < 160) return;
+      readDone = true;
+      readMeta(full).used.forEach(function(id){ step(ex, USED[id], false); });
+      writeStep = step(ex, "Writing the answer", true);
+      ex.card.hidden = false;
     }
     stopCurrent = function(){
       stopped = true;
@@ -4530,6 +4786,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
     function settle(){
       clearInterval(tick);
+      var steps = ex.list.children.length;
+      if (!ex.trace.classList.contains("is-done"))
+        foldTrace(ex, "Worked for " + ((Date.now() - t0) / 1000).toFixed(1) + "s \u00b7 " + steps + (steps > 1 ? " steps" : " step"));
       done = true;
       busy = false;
       stopCurrent = null;
@@ -4543,7 +4802,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       // unanswered — a retry would otherwise send it twice in a row
       history.pop();
       clearInterval(tick);
-      ex.proc.textContent = kind === "stopped" ? "Stopped" : "Didn\u2019t get through";
+      foldTrace(ex, kind === "stopped" ? "Stopped" : "Didn\u2019t get through", true);
       ex.text.innerHTML = "";
       settle();
       showError(ex, kind || "error", message, text, wait);
@@ -4554,6 +4813,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       if (done) return;
       if (!full) return stopped ? fail("Stopped before I could answer.", "stopped") : fail(FALLBACK, "error");
       thought();
+      reading(true);
+      stepDone(writeStep, "Wrote the answer");
       var meta = readMeta(full);
       renderRich(ex.text, full, false);
       history.push({ role: "assistant", content: full });
@@ -4600,6 +4861,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
               if (delta){
                 full += delta;
                 thought();
+                reading(false);
                 renderRich(ex.text, full, true);
                 scrollDown();
               }
