@@ -3054,6 +3054,27 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   .aisug{padding:12px 4px}
 }
 
+
+/* ══ ARRIVAL ═════════════════════════════════════════════════════════
+   New pieces of an answer ease in rather than appear: a short fade and
+   a few pixels of rise, a touch of blur clearing. Only genuinely new
+   blocks and list items get it (see morph), so nothing already read
+   moves again. When the answer is done, its actions and the follow-ups
+   follow in a gentle stagger. */
+.ai-new{animation:aiBlockIn .5s cubic-bezier(.22,1,.36,1) both}
+@keyframes aiBlockIn{from{opacity:0;transform:translateY(6px);filter:blur(2px)}to{opacity:1;transform:none;filter:none}}
+.aicard .aiacts{animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) .05s both}
+.ainext{animation:none}
+.ainext .aisug-k{animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) .15s both}
+.ainext .aisug{animation:aiBlockIn .45s cubic-bezier(.22,1,.36,1) both}
+.ainext .aisug:nth-of-type(1){animation-delay:.22s}
+.ainext .aisug:nth-of-type(2){animation-delay:.30s}
+.ainext .aisug:nth-of-type(3){animation-delay:.38s}
+.aitrace-sum{animation:aiBlockIn .35s cubic-bezier(.22,1,.36,1) both}
+@media (prefers-reduced-motion:reduce){
+  .ai-new,.aicard .aiacts,.ainext .aisug-k,.ainext .aisug,.aitrace-sum{animation:none!important}
+}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -4502,7 +4523,11 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   // a half-arrived token would flash as raw syntax, so while streaming
   // the tail is held back until it closes
   function holdPartial(text){
-    return text.replace(/\{\{[^}]*\}?$/, "").replace(/\{$/, "").replace(/\[[a-z]{0,4}(?::[a-z-]*)?$/, "");
+    text = text.replace(/\{\{[^}]*\}?$/, "").replace(/\{$/, "").replace(/\[[a-z]{0,4}(?::[a-z-]*)?$/, "");
+    // an unclosed **bold on the line being written would show its stars
+    var last = text.slice(text.lastIndexOf("\n") + 1);
+    if ((last.match(/\*\*/g) || []).length % 2) text = text.slice(0, text.lastIndexOf("**")) + text.slice(text.lastIndexOf("**") + 2);
+    return text.replace(/\*$/, "");
   }
   // for Copy and screen readers: the same answer as plain sentences
   function toPlain(text){
@@ -4597,10 +4622,15 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       } else if (b.t === "bq"){
         out.push("<blockquote>" + b.items.map(function(l){ return "<p>" + inline(l) + "</p>"; }).join("") + "</blockquote>");
       } else if (b.t === "ul"){
-        var facts = b.items.length > 1 && b.items.every(function(it){ return FACT_RE.test(it); });
+        // decided by the settled items, so a half-written last one can't
+        // flip the whole list between styles while it streams
+        var settled = streaming ? b.items.slice(0, -1) : b.items;
+        var facts = FACT_RE.test(b.items[0]) && (streaming || b.items.length > 1) &&
+          settled.every(function(it){ return FACT_RE.test(it); });
         if (facts){
           out.push('<dl class="aifacts">' + b.items.map(function(it){
             var f = it.match(FACT_RE);
+            if (!f) return '<div class="aifact"><dt></dt><dd>' + inlineCase(inline(it)) + "</dd></div>";
             var val = f[2].charAt(0).toUpperCase() + f[2].slice(1);
             return '<div class="aifact"><dt>' + escapeHtml(f[1].trim()) + "</dt><dd>" + inlineCase(inline(val)) + "</dd></div>";
           }).join("") + "</dl>");
@@ -4608,22 +4638,57 @@ body:not(.arriving) .hp-frame img{will-change:auto}
           out.push("<ul>" + b.items.map(function(it){ return "<li>" + inlineCase(inline(it)) + "</li>"; }).join("") + "</ul>");
         }
       } else if (b.t === "ol"){
-        var steps = b.items.every(function(it){ return FACT_RE.test(it); });
+        var stepsSettled = streaming ? b.items.slice(0, -1) : b.items;
+        var steps = FACT_RE.test(b.items[0]) && stepsSettled.every(function(it){ return FACT_RE.test(it); });
         out.push('<ol' + (steps ? ' class="aisteps"' : "") + ">" + b.items.map(function(it){
           if (!steps) return "<li>" + inlineCase(inline(it)) + "</li>";
           var f = it.match(FACT_RE);
+          if (!f) return '<li><span class="aistep-k">&#8203;</span>' + inlineCase(inline(it)) + "</li>";
           var body = f[2].charAt(0).toUpperCase() + f[2].slice(1);
           return '<li><span class="aistep-k">' + escapeHtml(f[1].trim()) + "</span>" + inlineCase(inline(body).replace(/<\/?b>/g, "")) + "</li>";
         }).join("") + "</ol>");
       }
     });
-    el.innerHTML = out.join("") || "<p></p>";
+    var next = document.createElement("div");
+    next.innerHTML = out.join("") || "<p></p>";
     if (streaming){
-      var tail = el.lastElementChild;
+      var tail = next.lastElementChild;
       if (tail && /^(UL|OL|BLOCKQUOTE|DL)$/.test(tail.tagName)) tail = tail.lastElementChild || tail;
       if (tail && /^(A|DIV)$/.test(tail.tagName)) tail = null;
-      (tail || el).insertAdjacentHTML("beforeend", '<span class="aicaret" aria-hidden="true"></span>');
+      (tail || next).insertAdjacentHTML("beforeend", '<span class="aicaret" aria-hidden="true"></span>');
     }
+    morph(el, next, streaming);
+  }
+  // Update only what changed, so a block that's already on screen never
+  // flashes: a growing paragraph has its text patched in place, a list
+  // gains items one by one, and only genuinely new pieces arrive (with a
+  // soft fade and rise). Rebuilding everything on each token is what
+  // made answers jump.
+  function baseClass(n){ return (n.getAttribute("class") || "").replace(/\s*ai-new\b/g, "").trim(); }
+  function morph(el, next, animate){
+    var incoming = Array.prototype.slice.call(next.children);
+    incoming.forEach(function(n, i){
+      var o = el.children[i];
+      if (!o){
+        if (animate) n.classList.add("ai-new");
+        el.appendChild(n);
+        return;
+      }
+      if (o.tagName !== n.tagName){
+        el.replaceChild(n, o);
+        return;
+      }
+      // same kind of block that has just been recognised as something more
+      // specific (a list becoming a story track): restyle it, don't swap it
+      if (baseClass(o) !== baseClass(n)){
+        var fresh = o.classList.contains("ai-new");
+        o.className = n.className;
+        if (fresh) o.classList.add("ai-new");
+      }
+      if (/^(OL|UL|DL|DIV|BLOCKQUOTE)$/.test(o.tagName) && !o.classList.contains("aifig")) morph(o, n, animate);
+      else if (o.innerHTML !== n.innerHTML) o.innerHTML = n.innerHTML;
+    });
+    while (el.children.length > incoming.length) el.removeChild(el.lastElementChild);
   }
 
   function nearBottom(){ return body.scrollHeight - body.scrollTop - body.clientHeight < 96; }
@@ -4881,6 +4946,39 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     };
     syncSend();
 
+    // The network hands text over in bursts; the reader should see it
+    // arrive at an even pace. Everything received goes into `full`, and
+    // each frame reveals a little more of it: a few characters when the
+    // stream is keeping up, more when a burst has built a backlog, so it
+    // never falls far behind.
+    var shown = 0, raf = 0, whenShown = null;
+    function paint(){
+      raf = 0;
+      // a hidden tab barely runs frames; don't make anyone come back to a
+      // half-written answer
+      if (document.hidden) shown = Math.max(shown, full.length - 1);
+      var back = full.length - shown;
+      if (back > 0){
+        shown = Math.min(full.length, shown + Math.max(2, Math.ceil(back / 10)));
+        renderRich(ex.text, full.slice(0, shown), true);
+        scrollDown();
+      }
+      if (shown < full.length) raf = requestAnimationFrame(paint);
+      else if (whenShown){ var f = whenShown; whenShown = null; f(); }
+    }
+    function reveal(){
+      if (document.hidden){
+        // no frames to pace with: write it straight in
+        shown = full.length;
+        renderRich(ex.text, full, true);
+        if (whenShown){ var f = whenShown; whenShown = null; f(); }
+        return;
+      }
+      if (!raf) raf = requestAnimationFrame(paint);
+    }
+    function afterReveal(fn){ whenShown = fn; reveal(); }
+    function stopReveal(){ if (raf) cancelAnimationFrame(raf); raf = 0; whenShown = null; }
+
     function settle(){
       clearInterval(tick);
       var steps = ex.list.children.length;
@@ -4899,6 +4997,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       // unanswered — a retry would otherwise send it twice in a row
       history.pop();
       clearInterval(tick);
+      stopReveal();
       foldTrace(ex, kind === "stopped" ? "Stopped" : "Didn\u2019t get through", true);
       ex.text.innerHTML = "";
       settle();
@@ -4943,7 +5042,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
       var buffer = "";
       function pump(){
         return reader.read().then(function(step){
-          if (step.done){ finish(); return; }
+          if (step.done){ afterReveal(finish); return; }
           buffer += decoder.decode(step.value, { stream: true });
           var lines = buffer.split("\n");
           buffer = lines.pop();
@@ -4959,8 +5058,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
                 full += delta;
                 thought();
                 reading(false);
-                renderRich(ex.text, full, true);
-                scrollDown();
+                reveal();
               }
             } catch (e) { /* a partial line or a keep-alive — skip it */ }
           });
@@ -4971,7 +5069,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
     }).catch(function(){
       // a stop lands here as an abort: whatever was written stands as
       // the answer; nothing written means there's nothing to keep
-      if (stopped) return finish();
+      if (stopped){ stopReveal(); return finish(); }
       if (navigator.onLine === false) return fail(OFFLINE, "offline");
       fail(BROKEN, "error");
     });
