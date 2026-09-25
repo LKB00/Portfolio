@@ -3867,52 +3867,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (max-width:576px){ .askdock{display:none!important} }
 @media (prefers-reduced-motion:reduce){ .askdock{transition:opacity .2s,visibility 0s} .askdock.is-on{transform:translate(-50%,0)} }
 
-/* ===== THE FOLDING PHONE (Runable card) =====
-   No mockup image: the device is built in 3D. Two halves share one
-   screen (the Runable home, split down the middle), joined at a hinge.
-   The left half swings shut over the right, its outer cover facing you,
-   then opens flat again: the way a folding phone is shown in its own
-   marketing, slow, lit, with a shadow that spreads as it opens. */
-@property --duo-a{syntax:"<angle>";inherits:true;initial-value:0deg}
-@property --duo-t{syntax:"<angle>";inherits:true;initial-value:-14deg}
-.duo{position:absolute;inset:0;display:grid;place-items:center;perspective:1500px;perspective-origin:50% 40%;--duo-a:0deg;--duo-t:-14deg;
-  animation:duoFold 9s cubic-bezier(.7,0,.25,1) infinite}
-@keyframes duoFold{
-  0%,10%{--duo-a:176deg;--duo-t:-30deg}
-  40%,68%{--duo-a:0deg;--duo-t:-14deg}
-  92%,100%{--duo-a:176deg;--duo-t:-30deg}}
-.duo-dev{position:relative;width:min(70%,296px);aspect-ratio:296/204;transform-style:preserve-3d;
-  transform:rotateX(8deg) rotateY(var(--duo-t));transition:transform .6s var(--ease)}
-.workrow:hover .duo-dev{transform:rotateX(8deg) rotateY(var(--duo-t)) translateY(-6px)}
-.duo-half{position:absolute;top:0;bottom:0;width:50%;background:#17171a;transform-style:preserve-3d;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 -1px 0 rgba(255,255,255,.04)}
-.duo-r{right:0;border-radius:0 22px 22px 0}
-.duo-l{left:0;border-radius:22px 0 0 22px;transform-origin:100% 50%;transform:rotateY(var(--duo-a));backface-visibility:hidden}
-.duo-scr{position:absolute;inset:4px 0 4px 4px;background:url("./assets/runable-agent-home-1050.webp") 0 0/200% 100% no-repeat;border-radius:18px 0 0 18px}
-.duo-r .duo-scr{inset:4px 4px 4px 0;background-position:100% 0;border-radius:0 18px 18px 0}
-/* light: the closing half darkens at the crease and catches a soft sheen */
-.duo-l .duo-scr::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(90deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.55));opacity:calc(var(--duo-a) / 176deg)}
-.duo-r .duo-scr::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,0) 45%);opacity:calc(var(--duo-a) / 176deg * .8)}
-/* the outer cover, seen when it's shut */
-.duo-back{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,#2a2a2f,#131316 60%,#1c1c21);
-  transform:rotateY(180deg);backface-visibility:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.duo-cam{position:absolute;top:10px;left:10px;width:22px;height:22px;border-radius:8px;background:#0b0b0d;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
-.duo-cam::after{content:"";position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#3a3a44,#0a0a0c 70%)}
-.duo-time{position:absolute;right:14px;bottom:12px;font:500 11px var(--display);color:rgba(255,255,255,.55);letter-spacing:.02em}
-/* the crease: a faint vertical shade on the open screen, not a bar */
-.duo-hinge{position:absolute;left:50%;top:4px;bottom:4px;width:14px;transform:translateX(-50%);pointer-events:none;
-  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.10) 45%,rgba(255,255,255,.25) 50%,rgba(0,0,0,.10) 55%,rgba(0,0,0,0));
-  opacity:calc(1 - var(--duo-a) / 176deg)}
-.duo-shadow{position:absolute;left:50%;bottom:14%;width:min(60%,250px);height:16px;border-radius:50%;
-  background:radial-gradient(ellipse at center,rgba(20,18,24,.35),rgba(20,18,24,0) 70%);filter:blur(6px);
-  transform:translateX(-50%) scaleX(calc(.55 + .45 * (1 - var(--duo-a) / 176deg)))}
-html[data-theme="dark"] .duo-half{background:#26262b}
-html[data-theme="dark"] .duo-shadow{background:radial-gradient(ellipse at center,rgba(0,0,0,.6),rgba(0,0,0,0) 70%)}
-@media (prefers-reduced-motion:reduce){ .duo{animation:none;--duo-a:0deg;--duo-t:-14deg} }
-@media (max-width:640px){ .duo-dev{width:78%} }
-
 /* ===== THE LOST LINE =====
    No box, no stack of buttons. The hand comes apart into drifting dots,
    the words type in, and below them the agent hands over the real
@@ -4234,15 +4188,10 @@ html[data-theme="dark"] .duo-shadow{background:radial-gradient(ellipse at center
       <a href="https://runable.com/" target="_blank" rel="noreferrer" class="workrow runrow" data-reveal data-cursor-label="visit" aria-label="Runable, an AI agent platform. Visit the live site">
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe runshot" style="background:var(--card-tint-03)">
-            <div class="duo" aria-hidden="true">
-              <div class="duo-dev">
-                <div class="duo-half duo-r"><div class="duo-scr"></div></div>
-                <div class="duo-half duo-l"><div class="duo-scr"></div><div class="duo-back"><span class="duo-cam"></span><span class="duo-time">9:41</span></div></div>
-                <div class="duo-hinge"></div>
-              </div>
-              <div class="duo-shadow"></div>
+            <div class="macframe">
+              <img class="macshot" loading="eager" decoding="async" data-src="./assets/runable-agent-home-1050.webp" data-srcset="./assets/runable-agent-home-700.webp 700w, ./assets/runable-agent-home-1050.webp 1050w, ./assets/runable-agent-home-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="685" alt="Runable agent home screen in a browser">
+              <img class="macdevice" src="./assets/macbook-mockup.webp" alt="" aria-hidden="true" loading="eager" decoding="async">
             </div>
-            <img class="sr-only" src="./assets/runable-agent-home-700.webp" width="700" height="457" alt="Runable agent home screen, shown on a folding phone" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="worktext">
