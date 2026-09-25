@@ -1440,12 +1440,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
    prototype's /embed/<name> page. Frames load lazily, and each one tells
    this page its height (postMessage from the prototype), so the frame
    always fits its exhibit, including the ones that grow when used.
-   Locally (localhost or the Tailscale address) the prototype runs on
-   port 3100; everywhere else it's the deployed prototype. */
+   They always come from the deployed prototype. */
 (function(){
-  var h=location.hostname;
-  var local=h==='localhost'||h==='127.0.0.1'||/^100\./.test(h)||/^192\.168\./.test(h);
-  var PROTO=local?('http://'+h+':3100'):'https://getbaq.vercel.app';
+  // Always the deployed prototype, even when this page is opened locally:
+  // a local prototype server isn't always running, and when it wasn't,
+  // every exhibit panel stood empty. The deployed embeds are the same.
+  var PROTO='https://getbaq.vercel.app';
 
   document.querySelectorAll('a[data-proto]').forEach(function(a){ a.href=PROTO+a.getAttribute('data-proto'); });
 
