@@ -465,12 +465,13 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
    the chapter answers), a section (mono kicker, a title that states the
    point), a statement (the one line to remember), and body. Text stays
    in the reading column; cards, stats and rows extend to the edge of the
-   shell; the product's own exhibits run live in frames on its own sand
-   panel, so they read the way the product looks. Accent is the
+   shell; the product's own exhibits run live in frames on the same
+   light grey as every other image in the portfolio (the embeds take
+   ?theme=portfolio, which swaps the product's sand for these greys). Accent is the
    product's olive, used only for the statement rule, the chosen column,
    and positive pills. */
 :root{
-  --gb-sand:#efece0; --gb-sand-ink:#7a766c;
+  --gb-sand:#F2F2F2; --gb-sand-ink:#7A7676;
   --gb-pos:#5a7a1f; --gb-pos-soft:#eef3dc;
   --gb-cau:#6b6b7d; --gb-cau-soft:#eeedf5;
   --gb-att:#c97b4a; --gb-att-soft:#f7ece3;
@@ -1718,7 +1719,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
     var max=fig.getAttribute('data-inner');
     if(max) inner.style.maxWidth=max+'px';
     var f=document.createElement('iframe');
-    f.src=PROTO+'/embed/'+name;
+    f.src=PROTO+'/embed/'+name+'?theme=portfolio';
     f.loading='lazy';
     f.title=(fig.querySelector('figcaption')||{}).textContent||('Getbaq '+name);
     f.setAttribute('scrolling','no');
