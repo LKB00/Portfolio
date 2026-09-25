@@ -4042,7 +4042,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .gbd-stage{position:absolute;left:50%;top:50%;width:var(--w,620px);height:340px;transform:translate(-50%,-50%) scale(var(--k,1));transform-origin:50% 50%}
 .gbd-cam{position:absolute;inset:0;transition:transform .9s var(--ease)}
 .gbd-ask,.gbd-run{position:absolute;left:50%;top:50%;width:392px;transform:translate(-50%,-50%);transition:opacity .45s ease,transform .6s var(--ease)}
-.gbd-intro{text-align:center}
+.gbd-intro{text-align:center;transition:opacity .45s ease}
+.gbdemo.is-zoom .gbd-intro{opacity:0}
+.gbd-stage.is-narrow .gbd-ask{width:320px}
 .gbd-mark{display:block;width:30px;height:30px;margin:0 auto}
 .gbd-mark svg{display:block;width:100%;height:100%}
 .gbd-h{margin:12px 0 0;font-family:var(--serif);font-size:27px;line-height:1.1;letter-spacing:-.01em}
@@ -7080,7 +7082,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   function fit(){
     var r=root.getBoundingClientRect(); if(!r.height) return;
     k=r.height/H; W=Math.max(430,r.width/k);
-    stage.style.setProperty('--w',W+'px'); stage.style.setProperty('--k',k);
+    stage.style.setProperty('--w',W+'px'); stage.style.setProperty('--k',k); stage.classList.toggle('is-narrow',W<520);
   }
   fit(); if('ResizeObserver' in window) new ResizeObserver(fit).observe(root); else addEventListener('resize',fit);
   you.textContent=MSG;
@@ -7120,9 +7122,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var p=at(box,.32,.3); await moveTo(p,1100); await wait(150);
     await click(p); cls('is-focus',true);
     // zoom in on the composer, keeping its centre where it sits
-    var c=at(box,.5,.5), z=Math.min(1.34,(W-28)/box.offsetWidth);
+    var c=at(box,.5,.5), z=Math.max(1.15,Math.min(1.7,(W-8)/box.offsetWidth));
     cam.style.transformOrigin=c[0]+'px '+c[1]+'px';
-    cam.style.transform='translateY('+(H/2-c[1])+'px) scale('+z+')';
+    cam.style.transform='translateY('+(H/2-c[1])+'px) scale('+z+')'; cls('is-zoom',true);
     cur.style.opacity='0'; await wait(950);
     // typing, at a person's pace
     cls('is-typing',true);
@@ -7135,7 +7137,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var sp=at(send,.5,.5); cur.style.opacity=''; jump(at(box,.62,.25)); await wait(30);
     await moveTo(sp,750); await wait(120); await click(sp,send);
     // it runs
-    await wait(220); cam.style.transformOrigin='50% 50%'; cam.style.transform='scale('+Math.min(1.14,(W-24)/392)+')'; cls('is-cursor',false); cls('is-run',true);
+    await wait(220); cam.style.transformOrigin='50% 50%'; cam.style.transform='scale('+Math.min(1.14,(W-24)/392)+')'; cls('is-zoom',false); cls('is-cursor',false); cls('is-run',true);
     await wait(650);
     for(var j=0;j<steps.length;j++){
       steps[j].className='is-on'; await wait(j===3?1100:700); steps[j].className='is-on is-done';
