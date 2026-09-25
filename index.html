@@ -4065,7 +4065,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .gbdemo.is-typing .gbd-send{background:#c2ef72;color:#1a1917}
 .gbd-send.is-press{transform:scale(.86)}
 .gbd-clip svg,.gbd-send svg{width:14px;height:14px}
-.gbd-run{height:256px;opacity:0;transform:translate(-50%,-44%);pointer-events:none}
+.gbd-run{height:180px;opacity:0;transform:translate(-50%,-44%);pointer-events:none}
 .gbdemo.is-run .gbd-ask{opacity:0;transform:translate(-50%,-62%)}
 .gbdemo.is-run .gbd-run{opacity:1;transform:translate(-50%,-50%)}
 /* After send, the app's own thread: her words in the serif, no bubble;
@@ -7128,7 +7128,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   you.textContent=MSG;
   function cls(c,on){root.classList.toggle(c,on)}
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-    cls('is-run',true); drawFolded(acts[0],RUNS[0]); drawRunning(acts[1],RUNS[1],RUNS[1].steps.length); lines[0].classList.add('is-on'); return;
+    cls('is-run',true); drawFolded(acts[0],RUNS[0]); lines[0].classList.add('is-on'); return;
   }
   var seen=false, gen=0;
   function wait(ms){return new Promise(function(res){setTimeout(res,ms)})}
@@ -7180,9 +7180,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     await wait(220); cam.style.transformOrigin='50% 50%'; cam.style.transform='scale('+Math.min(1.14,(W-24)/392)+')'; cls('is-zoom',false); cls('is-cursor',false); cls('is-run',true);
     await wait(600);
     await play(acts[0],RUNS[0],true); await wait(350);
-    lines[0].classList.add('is-on'); await wait(700);
-    // ends on the rule run's stacked card, "6 done · Rated how sure I am"
-    await play(acts[1],RUNS[1],false);
+    // ends on "You confirmed", then dissolves
+    lines[0].classList.add('is-on');
     await wait(2200); cls('is-out',true); await wait(700);
   }
   (async function loop(){ for(;;){ await waitSeen(); await cycle(); } })();
