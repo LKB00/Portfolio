@@ -52,7 +52,8 @@ const list = (v, d) => (v || d).split(",").map((m) => m.trim()).filter(Boolean);
 const GROQ_MODELS = list(process.env.GROQ_MODELS, "openai/gpt-oss-120b,openai/gpt-oss-20b,qwen/qwen3.8-27b");
 // Gemini first: its free tier allows far more tokens a minute than Groq's,
 // which matters because every question carries the whole system prompt.
-const GEMINI_MODELS = list(process.env.GEMINI_MODELS, "gemini-2.5-flash,gemini-2.5-flash-lite");
+// (the 2.5 family is closed to new users; these are the current 3.x IDs)
+const GEMINI_MODELS = list(process.env.GEMINI_MODELS, "gemini-3.8-flash,gemini-3.5-flash,gemini-3.5-flash-lite,gemini-3.1-flash-lite");
 const CEREBRAS_MODELS = list(process.env.CEREBRAS_MODELS, "gpt-oss-120b");
 
 function providerChain(env) {
