@@ -642,59 +642,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-sketches figure.gb-ex{margin-top:0}
 .gb-sketches figcaption b{color:var(--ink);font-weight:500}
 
-
-/* ===== DISCOVER VISUALS =====
-   Three pictures of what the text already says, so the opening chapter
-   isn't wall-to-wall words: the ideas narrowing over three rounds, the
-   scoring table as dots, and the research method that changed. Same grey
-   panel as every image in the case studies; white cards inside it;
-   rejected ideas struck through in grey, the chosen path in ink. */
-figure.gbv{margin-top:var(--s3);margin-bottom:0}
-.gbv-panel{background:var(--surface);border-radius:8px;padding:clamp(16px,3vw,28px)}
-.gbv-k{margin:0 0 10px;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
-.gbv-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
-.gbv-chips li{padding:4px 10px;border-radius:999px;background:var(--surface);font-size:13px;line-height:1.4;letter-spacing:-.01em;color:var(--ink)}
-.gbv-chips.out li{color:var(--faint);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--faint) 70%,transparent)}
-.gbv .tag{margin-top:12px}
-.gbv-arrow{position:relative;align-self:center;justify-self:center;width:20px;height:1px;background:var(--faint)}
-.gbv-arrow:after{content:"";position:absolute;right:-1px;top:-3px;width:6px;height:6px;border-top:1px solid var(--faint);border-right:1px solid var(--faint);transform:rotate(45deg)}
-
-/* 1. three rounds */
-.gbv-rounds{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
-.gbv-round{background:var(--card);border-radius:8px;padding:14px}
-.gbv-round.win{box-shadow:inset 0 0 0 1.5px var(--ink)}
-.gbv-round.win .gbv-chips li{background:var(--ink);color:var(--bg)}
-
-/* 2. scoring as dots */
-.gbv-scroll{overflow-x:auto}
-.gbv-score{width:100%;min-width:460px;border-collapse:collapse;font-size:13px;letter-spacing:-.01em}
-.gbv-score th{padding:0 8px 10px;text-align:center;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);vertical-align:bottom}
-.gbv-score th.hi{color:var(--ink)}
-.gbv-score td{padding:7px 8px;border-top:1px solid var(--line);text-align:center;vertical-align:middle}
-.gbv-score td:first-child{padding-left:0;text-align:left;color:var(--ink)}
-.gbv-score th:first-child{padding-left:0}
-.gbv-score td.hi,.gbv-score th.hi{background:var(--card)}
-.gbv-score tbody tr:last-child td.hi{border-radius:0 0 6px 6px}
-.gbv-score th.hi{border-radius:6px 6px 0 0}
-.gbv-dots{display:inline-flex;gap:3px}
-.gbv-dots i{width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--ink) 10%,transparent)}
-.gbv-dots i.on{background:var(--muted)}
-td.hi .gbv-dots i.on{background:var(--ink)}
-.gbv-na{color:var(--faint)}
-.gbv-verdict td{font-size:12px;line-height:1.4;color:var(--muted)}
-.gbv-verdict td.hi{color:var(--ink);font-weight:500}
-
-/* 3. the research pivot */
-.gbv-pivot{display:grid;grid-template-columns:1fr auto 1.5fr;gap:10px;align-items:stretch}
-.gbv-side{background:var(--card);border-radius:8px;padding:14px}
-.gbv-big{margin:0;font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-.015em;color:var(--ink)}
-.gbv-big.out{color:var(--faint);text-decoration:line-through;text-decoration-thickness:1.5px}
-.gbv-note{margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}
-
-@media(max-width:600px){
-  .gbv-rounds,.gbv-pivot{grid-template-columns:1fr}
-  .gbv-arrow{transform:rotate(90deg);margin:6px 0}
-}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -760,6 +707,7 @@ td.hi .gbv-dots i.on{background:var(--ink)}
 <p class="dek">When a company keeps your money, a lawyer costs more than the refund. Getbaq finds the rule, drafts the complaint, tracks the deadline and escalates when they go quiet. It never sends a word without your tap.</p>
 <a class="livelink gb-try" data-proto="/" href="#" rel="noopener" target="_blank">See the prototype <svg aria-hidden="true" fill="none" height="14" viewbox="0 0 16 16" width="14"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg></a>
 </div>
+
 <dl class="meta col" data-reveal="">
 <div><dt>Role</dt><dd>Solo, end to end: research, strategy, design, prompts, evaluation. Built with Claude Code: I directed it and made every call</dd></div>
 <div><dt>For</dt><dd>Young Indians, 20–30, with ₹500–₹20,000 stuck with a company. I call her Aanya</dd></div>
@@ -825,20 +773,14 @@ td.hi .gbv-dots i.on{background:var(--ink)}
 <div class="pair col gb-grid"><div><p class="cap"><b>01</b></p><h4>How many people have it?</h4><p class="body">Scale.</p></div><div><p class="cap"><b>02</b></p><h4>Do they lose money, time or a chance?</h4><p class="body">Real pain, not annoyance.</p></div><div><p class="cap"><b>03</b></p><h4>Do they already try to solve it?</h4><p class="body">Proof the pain is real.</p></div><div><p class="cap"><b>04</b></p><h4>Is AI actually needed?</h4><p class="body">Not decoration.</p></div><div><p class="cap"><b>05</b></p><h4>Is there room next to existing players?</h4><p class="body">Not a copy.</p></div><div><p class="cap"><b>06</b></p><h4>Does it force hard AI design?</h4><p class="body">Wrong answers hurt; actions have consequences.</p></div></div>
 </section>
 <section class="gb-sec" data-reveal="" id="s1-3">
-<div class="col"><p class="eyebrow">Three rounds of ideas</p><h3 class="say sub">The first two rounds failed my own filter</h3></div><figure class="gbv col"><div class="gbv-panel"><div class="gbv-rounds">
-<div class="gbv-round"><p class="gbv-k">Round 1</p><ul class="gbv-chips out"><li>Scam-checking</li><li>Read-before-you-sign</li><li>Screenshot organiser</li><li>Money-leak tracker</li></ul><p class="tag t-att">Failed the filter</p></div>
-<span aria-hidden="true" class="gbv-arrow"></span>
-<div class="gbv-round"><p class="gbv-k">Round 2</p><ul class="gbv-chips out"><li>Job readiness</li><li>Investment-scam protection</li><li>Communication skills</li></ul><p class="tag t-cau">Too broad</p></div>
-<span aria-hidden="true" class="gbv-arrow"></span>
-<div class="gbv-round win"><p class="gbv-k">Round 3</p><ul class="gbv-chips"><li>An advocate for people who can’t afford one</li></ul><p class="tag t-pos">The direction</p></div>
-</div></div><figcaption class="cap">Eight ideas, three rounds, one direction.</figcaption></figure>
+<div class="col"><p class="eyebrow">Three rounds of ideas</p><h3 class="say sub">The first two rounds failed my own filter</h3></div>
 <div class="pair col gb-grid"><div><p class="cap"><b>Round 1</b></p><h4>Annoyances, not problems</h4><p class="body">Scam-checking, a read-before-you-sign tool, a screenshot organiser, a money-leak tracker. Nobody loses real money to a messy camera roll, and a big player could ship most of these as a feature in a week.</p><p class="tag t-att">Failed the filter</p></div><div><p class="cap"><b>Round 2</b></p><h4>Scale, but not sharp</h4><p class="body">Job readiness: huge, crowded, vague. Investment-scam protection: ₹22,495 crore lost to cyber fraud in 2025 (Ministry of Home Affairs), but very hard to distribute. Communication skills: a weaker trust story.</p><p class="tag t-cau">Too broad</p></div><div class="hi"><p class="cap"><b>Round 3</b></p><h4>A better question</h4><p class="body">Not “what’s painful”, but “what was impossible before LLMs”. The answer: an advocate for people who can’t afford one. It can know the rules, write in the right form, send it to the right place and follow up without getting tired.</p><p class="tag t-pos">The direction</p></div></div>
 </section>
 <section class="gb-sec" data-reveal="" id="s1-2">
 <div class="col"><p class="eyebrow">Scoring the finalists</p><h3 class="say sub">The idea with the biggest impact lost, because it fights its own user</h3></div>
 <p class="col body">Three finalists, scored 1–5 on twelve parameters. A “trading brake” for young option traders had the most impact on paper. The data said why it couldn’t work:</p>
 <div class="col"><div class="figrow" style="--cols:3"><div><p class="fnum">88.5%</p><p class="fnote">of under-30 option traders lose money</p><p class="fsrc">SEBI</p></div><div><p class="fnum">75%+</p><p class="fnote">of loss-making traders keep trading after years of losses</p><p class="fsrc">SEBI</p></div><div><p class="fnum">0</p><p class="fnote">behaviour change needed for someone who wants their refund back</p></div></div></div>
-<p class="col body">I knew this group from the inside: I spent 18 months designing the trading app at Rupeezy, a stockbroker. They don’t want to be stopped, and a product that fights its own user is a losing design problem, however good the AI is. <b>Refunds won because she already wants the outcome</b>, and money recovered is provable in weeks.</p><figure class="gbv col"><div class="gbv-panel gbv-scroll"><table class="gbv-score"><thead><tr><th></th><th>Trading brake</th><th>Needs vs wants</th><th class="hi">Refund advocate</th></tr></thead><tbody><tr><td>Size of group</td><td><span aria-label="4 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="hi"><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr><td>Severity</td><td><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span aria-label="2 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="hi"><span aria-label="3 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td></tr><tr><td>Evidence people act</td><td><span aria-label="2 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td><span aria-label="3 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td class="hi"><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr><td>AI really needed</td><td><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span aria-label="4 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td class="hi"><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr><td>Competition / room</td><td><span aria-label="4 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span aria-label="1 of 5" class="gbv-dots"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="hi"><span aria-label="4 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td></tr><tr><td>No behaviour change needed</td><td><span aria-label="1 of 5" class="gbv-dots"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span aria-label="3 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td class="hi"><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr><td>Buildable in weeks</td><td><span aria-label="3 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="hi"><span aria-label="4 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td></tr><tr><td>Testable with real people</td><td><span aria-label="2 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="hi"><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr><td>Eval quality</td><td><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span aria-label="3 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td class="hi"><span aria-label="4 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td></tr><tr><td>Trust + agentic depth</td><td><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span aria-label="3 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td class="hi"><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr><td>Portfolio distinctiveness</td><td><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span aria-label="1 of 5" class="gbv-dots"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="hi"><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr><td>Measurable result in weeks</td><td><span aria-label="2 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td><span aria-label="not scored" class="gbv-na">—</span></td><td class="hi"><span aria-label="5 of 5" class="gbv-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr class="gbv-verdict"><td>Verdict</td><td>Fights human nature</td><td>Most common student project</td><td class="hi">Chosen</td></tr></tbody></table></div><figcaption class="cap">Each finalist scored 1–5 on twelve parameters, one dot per point.</figcaption></figure>
+<p class="col body">I knew this group from the inside: I spent 18 months designing the trading app at Rupeezy, a stockbroker. They don’t want to be stopped, and a product that fights its own user is a losing design problem, however good the AI is. <b>Refunds won because she already wants the outcome</b>, and money recovered is provable in weeks.</p>
 <div class="col"><details class="gb-more">
 <summary>See the full scoring table <svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div><div class="gb-table"><table style="min-width:520px">
@@ -865,11 +807,7 @@ td.hi .gbv-dots i.on{background:var(--ink)}
 </section>
 <section class="gb-sec" data-reveal="" id="s1-4">
 <div class="col"><p class="eyebrow">Research</p><h3 class="say sub">I couldn’t recruit in time, so I changed the method, not the questions</h3></div>
-<p class="col body">The plan was 5–8 interviews with people holding a stuck refund: to see their real screenshots and the exact moment they give up. Recruiting didn’t come through in time. So I answered the same interview questions from public evidence: Reddit and X complaints, Play Store reviews, consumer forums, news reports and government data. It’s labelled desk research everywhere, never primary research.</p><figure class="gbv col"><div class="gbv-panel"><div class="gbv-pivot">
-<div class="gbv-side"><p class="gbv-k">Planned</p><p class="gbv-big out">5–8 interviews</p><p class="gbv-note">Recruiting didn’t come through in time</p></div>
-<span aria-hidden="true" class="gbv-arrow"></span>
-<div class="gbv-side"><p class="gbv-k">Used instead</p><ul class="gbv-chips"><li>Reddit and X complaints</li><li>Play Store reviews</li><li>Consumer forums</li><li>News reports</li><li>Government data</li></ul><p class="tag t-neu">Desk research</p></div>
-</div></div><figcaption class="cap">Same questions, a different method.</figcaption></figure>
+<p class="col body">The plan was 5–8 interviews with people holding a stuck refund: to see their real screenshots and the exact moment they give up. Recruiting didn’t come through in time. So I answered the same interview questions from public evidence: Reddit and X complaints, Play Store reviews, consumer forums, news reports and government data. It’s labelled desk research everywhere, never primary research.</p>
 <div class="col"><details class="gb-more">
 <summary>The interview guide: what I’d ask, and what each question tests <svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div>
