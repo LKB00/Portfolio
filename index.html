@@ -4033,6 +4033,24 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    longer needs a bar's worth of clearance; the page starts close to the
    top edge, clear of the notch */
 @media (max-width:576px){ #top{padding-top:calc(40px + env(safe-area-inset-top))} }
+
+/* ===== BACK TO TOP, READ AS PROGRESS =====
+   A blue arc sweeping round a grey circle is the loading spinner
+   everyone knows, so the ring read as "something is loading", not
+   "this is how far you are". Now it is a gauge: the whole track is
+   drawn, and the part you have read fills in ink. At the end of the
+   page the ring closes and the arrow lifts once: you are done here,
+   this takes you back up. */
+.totop-track{stroke:color-mix(in srgb,var(--ink) 12%,transparent)}
+.totop-prog{stroke:var(--ink);transition:stroke-dashoffset .1s linear,opacity .3s ease}
+.totop > svg:not(.totop-ring){transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.totop.is-done > svg:not(.totop-ring){animation:totopLift .9s cubic-bezier(.22,1,.36,1) .15s 1}
+@keyframes totopLift{0%{transform:none}40%{transform:translateY(-3px)}100%{transform:none}}
+@media (hover:hover){ .totop:hover > svg:not(.totop-ring){transform:translateY(-2px)} }
+@media (prefers-reduced-motion:reduce){
+  .totop.is-done > svg:not(.totop-ring){animation:none}
+  .totop:hover > svg:not(.totop-ring){transform:none}
+}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -6870,6 +6888,19 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   row.addEventListener("focusin", function(){ tgt.lift = 1; kick(); });
   row.addEventListener("focusout", function(){ tgt.lift = 0; kick(); });
   apply(); kick();
+})();
+</script>
+<script>
+/* back to top: mark the end of the page so the arrow can invite a return */
+(function(){
+  var b=document.getElementById("totop"); if(!b) return;
+  var t=false;
+  function f(){ t=false;
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    b.classList.toggle("is-done", max>0 && window.scrollY>=max-24);
+  }
+  window.addEventListener("scroll",function(){ if(!t){ t=true; requestAnimationFrame(f); } },{passive:true});
+  f();
 })();
 </script>
 </body>
