@@ -3857,6 +3857,10 @@ html:has(body.chat-open),body.chat-open{overscroll-behavior:none}
 .askdock-go{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--muted);
   background:color-mix(in srgb,var(--ink) 6%,transparent);transition:background-color .2s,color .2s}
 .askdock:hover .askdock-go{background:var(--ink);color:var(--bg)}
+/* right, like the hero button: it opens something. Up belonged to
+   the back-to-top button sitting on the same line. */
+.askdock-go svg{transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+.askdock:hover .askdock-go svg{transform:translateX(1px)}
 body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* phones: the nav pill lives at the bottom centre, so the ask pill
@@ -4129,7 +4133,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
 
   <button type="button" class="askdock" id="askDock" aria-label="Ask my AI twin" tabindex="-1" aria-hidden="true">
-    <canvas class="askhand" aria-hidden="true"></canvas><span class="askdock-t"><span class="heroask-q">Ask my</span> AI twin</span><span class="askdock-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></span>
+    <canvas class="askhand" aria-hidden="true"></canvas><span class="askdock-t"><span class="heroask-q">Ask my</span> AI twin</span><span class="askdock-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
   </button>
 
   <div class="aichat" id="aiChat" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle" aria-hidden="true">
