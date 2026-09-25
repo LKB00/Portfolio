@@ -432,6 +432,29 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
 #contact .footcredit{font-size:13px;line-height:1.55;letter-spacing:-.01em}
 @media (max-width:400px){#contact .footcredit{font-size:12px}}
 @media (max-width:340px){#contact .footcredit{font-size:12px;white-space:normal}}
+
+/* ===== BACK TO TOP, READ AS PROGRESS =====
+   A blue arc sweeping round a grey circle is the loading spinner
+   everyone knows, so the ring read as "something is loading", not
+   "this is how far you are". Now it is a gauge: the whole track is
+   drawn, and the part you have read fills in ink. At the end of the
+   page the ring closes and the arrow lifts once: you are done here,
+   this takes you back up. */
+.totop-track{stroke:color-mix(in srgb,var(--ink) 12%,transparent)}
+.totop-prog{stroke:var(--ink);transition:stroke-dashoffset .1s linear,opacity .3s ease}
+.totop > svg:not(.totop-ring){transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.totop.is-done > svg:not(.totop-ring){animation:totopLift .9s cubic-bezier(.22,1,.36,1) .15s 1}
+@keyframes totopLift{0%{transform:none}40%{transform:translateY(-3px)}100%{transform:none}}
+/* 44px everywhere: at 56 it outweighed the nav pill (37) and the
+   AI twin pill (46). The ring's stroke grows to stay ~2px on screen. */
+.totop{width:44px;height:44px}
+.totop-ring circle{stroke-width:2.5}
+.totop > svg:not(.totop-ring){width:15px;height:15px}
+@media (hover:hover){ .totop:hover > svg:not(.totop-ring){transform:translateY(-2px)} }
+@media (prefers-reduced-motion:reduce){
+  .totop.is-done > svg:not(.totop-ring){animation:none}
+  .totop:hover > svg:not(.totop-ring){transform:none}
+}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -823,6 +846,19 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
   },{threshold:0,rootMargin:'0px 0px -10% 0px'});
   els.forEach(function(el){ io.observe(el); });
   setTimeout(showAll,2500);
+})();
+</script>
+<script>
+/* back to top: mark the end of the page so the arrow can invite a return */
+(function(){
+  var b=document.getElementById("totop"); if(!b) return;
+  var t=false;
+  function f(){ t=false;
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    b.classList.toggle("is-done", max>0 && window.scrollY>=max-24);
+  }
+  window.addEventListener("scroll",function(){ if(!t){ t=true; requestAnimationFrame(f); } },{passive:true});
+  f();
 })();
 </script>
 </body></html>
