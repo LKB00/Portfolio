@@ -3795,7 +3795,12 @@ html:has(body.chat-open),body.chat-open{overscroll-behavior:none}
 /* a call to action, not a text field: hugs its label, opens the chat */
 .heroask{width:auto;max-width:none;height:48px;padding:0 6px 0 14px;gap:10px;cursor:pointer;text-align:left;font:inherit;
   transition:border-color .2s,background-color .2s}
-.heroask-t{font-size:14.5px;font-weight:500;color:var(--ink);white-space:nowrap}
+/* the same voice as the headline: the lead-in in grey, the thing that
+   matters in ink. Geist 14/500, the site's button setting, so it sits
+   with the nav and the other pills rather than shouting. */
+.heroask-t{font-family:var(--display);font-size:14px;font-weight:500;letter-spacing:-.005em;color:var(--ink);white-space:nowrap}
+.heroask-q{color:var(--muted);font-weight:400}
+.askdock-t .heroask-q{color:inherit;font-weight:inherit}
 .heroask:hover{border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
 .heroask:hover .heroask-go{background:var(--ink);color:var(--bg)}
 .heroask:hover .heroask-go svg{transform:translateX(1px)}
@@ -4061,8 +4066,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Copied to clipboard</span></div>
 
-  <button type="button" class="askdock" id="askDock" aria-label="Interview my AI twin" tabindex="-1" aria-hidden="true">
-    <canvas class="askhand" aria-hidden="true"></canvas><span class="askdock-t">Interview my AI twin</span><span class="askdock-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></span>
+  <button type="button" class="askdock" id="askDock" aria-label="Ask my AI twin" tabindex="-1" aria-hidden="true">
+    <canvas class="askhand" aria-hidden="true"></canvas><span class="askdock-t"><span class="heroask-q">Ask my</span> AI twin</span><span class="askdock-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></span>
   </button>
 
   <div class="aichat" id="aiChat" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle" aria-hidden="true">
@@ -4134,7 +4139,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <stop offset="0" stop-color="#6c9bff"/><stop offset=".4" stop-color="#b17cff"/><stop offset=".72" stop-color="#ff86b7"/><stop offset="1" stop-color="#ffb070"/>
         </linearGradient></defs><rect class="rg-bloom" pathLength="1"/><rect class="rg-line" pathLength="1"/><rect class="rg-glow" pathLength="1"/><rect class="rg-head" pathLength="1"/></svg>
         <canvas class="askhand" aria-hidden="true"></canvas>
-        <span class="heroask-t">Interview my AI twin</span>
+        <span class="heroask-t"><span class="heroask-q">Ask my</span> AI twin</span>
         <span class="heroask-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
       </button>
       </div>
