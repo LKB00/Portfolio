@@ -627,7 +627,7 @@ ul.keys.col{margin-left:auto;margin-right:auto}
 figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-stack figure.gb-ex,.gb-sketches figure.gb-ex,.col > figure.gb-ex{margin-left:0;margin-right:0}
 .gb-stack figure.gb-ex:first-child{margin-top:0}
-.gb-ex-panel{position:relative;background:#F2F2F2;border-radius:8px;padding:44px clamp(16px,3vw,28px) clamp(16px,3vw,28px)}
+.gb-ex-panel{position:relative;background:#F2F2F2;border-radius:8px;padding:clamp(16px,3vw,28px)}
 .gb-ex-note{position:absolute;left:clamp(16px,3vw,28px);top:14px;display:inline-flex;align-items:center;gap:6px;color:#7A7676}
 .gb-ex-note:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 .gb-ex-note.dia:before{background:transparent;box-shadow:inset 0 0 0 1px currentColor}
@@ -1453,13 +1453,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
     var name=fig.getAttribute('data-embed');
     var panel=fig.querySelector('.gb-ex-panel');
     var inner=fig.querySelector('.gb-ex-inner');
-    var note=fig.getAttribute('data-note');
-    if(note&&panel){
-      var s=document.createElement('span');
-      s.className='gb-ex-note'+(note==='Diagram'?' dia':'');
-      s.textContent=note;
-      panel.insertBefore(s,panel.firstChild);
-    }
+    // no corner label: the other case studies don't label their images
     var max=fig.getAttribute('data-inner');
     if(max) inner.style.maxWidth=max+'px';
     var f=document.createElement('iframe');
