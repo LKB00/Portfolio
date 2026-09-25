@@ -121,6 +121,7 @@ export default async function handler(req, res) {
   }
 
   let upstream = null, used = null;
+  const skipped = []; // "provider/model:status", for diagnosing the chain
   let lastDetail = "";
   let allBusy = true;
   for (const p of chain) {
@@ -147,6 +148,8 @@ export default async function handler(req, res) {
     }
     if (r.ok && r.body) { upstream = r; used = p; break; }
     lastDetail = (await r.text().catch(() => "")).slice(0, 300);
+    skipped.push(p.name + "/" + p.model + ":" + r.status);
+    console.warn("chat: skipped", p.name, p.model, r.status, lastDetail.slice(0, 200));
     // 429 = this model's minute is spent; 503 = it's overloaded. Either way
     // the next model has its own separate allowance, so move on. Anything
     // else (a bad request, a retired model ID) is worth trying past too,
@@ -164,6 +167,7 @@ export default async function handler(req, res) {
 
   res.writeHead(200, {
     "X-AI-Model": used.name + "/" + used.model, // which link in the chain answered
+    "X-AI-Skipped": skipped.join(", ") || "none",
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache, no-transform",
     Connection: "keep-alive",
