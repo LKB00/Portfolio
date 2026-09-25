@@ -445,6 +445,11 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
 .totop > svg:not(.totop-ring){transition:transform .3s cubic-bezier(.22,1,.36,1)}
 .totop.is-done > svg:not(.totop-ring){animation:totopLift .9s cubic-bezier(.22,1,.36,1) .15s 1}
 @keyframes totopLift{0%{transform:none}40%{transform:translateY(-3px)}100%{transform:none}}
+/* 44px everywhere: at 56 it outweighed the nav pill (37) and the
+   AI twin pill (46). The ring's stroke grows to stay ~2px on screen. */
+.totop{width:44px;height:44px}
+.totop-ring circle{stroke-width:2.5}
+.totop > svg:not(.totop-ring){width:15px;height:15px}
 @media (hover:hover){ .totop:hover > svg:not(.totop-ring){transform:translateY(-2px)} }
 @media (prefers-reduced-motion:reduce){
   .totop.is-done > svg:not(.totop-ring){animation:none}
