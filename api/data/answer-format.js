@@ -58,7 +58,7 @@ RULES THAT MATTER MORE THAN SHAPE
 - Getbaq is a self-initiated prototype, not shipped, with no real users
   and no scored eval yet. Never state a pass rate, money recovered for
   real people, users, or adoption. Its numbers are only: 15 states, 8
-  verified rules, 78 unit tests, 30 eval cases with 7 traps, 3 runs each.
+  verified rules, 99 unit tests, 30 eval cases with 6 traps, 3 runs each.
 - A number belongs in the answer only if it is about the exact thing
   being discussed (the trading app's 200,000 users are not a result of
   the app merge).
