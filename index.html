@@ -4019,6 +4019,22 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 #experience,#experience:has(+ #contact){padding-bottom:clamp(90px,12vw,130px)}
 #contact footer{padding-top:0}
 
+
+/* ===== GETBAQ CARD =====
+   The newest and most AI-forward piece leads the grid across both
+   columns, so five cards still read as a whole: one wide, then two by
+   two. Its frame is the product's own sand, edge to edge, rather than
+   the grey the others share, because the screens were designed on it.
+   On a phone the frame gets taller and centres on the money-back
+   screen, the one that says what the product is for. */
+.workrow.gbrow{grid-column:1/-1}
+.cardframe.gbframe{aspect-ratio:1240/593;background:#efece0!important}
+.cardframe.gbframe .gbshot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block;
+  transition:transform .6s var(--ease)}
+@media (hover:hover){ .workrow.gbrow:hover .gbshot{transform:scale(1.015)} }
+@media (max-width:684px){ .cardframe.gbframe{aspect-ratio:4/3} }
+@media (prefers-reduced-motion:reduce){ .workrow.gbrow:hover .gbshot{transform:none} }
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
@@ -4118,9 +4134,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </nav>
       <div class="mcases">
         <p class="mgroup">Case studies</p>
-        <a class="mcase" href="./app-merge.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
-        <a class="mcase" href="./rise-portal.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span></a>
-        <a class="mcase" href="./web-terminal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">The desktop trading terminal: chart, watchlist, and orders on one screen.</span><span class="mcase-m">Rupeezy &#183; Web trading terminal</span></span></a>
+        <a class="mcase" href="./getbaq.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Designing an AI agent that fights for your refund</span><span class="mcase-m">Getbaq &#183; AI agent</span></span></a>
+        <a class="mcase" href="./app-merge.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
+        <a class="mcase" href="./rise-portal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span></a>
+        <a class="mcase" href="./web-terminal.html"><span class="mcase-num">04</span><span class="mcase-x"><span class="mcase-t">The desktop trading terminal: chart, watchlist, and orders on one screen.</span><span class="mcase-m">Rupeezy &#183; Web trading terminal</span></span></a>
       </div>
       <div class="mfoot">
         <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
@@ -4215,6 +4232,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="work" data-section="Selected work">
     <div class="workgrid">
+      <a href="./getbaq.html" class="workrow gbrow" data-reveal data-cursor-label="open">
+        <div style="grid-row:1;grid-column:1;min-width:0">
+          <div class="cardframe gbframe">
+            <img class="gbshot" src="./assets/getbaq-card-1240.webp" srcset="./assets/getbaq-card-820.webp 820w, ./assets/getbaq-card-1240.webp 1240w, ./assets/getbaq-card-1640.webp 1640w" sizes="(max-width:684px) 100vw, 821px" width="1240" height="593" loading="eager" decoding="async" alt="Three Getbaq screens: a rule card with the refund deadline, the money-back screen showing Rs 3,499 recovered, and the complaint email waiting for approval">
+          </div>
+        </div>
+        <div class="worktext">
+          <h3>Designing an AI agent that fights for your refund</h3>
+        </div>
+      </a>
+
       <a href="./app-merge.html" class="workrow" data-reveal data-cursor-label="open">
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe merge2" style="background:var(--card-tint-01)">
@@ -4743,6 +4771,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     { label: "Experience", href: "#experience" },
     { label: "Contact", href: "#contact" },
     { label: "About", href: "./about.html" },
+    { label: "Getbaq case study", href: "./getbaq.html" },
     { label: "App Merge case study", href: "./app-merge.html" },
     { label: "Rise Portal case study", href: "./rise-portal.html" },
     { label: "Web Terminal case study", href: "./web-terminal.html" },
@@ -5358,6 +5387,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // the page most likely to answer a question the AI couldn't
   function pageFor(q){
     var t = (q || "").toLowerCase();
+    if (/getbaq|refund|complaint|agent|eval|hallucinat|trust|consumer|1915/.test(t)) return { href: "./getbaq.html", label: "Read the Getbaq case study" };
     if (/merge|switch|investeezy|proudest|revenue|sebi|paused|model/.test(t)) return { href: "./app-merge.html", label: "Read the App Merge case study" };
     if (/rise|partner|referral/.test(t)) return { href: "./rise-portal.html", label: "Read the Rise Portal case study" };
     if (/terminal|watchlist|chart|order|web app|desktop/.test(t)) return { href: "./web-terminal.html", label: "Read the Web Terminal case study" };
@@ -5900,7 +5930,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // Acting on the page, not just talking: when an answer is about one of
   // the case studies and the page is visible beside the panel, scroll the
   // page to that project's card and ring it for a moment.
-  var CASE_PAGES = { "app-merge": "app-merge.html", "rise-portal": "rise-portal.html", "web-terminal": "web-terminal.html" };
+  var CASE_PAGES = { "getbaq": "getbaq.html", "app-merge": "app-merge.html", "rise-portal": "rise-portal.html", "web-terminal": "web-terminal.html" };
   function pointAtCase(full){
     if (!isDocked()) return;
     var m = /\[case:([a-z-]+)\]/.exec(full || ""), href = m && CASE_PAGES[m[1]];
@@ -5952,9 +5982,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // a lead line, figures {{n|label}}, a "Label: value" facts list,
   // labelled steps, a quote, and [case:id] cards. Re-run on every token.
   var CASES = {
-    "app-merge":    { n: "01", t: "Two apps into one, built to hold the third", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
-    "rise-portal":  { n: "02", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
-    "web-terminal": { n: "03", t: "The desktop trading terminal: chart, watchlist, and orders on one screen", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
+    "getbaq":       { n: "01", t: "Designing an AI agent that fights for your refund", m: "Getbaq \u00b7 AI agent", href: "./getbaq.html" },
+    "app-merge":    { n: "02", t: "Two apps into one, built to hold the third", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
+    "rise-portal":  { n: "03", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
+    "web-terminal": { n: "04", t: "The desktop trading terminal: chart, watchlist, and orders on one screen", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
     "resume":       { t: "My r\u00e9sum\u00e9", k: "R\u00e9sum\u00e9", m: "Roles, dates and tools", href: "./resume.html" }
   };
   var FIG_RE = /\{\{\s*([^|}]+?)\s*\|\s*([^}]+?)\s*\}\}/g;
@@ -6279,6 +6310,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     ex.trace.classList.add("is-done");
   }
   var USED = {
+    "getbaq": "Read the Getbaq case study",
     "app-merge": "Read the App Merge case study",
     "rise-portal": "Read the Rise Portal case study",
     "web-terminal": "Read the trading terminal case study",

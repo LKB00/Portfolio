@@ -87,6 +87,67 @@ Why I'm proud of it: I shipped what was agreed, kept building the version I
 believed in, won the argument, and the design outlived my time there.
 
 ---
+MY AI AGENT PROJECT: Getbaq (a self-initiated case study, NOT shipped)
+
+Getbaq is an AI agent I designed and prototyped on my own, end to end:
+research, strategy, design, prompts, evaluation and a working prototype.
+It is for young Indians, 20 to 30, with ₹500 to ₹20,000 stuck with a
+company. It finds the rule, drafts the complaint, tracks the deadline and
+escalates when the company goes quiet. It never sends anything without
+the user's tap, and she gets six seconds to undo a send.
+
+How I picked the problem: I started with a question, "What could a young
+Indian not do before LLMs, that they can do now?" Every idea had to pass
+six tests (scale, real loss, people already trying, AI actually needed,
+room next to existing players, hard AI design). My first two rounds of
+ideas failed my own filter. A "trading brake" for young option traders had
+the most impact on paper, but 88.5% of under-30 option traders lose money
+(SEBI) and they don't want to be stopped; a product that fights its own
+user is a losing design problem. Refunds won because the user already
+wants the outcome, and money recovered is provable in weeks.
+
+Research: I planned 5 to 8 interviews but couldn't recruit in time, so I
+answered the same questions from public evidence (Reddit and X complaints,
+Play Store reviews, consumer forums, news, government data). It is
+labelled desk research, never primary research. I read the rules from the
+primary sources and collected 30 real, anonymised cases that became the
+eval set.
+
+Key design decisions:
+- The model reads and writes; code counts. Deadlines and money are
+  computed in code with unit tests, never generated. The model is never
+  given a rule's day count, so it has no number to get wrong.
+- No autonomy dial: every send needs her approval, forever.
+- Only verified rules can appear in a draft; if the model cites an
+  unverified rule, confidence drops to low and it can never reach Approve.
+- Every step the agent shows says who did it (AI, rule sheet, calculated,
+  safety check), and failure states got the same care as the happy path.
+- Escalation goes through India's free 1915 consumer helpline.
+- It never claims to be a lawyer; every action screen says "not legal
+  advice".
+- Iterations I made: one input box that takes anything; fixing a look
+  that matched known AI-generated design tells; moving from separate pages
+  to one continuous thread; showing the agent's real work honestly; room
+  for more than one case; asking for every missing detail in one card;
+  checking against Google PAIR, Microsoft's human-AI guidelines, Shape of
+  AI and Smashing Magazine's agentic patterns.
+
+Bugs I caught before any screen: the UPI failed-payment deadline was wrong
+(UPI is T+1, not 5 days); two airline refund clocks had been one rule;
+deadlines shifted with the server timezone (now all date maths runs in
+UTC); and "14 working days" is approximated as 14 calendar days, which is
+documented as a known gap.
+
+Numbers: 15 states in the agent's state machine, 8 legal rules each
+verified at the source, 78 unit tests on dates, money and states, 30 real
+cases in the eval set with 7 traps, each case run 3 times.
+
+Status, stated honestly: it is a working prototype on a real LLM call. The
+scored eval has NOT been run yet. It is not shipped and I don't claim it is.
+What I'd do differently: run the eval earlier, start with a sharper
+question, and recruit real people before designing.
+
+---
 PARTNER PLATFORM NUMBERS (always say the source)
 
 Rise Portal served about 100 partners who drove 35% of company revenue. After
@@ -232,7 +293,8 @@ hi.lokeshux@gmail.com. I read it myself.
 It's on the site nav.
 
 **"Where can I see your work?"**
-lokeshbhatia.com. Three main case studies: Rupeezy trading app, Rupeezy partner
-platform, and desktop trading terminal. This site itself is also work. I designed
+lokeshbhatia.com. Four case studies: Getbaq (an AI agent for stuck refunds,
+self-initiated), the Rupeezy trading app merge, the Rupeezy partner platform,
+and the desktop trading terminal. This site itself is also work. I designed
 and directed it all.
 `.trim();
