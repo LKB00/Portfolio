@@ -3865,6 +3865,45 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (max-width:576px){ .askdock{display:none!important} }
 @media (prefers-reduced-motion:reduce){ .askdock{transition:opacity .2s,visibility 0s} .askdock.is-on{transform:translate(-50%,0)} }
 
+/* ===== THE LOST LINE =====
+   No box, no stack of buttons. The hand comes apart into drifting dots,
+   the words type in, and below them the agent hands over the real
+   things: the work card itself, and a note to me with the question
+   already written. The countdown is the dots gathering back. */
+.ailost{padding:2px 0 4px}
+.ailost-top{display:flex;gap:14px;align-items:flex-start}
+.ailost-hand{flex:none;width:56px;height:56px;margin:-4px 0 0 -6px}
+.ailost-w{flex:1;min-width:0}
+.ailost-t{margin:0 0 6px;font-family:var(--serif);font-size:19px;line-height:1.3;letter-spacing:-.015em;color:var(--ink);min-height:1.3em}
+.ailost-m{margin:0;font-size:14px;line-height:1.55;color:var(--muted);min-height:1.55em}
+.ailost-try{margin:10px 0 0;padding:0;border:0;background:none;font:500 13px var(--display);color:var(--ink);cursor:pointer;
+  text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 25%,transparent);text-underline-offset:4px}
+.ailost-try:hover{text-decoration-color:var(--ink)}
+.ailost-try:disabled{color:var(--muted);text-decoration:none;cursor:default}
+.ailost-hand-over{display:flex;flex-direction:column;gap:8px;margin-top:18px;opacity:0;transform:translateY(6px);
+  transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.ailost.is-in .ailost-hand-over{opacity:1;transform:none}
+.ailost-k{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.ailost-case{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 8px;border-radius:16px;background:var(--surface);color:var(--ink);text-decoration:none;
+  transition:background-color .2s,transform .3s cubic-bezier(.2,.7,.2,1)}
+.ailost-case:hover{background:color-mix(in srgb,var(--ink) 6%,var(--surface));transform:translateY(-1px)}
+.ailost-case > svg{flex:none;color:var(--muted);margin-left:auto;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+.ailost-case:hover > svg{transform:translateX(3px);color:var(--ink)}
+.ailost-shot{flex:none;width:76px;height:56px;border-radius:10px;overflow:hidden;background:var(--card);display:grid;place-items:center}
+.ailost-shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.ailost-ct{min-width:0;display:flex;flex-direction:column;gap:3px}
+.ailost-title{font-family:var(--serif);font-size:15px;line-height:1.25;letter-spacing:-.01em;color:var(--ink);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ailost-note{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:16px;color:var(--ink);text-decoration:none;
+  background:var(--card);box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--ink) 12%,transparent);transition:box-shadow .2s,transform .3s cubic-bezier(.2,.7,.2,1)}
+.ailost-note:hover{box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--ink) 30%,transparent);transform:translateY(-1px)}
+.ailost-nh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ailost-nto{font-size:12px;color:var(--faint)}
+.ailost-nq{font-family:var(--serif);font-size:15px;line-height:1.35;color:var(--ink);font-style:italic}
+.ailost-ns{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--muted)}
+.ailost-note:hover .ailost-ns{color:var(--ink)}
+.aierr-plain{box-shadow:none;background:transparent;padding:0}
+@media (prefers-reduced-motion:reduce){ .ailost-hand-over{transition:none;opacity:1;transform:none} }
+
 /* a saved answer says so, quietly, above the text */
 .aisaved{margin:0 0 12px;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--ink) 4%,transparent);font-size:12.5px;line-height:1.5;color:var(--muted)}
 .aierr-a{flex-wrap:wrap}
@@ -5626,6 +5665,52 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // the entry icons: the chat's welcome, small and on a loop. Dots
   // gather into the hand in the AI colours, settle into ink, wave,
   // rest, then drift apart and gather again. Runs only while visible.
+  // When the live AI can't be reached, the hand comes apart: its dots
+  // drift in a slow cloud. As the retry timer runs they gather back, so
+  // the countdown IS the animation; when the hand is whole again it
+  // tries again. With no timer (an outage) the dots just drift, and
+  // gather when the visitor asks it to.
+  function lostHand(cv, seconds, onWhole){
+    var css = cv.clientWidth || 56, dpr = Math.min(window.devicePixelRatio || 1, 3);
+    cv.width = Math.round(css * dpr); cv.height = Math.round(css * dpr);
+    var g = cv.getContext("2d"), S = css / 26, OX = css / 2 - 12 * S, OY = css / 2 - 11.5 * S;
+    var pts = samplePaths(HAND_D, 1.4), N = pts.length, R = Math.max(.9, css / 46);
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var P = pts.map(function(p, i){
+      var a = Math.random() * 6.2832, r = (0.28 + Math.random() * 0.2) * css;
+      return { tx: OX + p.x * S, ty: OY + p.y * S, cx: css/2 + Math.cos(a) * r, cy: css/2 + Math.sin(a) * r,
+        ph: Math.random() * 6.2832, sp: 0.4 + Math.random() * 0.6, hue: hueAt(i / N) };
+    });
+    var t0 = 0, raf = 0, gatherAt = seconds ? seconds * 1000 : Infinity, whole = false, stopped = false;
+    var SCATTER = 900;
+    function ease(t){ return t <= 0 ? 0 : t >= 1 ? 1 : 1 - Math.pow(1 - t, 3); }
+    function frame(now){
+      raf = 0;
+      if (stopped) return;
+      if (!t0) t0 = now;
+      var t = now - t0, ink = inkRgb();
+      var out = ease(t / SCATTER);                                  // 0 hand → 1 cloud
+      var back = gatherAt === Infinity ? 0 : ease((t - Math.max(SCATTER, gatherAt - 1400)) / 1400); // gather in the last 1.4s
+      var k = out * (1 - back);                                     // how far from the hand
+      g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, css, css);
+      for (var i = 0; i < N; i++){
+        var p = P[i];
+        var dx = Math.cos(t / 1000 * p.sp + p.ph) * css * 0.05, dy = Math.sin(t / 1300 * p.sp + p.ph) * css * 0.05; // slow drift
+        var x = p.tx + (p.cx + dx - p.tx) * k, y = p.ty + (p.cy + dy - p.ty) * k;
+        var c = mix(ink, p.hue, Math.min(1, k * 1.2)), al = 1 - k * 0.55;
+        g.fillStyle = "rgba(" + Math.round(c[0]) + "," + Math.round(c[1]) + "," + Math.round(c[2]) + "," + al.toFixed(3) + ")";
+        g.beginPath(); g.arc(x, y, R, 0, 6.2832); g.fill();
+      }
+      if (back >= 1 && !whole){ whole = true; if (onWhole) onWhole(); return; }
+      raf = requestAnimationFrame(frame);
+    }
+    if (reduce){ g.setTransform(dpr, 0, 0, dpr, 0, 0); P.forEach(function(p){ g.fillStyle = "rgb(" + inkRgb().join(",") + ")"; g.beginPath(); g.arc(p.tx, p.ty, R, 0, 6.2832); g.fill(); }); }
+    else raf = requestAnimationFrame(frame);
+    return {
+      gather: function(){ if (gatherAt === Infinity){ gatherAt = (performance.now() - t0) + 1400; } },
+      stop: function(){ stopped = true; if (raf) cancelAnimationFrame(raf); }
+    };
+  }
   function loopHand(cv, onCycle){
     var css = cv.clientWidth || 20, dpr = Math.min(window.devicePixelRatio || 1, 3);
     cv.width = Math.round(css * dpr); cv.height = Math.round(css * dpr);
@@ -6236,70 +6321,123 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     body.appendChild(box);
   }
 
+  // The card of a thumbnail: the same image and title as the work card on
+  // the homepage, so the agent hands over the real thing, not a link.
+  function caseThumb(href){
+    var card = document.querySelector('a.workrow[href$="' + href.replace("./", "") + '"]');
+    if (!card) return null;
+    var img = card.querySelector(".cardframe img:not(.macdevice):not(.bg)"), src = img && (img.currentSrc || img.src);
+    if (!src){ var shot = card.querySelector(".rz-shot"); var bg = shot && getComputedStyle(shot).backgroundImage.match(/url\("?(.*?)"?\)/); src = bg && bg[1]; }
+    var h3 = card.querySelector("h3");
+    return { src: src, title: h3 ? h3.textContent.trim() : "", tint: (card.querySelector(".cardframe") || {}).style ? card.querySelector(".cardframe").style.background : "" };
+  }
+  var PAGE_TITLES = { "./about.html": "About me", "./resume.html": "My r\u00e9sum\u00e9" };
+  var PAGE_THUMBS = { "./about.html": { src: "./assets/about-portrait.webp", tint: "var(--lavender)" } };
+
   function showError(ex, kind, message, question, wait){
     var box = document.createElement("div");
-    box.className = "aierr";
     box.setAttribute("role", "status");
-    box.innerHTML = '<p class="aierr-m"></p><div class="aierr-a"></div>';
-    box.firstChild.textContent = message;
-    var acts = box.lastChild;
-    function button(label, icon, primary, onClick){
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "aipill" + (primary ? " is-primary" : "");
-      b.innerHTML = (icon || "") + "<span></span>";
-      b.lastChild.textContent = label;
-      b.addEventListener("click", onClick);
-      acts.appendChild(b);
-      return b;
+    function again(){ dropRetry(); ex.el.remove(); sendMessage(question); }
+
+    // the plain cases keep a plain line
+    if (kind === "long" || kind === "stopped"){
+      box.className = "aierr aierr-plain";
+      box.innerHTML = '<p class="aierr-m"></p><div class="aierr-a"></div>';
+      box.firstChild.textContent = message;
+      var b = document.createElement("button"); b.type = "button"; b.className = "aipill is-primary";
+      b.innerHTML = ICON_RETRY + "<span>" + (kind === "long" ? "Start a new chat" : "Ask again") + "</span>";
+      b.addEventListener("click", kind === "long" ? function(){ dropRetry(); resetChat(); sendMessage(question); } : again);
+      box.lastChild.appendChild(b);
+      ex.card.hidden = true; ex.col.appendChild(box);
+      return;
     }
-    function again(){
-      dropRetry();
-      ex.el.remove();
-      sendMessage(question);
-    }
-    if (kind === "long"){
-      button("Start a new chat", ICON_RETRY, true, function(){ dropRetry(); resetChat(); sendMessage(question); });
-    } else {
-      var main = button(kind === "stopped" ? "Ask again" : "Try again", ICON_RETRY, true, again);
-      if (kind === "busy" && wait){
-        // count down on the button itself, then go
-        var left = wait, label = main.lastChild;
-        label.innerHTML = 'Try now <span class="aierr-n">\u00b7 ' + left + "s</span>";
-        box.style.setProperty("--t", wait + "s");
-        box.insertAdjacentHTML("beforeend", '<span class="aierr-bar" aria-hidden="true"></span>');
-        var timer = setInterval(function(){
-          left -= 1;
-          if (left <= 0){ clearInterval(timer); cancelRetry = null; again(); return; }
-          label.querySelector(".aierr-n").textContent = "\u00b7 " + left + "s";
-        }, 1000);
-        cancelRetry = function(){ clearInterval(timer); var bar = box.querySelector(".aierr-bar"); if (bar) bar.remove(); label.textContent = "Try again"; };
+
+    // the line is lost: the hand comes apart, the words type in, and the
+    // agent hands over what it can: the page that holds the answer, and
+    // a note to the real me with the question already written
+    box.className = "ailost";
+    var lead = kind === "busy" ? "Every line to my live brain is busy." : kind === "offline" ? "You\u2019re offline, so I can\u2019t reach my live brain." : "I lost the line to my live brain.";
+    var page = pageFor(question), thumb = page && (caseThumb(page.href) || (PAGE_THUMBS[page.href] ? { src: PAGE_THUMBS[page.href].src, tint: PAGE_THUMBS[page.href].tint, title: PAGE_TITLES[page.href] } : null));
+    box.innerHTML =
+      '<div class="ailost-top"><canvas class="ailost-hand" aria-hidden="true"></canvas>' +
+        '<div class="ailost-w"><p class="ailost-t"></p><p class="ailost-m"></p></div></div>' +
+      '<div class="ailost-hand-over"></div>';
+    var leadEl = box.querySelector(".ailost-t"), msgEl = box.querySelector(".ailost-m"), over = box.querySelector(".ailost-hand-over");
+
+    // what it can hand over
+    if (page){
+      var go = document.createElement("a");
+      go.className = "ailost-case"; go.href = page.href;
+      if (thumb && thumb.src){
+        go.innerHTML = '<span class="ailost-shot"><img alt=""></span><span class="ailost-ct"><span class="ailost-k">' +
+          (page.href.indexOf("about") > -1 || page.href.indexOf("resume") > -1 ? "Page" : "Case study") +
+          '</span><span class="ailost-title"></span></span>' + LI("arrowRight", 14);
+        go.querySelector("img").src = thumb.src;
+        go.querySelector(".ailost-title").textContent = thumb.title;
+        if (thumb.tint) go.querySelector(".ailost-shot").style.background = thumb.tint;
+      } else {
+        go.innerHTML = '<span class="ailost-ct"><span class="ailost-k">Page</span><span class="ailost-title"></span></span>' + LI("arrowRight", 14);
+        go.querySelector(".ailost-title").textContent = PAGE_TITLES[page.href] || page.label;
       }
-      if (kind === "offline"){
-        var back = function(){ cancelRetry = null; again(); };
-        window.addEventListener("online", back, { once: true });
-        cancelRetry = function(){ window.removeEventListener("online", back); };
-      }
+      over.appendChild(go);
     }
-    if (kind !== "stopped"){
-      var page = pageFor(question);
-      if (page){
-        var go = document.createElement("a");
-        go.className = "aipill";
-        go.href = page.href;
-        go.innerHTML = "<span></span>" + LI("arrowRight", 12);
-        go.firstChild.textContent = page.label;
-        acts.appendChild(go);
-      }
-      var mail = document.createElement("a");
-      mail.className = "aipill";
-      mail.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("A question from your portfolio") +
-        "&body=" + encodeURIComponent("Hi Lokesh,\n\nI asked your AI: \u201c" + question + "\u201d\n\n");
-      mail.innerHTML = ICON_MAIL + "<span>Email me this question</span>";
-      acts.appendChild(mail);
-    }
+    var note = document.createElement("a");
+    note.className = "ailost-note";
+    note.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("A question from your portfolio") +
+      "&body=" + encodeURIComponent("Hi Lokesh,\n\nI asked your AI: \u201c" + question + "\u201d\n\n");
+    note.innerHTML = '<span class="ailost-nh"><span class="ailost-k">To the real me</span><span class="ailost-nto">hi.lokeshux@gmail.com</span></span>' +
+      '<span class="ailost-nq"></span><span class="ailost-ns">' + ICON_MAIL + ' Send it as an email</span>';
+    note.querySelector(".ailost-nq").textContent = "\u201c" + question + "\u201d";
+    over.appendChild(note);
+
     ex.card.hidden = true;
     ex.col.appendChild(box);
+
+    // the hand, and the words after it
+    var hand = lostHand(box.querySelector(".ailost-hand"), kind === "busy" ? wait : 0, kind === "busy" ? function(){ cancelRetry = null; again(); } : null);
+    function typeInto(el, text, delay, cb){
+      el.innerHTML = text.split(" ").map(function(w, wi, arr){
+        var before = arr.slice(0, wi).join(" ").length + (wi ? 1 : 0);
+        return '<span class="tw-word">' + w.split("").map(function(ch, ci){
+          return '<span class="tw-char" style="animation-delay:' + (delay + (before + ci) * 14) + 'ms">' + escapeHtml(ch) + "</span>";
+        }).join("") + "</span>";
+      }).join(" ");
+      if (cb) setTimeout(cb, delay + text.length * 14 + 200);
+    }
+    typeInto(leadEl, lead, 500);
+    var left = wait || 0, timer = 0;
+    function body(){
+      if (kind === "busy" && wait) return "I\u2019ll try again as the dots come back together, in " + left + "s. Meanwhile, this is where the answer lives.";
+      if (kind === "offline") return "I\u2019ll ask again the moment you\u2019re back. Meanwhile, this is where the answer lives.";
+      return "You can ask me to try again, or take the answer from where it lives.";
+    }
+    typeInto(msgEl, body(), 500 + lead.length * 14 + 250, function(){ box.classList.add("is-in"); });
+    if (kind === "busy" && wait){
+      timer = setInterval(function(){
+        left -= 1;
+        if (left <= 0){ clearInterval(timer); return; } // the hand fires the retry when it's whole
+        msgEl.textContent = body();
+      }, 1000);
+      cancelRetry = function(){ clearInterval(timer); hand.stop(); msgEl.textContent = "Ask me to try again whenever you like."; };
+    } else if (kind === "offline"){
+      var back = function(){ cancelRetry = null; again(); };
+      window.addEventListener("online", back, { once: true });
+      cancelRetry = function(){ window.removeEventListener("online", back); hand.stop(); };
+    } else {
+      cancelRetry = function(){ hand.stop(); };
+    }
+    // ask it to try: click the hand or the words
+    var tryBtn = document.createElement("button");
+    tryBtn.type = "button"; tryBtn.className = "ailost-try";
+    tryBtn.innerHTML = "<span>Try again</span>";
+    tryBtn.addEventListener("click", function(){
+      tryBtn.disabled = true; tryBtn.firstChild.textContent = "Gathering\u2026";
+      if (timer) clearInterval(timer);
+      hand.stop();
+      var cv = box.querySelector(".ailost-hand");
+      lostHand(cv, 1.6, function(){ cancelRetry = null; again(); });
+    });
+    box.querySelector(".ailost-w").appendChild(tryBtn);
   }
 
   // ── the slot ──────────────────────────────────────────────────────────
