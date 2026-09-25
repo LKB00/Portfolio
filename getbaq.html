@@ -795,7 +795,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <p class="eyebrow">Case study · AI product design · Getbaq</p>
       <h1>Designing an AI agent that fights for your <em>refund</em></h1>
       <p class="dek">When a company keeps your money, a lawyer costs more than the refund. Getbaq finds the rule, drafts the complaint, tracks the deadline and escalates when they go quiet. It never sends a word without your tap.</p>
-      <a class="gb-try" data-proto="/app" href="#" target="_blank" rel="noopener">Try the prototype <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="gb-try" data-proto="/" href="#" target="_blank" rel="noopener">See the prototype <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
 
     <figure class="gb-ex gb-ex-hero wide beat" data-embed="hero-shot" data-reveal>
@@ -803,10 +803,10 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
     </figure>
 
     <dl class="gb-meta wide beat" data-reveal>
-      <div><dt>Role</dt><dd>Solo, end to end: research, strategy, design, prompts, evaluation, prototype</dd></div>
-      <div><dt>For</dt><dd>Young Indians, 20–30, with ₹500–₹20,000 stuck with a company</dd></div>
+      <div><dt>Role</dt><dd>Solo, end to end: research, strategy, design, prompts, evaluation. Built with Claude Code: I directed it and made every call</dd></div>
+      <div><dt>For</dt><dd>Young Indians, 20–30, with ₹500–₹20,000 stuck with a company. I call her Aanya</dd></div>
       <div><dt>Process</dt><dd>Double Diamond, plus an AI layer for prompts, evals and uncertainty</dd></div>
-      <div><dt>Status</dt><dd>Working prototype on a real LLM call. Scored eval pending</dd></div>
+      <div><dt>Status</dt><dd>Self-initiated, 2026. Working prototype on Claude. Scored eval pending</dd></div>
     </dl>
 
     <div class="wide gb-sec" data-reveal>
@@ -822,8 +822,8 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <dl class="gb-stats n4">
         <div><dt>15</dt><dd>states in the agent’s state machine</dd></div>
         <div><dt>8</dt><dd>legal rules, each verified at the source</dd></div>
-        <div><dt>78</dt><dd>unit tests on dates, money and states</dd></div>
-        <div><dt>30</dt><dd>real cases in the eval set, 7 of them traps</dd></div>
+        <div><dt>99</dt><dd>unit tests on dates, money and states</dd></div>
+        <div><dt>30</dt><dd>real cases in the eval set, 6 of them traps</dd></div>
       </dl>
     </div>
 
@@ -843,7 +843,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
             <li><a href="#s3-1">Agentic UX: lifecycle, approval, escalation <span>→</span></a></li>
             <li><a href="#s3-3">Designing for the AI being wrong <span>→</span></a></li>
             <li><a href="#s3-4">Prompt design and guardrails <span>→</span></a></li>
-            <li><a href="#s3-7">Working in code, catching real bugs <span>→</span></a></li>
+            <li><a href="#s3-7">Directing AI to build, catching real bugs <span>→</span></a></li>
             <li><a href="#s3-8">Iteration and self-critique <span>→</span></a></li>
             <li><a href="#s4-1">User stories as a spec <span>→</span></a></li>
             <li><a href="#s4-3">Screen-level decisions <span>→</span></a></li>
@@ -892,7 +892,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <div class="col gb-head"><p class="eyebrow">Three rounds of ideas</p><h3>The first two rounds failed my own filter</h3></div>
       <ul class="mid gb-cards c3">
         <li><p class="k">Round 1</p><p class="t">Annoyances, not problems</p><p class="d">Scam-checking, a read-before-you-sign tool, a screenshot organiser, a money-leak tracker. Nobody loses real money to a messy camera roll, and a big player could ship most of these as a feature in a week.</p><div class="f"><span class="gb-pill att">Failed the filter</span></div></li>
-        <li><p class="k">Round 2</p><p class="t">Scale, but not sharp</p><p class="d">Job readiness: huge, crowded, vague. Investment-scam protection: ₹22,495 crore lost to cyber fraud in 2025, but very hard to distribute. Communication skills: a weaker trust story.</p><div class="f"><span class="gb-pill cau">Too broad</span></div></li>
+        <li><p class="k">Round 2</p><p class="t">Scale, but not sharp</p><p class="d">Job readiness: huge, crowded, vague. Investment-scam protection: ₹22,495 crore lost to cyber fraud in 2025 (Ministry of Home Affairs), but very hard to distribute. Communication skills: a weaker trust story.</p><div class="f"><span class="gb-pill cau">Too broad</span></div></li>
         <li class="hi"><p class="k">Round 3</p><p class="t">A better question</p><p class="d">Not “what’s painful”, but “what was impossible before LLMs”. The answer: an advocate for people who can’t afford one. It can know the rules, write in the right form, send it to the right place and follow up without getting tired.</p><div class="f"><span class="gb-pill pos">The direction</span></div></li>
       </ul>
     </section>
@@ -905,7 +905,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
         <div><dt>75%+</dt><dd>of loss-making traders keep trading after years of losses</dd><dd class="src">SEBI</dd></div>
         <div><dt>0</dt><dd>behaviour change needed for someone who wants their refund back</dd></div>
       </dl></div>
-      <p class="col body">They don’t want to be stopped, and a product that fights its own user is a losing design problem, however good the AI is. <b>Refunds won because she already wants the outcome</b>, and money recovered is provable in weeks.</p>
+      <p class="col body">I knew this group from the inside: I spent 18 months designing the trading app at Rupeezy, a stockbroker. They don’t want to be stopped, and a product that fights its own user is a losing design problem, however good the AI is. <b>Refunds won because she already wants the outcome</b>, and money recovered is provable in weeks.</p>
       <div class="mid"><details class="gb-more">
         <summary>See the full scoring table <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
         <div><div class="gb-table"><table style="min-width:520px">
@@ -929,7 +929,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       </details></div>
       <p class="col body">Then, where to start inside refunds:</p>
       <ul class="mid gb-cards c3">
-        <li class="hi"><p class="k">₹500–₹50,000 · days to weeks</p><p class="t">E-commerce and travel</p><p class="d">60% of helpline refund complaints, and results fast enough to measure.</p><div class="f"><span class="gb-pill pos">Start here</span></div></li>
+        <li class="hi"><p class="k">₹500–₹50,000 · days to weeks</p><p class="t">E-commerce and travel</p><p class="d">E-commerce alone is 60% of the helpline’s refund complaints, with travel second. Results come fast enough to measure. Source: National Consumer Helpline, 2025–26.</p><div class="f"><span class="gb-pill pos">Start here</span></div></li>
         <li><p class="k">₹50,000–₹2 lakh · months</p><p class="t">Rent deposits</p><p class="d">The strongest story, but too slow to prove.</p><div class="f"><span class="gb-pill neu">Later</span></div></li>
         <li><p class="k">1–3 months’ pay · months</p><p class="t">Unpaid salary</p><p class="d">The highest impact, and the slowest proof.</p><div class="f"><span class="gb-pill neu">Later</span></div></li>
       </ul>
@@ -961,7 +961,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <div class="mid"><dl class="gb-stats n4">
         <div><dt>66%</dt><dd>of people with a major issue couldn’t get help</dd><dd class="src">LocalCircles</dd></div>
         <div><dt>36%</dt><dd>were refused outright</dd><dd class="src">LocalCircles</dd></div>
-        <div><dt>1,000+</dt><dd>companies respond to the 1915 helpline as “convergence partners”</dd></div>
+        <div><dt>1,000+</dt><dd>companies respond to the 1915 helpline as “convergence partners”</dd><dd class="src">Ministry of Consumer Affairs, 2024</dd></div>
         <div><dt>+6.9 pts</dt><dd>more likely to get relief when a complaint was AI-assisted</dd><dd class="src">1.1M US complaints, 2026</dd></div>
       </dl></div>
       <ul class="mid gb-cards">
@@ -1018,7 +1018,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       </div>
       <figure class="gb-ex wide" data-embed="journey-map" data-note="Diagram">
         <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-        <figcaption>Same trigger, two journeys. Today bottoms out at stage 5, where there’s simply no next step.</figcaption>
+        <figcaption>Same trigger, two journeys. Pick a stage to compare them.</figcaption>
       </figure>
       <div class="mid gb-statement"><p>The lowest point isn’t the loss. It’s stage 5, where there’s no next step. That’s the moment the product is built for.</p></div>
     </section>
@@ -1158,7 +1158,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <div class="mid gb-rows"><ul>
         <li><p>Every send needs approval, forever</p><p>The agent acts in her name (the Intent Preview pattern)</p></li>
         <li><p>Escalate through the free helpline</p><p>Free, official, and big companies are already connected to it</p></li>
-        <li><p>Mobile and chat-first</p><p>WhatsApp complaints to the helpline grew from 3% to 20% in two years</p></li>
+        <li><p>Mobile and chat-first</p><p>WhatsApp went from 3% to 20% of complaints to the helpline between March 2023 and March 2025 (National Consumer Helpline)</p></li>
         <li><p>Design for three failures: wrong, ignored, blocked</p><p>Each one needs its own state, not an error message</p></li>
       </ul></div>
     </section>
@@ -1168,7 +1168,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <p class="col body">Failure states are where trust is won or lost. Pick any state to see the real screen, and try them: they all work.</p>
       <figure class="gb-ex wide" data-embed="state-gallery" data-note="Interactive">
         <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-        <figcaption>Eleven states, each the real component. Fill in the questionnaire, open the letter, press Send it and then Undo.</figcaption>
+        <figcaption>Eleven of the fifteen states have a screen of their own, and each one here is the real component. Fill in the questionnaire, open the letter, press Send it and then Undo.</figcaption>
       </figure>
     </section>
 
@@ -1209,13 +1209,14 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
 
     <section id="s3-6" class="gb-sec" data-reveal>
       <div class="col gb-head"><p class="eyebrow">Architecture</p><h3>Built so an accidental auto-send is impossible, not just forbidden</h3></div>
+      <div class="col gb-callout"><p class="eyebrow">How it was built</p><p>I don’t write code. I built the prototype with Claude Code: I set every rule, state and screen, reviewed what it wrote, and pushed back when it was wrong. The decisions below are mine; the typing was the AI’s.</p></div>
       <ul class="mid gb-cards">
         <li><p class="t">Legal moves, separate from who made them</p><p class="d">The state machine only says which moves are legal. A separate layer decides whether a tap, the model or code caused it.</p></li>
         <li><p class="t">verified: true on every rule</p><p class="d">An unverified rule can never appear in a draft. This is where hallucination is stopped.</p></li>
         <li><p class="t">All dates and money in one tested file</p><p class="d">The one place where being wrong costs real money.</p></li>
         <li><p class="t">The eval before the screens</p><p class="d">If the model picks the wrong rule 40% of the time, the screens are decoration. The score decides what to design.</p></li>
         <li><p class="t">A real model call, not a Figma mock</p><p class="d">The eval needs real output. WhatsApp is simulated in a web app, because the real API takes weeks to approve.</p></li>
-        <li><p class="t">Stop, rather than fake it</p><p class="d">Blocked on API billing, I built the eval code-complete and left it honestly unrun.</p></li>
+        <li><p class="t">Stop, rather than fake it</p><p class="d">The first scored run ran out of API credit before a single case finished. The eval is code-complete and honestly unscored, not faked.</p></li>
       </ul>
     </section>
 
@@ -1280,6 +1281,14 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
     <section id="s3-12" class="gb-sec" data-reveal>
       <div class="col gb-head"><span class="gb-iter">Iteration 05</span><h3>Room for more than one case</h3></div>
       <p class="col body">The product assumed one case at a time; a returning user with three refunds had nowhere to land. The first fix, a Home screen, didn’t last. Chat products open on a fresh conversation and keep the past one gesture away, so a new case became the opening screen and the list moved into a drawer on a phone and a rail on desktop. On a wide screen, a case file on the right keeps the deadline, the facts and the rule from scrolling away.</p>
+      <div class="mid gb-rows">
+        <div class="rh"><p class="eyebrow" style="margin:0">Before</p><p class="eyebrow" style="margin:0">After</p></div>
+        <ul>
+          <li><p>One case at a time</p><p>A new case is the opening screen; past cases are one gesture away</p></li>
+          <li><p>A returning user had nowhere to land</p><p>A drawer on a phone, a rail on desktop</p></li>
+          <li><p>The deadline scrolled away with the thread</p><p>On a wide screen, a case file keeps the deadline, the facts and the rule in view</p></li>
+        </ul>
+      </div>
     </section>
 
     <section id="s3-13" class="gb-sec" data-reveal>
@@ -1385,12 +1394,18 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <div><h2 class="gb-ctitle">An agent that cites the wrong law is worse than one that admits it doesn’t know</h2><p class="gb-cq">Is the AI honest and correct, and how would I know?</p></div>
     </div>
 
+    <section id="s5-0" class="gb-sec" data-reveal>
+      <div class="col gb-head"><p class="eyebrow">What’s tested today</p><h3>The code is tested. The model isn’t scored yet.</h3></div>
+      <p class="col body">Everything that has one right answer is tested: <b>99 unit tests</b> cover dates, money and state changes, the parts where being wrong costs real money. And I used the prototype myself, which is where the biggest change, pages to one thread, came from.</p>
+      <p class="col body">What isn’t scored yet is the model’s judgment: whether it reads a case correctly and picks the right rule. The rest of this chapter is how that will be measured.</p>
+    </section>
+
     <section id="s5-1" class="gb-sec" data-reveal>
       <div class="col gb-head"><p class="eyebrow">The evaluation</p><h3>Built to catch the model inventing things</h3></div>
       <div class="mid"><dl class="gb-stats n4">
         <div><dt>8</dt><dd>rules, each read from the actual legal text and marked verified</dd></div>
         <div><dt>30</dt><dd>real, sourced cases, rewritten with testable dates</dd></div>
-        <div><dt>7</dt><dd>traps where the right answer is “no rule covers this”</dd></div>
+        <div><dt>6</dt><dd>traps where the right answer is “no rule covers this”</dd></div>
         <div><dt>3×</dt><dd>runs per case; it passes only if all three pass</dd></div>
       </dl></div>
       <p class="col body">Some cases have two acceptable rules, so the model isn’t failed for a fair choice. Several are missing a company, a date or an amount, to test whether it asks instead of guessing. Case type, rule and amount are scored automatically; tone is automatic, then checked by hand; and <b>a person reads every draft for invented facts.</b> An invented rule is an automatic fail, as serious as a wrong deadline.</p>
@@ -1406,7 +1421,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <div class="col gb-head"><p class="eyebrow">Status</p><h3>The scored run hasn’t happened yet</h3></div>
       <div class="col gb-status">
         <div class="pills"><span class="gb-pill pos">Harness built</span><span class="gb-pill pos">Rules verified</span><span class="gb-pill pos">30 cases ready</span><span class="gb-pill att">Scored run pending</span></div>
-        <p>The pipeline reaches a live model. I’m running the scored eval on Google’s Gemini API next and will publish the real pass rate here, failures included, not a cleaned-up number.</p>
+        <p>The pipeline reaches a live Claude model. The first scored run stopped when the API credit ran out, so 0 of 30 cases were scored. I’ll rerun it on Claude and publish the real pass rate here, failures included, not a cleaned-up number.</p>
       </div>
     </section>
   </section>
@@ -1471,7 +1486,7 @@ section.gb-chapter,section.gb-sec{scroll-margin-top:24px}
       <div class="gb-close">
         <h3>Getbaq isn’t shipped, and I’m not claiming it is.</h3>
         <p>What’s here is the research, the decisions, the trust design, and proof that I catch my own mistakes before they reach a user.</p>
-        <a class="gb-try" data-proto="/app" href="#" target="_blank" rel="noopener">Try the prototype <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="gb-try" data-proto="/" href="#" target="_blank" rel="noopener">See the prototype <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
   </section>

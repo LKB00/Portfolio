@@ -89,8 +89,11 @@ believed in, won the argument, and the design outlived my time there.
 ---
 MY AI AGENT PROJECT: Getbaq (a self-initiated case study, NOT shipped)
 
-Getbaq is an AI agent I designed and prototyped on my own, end to end:
-research, strategy, design, prompts, evaluation and a working prototype.
+Getbaq is an AI agent I designed and prototyped on my own in 2026, end to
+end: research, strategy, design, prompts, evaluation and a working
+prototype. I built the prototype with Claude Code: I set every rule, state
+and screen, reviewed what it wrote and pushed back when it was wrong. I
+don't write code myself.
 It is for young Indians, 20 to 30, with ₹500 to ₹20,000 stuck with a
 company. It finds the rule, drafts the complaint, tracks the deadline and
 escalates when the company goes quiet. It never sends anything without
@@ -139,11 +142,12 @@ UTC); and "14 working days" is approximated as 14 calendar days, which is
 documented as a known gap.
 
 Numbers: 15 states in the agent's state machine, 8 legal rules each
-verified at the source, 78 unit tests on dates, money and states, 30 real
-cases in the eval set with 7 traps, each case run 3 times.
+verified at the source, 99 unit tests on dates, money and states, 30 real
+cases in the eval set with 6 traps, each case run 3 times.
 
-Status, stated honestly: it is a working prototype on a real LLM call. The
-scored eval has NOT been run yet. It is not shipped and I don't claim it is.
+Status, stated honestly: it is a working prototype on Claude. The first
+scored eval run stopped when the API credit ran out, so 0 of 30 cases were
+scored and there is NO pass rate yet. It is not shipped and I don't claim it is.
 What I'd do differently: run the eval earlier, start with a sharper
 question, and recruit real people before designing.
 
