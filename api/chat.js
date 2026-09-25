@@ -4,8 +4,12 @@
 // endpoint. The browser never sees GROQ_API_KEY; it lives only in Vercel's
 // environment variables and is attached here, server-side, on every call.
 //
-// Required Vercel environment variable:
-//   GROQ_API_KEY    from console.groq.com (free tier, no card required)
+// Vercel environment variables (at least one key is required):
+//   GEMINI_API_KEY    from aistudio.google.com (free tier, tried first)
+//   GROQ_API_KEY      from console.groq.com (free tier, the fallback chain)
+//   CEREBRAS_API_KEY  optional, from cloud.cerebras.ai (last resort)
+// All three speak the same OpenAI-style chat API and stream the same SSE,
+// so the browser never knows which one answered.
 //
 // Streaming: Groq's response is Server-Sent Events, one JSON chunk per
 // line ("data: {...}"). Re-encoding that into some other shape would only
@@ -44,8 +48,32 @@ export const config = { maxDuration: 30 };
 // delta.reasoning, separate from delta.content, and the client only reads
 // content — so it never reaches the chat, but it does spend tokens, hence
 // the budget and low effort.
-const MODELS = (process.env.GROQ_MODELS || "openai/gpt-oss-120b,openai/gpt-oss-20b,qwen/qwen3.8-27b")
-  .split(",").map((m) => m.trim()).filter(Boolean);
+const list = (v, d) => (v || d).split(",").map((m) => m.trim()).filter(Boolean);
+const GROQ_MODELS = list(process.env.GROQ_MODELS, "openai/gpt-oss-120b,openai/gpt-oss-20b,qwen/qwen3.8-27b");
+// Gemini first: its free tier allows far more tokens a minute than Groq's,
+// which matters because every question carries the whole system prompt.
+const GEMINI_MODELS = list(process.env.GEMINI_MODELS, "gemini-2.5-flash,gemini-2.5-flash-lite");
+const CEREBRAS_MODELS = list(process.env.CEREBRAS_MODELS, "gpt-oss-120b");
+
+function providerChain(env) {
+  const chain = [];
+  if (env.GEMINI_API_KEY) for (const model of GEMINI_MODELS) chain.push({
+    name: "gemini", model, key: env.GEMINI_API_KEY,
+    url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+    extra: { max_tokens: MAX_TOKENS, reasoning_effort: "low" },
+  });
+  if (env.GROQ_API_KEY) for (const model of GROQ_MODELS) chain.push({
+    name: "groq", model, key: env.GROQ_API_KEY,
+    url: "https://api.groq.com/openai/v1/chat/completions",
+    extra: { max_completion_tokens: MAX_TOKENS, ...(model.startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}) },
+  });
+  if (env.CEREBRAS_API_KEY) for (const model of CEREBRAS_MODELS) chain.push({
+    name: "cerebras", model, key: env.CEREBRAS_API_KEY,
+    url: "https://api.cerebras.ai/v1/chat/completions",
+    extra: { max_completion_tokens: MAX_TOKENS },
+  });
+  return chain;
+}
 const MAX_TURNS = 16; // user+assistant messages, not counting the system prompt
 const MAX_MESSAGE_CHARS = 600;   // per visitor message
 const MAX_ANSWER_CHARS = 6000;   // per assistant message echoed back in history
@@ -65,9 +93,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Use POST." });
   }
 
-  const { GROQ_API_KEY } = process.env;
-  if (!GROQ_API_KEY) {
-    return res.status(500).json({ error: "Server not configured", missing: ["GROQ_API_KEY"] });
+  const chain = providerChain(process.env);
+  if (!chain.length) {
+    return res.status(500).json({ error: "Server not configured" });
   }
 
   const body = req.body || {};
@@ -92,33 +120,32 @@ export default async function handler(req, res) {
     }
   }
 
-  let upstream = null;
+  let upstream = null, used = null;
   let lastDetail = "";
   let allBusy = true;
-  for (const model of MODELS) {
+  for (const p of chain) {
     let r;
     try {
-      r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      r = await fetch(p.url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${GROQ_API_KEY}`,
+          Authorization: `Bearer ${p.key}`,
         },
         body: JSON.stringify({
-          model,
+          model: p.model,
           messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
           stream: true,
           temperature: 0.3, // low: answers are retold facts, not ideas
-          max_completion_tokens: MAX_TOKENS,
-          ...(model.startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}),
+          ...p.extra,
         }),
       });
     } catch (e) {
       allBusy = false;
-      lastDetail = "Could not reach the model provider";
+      lastDetail = "Could not reach " + p.name;
       continue;
     }
-    if (r.ok && r.body) { upstream = r; break; }
+    if (r.ok && r.body) { upstream = r; used = p; break; }
     lastDetail = (await r.text().catch(() => "")).slice(0, 300);
     // 429 = this model's minute is spent; 503 = it's overloaded. Either way
     // the next model has its own separate allowance, so move on. Anything
@@ -136,6 +163,7 @@ export default async function handler(req, res) {
   }
 
   res.writeHead(200, {
+    "X-AI-Model": used.name + "/" + used.model, // which link in the chain answered
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache, no-transform",
     Connection: "keep-alive",
