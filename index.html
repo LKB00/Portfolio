@@ -3865,6 +3865,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (max-width:576px){ .askdock{display:none!important} }
 @media (prefers-reduced-motion:reduce){ .askdock{transition:opacity .2s,visibility 0s} .askdock.is-on{transform:translate(-50%,0)} }
 
+/* a saved answer says so, quietly, above the text */
+.aisaved{margin:0 0 12px;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--ink) 4%,transparent);font-size:12.5px;line-height:1.5;color:var(--muted)}
+.aierr-a{flex-wrap:wrap}
+
 /* ===== FOLLOW-UPS, QUIETER =====
    Under an answer the suggestions are a side note, not a second
    answer: 13px, muted, each hugging its own text with a small
@@ -5165,8 +5169,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   var live = document.getElementById("aiChatLive");
 
   var MAIL = "hi.lokeshux@gmail.com";
-  var FALLBACK = "Sorry, I lost my train of thought there.";
-  var BUSY = "Lots of people are asking me things right now. I\u2019ll try again in a moment.";
+  var FALLBACK = "Sorry, I lost my train of thought there. The real me won\u2019t.";
+  var BUSY = "Everyone\u2019s asking me things at once, so I can\u2019t answer live right now. I\u2019ll keep trying, or you can read the answer or send it to the real me.";
   var OFFLINE = "You seem to be offline. I\u2019ll ask again as soon as you\u2019re back.";
   var BROKEN = "Something went wrong on my end.";
   var LONG = "This chat has got long. Start a fresh one and I\u2019ll pick up your question.";
@@ -5215,6 +5219,46 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     { q: "How did you get into design?", tag: "Career", hint: "Self-taught, from chemical science" },
     { q: "How do you work with PMs and engineers?", tag: "Craft", hint: "One PM, seven engineers" }
   ];
+  // When the live AI can't answer (every free model busy, or an outage),
+  // a suggested question still gets a real answer: one written by the
+  // same AI from the same facts, saved here. Typed questions that aren't
+  // in this list get the honest card instead. Regenerate with the live
+  // API when the facts change.
+  var SAVED_ANSWERS = {
+  "Do you have fintech experience?": "<<used: about, resume>>\nYes, fintech is **my strongest domain**.\n\nI spent 18 months at Rupeezy, a stockbroker, owning the trading app end to end. More than **200,000 registered users** used it, and **97% of company revenue** ran through that product.\n\nRegulation is not an edge case for me. It is a normal design constraint I worked inside every day, covering KYC flows, SEBI compliance rules, and payment systems.\n\n[case:app-merge]",
+  "How big was the revenue hit?": "<<used: app-merge>>\nTrading revenue fell **about 75%** after new rules for derivatives.\n\nI checked that number myself in Firebase. When SEBI announced those rules in October 2024, it led to that drop by March 2025, meaning we had to combine the trading app and Investeezy into one app, fast.\n\n[case:app-merge]",
+  "How did you build this site?": "<<used: about>>\nI built this entire site using **Claude Code and Claude Design**.\n\nI am not a developer, so I direct the AI and push back when the output looks generated rather than considered. That includes the navigation, analytics dashboard, and interactive demos. I use AI a lot in my own work day to day, but the costly design calls are still mine.",
+  "How did you get into design?": "<<used: about>>\nI didn't study design at all, so **I taught myself** from scratch. \n\nI graduated from IIT Guwahati in Chemical Science. While there, I became the campus photographer, which led me to pick up Photoshop and Adobe XD on my own. \n\nTo prove I could actually do the work, I did unpaid, unsolicited design tasks. That landed me my first paid design job just **four months** after graduation, without going to a bootcamp.",
+  "How do I reach you directly?": "<<used: about>>\nThe best way is to **email me directly** at hi.lokeshux@gmail.com.\n\nYou can also find me on LinkedIn at linkedin.com/in/lkb01.",
+  "How do you approach a design problem?": "<<used: about>>\nI start with what the user needs, then look at **real constraints to make a call**.\n\nI figure out the user problem, then check the hard boundaries: budget, timeline, regulation, or whatever is real. That is where the design happens.\n\nAfter shipping, I go check what actually happened . I don't just ship something and walk away.",
+  "How do you use AI day to day?": "<<used: about>>\nI use AI as a **first-draft tool and building partner**, not a decision-maker.\n\nI use Claude Code and Claude Design to build things day to day. I directed Claude to build this entire portfolio site, including the navigation and the analytics dashboard. I am not a developer, so my job is to direct the AI and push back when the output looks generated rather than considered.\n\nFor actual decisions, I do not use AI. It is fast at the average answer, but the costly calls are still mine to make.",
+  "How do you work with PMs and engineers?": "<<used: about, resume>>\nI keep design and build close, mostly by **defining the shared system**.\n\nAt Rupeezy, I worked with one PM and seven engineers. I defined the design tokens and variables that engineers used in production code, so design and code stayed in sync. I also worked directly with compliance on SEBI and KYC rules.\n\nAt Runable there was no PM, so I took on that part of the job myself from concept to launch.",
+  "What are you looking for next?": "<<used: resume>>\nWhat I want next is **one product I can go deep on for years**.\nI am looking for a place where I can settle in and build over a long stretch.\n- **Availability:** Immediately. I have no notice period.\n- **Location:** I can work remotely, move anywhere in India, or do on-site and hybrid work.",
+  "What did Rise Portal actually change?": "<<used: rise-portal>>\nIt changed **how partners worked with us**, and the results showed up clearly.\n\nRise Portal served about **100 partners** who drove **35%** of company revenue. After launch, lead-to-client conversion rose **2.4x** and partner support tickets fell **48%**. The source for both numbers is the support team.\n\n[case:rise-portal]",
+  "What have you actually designed for AI?": "<<used: about, resume>>\nTwo AI products, and both put **trust before speed**.\n\nAt Runable, people didn't trust the agent because all they saw was a loading spinner. I designed a view that shows each step the agent takes as it happens. It puts more on screen, but people could finally see what the AI was doing.\n\nAt ZZAZZ, I designed tools that suggest better headlines for publishers. The AI only suggests and the editor decides, because for someone whose name is on the article, control matters more than speed.",
+  "What was it like being the only designer?": "<<used: about, resume>>\nIt has been **most of my career**, and it means learning the parts nobody assigns you.\n\nAt Runable I was the founding designer with no PM. I built the whole first version from scratch, onboarding included, and it shipped and did well.\n\nAt Sustainability Economics I was the sole designer on a net-zero carbon accounting platform. Being alone meant pressure-testing my own thinking because there was no one else to catch it.",
+  "What won't you use AI for?": "<<used: about>>\nI don't use AI for **making the final decision**. \n\nIt is fast at giving the average answer, but the costly call is still mine. I treat AI as a first-draft tool, not a decision-maker.",
+  "What's the project you're proudest of?": "<<used: app-merge>>\nThe Rupeezy app merge, where I shipped the agreed switch and then **designed the better model**.\n\nWhen new SEBI rules for derivatives cut our trading revenue by **about 75%**, the company needed both products in one app, fast. I built the simple switch and it shipped in **six weeks**. \n\nA switch only works for two things, so I designed a model that could hold any number of products. It was built after I left, and it is live in the app today.\n\n[case:app-merge]",
+  "When can you start?": "<<used: resume>>\n\n**Immediately.** I have no notice period to serve. \n\nI am happy to work remotely or move anywhere in India, and I am open to both on-site and hybrid setups.",
+  "Where do the Rise Portal numbers come from?": "<<used: rise-portal>>\nBoth numbers come from our **support team**.\n\nAfter launch, lead-to-client conversion rose **2.4x** and partner support tickets fell **48%**. The support team is the source for both.\n\n[case:rise-portal]",
+  "Why not just keep the switch?": "<<used: app-merge>>\nA switch **only works for two things**.\n\nWe built the simple switch first and shipped it in **six weeks** because we had to move fast after SEBI rules hit our revenue. \n\nWhile building it, I saw its limit because more products were coming. A switch model breaks down once you add a third product, so I designed a model that could hold any number of them instead.\n\n[case:app-merge]",
+  "Why was your new model paused?": "<<used: app-merge>>\nIt was paused because every team was **busy with SEBI compliance work**.\n\nWhen SEBI announced new rules for derivatives, our trading revenue fell **about 75%**, so the company needed both products in one app fast. All our energy had to go toward meeting the regulatory requirements first. \n\n[case:app-merge]",
+  "Would you relocate?": "<<used: resume>>\nYes, I am **happy to move anywhere in India**. \n\nI am also open to working remotely, on-site, or in a hybrid setup. I can start immediately since I have no notice period to serve."
+};
+  var SAVED = {};
+  Object.keys(SAVED_ANSWERS).forEach(function(q){ SAVED[q.toLowerCase().replace(/[^a-z0-9 ]/g, "").trim()] = SAVED_ANSWERS[q]; });
+  function savedAnswerFor(q){ return SAVED[(q || "").toLowerCase().replace(/[^a-z0-9 ]/g, "").trim()] || null; }
+  // the page most likely to answer a question the AI couldn't
+  function pageFor(q){
+    var t = (q || "").toLowerCase();
+    if (/merge|switch|investeezy|proudest|revenue|sebi|paused|model/.test(t)) return { href: "./app-merge.html", label: "Read the App Merge case study" };
+    if (/rise|partner|referral/.test(t)) return { href: "./rise-portal.html", label: "Read the Rise Portal case study" };
+    if (/terminal|watchlist|chart|order|web app|desktop/.test(t)) return { href: "./web-terminal.html", label: "Read the Web Terminal case study" };
+    if (/r[eé]sum[eé]|\bcv\b|experience|career|start|notice|relocat|remote|company|companies|role/.test(t)) return { href: "./resume.html", label: "See my r\u00e9sum\u00e9" };
+    if (/design|ai|work|process|photograph|learn|yourself|about/.test(t)) return { href: "./about.html", label: "Read my About page" };
+    return null;
+  }
+
   // "Ask next" draws from these plus any starter not yet asked
   var QUESTION_POOL = STARTERS.concat([
     { q: "What did Rise Portal actually change?", tag: "Work" },
@@ -5972,7 +6016,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       li.querySelector(".as-i").innerHTML = LI("check", 12, 2);
     }
     function show(label){
-      setHead(label + "\u2026");
+      if (busy) setHead(label + "\u2026"); // never after the answer or an error
       markDone(stepsEl.querySelector(".is-now"));
       var li = document.createElement("li");
       li.className = "as is-now" + (/^(Reading|Checking)/.test(label) ? " is-read" : "");
@@ -5990,6 +6034,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       if (doneCb){ var f = doneCb; doneCb = null; f(); }
     }
     var api = {
+      liveStep: function(label){ clearTimeout(timer); timer = 0; show(label); return stepsEl.lastChild.lastChild; },
       queueStep: function(label){ if (queue[queue.length - 1] === label) return; queue.push(label); if (!timer) pump(); },
       afterSteps: function(cb){ doneCb = cb; if (!timer) pump(); },
       cancelSteps: function(){ clearTimeout(timer); timer = 0; queue = []; doneCb = null; },
@@ -6002,7 +6047,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         if (stepsEl.querySelector(".is-read")) statusEl.classList.add("is-summary"); else statusEl.remove();
       }
     };
-    return { queueStep: api.queueStep, afterSteps: api.afterSteps, cancelSteps: api.cancelSteps, summarize: api.summarize,
+    return { queueStep: api.queueStep, liveStep: api.liveStep, afterSteps: api.afterSteps, cancelSteps: api.cancelSteps, summarize: api.summarize,
              el: x, col: x.querySelector(".aians-x"), ans: x.querySelector(".aicard"), card: x.querySelector(".aicard"),
              text: x.querySelector(".aitext"), spark: document.createElement("span"),
              status: x.querySelector(".aistatus"), statusT: x.querySelector(".aistatus-t"),
@@ -6040,10 +6085,20 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   // the status line says what the agent is doing right now, in words
   var headStatus = document.getElementById("aiHeadStatus"), HEAD_REST = headStatus ? headStatus.textContent : "";
+  // one pending swap at a time, always landing on the latest text, so a
+  // late "Thinking…" can never overwrite the rest line after an error
+  var headWant = null, headTimer = 0;
   function setHead(text){
-    if (!headStatus || headStatus.textContent === text) return;
+    if (!headStatus) return;
+    headWant = text;
+    if (headTimer) return;
+    if (headStatus.textContent === text) return;
     headStatus.classList.add("is-swap");
-    setTimeout(function(){ headStatus.textContent = text; headStatus.classList.remove("is-swap"); }, 160);
+    headTimer = setTimeout(function(){
+      headTimer = 0;
+      headStatus.textContent = headWant;
+      headStatus.classList.remove("is-swap");
+    }, 160);
   }
   function present(label){
     return label.replace(/^Read /, "Reading ").replace(/^Checked /, "Checking ");
@@ -6227,10 +6282,20 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       }
     }
     if (kind !== "stopped"){
+      var page = pageFor(question);
+      if (page){
+        var go = document.createElement("a");
+        go.className = "aipill";
+        go.href = page.href;
+        go.innerHTML = "<span></span>" + LI("arrowRight", 12);
+        go.firstChild.textContent = page.label;
+        acts.appendChild(go);
+      }
       var mail = document.createElement("a");
       mail.className = "aipill";
-      mail.href = "mailto:" + MAIL;
-      mail.innerHTML = ICON_MAIL + "<span>Email me instead</span>";
+      mail.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("A question from your portfolio") +
+        "&body=" + encodeURIComponent("Hi Lokesh,\n\nI asked your AI: \u201c" + question + "\u201d\n\n");
+      mail.innerHTML = ICON_MAIL + "<span>Email me this question</span>";
       acts.appendChild(mail);
     }
     ex.card.hidden = true;
@@ -6446,6 +6511,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         if (!/r[eé]sum[eé]|\bcv\b|experience|career|background|history|roles?\b|worked/i.test(text))
           full = full.replace(/^[ \t]*\[page:resume\][ \t]*$/gm, "").replace(/\[page:resume\]/g, "");
         renderRich(ex.text, full, false);
+        if (ex.saved){
+          var note = document.createElement("p");
+          note.className = "aisaved";
+          note.textContent = "The live AI is at capacity, so this is an answer I saved for this question.";
+          ex.text.insertBefore(note, ex.text.firstChild);
+        }
         ex.card.hidden = false;
         blurReveal(ex.text);
         history.push({ role: "assistant", content: full });
@@ -6458,57 +6529,91 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       });
     }
 
-    fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history }),
-      signal: controller ? controller.signal : undefined
-    }).then(function(res){
-      if (res.status === 429){
-        var ra = parseInt(res.headers.get("Retry-After"), 10);
-        return fail(BUSY, "busy", isFinite(ra) ? Math.min(Math.max(ra, 8), 45) : 20);
-      }
-      if (res.status === 400){
-        return res.json().catch(function(){ return {}; }).then(function(j){
-          return /new chat/i.test((j && j.error) || "") ? fail(LONG, "long") : fail(FALLBACK, "error");
-        });
-      }
-      if (!res.ok || !res.body) return fail(FALLBACK, "error");
-      var reader = res.body.getReader();
-      var decoder = new TextDecoder();
-      var buffer = "";
-      function pump(){
-        return reader.read().then(function(step){
-          if (step.done){ finish(); return; }
-          buffer += decoder.decode(step.value, { stream: true });
-          var lines = buffer.split("\n");
-          buffer = lines.pop();
-          lines.forEach(function(line){
-            line = line.trim();
-            if (line.slice(0, 5) !== "data:") return;
-            var payload = line.slice(5).trim();
-            if (!payload || payload === "[DONE]") return;
-            try {
-              var json = JSON.parse(payload);
-              var delta = json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
-              if (delta){
-                full += delta;
-                thought();
-                reading(false);
-              }
-            } catch (e) { /* a partial line or a keep-alive — skip it */ }
+    // The live AI can be out of free capacity (every model busy) or down.
+    // Neither should end in a dead end: first retry quietly, in the
+    // agent's own step list; then, for a suggested question, answer from
+    // the saved copy; only a typed question with no saved answer gets a
+    // card, and that card offers the page that would answer it and an
+    // email with the question already written.
+    var RETRIES = 2;
+    function useSaved(saved, why){
+      ex.queueStep(why);
+      ex.saved = true;
+      full = saved;
+      finish();
+    }
+    function giveUp(kind, message, wait){
+      var saved = savedAnswerFor(text);
+      if (saved) return useSaved(saved, kind === "busy" ? "Live AI is busy, using a saved answer" : "Live AI is down, using a saved answer");
+      fail(message, kind, wait);
+    }
+    function attempt(n){
+      fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
+        signal: controller ? controller.signal : undefined
+      }).then(function(res){
+        if (res.status === 429){
+          var ra = parseInt(res.headers.get("Retry-After"), 10);
+          var wait = isFinite(ra) ? Math.min(Math.max(ra, 6), 20) : 12;
+          if (n < RETRIES && !stopped){
+            // wait it out in the open, then try again on our own
+            var label = ex.liveStep("Waiting for a free line \u00b7 " + wait + "s"), left = wait;
+            if (busy) setHead("Waiting for a free line\u2026");
+            var t = setInterval(function(){
+              left -= 1;
+              if (stopped || done){ clearInterval(t); return; }
+              if (left <= 0){ clearInterval(t); label.textContent = "Trying again"; attempt(n + 1); return; }
+              label.textContent = "Waiting for a free line \u00b7 " + left + "s";
+            }, 1000);
+            return;
+          }
+          return giveUp("busy", BUSY, Math.min(Math.max(isFinite(ra) ? ra : 20, 8), 45));
+        }
+        if (res.status === 400){
+          return res.json().catch(function(){ return {}; }).then(function(j){
+            return /new chat/i.test((j && j.error) || "") ? fail(LONG, "long") : giveUp("error", FALLBACK);
           });
-          return pump();
-        });
-      }
-      return pump();
-    }).catch(function(){
-      // a stop lands here as an abort: whatever was written stands as
-      // the answer; nothing written means there's nothing to keep
-      if (stopped){ stopReveal(); return finish(); }
-      if (navigator.onLine === false) return fail(OFFLINE, "offline");
-      fail(BROKEN, "error");
-    });
+        }
+        if (!res.ok || !res.body) return giveUp("error", FALLBACK);
+        var reader = res.body.getReader();
+        var decoder = new TextDecoder();
+        var buffer = "";
+        function pump(){
+          return reader.read().then(function(step){
+            if (step.done){ finish(); return; }
+            buffer += decoder.decode(step.value, { stream: true });
+            var lines = buffer.split("\n");
+            buffer = lines.pop();
+            lines.forEach(function(line){
+              line = line.trim();
+              if (line.slice(0, 5) !== "data:") return;
+              var payload = line.slice(5).trim();
+              if (!payload || payload === "[DONE]") return;
+              try {
+                var json = JSON.parse(payload);
+                var delta = json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
+                if (delta){
+                  full += delta;
+                  thought();
+                  reading(false);
+                }
+              } catch (e) { /* a partial line or a keep-alive — skip it */ }
+            });
+            return pump();
+          });
+        }
+        return pump();
+      }).catch(function(){
+        // a stop lands here as an abort: whatever was written stands as
+        // the answer; nothing written means there's nothing to keep
+        if (stopped){ stopReveal(); return finish(); }
+        if (navigator.onLine === false) return fail(OFFLINE, "offline");
+        giveUp("error", BROKEN);
+      });
+    }
+    attempt(0);
   }
 })();
 </script>
