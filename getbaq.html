@@ -625,7 +625,7 @@ ul.keys.col{margin-left:auto;margin-right:auto}
 
 /* the live exhibits, framed like the other case studies' image panels */
 figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
-.gb-stack figure.gb-ex,.gb-sketches figure.gb-ex{margin-left:0;margin-right:0}
+.gb-stack figure.gb-ex,.gb-sketches figure.gb-ex,.col > figure.gb-ex{margin-left:0;margin-right:0}
 .gb-stack figure.gb-ex:first-child{margin-top:0}
 .gb-ex-panel{position:relative;background:#F2F2F2;border-radius:8px;padding:44px clamp(16px,3vw,28px) clamp(16px,3vw,28px)}
 .gb-ex-note{position:absolute;left:clamp(16px,3vw,28px);top:14px;display:inline-flex;align-items:center;gap:6px;color:#7A7676}
@@ -719,7 +719,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="point"><p class="n">The problem</p><p class="body">People have a legal right to their refund and a free government channel that works. They don’t know the rule, the channel or the deadline, and they run out of time to keep chasing. So the money stays with the company.</p></div>
 <div class="point"><p class="n">The insight</p><p class="body">Drafting a complaint is crowded; ChatGPT already does it. Nobody runs the fight: follows up, tracks the deadline, escalates. And the worst moment isn’t the loss. It’s when there’s no next step.</p></div>
 <div class="point"><p class="n">What I built</p><p class="body">An agent where the model reads and writes, and code counts: deadlines and money are computed and tested, never generated. Every send waits for her tap, with six seconds to undo.</p></div>
-</div>
+</div><figure class="gb-ex" data-embed="intake-now" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">Where every case starts: one box that takes anything.</figcaption></figure>
 </div>
 <div class="col gb-sec" data-reveal="">
 <div class="figrow" style="--cols:4"><div><p class="fnum">15</p><p class="fnote">states in the agent’s state machine</p></div><div><p class="fnum">8</p><p class="fnote">legal rules, each verified at the source</p></div><div><p class="fnum">99</p><p class="fnote">unit tests on dates, money and states</p></div><div><p class="fnum">30</p><p class="fnote">real cases in the eval set, 6 of them traps</p></div></div>
