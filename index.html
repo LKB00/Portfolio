@@ -3698,12 +3698,10 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
     opacity:0;transform:translateX(28px)!important;transition:transform .5s var(--ease),opacity .3s ease!important}
   .aichat.open .aichat-panel{opacity:1;transform:none!important}
   .aimain{flex:1;min-height:0}
-  /* the page makes room rather than hiding behind the panel */
-  html.chat-docked body{padding-right:436px}
-  html.chat-docked header,html.chat-docked header.scrolled{right:436px;width:auto!important}
+  /* the panel sits over the page's right edge; the page stays put and
+     stays scrollable, the way a browser's own side panel behaves */
   html.chat-docked .totop{right:452px}
   html.chat-docked .askdock{opacity:0!important;pointer-events:none!important}
-  body{transition:padding-right .5s var(--ease)}
   /* compact welcome: small hand, one line, right above the suggestions */
   .aichat-intro{justify-content:flex-end!important;padding:16px 0 8px!important}
   .aihand{width:56px!important;height:56px!important;margin:0 auto 8px!important}
@@ -3717,7 +3715,6 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 /* the agent points at the part of the page it's talking about */
 .workrow.ai-pointed .cardframe{box-shadow:0 0 0 2px #fff,0 0 0 4px #b17cff,0 0 32px -4px rgba(177,124,255,.55);transition:box-shadow .3s ease}
 .workrow .cardframe{transition:box-shadow .6s ease}
-@media (prefers-reduced-motion:reduce){ body{transition:none} }
 
 /* ===== PHONES: FULL SCREEN =====
    On a phone the chat still rises from the bottom like a sheet, but it
