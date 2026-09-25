@@ -3988,6 +3988,33 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .aihand{display:block;width:88px;height:88px;margin:0 auto 14px;flex:none}
 @media (max-width:640px){ .aihand{width:72px;height:72px;margin-bottom:10px} }
 
+/* ===== TYPE & SPACING PASS =====
+   One pass over the homepage so every piece of text comes from the same
+   short list: serif heads in ink at line-height 1.3, Geist body in muted
+   (paragraphs 1.55, single lines 1.45), Geist Mono meta in faint. Things
+   that had drifted: the nav's own grey (#5C5C5C, in no palette), work
+   card titles and body copy set in the faint meta grey, credit line at
+   12.5px, hint and trigger with ad-hoc tracking and "normal" leading,
+   the company slot two sizes bigger than the names beside it, and the
+   timeline ending 60px early before the footer. */
+:root{--navOff:var(--muted)}
+#top h1{line-height:1.3}
+.worktext h3{color:var(--ink);line-height:1.3}
+#experience .exp-co{line-height:1.3}
+#top .hero-sub{line-height:1.55;letter-spacing:var(--tr-body)}
+#experience .exp-desc{color:var(--muted);line-height:1.55;letter-spacing:var(--tr-body)}
+#experience .exp-role{line-height:1.45;letter-spacing:var(--tr-body)}
+.padtriggertext{font-size:15px;line-height:1.45;letter-spacing:var(--tr-body)}
+.padtriggerhint{font-size:13px;line-height:1.45;letter-spacing:var(--tr-body);color:var(--muted)}
+.heroask-t{letter-spacing:var(--tr-body)}
+#contact .footcredit{font-size:13px;line-height:1.55;letter-spacing:var(--tr-body)}
+@media (max-width:400px){#contact .footcredit{font-size:12px}}
+@media (max-width:340px){#contact .footcredit{white-space:normal}}
+/* 16px in the input only where a smaller one would make the phone zoom */
+@media (hover:hover) and (pointer:fine){#experience .expinput{font-size:14px}}
+#experience,#experience:has(+ #contact){padding-bottom:clamp(90px,12vw,130px)}
+#contact footer{padding-top:0}
+
 /* the pill has no room for a fourth item once the burger takes over --
    the same "Ask AI" entry point lives inside the mobile sheet instead */
 @media (max-width:576px){.askbtn{display:none}}
