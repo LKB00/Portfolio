@@ -4057,6 +4057,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .gbdemo.is-typing .gbd-ph{display:none}
 .gbd-caret{display:none;width:1.5px;height:17px;margin-left:1px;vertical-align:-3px;background:#1a1917;animation:gbdBlink 1s steps(1) infinite}
 .gbdemo.is-focus .gbd-caret{display:inline-block}
+.gbdemo.is-keying .gbd-caret{animation:none;opacity:1}
+.gbd-typed .ch{display:inline;animation:gbdCh .26s cubic-bezier(.2,.8,.2,1) both;white-space:pre-wrap}
+@keyframes gbdCh{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:none}}
+.gbdemo.is-typing .gbd-send{animation:gbdPop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes gbdPop{0%{transform:scale(.8)}100%{transform:scale(1)}}
 @keyframes gbdBlink{50%{opacity:0}}
 .gbd-bar{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
 .gbd-clip,.gbd-send{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%}
@@ -7167,12 +7172,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     cam.style.transform='translateY('+(H/2-c[1])+'px) scale('+z+')'; cls('is-zoom',true);
     cur.style.opacity='0'; await wait(950);
     // typing, at a person's pace
-    cls('is-typing',true);
-    for(var i=1;i<=MSG.length;i++){
-      typed.textContent=MSG.slice(0,i);
-      var ch=MSG[i-1]; await wait(ch===' '?70:ch==='.'?260:34+Math.random()*40);
+    // each letter eases in, the caret holds still while keys land, and the
+    // rhythm is a person's: quick inside a word, a breath at each space,
+    // a pause at a full stop, a moment before a number
+    cls('is-typing',true); cls('is-keying',true);
+    for(var i=0;i<MSG.length;i++){
+      var ch=MSG[i], el=document.createElement('span');
+      el.className='ch'; el.textContent=ch; typed.appendChild(el);
+      var next=MSG[i+1]||'';
+      await wait(ch==='.'?340:ch===','?180:ch===' '?(/[\d\u20B9]/.test(next)?190:85):/\d/.test(ch)?70:30+((i*37)%5)*6);
     }
-    await wait(450);
+    cls('is-keying',false);
+    await wait(550);
     // over to send, and click it
     var sp=at(send,.5,.5); cur.style.opacity=''; jump(at(box,.62,.25)); await wait(30);
     await moveTo(sp,750); await wait(120); await click(sp,send);
