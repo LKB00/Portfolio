@@ -3898,7 +3898,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .ailost-note:hover{box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--ink) 30%,transparent);transform:translateY(-1px)}
 .ailost-nh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .ailost-nto{font-size:12px;color:var(--faint)}
-.ailost-nq{font-family:var(--serif);font-size:15px;line-height:1.35;color:var(--ink);font-style:italic}
+.ailost-nq{font-family:var(--serif);font-size:15px;line-height:1.35;color:var(--ink)}
 .ailost-ns{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--muted)}
 .ailost-note:hover .ailost-ns{color:var(--ink)}
 .aierr-plain{box-shadow:none;background:transparent;padding:0}
@@ -6385,9 +6385,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     note.className = "ailost-note";
     note.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("A question from your portfolio") +
       "&body=" + encodeURIComponent("Hi Lokesh,\n\nI asked your AI: \u201c" + question + "\u201d\n\n");
-    note.innerHTML = '<span class="ailost-nh"><span class="ailost-k">To the real me</span><span class="ailost-nto">hi.lokeshux@gmail.com</span></span>' +
-      '<span class="ailost-nq"></span><span class="ailost-ns">' + ICON_MAIL + ' Send it as an email</span>';
-    note.querySelector(".ailost-nq").textContent = "\u201c" + question + "\u201d";
+    note.innerHTML = '<span class="ailost-nh"><span class="ailost-k">The real me</span><span class="ailost-nto">hi.lokeshux@gmail.com</span></span>' +
+      '<span class="ailost-nq">Want to know more? Reach out and I\u2019ll answer this myself.</span>' +
+      '<span class="ailost-ns">' + ICON_MAIL + ' Email me, your question comes along</span>';
     over.appendChild(note);
 
     ex.card.hidden = true;
