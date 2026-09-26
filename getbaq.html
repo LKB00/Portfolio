@@ -672,6 +672,27 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-sketches figure.gb-ex > .gb-ex-panel{flex:1}
 .gb-sketches figcaption b{color:var(--ink);font-weight:500}
 
+
+/* one product, two screens: the same case on a laptop and on a phone,
+   drawn as crisp CSS devices around real screenshots of the live app */
+.gb-devices{position:relative;padding:4% 0 6%}
+.gb-laptop{position:relative;width:70%;margin-left:3%}
+.gb-lid{background:#1d1d1f;border-radius:14px 14px 6px 6px;padding:2% 2% 2.4%;box-shadow:0 22px 40px -22px rgba(0,0,0,.35)}
+.gb-lid img{display:block;width:100%;height:auto;border-radius:3px}
+.gb-base{position:relative;height:12px;margin:0 -7%;border-radius:2px 2px 14px 14px;background:linear-gradient(#e2e2e4,#c5c5c8)}
+.gb-base::before{content:"";position:absolute;left:50%;top:0;width:16%;height:5px;transform:translateX(-50%);border-radius:0 0 6px 6px;background:#b3b3b7}
+.gb-phone{position:absolute;width:19%;padding:.9%;border-radius:15%/7%;background:#121214;box-shadow:0 26px 40px -18px rgba(0,0,0,.45),inset 0 0 0 1.5px #3a3a3e}
+.gb-phone img{display:block;width:100%;height:auto;border-radius:12.5%/5.8%}
+.gb-phone-a{right:14.5%;bottom:0;z-index:2}
+.gb-phone-b{right:0;bottom:7%;z-index:1}
+@media(max-width:600px){
+  .gb-devices{padding:2% 0 4%}
+  .gb-laptop{width:100%;margin:0}
+  .gb-base{margin:0 -4%}
+  .gb-phone{position:relative;display:inline-block;width:42%;right:auto;bottom:auto;transform:none;margin-top:9%;vertical-align:top}
+  .gb-phone-a{margin-left:6%}
+  .gb-phone-b{margin-left:4%}
+}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -1103,6 +1124,14 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <li><p>The deadline scrolled away with the thread</p><p>A case file keeps the deadline, the facts and the rule in view: on the right on a wide screen, as a sheet on a phone</p></li>
 </ul>
 </div>
+<figure class="gb-ex col gb-devices-fig">
+<div class="gb-ex-panel"><div class="gb-devices" role="img" aria-label="The same Flipkart case in Getbaq on a laptop and on a phone. On the laptop, the case list, the thread with the Approve card and the case file sit side by side. On the phone, the thread fills the screen and the case file opens as a sheet from the bottom.">
+<div class="gb-laptop" aria-hidden="true"><div class="gb-lid"><img src="./assets/getbaq-desktop-1600.webp" srcset="./assets/getbaq-desktop-960.webp 960w, ./assets/getbaq-desktop-1600.webp 1600w" sizes="(max-width:600px) 90vw, 520px" width="1600" height="1000" alt="" loading="lazy" decoding="async"></div><div class="gb-base"></div></div>
+<div class="gb-phone gb-phone-a" aria-hidden="true"><img src="./assets/getbaq-phone-thread-540.webp" width="540" height="1169" alt="" loading="lazy" decoding="async"></div>
+<div class="gb-phone gb-phone-b" aria-hidden="true"><img src="./assets/getbaq-phone-casefile-540.webp" width="540" height="1169" alt="" loading="lazy" decoding="async"></div>
+</div></div>
+<figcaption>The same case on a laptop and on a phone. On a wide screen, the list, the thread and the case file sit side by side; on a phone, the list is a drawer and the case file a sheet.</figcaption>
+</figure>
 </section>
 <section class="gb-sec" data-reveal="" id="s3-13">
 <div class="col"><p class="eyebrow">Iteration 06</p><h3 class="say sub">Read once, ask once</h3></div>
