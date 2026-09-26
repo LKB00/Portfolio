@@ -4007,9 +4007,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .worktext h3{color:var(--ink);line-height:1.3}
 /* card titles in the notes card's voice: Geist 15/500, not the serif */
 .worktext h3{font-family:var(--sans,'Geist'),system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.45;letter-spacing:var(--tr-body)}
-/* grey at rest, dark on hover (not the accent blue) */
-.worktext h3{color:var(--muted);transition:color .2s var(--ease)}
-.workrow:hover .worktext h3,.workrow:focus-visible .worktext h3{color:var(--ink)}
+/* 2x2 tiles: the title is a small label in the tile's corner, shown on
+   hover or keyboard focus; where there is no hover it always shows */
+#work .workrow{position:relative}
+#work .worktext{position:absolute;left:12px;bottom:12px;right:12px;margin:0;z-index:5;pointer-events:none;
+  opacity:0;transform:translateY(6px);transition:opacity .25s var(--ease),transform .25s var(--ease)}
+#work .worktext h3{margin:0;width:fit-content;max-width:100%;padding:7px 11px;border-radius:9px;
+  background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:0 4px 14px rgba(0,0,0,.08);color:#242020;font-size:13px;line-height:1.35}
+#work .workrow:hover .worktext,#work .workrow:focus-visible .worktext{opacity:1;transform:none}
+@media (hover:none){ #work .worktext{opacity:1;transform:none} }
+@media (max-width:684px){ #work .workgrid{row-gap:24px} #work .workrow + .workrow{padding-top:0} }
 #experience .exp-co{line-height:1.3}
 #top .hero-sub{line-height:1.55;letter-spacing:var(--tr-body)}
 #experience .exp-desc{color:var(--muted);line-height:1.55;letter-spacing:var(--tr-body)}
@@ -4038,12 +4046,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    two. Its frame is the same grey the others share, edge to edge.
    On a phone the frame gets taller and centres on the money-back
    screen, the one that says what the product is for. */
-.workrow.gbrow{grid-column:1/-1}
-.cardframe.gbframe{aspect-ratio:1240/593;background:#F2F2F2!important}
+.cardframe.gbframe{aspect-ratio:var(--card-ar);background:#F2F2F2!important}
 .cardframe.gbframe .gbshot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block;
   transition:transform .6s var(--ease)}
 @media (hover:hover){ .workrow.gbrow:hover .gbshot{transform:scale(1.015)} }
-@media (max-width:684px){ .cardframe.gbframe{aspect-ratio:4/3} }
 @media (prefers-reduced-motion:reduce){ .workrow.gbrow:hover .gbshot{transform:none} }
 /* The Getbaq card plays the product instead of showing a still: a cursor
    clicks the composer, the view zooms in, a real case is typed and sent,
@@ -4399,19 +4405,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         </div>
       </a>
 
-      <a href="https://runable.com/" target="_blank" rel="noreferrer" class="workrow runrow" data-reveal data-cursor-label="visit" aria-label="Runable, an AI agent platform. Visit the live site">
-        <div style="grid-row:1;grid-column:1;min-width:0">
-          <div class="cardframe runshot" style="background:var(--card-tint-03)">
-            <div class="macframe">
-              <img class="macshot" loading="eager" decoding="async" data-src="./assets/runable-agent-home-1050.webp" data-srcset="./assets/runable-agent-home-700.webp 700w, ./assets/runable-agent-home-1050.webp 1050w, ./assets/runable-agent-home-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="685" alt="Runable agent home screen in a browser">
-              <img class="macdevice" src="./assets/macbook-mockup.webp" alt="" aria-hidden="true" loading="eager" decoding="async">
-            </div>
-          </div>
-        </div>
-        <div class="worktext">
-          <h3>An AI agent platform, concept to public launch</h3>
-        </div>
-      </a>
     </div>
   </section>
 
@@ -7137,7 +7130,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   var H=340, k=1, W=620;
   function fit(){
     var r=root.getBoundingClientRect(); if(!r.height) return;
-    k=r.height/H; W=Math.max(430,r.width/k);
+    k=Math.min(r.height/H,r.width/430); W=Math.max(430,r.width/k);
     stage.style.setProperty('--w',W+'px'); stage.style.setProperty('--k',k); stage.classList.toggle('is-narrow',W<520);
   }
   fit(); if('ResizeObserver' in window) new ResizeObserver(fit).observe(root); else addEventListener('resize',fit);
@@ -7178,7 +7171,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var p=at(box,.32,.3); await moveTo(p,1100); await wait(150);
     await click(p); cls('is-focus',true);
     // zoom in on the composer, keeping its centre where it sits
-    var c=at(box,.5,.5), z=Math.max(1.15,Math.min(1.7,(W-8)/box.offsetWidth));
+    var c=at(box,.5,.5), z=Math.max(1.1,Math.min(1.6,(W-48)/box.offsetWidth));
     cam.style.transformOrigin=c[0]+'px '+c[1]+'px';
     cam.style.transform='translateY('+(H/2-c[1])+'px) scale('+z+')'; cls('is-zoom',true);
     cur.style.opacity='0'; await wait(950);
