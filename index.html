@@ -4110,11 +4110,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .totop:hover > svg:not(.totop-ring){transform:none}
 }
 
-/* phones: the dock sits just above the bottom bar (theme, menu, back to
-   top), full width less the gutters, so the AI twin is one tap away on
-   every page */
+/* phones: the AI twin is the animated hand in the nav pill (no wide dock) */
+.navask{display:none}
 @media (max-width:576px){
-  html body .askdock{display:flex!important;width:calc(100% - 32px);max-width:none;bottom:calc(70px + env(safe-area-inset-bottom))}
+  .navask{display:inline-grid;place-items:center;width:28px;height:28px;margin-left:2px;padding:0;border:0;border-radius:1000px;background:transparent;cursor:pointer}
+  .navask canvas{display:block;width:22px;height:22px}
 }
 </style>
 <script defer src="./analytics.js?v=3"></script>
@@ -5304,7 +5304,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 </script>
 
-<script src="./aitwin.js?v=1"></script>
+<script src="./aitwin.js?v=2"></script>
 <script>
 /* Motion cards: play a card's recording only while it's on screen, and
    never for visitors who've asked for less motion. */
