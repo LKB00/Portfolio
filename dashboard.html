@@ -75,11 +75,10 @@ body{
 
 /* ── type roles. Every rule sets letter-spacing explicitly, because the
       `font:` shorthand silently resets it to normal. ───────────────────── */
-.t-page{font-size:var(--fs-page);font-weight:500;line-height:var(--lh-page);letter-spacing:var(--tr-page)}
+
 .t-h1{font-size:var(--fs-h1);font-weight:500;line-height:var(--lh-h1);letter-spacing:var(--tr-h1)}
-.t-h2{font-size:var(--fs-h2);font-weight:500;line-height:var(--lh-h2);letter-spacing:var(--tr-h2)}
-.t-lead{font-size:var(--fs-lead);font-weight:400;line-height:var(--lh-lead);letter-spacing:var(--tr-lead)}
-.t-label,.title{font-family:var(--mono);font-size:var(--fs-micro);font-weight:500;
+
+.title{font-family:var(--mono);font-size:var(--fs-micro);font-weight:500;
   line-height:var(--lh-micro);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
 .mono{font-family:var(--mono);letter-spacing:var(--tr-mono)}
 
@@ -116,7 +115,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
   font-size:var(--fs-body);font-weight:500;letter-spacing:var(--tr-body);
   color:var(--muted);text-decoration:none;transition:.2s var(--ease)}
 .navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
-.navlink[aria-current="page"]{color:var(--ink)}
+
 .themebtn{display:grid;place-items:center;width:30px;height:30px;margin-left:2px;border:0;background:transparent;
   color:var(--muted);border-radius:var(--r-pill);cursor:pointer;transition:.2s var(--ease)}
 .themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
@@ -130,8 +129,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
 .verdict{font-size:var(--fs-page);line-height:var(--lh-page);letter-spacing:var(--tr-page);
   font-weight:500;color:var(--ink);max-width:46ch;margin:0}
 .headline .asof{display:block;margin:var(--s-3) 0 0}
-.toolbar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);
-  flex-wrap:wrap;margin-bottom:var(--s-4);min-height:34px}
+
 .filters{display:flex;align-items:center;gap:var(--s-2);flex-wrap:wrap;min-height:30px}
 .asof{font-size:var(--fs-micro);letter-spacing:var(--tr-mono);color:var(--faint);margin-left:var(--s-3)}
 .asof .dot-sep{margin:0 6px;opacity:.6}
@@ -168,8 +166,8 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
   box-shadow:var(--shadow-card);min-width:0}
 .card.sub{padding:var(--s-5)}
 .card.invert{background:var(--deep);color:var(--onDeep);box-shadow:none}
-.c12{grid-column:span 12} .c7{grid-column:span 7} .c5{grid-column:span 5}
-.c6{grid-column:span 6} .c8{grid-column:span 8} .c4{grid-column:span 4}
+.c12{grid-column:span 12}
+.c6{grid-column:span 6}
 .head{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);margin-bottom:var(--s-4)}
 .head h2{color:var(--ink);display:flex;align-items:center;flex-wrap:wrap;min-width:0}
 .invert .head h2{color:var(--onDeep)}
@@ -190,7 +188,6 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
   letter-spacing:var(--tr-body);text-transform:none;text-align:left;
   box-shadow:0 0 0 1px color-mix(in srgb,var(--onDark) 20%,transparent),
              0 8px 24px -8px rgba(0,0,0,.55)}
-.thin-flag{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-mono);color:var(--thin)}
 
 /* ── figures ─────────────────────────────────────────────── */
 /* The page's conclusion, in the site's lead size. It sits above the figures
@@ -270,25 +267,7 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
 .srow[aria-pressed="true"]{background:var(--inset);box-shadow:inset 2px 0 0 var(--ink)}
 
 /* ── source quality ──────────────────────────────────────── */
-.lgrid{display:grid;grid-template-columns:1fr minmax(0,2.2fr) 72px;gap:var(--s-4);align-items:center}
-.lrow{padding:var(--s-2) var(--s-3);border-radius:var(--r-sm);cursor:pointer;border:0;font:inherit;
-  letter-spacing:var(--tr-body);color:inherit;text-align:left;width:100%;background:transparent;
-  transition:.15s var(--ease)}
-.lrow:hover{background:color-mix(in srgb,var(--onDeep) 8%,transparent)}
-.lrow[aria-pressed="true"]{background:color-mix(in srgb,var(--onDeep) 14%,transparent)}
-.lrow .nm{font-size:var(--fs-body);letter-spacing:var(--tr-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lrow .ax{position:relative;height:16px}
-.lrow .ax .stem{position:absolute;left:0;top:7px;height:2px;border-radius:var(--r-pill);
-  background:color-mix(in srgb,var(--onDeep) 26%,transparent)}
-.lrow .ax .dot{position:absolute;top:2px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--onDeep)}
-.lrow.low .ax .dot{background:color-mix(in srgb,var(--onDeep) 40%,transparent)}
-.lrow.low .nm,.lrow.low .pc{opacity:.62}
-.lrow .pc{font-family:var(--mono);font-size:var(--fs-body);letter-spacing:var(--tr-mono);
-  text-align:right;white-space:nowrap}
-.lrow .pc small{display:block;font-size:var(--fs-micro);line-height:1.5;opacity:.55}
-.refline{position:absolute;top:-3px;bottom:-3px;width:1px;background:color-mix(in srgb,var(--onDeep) 45%,transparent)}
-.reflab{position:relative;height:13px;font-family:var(--mono);font-size:var(--fs-micro);
-  line-height:1;letter-spacing:var(--tr-mono);opacity:.55}
+
 .ticks{display:flex;justify-content:space-between;padding-top:var(--s-2);
   border-top:1px solid color-mix(in srgb,var(--onDeep) 14%,transparent);
   font-family:var(--mono);font-size:var(--fs-micro);line-height:1;letter-spacing:var(--tr-mono);opacity:.55}
@@ -318,9 +297,6 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
   border-top:1px solid var(--line);font-family:var(--mono);font-size:var(--fs-micro);
   letter-spacing:var(--tr-mono);color:var(--faint)}
 .payaxis .ax i{font-style:normal}
-.paysub{font-family:var(--mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--tr-label);
-  text-transform:uppercase;color:var(--faint);margin:var(--s-5) 0 var(--s-3)}
-.paysub:first-of-type{margin-top:0}
 
 /* ── traffic ─────────────────────────────────────────────── */
 .days{display:flex;align-items:flex-end;gap:3px;height:96px;margin-top:var(--s-3)}
@@ -335,9 +311,6 @@ header{position:sticky;top:0;z-index:40;background:var(--bar);
 .days .d[aria-pressed="true"]:hover i{opacity:.65}
 .days .d.mark::before{content:"";position:absolute;left:50%;top:-9px;width:6px;height:6px;margin-left:-3px;
   border-radius:50%;background:var(--yellow);box-shadow:0 0 0 1px var(--ink)}
-.daxis{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:var(--s-2);
-  margin-top:var(--s-2);font-family:var(--mono);font-size:var(--fs-micro);line-height:1;
-  letter-spacing:var(--tr-mono);color:var(--faint)}
 
 /* ── tables ──────────────────────────────────────────────── */
 table{width:100%;border-collapse:collapse;font-size:var(--fs-body);letter-spacing:var(--tr-body)}
@@ -354,15 +327,9 @@ tbody tr[aria-pressed="true"] td:first-child{box-shadow:inset 2px 0 0 var(--ink)
 td:first-child{padding-left:var(--s-3)!important} th:first-child{padding-left:var(--s-3)}
 .r{text-align:right}
 td.r{font-family:var(--mono);letter-spacing:var(--tr-mono);white-space:nowrap}
-td.mono{white-space:nowrap} .dim{color:var(--muted)}
+td.mono{white-space:nowrap}
 .trunc{max-width:1px;width:99%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-tr.cold td{color:var(--faint)}
-.dot6{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--thin);
-  margin-right:var(--s-2);vertical-align:1px}
-.dot6.on{background:var(--gain)}
-.track{display:flex;gap:2px;width:88px}
-.track i{flex:1;height:8px;border-radius:2px;background:var(--nest)}
-.track i.on{background:var(--ink);box-shadow:none} .track i.end{background:var(--gain);box-shadow:none}
+
 .bwrap{background:var(--nest);border-radius:var(--r-pill);width:100%}
 .bar{height:8px;border-radius:var(--r-pill);background:var(--ink);min-width:3px}
 table.fixed{table-layout:fixed}
@@ -429,9 +396,6 @@ table.fixed .trunc{width:auto;max-width:none}
 #tip b{font-weight:500}
 #tip .m{font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--tr-mono);opacity:.7;display:block}
 
-/* ── method ──────────────────────────────────────────────── */
-mark{background:var(--markWash);color:inherit;padding:0 2px;border-radius:2px}
-
 /* Demo mode fills this page with synthetic numbers. A hostname regex is the
    only thing keeping that off production, and if it ever breaks the page
    looks entirely normal while every figure is invented. So the numbers say
@@ -450,7 +414,7 @@ body.demo{padding-top:34px}
   /* the ends of the bar reach the middle at this width, so the pill stops
      being centred and goes back to sitting at the end of the row */
   .navpill{position:static;transform:none}
-  .c7,.c5,.c6,.c8,.c4{grid-column:span 12}
+  .c6{grid-column:span 12}
   .figs{grid-template-columns:repeat(2,1fr)}
   .verdict{font-size:var(--fs-body)}
   .mult{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -463,7 +427,7 @@ body.demo{padding-top:34px}
   .mult{grid-template-columns:1fr}
   .head{flex-direction:column;gap:var(--s-3)}
   .hint{text-align:left}
-  .lgrid{grid-template-columns:88px minmax(0,1fr) 64px;gap:var(--s-3)}
+
   .payrow{grid-template-columns:84px minmax(0,1fr) 66px}
   .card{overflow-x:auto} .card table{min-width:520px} .card table.fixed{min-width:0}
   .card:has(.mult),.card:has(.days),.card.invert,.card:has(.payrow),.card:has(.mapwrap){overflow-x:visible}

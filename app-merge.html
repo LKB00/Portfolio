@@ -281,26 +281,7 @@ h3.say.sub{margin-top:var(--s4)}
 /* ---------------- IMAGE PANELS ---------------- */
 .shot{border-radius:8px;overflow:hidden;background:var(--surface);position:relative;line-height:0}
 .shot img{width:100%;height:auto;display:block}
-/* placeholder for a screenshot not attached yet: shows which file belongs
-   here and what it should contain, so the empty card is still legible in
-   place of a real image, not just an unexplained block of colour.
-   self-clearing: the instant a real <img> lands anywhere inside the card
-   (dropped in next to the placeholder, in any order, without remembering
-   to delete the placeholder markup first) the placeholder disappears on
-   its own, so there is never a moment where both render at once. */
-.shot:has(img) .ph-slot{display:none}
-.ph-slot{position:absolute;inset:16px;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:7px;padding:20px;text-align:center;border-radius:6px;line-height:1.4;
-  border:1.5px dashed rgba(17,17,17,.25);color:rgba(17,17,17,.55)}
-.ph-slot p{margin:0}
-.ph-slot svg{opacity:.65}
-.ph-slot .ph-label{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:-.01em;color:rgba(17,17,17,.7)}
-.ph-slot .ph-file{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11.5px;color:rgba(17,17,17,.55)}
-.ph-slot .ph-hint{font-family:var(--sans);font-size:11.5px;line-height:1.45;max-width:230px;color:rgba(17,17,17,.45)}
-:root[data-theme="dark"] .ph-slot{border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.6)}
-:root[data-theme="dark"] .ph-slot .ph-label{color:rgba(255,255,255,.78)}
-:root[data-theme="dark"] .ph-slot .ph-file{color:rgba(255,255,255,.6)}
-:root[data-theme="dark"] .ph-slot .ph-hint{color:rgba(255,255,255,.5)}
+
 /* a mockup on a card, the reference's pattern: padding so the colour frames
    the screenshot instead of being hidden edge-to-edge behind it */
 /* a soft top-left highlight, like a glossy surface catching light, so the
@@ -317,11 +298,9 @@ h3.say.sub{margin-top:var(--s4)}
    never crops) and centers, instead of growing the card to match it. */
 .shot.phone{width:100%;margin:0 auto;display:flex;justify-content:center;align-items:center}
 .shot.phone img{width:100%;height:auto;max-height:462px;object-fit:contain;display:block}
-.shot.c-lav{background-color:var(--lav)}
+
 .shot.c-sky{background-color:var(--sky)}
-.shot.c-peach{background-color:var(--peach)}
-.shot.c-mint{background-color:var(--mint)}
-.shot.c-sand{background-color:var(--sand)}
+
 .pin{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--ink);
   color:var(--bg);font-family:var(--sans);font-size:11px;font-weight:600;line-height:1;
   display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);
