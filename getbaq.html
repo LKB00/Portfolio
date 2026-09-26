@@ -705,6 +705,26 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-fold-body > p.body + p.body{margin-top:var(--s2)}
 .gb-fold-body .col,.gb-fold-body ul.keys.col{margin-left:0;margin-right:0;max-width:none}
 .gb-fold-body > .hinge.col{margin-top:var(--s4)}
+/* consistency: a fold opens with its content 4px under the summary and
+   ends 56px above the next rule, whatever block comes first or last; a
+   label sits 16px over what it labels, in folds and overview blocks alike */
+.gb-fold-body > :first-child{margin-top:0}
+.gb-fold-body > :last-child{margin-bottom:0}
+.gb-fold-body > p.eyebrow + *,div.gb-sec > p.eyebrow:first-child + *{margin-top:var(--s2)}
+.gb-points .point:first-of-type{margin-top:0}
+
+/* trust patterns: the pattern and who named it, then where it lives */
+.gb-patterns{list-style:none;margin:0;padding:0;display:grid;gap:0 32px;border-top:1px solid var(--line)}
+@media(min-width:640px){.gb-patterns{grid-template-columns:1fr 1fr}}
+.gb-patterns li{padding:14px 0;border-bottom:1px solid var(--line)}
+.gb-patterns .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.gb-patterns .p{margin:0;font-family:var(--serif);font-weight:500;font-size:17px;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.gb-patterns .s{margin:0;flex:none;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.gb-patterns .w{margin:4px 0 0;font-size:15px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
+
+/* the closing statement after the last folds: the folds' own bottom rule
+   already closes that stretch, so no second rule a few lines under it */
+.gb-folds + div.gb-sec > .gb-close{border-top:0;padding-top:0}
 
 /* a research figure links to its study, quietly */
 .figrow .fsrc a{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-underline-offset:2px}
