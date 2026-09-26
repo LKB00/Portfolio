@@ -4028,12 +4028,14 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    with a little blur, out a touch quicker. Touch screens always show it. */
 #work .workrow{position:relative}
 #work .cardframe::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;z-index:4;pointer-events:none;
-  background:linear-gradient(to top,color-mix(in srgb,var(--bg) 94%,transparent) 0%,color-mix(in srgb,var(--bg) 70%,transparent) 38%,transparent 100%);
+  background:color-mix(in srgb,var(--bg) 78%,transparent);
+  -webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1);
+  -webkit-mask-image:linear-gradient(to top,#000 0%,#000 42%,transparent 100%);mask-image:linear-gradient(to top,#000 0%,#000 42%,transparent 100%);
   opacity:0;transition:opacity .35s cubic-bezier(.4,0,.2,1)}
 #work .worktext{position:absolute;left:20px;right:20px;bottom:10px;margin:0!important;text-align:center;align-items:center;z-index:5;pointer-events:none;
   opacity:0;transform:translateY(8px);filter:blur(3px);
   transition:opacity .3s cubic-bezier(.4,0,.2,1),transform .35s cubic-bezier(.4,0,.2,1),filter .3s cubic-bezier(.4,0,.2,1)}
-#work .worktext h3{margin:0 auto;text-align:center;color:var(--muted);font-size:13px;font-weight:300;line-height:1.5;letter-spacing:0}
+#work .worktext h3{margin:0 auto;text-align:center;color:var(--muted);font-size:13px;font-weight:400;line-height:1.5;letter-spacing:0}
 @media (hover:hover){
   #work .workrow:hover .cardframe::after,#work .workrow:focus-visible .cardframe::after{opacity:1;transition:opacity .6s cubic-bezier(.22,1,.36,1)}
   #work .workrow:hover .worktext,#work .workrow:focus-visible .worktext{opacity:1;transform:none;filter:none;
