@@ -2,6 +2,20 @@
    The homepage carries the dock and the chat markup and styles inline; any
    other page gets them injected here, with aitwin.css, before the chat client
    (below, unchanged from the homepage) starts. */
+/* Phones: no wide dock. The AI twin is the animated hand, one more button
+   in the nav pill beside the theme and the menu. Added before the chat
+   client runs, so its hand animates like the dock's. */
+(function(){
+  var nav = document.querySelector("#siteHeader .navlinks");
+  if (!nav || document.getElementById("navAsk")) return;
+  var b = document.createElement("button");
+  b.type = "button"; b.id = "navAsk"; b.className = "navask";
+  b.setAttribute("aria-label", "Ask my AI twin");
+  b.innerHTML = '<canvas class="askhand" aria-hidden="true"></canvas>';
+  nav.insertBefore(b, nav.querySelector(".themebtn") || nav.firstChild);
+  b.addEventListener("click", function(){ var d = document.getElementById("askDock"); if (d) d.click(); });
+})();
+
 (function(){
   if (document.getElementById("aiChat")) return;
   var head = document.head;
