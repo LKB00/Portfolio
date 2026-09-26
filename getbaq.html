@@ -524,7 +524,7 @@ div.gb-sec{margin-top:var(--s5)}
 /* a panel's verdict, in the sticky notes' tag style */
 .tag{margin:14px 0 0;font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase}
 .tag.t-pos{color:var(--gb-pos)}
-.tag.t-att{color:var(--neg)}
+.tag.t-att{color:#B8683C}
 .tag.t-cau{color:var(--muted)}
 .tag.t-neu{color:var(--faint)}
 .pills{display:flex;flex-wrap:wrap;gap:6px 18px}
@@ -624,6 +624,28 @@ ul.keys.col{margin-left:auto;margin-right:auto}
 .gb-steps li{display:inline-flex;align-items:center;gap:8px}
 .gb-steps li + li:before{content:"\2192";color:var(--muted)}
 .gb-steps span{padding:6px 12px;border-radius:999px;background:var(--surface);font-size:14px;color:var(--ink)}
+.gb-loop{margin-top:var(--s3)}
+.gb-loop-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.7fr);gap:22px}
+.gb-loop-steps > li{position:relative;display:flex;flex-direction:column;gap:8px;padding:14px 14px 16px;border-radius:12px;background:#F2F2F2;font-size:14px;line-height:1.35;color:var(--ink)}
+.gb-loop-steps > li + li::before{content:"\2192";position:absolute;left:-17px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+.gb-loop-steps i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.gb-loop-steps > li.fix{background:#E3F3EE}
+.gb-fix{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:nowrap;gap:6px;align-items:center}
+.gb-fix li{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-size:13px;background:#fff}
+.gb-fix li{position:relative}
+.gb-fix li + li{margin-left:16px}
+.gb-fix li + li::before{content:"\2192";position:absolute;left:-17px;color:var(--muted);font-size:12px}
+.gb-fix .p1{background:#2E7D6B;color:#fff}
+.gb-fix .p2{background:#A3D3C4;color:#173F36}
+.gb-fix .p3{background:#fff;color:var(--muted);box-shadow:inset 0 0 0 1px #C6E5DB}
+/* the return: a dashed line from under the fix back to under step 1 */
+.gb-loop-back{position:relative;display:block;height:18px;margin:6px 12% 0 7%;border:1.5px dashed #A3D3C4;border-top:0;border-radius:0 0 14px 14px}
+.gb-loop-back::before{content:"";position:absolute;left:-6.5px;top:-7px;border:5.5px solid transparent;border-bottom:7px solid #A3D3C4;border-top:0}
+@media(max-width:600px){
+  .gb-loop-steps{grid-template-columns:1fr;gap:18px}
+  .gb-loop-steps > li + li::before{content:"\2193";left:50%;top:-16px;transform:translateX(-50%)}
+  .gb-loop-back{display:none}
+}
 .gb-legend{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .gb-legend li{font-size:14px;color:var(--muted)}
 .gb-legend .tag{display:inline-block;margin:0 10px 0 0}
@@ -646,7 +668,8 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-sketches.s3 > :last-child{grid-column:1/-1}
 @media(max-width:600px){.gb-sketches{grid-template-columns:1fr}}
 .gb-sketches .gb-ex-panel{padding:16px}
-.gb-sketches figure.gb-ex{margin-top:0}
+.gb-sketches figure.gb-ex{margin-top:0;display:flex;flex-direction:column}
+.gb-sketches figure.gb-ex > .gb-ex-panel{flex:1}
 .gb-sketches figcaption b{color:var(--ink);font-weight:500}
 
 </style><script defer src="./analytics.js?v=3"></script>
@@ -1218,7 +1241,15 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s5-4">
 <div class="col"><p class="eyebrow">Error analysis</p><h3 class="say sub">Fix the source before the prompt, and the prompt before the UI</h3></div>
-<ol class="col gb-steps"><li><span>Collect real outputs</span></li><li><span>Mark failures by hand</span></li><li><span>Group them</span></li><li><span>Fix: rules → prompt → UI</span></li></ol>
+<div class="col gb-loop" role="img" aria-label="Collect real outputs, mark failures by hand, group them, then fix: rules, then the prompt, then the UI. Then collect again.">
+<ol class="gb-loop-steps" aria-hidden="true">
+<li><i>1</i><span>Collect real outputs</span></li>
+<li><i>2</i><span>Mark failures by hand</span></li>
+<li><i>3</i><span>Group them</span></li>
+<li class="fix"><i>4</i><span>Fix:</span><ol class="gb-fix"><li class="p1">rules</li><li class="p2">prompt</li><li class="p3">UI</li></ol></li>
+</ol>
+<span class="gb-loop-back" aria-hidden="true"></span>
+</div>
 <p class="col body">Most model errors come from unclear reference material, not bad prompts. Fixing the source is cheaper, and more honest, than rewriting instructions blind.</p>
 </section>
 <section class="gb-sec" data-reveal="" id="s5-5">
