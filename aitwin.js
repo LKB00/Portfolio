@@ -14,6 +14,10 @@
   b.innerHTML = '<canvas class="askhand" aria-hidden="true"></canvas>';
   nav.insertBefore(b, nav.querySelector(".themebtn") || nav.firstChild);
   b.addEventListener("click", function(){ var d = document.getElementById("askDock"); if (d) d.click(); });
+  var pill = nav.closest(".navpill");
+  if (pill && window.ResizeObserver) new ResizeObserver(function(){
+    document.documentElement.style.setProperty("--navpill-w", pill.offsetWidth + "px");
+  }).observe(pill);
 })();
 
 (function(){

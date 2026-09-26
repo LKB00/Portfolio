@@ -501,6 +501,23 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
 /* phones: the nav pill and back-to-top sit at the bottom of the screen,
    so the footer line needs room below it to scroll clear of them */
 @media (max-width:576px){#contact footer{padding-bottom:calc(88px + env(safe-area-inset-bottom))}}
+/* phones: Home, About and Resume sit in the nav pill as icons, beside the
+   AI twin's hand; the menu keeps only the case studies and the email */
+.navico{display:none}
+@media (max-width:576px){
+  nav.navlinks{gap:4px}
+  nav.navlinks a.navlink{display:inline-grid;place-items:center;width:30px;height:30px;padding:0;margin:0;border-radius:1000px;background:transparent;color:var(--muted)}
+  nav.navlinks a.navlink[aria-current="page"]{color:var(--ink)}
+  nav.navlinks a.navlink .navtext{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  nav.navlinks a.navlink .navico{display:block;width:18px;height:18px}
+  .mobilenav .mlinks,.mobilenav .mresume{display:none}
+  /* the wider pill and back-to-top now move as one centred row: the pill
+     steps left by half the button (+ gap), the button sits at its right
+     edge (--navpill-w is kept current by aitwin.js) */
+  header.totop-on .navpill{transform:translateX(-26px)}
+  .totop{left:calc(50% + var(--navpill-w,216px) / 2 - 18px);transform:scale(.86)}
+  .totop.show{transform:scale(1)}
+}
 </style>
 </head>
 <body>
@@ -508,9 +525,9 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
 <header id="siteHeader">
   <div class="navpill">
     <nav class="navlinks" aria-label="Main">
-      <a class="navlink" href="./index.html">Home</a>
-      <a class="navlink" href="./about.html">About</a>
-      <a class="navlink" href="./resume.html">Resume</a>
+      <a class="navlink" href="./index.html"><span class="navtext">Home</span><svg class="navico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg></a>
+      <a class="navlink" href="./about.html"><span class="navtext">About</span><svg class="navico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a>
+      <a class="navlink" href="./resume.html"><span class="navtext">Resume</span><svg class="navico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></a>
       <button class="themebtn" id="themeToggle" type="button" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="icon-moon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span></button>
       <button class="burger" id="burgerBtn" type="button" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></button>
     </nav>
@@ -1037,5 +1054,5 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
   f();
 })();
 </script>
-<script src="./aitwin.js?v=2" defer></script>
+<script src="./aitwin.js?v=3" defer></script>
 </body></html>
