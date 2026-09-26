@@ -25,8 +25,9 @@
 <link rel="icon" href="./assets/lokesh-face.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@500&text=%E2%82%B90123456789%2C.&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.6s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
@@ -1571,17 +1572,32 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    ═══════════════════════════════════════════════════════════════════ */
 .cardframe.merge2{overflow:hidden;aspect-ratio:var(--card-ar)}
 
+.workrow .cardframe.merge2 .mgphone-wrap{position:absolute;top:15.3%;left:11.75%;width:76.5%;container-type:inline-size}
+/* the value is live text laid over the one in the picture: a patch of the
+   card's own colour hides the baked-in digits, and Hind (the app's face)
+   draws the number so it can count up. Box = the digits' bounds in the
+   1600x3299 image, padded a little. */
+.mgval{position:absolute;left:67.8%;width:22.5%;top:20.0%;height:2.37%;background:#F9FBFC;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:.5%;box-sizing:border-box;pointer-events:none}
+.mgval-n{font-size:4.85cqw;font-family:'Hind',var(--sans,'Geist'),sans-serif;font-weight:500;color:#2C333E;line-height:1.1;white-space:nowrap;letter-spacing:0;display:inline-flex;align-items:flex-start}
+.mgval-n .od-d{position:relative;display:inline-block;height:1.1em;overflow:hidden;vertical-align:top}
+/* the column is as wide as its own final digit (proportional, like the
+   app); the strip rides centred over it */
+.mgval-n .od-sz{display:block;visibility:hidden;line-height:1.1}
+.mgval-n .od-strip{position:absolute;top:0;left:50%;margin-left:-1em;width:2em;display:flex;flex-direction:column;will-change:transform}
+.mgval-n .od-strip > span{display:block;height:1.1em;line-height:1.1;text-align:center}
+.mgval-n .od-s{display:inline-block;height:1.1em;line-height:1.1}
 .workrow .cardframe.merge2 .mgphone-single{
-  position:absolute;top:15.3%;left:11.75%;width:76.5%;height:auto;
+  position:relative;display:block;width:100%;height:auto;
   filter:drop-shadow(-14px 22px 26px rgba(18,18,22,.24));
   transition:transform .45s var(--ease)}
 
-.workrow:hover .cardframe.merge2 .mgphone-single,
-.workrow:focus-within .cardframe.merge2 .mgphone-single{
+.workrow:hover .cardframe.merge2 .mgphone-wrap,
+.workrow:focus-within .cardframe.merge2 .mgphone-wrap{
   transform:translateY(-8px) scale(1.015)}
 
 @media (prefers-reduced-motion:reduce){
-  .workrow .cardframe.merge2 .mgphone-single{transition:none}
+  .workrow .cardframe.merge2 .mgphone-wrap{transition:none}
 }
 /* fluid mode (JS): one continuous motion instead of a hover jump. The
    phone rises into the frame the first time the card is seen, drifts
@@ -1589,7 +1605,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    cursor. Every value eases toward its target each frame, so nothing
    snaps: moving the mouse away lets it settle back like it has weight. */
 .cardframe.merge2.is-fluid{perspective:1400px}
-.cardframe.merge2.is-fluid .mgphone-single{transition:none!important;will-change:transform,opacity;transform-origin:50% 40%;backface-visibility:hidden}
+.cardframe.merge2.is-fluid .mgphone-wrap{transition:none!important;will-change:transform,opacity;transform-origin:50% 40%;backface-visibility:hidden}
 /* ══ RISE PORTAL CARD ════════════════════════════════════════════════
    Same shape as the App Merge card: alive at rest with a slow float,
    then one clean move on hover. The auto-playing cursor tour is gone —
@@ -3702,8 +3718,8 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
      stays scrollable, the way a browser's own side panel behaves */
   html.chat-docked .totop{right:452px}
   html.chat-docked .askdock{opacity:0!important;pointer-events:none!important}
-  /* compact welcome: small hand, one line, right above the suggestions */
-  .aichat-intro{justify-content:flex-end!important;padding:16px 0 8px!important}
+  /* compact welcome: small hand, one line, centred in the empty space */
+  .aichat-intro{justify-content:center!important;padding:12px 0!important}
   .aihand{width:56px!important;height:56px!important;margin:0 auto 8px!important}
   .aihero-t{font-size:22px!important}
   .aichat-body{padding:0 20px}
@@ -4004,12 +4020,39 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 :root{--navOff:var(--muted)}
 #top h1{line-height:1.3}
 .worktext h3{color:var(--ink);line-height:1.3}
+/* card titles in the notes card's voice: Geist 15/500, not the serif */
+.worktext h3{font-family:var(--sans,'Geist'),system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.45;letter-spacing:var(--tr-body)}
+/* 2x2 tiles: on hover a soft fade in the page's own colour rises from the
+   tile's foot and the title settles onto it: no box, no label. In slowly
+   with a little blur, out a touch quicker. Touch screens always show it. */
+#work .workrow{position:relative}
+#work .cardframe::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;z-index:4;pointer-events:none;
+  background:linear-gradient(to top,color-mix(in srgb,var(--bg) 94%,transparent) 0%,color-mix(in srgb,var(--bg) 70%,transparent) 38%,transparent 100%);
+  opacity:0;transition:opacity .35s cubic-bezier(.4,0,.2,1)}
+#work .worktext{position:absolute;left:20px;right:20px;bottom:10px;margin:0!important;text-align:center;align-items:center;z-index:5;pointer-events:none;
+  opacity:0;transform:translateY(8px);filter:blur(3px);
+  transition:opacity .3s cubic-bezier(.4,0,.2,1),transform .35s cubic-bezier(.4,0,.2,1),filter .3s cubic-bezier(.4,0,.2,1)}
+#work .worktext h3{margin:0 auto;text-align:center;color:var(--muted);font-size:13px;font-weight:300;line-height:1.5;letter-spacing:0}
+@media (hover:hover){
+  #work .workrow:hover .cardframe::after,#work .workrow:focus-visible .cardframe::after{opacity:1;transition:opacity .6s cubic-bezier(.22,1,.36,1)}
+  #work .workrow:hover .worktext,#work .workrow:focus-visible .worktext{opacity:1;transform:none;filter:none;
+    transition:opacity .55s cubic-bezier(.22,1,.36,1) .06s,transform .7s cubic-bezier(.22,1,.36,1) .06s,filter .55s cubic-bezier(.22,1,.36,1) .06s}
+}
+@media (hover:none){ #work .cardframe::after{opacity:1} #work .worktext{opacity:1;transform:none;filter:none} }
+@media (prefers-reduced-motion:reduce){ #work .worktext{transform:none;filter:none} }
+@media (max-width:684px){ #work .workgrid{row-gap:24px} #work .workrow + .workrow{padding-top:0} }
 #experience .exp-co{line-height:1.3}
 #top .hero-sub{line-height:1.55;letter-spacing:var(--tr-body)}
 #experience .exp-desc{color:var(--muted);line-height:1.55;letter-spacing:var(--tr-body)}
 #experience .exp-role{line-height:1.45;letter-spacing:var(--tr-body)}
 .padtriggertext{font-size:15px;line-height:1.45;letter-spacing:var(--tr-body)}
 .padtriggerhint{font-size:13px;line-height:1.45;letter-spacing:var(--tr-body);color:var(--muted)}
+/* the views card reads at the notes card's sizes: they sit side by side */
+#notes .rp-txt b,#notes .rp-txt b[data-rp-line]{font-size:15px;line-height:1.45;letter-spacing:var(--tr-body)}
+#notes .rp-sub{font-size:13px;line-height:1.45;letter-spacing:var(--tr-body)}
+#notes .rp-faces i.rp-me{font-size:11px}
+@media (max-width:400px){ #notes .rp-txt b{font-size:15px} #notes .rp-sub{font-size:13px} }
+@media (hover:none){ #notes .rp-sub-b{display:none} }
 .heroask-t{letter-spacing:var(--tr-body)}
 #contact .footcredit{font-size:13px;line-height:1.55;letter-spacing:var(--tr-body)}
 @media (max-width:400px){#contact .footcredit{font-size:12px}}
@@ -4119,9 +4162,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </nav>
       <div class="mcases">
         <p class="mgroup">Case studies</p>
-        <a class="mcase" href="./app-merge.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Two apps into one, built to hold the third</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
+        <a class="mcase" href="./app-merge.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Unifying the investing journey in one app</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
         <a class="mcase" href="./rise-portal.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span></a>
-        <a class="mcase" href="./web-terminal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">The desktop trading terminal: chart, watchlist, and orders on one screen.</span><span class="mcase-m">Rupeezy &#183; Web trading terminal</span></span></a>
+        <a class="mcase" href="./web-terminal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">Designing the desktop trading experience</span><span class="mcase-m">Rupeezy &#183; Web trading terminal</span></span></a>
       </div>
       <div class="mfoot">
         <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
@@ -4219,11 +4262,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       <a href="./app-merge.html" class="workrow" data-reveal data-cursor-label="open">
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe merge2" style="background:var(--card-tint-01)">
-            <img class="mgphone-single" src="./assets/am-home-after-framed.webp" width="1600" height="3299" loading="eager" decoding="async" alt="The merged app&#8217;s home screen, with one overall portfolio card and IPO and NFO entry points side by side">
+            <div class="mgphone-wrap"><img class="mgphone-single" src="./assets/am-home-after-framed.webp" width="1600" height="3299" loading="eager" decoding="async" alt="The merged app&#8217;s home screen, with one overall portfolio card and IPO and NFO entry points side by side"><span class="mgval" aria-hidden="true"><span class="mgval-n">₹12,570.45</span></span></div>
           </div>
         </div>
         <div class="worktext">
-          <h3>Two apps into one, built to hold the third</h3>
+          <h3>Unifying the investing journey in one app</h3>
         </div>
       </a>
 
@@ -4248,9 +4291,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           </div>
         </div>
         <div class="worktext">
-          <h3>The desktop trading terminal: chart, watchlist, and orders on one screen.</h3>
+          <h3>Designing the desktop trading experience</h3>
         </div>
       </a>
+
 
       <a href="https://runable.com/" target="_blank" rel="noreferrer" class="workrow runrow" data-reveal data-cursor-label="visit" aria-label="Runable, an AI agent platform. Visit the live site">
         <div style="grid-row:1;grid-column:1;min-width:0">
@@ -5953,9 +5997,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // a lead line, figures {{n|label}}, a "Label: value" facts list,
   // labelled steps, a quote, and [case:id] cards. Re-run on every token.
   var CASES = {
-    "app-merge":    { n: "01", t: "Two apps into one, built to hold the third", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
+    "app-merge":    { n: "01", t: "Unifying the investing journey in one app", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
     "rise-portal":  { n: "02", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
-    "web-terminal": { n: "03", t: "The desktop trading terminal: chart, watchlist, and orders on one screen", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
+    "web-terminal": { n: "03", t: "Designing the desktop trading experience", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
     "resume":       { t: "My r\u00e9sum\u00e9", k: "R\u00e9sum\u00e9", m: "Roles, dates and tools", href: "./resume.html" }
   };
   var FIG_RE = /\{\{\s*([^|}]+?)\s*\|\s*([^}]+?)\s*\}\}/g;
@@ -6865,7 +6909,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 <script>
 /* App Merge card: fluid phone (entrance, scroll drift, cursor lean) */
 (function(){
-  var frame = document.querySelector(".cardframe.merge2"), img = frame && frame.querySelector(".mgphone-single");
+  var frame = document.querySelector(".cardframe.merge2"), img = frame && frame.querySelector(".mgphone-wrap");
   if (!img || !window.requestAnimationFrame) return;
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   var row = frame.closest(".workrow") || frame;
@@ -6873,7 +6917,45 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   frame.classList.add("is-fluid");
   // current and target values; each frame current moves a fraction of the way to target
   var cur = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 }, tgt = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 };
-  var inView = false, entered = false, raf = 0, last = 0;
+  var inView = false, entered = false, raf = 0, last = 0, counted = false;
+  // Current Value rolls in like an odometer once the phone has landed:
+  // each digit is a strip of 0-9 twice over that scrolls to its place, the
+  // left digits travelling furthest, all settling together.
+  var val = frame.querySelector(".mgval-n"), FINAL = "₹12,570.45", strips = [];
+  if (val){
+    val.textContent = "";
+    FINAL.split("").forEach(function(ch){
+      if (/\d/.test(ch)){
+        var col = document.createElement("span"); col.className = "od-d";
+        var st = document.createElement("span"); st.className = "od-strip";
+        for (var k = 0; k < 20; k++){ var i = document.createElement("span"); i.textContent = k % 10; st.appendChild(i); }
+        var sz = document.createElement("span"); sz.className = "od-sz"; sz.textContent = ch;
+        col.appendChild(sz); col.appendChild(st); val.appendChild(col); strips.push({ el: st, d: +ch });
+      } else {
+        var c = document.createElement("span"); c.className = "od-s"; c.textContent = ch; val.appendChild(c);
+      }
+    });
+  }
+  function odoReset(){
+    strips.forEach(function(s){ s.el.style.transition = "none"; s.el.style.transform = "translateY(0)"; });
+  }
+  function odoRoll(){
+    var n = strips.length;
+    strips.forEach(function(s, i){
+      void s.el.offsetHeight;
+      s.el.style.transition = "transform " + (1700 - i * 60) + "ms cubic-bezier(.33,1,.68,1) " + (i * 45) + "ms";
+      s.el.style.transform = "translateY(" + (-(10 + s.d) * 1.1) + "em)";
+    });
+  }
+  odoReset();
+  function countUp(){ odoRoll(); }
+  // leaving the screen resets the phone and the number, so it plays again
+  function replayReset(){
+    if (!entered) return;
+    entered = false; counted = false;
+    tgt.enter = 1; cur.enter = 1; apply(); odoReset();
+  }
+
   function measure(){
     var r = frame.getBoundingClientRect(), vh = window.innerHeight || 1;
     var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2); // -1 above … 1 below
@@ -6882,10 +6964,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
   function apply(){
     var h = frame.clientHeight || 1;
-    var y = cur.enter * h * 0.22 + cur.drift * h * 0.045 - cur.lift * 10;
+    var y = cur.enter * h * 0.7 + cur.drift * h * 0.045 - cur.lift * 10;
     var sc = 1 + cur.lift * 0.018;
     img.style.transform = "translate3d(0," + y.toFixed(2) + "px,0) rotateX(" + cur.rx.toFixed(3) + "deg) rotateY(" + cur.ry.toFixed(3) + "deg) scale(" + sc.toFixed(4) + ")";
     img.style.opacity = (1 - cur.enter * 0.9).toFixed(3);
+    if (!counted && entered && cur.enter < 0.12){ counted = true; countUp(); }
   }
   function tick(now){
     raf = 0;
@@ -6904,7 +6987,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
   function kick(){ if (!raf) raf = requestAnimationFrame(tick); }
   if ("IntersectionObserver" in window){
-    new IntersectionObserver(function(es){ inView = es[es.length - 1].isIntersecting; if (inView) kick(); }, { rootMargin: "80px 0px" }).observe(frame);
+    new IntersectionObserver(function(es){ inView = es[es.length - 1].isIntersecting; if (inView) kick(); else replayReset(); }, { rootMargin: "80px 0px" }).observe(frame);
   } else { inView = true; }
   window.addEventListener("scroll", kick, { passive: true });
   window.addEventListener("resize", kick);
