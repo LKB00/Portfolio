@@ -42,19 +42,17 @@
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
   --display:'Geist','Inter',Helvetica,Arial,sans-serif;
   --serif:'STIX Two Text','STIX Two Math',Georgia,serif; --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-    --t-body:15px;    --t-small:12px;
+    --t-body:15px;
   --t-h1:24px;
-   --t-btn:13px; --t-mono:11px;
+    --t-mono:11px;
 
-  --tr-display:-.01em;
-  --s-1:4px; --s-2:7px; --s-3:10px; --s-4:13px; --s-5:18px;
+  --s-1:4px; --s-2:7px; --s-3:10px; --s-4:13px;
     --s-8:45px;
 
   --pad:18px;
-  --dot:rgba(20,20,20,.10); --frameSh:rgba(0,0,0,.14);
+   --frameSh:rgba(0,0,0,.14);
   --accent:#006AD4;
   --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
-  --tint:var(--surface);
 
    --navOff:#5C5C5C;
 }
@@ -64,10 +62,9 @@
   --link:#5EA9F5; --dark:#EDEDED; --onDark:#141414;
 
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
-  --dot:rgba(237,237,237,.10); --frameSh:rgba(0,0,0,.6);
+   --frameSh:rgba(0,0,0,.6);
   --accent:#5EA9F5;
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
-  --tint:var(--surface);
 
   --navOff:#A1A1A1;
 }
@@ -153,12 +150,12 @@ h1{font-size:var(--t-h1);line-height:1.02;letter-spacing:-.02em;font-weight:400}
 #contact p{margin:10px 0 0;font-size:var(--t-body);color:var(--muted)}
 
 /* bg wash */
-#bgwash{position:fixed;inset:-10% -5%;z-index:0;pointer-events:none;background:radial-gradient(70% 58% at 12% 0%, color-mix(in oklab,var(--accent) 16%, transparent) 0%, transparent 72%),radial-gradient(64% 54% at 92% 14%, color-mix(in oklab,var(--accent) 11%, transparent) 0%, transparent 74%),radial-gradient(90% 55% at 50% 100%, color-mix(in oklab,var(--accent) 8%, transparent) 0%, transparent 76%)}
+
 body:before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;filter:url(#grain);opacity:.05}
 :root[data-theme="dark"] body:before{opacity:.07}
-.halftone{position:absolute;top:0;left:0;width:100vw;height:min(900px,90vh);pointer-events:none;z-index:0;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:13px 13px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%)}
+
 #contact footer{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;}
-#contact footer > *:not(.halftone){position:relative;z-index:1}
+#contact footer > *{position:relative;z-index:1}
 
 section,main,footer{position:relative;z-index:2}
 
@@ -208,7 +205,7 @@ section{padding-bottom:0}
 
 html,body{background:var(--bg);font-family:var(--display);letter-spacing:-.01em}
 body{font-size:14px;line-height:1.6;color:var(--muted);-webkit-font-smoothing:antialiased}
-body:before,#bgwash,.halftone{display:none!important}
+body:before{display:none!important}
 a{color:var(--link);transition:opacity .2s ease,color .2s ease}
 a:hover{color:var(--link);opacity:.7}
 ::selection{background:var(--markWash)}
@@ -547,8 +544,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 </head>
 <body>
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter></svg>
-<div id="bgwash" aria-hidden="true"></div>
-<div class="halftone halftone-down" aria-hidden="true"></div>
 <div class="wrap">
   <button type="button" class="totop" id="totop" aria-label="Back to top">
     <svg class="totop-ring" viewBox="0 0 56 56" aria-hidden="true"><circle class="totop-track" cx="28" cy="28" r="25"/><circle class="totop-prog" cx="28" cy="28" r="25"/></svg>

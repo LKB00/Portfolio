@@ -69,23 +69,23 @@
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
   --display:'Geist','Inter',Helvetica,Arial,sans-serif;
   --serif:'STIX Two Text','STIX Two Math',Georgia,serif; --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --t-display:40px; --t-lead:16px; --t-body:16px; --t-title:14px; --t-meta:13px; --t-ui:13px; --t-small:12px; --t-micro:11px; --t-xs:11px;
+   --t-lead:16px; --t-body:16px; --t-title:14px; --t-meta:13px; --t-ui:13px;  --t-micro:11px;
   --t-h1:40px; --t-h2:26px;
-   --t-btn:13px; --t-mono:11px; --t-mono-lg:12px;
+    --t-mono:11px; --t-mono-lg:12px;
   --lh-body:1.42;
-  --tr-display:-.01em;  --tr-body:-.01em; --tr-label:.02em; --tr-mono:0;
+  --tr-display:-.01em;  --tr-body:-.01em; --tr-label:.02em;
   /* one frame shape for every work card: as landscape as the phone
      mockups can stand, so the two web shots keep tight even air */
   --card-ar:100/77;
   /* redefined to resolve to the case-study pages' 5-step scale
      (8/16/32/56/96px) — old step names kept so every declaration
      across the file picks up the shared values automatically */
-  --s-1:8px; --s-2:8px; --s-3:8px; --s-4:16px; --s-5:16px;
+   --s-2:8px; --s-3:8px; --s-4:16px; --s-5:16px;
   --s-6:32px; --s-7:32px; --s-8:56px;
   --col:821px;  --gap:24px;
   --pad:18px;   --measure:468px;
-  --dot:rgba(20,20,20,.10); --frameSh:rgba(0,0,0,.14);
-  --accent:#006AD4; --accentLine:#006AD4;
+   --frameSh:rgba(0,0,0,.14);
+  --accent:#006AD4;
   --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
   --tint:var(--surface);
 
@@ -106,8 +106,8 @@
      reads as a lit panel rather than glaring */
 
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
-  --dot:rgba(237,237,237,.10); --frameSh:rgba(0,0,0,.6);
-  --accent:#5EA9F5; --accentLine:#5EA9F5;
+   --frameSh:rgba(0,0,0,.6);
+  --accent:#5EA9F5;
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
   --tint:var(--surface);
 
@@ -227,12 +227,12 @@ h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;lett
 
 @media (max-width:576px){h1{letter-spacing:var(--tr-display)}}
 /* bg wash */
-#bgwash{position:fixed;inset:-10% -5%;z-index:0;pointer-events:none;background:radial-gradient(70% 58% at 12% 0%, color-mix(in oklab,var(--accent) 16%, transparent) 0%, transparent 72%),radial-gradient(64% 54% at 92% 14%, color-mix(in oklab,var(--accent) 11%, transparent) 0%, transparent 74%),radial-gradient(90% 55% at 50% 100%, color-mix(in oklab,var(--accent) 8%, transparent) 0%, transparent 76%)}
+
 body:before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;filter:url(#grain);opacity:.05}
 :root[data-theme="dark"] body:before{opacity:.07}
-.halftone{position:absolute;top:0;left:0;width:100vw;height:min(900px,90vh);pointer-events:none;z-index:0;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:13px 13px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%)}
+
 #contact footer{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;}
-#contact footer > *:not(.halftone){position:relative;z-index:1}
+#contact footer > *{position:relative;z-index:1}
 
 section,main,footer{position:relative;z-index:2}
 
@@ -257,7 +257,7 @@ figure[data-reveal].shown{opacity:1;transform:none}
 html.pf-cursor{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%234A5FD0' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
 html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L20 11.6 L12.4 13.3 L9.6 21 Z' fill='%23A5BBFC' stroke='%23FFFFFF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto}
 }
-#cursorTag{display:none}
+
 /* intro loader */
 #loader{position:fixed;inset:0;z-index:90;display:grid;place-items:center;transition:opacity .5s cubic-bezier(.4,0,.2,1),visibility .5s}
 #loader .box{position:relative;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .5s}
@@ -267,9 +267,8 @@ html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='h
 
 #loader .name{display:block;white-space:nowrap;}
 
-@keyframes typeName{from{max-width:0}to{max-width:100%}}
 @keyframes popIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
 #loader .dot{position:absolute;}
 
 #loader .tag{position:absolute;opacity:0;white-space:nowrap}
@@ -298,7 +297,7 @@ html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='h
 .workrow:active .cardframe{transform:scale(.99)}
 }
 @media (prefers-reduced-motion:reduce){
-#bgwash,#loader *,[data-reveal]{animation:none!important;transition:none!important}
+#loader *,[data-reveal]{animation:none!important;transition:none!important}
 
 }
 
@@ -310,8 +309,7 @@ img.bg{opacity:0;transition:opacity .5s ease}
    floating annotation chips, pill controls, a peeling contact tab.
    ══════════════════════════════════════════════════════════════════ */
 
-body:before{display:none}          /* drop the film grain */
-#bgwash,.halftone{display:none}    /* drop the wash + dot fields */
+    /* drop the wash + dot fields */
 
 .wrap{padding:0 var(--pad)}
 section{position:relative;z-index:2;padding-bottom:clamp(42px,7vw,62px)}
@@ -492,7 +490,7 @@ h1[data-reveal],h2[data-reveal]{transform:translateY(12px);transition-duration:.
 
 html,body{background:var(--bg);font-family:var(--display);letter-spacing:-.01em}
 body{font-size:14px;line-height:1.6;color:var(--muted);-webkit-font-smoothing:antialiased}
-body:before,#bgwash,.halftone{display:none!important}
+body:before{display:none!important}
 a{color:var(--link);transition:opacity .2s ease,color .2s ease}
 a:hover{color:var(--link);opacity:.7}
 ::selection{background:var(--markWash)}
@@ -2695,7 +2693,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aistatus{align-items:center;gap:4px;font-family:var(--display);font-size:12.5px;
   line-height:16px;color:var(--muted);}
 .aistatus svg{color:var(--faint)}
-@keyframes aiStat{0%,100%{opacity:1}50%{opacity:.5}}
+
 .aians-x{min-width:0}
 .aitrace{display:none!important}
 
@@ -3291,7 +3289,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 </head>
 <body>
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter></svg>
-<div class="halftone halftone-down" aria-hidden="true"></div>
 <div id="loader" aria-hidden="true">
   <div class="box">
     <span class="sel" aria-hidden="true"><span class="dot tl"></span><span class="dot tr"></span><span class="dot bl"></span><span class="dot br"></span></span>
@@ -3299,8 +3296,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     <span class="name"><span>Lokesh Bhatia</span></span>
   </div>
 </div>
-<div id="bgwash" aria-hidden="true"></div>
-<div id="cursorTag"><span id="cursorTagText"></span></div>
 <div id="palette" role="dialog" aria-modal="true" aria-label="Command palette">
   <div class="box">
     <input id="paletteInput" type="text" placeholder="Jump to…" aria-label="Search sections">
@@ -3311,7 +3306,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 <div class="padoverlay" id="padOverlay"></div>
 <div class="wrap">
 
-  <button type="button" class="totop" id="totop" aria-label="Back to top" data-cursor-label="top">
+  <button type="button" class="totop" id="totop" aria-label="Back to top">
     <svg class="totop-ring" viewBox="0 0 56 56" aria-hidden="true"><circle class="totop-track" cx="28" cy="28" r="25"/><circle class="totop-prog" cx="28" cy="28" r="25"/></svg>
     <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
   </button>
@@ -3437,7 +3432,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="work" data-section="Selected work">
     <div class="workgrid">
-      <a href="./getbaq.html" class="workrow gbrow" data-reveal data-cursor-label="open">
+      <a href="./getbaq.html" class="workrow gbrow" data-reveal>
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe gbframe">
             <div class="gbdemo" role="img" aria-label="Getbaq in use: someone types that Flipkart rejected the replacement for a rusted mixer grinder, sends it, and the agent reads the message, finds the company, the amount, the rule that fits and Flipkart's deadline">
@@ -3476,7 +3471,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         </div>
       </a>
 
-      <a href="./app-merge.html" class="workrow" data-reveal data-cursor-label="open">
+      <a href="./app-merge.html" class="workrow" data-reveal>
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe merge2" style="background:var(--card-tint-01)">
             <div class="mgphone-wrap"><img class="mgphone-single" src="./assets/am-home-after-framed.webp" width="1600" height="3299" loading="eager" decoding="async" alt="The merged app&#8217;s home screen, with one overall portfolio card and IPO and NFO entry points side by side"><span class="mgval" aria-hidden="true"><span class="mgval-n">₹12,570.45</span></span></div>
@@ -3487,7 +3482,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         </div>
       </a>
 
-      <a href="./rise-portal.html" class="workrow" data-reveal data-cursor-label="open">
+      <a href="./rise-portal.html" class="workrow" data-reveal>
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe rztour" style="background:var(--card-tint-02)">
             <div class="rz-shot" role="img" aria-label="Rise Portal dashboard: earnings, clients, and the payout eligibility criteria"></div>
@@ -3498,7 +3493,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         </div>
       </a>
 
-      <a href="./web-terminal.html" class="workrow" data-reveal data-cursor-label="open">
+      <a href="./web-terminal.html" class="workrow" data-reveal>
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe runshot" style="background:var(--card-tint-01)">
             <div class="macframe zoom">
