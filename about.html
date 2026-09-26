@@ -1199,48 +1199,6 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
 /* the session card's heading sits the same distance from its label and
    its text as every other heading on the page */
 .notecard h2 + p{margin-top:13px!important}
-
-/* ══ WHO'S DRIVING ═══════════════════════════════════════════════════
-   "What I do with AI, and what I don't" as one dial, not three boxes:
-   a track from AI to Me, and the three answers placed along it by how
-   much is handed over. Building this site sits toward AI (it writes, I
-   direct), designing AI products in the middle, deciding at my end. A
-   thumb sweeps along once when the section arrives, lighting each
-   answer; hovering an answer glides it there; and "Let it decide?"
-   drives the dial: the thumb races to AI, then snaps back to Me. */
-.aidial{position:relative;background:var(--surface);border-radius:var(--r-card);padding:26px 24px 28px}
-.aidial-axis{position:relative;padding-top:22px;margin-bottom:26px}
-.aidial-end{position:absolute;top:0;left:0;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:#8B6FD6}
-.aidial-end.is-me{left:auto;right:0;color:var(--ink)}
-.aidial-track{position:relative;height:22px}
-.aidial-line{position:absolute;left:0;right:0;top:9px;height:4px;border-radius:4px;background:linear-gradient(90deg,#D9D0F6 0%,#A996E4 35%,#6E6480 70%,var(--ink) 100%)}
-.aidial{--dg:40px}
-.aidial-ticks{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--dg)}
-.aidial .labelrow{gap:var(--dg)!important}
-.aidial-ticks i{justify-self:center;margin-top:5px;width:12px;height:12px;border-radius:50%;background:var(--surface);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--ink) 22%,transparent);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-.aidial-ticks i.is-on{transform:scale(1.25);box-shadow:inset 0 0 0 2px var(--ink)}
-.aidial-thumb{position:absolute;top:0;left:var(--x,100%);width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--card,#fff);
-  box-shadow:0 0 0 2px var(--ink),0 6px 14px -4px rgba(0,0,0,.28);transition:left .7s cubic-bezier(.22,1,.36,1);z-index:2}
-.aidial-thumb::after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--ink)}
-.aidial.is-racing .aidial-thumb{transition:left .42s cubic-bezier(.5,0,.75,0)}
-.aidial.is-snap .aidial-thumb{transition:left .55s cubic-bezier(.34,1.56,.64,1)}
-.aidial.is-snap .aidial-track{animation:aiShake .4s var(--ease)}
-/* the answers: one panel, not three cards */
-.aidial .labelrow > div{background:none!important;box-shadow:none!important;border-radius:0!important;padding:0!important;transition:opacity .35s var(--ease)}
-.aidial.is-focus .labelrow > div:not(.is-active){opacity:.38}
-.aidial .labelrow > div .aiproof{background:var(--card,#fff);margin-left:0!important;margin-right:0!important;width:auto!important;max-width:100%;box-sizing:border-box}
-@media (min-width:685px){
-  .aidial .labelrow > div + div{position:relative}
-  .aidial .labelrow > div + div::before{content:"";position:absolute;left:calc(var(--dg) / -2);top:0;bottom:0;width:1px;background:var(--line)}
-}
-@media (max-width:684px){
-  .aidial{padding:22px 18px 24px}
-  .aidial .labelrow{gap:28px!important}
-}
-@media (prefers-reduced-motion:reduce){
-  .aidial-thumb,.aidial.is-racing .aidial-thumb,.aidial.is-snap .aidial-thumb{transition:none}
-  .aidial.is-snap .aidial-track{animation:none}
-}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
@@ -1380,14 +1338,8 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
       <h2>What I do with AI, and what I don’t</h2>
       <p>Two of my last three roles were at AI companies. This site is the third.</p>
     </div>
-    <div class="aidial" data-aidial data-reveal>
-    <div class="aidial-axis" aria-hidden="true">
-      <span class="aidial-end">AI</span>
-      <span class="aidial-end is-me">Me</span>
-      <div class="aidial-track"><span class="aidial-line"></span><div class="aidial-ticks"><i></i><i></i><i></i></div><span class="aidial-thumb"></span></div>
-    </div>
-    <div class="labelrow" style="--cols:3;margin-bottom:0">
-      <div data-stop="0">
+    <div class="labelrow" style="--cols:3;margin-bottom:0" data-reveal>
+      <div>
         <span class="cap">Built with it</span>
         <div class="aiproof aiproof-live" aria-hidden="true">
           <div class="aiproof-bar">
@@ -1404,7 +1356,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
         </div>
         <p>This site, end to end: nav, slider, analytics. I don’t code. I direct, check, and push back when it looks generated.</p>
       </div>
-      <div data-stop="1">
+      <div>
         <span class="cap">Designed for it</span>
         <div class="aiproof aiproof-path" aria-hidden="true">
           <div class="aiproof-frames">
@@ -1420,7 +1372,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
         </div>
         <p>An AI agent platform, concept to public launch. The hard part wasn’t the model. It was making the work visible enough to trust.</p>
       </div>
-      <div class="is-no" data-stop="2">
+      <div class="is-no">
         <span class="cap">Don’t use it for</span>
         <button type="button" class="aiproof aiproof-toggle" data-ai-toggle aria-label="Try letting it decide. See what happens">
           <span class="aiproof-track"><span class="aiproof-knob"></span></span>
@@ -1428,7 +1380,6 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
         </button>
         <p>Deciding. It’s fast at the average answer. The costly call is still mine.</p>
       </div>
-    </div>
     </div>
   </section>
 
@@ -1990,75 +1941,6 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
   }
   window.addEventListener("scroll",function(){ if(!t){ t=true; requestAnimationFrame(f); } },{passive:true});
   f();
-})();
-</script>
-<script>
-/* Who's driving: the dial under "What I do with AI". */
-(function(){
-  "use strict";
-  var dial = document.querySelector("[data-aidial]");
-  if (!dial) return;
-  var thumb = dial.querySelector(".aidial-thumb"), track = dial.querySelector(".aidial-track");
-  var ticks = Array.prototype.slice.call(dial.querySelectorAll(".aidial-ticks i"));
-  var stops = Array.prototype.slice.call(dial.querySelectorAll("[data-stop]"));
-  var reduced = false;
-  try { reduced = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
-  var HOME = 2, cur = HOME, swept = false, busy = false;
-  function xOf(i){
-    var t = track.getBoundingClientRect(), k = ticks[i].getBoundingClientRect();
-    return ((k.left + k.width / 2 - t.left) / t.width) * 100;
-  }
-  function go(i, focus){
-    cur = i;
-    thumb.style.setProperty("--x", xOf(i) + "%");
-    ticks.forEach(function(t, j){ t.classList.toggle("is-on", j === i); });
-    stops.forEach(function(s, j){ s.classList.toggle("is-active", j === i); });
-    dial.classList.toggle("is-focus", !!focus);
-  }
-  function rest(){ go(HOME, false); }
-  rest();
-  addEventListener("resize", function(){ go(cur, dial.classList.contains("is-focus")); });
-
-  // once, when it arrives: AI end, then each answer in turn, then home
-  function sweep(){
-    if (swept || reduced) return;
-    swept = true;
-    thumb.style.transition = "none"; thumb.style.setProperty("--x", "0%"); void thumb.offsetWidth; thumb.style.transition = "";
-    var i = 0;
-    (function step(){
-      if (i > 2) { setTimeout(rest, 900); return; }
-      go(i, true); i++;
-      setTimeout(step, 950);
-    })();
-  }
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function(es){ if (es[0].isIntersecting) { setTimeout(sweep, 350); io.disconnect(); } }, { threshold: .45 });
-    io.observe(dial);
-  }
-
-  // hover or tap an answer: the thumb goes to it
-  stops.forEach(function(s, i){
-    s.addEventListener("mouseenter", function(){ if (!busy) go(i, true); });
-    s.addEventListener("focusin", function(){ if (!busy) go(i, true); });
-  });
-  dial.addEventListener("mouseleave", function(){ if (!busy) rest(); });
-
-  // "Let it decide?" drives the dial: race to AI, then snap back to Me
-  var toggle = dial.querySelector("[data-ai-toggle]");
-  if (toggle) toggle.addEventListener("click", function(){
-    if (busy) return;
-    busy = true;
-    go(HOME, true);
-    dial.classList.add("is-racing");
-    thumb.style.setProperty("--x", "0%");
-    ticks.forEach(function(t){ t.classList.remove("is-on"); });
-    setTimeout(function(){
-      dial.classList.remove("is-racing");
-      dial.classList.add("is-snap");
-      go(HOME, true);
-      setTimeout(function(){ dial.classList.remove("is-snap"); busy = false; if (!dial.matches(":hover")) rest(); }, 1400);
-    }, 480);
-  });
 })();
 </script>
 </body>
