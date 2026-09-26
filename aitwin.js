@@ -31,7 +31,7 @@
     f.href = "https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap";
     head.appendChild(f);
   }
-  var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "./aitwin.css?v=2"; head.appendChild(l);
+  var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "./aitwin.css?v=3"; head.appendChild(l);
   var wrap = document.createElement("div");
   wrap.innerHTML = "  <button type=\"button\" class=\"askdock\" id=\"askDock\" aria-label=\"Ask my AI twin\" tabindex=\"-1\" aria-hidden=\"true\">\n    <canvas class=\"askhand\" width=\"20\" height=\"20\" aria-hidden=\"true\"></canvas><span class=\"askdock-t\"><span class=\"heroask-q\">Ask my</span> AI twin</span><span class=\"askdock-go\" aria-hidden=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span>\n  </button>\n\n  <div class=\"aichat\" id=\"aiChat\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"aiChatTitle\" aria-hidden=\"true\">\n    <div class=\"aichat-scrim\" data-aichat-close></div>\n    <div class=\"aichat-panel\" tabindex=\"-1\">\n      <span class=\"aichat-handle\" aria-hidden=\"true\"></span>\n\n\n      <section class=\"aimain\">\n        <div class=\"aichat-head\">\n          <div class=\"aiwm aiid\">\n            <span class=\"aiav\" aria-hidden=\"true\"><img src=\"assets/avatar-96.webp\" alt=\"\" width=\"36\" height=\"36\"></span>\n            <span class=\"aiid-t\">\n              <span class=\"aiid-n\" id=\"aiChatTitle\"><span class=\"aiwm-n\">Lokesh Bhatia</span><span class=\"aiwm-b\">AI</span></span>\n              <span class=\"aiid-s\" id=\"aiHeadStatus\">Trained on my work and r\u00e9sum\u00e9</span>\n            </span>\n          </div>\n          <span id=\"aiChatSpark\" hidden></span>\n          <button type=\"button\" class=\"aichat-iconbtn\" id=\"aiChatReset\" aria-label=\"New chat\" title=\"New chat\">\n            <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"/><path d=\"M12 7v6\"/><path d=\"M9 10h6\"/></svg>\n          </button>\n          <button type=\"button\" class=\"aichat-iconbtn\" id=\"aiChatClose\" aria-label=\"Close\" title=\"Close\">\n            <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg>\n          </button>\n        </div>\n        <div class=\"aichat-body\" id=\"aiChatBody\">\n          <div class=\"aichat-intro\" id=\"aiChatIntro\">\n            <canvas class=\"aihand\" id=\"aiHand\" aria-hidden=\"true\"></canvas>\n            <div class=\"aihero\"><p class=\"aihero-t\" id=\"aiHero\">What would you like to know?</p></div>\n          </div>\n        </div>\n        <p class=\"fsr\" id=\"aiChatLive\" aria-live=\"polite\"></p>\n        <div class=\"aichat-foot\" id=\"aiChatFoot\">\n          <div class=\"aitray\">\n            <div class=\"aitray-top\">\n              <p class=\"ailabel\" id=\"aiTrayLabel\">Ask me about</p>\n              <div class=\"airows\" id=\"aiChatSuggest\"></div>\n            </div>\n            <form class=\"aicomposer\" id=\"aiChatForm\">\n              <textarea class=\"aichat-input\" id=\"aiChatInput\" rows=\"1\" maxlength=\"600\" placeholder=\"Ask about my work, my career, or AI&#8230;\" aria-label=\"Ask me a question\"></textarea>\n              <div class=\"aicomposer-row\">\n                <button type=\"submit\" class=\"aichat-send\" id=\"aiChatSend\" aria-label=\"Send\" disabled>\n                  <svg class=\"ico-send\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5 12 7-7 7 7\"/><path d=\"M12 19V5\"/></svg>\n                  <svg class=\"ico-stop\" width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" aria-hidden=\"true\"><rect x=\"1\" y=\"1\" width=\"10\" height=\"10\" rx=\"2.2\" fill=\"currentColor\"></rect></svg>\n                </button>\n              </div>\n            </form>\n          </div>\n          <div class=\"aihint\"><span>AI version of me &#183; can be wrong</span></div>\n        </div>\n      </section>\n    </div>\n  </div>";
   while (wrap.firstChild) document.body.appendChild(wrap.firstChild);
@@ -60,8 +60,6 @@
 (function(){
   var panel = document.getElementById("aiChat");
   if (!panel) return;
-  var askBtn = document.getElementById("askAiBtn");
-  var askBtnMobile = document.getElementById("askAiBtnMobile");
   var sheet = panel.querySelector(".aichat-panel");
   var head = panel.querySelector(".aichat-head");
   var scrim = panel.querySelector(".aichat-scrim");
@@ -87,31 +85,17 @@
   // visitor does next cancels it
   var cancelRetry = null;
   function dropRetry(){ if (cancelRetry){ var c = cancelRetry; cancelRetry = null; c(); } }
-  var ARROW = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 
   // Lucide icons, as the Instead prototype uses them: 24-unit paths drawn
   // at 14px by default (12px inline, 16px for header actions), 1.5 stroke,
   // round caps and joins.
   var LP = {
-    thumbsUp: '<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>',
-    thumbsDown: '<path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>',
-    copy: '<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
     check: '<path d="M20 6 9 17l-5-5"/>',
-    chevronDown: '<path d="m6 9 6 6 6-6"/>',
-    arrowUp: '<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>',
     cornerDownRight: '<path d="m15 10 5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/>',
     arrowRight: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
     cornerDownLeft: '<path d="M20 4v7a4 4 0 0 1-4 4H4"/><path d="m9 10-5 5 5 5"/>',
-    x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
-    messagePlus: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v6"/><path d="M9 10h6"/>',
-    layers: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
-    briefcase: '<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/>',
-    sparkles: '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/>',
-    route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
-    users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-    fileText: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
-    arrowUpRight: '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>'
+    fileText: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>'
   };
   function LI(name, size, stroke){
     size = size || 14;
@@ -119,14 +103,6 @@
       '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + LP[name] + "</svg>";
   }
 
-  // The opening four are fixed and in this order: the questions a
-  // recruiter screening a designer actually has, strongest story first.
-  var STARTERS = [
-    { q: "What's the project you're proudest of?", tag: "Work", hint: "The Rupeezy app merge" },
-    { q: "What have you actually designed for AI?", tag: "AI", hint: "Runable, ZZAZZ and Getbaq" },
-    { q: "How did you get into design?", tag: "Career", hint: "Self-taught, from chemical science" },
-    { q: "How do you work with PMs and engineers?", tag: "Craft", hint: "One PM, seven engineers" }
-  ];
   // When the live AI can't answer (every free model busy, or an outage),
   // a suggested question still gets a real answer: one written by the
   // same AI from the same facts, saved here. Typed questions that aren't
@@ -172,77 +148,9 @@
     return null;
   }
 
-  // "Ask next" draws from these plus any starter not yet asked
-  var QUESTION_POOL = STARTERS.concat([
-    { q: "What's Getbaq?", tag: "AI" },
-    { q: "What did Rise Portal actually change?", tag: "Work" },
-    { q: "Do you have fintech experience?", tag: "Work" },
-    { q: "How did you build this site?", tag: "Craft" },
-    { q: "What was it like being the only designer?", tag: "Career" },
-    { q: "What are you looking for next?", tag: "Career" },
-    { q: "When can you start?", tag: "Hiring" },
-    { q: "How do I reach you directly?", tag: "Hiring" }
-  ]);
-
   var history = [], asked = [], busy = false, lastFocus = null, stopCurrent = null;
   var canHover = window.matchMedia && window.matchMedia("(hover:hover)").matches;
-  setTimeout(function(){ renderRail(); }, 0);
 
-  function shuffle(a){
-    for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
-    return a;
-  }
-  function pick(n, oneEachTag){
-    var fresh = shuffle(QUESTION_POOL.filter(function(x){ return asked.indexOf(x.q) === -1; }));
-    if (fresh.length < n) fresh = shuffle(QUESTION_POOL.slice());
-    if (!oneEachTag) return fresh.slice(0, n);
-    var out = [], tags = [];
-    fresh.forEach(function(x){ if (out.length < n && tags.indexOf(x.tag) === -1){ out.push(x); tags.push(x.tag); } });
-    fresh.forEach(function(x){ if (out.length < n && out.indexOf(x) === -1) out.push(x); });
-    return out;
-  }
-  function chip(item){
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "aichip";
-    b.innerHTML = "<span></span>" + ARROW;
-    b.firstChild.textContent = item.q;
-    b.addEventListener("click", function(){ sendMessage(item.q); });
-    return b;
-  }
-  var TOPIC = { Work: "My work", AI: "AI", Craft: "Working together", Career: "Career", Hiring: "Hiring" };
-  // Familiar icons, one per topic (NN/g: recognisable icon + plain label),
-  // so a row says what kind of question it is before it's read.
-  var SVG = function(d){ return '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">' + d + "</svg>"; };
-  var TOPIC_ICON = {
-    Work:   SVG('<rect x="2" y="4.5" width="12" height="9" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M5.8 4.5V3.2c0-.5.4-.9.9-.9h2.6c.5 0 .9.4.9.9v1.3M2 8.5h12" stroke="currentColor" stroke-width="1.4"/>'),
-    AI:     SVG('<path d="M8 1.8c.4 2.9 1.3 3.8 4.2 4.2-2.9.4-3.8 1.3-4.2 4.2-.4-2.9-1.3-3.8-4.2-4.2 2.9-.4 3.8-1.3 4.2-4.2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M12.4 10.6c.2 1.2.6 1.6 1.8 1.8-1.2.2-1.6.6-1.8 1.8-.2-1.2-.6-1.6-1.8-1.8 1.2-.2 1.6-.6 1.8-1.8Z" fill="currentColor"/>'),
-    Craft:  SVG('<circle cx="5.6" cy="5.6" r="2.2" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="6.4" r="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M1.8 13.4c.4-2.2 1.9-3.4 3.8-3.4s3.4 1.2 3.8 3.4M9.6 10.3c1.6-.2 3.8.5 4.6 3.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>'),
-    Career: SVG('<path d="M2.5 13.5h3v-3h3v-3h3v-3h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'),
-    Hiring: SVG('<rect x="2.2" y="3" width="11.6" height="10.5" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M2.2 6.5h11.6M5.5 1.8v2.4M10.5 1.8v2.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>')
-  };
-  var ICON_FOLLOW = SVG('<path d="M3.5 2.5v5.2c0 1.1.9 2 2 2h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M10 7l2.6 2.7L10 12.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>');
-  function sugRow(item, icon){
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "aisug";
-    b.innerHTML = '<span class="aisug-i">' + icon + '</span><span class="aisug-t"></span><span class="aisug-a">' + ARROW + "</span>";
-    b.querySelector(".aisug-t").textContent = item.q;
-    if (item.tag) b.title = TOPIC[item.tag] || item.tag;
-    b.addEventListener("click", function(){ sendMessage(item.q); });
-    return b;
-  }
-  function dotRow(item){
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "aitr";
-    // just the question: it already says what the answer is about. The
-    // arrow only appears on hover or focus, to say "this sends it".
-    b.innerHTML = '<span class="aitr-t"></span><span class="aitr-a" aria-hidden="true">' + ARROW + "</span>";
-    b.querySelector(".aitr-t").textContent = item.q;
-    b.addEventListener("click", function(){ sendMessage(item.q); });
-    return b;
-  }
   // Suggestions live in the tray the composer docks into, as pill rows;
   // hovering a row reveals its action, as in the prototype's "Open".
   function trayRow(q){
@@ -263,58 +171,14 @@
     suggest.parentNode.hidden = !qs.length;
   }
   function renderTry(){
-    fillTray("Ask me about", SCOPES[scope].rows);
+    fillTray("Ask me about", HOME.rows);
   }
-  // The context pill: what the conversation is about, as the prototype's
-  // "All clients ⌄". Choosing one changes the heading, the suggestions,
-  // and tells the model which part of my work to answer from.
-  var SCOPES = {
-    all:    { label: "Everything", icon: "layers", hero: "What would you like to know?",
-              rows: ["What's the project you're proudest of?", "What have you actually designed for AI?", "How did you get into design?", "How do you work with PMs and engineers?"] },
-    work:   { label: "My work", icon: "briefcase", hero: "Which project should we start with?",
-              rows: ["What's Getbaq?", "What's the project you're proudest of?", "What did Rise Portal actually change?", "Do you have fintech experience?"] },
-    ai:     { label: "AI", icon: "sparkles", hero: "Ask me how I design for AI.",
-              rows: ["What have you actually designed for AI?", "What's Getbaq?", "How do you stop the AI making things up?", "What won't you use AI for?"] },
-    career: { label: "Career", icon: "route", hero: "Ask me about my career.",
-              rows: ["How did you get into design?", "What was it like being the only designer?", "What are you looking for next?"] },
-    hiring: { label: "Hiring", icon: "users", hero: "Let\u2019s talk about working together.",
-              rows: ["When can you start?", "Would you relocate?", "How do you work with PMs and engineers?", "How do I reach you directly?"] }
-  };
-  var scope = "all";
-  var ctxBtn = document.getElementById("aiCtxBtn"), ctxMenu = document.getElementById("aiCtxMenu");
+  // What an empty chat opens with: its heading, and four questions in a
+  // fixed order, the ones a recruiter screening a designer actually has,
+  // strongest story first.
+  var HOME = { hero: "What would you like to know?",
+               rows: ["What's the project you're proudest of?", "What have you actually designed for AI?", "How did you get into design?", "How do you work with PMs and engineers?"] };
   var heroEl = document.getElementById("aiHero");
-  function paintCtx(){
-    if (!ctxBtn) return;
-    document.getElementById("aiCtxIcon").innerHTML = LI(SCOPES[scope].icon, 12);
-    document.getElementById("aiCtxName").textContent = SCOPES[scope].label;
-    ctxBtn.querySelector(".aictx-chev").innerHTML = LI("chevronDown", 12);
-    ctxBtn.classList.toggle("is-scoped", scope !== "all");
-    ctxMenu.innerHTML = '<p class="ailabel">What\u2019s this about?</p>' + Object.keys(SCOPES).map(function(k){
-      return '<button type="button" class="aictx-item" role="menuitemradio" aria-checked="' + (k === scope) + '" data-k="' + k + '">' +
-        '<span class="aictx-ic">' + LI(SCOPES[k].icon, 14) + '</span><span class="aictx-l">' + SCOPES[k].label + "</span>" +
-        (k === scope ? '<span class="aictx-ck">' + LI("check", 12) + "</span>" : "") + "</button>";
-    }).join("");
-  }
-  function setScope(k){
-    scope = k;
-    paintCtx();
-    closeCtx();
-    if (!panel.classList.contains("has-chat")){ renderTry(); typeHero(SCOPES[k].hero, false); }
-    input.focus({ preventScroll: true });
-  }
-  function openCtx(){ ctxMenu.hidden = false; ctxBtn.setAttribute("aria-expanded", "true"); var on = ctxMenu.querySelector('[aria-checked="true"]'); if (on) on.focus(); }
-  function closeCtx(){ ctxMenu.hidden = true; ctxBtn.setAttribute("aria-expanded", "false"); }
-  if (ctxBtn){
-  ctxBtn.addEventListener("click", function(e){ e.stopPropagation(); ctxMenu.hidden ? openCtx() : closeCtx(); });
-  ctxMenu.addEventListener("click", function(e){ var it = e.target.closest(".aictx-item"); if (it) setScope(it.getAttribute("data-k")); });
-  document.addEventListener("click", function(e){ if (!ctxMenu.hidden && !e.target.closest(".aictx")) closeCtx(); });
-  ctxMenu.addEventListener("keydown", function(e){
-    var items = Array.prototype.slice.call(ctxMenu.querySelectorAll(".aictx-item")), i = items.indexOf(document.activeElement);
-    if (e.key === "ArrowDown"){ e.preventDefault(); items[(i + 1) % items.length].focus(); }
-    else if (e.key === "ArrowUp"){ e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
-    else if (e.key === "Escape"){ e.stopPropagation(); closeCtx(); ctxBtn.focus(); }
-  });
-  }
   // The prototype's hero: the wordmark flips (rotateX) into the heading,
   // which then types in at 15ms a character.
   // ---- the welcome wave --------------------------------------------
@@ -424,34 +288,7 @@
       setTimeout(type, 1200);
     } else type();
   }
-  paintCtx();
 
-  // the header caption: the role at rest, the real state while working
-  var stateEl = document.getElementById("aiState");
-  var ROLE = stateEl ? stateEl.textContent : "";
-  function setState(t){ if (stateEl) stateEl.textContent = t || ROLE; }
-  // the rail: everything you can ask, grouped, ticking off as you go
-  var railTopics = document.getElementById("aiRailTopics");
-  function renderRail(){
-    if (!railTopics) return;
-    railTopics.innerHTML = "";
-    ["Work", "AI", "Craft", "Career", "Hiring"].forEach(function(tag){
-      var items = QUESTION_POOL.filter(function(x){ return x.tag === tag; });
-      if (!items.length) return;
-      var k = document.createElement("p");
-      k.className = "airail-k";
-      k.textContent = TOPIC[tag];
-      railTopics.appendChild(k);
-      items.forEach(function(item){
-        var b = document.createElement("button");
-        b.type = "button";
-        b.className = "airail-q" + (asked.indexOf(item.q) > -1 ? " is-asked" : "");
-        b.textContent = item.q;
-        b.addEventListener("click", function(){ sendMessage(item.q); });
-        railTopics.appendChild(b);
-      });
-    });
-  }
   renderTry();
 
   // ── open / close ──────────────────────────────────────────────────────
@@ -512,7 +349,7 @@
     releaseMobileNav();
     lockPage();
     fitViewport();
-    if (!heroPlayed && !panel.classList.contains("has-chat")){ heroPlayed = true; heroEl.style.opacity = "0"; requestAnimationFrame(function(){ playHand(false); }); setTimeout(function(){ heroEl.style.opacity = ""; typeHero(SCOPES[scope].hero, false); }, 1000); }
+    if (!heroPlayed && !panel.classList.contains("has-chat")){ heroPlayed = true; heroEl.style.opacity = "0"; requestAnimationFrame(function(){ playHand(false); }); setTimeout(function(){ heroEl.style.opacity = ""; typeHero(HOME.hero, false); }, 1000); }
     panel.classList.add("open");
     panel.setAttribute("aria-hidden", "false");
     panel.setAttribute("aria-modal", isDocked() ? "false" : "true");
@@ -527,7 +364,6 @@
     unlockPage();
     if (lastFocus && lastFocus.focus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
   }
-  [askBtn, askBtnMobile].forEach(function(b){ if (b) b.addEventListener("click", openChat); });
 
   // ---- entry points: the hero ask box and the dock --------------------
   function askFrom(q){
@@ -802,16 +638,8 @@
     if ((last.match(/\*\*/g) || []).length % 2) text = text.slice(0, text.lastIndexOf("**")) + text.slice(text.lastIndexOf("**") + 2);
     return text.replace(/\*$/, "");
   }
-  // for Copy and screen readers: the same answer as plain sentences
-  function toPlain(text){
-    return stripMeta(text)
-      .replace(FIG_RE, "$1 $2")
-      .replace(/\[(?:case|page):([a-z-]+)\]/g, function(m, id){ var c = CASES[id]; return c ? c.t + " (" + new URL(c.href, location.href).href + ")" : ""; })
-      .replace(/\*\*/g, "").replace(/`/g, "");
-  }
   // the meta line every answer ends with (answer-format.js): what to
   // ask next. Never shown as text.
-  var DOC = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 1.8h5.2L12.5 5v9.2H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.8V5.2h3.4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   function readMeta(text){
     var meta = { next: null, used: [] };
     // tolerant of a sloppy close (">" or none): read to the end of the line
@@ -1112,48 +940,8 @@
     "about": "Read my About page"
   };
 
-  var ICON_COPY = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.2" y="5.2" width="8.3" height="8.3" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M10.8 3.2A1.6 1.6 0 0 0 9.2 2H4a2 2 0 0 0-2 2v5.2a1.6 1.6 0 0 0 1.2 1.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
-  var ICON_DONE = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var ICON_MAIL = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.8" y="3.3" width="12.4" height="9.4" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 4.5 8 8.6l5.5-4.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var HIRING = /\b(salary|pay|compensation|ctc|interview|hire|hiring|role|offer|start|notice|available|availability|reach|contact|email|call|relocat)/i;
 
-  // what's worth doing next depends on what was just said: the page it
-  // came from if it isn't already on screen, the résumé when the answer
-  // is about roles and dates, email when it's about working together
-  // Under every answer, the prototype's three small icons. The thumbs are
-  // real: they go to the site's analytics, so good and bad answers can be
-  // read later; copy copies the answer as plain text.
-  function addActions(ex, answer, meta, question){
-    return; // removed at Lokesh's request: the answer ends cleanly, then the tray
-    var bar = document.createElement("div");
-    bar.className = "aifb";
-    function btn(icon, label){
-      var b = document.createElement("button");
-      b.type = "button"; b.className = "aifb-b";
-      b.setAttribute("aria-label", label); b.title = label;
-      b.innerHTML = LI(icon, 14);
-      bar.appendChild(b);
-      return b;
-    }
-    var up = btn("thumbsUp", "Good answer"), down = btn("thumbsDown", "Bad answer"), copy = btn("copy", "Copy answer");
-    function vote(b, other, v){
-      var on = b.getAttribute("aria-pressed") !== "true";
-      b.setAttribute("aria-pressed", String(on)); other.setAttribute("aria-pressed", "false");
-      if (on && window.pfTrack) window.pfTrack("ai_feedback", { vote: v, q: question.slice(0, 80) });
-    }
-    up.setAttribute("aria-pressed", "false"); down.setAttribute("aria-pressed", "false");
-    up.addEventListener("click", function(){ vote(up, down, "up"); });
-    down.addEventListener("click", function(){ vote(down, up, "down"); });
-    copy.addEventListener("click", function(){
-      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-      navigator.clipboard.writeText(toPlain(answer)).then(function(){
-        copy.innerHTML = LI("check", 14); copy.setAttribute("aria-label", "Copied");
-        setTimeout(function(){ copy.innerHTML = LI("copy", 14); copy.setAttribute("aria-label", "Copy answer"); }, 1600);
-      }, function(){});
-    });
-    ex.ans.appendChild(bar);
-  }
-  // follow-ups the answer itself suggests; the pool only if it gave none
   // Follow-ups come from questions checked against the knowledge file,
   // so every suggestion has a real answer behind it. (Model-written ones
   // kept inviting questions the facts can't answer, and each dead end
@@ -1244,7 +1032,6 @@
     var card = document.querySelector('a.workrow[href$="' + href.replace("./", "") + '"]');
     if (!card) return null;
     var img = card.querySelector(".cardframe img:not(.macdevice):not(.bg)"), src = img && (img.currentSrc || img.src);
-    if (!src){ var shot = card.querySelector(".rz-shot"); var bg = shot && getComputedStyle(shot).backgroundImage.match(/url\("?(.*?)"?\)/); src = bg && bg[1]; }
     var h3 = card.querySelector("h3");
     return { src: src, title: h3 ? h3.textContent.trim() : "", tint: (card.querySelector(".cardframe") || {}).style ? card.querySelector(".cardframe").style.background : "" };
   }
@@ -1391,11 +1178,10 @@
     dropRetry();
     history = [];
     asked = [];
-    renderRail();
     Array.prototype.slice.call(body.querySelectorAll(".aix, .ainext")).forEach(function(m){ m.remove(); });
     intro.style.display = "";
     playHand(false);
-    typeHero(SCOPES[scope].hero, false);
+    typeHero(HOME.hero, false);
     document.getElementById("aiChatFoot").classList.remove("is-chatting");
     panel.classList.remove("has-chat");
     renderTry();
@@ -1410,7 +1196,6 @@
     if (!text || busy) return;
     dropRetry();
     if (asked.indexOf(text) === -1) asked.push(text);
-    renderRail();
     var oldNext = body.querySelector(".ainext");
     if (oldNext) oldNext.remove();
     intro.style.display = "none";
@@ -1420,7 +1205,7 @@
     Array.prototype.forEach.call(body.querySelectorAll(".aix"), function(x){ x.classList.add("is-past"); });
     var ex = addExchange(text);
     suggest.parentNode.hidden = true;
-    history.push({ role: "user", content: text + (scope !== "all" ? "\n\n(Answer about: " + SCOPES[scope].label + ")" : "") });
+    history.push({ role: "user", content: text });
     input.value = "";
     autosize();
     busy = true;
@@ -1435,7 +1220,6 @@
     var t0 = Date.now(), firstAt = 0, readDone = false, writeStep = null;
     var thinkStep = step(ex, "Thinking", true);
     headSpark.classList.remove("is-writing");
-    setState("Thinking\u2026");
     var tick = setInterval(function(){ thinkStep.lastChild.textContent = "Thinking \u00b7 " + ((Date.now() - t0) / 1000).toFixed(1) + "s"; }, 100);
     function thought(){
       if (firstAt) return;
@@ -1443,7 +1227,6 @@
       clearInterval(tick);
       stepDone(thinkStep, "Thought for " + Math.max(0.1, (firstAt - t0) / 1000).toFixed(1) + "s");
       headSpark.classList.add("is-writing");
-      setState("Writing\u2026");
     }
     function reading(force){
       if (readDone) return;
@@ -1460,66 +1243,6 @@
     };
     syncSend();
 
-    // The network hands text over in bursts; the reader should see it
-    // arrive at an even pace. Everything received goes into `full`, and
-    // each frame reveals a little more of it: a few characters when the
-    // stream is keeping up, more when a burst has built a backlog, so it
-    // never falls far behind.
-    var shown = 0, raf = 0, whenShown = null, lastT = 0, carry = 0;
-    // A calm, steady reading pace, whole words at a time. The model hands
-    // the answer over in well under a second; racing to catch up with it
-    // made answers feel hurried. ~140 characters a second reads as
-    // someone writing to you, a typical answer unfolds over 3 to 4 s,
-    // and only a genuinely long one speeds up a little so it never drags.
-    var CPS = 140;
-    function paint(t){
-      raf = 0;
-      if (document.hidden) shown = Math.max(shown, full.length - 1);
-      // the hidden first line isn't reading material: skip straight past it
-      if (shown === 0 && /^\s*<</.test(full)){
-        var nl = full.indexOf("\n");
-        if (nl > -1) shown = nl + 1; else { raf = requestAnimationFrame(paint); return; }
-      }
-      var dt = lastT ? Math.min(64, t - lastT) : 16;
-      lastT = t;
-      var back = full.length - shown;
-      if (back > 0){
-        var cps = CPS + Math.max(0, back - 500) * 0.25;
-        carry += cps * dt / 1000;
-        // spend the budget a whole word at a time (the word plus the space
-        // after it), so the pace stays exact and nothing appears half-typed
-        var moved = false;
-        while (shown < full.length){
-          var m = /^\s*\S+\s?/.exec(full.slice(shown, shown + 60));
-          var len = m ? m[0].length : full.length - shown;
-          if (len > carry) break;
-          carry -= len; shown += len; moved = true;
-        }
-        if (moved){
-          renderRich(ex.text, full.slice(0, shown), true);
-          scrollDown();
-        }
-      }
-      if (shown < full.length) raf = requestAnimationFrame(paint);
-      else if (whenShown){
-        // a breath after the last word before anything else arrives
-        var f = whenShown; whenShown = null;
-        setTimeout(f, 280);
-      }
-    }
-    function reveal(){
-      if (document.hidden){
-        // no frames to pace with: write it straight in
-        shown = full.length;
-        renderRich(ex.text, full, true);
-        if (whenShown){ var f = whenShown; whenShown = null; f(); }
-        return;
-      }
-      if (!raf) raf = requestAnimationFrame(paint);
-    }
-    function afterReveal(fn){ whenShown = fn; reveal(); }
-    function stopReveal(){ if (raf) cancelAnimationFrame(raf); raf = 0; whenShown = null; }
-
     function settle(){
       clearInterval(tick);
       var steps = ex.list.children.length;
@@ -1531,7 +1254,6 @@
       ex.spark.classList.remove("is-busy");
       headSpark.classList.remove("is-busy");
       headSpark.classList.remove("is-writing");
-      setState();
       syncSend();
     }
     function fail(message, kind, wait){
@@ -1540,7 +1262,6 @@
       // unanswered — a retry would otherwise send it twice in a row
       history.pop();
       clearInterval(tick);
-      stopReveal();
       foldTrace(ex, kind === "stopped" ? "Stopped" : "Didn\u2019t get through", true);
       ex.cancelSteps();
       if (ex.status.parentNode) ex.status.remove();
@@ -1575,7 +1296,6 @@
         ex.card.hidden = false;
         blurReveal(ex.text);
         history.push({ role: "assistant", content: full });
-        addActions(ex, full, meta, text);
         settle();
         addNext(text, meta.used);
         pointAtCase(full);
@@ -1663,7 +1383,7 @@
       }).catch(function(){
         // a stop lands here as an abort: whatever was written stands as
         // the answer; nothing written means there's nothing to keep
-        if (stopped){ stopReveal(); return finish(); }
+        if (stopped) return finish();
         if (navigator.onLine === false) return fail(OFFLINE, "offline");
         giveUp("error", BROKEN);
       });
