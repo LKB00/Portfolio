@@ -28,6 +28,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Libre+Baskerville&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@500&text=%E2%82%B90123456789%2C.&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.6s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
@@ -1572,17 +1573,25 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    ═══════════════════════════════════════════════════════════════════ */
 .cardframe.merge2{overflow:hidden;aspect-ratio:var(--card-ar)}
 
+.workrow .cardframe.merge2 .mgphone-wrap{position:absolute;top:15.3%;left:11.75%;width:76.5%;container-type:inline-size}
+/* the value is live text laid over the one in the picture: a patch of the
+   card's own colour hides the baked-in digits, and Hind (the app's face)
+   draws the number so it can count up. Box = the digits' bounds in the
+   1600x3299 image, padded a little. */
+.mgval{position:absolute;left:67.8%;width:22.5%;top:20.0%;height:2.37%;background:#F9FBFC;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:.5%;box-sizing:border-box;pointer-events:none}
+.mgval-n{font-size:4.85cqw;font-family:'Hind',var(--sans,'Geist'),sans-serif;font-weight:500;color:#2C333E;line-height:1;white-space:nowrap;letter-spacing:0}
 .workrow .cardframe.merge2 .mgphone-single{
-  position:absolute;top:15.3%;left:11.75%;width:76.5%;height:auto;
+  position:relative;display:block;width:100%;height:auto;
   filter:drop-shadow(-14px 22px 26px rgba(18,18,22,.24));
   transition:transform .45s var(--ease)}
 
-.workrow:hover .cardframe.merge2 .mgphone-single,
-.workrow:focus-within .cardframe.merge2 .mgphone-single{
+.workrow:hover .cardframe.merge2 .mgphone-wrap,
+.workrow:focus-within .cardframe.merge2 .mgphone-wrap{
   transform:translateY(-8px) scale(1.015)}
 
 @media (prefers-reduced-motion:reduce){
-  .workrow .cardframe.merge2 .mgphone-single{transition:none}
+  .workrow .cardframe.merge2 .mgphone-wrap{transition:none}
 }
 /* fluid mode (JS): one continuous motion instead of a hover jump. The
    phone rises into the frame the first time the card is seen, drifts
@@ -1590,7 +1599,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    cursor. Every value eases toward its target each frame, so nothing
    snaps: moving the mouse away lets it settle back like it has weight. */
 .cardframe.merge2.is-fluid{perspective:1400px}
-.cardframe.merge2.is-fluid .mgphone-single{transition:none!important;will-change:transform,opacity;transform-origin:50% 40%;backface-visibility:hidden}
+.cardframe.merge2.is-fluid .mgphone-wrap{transition:none!important;will-change:transform,opacity;transform-origin:50% 40%;backface-visibility:hidden}
 /* ══ RISE PORTAL CARD ════════════════════════════════════════════════
    Same shape as the App Merge card: alive at rest with a slow float,
    then one clean move on hover. The auto-playing cursor tour is gone —
@@ -4380,7 +4389,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       <a href="./app-merge.html" class="workrow" data-reveal data-cursor-label="open">
         <div style="grid-row:1;grid-column:1;min-width:0">
           <div class="cardframe merge2" style="background:var(--card-tint-01)">
-            <img class="mgphone-single" src="./assets/am-home-after-framed.webp" width="1600" height="3299" loading="eager" decoding="async" alt="The merged app&#8217;s home screen, with one overall portfolio card and IPO and NFO entry points side by side">
+            <div class="mgphone-wrap"><img class="mgphone-single" src="./assets/am-home-after-framed.webp" width="1600" height="3299" loading="eager" decoding="async" alt="The merged app&#8217;s home screen, with one overall portfolio card and IPO and NFO entry points side by side"><span class="mgval" aria-hidden="true"><span class="mgval-n">₹12,570.45</span></span></div>
           </div>
         </div>
         <div class="worktext">
@@ -7026,7 +7035,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 <script>
 /* App Merge card: fluid phone (entrance, scroll drift, cursor lean) */
 (function(){
-  var frame = document.querySelector(".cardframe.merge2"), img = frame && frame.querySelector(".mgphone-single");
+  var frame = document.querySelector(".cardframe.merge2"), img = frame && frame.querySelector(".mgphone-wrap");
   if (!img || !window.requestAnimationFrame) return;
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   var row = frame.closest(".workrow") || frame;
@@ -7034,7 +7043,22 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   frame.classList.add("is-fluid");
   // current and target values; each frame current moves a fraction of the way to target
   var cur = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 }, tgt = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 };
-  var inView = false, entered = false, raf = 0, last = 0;
+  var inView = false, entered = false, raf = 0, last = 0, counted = false;
+  // Current Value counts up once the phone has landed
+  var val = frame.querySelector(".mgval-n"), TARGET = 12570.45;
+  function fmt(n){ return "\u20B9" + n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  if (val) val.textContent = fmt(0);
+  function countUp(){
+    if (!val) return;
+    var t0 = 0, D = 1400;
+    (function step(now){
+      if (!t0) t0 = now;
+      var p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 3);
+      val.textContent = fmt(TARGET * e);
+      if (p < 1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+
   function measure(){
     var r = frame.getBoundingClientRect(), vh = window.innerHeight || 1;
     var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2); // -1 above … 1 below
@@ -7043,10 +7067,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
   function apply(){
     var h = frame.clientHeight || 1;
-    var y = cur.enter * h * 0.22 + cur.drift * h * 0.045 - cur.lift * 10;
+    var y = cur.enter * h * 0.7 + cur.drift * h * 0.045 - cur.lift * 10;
     var sc = 1 + cur.lift * 0.018;
     img.style.transform = "translate3d(0," + y.toFixed(2) + "px,0) rotateX(" + cur.rx.toFixed(3) + "deg) rotateY(" + cur.ry.toFixed(3) + "deg) scale(" + sc.toFixed(4) + ")";
     img.style.opacity = (1 - cur.enter * 0.9).toFixed(3);
+    if (!counted && entered && cur.enter < 0.12){ counted = true; countUp(); }
   }
   function tick(now){
     raf = 0;
