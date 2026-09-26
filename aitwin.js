@@ -11,7 +11,7 @@
   var b = document.createElement("button");
   b.type = "button"; b.id = "navAsk"; b.className = "navask";
   b.setAttribute("aria-label", "Ask my AI twin");
-  b.innerHTML = '<canvas class="askhand" aria-hidden="true"></canvas>';
+  b.innerHTML = '<canvas class="askhand" width="22" height="22" aria-hidden="true"></canvas>';
   var line = document.createElement("span");
   line.className = "navsep"; line.setAttribute("aria-hidden", "true");
   nav.insertBefore(line, nav.firstChild);
@@ -33,7 +33,7 @@
   }
   var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "./aitwin.css?v=2"; head.appendChild(l);
   var wrap = document.createElement("div");
-  wrap.innerHTML = "  <button type=\"button\" class=\"askdock\" id=\"askDock\" aria-label=\"Ask my AI twin\" tabindex=\"-1\" aria-hidden=\"true\">\n    <canvas class=\"askhand\" aria-hidden=\"true\"></canvas><span class=\"askdock-t\"><span class=\"heroask-q\">Ask my</span> AI twin</span><span class=\"askdock-go\" aria-hidden=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span>\n  </button>\n\n  <div class=\"aichat\" id=\"aiChat\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"aiChatTitle\" aria-hidden=\"true\">\n    <div class=\"aichat-scrim\" data-aichat-close></div>\n    <div class=\"aichat-panel\" tabindex=\"-1\">\n      <span class=\"aichat-handle\" aria-hidden=\"true\"></span>\n\n\n      <section class=\"aimain\">\n        <div class=\"aichat-head\">\n          <div class=\"aiwm aiid\">\n            <span class=\"aiav\" aria-hidden=\"true\"><img src=\"assets/avatar-96.webp\" alt=\"\" width=\"36\" height=\"36\"></span>\n            <span class=\"aiid-t\">\n              <span class=\"aiid-n\" id=\"aiChatTitle\"><span class=\"aiwm-n\">Lokesh Bhatia</span><span class=\"aiwm-b\">AI</span></span>\n              <span class=\"aiid-s\" id=\"aiHeadStatus\">Trained on my work and r\u00e9sum\u00e9</span>\n            </span>\n          </div>\n          <span id=\"aiChatSpark\" hidden></span>\n          <button type=\"button\" class=\"aichat-iconbtn\" id=\"aiChatReset\" aria-label=\"New chat\" title=\"New chat\">\n            <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"/><path d=\"M12 7v6\"/><path d=\"M9 10h6\"/></svg>\n          </button>\n          <button type=\"button\" class=\"aichat-iconbtn\" id=\"aiChatClose\" aria-label=\"Close\" title=\"Close\">\n            <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg>\n          </button>\n        </div>\n        <div class=\"aichat-body\" id=\"aiChatBody\">\n          <div class=\"aichat-intro\" id=\"aiChatIntro\">\n            <canvas class=\"aihand\" id=\"aiHand\" aria-hidden=\"true\"></canvas>\n            <div class=\"aihero\"><p class=\"aihero-t\" id=\"aiHero\">What would you like to know?</p></div>\n          </div>\n        </div>\n        <p class=\"fsr\" id=\"aiChatLive\" aria-live=\"polite\"></p>\n        <div class=\"aichat-foot\" id=\"aiChatFoot\">\n          <div class=\"aitray\">\n            <div class=\"aitray-top\">\n              <p class=\"ailabel\" id=\"aiTrayLabel\">Ask me about</p>\n              <div class=\"airows\" id=\"aiChatSuggest\"></div>\n            </div>\n            <form class=\"aicomposer\" id=\"aiChatForm\">\n              <textarea class=\"aichat-input\" id=\"aiChatInput\" rows=\"1\" maxlength=\"600\" placeholder=\"Ask about my work, my career, or AI&#8230;\" aria-label=\"Ask me a question\"></textarea>\n              <div class=\"aicomposer-row\">\n                <button type=\"submit\" class=\"aichat-send\" id=\"aiChatSend\" aria-label=\"Send\" disabled>\n                  <svg class=\"ico-send\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5 12 7-7 7 7\"/><path d=\"M12 19V5\"/></svg>\n                  <svg class=\"ico-stop\" width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" aria-hidden=\"true\"><rect x=\"1\" y=\"1\" width=\"10\" height=\"10\" rx=\"2.2\" fill=\"currentColor\"></rect></svg>\n                </button>\n              </div>\n            </form>\n          </div>\n          <div class=\"aihint\"><span>AI version of me &#183; can be wrong</span></div>\n        </div>\n      </section>\n    </div>\n  </div>";
+  wrap.innerHTML = "  <button type=\"button\" class=\"askdock\" id=\"askDock\" aria-label=\"Ask my AI twin\" tabindex=\"-1\" aria-hidden=\"true\">\n    <canvas class=\"askhand\" width=\"20\" height=\"20\" aria-hidden=\"true\"></canvas><span class=\"askdock-t\"><span class=\"heroask-q\">Ask my</span> AI twin</span><span class=\"askdock-go\" aria-hidden=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span>\n  </button>\n\n  <div class=\"aichat\" id=\"aiChat\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"aiChatTitle\" aria-hidden=\"true\">\n    <div class=\"aichat-scrim\" data-aichat-close></div>\n    <div class=\"aichat-panel\" tabindex=\"-1\">\n      <span class=\"aichat-handle\" aria-hidden=\"true\"></span>\n\n\n      <section class=\"aimain\">\n        <div class=\"aichat-head\">\n          <div class=\"aiwm aiid\">\n            <span class=\"aiav\" aria-hidden=\"true\"><img src=\"assets/avatar-96.webp\" alt=\"\" width=\"36\" height=\"36\"></span>\n            <span class=\"aiid-t\">\n              <span class=\"aiid-n\" id=\"aiChatTitle\"><span class=\"aiwm-n\">Lokesh Bhatia</span><span class=\"aiwm-b\">AI</span></span>\n              <span class=\"aiid-s\" id=\"aiHeadStatus\">Trained on my work and r\u00e9sum\u00e9</span>\n            </span>\n          </div>\n          <span id=\"aiChatSpark\" hidden></span>\n          <button type=\"button\" class=\"aichat-iconbtn\" id=\"aiChatReset\" aria-label=\"New chat\" title=\"New chat\">\n            <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"/><path d=\"M12 7v6\"/><path d=\"M9 10h6\"/></svg>\n          </button>\n          <button type=\"button\" class=\"aichat-iconbtn\" id=\"aiChatClose\" aria-label=\"Close\" title=\"Close\">\n            <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg>\n          </button>\n        </div>\n        <div class=\"aichat-body\" id=\"aiChatBody\">\n          <div class=\"aichat-intro\" id=\"aiChatIntro\">\n            <canvas class=\"aihand\" id=\"aiHand\" aria-hidden=\"true\"></canvas>\n            <div class=\"aihero\"><p class=\"aihero-t\" id=\"aiHero\">What would you like to know?</p></div>\n          </div>\n        </div>\n        <p class=\"fsr\" id=\"aiChatLive\" aria-live=\"polite\"></p>\n        <div class=\"aichat-foot\" id=\"aiChatFoot\">\n          <div class=\"aitray\">\n            <div class=\"aitray-top\">\n              <p class=\"ailabel\" id=\"aiTrayLabel\">Ask me about</p>\n              <div class=\"airows\" id=\"aiChatSuggest\"></div>\n            </div>\n            <form class=\"aicomposer\" id=\"aiChatForm\">\n              <textarea class=\"aichat-input\" id=\"aiChatInput\" rows=\"1\" maxlength=\"600\" placeholder=\"Ask about my work, my career, or AI&#8230;\" aria-label=\"Ask me a question\"></textarea>\n              <div class=\"aicomposer-row\">\n                <button type=\"submit\" class=\"aichat-send\" id=\"aiChatSend\" aria-label=\"Send\" disabled>\n                  <svg class=\"ico-send\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5 12 7-7 7 7\"/><path d=\"M12 19V5\"/></svg>\n                  <svg class=\"ico-stop\" width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" aria-hidden=\"true\"><rect x=\"1\" y=\"1\" width=\"10\" height=\"10\" rx=\"2.2\" fill=\"currentColor\"></rect></svg>\n                </button>\n              </div>\n            </form>\n          </div>\n          <div class=\"aihint\"><span>AI version of me &#183; can be wrong</span></div>\n        </div>\n      </section>\n    </div>\n  </div>";
   while (wrap.firstChild) document.body.appendChild(wrap.firstChild);
 
   // Case studies shift their reading column right of centre to make room
@@ -581,11 +581,18 @@
     };
   }
   function loopHand(cv, onCycle){
-    var css = cv.clientWidth || 20, dpr = Math.min(window.devicePixelRatio || 1, 3);
-    cv.width = Math.round(css * dpr); cv.height = Math.round(css * dpr);
-    var g = cv.getContext("2d"), S = css / 26, OX = css / 2 - 12 * S, OY = css / 2 - 11.5 * S;
-    var pts = samplePaths(HAND_D, 2.2), N = pts.length, R = Math.max(.7, css / 26);
-    var PX = OX + 12 * S, PY = OY + 22 * S, P = [], t0 = 0, raf = 0, visible = true;
+    var css, dpr, S, OX, OY, R, PX, PY, g = cv.getContext("2d");
+    var pts = samplePaths(HAND_D, 2.2), N = pts.length, P = [], t0 = 0, raf = 0, visible = true;
+    // Measured again whenever the canvas changes size. On pages that load
+    // aitwin.css after this runs, the first measurement came before the
+    // styles, and a hand drawn for that size shrunk into 22px vanished.
+    function layout(){
+      css = cv.clientWidth || 20; dpr = Math.min(window.devicePixelRatio || 1, 3);
+      cv.width = Math.round(css * dpr); cv.height = Math.round(css * dpr);
+      S = css / 26; OX = css / 2 - 12 * S; OY = css / 2 - 11.5 * S; R = Math.max(.7, css / 26);
+      PX = OX + 12 * S; PY = OY + 22 * S;
+    }
+    layout();
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var GATHER = 1300, WAVE_AT = 2500, WAVE = 1200, SCATTER_AT = 4800, SCATTER = 650, CYCLE = 5500;
     function seed(){
@@ -630,6 +637,16 @@
       if (t >= CYCLE){ t0 = now; seed(); t = 0; if (onCycle) onCycle(); }
       draw(t);
       raf = requestAnimationFrame(frame);
+    }
+    // A width equal to the drawing buffer's is the canvas's own intrinsic
+    // size (no stylesheet yet), not a new layout: skip it, or it would grow.
+    if ("ResizeObserver" in window){
+      new ResizeObserver(function(){
+        var w = cv.clientWidth;
+        if (!w || w === css || w === cv.width) return;
+        layout(); seed();
+        if (reduce) draw(SCATTER_AT - 1);
+      }).observe(cv);
     }
     if (reduce){ seed(); draw(SCATTER_AT - 1); return; }
     function kick(){ if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame); }
