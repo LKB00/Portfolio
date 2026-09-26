@@ -123,7 +123,7 @@
   // recruiter screening a designer actually has, strongest story first.
   var STARTERS = [
     { q: "What's the project you're proudest of?", tag: "Work", hint: "The Rupeezy app merge" },
-    { q: "What have you actually designed for AI?", tag: "AI", hint: "Two products, Runable and ZZAZZ" },
+    { q: "What have you actually designed for AI?", tag: "AI", hint: "Runable, ZZAZZ and Getbaq" },
     { q: "How did you get into design?", tag: "Career", hint: "Self-taught, from chemical science" },
     { q: "How do you work with PMs and engineers?", tag: "Craft", hint: "One PM, seven engineers" }
   ];
@@ -133,6 +133,10 @@
   // in this list get the honest card instead. Regenerate with the live
   // API when the facts change.
   var SAVED_ANSWERS = {
+  "What's Getbaq?": "<<used: getbaq>>\nGetbaq is an AI agent I designed and prototyped myself that **fights for your refund**.\n\nIt is for young Indians with ₹500 to ₹20,000 stuck with a company. It finds the rule, drafts the complaint in her own name, tracks the deadline and prepares the next letter when the company goes quiet. It never sends anything without her tap, and she gets six seconds to undo.\n\nIt is a working prototype, not a shipped product: Gemini reads what she sends, and sending is simulated.\n\n[case:getbaq]",
+  "Why does every send need her approval?": "<<used: getbaq>>\nBecause with money and her name at stake, **trust built over time doesn't remove the need to approve**.\n\nMost agents let you hand over more control as trust grows. Getbaq has no autonomy dial on purpose: a wrong or rude message damages her, not the AI. So every send is previewed, needs her tap, and has a six-second undo.\n\n[case:getbaq]",
+  "How do you stop the AI making things up?": "<<used: getbaq>>\nThe model reads and writes, but **code counts**.\n\nDeadlines and money are computed in code with unit tests, and the model is never given a rule's day count, so it has no number to get wrong. Only verified rules can appear in a draft. If the model cites one that isn't on the sheet, confidence drops to low and it can never reach Approve.\n\n[case:getbaq]",
+  "Has the Getbaq eval run yet?": "<<used: getbaq>>\n**Not yet**, and I say that openly.\n\nThe harness is built, 8 rules are verified at the source, and 30 real cases are ready, 6 of them traps where the right answer is that no rule applies. Each case runs 3 times and passes only if all three pass. The only attempt stopped when the Anthropic API credit ran out, before a single case ran. The next run is on Gemini's free plan, so I don't claim a pass rate.\n\n[case:getbaq]",
   "Do you have fintech experience?": "<<used: about, resume>>\nYes, fintech is **my strongest domain**.\n\nI spent 18 months at Rupeezy, a stockbroker, owning the trading app end to end. More than **200,000 registered users** used it, and **97% of company revenue** ran through that product.\n\nRegulation is not an edge case for me. It is a normal design constraint I worked inside every day, covering KYC flows, SEBI compliance rules, and payment systems.\n\n[case:app-merge]",
   "How big was the revenue hit?": "<<used: app-merge>>\nTrading revenue fell **about 75%** after new rules for derivatives.\n\nI checked that number myself in Firebase. When SEBI announced those rules in October 2024, it led to that drop by March 2025, meaning we had to combine the trading app and Investeezy into one app, fast.\n\n[case:app-merge]",
   "How did you build this site?": "<<used: about>>\nI built this entire site using **Claude Code and Claude Design**.\n\nI am not a developer, so I direct the AI and push back when the output looks generated rather than considered. That includes the navigation, analytics dashboard, and interactive demos. I use AI a lot in my own work day to day, but the costly design calls are still mine.",
@@ -159,6 +163,7 @@
   // the page most likely to answer a question the AI couldn't
   function pageFor(q){
     var t = (q || "").toLowerCase();
+    if (/getbaq|refund|complaint|agent|eval|hallucinat|trust|consumer|1915/.test(t)) return { href: "./getbaq.html", label: "Read the Getbaq case study" };
     if (/merge|switch|investeezy|proudest|revenue|sebi|paused|model/.test(t)) return { href: "./app-merge.html", label: "Read the App Merge case study" };
     if (/rise|partner|referral/.test(t)) return { href: "./rise-portal.html", label: "Read the Rise Portal case study" };
     if (/terminal|watchlist|chart|order|web app|desktop/.test(t)) return { href: "./web-terminal.html", label: "Read the Web Terminal case study" };
@@ -169,6 +174,7 @@
 
   // "Ask next" draws from these plus any starter not yet asked
   var QUESTION_POOL = STARTERS.concat([
+    { q: "What's Getbaq?", tag: "AI" },
     { q: "What did Rise Portal actually change?", tag: "Work" },
     { q: "Do you have fintech experience?", tag: "Work" },
     { q: "How did you build this site?", tag: "Craft" },
@@ -266,9 +272,9 @@
     all:    { label: "Everything", icon: "layers", hero: "What would you like to know?",
               rows: ["What's the project you're proudest of?", "What have you actually designed for AI?", "How did you get into design?", "How do you work with PMs and engineers?"] },
     work:   { label: "My work", icon: "briefcase", hero: "Which project should we start with?",
-              rows: ["What's the project you're proudest of?", "What did Rise Portal actually change?", "Do you have fintech experience?", "How do you approach a design problem?"] },
+              rows: ["What's Getbaq?", "What's the project you're proudest of?", "What did Rise Portal actually change?", "Do you have fintech experience?"] },
     ai:     { label: "AI", icon: "sparkles", hero: "Ask me how I design for AI.",
-              rows: ["What have you actually designed for AI?", "How do you use AI day to day?", "What won't you use AI for?"] },
+              rows: ["What have you actually designed for AI?", "What's Getbaq?", "How do you stop the AI making things up?", "What won't you use AI for?"] },
     career: { label: "Career", icon: "route", hero: "Ask me about my career.",
               rows: ["How did you get into design?", "What was it like being the only designer?", "What are you looking for next?"] },
     hiring: { label: "Hiring", icon: "users", hero: "Let\u2019s talk about working together.",
@@ -718,7 +724,7 @@
   // Acting on the page, not just talking: when an answer is about one of
   // the case studies and the page is visible beside the panel, scroll the
   // page to that project's card and ring it for a moment.
-  var CASE_PAGES = { "app-merge": "app-merge.html", "rise-portal": "rise-portal.html", "web-terminal": "web-terminal.html" };
+  var CASE_PAGES = { "getbaq": "getbaq.html", "app-merge": "app-merge.html", "rise-portal": "rise-portal.html", "web-terminal": "web-terminal.html" };
   function pointAtCase(full){
     if (!isDocked()) return;
     var m = /\[case:([a-z-]+)\]/.exec(full || ""), href = m && CASE_PAGES[m[1]];
@@ -770,9 +776,10 @@
   // a lead line, figures {{n|label}}, a "Label: value" facts list,
   // labelled steps, a quote, and [case:id] cards. Re-run on every token.
   var CASES = {
-    "app-merge":    { n: "01", t: "Unifying the investing journey in one app", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
-    "rise-portal":  { n: "02", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
-    "web-terminal": { n: "03", t: "Designing the desktop trading experience", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
+    "getbaq":       { n: "01", t: "Designing an AI agent that fights for your refund", m: "Getbaq \u00b7 AI agent", href: "./getbaq.html" },
+    "app-merge":    { n: "02", t: "Unifying the investing journey in one app", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
+    "rise-portal":  { n: "03", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
+    "web-terminal": { n: "04", t: "Designing the desktop trading experience", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
     "resume":       { t: "My r\u00e9sum\u00e9", k: "R\u00e9sum\u00e9", m: "Roles, dates and tools", href: "./resume.html" }
   };
   var FIG_RE = /\{\{\s*([^|}]+?)\s*\|\s*([^}]+?)\s*\}\}/g;
@@ -1097,6 +1104,7 @@
     ex.trace.classList.add("is-done");
   }
   var USED = {
+    "getbaq": "Read the Getbaq case study",
     "app-merge": "Read the App Merge case study",
     "rise-portal": "Read the Rise Portal case study",
     "web-terminal": "Read the trading terminal case study",
@@ -1157,6 +1165,7 @@
   // questions of neighbouring topics. Never a deep question out of
   // context ("Why was your new model paused?" after a Rise Portal answer).
   var TOPICS = {
+    getbaq:  { entry: "What's Getbaq?", deep: ["Why does every send need her approval?", "How do you stop the AI making things up?", "Has the Getbaq eval run yet?"] },
     merge:   { entry: "What's the project you're proudest of?", deep: ["Why was your new model paused?", "Why not just keep the switch?", "How big was the revenue hit?"] },
     rise:    { entry: "What did Rise Portal actually change?", deep: ["Where do the Rise Portal numbers come from?"] },
     ai:      { entry: "What have you actually designed for AI?", deep: ["How do you use AI day to day?", "What won't you use AI for?"] },
@@ -1166,18 +1175,21 @@
     fintech: { entry: "Do you have fintech experience?", deep: [] }
   };
   var NEIGHBOURS = {
-    merge: ["rise", "ai", "career", "hiring"], rise: ["merge", "craft", "ai", "hiring"],
-    ai: ["craft", "merge", "career", "hiring"], craft: ["ai", "merge", "career", "hiring"],
-    career: ["hiring", "merge", "ai", "craft"], hiring: ["career", "merge", "ai", "craft"],
+    getbaq: ["ai", "merge", "career", "hiring"],
+    merge: ["rise", "getbaq", "career", "hiring"], rise: ["merge", "craft", "getbaq", "hiring"],
+    ai: ["getbaq", "craft", "merge", "hiring"], craft: ["ai", "getbaq", "career", "hiring"],
+    career: ["hiring", "getbaq", "merge", "craft"], hiring: ["career", "getbaq", "merge", "craft"],
     fintech: ["merge", "rise", "career", "hiring"]
   };
   // no clear topic: only questions that stand on their own, strongest first
-  var OPENERS = ["merge", "ai", "career", "hiring", "craft", "rise"];
+  var OPENERS = ["getbaq", "merge", "ai", "career", "hiring", "craft", "rise"];
   function topicOf(q, used){
     var t = q.toLowerCase(); used = used || [];
     // what the answer actually drew on beats guessing from the question
+    if (used.indexOf("getbaq") > -1) return "getbaq";
     if (used.indexOf("app-merge") > -1) return "merge";
     if (used.indexOf("rise-portal") > -1) return "rise";
+    if (/getbaq|refund|complaint|1915|eval|hallucinat|making things up|approval/.test(t)) return "getbaq";
     if (/fintech|regulat|sebi|kyc|broking|trading/.test(t)) return "fintech";
     if (/merge|proudest|switch|investeezy|biggest project|revenue hit|paused/.test(t)) return "merge";
     if (/rise|partner/.test(t)) return "rise";
@@ -1190,8 +1202,8 @@
     return null;
   }
   function norm(q){ return q.toLowerCase().replace(/[^a-z0-9 ]/g, "").trim(); }
-  // topics already answered, however they were asked: once the app merge
-  // has been explained, its opener isn't a useful suggestion any more
+  // topics already answered, however they were asked: once Getbaq has
+  // been explained, "What's Getbaq?" isn't a useful suggestion any more
   var covered = [];
   function addNext(question, used){
     var seen = asked.map(norm);
