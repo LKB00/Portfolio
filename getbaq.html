@@ -706,7 +706,11 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-fold-body .col,.gb-fold-body ul.keys.col{margin-left:0;margin-right:0;max-width:none}
 .gb-fold-body > .hinge.col{margin-top:var(--s4)}
 
-/* where the rules come from */
+/* a research figure links to its study, quietly */
+.figrow .fsrc a{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-underline-offset:2px}
+.figrow .fsrc a:hover{color:var(--ink);text-decoration-color:var(--ink)}
+
+/* sources: the rules and the research */
 .gb-sources{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .gb-sources li{padding:12px 0;border-bottom:1px solid var(--line)}
 .gb-sources a{font-size:16px;letter-spacing:-.01em;color:var(--ink);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 25%,transparent);text-underline-offset:4px}
@@ -825,7 +829,8 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </div>
 <dl class="meta col" data-reveal="">
 <div><dt>Type</dt><dd>Self-initiated, not client work. Not shipped to real users.</dd></div>
-<div><dt>Role</dt><dd>Solo: research, strategy, design, prompts and eval design. Built in code with an AI coding assistant.</dd></div>
+<div><dt>Timeline</dt><dd>Sep 2026 · about 2 weeks, full-time</dd></div>
+<div><dt>Role</dt><dd>Solo: research, strategy, design, prompts and eval design.</dd></div>
 <div><dt>For</dt><dd>Young Indians, 20–30, with ₹500–₹20,000 stuck with a company</dd></div>
 <div><dt>Status</dt><dd>Live prototype. Gemini reads what people send; sending is simulated. The evaluation (eval) and user testing haven’t been run yet.</dd></div>
 </dl>
@@ -874,8 +879,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </div>
 </details>
 </div>
-<div class="col gb-folds" data-reveal="">
+<div class="col gb-sec" data-reveal="">
 <p class="eyebrow">How I worked</p>
+<p class="body"><b>I designed in code, with a real AI model, not in static mock-ups.</b> The product screens on this page are the working prototype itself, and Gemini reads what people send, so I designed against its actual answers and mistakes, not imagined ones. That’s how I found it inventing years in dates (chapter 2). An AI coding assistant wrote much of the code; the research, decisions, prompts and evaluation are mine.</p>
+</div>
+<div class="col gb-folds" data-reveal="">
+<p class="eyebrow">The process</p>
 <div class="gb-fold-list">
 <details class="gb-fold"><summary><span class="gb-fold-t"><b>A Double Diamond, with a layer most processes don’t have</b><span>Plus prompts, evals and uncertain states. And one rule: every decision needs a reason.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div class="gb-fold-body">
@@ -906,7 +915,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <section class="gb-sec" data-reveal="" id="s1-2">
 <div class="col"><p class="eyebrow">Scoring the finalists</p><h3 class="say sub">The idea with the biggest impact lost, because it fights its own user</h3></div>
 <p class="col body">Three finalists, scored on twelve parameters. A “trading brake” for young option traders had the most impact on paper. The data said why it couldn’t work:</p>
-<div class="col"><div class="figrow" style="--cols:3"><div><p class="fnum">88.5%</p><p class="fnote">of under-30 option traders lose money</p><p class="fsrc">SEBI</p></div><div><p class="fnum">75%+</p><p class="fnote">of loss-making traders keep trading after years of losses</p><p class="fsrc">SEBI</p></div><div><p class="fnum">0</p><p class="fnote">behaviour change needed for someone who wants their refund back</p></div></div></div>
+<div class="col"><div class="figrow" style="--cols:3"><div><p class="fnum">88.5%</p><p class="fnote">of under-30 futures and options traders lost money in FY26</p><p class="fsrc"><a href="https://www.sebi.gov.in/reports-and-statistics/research/aug-2026/study-profitability-of-individual-traders-in-the-equity-derivatives-segment-fy25-fy26-_103835.html" target="_blank" rel="noopener noreferrer">SEBI study, 2026</a></p></div><div><p class="fnum">75%+</p><p class="fnote">of loss-making traders kept trading after two years of losses</p><p class="fsrc"><a href="https://www.sebi.gov.in/media-and-notifications/press-releases/sep-2024/updated-sebi-study-reveals-93-of-individual-traders-incurred-losses-in-equity-fando-between-fy22-and-fy24-aggregate-losses-exceed-1-8-lakh-crores-over-three-years_86906.html" target="_blank" rel="noopener noreferrer">SEBI study, 2024</a></p></div><div><p class="fnum">0</p><p class="fnote">behaviour change needed for someone who wants their refund back</p></div></div></div>
 <p class="col body">I knew this group from the inside: I spent 18 months designing the trading app at Rupeezy, a stockbroker. A product that fights its own user loses, however good the AI. <b>Refunds won because she already wants the outcome</b>, and money recovered is provable in weeks.</p>
 <div class="col"><details class="gb-more">
 <summary>See the full scoring table <svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
@@ -953,7 +962,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s1-6">
 <div class="col"><p class="eyebrow">What the evidence said</p><h3 class="say sub">Most people with a real problem never get help, and almost nobody knows the channel that works</h3></div>
-<div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">66%</p><p class="fnote">of people with a major issue couldn’t get help</p><p class="fsrc">LocalCircles</p></div><div><p class="fnum">36%</p><p class="fnote">were refused outright</p><p class="fsrc">LocalCircles</p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p></div><div><p class="fnum">+6.9 pts</p><p class="fnote">more likely to get relief when a complaint was AI-assisted</p><p class="fsrc">1.1M US complaints, 2026</p></div></div></div>
+<div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">66%</p><p class="fnote">of people with a major service problem got no help from the company</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">36%</p><p class="fnote">were refused outright</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p><p class="fsrc"><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></p></div><div><p class="fnum">+6.9 pts</p><p class="fnote">more likely to get relief when a complaint was AI-assisted</p><p class="fsrc"><a href="https://www.nature.com/articles/s41562-026-02409-4" target="_blank" rel="noopener noreferrer">Nature Human Behaviour, 2026 · 1.1M US complaints</a></p></div></div></div>
 <div class="pair col gb-grid"><div><h4>What goes wrong</h4><p class="body">Cancelled orders, fake items, returns never refunded, flights stuck between airline and agent, failed UPI. Mostly ₹500–₹20,000.</p><p class="tag t-pos">High confidence</p></div><div><h4>What companies reply</h4><p class="body">“5 to 7 working days.” “We are very sorry sir.” Tickets closed with nothing fixed.</p><p class="tag t-pos">High confidence</p></div><div><h4>Whether they know 1915</h4><p class="body">Mostly not. Those who find it often get refunds in days.</p><p class="tag t-pos">High confidence</p></div><div><h4>What it costs emotionally</h4><p class="body">Stress, “a merry chase”, powerlessness. Then strong relief.</p><p class="tag t-cau">Medium–high</p></div><div><h4>What they won’t let an agent do</h4><p class="body">Share an OTP or bank details. Send anything false or rude.</p><p class="tag t-att">Low: inferred, not surveyed</p></div><div><h4>Whether they’d pay</h4><p class="body">Paid options exist (₹199 to a 35% fee), but no India data on small refunds.</p><p class="tag t-att">Low</p></div></div>
 <figure class="gb-ex col" data-embed="screen-blocked" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Blocked screen. It won’t guess a grievance address, because a wrong one means the complaint goes nowhere; it hands her the letter to send herself and keeps tracking the deadline.</figcaption></figure>
 </section>
@@ -1048,7 +1057,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>The capability map: what the AI judges, what code computes, and what the AI is never allowed to do.</figcaption>
 </figure>
-<p class="col body">And she can see the split: every step is labelled with who did it, and the deadline says <b>Calculated</b>, not AI.</p>
+<p class="col body">And she can see the split: every step is labelled with who did it, and the deadline says <b>Calculated</b>, not AI. Every rule card cites the law it rests on, the way Perplexity puts its sources first, so she can check it instead of taking it on trust.</p>
 <figure class="gb-ex col" data-embed="sourced-steps" data-inner="520" data-note="Live">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>Finding the rule and writing the complaint for a real case, each step labelled AI, Rule sheet, Calculated or Safety check.</figcaption>
@@ -1147,6 +1156,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <section class="gb-sec" data-reveal="" id="s3-1">
 <div class="col"><p class="eyebrow">The lifecycle</p><h3 class="say sub">It proposes, she approves, it acts, it reports back</h3></div>
 <p class="col body">Every action has the same shape. Escalation isn’t exempt: even after a company has ignored her for weeks, the 1915 complaint still needs her tap.</p>
+<p class="col body"><b>It says back what it understood before it acts.</b> Before any rule is found or letter written, she sees “You confirmed · Flipkart · ₹3,499 · 2 Aug” and can fix a wrong fact there, not in a finished letter. It’s the pattern known as prompt reflection: the AI restates the request before doing anything with it.</p>
 <figure class="gb-ex col" data-embed="lifecycle-diagram" data-note="Diagram">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>Green is her decision, lilac is the AI’s judgment, white is code.</figcaption>
@@ -1168,7 +1178,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="col gb-stack"><figure class="gb-ex" data-embed="approve" data-note="Interactive">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>Press Send it to see the undo window.</figcaption>
-</figure><ul class="keys one gb-decisions"><li><i>1</i><p><b>It looks like an email.</b> <span>From shows her own name, answering “is a bot sending this?” before she asks.</span></p></li><li><i>2</i><p><b>The letter is visible.</b> <span>Nobody should send what they haven’t seen.</span></p></li><li><i>3</i><p><b>The amount and deadline come first.</b> <span>The rule and how sure it is sit below, as backing.</span></p></li><li><i>4</i><p><b>One strong button.</b> <span>The only irreversible action looks unlike anything else.</span></p></li><li><i>5</i><p><b>Edit and Not now, equally quiet.</b> <span>Saying no is as easy as editing.</span></p></li><li><i>6</i><p><b>Signed by her, never by Getbaq.</b> <span>Send waits for her name.</span></p></li><li><i>7</i><p><b>Reassurance right where she taps.</b> <span>“6 seconds to undo” sits just above the button.</span></p></li><li class="warn"><i>8</i><p><b>When it’s unsure, this card never appears.</b> <span>She never approves what the AI doubts.</span></p></li></ul></div>
+</figure><ul class="keys one gb-decisions"><li><i>1</i><p><b>It looks like an email.</b> <span>Familiar on purpose, so the novelty goes on the agent, not the letter. From shows her own name.</span></p></li><li><i>2</i><p><b>The letter is visible.</b> <span>Nobody should send what they haven’t seen.</span></p></li><li><i>3</i><p><b>The amount and deadline come first.</b> <span>The rule and how sure it is sit below, as backing.</span></p></li><li><i>4</i><p><b>One strong button.</b> <span>The only irreversible action looks unlike anything else.</span></p></li><li><i>5</i><p><b>Edit and Not now, equally quiet.</b> <span>Saying no is as easy as editing.</span></p></li><li><i>6</i><p><b>Signed by her, never by Getbaq.</b> <span>Send waits for her name.</span></p></li><li><i>7</i><p><b>Reassurance right where she taps.</b> <span>“6 seconds to undo” sits just above the button.</span></p></li><li class="warn"><i>8</i><p><b>When it’s unsure, this card never appears.</b> <span>She never approves what the AI doubts.</span></p></li></ul></div>
 </section>
 <section class="gb-sec" data-reveal="" id="s3-16">
 <div class="col"><p class="eyebrow">What I got wrong first</p><h3 class="say sub">The letter had no name on it</h3></div>
@@ -1320,7 +1330,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="col"><p class="eyebrow">05 · The craft</p><h2 class="say">Smaller decisions that make it feel like one product</h2><p class="dek">The two changes that mattered most, then everything else in a line each.</p></div>
 <section class="gb-sec" data-reveal="" id="s3-10">
 <div class="col"><p class="eyebrow">Iteration</p><h3 class="say sub">From pages to one thread</h3></div>
-<p class="col body">Using my own prototype, every step felt like being sent to a new page. I kept the logic the same and changed only how it looks: each step adds to one conversation, and finished steps fold into one-line receipts.</p>
+<p class="col body">Using my own prototype, every step felt like being sent to a new page. I kept the logic the same and changed only how it looks: each step adds to one conversation, and finished steps fold into one-line receipts. It reads like a conversation but isn’t only chat: the steps are cards she can act on. As Perplexity’s head of design puts it, not everything should be a chat.</p>
 <figure class="gb-ex col" data-embed="thread" data-inner="480" data-note="Live">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>A whole case as the app renders it: her message, every finished step as a receipt you can open, and the one card that’s live now.</figcaption>
@@ -1490,8 +1500,9 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </ul>
 </div>
 </div></details>
-<details class="gb-fold" id="sources"><summary><span class="gb-fold-t"><b>Where the rules come from</b><span>Every rule links to the official text I verified it against.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
+<details class="gb-fold" id="sources"><summary><span class="gb-fold-t"><b>Sources</b><span>Every rule links to the official text I verified it against, and every research figure to its study.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div class="gb-fold-body">
+<p class="eyebrow">Rules</p>
 <ul class="col gb-sources">
 <li><a href="https://thc.nic.in/Central%20Governmental%20Rules/Consumer%20Protection%20(E-Commerce)%20Rules,%202020.pdf" target="_blank" rel="noopener noreferrer">Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)</a><p>48-hour acknowledgement and 30-day resolution</p></li>
 <li><a href="https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11693" target="_blank" rel="noopener noreferrer">RBI circular RBI/2019-20/67, 20 Sep 2019</a><p>Failed UPI payments reversed by T+1</p></li>
@@ -1499,6 +1510,13 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <li><a href="https://www.dgca.gov.in/digigov-portal/" target="_blank" rel="noopener noreferrer">DGCA Civil Aviation Requirements, Section 3, Series M, Part II</a><p>Airline refunds: 7 days by card, 14 working days via an agent</p></li>
 <li><a href="https://www.meity.gov.in/static/uploads/2024/02/Information-Technology-Intermediary-Guidelines-and-Digital-Media-Ethics-Code-Rules-2021-updated-06.04.2023-.pdf" target="_blank" rel="noopener noreferrer">IT (Intermediary Guidelines) Rules 2021, Rule 3(2)(a)(i)</a><p>Booking apps: 15 days to resolve</p></li>
 <li><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline convergence programme</a><p>Companies that answer 1915 complaints</p></li>
+</ul>
+<p class="eyebrow">Research</p>
+<ul class="col gb-sources">
+<li><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, Aug 2026 (7,153 people)</a><p>66% got no help from the company; 36% were refused outright</p></li>
+<li><a href="https://www.sebi.gov.in/reports-and-statistics/research/aug-2026/study-profitability-of-individual-traders-in-the-equity-derivatives-segment-fy25-fy26-_103835.html" target="_blank" rel="noopener noreferrer">SEBI, profitability of individual F&amp;O traders, FY25–FY26</a><p>88.5% of traders under 30 lost money in FY26</p></li>
+<li><a href="https://www.sebi.gov.in/media-and-notifications/press-releases/sep-2024/updated-sebi-study-reveals-93-of-individual-traders-incurred-losses-in-equity-fando-between-fy22-and-fy24-aggregate-losses-exceed-1-8-lakh-crores-over-three-years_86906.html" target="_blank" rel="noopener noreferrer">SEBI, F&amp;O traders study, Sep 2024 (FY22–FY24)</a><p>Over 75% of loss-makers kept trading after two years of losses</p></li>
+<li><a href="https://www.nature.com/articles/s41562-026-02409-4" target="_blank" rel="noopener noreferrer">Shin, Kim &amp; Shin, Nature Human Behaviour, Feb 2026</a><p>1.1M CFPB complaints: AI-assisted ones +6.9 points more likely to get relief</p></li>
 </ul>
 </div></details>
 <details class="gb-fold"><summary><span class="gb-fold-t"><b>What people ask first</b><span>Legal advice, ChatGPT, screenshots, and five more.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
