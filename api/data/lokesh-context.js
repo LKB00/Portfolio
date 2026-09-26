@@ -135,27 +135,31 @@ Key design decisions:
   checking against Google PAIR, Microsoft's human-AI guidelines, Shape of
   AI and Smashing Magazine's agentic patterns.
 
-Bugs I caught before any screen: the UPI failed-payment deadline was wrong
-(UPI is T+1, not 5 days); two airline refund clocks had been one rule;
-deadlines shifted with the server timezone (now all date maths runs in
-UTC); and "14 working days" is approximated as 14 calendar days, which is
-documented as a known gap.
+Five mistakes that would have cost people money, caught before any user
+saw them: the UPI failed-payment deadline was wrong (UPI is T+1, not 5
+days); two airline refund clocks had been one rule; deadlines shifted with
+the timezone (now all dates use one fixed timezone); the model invented
+years it was never given (now a year is kept only if she wrote one); and
+the UPI letter went to the shop instead of her bank. One known gap is
+documented: "14 working days" is counted as 14 calendar days for now.
 
 Numbers: 15 states in the agent's state machine, 8 legal rules each
-verified at the source, 174 automated tests on dates, money, states and
+verified at the source, 182 automated tests on dates, money, states and
 safety, 30 real cases in the eval set with 6 traps, each case run 3 times.
 
 Status, stated honestly: it is a live working prototype. Gemini reads what
-people send (words and screenshots); picking the rule, writing the letter and
-reading the company's reply still run on code templates. Sending is
+people send (words and screenshots), picks the rule, writes the letter and
+reads the company's reply; every answer passes code's checks first, and a
+fixed template takes over when one fails or the free limit runs out. Sending is
 simulated: nothing leaves the app, and nothing follows up in the background.
 Letters are signed with the person's own name, never by Getbaq. I switched
 from Claude to Gemini because the Anthropic API needed paid credit. The only
 scored eval attempt stopped when that credit ran out, before a single case
 ran, so there is NO pass rate yet; the next run is on Gemini's free plan.
 It is not shipped and I don't claim it is.
-What I'd do differently: run the eval earlier, start with a sharper
-question, and recruit real people before designing.
+What I'd do differently: run the eval earlier, recruit real people before
+designing, write the marketing from the code, and question "no accounts"
+earlier.
 
 ---
 PARTNER PLATFORM NUMBERS (always say the source)
