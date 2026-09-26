@@ -4116,6 +4116,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .navask{display:inline-grid;place-items:center;width:28px;height:28px;margin-left:2px;padding:0;border:0;border-radius:1000px;background:transparent;cursor:pointer}
   .navask canvas{display:block;width:22px;height:22px}
 }
+/* phones: the nav pill and back-to-top sit at the bottom of the screen,
+   so the footer line needs room below it to scroll clear of them */
+@media (max-width:576px){#contact footer{padding-bottom:calc(88px + env(safe-area-inset-bottom))}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
