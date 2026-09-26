@@ -3,7 +3,7 @@
    other page gets them injected here, with aitwin.css, before the chat client
    (below, unchanged from the homepage) starts. */
 /* Phones: no wide dock. The AI twin is the animated hand, one more button
-   in the nav pill beside the theme and the menu. Added before the chat
+   at the front of the nav pill, a hairline before the page icons. Added before the chat
    client runs, so its hand animates like the dock's. */
 (function(){
   var nav = document.querySelector("#siteHeader .navlinks");
@@ -12,8 +12,15 @@
   b.type = "button"; b.id = "navAsk"; b.className = "navask";
   b.setAttribute("aria-label", "Ask my AI twin");
   b.innerHTML = '<canvas class="askhand" aria-hidden="true"></canvas>';
-  nav.insertBefore(b, nav.querySelector(".themebtn") || nav.firstChild);
+  var line = document.createElement("span");
+  line.className = "navsep"; line.setAttribute("aria-hidden", "true");
+  nav.insertBefore(line, nav.firstChild);
+  nav.insertBefore(b, line);
   b.addEventListener("click", function(){ var d = document.getElementById("askDock"); if (d) d.click(); });
+  var pill = nav.closest(".navpill");
+  if (pill && window.ResizeObserver) new ResizeObserver(function(){
+    document.documentElement.style.setProperty("--navpill-w", pill.offsetWidth + "px");
+  }).observe(pill);
 })();
 
 (function(){
