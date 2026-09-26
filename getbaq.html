@@ -572,6 +572,11 @@ ul.keys.col{margin-left:auto;margin-right:auto}
 .gb-rows li p:first-child{color:var(--ink)}
 .gb-rows li p:last-child{color:var(--muted)}
 .gb-rows > ul:first-child{border-top:1px solid var(--line)}
+/* consistency: a stats row sits 16px under its heading like every other
+   block (its own top margin leaked through the wrapper and made it 32);
+   a rows list straight after a statement shares its rule, not a second one */
+.gb-sec .col > .figrow:first-child{margin-top:0}
+.hinge + .gb-rows > ul:first-child{border-top:0}
 @media(min-width:640px){
   .gb-rows .rh,.gb-rows li{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px}
   .gb-rows .rh{display:grid}
