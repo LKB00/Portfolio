@@ -91,7 +91,7 @@
 
   --neg:#C64B3D;
   --card-tint-01:#F2F2F2; --card-tint-02:#F2F2F2;
-   --navOff:#5C5C5C;
+
 }
 :root[data-theme="dark"]{
   --bg:#0F0F0F; --surface:#1A1A1A; --card:#161616; --line:rgba(255,255,255,.10);
@@ -118,29 +118,28 @@
 *{box-sizing:border-box}
 html{overflow-x:clip;background:var(--bg);color-scheme:light}
 html[data-theme="dark"]{color-scheme:dark}
-body{position:relative;overflow-x:clip;margin:0;background:transparent;color:var(--ink);font-family:var(--display);-webkit-font-smoothing:antialiased}
+body{position:relative;overflow-x:clip;margin:0;background:transparent;font-family:var(--display);}
 img{max-width:100%;height:auto}
-a{color:var(--accent);text-decoration:none}
-a:hover{color:var(--ink)}
+a{text-decoration:none}
+
 button{font-family:inherit}
-.wrap{padding:0 var(--pad);position:relative}
-.mark{background-image:linear-gradient(transparent 68%,var(--markWash) 68%,var(--markWash) 95%,transparent 95%);background-repeat:no-repeat;color:var(--ink);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.wrap{position:relative}
+.mark{background-repeat:no-repeat;}
 
 header{position:sticky;top:16px;will-change:max-width;z-index:40;width:100%;max-width:min(792px,100%);margin:0 auto;padding-top:var(--s-4);transition:max-width .35s ease}
 header.scrolled{max-width:min(288px,92%)}
-.navpill{position:relative;display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);padding:var(--s-3) var(--s-3) var(--s-3) var(--s-4);background:transparent;backdrop-filter:none;box-shadow:none;border-radius:6px;transition:background .3s ease,padding .3s ease,box-shadow .3s ease}
-header.scrolled .navpill{background:color-mix(in srgb,var(--card) 58%,transparent);backdrop-filter:blur(12px) saturate(1.4);box-shadow:0 10px 26px -14px var(--frameSh);padding:var(--s-2) var(--s-3)}
+.navpill{position:relative;justify-content:space-between;background:transparent;}
+header.scrolled .navpill{background:color-mix(in srgb,var(--card) 58%,transparent);backdrop-filter:blur(12px) saturate(1.4);box-shadow:0 10px 26px -14px var(--frameSh);}
 
-nav.navlinks{display:flex;align-items:center;gap:clamp(11px,1.8vw,20px);font-size:var(--t-small);font-weight:500}
-.navlink{display:inline-flex;align-items:center;justify-content:center;color:var(--navOff)}
-.navlink:hover{color:var(--ink)}
+.navlink{justify-content:center;}
+
 header.scrolled .navtext{display:none}
 
 header.scrolled .navlink{min-width:34px}
 
-.themebtn{border:0;background:transparent;padding:0;height:19px;color:var(--navOff);cursor:pointer;position:relative;display:inline-flex;align-items:center}
+.themebtn{padding:0;position:relative;align-items:center}
 .themebtn::before{content:'';position:absolute;left:-9px;right:-9px;top:-9px;bottom:-9px}
-.themebtn:hover{color:var(--ink)}
+
 .icon-sun,.icon-moon{line-height:0}
 html:not([data-theme="dark"]) .icon-moon{display:none}
 html[data-theme="dark"] .icon-sun{display:none}
@@ -150,45 +149,42 @@ html[data-theme="dark"] .icon-sun{display:none}
 .burger .bicon-x{opacity:0;transform:rotate(-45deg)}
 .burger[aria-expanded="true"] .bicon-bars{opacity:0;transform:rotate(45deg)}
 .burger[aria-expanded="true"] .bicon-x{opacity:1;transform:rotate(0)}
-@media (max-width:576px){
-  nav.navlinks a{display:none}
 
-}
 :focus{outline:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 .mrow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px}
 .mobilenav a:focus:not(:focus-visible),
 .mobilenav button:focus:not(:focus-visible){outline:none}
 body.menu-open{overflow:hidden;position:fixed;width:100%}
-.mobilenav{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s;overscroll-behavior:contain;flex-direction:column;min-height:100dvh;overflow-y:auto;padding-top:calc(59px + env(safe-area-inset-top))}
-@media (max-width:576px){nav.navlinks{gap:8px}header .themebtn::before{display:none}}
+.mobilenav{position:fixed;inset:0;z-index:60;display:flex;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s;overscroll-behavior:contain;flex-direction:column;min-height:100dvh;overflow-y:auto;padding-top:calc(59px + env(safe-area-inset-top))}
+@media (max-width:576px){header .themebtn::before{display:none}}
 body.menu-open header{z-index:70}
-@media (min-width:641px){header .burger{display:none}}
-.mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
-.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(13px,3vh,24px);padding:0 var(--pad)}
-.mrow{display:flex;align-items:center;gap:var(--s-4);min-height:64px;padding:var(--s-3) 0;color:var(--ink);box-shadow:inset 0 -1px 0 var(--line)}
-.mrow.current{color:var(--accent)}
-.mrow.current .mlabel{color:var(--accent)}
-.mrow.current svg{color:var(--accent);opacity:.6}
-.mrow .mlabel{flex:1;font-size:21px;line-height:1.15;letter-spacing:var(--tr-display)}
-.mrow svg{flex:0 0 auto;color:var(--faint)}
-.mfoot{margin-top:auto;display:flex;flex-direction:column;align-items:stretch;text-align:center;gap:var(--s-3);padding:21px var(--pad) 21px}
 
-.mresume{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;border-radius:4px;background:var(--ink);color:var(--card);font-size:var(--t-btn);font-weight:500}
+.mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
+.mlinks{display:flex;flex-direction:column;flex:0 0 auto;padding:0 var(--pad)}
+.mrow{display:flex;align-items:center;gap:var(--s-4);color:var(--ink);box-shadow:inset 0 -1px 0 var(--line)}
+.mrow.current{color:var(--accent)}
+
+.mrow.current svg{color:var(--accent);opacity:.6}
+.mrow .mlabel{flex:1;line-height:1.15;}
+.mrow svg{flex:0 0 auto;color:var(--faint)}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;align-items:stretch;text-align:center;padding:21px var(--pad) 21px}
+
+.mresume{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;font-weight:500}
 .mresume:hover{background:var(--accent);color:var(--onAccent)}
-.mailbtn{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;padding:0;border-radius:4px;box-shadow:inset 0 0 0 1px var(--line);background:transparent;font-size:var(--t-btn);font-weight:500;color:var(--ink);cursor:pointer}
+.mailbtn{display:flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:52px;padding:0;box-shadow:inset 0 0 0 1px var(--line);background:transparent;font-weight:500;color:var(--ink);cursor:pointer}
 .mailbtn:hover{box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;gap:var(--s-3);padding:11px 16px;border-radius:4px;background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 18px 40px -20px rgba(16,16,24,.32);white-space:nowrap}
 .toast.show{display:inline-flex}
-.totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;width:56px;height:56px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--accent);cursor:pointer;display:grid;place-items:center;box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 16px -8px rgba(0,0,0,.10);opacity:0;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1)}
+.totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;padding:0;cursor:pointer;display:grid;place-items:center;opacity:0;transform:scale(.86);pointer-events:none;}
 .totop.show{opacity:1;transform:scale(1);pointer-events:auto}
 /* The ring is the reason there is a button here at all: a plain circle with an arrow answers "go to top" but not "how far is that", and the second question is the one a reader actually has on a long page. Traced in the site's own link blue, the same colour that already means "this is live" on the readership pill, so the ring reads as an instrument rather than a decoration. */
 .totop-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none}
-.totop-ring circle{fill:none;stroke-width:2}
+.totop-ring circle{fill:none;}
 .totop-track{stroke:var(--line)}
-.totop-prog{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;transition:stroke-dashoffset .1s linear}
-@media (prefers-reduced-motion:reduce){.totop-prog{transition:none}}
-@media (max-width:576px){.totop{width:44px;height:44px;bottom:calc(74px + env(safe-area-inset-bottom));left:50%;right:auto;transform:translateX(-50%) scale(.86)}.totop.show{transform:translateX(-50%) scale(1)}.totop svg:not(.totop-ring){width:14px;height:14px}}
+.totop-prog{stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;}
+
+@media (max-width:576px){.totop svg:not(.totop-ring){width:14px;height:14px}}
 /* Typing a note pops the keyboard, which shrinks the visible page from
    the bottom -- exactly where this button sits. Fixed positioning keeps
    it pinned above the keyboard rather than off-screen with it, so it
@@ -196,23 +192,18 @@ body.menu-open header{z-index:70}
    nothing to do while a note is being written, so it stands down. */
 body.notewriting .totop{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 
-section{position:relative;z-index:2;padding-bottom:clamp(50px,16vw,84px)}
-#top{padding-top:clamp(42px,8vw,78px);padding-bottom:67px;max-width:792px;margin:0 auto;text-align:left}
+#top{max-width:792px;margin:0 auto;text-align:left}
 
 h1,h2,h3,.lead{font-family:var(--serif)}
 
 h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;letter-spacing:-.02em;font-weight:400}
-.hero-sub{margin:clamp(8px,1vw,16px) 0 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
 
 #work{max-width:792px;margin:0 auto}
-.workgrid{display:grid;grid-template-columns:minmax(0,1fr);row-gap:56px}
-.workrow{position:relative;display:grid;gap:clamp(21px,4vw,45px);align-items:end;color:inherit;grid-template-columns:minmax(0,57fr) minmax(0,43fr)}
-.cardframe{overflow:hidden;position:relative;aspect-ratio:16/9;border-radius:4px;transition:transform .3s cubic-bezier(.2,.85,.25,1)}
+.workgrid{row-gap:56px}
+.workrow{position:relative;gap:clamp(21px,4vw,45px);align-items:end;color:inherit;grid-template-columns:minmax(0,57fr) minmax(0,43fr)}
+
 .cardframe img.bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:blur(6px);transform:scale(1.06);pointer-events:none}
-.worktext{display:flex;flex-direction:column;align-items:flex-start;gap:0}
-.worktext .num{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--faint)}
-.worktext h3{margin:16px 0 0;font-family:var(--serif);font-size:clamp(20px,2vw,26px);line-height:1.15;letter-spacing:-.012em;font-weight:400}
-.worktext .desc{margin:10px 0 0;font-family:var(--mono);font-size:var(--t-mono-lg);letter-spacing:var(--tr-mono);color:var(--muted)}
+.worktext{flex-direction:column;align-items:flex-start;gap:0}
 
 @media (max-width:684px){
   .workrow{grid-template-columns:minmax(0,1fr)!important;align-items:start}
@@ -220,19 +211,17 @@ h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;lett
 }
 
 #experience{max-width:792px;margin:0 auto}
-.exptimeline{position:relative;padding-left:30px}
+.exptimeline{position:relative;}
 .exptimeline:before{content:"";position:absolute;left:5px;top:calc(20px + clamp(40px,5vw,64px) + 22px);bottom:12px;width:1px;background:var(--line)}
-.exprow{position:relative;padding:0 0 clamp(36px,6vw,50px) 0;border:0}
+.exprow{position:relative;border:0}
 .exprow:last-child{padding-bottom:0}
 .exprow:before{content:"";position:absolute;left:-40px;top:9px;width:11px;height:11px;border-radius:50%;background:var(--bg);box-shadow:0 0 0 1px var(--line)}
 
-.exp-date{margin:0 0 16px;font-family:var(--mono);font-size:var(--t-small);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--faint)}
-.exp-co{margin:0;font-family:var(--serif);font-size:clamp(17px,2vw,21px);line-height:1.2;font-weight:400;color:var(--ink)}
-.exp-role{margin:8px 0 0;font-size:var(--t-body);color:var(--accent)}
-.exp-desc{margin:16px 0 0;font-size:var(--t-body);line-height:1.65;color:var(--muted);max-width:52ch}
+.exp-date{font-family:var(--mono);}
+.exp-co{margin:0;font-family:var(--serif);line-height:1.2;}
 
-@media (max-width:576px){.exptimeline{padding-left:21px}.exptimeline:before{left:4px}.exprow:before{left:-28px;width:9px;height:9px}}
-#contact{max-width:792px;margin:0 auto;padding:0}
+@media (max-width:576px){.exptimeline:before{left:4px}.exprow:before{left:-28px;width:9px;height:9px}}
+#contact{padding:0}
 #contact h2{margin:0;font-family:var(--serif);font-size:var(--t-h2);line-height:1.15;letter-spacing:-.012em;font-weight:400}
 #contact p{margin:10px 0 0;font-size:var(--t-body);color:var(--muted)}
 
@@ -242,7 +231,7 @@ h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;lett
 body:before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;filter:url(#grain);opacity:.05}
 :root[data-theme="dark"] body:before{opacity:.07}
 .halftone{position:absolute;top:0;left:0;width:100vw;height:min(900px,90vh);pointer-events:none;z-index:0;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:13px 13px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 100%)}
-#contact footer{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;padding:clamp(42px,6vw,59px) clamp(16px,6vw,30px) clamp(39px,5.5vw,50px);background:var(--tint);width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;position:relative}
+#contact footer{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;}
 #contact footer > *:not(.halftone){position:relative;z-index:1}
 
 section,main,footer{position:relative;z-index:2}
@@ -250,14 +239,11 @@ section,main,footer{position:relative;z-index:2}
 section:has(+ #contact){padding-bottom:var(--s-8)}
 
 /* scroll reveal */
-[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .8s var(--ease),transform .8s var(--ease);will-change:opacity,transform}
-[data-reveal].shown{opacity:1;transform:none;will-change:auto}
+[data-reveal]{will-change:opacity,transform}
+[data-reveal].shown{will-change:auto}
 
-h1[data-reveal],h2[data-reveal]{transform:translateY(26px);transition-duration:1s}
 figure[data-reveal]{opacity:0;transform:translateY(20px) scale(.985);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 figure[data-reveal].shown{opacity:1;transform:none}
-
-.heroin h1{animation:riseIn .9s var(--ease) .05s both}
 
 .heroin #top figure{animation:riseIn 1s var(--ease) .28s both}
 
@@ -273,32 +259,28 @@ html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='h
 }
 #cursorTag{display:none}
 /* intro loader */
-#loader{position:fixed;inset:0;z-index:90;background:var(--bg);display:grid;place-items:center;transition:opacity .5s cubic-bezier(.4,0,.2,1),visibility .5s}
-#loader .box{position:relative;padding:var(--s-5) var(--s-6);transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .5s}
+#loader{position:fixed;inset:0;z-index:90;display:grid;place-items:center;transition:opacity .5s cubic-bezier(.4,0,.2,1),visibility .5s}
+#loader .box{position:relative;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .5s}
 #loader.hide .box{transform:scale(1.06);opacity:0}
 @media (prefers-reduced-motion:reduce){#loader{display:none}}
 #loader.hide{opacity:0;visibility:hidden;pointer-events:none}
 
-#loader .name{display:block;overflow:hidden;white-space:nowrap;animation:typeName .75s cubic-bezier(.25,.85,.2,1) .18s both}
-#loader .name span{font-size:var(--t-h2);letter-spacing:var(--tr-display);font-weight:400;color:var(--ink)}
+#loader .name{display:block;white-space:nowrap;}
 
 @keyframes typeName{from{max-width:0}to{max-width:100%}}
 @keyframes popIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#loader .dot{position:absolute;width:7px;height:7px;background:var(--bg);box-shadow:0 0 0 1px var(--accentLine);opacity:0}
-#loader .dot.tl{top:-3.5px;left:-3.5px;animation:popIn .22s cubic-bezier(.3,1.5,.5,1) .82s both}
-#loader .dot.tr{top:-3.5px;right:-3.5px;animation:popIn .22s cubic-bezier(.3,1.5,.5,1) .87s both}
-#loader .dot.bl{bottom:-3.5px;left:-3.5px;animation:popIn .22s cubic-bezier(.3,1.5,.5,1) .92s both}
-#loader .dot.br{bottom:-3.5px;right:-3.5px;animation:popIn .22s cubic-bezier(.3,1.5,.5,1) .97s both}
-#loader .tag{position:absolute;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--accent);opacity:0;white-space:nowrap}
-#loader .tag.top{top:-26px;left:0;animation:fadeUp .34s cubic-bezier(.33,.9,.24,1) .86s both}
+#loader .dot{position:absolute;}
+
+#loader .tag{position:absolute;opacity:0;white-space:nowrap}
+
 /* command palette */
 #palette{display:none;position:fixed;inset:0;z-index:95;background:rgba(20,20,22,.28);backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:12vh 16px 16px}
 #palette.open{display:flex}
 #palette .box{width:100%;max-width:468px;border-radius:4px;background:var(--card);box-shadow:0 24px 70px -30px rgba(20,24,45,.4)}
 #palette input{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-size:14px;padding:var(--s-4) var(--s-5);box-shadow:inset 0 -1px 0 var(--tint)}
 #palette .list{max-height:46vh;overflow:auto;padding:var(--s-2)}
-#palette .list a{display:block;padding:var(--s-3) var(--s-4);border-radius:4px;color:var(--ink);font-size:var(--t-body)}
+#palette .list a{padding:var(--s-3) var(--s-4);border-radius:4px;color:var(--ink);font-size:var(--t-body)}
 #palette .list a.active,#palette .list a:hover{background:var(--tint)}
 #palette .list a{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3)}
 #palette .ptag{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:var(--tr-label);color:var(--faint)}
@@ -317,14 +299,10 @@ html.pf-cursor[data-theme="dark"]{cursor:url("data:image/svg+xml,%3Csvg xmlns='h
 }
 @media (prefers-reduced-motion:reduce){
 #bgwash,#loader *,[data-reveal]{animation:none!important;transition:none!important}
-[data-reveal]{opacity:1!important;transform:none!important}
+
 }
 
 img.bg{opacity:0;transition:opacity .5s ease}
-
-/* resume modal */
-@media (max-width:576px){
-}
 
 /* ══════════════════════════════════════════════════════════════════
    JAIMEC.CO-INSPIRED LAYER
@@ -332,13 +310,8 @@ img.bg{opacity:0;transition:opacity .5s ease}
    floating annotation chips, pill controls, a peeling contact tab.
    ══════════════════════════════════════════════════════════════════ */
 
-html,body{background:var(--bg);font-family:var(--display);letter-spacing:var(--tr-body)}
-body{font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
 body:before{display:none}          /* drop the film grain */
 #bgwash,.halftone{display:none}    /* drop the wash + dot fields */
-a{color:var(--link)}
-a:hover{color:var(--link);opacity:.7}
-::selection{background:var(--markWash)}
 
 .wrap{padding:0 var(--pad)}
 section{position:relative;z-index:2;padding-bottom:clamp(42px,7vw,62px)}
@@ -354,26 +327,17 @@ h1,h2,h3,.lead,#contact h2{
 .mark{background-image:linear-gradient(transparent 68%,var(--markWash) 68%,var(--markWash) 95%,transparent 95%);-webkit-box-decoration-break:clone;box-decoration-break:clone;color:var(--ink)}
 
 /* ── nav: floating centred pill ── */
-header,header.scrolled{position:fixed;top:24px;left:0;right:0;max-width:none;width:100%;padding:0;z-index:50;pointer-events:none}
-.navpill{pointer-events:auto;width:max-content;margin:0 auto;display:flex;align-items:center;gap:var(--s-1);
-  padding:4px 5px;border:0;border-radius:var(--r-pill);
-  background:color-mix(in srgb,var(--surface) 80%,transparent);backdrop-filter:blur(12px) saturate(1.4);
-  box-shadow:none;transition:background .3s var(--ease)}
+
+.navpill{
+
+  background:color-mix(in srgb,var(--surface) 80%,transparent);
+  transition:background .3s var(--ease)}
 header.scrolled .navpill{background:color-mix(in srgb,var(--surface) 92%,transparent)}
 
-.navpill > div[style]{display:none}
-nav.navlinks{display:flex;align-items:center;gap:2px}
-.navlink{padding:4px 10px;border-radius:var(--r-pill);font-size:var(--t-ui);font-weight:500;color:var(--navOff);letter-spacing:var(--tr-body)}
-.navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink);opacity:1}
+.navlink{letter-spacing:var(--tr-body)}
+.navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);}
 
-.navtext{display:inline!important}
-
-.themebtn{width:28px;height:28px;margin-left:2px;border-radius:var(--r-pill);background:transparent;color:var(--navOff);display:inline-grid;place-items:center}
-.themebtn::before{display:none}
-.themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
-.burger{position:relative;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
-@media (min-width:641px){header .burger{display:none}}
-@media (max-width:576px){nav.navlinks a{display:none}}
+.themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);}
 
 /* ── contact tab: peels off the top-right corner ── */
   transform:rotate(5deg) translateY(-10px);transform-origin:top right;
@@ -383,11 +347,10 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 
 /* ── hero ── */
 #top{padding-top:clamp(84px,16vh,133px);padding-bottom:clamp(42px,7vw,56px);text-align:left}
-.hero-c{display:block;text-align:left}
+.hero-c{text-align:left}
 
-#top h1{max-width:var(--measure);margin:0;font-size:var(--t-body);font-weight:400;color:var(--ink)}
-.hero-sub{max-width:var(--measure);margin:var(--s-5) 0 0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--muted)}
-.hero-sub + .hero-sub{margin-top:var(--s-4)}
+#top h1{margin:0;}
+.hero-sub{max-width:var(--measure);margin:var(--s-5) 0 0;}
 
 /* inline monogram chips inside prose */
 .co{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;color:var(--ink)}
@@ -396,9 +359,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
   transform:translateY(1px)}
 
 /* ── pill buttons ── */
-.pill{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:34px;padding:0 13px;
-  border:0;border-radius:var(--r-pill);font-family:var(--display);font-size:var(--t-ui);font-weight:500;
-  line-height:1;cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
+.pill{
+  font-family:var(--display);
+  }
 
 /* The top row is not two equal squares any more. One card holds two
    portrait phones, the other holds a landscape dashboard; forcing both
@@ -428,9 +391,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 .cardframe > img:not(.bg){transition:transform .6s var(--ease)}
 @media (hover:hover){.workrow:hover .cardframe > img:not(.bg){transform:scale(1.03)}}
 .worktext{display:block;padding:0;margin-top:var(--s-4)}
-.worktext .num{display:none}
-.worktext h3{margin:0;font-size:var(--t-ui);font-weight:500;color:var(--ink);line-height:1.35}
-.worktext .desc{display:block;margin:2px 0 0;font-size:var(--t-ui);font-weight:400;color:var(--faint);letter-spacing:var(--tr-body);text-transform:none!important}
+
+.worktext h3{margin:0;}
+.worktext .desc{margin:2px 0 0;letter-spacing:var(--tr-body);text-transform:none!important}
 
 @media (max-width:684px){.workgrid{grid-template-columns:minmax(0,1fr);row-gap:32px}}
 
@@ -461,7 +424,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
    ════════════════════════════════════════════════════════════════ */
 
 /* 1 — display: the name, and the only thing at this size */
-#top h1{font-size:var(--t-display);font-weight:500;line-height:1.1;letter-spacing:-.022em;color:var(--ink)}
+#top h1{color:var(--ink)}
 
 /* 2 — lead: hero prose */
 .hero-sub{font-size:var(--t-lead);font-weight:400;line-height:1.5;color:var(--muted)}
@@ -472,12 +435,8 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 
 /* 4 — meta: descriptions and supporting copy */
 .worktext .desc,.exp-role,#contact p{font-size:var(--t-meta);font-weight:400;line-height:1.45;color:var(--faint)}
-.exp-desc{font-size:var(--t-meta);line-height:1.55;color:var(--muted);max-width:var(--measure)}
-.exp-role{color:var(--muted)}
 
 /* 5 — micro: labels, dates, chips */
-.exp-date{margin:0;font-size:var(--t-micro);font-weight:500;letter-spacing:.09em;
-  text-transform:uppercase;color:var(--faint)}
 
 /* section labels get room, not a sentence */
 
@@ -488,19 +447,17 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 .exp-desc{margin-top:var(--s-2)}
 
 /* the hero gets the most air on the page */
-#top{padding-bottom:clamp(72px,12vw,96px)}
+
 .hero-sub{margin-top:var(--s-4)}
-#top h1 + .hero-sub{margin-top:var(--s-5)}
 
 /* ── experience ── */
-.exptimeline{padding-left:0}
+
 .exptimeline:before,.exprow:before{display:none}
-.exprow{padding:0 0 var(--s-6)}
 
 .exp-date{margin:0 0 5px;font-size:var(--t-micro);font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 .exp-co{font-size:var(--t-title);font-weight:500;letter-spacing:-.012em;color:var(--ink)}
 .exp-role{margin:2px 0 0;font-size:var(--t-meta);color:var(--muted)}
-.exp-desc{margin:var(--s-2) 0 0;font-size:var(--t-meta);line-height:1.55;color:var(--faint);max-width:var(--measure)}
+.exp-desc{margin:var(--s-2) 0 0;font-size:var(--t-meta);line-height:1.55;color:var(--faint);}
 
 /* experience: two-up so the column isn't half empty */
 .exptimeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7) var(--gap);padding-left:0}
@@ -510,38 +467,19 @@ nav.navlinks{display:flex;align-items:center;gap:2px}
 @media (max-width:684px){.exptimeline{grid-template-columns:minmax(0,1fr);gap:var(--s-6)}}
 
 /* ── hero rhythm: one even step, the way the reference does it ── */
-#top h1 + .hero-sub{margin-top:18px}
+
 .hero-sub + .hero-sub{margin-top:16px}
 
 #top{padding-top:clamp(104px,20vh,158px);padding-bottom:clamp(62px,11vw,87px)}
 
-/* ── footer: one quiet row, no repeats ── */
-#contact{padding-bottom:0}
-#contact footer{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:var(--s-5);
-  width:auto;margin:0;padding:var(--s-6) 0 var(--s-7);background:transparent;
-  text-align:left}
-@media (max-width:504px){#contact footer{flex-direction:column;align-items:flex-start;gap:var(--s-3)}}
-
 /* (old contact/footer rules removed — superseded above) */
 
 /* ── chrome ── */
-.totop{border-radius:var(--r-pill);background:var(--surface);border:0;color:var(--ink);box-shadow:none}
-.toast,#palette .box{border-radius:var(--r-float);background:var(--card);box-shadow:var(--shadow-float)}
-#palette .list a,.mrow{border-radius:var(--r-sm)}
-.mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:var(--tr-body)}
-.mresume{border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:var(--t-ui)}
-.mailbtn{border-radius:var(--r-pill);font-family:var(--display);font-size:var(--t-ui)}
-#loader{background:var(--bg)}
-#loader .name span{font-family:var(--display);font-size:var(--t-body);font-weight:400;letter-spacing:var(--tr-body);color:var(--ink)}
-#loader .tag{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:0;color:var(--faint)}
-#loader .dot{background:var(--line)}
-#loader .dot{box-shadow:0 0 0 1px var(--line)}
 
 /* ── motion: quieter reveals ── */
 /* buttery smooth: longer duration with a delightful ease-out-back curve
    that feels like the element is released and settles into place. */
-[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .75s cubic-bezier(.23,1,.320,1.1),transform .75s cubic-bezier(.23,1,.320,1.1)}
-[data-reveal].shown{opacity:1;transform:none}
+
 h1[data-reveal],h2[data-reveal]{transform:translateY(12px);transition-duration:.85s}
 .heroin h1{animation:riseIn .6s var(--ease) .04s both}
 
@@ -675,7 +613,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    one plane on .padstack now and both of these sit on it transparently,
    so the grid is continuous by construction. */
 .padboard{position:relative;overflow:hidden;touch-action:manipulation;
-  height:0;background:transparent}
+  background:transparent}
 
 /* ── a note ── */
 .padnote{position:absolute;width:152px;border-radius:4px;
@@ -720,7 +658,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   border:0;border-radius:var(--r-pill);background:transparent;cursor:pointer;
   color:var(--ink);transition:background .18s var(--ease),color .18s var(--ease)}
 @media (hover:hover){.padtool:hover{background:var(--surface)}}
-.padtool[disabled]{cursor:default;color:var(--faint);opacity:.5;background:transparent}
+.padtool[disabled]{color:var(--faint);opacity:.5;background:transparent}
 .padtrash{color:var(--muted)}
 @media (hover:hover){.padtrash:hover{color:var(--ink)}}
 .padcount{min-width:16px;padding:0 2px;text-align:center;
@@ -780,24 +718,22 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    .show condition (same scrollY>400 check, toggled together in JS) so
    the CSS never has to guess the button's visibility from outside it. */
 @media (max-width:576px){
-  .totop{bottom:calc(16px + env(safe-area-inset-bottom));left:50%;right:auto;
-    transform:translateX(4px) scale(.86);
+  .totop{bottom:calc(16px + env(safe-area-inset-bottom));right:auto;
+
     transition:opacity .2s ease,transform .5s cubic-bezier(.34,1.56,.64,1)}
-  .totop.show{transform:translateX(4px) scale(1)}
+
   .navpill{transition:transform .5s cubic-bezier(.34,1.56,.64,1),background .3s var(--ease)}
-  header.totop-on .navpill{transform:translateX(calc(-50% - 4px))}
+
 }
 .toast,#palette .box{border-radius:var(--r-float);background:var(--card);box-shadow:var(--shadow-float)}
 #palette .list a,.mrow{border-radius:var(--r-sm)}
-.mrow .mlabel{font-family:var(--display);font-size:18px;font-weight:400;letter-spacing:-.01em}
+
 .mresume{border-radius:var(--r-pill);background:var(--dark);color:var(--onDark);font-size:13px}
-.mailbtn{border-radius:var(--r-pill);font-family:var(--display);font-size:13px}
+.mailbtn{border-radius:var(--r-pill);font-family:var(--display);}
 .mobilenav{background:var(--bg)}
 #loader{background:var(--bg)}
-#loader .name span{font-family:var(--display);font-size:15px;font-weight:400;letter-spacing:-.01em;color:var(--ink)}
-#loader .tag{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--faint)}
 
-#loader .dot{background:var(--bg);box-shadow:0 0 0 1px var(--line)}
+#loader .tag{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--faint)}
 
 /* ── pill buttons (shared) ── */
 .pill,.mresume{font-family:var(--display)}
@@ -813,7 +749,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* ── hero: text left, image right ── */
 
 .hero-c{display:block}
-#top .hero-sub{max-width:38em}
 
 /* ══ WHERE I'VE WORKED — a rail, read top to bottom ══════════════ */
 #experience .exptimeline{position:relative;display:block;padding-left:20px;margin-top:2px;
@@ -832,10 +767,10 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 #experience .exp-date{margin:1px 0 0;font-size:11px;font-weight:500;letter-spacing:.09em;
   text-transform:uppercase;color:var(--faint);white-space:nowrap}
-#experience .exp-co{margin:0;font-size:14px;font-weight:500;line-height:1.3;
+#experience .exp-co{margin:0;font-size:14px;font-weight:500;
   letter-spacing:-.012em;color:var(--ink)}
-#experience .exp-role{margin:2px 0 0;font-size:13px;line-height:1.45;color:var(--muted)}
-#experience .exp-desc{margin:7px 0 0;font-size:13px;line-height:1.55;color:var(--faint);max-width:56ch}
+#experience .exp-role{margin:2px 0 0;font-size:13px;color:var(--muted)}
+#experience .exp-desc{margin:7px 0 0;font-size:13px;max-width:56ch}
 
 @media (max-width:576px){
   #experience .exptimeline{padding-left:16px}
@@ -853,17 +788,15 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   #experience .exp-date,#experience .exp-co,#experience .exp-role,#experience .exp-desc{grid-column:1;grid-row:auto}
 }
 
-#top .hero-c{display:block;max-width:none}
-
-#top h1{max-width:none;font-size:clamp(22px,3.2vw,35px);font-weight:500;
-  line-height:1.36;letter-spacing:-.026em;
+#top h1{max-width:none;font-weight:500;
+  letter-spacing:-.026em;
   color:color-mix(in srgb,var(--muted) 65%,var(--bg) 35%);text-wrap:pretty}
 /* one continuous line, wrapping naturally on width. The sentence reads
    muted by default; only the words that carry the claim — what gets
    made, and what it does — land in ink. */
 #top h1 .h1-key{color:var(--ink)}
 #top h1 + .hero-sub{margin-top:clamp(14px,2vw,18px)}
-#top .hero-sub{max-width:66ch;font-size:var(--t-lead);line-height:1.55;color:var(--muted)}
+#top .hero-sub{max-width:66ch;color:var(--muted)}
 
 /* The arrow was at .55, which on the black pill composited to about
    #959595 next to pure white type -- a grey arrow beside a white
@@ -909,9 +842,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   font-size:11px;font-weight:500;letter-spacing:.09em;color:var(--faint)}
 
 /* the line they actually scan */
-.worktext h3{font-size:clamp(16px,1.6vw,18px);font-weight:500;line-height:1.3;
-  letter-spacing:-.018em;color:var(--ink)}
-.worktext .desc{margin-top:5px;font-size:13px;color:var(--faint)}
 
 /* the grid equalises row height, so bottom-align the CTA — otherwise the
    card carrying a note pushes its link out of step with the one that isn't */
@@ -945,7 +875,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .workrow .worktext{margin-top:14px!important}
 .workrow .cardframe{margin-bottom:0}
 
-.worktext h3{font-size:18px;font-weight:500;line-height:1.3;letter-spacing:-.018em;color:var(--muted)}
 .worktext .desc{display:block;margin-top:5px;font-size:13px;font-weight:400;
   line-height:1.45;color:var(--faint)}
 
@@ -1536,8 +1465,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 /* the heading and its supporting line, one container, always stacked —
    this no longer depends on viewport width the way it used to */
 .padtriggercopy{display:flex;flex-direction:column;gap:2px;min-width:0}
-.padtriggertext{font-size:15px;font-weight:500;letter-spacing:-.012em}
-.padtriggerhint{font-size:13px;color:var(--faint);letter-spacing:-.005em}
+.padtriggertext{font-weight:500;}
+
 /* :hover still matches a disabled button, so this only has to work
    while the board is shut. The dashed edge is "empty slot, put
    something here" throughout -- border-style cannot transition (it
@@ -1922,7 +1851,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #notes .rp-faces i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
   font-family:var(--mono);font-size:10px;font-weight:500;font-style:normal;
   box-shadow:0 0 0 2px var(--rp-bg),inset 0 0 0 1px rgba(0,0,0,.14);
-  background:var(--surface);color:var(--faint)}
+  color:var(--faint)}
 #notes .rp-faces i + i{margin-left:-9px}
 /* One tone, not a fade. The original ramp ran 13/9/6% ink, which measured
    1.32, 1.20 and 1.13 against the white pill — three circles nobody could
@@ -1974,7 +1903,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #notes .readpill.is-rolling .rp-n{transform:scale(1.06)}
 #notes .rp-txt{display:flex;flex-direction:column;gap:1px;min-width:0}
 #notes .rp-txt b{font-size:var(--t-mono-lg);font-weight:500;letter-spacing:var(--tr-body);white-space:nowrap}
-#notes .rp-sub{display:grid;font-size:var(--t-mono);
+#notes .rp-sub{display:grid;
   color:color-mix(in srgb,var(--rp-fg) 72%,transparent);white-space:nowrap}
 #notes .rp-sub > span{grid-area:1/1;transition:opacity .2s var(--ease),color .2s var(--ease)}
 #notes .rp-sub-b{opacity:0}
@@ -2001,7 +1930,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 }
 @media (max-width:400px){
   #notes .readpill{gap:var(--s-3);padding:7px 20px}
-  #notes .rp-txt b{font-size:11.5px} #notes .rp-sub{font-size:10.5px}
+
 }
 /* ── the footer credit ───────────────────────────────────────────────
    Two round tokens instead of the two nouns: a face for "me", a spark
@@ -2024,12 +1953,9 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    bare class, so the credit has to be addressed through #contact too —
    otherwise it silently stays at 13px and the step-downs below never
    fire on a narrow phone. */
-#contact .footcredit{margin:6px 0 0;font-size:12.5px;line-height:1.7;
+#contact .footcredit{margin:6px 0 0;
   color:var(--faint);text-align:center;white-space:nowrap}
-/* it has to hold one line on the narrowest phone too, so the type steps
-   down rather than the sentence breaking in half */
-@media (max-width:400px){#contact .footcredit{font-size:11.5px}}
-@media (max-width:340px){#contact .footcredit{font-size:10.5px}}
+
 .fmark{display:inline-grid;place-items:center;
   width:20px;height:20px;flex:0 0 auto;
   border-radius:50%;overflow:hidden;margin:0 2px;
@@ -2142,28 +2068,27 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 /* ── the panel: the command palette's grammar, stood up on the right ── */
 .aichat{position:fixed;inset:0;z-index:85;visibility:hidden;pointer-events:none}
 .aichat.open{visibility:visible;pointer-events:auto}
-.aichat-scrim{position:absolute;inset:0;background:rgba(20,20,22,.28);
-  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s ease}
+.aichat-scrim{position:absolute;inset:0;
+  opacity:0;transition:opacity .3s ease}
 .aichat.open .aichat-scrim{opacity:1}
-.aichat-panel{position:absolute;top:0;right:0;bottom:0;width:min(460px,100vw);
-  display:flex;flex-direction:column;background:var(--bg);
-  box-shadow:-1px 0 0 var(--line),0 24px 70px -30px rgba(20,24,45,.4);
-  transform:translateX(100%);transition:transform .5s var(--ease)}
-.aichat.open .aichat-panel{transform:none}
+.aichat-panel{position:absolute;
+  flex-direction:column;
+
+  }
+
 .aichat-panel:focus{outline:none}
 .aichat-handle{display:none}
 
-.aichat-head{display:flex;align-items:center;gap:10px;height:56px;padding:0 10px 0 20px;flex:0 0 auto;
-  box-shadow:inset 0 -1px 0 var(--line)}
+.aichat-head{display:flex;align-items:center;flex:0 0 auto;
+  }
 
-.aichat-iconbtn{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;border:0;border-radius:var(--r-pill);
-  background:transparent;color:var(--faint);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
-.aichat-iconbtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.aichat-iconbtn{flex:0 0 auto;display:grid;place-items:center;border:0;
+  background:transparent;cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
+.aichat-iconbtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);}
 
-.aichat-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 24px}
+.aichat-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;}
 
 /* ── the empty state: the page's own voice, set like the page ─────── */
-.aichat-intro{padding:40px 0 32px}
 
 /* arrival, the way [data-reveal] arrives everywhere else */
 
@@ -2173,19 +2098,19 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    Set like a printed interview, not a messenger: who's speaking in mono,
    the question in the serif (the same face the timeline gives whatever
    a visitor types), the answer as plain reading text. */
-.aix{padding:28px 0 26px;animation:aiRise .5s var(--ease) both}
+.aix{animation:aiRise .5s var(--ease) both}
 .aix + .aix{border-top:1px solid var(--line)}
 
-.aitext{font-family:var(--display);font-size:14px;line-height:1.6;letter-spacing:-.005em;color:var(--ink);overflow-wrap:anywhere}
-.aitext p{margin:0 0 16px;color:var(--muted)}
+.aitext{letter-spacing:-.005em;color:var(--ink);overflow-wrap:anywhere}
+.aitext p{color:var(--muted)}
 .aitext p:last-child{margin-bottom:0}
 .aitext .aitext-h{font-weight:500}
 .aitext ul,.aitext ol{margin:0 0 11px;padding:0;list-style:none}
 .aitext ul:last-child,.aitext ol:last-child{margin-bottom:0}
 .aitext li{position:relative;margin-bottom:6px}
 .aitext li:last-child{margin-bottom:0}
-.aitext ul li{padding-left:18px}
-.aitext ul li::before{content:"\2013";position:absolute;left:0;color:var(--faint)}
+
+.aitext ul li::before{position:absolute;left:0;color:var(--faint)}
 .aitext ol{counter-reset:ai}
 .aitext ol li{padding-left:28px;counter-increment:ai}
 .aitext ol li::before{content:counter(ai,decimal-leading-zero);position:absolute;left:0;top:.28em;
@@ -2208,49 +2133,48 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    as a spec sheet; a case study arrives as the menu's numbered row. */
 /* the answer itself: everything in it is information, so all of it is
    ink; the words that carry it are set heavier, not the rest fainter */
-.aitext .ailead{margin:0 0 14px;font-family:var(--display);font-size:19px;font-weight:400;line-height:1.38;
-  letter-spacing:-.02em;color:var(--ink);text-wrap:pretty}
-.aitext .ailead b{font-weight:600}
+.aitext .ailead{
+  text-wrap:pretty}
+
 .aitext .ailead:last-child{margin-bottom:0}
 
 /* One rule for the whole answer: a box means you can tap it. Link cards
    and error cards are boxed; everything that's only read is plain,
    left-aligned, in the same rhythm (16px between blocks). */
-.aifigs-wrap{margin:0 0 16px}
-.aifigs{display:flex;flex-wrap:wrap;gap:12px 32px}
-.aifig{min-width:0;max-width:18ch}
-.aifig b{display:block;font-family:var(--serif);font-size:26px;font-weight:400;line-height:1;
-  letter-spacing:-.02em;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
-.aifig span{display:block;margin-top:7px;font-family:var(--mono);font-size:9.5px;line-height:1.45;letter-spacing:.05em;
-  text-transform:uppercase;color:var(--faint)}
+
+.aifig{min-width:0;}
+.aifig b{display:block;line-height:1;
+  color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.aifig span{display:block;margin-top:7px;line-height:1.45;
+  }
 .aitext .aifigs-src{margin:8px 2px 0;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
 
 /* facts: one grouped box, the way a settings list groups rows — a
    single hairline between rows, edge to edge, nothing else */
-.aifacts{display:flex;flex-direction:column;gap:14px;margin:0 0 16px}
-.aifacts dt{margin:0 0 3px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--faint);line-height:1.5}
+.aifacts{display:flex;flex-direction:column;margin:0 0 16px}
+.aifacts dt{margin:0 0 3px;
+  line-height:1.5}
 .aifacts dd{margin:0;font-size:14px;line-height:1.55;color:var(--ink)}
 .aifacts:last-child{margin-bottom:0}
 
 .aitext ol.aisteps{margin-bottom:16px}
 .aitext ol.aisteps:last-child{margin-bottom:0}
-.aitext ol.aisteps li{padding:0 0 13px 22px;margin:0;font-size:13.5px;line-height:1.5}
+.aitext ol.aisteps li{margin:0;font-size:13.5px;line-height:1.5}
 .aitext ol.aisteps li::before{content:"";top:5px;left:0;width:7px;height:7px;border-radius:50%;
   background:var(--bg);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--faint) 70%,transparent)}
 .aitext ol.aisteps li::after{content:"";position:absolute;left:3px;top:16px;bottom:1px;width:1px;background:var(--line)}
 .aitext ol.aisteps li:last-child{padding-bottom:0}
 .aitext ol.aisteps li:last-child::after{display:none}
 .aitext ol.aisteps li:last-child::before{background:var(--ink);box-shadow:none}
-.aistep-k{display:block;margin-bottom:1px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--faint);line-height:1.6}
+.aistep-k{margin-bottom:1px;
+  line-height:1.6}
 
-.aitext a.aicase{display:flex;align-items:flex-start;gap:14px;margin:16px 0 0;padding:14px 16px;border-radius:12px;
-  background:var(--card);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);text-decoration:none;
+.aitext a.aicase{
+
   transition:background .2s var(--ease),box-shadow .2s var(--ease)}
-.aitext a.aicase:hover{background:var(--surface);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent)}
+.aitext a.aicase:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent)}
 
-.aicase-t{display:block;font-family:var(--serif);font-size:17px;line-height:1.3;letter-spacing:-.008em}
+.aicase-t{display:block;}
 
 .aicase svg{flex:0 0 auto;margin-top:4px;color:var(--faint);transition:transform .3s var(--ease),color .2s var(--ease)}
 .aitext a.aicase:hover svg{color:var(--accent);transform:translate(1px,-1px)}
@@ -2282,56 +2206,49 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 /* a failed answer is never a dead end: say what happened in plain words,
    then the way forward — a retry that runs itself when it can, and a
    person to email when it can't */
-.aierr{position:relative;overflow:hidden;padding:14px 16px 15px;border-radius:12px;background:var(--card);
-  box-shadow:0 0 0 1px var(--line);animation:aiRise .4s var(--ease) both}
+.aierr{position:relative;overflow:hidden;padding:14px 16px 15px;border-radius:12px;
+  animation:aiRise .4s var(--ease) both}
 .aierr-m{margin:0 0 12px;font-size:14px;line-height:1.5;color:var(--ink)}
-.aierr-a{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.aierr-a{display:flex;align-items:center;gap:8px}
 .aierr-a .aipill svg{flex:0 0 auto}
-
-.ainext{padding:2px 0 30px;animation:aiRise .5s var(--ease) .1s both}
 
 /* ── the composer ────────────────────────────────────────────────────
    The shape every AI tool has taught people to type into — a solid box,
    the text on top, what's answering named bottom-left, a round send
    bottom-right that becomes stop while it writes — made from this site's
    materials: the card ground, the hairline, the ink primary. */
-.aichat-foot{flex:0 0 auto;padding:10px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg)}
-.aicomposer{display:flex;flex-direction:column;gap:8px;margin:0;padding:12px 10px 10px 14px;border-radius:var(--r-float);
-  background:var(--card);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.04),0 10px 26px -18px rgba(0,0,0,.28);
+.aichat-foot{flex:0 0 auto;}
+.aicomposer{display:flex;margin:0;border-radius:var(--r-float);
+  background:var(--card);
   transition:box-shadow .2s var(--ease)}
-.aicomposer:focus-within{box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 28%,transparent),0 1px 2px rgba(0,0,0,.04),0 10px 26px -18px rgba(0,0,0,.28)}
-.aichat-input{display:block;width:100%;min-height:24px;max-height:140px;margin:0;padding:1px 2px 0 0;resize:none;
-  border:0;outline:0;background:transparent;overflow-y:auto;
-  font-family:var(--display);font-size:14.5px;line-height:1.55;letter-spacing:var(--tr-body);color:var(--ink);caret-color:var(--accent)}
-.aichat-input::placeholder{color:var(--faint);opacity:1}
-.aicomposer-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 
-.aichat-send{position:relative;flex:0 0 auto;display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:50%;
-  background:var(--surface);color:var(--faint);cursor:default;
+.aichat-input{max-height:140px;margin:0;resize:none;
+  border:0;outline:0;background:transparent;overflow-y:auto;
+  caret-color:var(--accent)}
+.aichat-input::placeholder{opacity:1}
+
+.aichat-send{position:relative;flex:0 0 auto;display:grid;place-items:center;border:0;
+  cursor:default;
   transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
 .aichat-send svg{grid-area:1/1;transition:opacity .15s ease,transform .2s var(--ease)}
 .aichat-send .ico-stop{opacity:0;transform:scale(.6)}
-.aichat-send.is-ready,.aichat-send.is-busy{background:var(--ink);color:var(--bg);cursor:pointer}
+.aichat-send.is-ready,.aichat-send.is-busy{cursor:pointer}
 .aichat-send.is-ready:hover,.aichat-send.is-busy:hover{opacity:.88}
 .aichat-send.is-ready:active,.aichat-send.is-busy:active{transform:scale(.92)}
 .aichat-send.is-busy .ico-send{opacity:0;transform:scale(.6)}
 .aichat-send.is-busy .ico-stop{opacity:1;transform:none}
 .aichat-send:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.aihint{display:flex;justify-content:flex-end;gap:12px;margin:8px 4px 0;
-  font-family:var(--mono);font-size:10px;color:var(--faint)}
+.aihint{display:flex;gap:12px;
+  }
 
 /* ── phones: the mobile menu's own sheet ─────────────────────────────── */
 @media (max-width:640px){
-  .aichat-scrim{background:rgba(20,18,16,.42);-webkit-backdrop-filter:none;backdrop-filter:none}
-  html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
-  .aichat-panel{top:auto;left:0;width:100%;height:92dvh;border-radius:20px 20px 0 0;
-    box-shadow:0 -14px 34px -18px rgba(0,0,0,.32);transform:translateY(100%)}
-  .aichat-handle{display:block;flex:0 0 auto;width:36px;height:4px;margin:10px auto 0;border-radius:2px;background:var(--line)}
-  .aichat-head{height:50px;padding-left:var(--pad);box-shadow:none}
-  .aichat-body{padding:0 var(--pad)}
-  .aichat-intro{padding-top:20px}
 
-  .aichat-foot{padding-left:12px;padding-right:12px}
+  html[data-theme="dark"] .aichat-scrim{background:rgba(0,0,0,.6)}
+  .aichat-panel{height:92dvh;
+    }
+  .aichat-handle{flex:0 0 auto;width:36px;height:4px;margin:10px auto 0;border-radius:2px;background:var(--line)}
+
 }
 @media (prefers-reduced-motion:reduce){
   .aichat-panel,.aichat-scrim{transition:none}
@@ -2349,45 +2266,34 @@ body:not(.arriving) .hp-frame img{will-change:auto}
      right, answers as white cards on a tinted canvas on the left
    · the agent's work shown as steps that tick off, then fold away */
 .aichat-panel{top:50%;left:50%;right:auto;bottom:auto;
-  width:min(1060px,calc(100vw - 48px));height:min(780px,calc(100dvh - 48px));
-  display:grid;grid-template-columns:272px minmax(0,1fr);overflow:hidden;border-radius:20px;
-  background:var(--surface);
-  box-shadow:0 0 0 1px var(--line),0 40px 100px -40px rgba(20,24,45,.45),0 12px 30px -18px rgba(20,24,45,.25);
+  height:min(780px,calc(100dvh - 48px));
+  display:grid;overflow:hidden;border-radius:20px;
+
   opacity:0;transform:translate(-50%,-48%) scale(.985);
   transition:transform .5s var(--ease),opacity .28s ease}
 .aichat.open .aichat-panel{opacity:1;transform:translate(-50%,-50%)}
-.aichat-scrim{background:rgba(20,20,22,.34)}
 
 /* ── the main area ── */
 /* both are <section>s, and the page gives every section bottom padding
    and a stacking layer; neither belongs inside the chat */
 .aimain{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;min-height:0;padding:0!important;z-index:auto}
 section.aix{z-index:auto}
-.aichat-head{height:64px;padding:0 14px 0 28px;box-shadow:inset 0 -1px 0 var(--line);background:var(--surface)}
 
-.aichat-body{padding:0 28px}
-.aichat-body > *{max-width:720px;margin-left:auto;margin-right:auto}
+.aichat-body > *{margin-left:auto;margin-right:auto}
 
 /* empty state */
-.aichat-intro{padding:44px 0 28px}
 
 /* ── a conversation ── */
-.aix{padding:24px 0 6px;border:0!important}
+.aix{border:0!important}
 
-.aians-x{min-width:0}
-.aicard{padding:20px 22px 16px;border-radius:16px;background:var(--card);
-  box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.03),0 16px 34px -28px rgba(0,0,0,.35);animation:aiRise .4s var(--ease) both}
 .aicard[hidden]{display:none}
-.aicard .aitext a.aicase{background:var(--bg)}
-.aicard .aitext a.aicase:hover{background:var(--surface)}
 
 .aians-x > .aierr{margin-top:0}
-.ainext{padding:14px 0 26px 44px}
 
 /* ── the agent at work: steps that tick off, then fold into one line ── */
-.aitrace{margin:4px 0 10px}
+
 .aitrace-sum{display:none;align-items:center;gap:6px;padding:3px 8px 3px 6px;margin-left:-6px;border:0;border-radius:var(--r-pill);
-  background:transparent;color:var(--muted);cursor:pointer;font-family:var(--display);font-size:12.5px;
+  background:transparent;cursor:pointer;font-family:var(--display);font-size:12.5px;
   transition:background .2s var(--ease)}
 .aitrace-sum:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
 .aitrace-sum svg{transition:transform .25s var(--ease)}
@@ -2398,7 +2304,7 @@ section.aix{z-index:auto}
 .aitrace.is-done.is-open .aitrace-list{margin-top:8px}
 .aistep{display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.3;color:var(--muted);animation:aiRise .3s var(--ease) both}
 .aistep-i{position:relative;flex:0 0 auto;width:15px;height:15px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--line)}
-.aistep.is-live .aistep-i{box-shadow:none;border:1.5px solid var(--line);border-top-color:var(--accent);animation:aiSpin .8s linear infinite}
+.aistep.is-live .aistep-i{border-top-color:var(--accent);}
 @keyframes aiSpin{to{transform:rotate(360deg)}}
 .aistep.is-done .aistep-i{background:var(--ink);box-shadow:none}
 .aistep.is-done .aistep-i::after{content:"";position:absolute;left:4.5px;top:4px;width:5px;height:3px;
@@ -2408,27 +2314,16 @@ section.aix{z-index:auto}
   background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:aiShimmer 1.6s linear infinite}
 
 /* composer sits on the canvas */
-.aichat-foot{background:var(--surface);padding:10px 28px calc(14px + env(safe-area-inset-bottom))}
-.aichat-foot > *{max-width:720px;margin-left:auto;margin-right:auto}
 
-/* ── narrower screens: the rail steps aside, the window becomes a sheet ── */
-@media (max-width:900px){
-  .aichat-panel{grid-template-columns:minmax(0,1fr)}
+.aichat-foot > *{margin-left:auto;margin-right:auto}
 
-  .aichat-head{padding-left:20px}
-}
 @media (max-width:640px){
-  .aichat-panel{top:auto;left:0;right:0;bottom:0;width:100%;height:94dvh;border-radius:20px 20px 0 0;
+  .aichat-panel{left:0;right:0;height:94dvh;
     display:flex;flex-direction:column;opacity:1;transform:translateY(100%)}
   .aichat.open .aichat-panel{transform:none}
-  .aichat-head{height:auto;min-height:52px;padding:6px 10px 6px var(--pad);box-shadow:none}
 
-  .aichat-body{padding:0 var(--pad)}
   .aichat-intro{padding-top:14px}
 
-  .aichat-foot{padding-left:12px;padding-right:12px}
-
-  .aicard{padding:16px 16px 14px}
   .ainext{padding-left:0}
 }
 @media (prefers-reduced-motion:reduce){
@@ -2444,10 +2339,7 @@ section.aix{z-index:auto}
    meet, no card and no shadow around an answer, the visitor's message
    as a soft grey bubble, and depth kept for the one thing you act on
    first, the composer. */
-.aichat-panel{background:var(--bg);box-shadow:0 0 0 1px var(--line),0 30px 80px -40px rgba(20,24,45,.35)}
-
-.aichat-head{background:var(--bg)}
-.aichat-foot{background:var(--bg)}
+.aichat-panel{box-shadow:0 0 0 1px var(--line),0 30px 80px -40px rgba(20,24,45,.35)}
 
 /* answers: plain text on the page */
 .aicard{padding:0;border-radius:0;background:none;box-shadow:none;animation:none}
@@ -2457,14 +2349,13 @@ section.aix{z-index:auto}
 
 .aitrace{margin:0 0 12px}
 .aix{padding:28px 0 4px}
-.ainext{padding:14px 0 22px}
 
 /* errors: a hairline, not a floating card */
 .aierr{box-shadow:inset 0 0 0 1px var(--line);background:transparent}
 
 /* the composer keeps the only depth on the page */
 .aicomposer{box-shadow:0 0 0 1px var(--line),0 4px 16px -10px rgba(0,0,0,.18)}
-.aicomposer:focus-within{box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 30%,transparent),0 4px 16px -10px rgba(0,0,0,.18)}
+
 @media (max-width:640px){
   .aicard{padding:0}
 }
@@ -2475,9 +2366,6 @@ section.aix{z-index:auto}
    arrow that wakes on hover, hairlines between rows. A vertical list
    scans faster than wrapping pills of uneven width. Starters sit
    directly on the composer, where the visitor is already looking. */
-.aichat-intro{display:flex;flex-direction:column;min-height:100%;padding-bottom:6px}
-
-.ainext{padding:18px 0 24px}
 
 /* ══ ARRIVAL ═════════════════════════════════════════════════════════
    New pieces of an answer ease in rather than appear: a short fade and
@@ -2487,8 +2375,6 @@ section.aix{z-index:auto}
    follow in a gentle stagger. */
 .ai-new{animation:aiBlockIn .5s cubic-bezier(.22,1,.36,1) both}
 @keyframes aiBlockIn{from{opacity:0;transform:translateY(6px);filter:blur(2px)}to{opacity:1;transform:none;filter:none}}
-
-.ainext{animation:none}
 
 .aitrace-sum{animation:aiBlockIn .35s cubic-bezier(.22,1,.36,1) both}
 @media (prefers-reduced-motion:reduce){
@@ -2507,11 +2393,9 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aichat{touch-action:manipulation}
 .aichat-panel,.aichat-body{overscroll-behavior:contain}
 .aichat-body{-webkit-overflow-scrolling:touch}
-@media (hover:none),(max-width:640px){
-  .aichat-input{font-size:16px;line-height:1.45}
-}
+
 @media (max-width:640px){
-  .aichat-panel{bottom:var(--kb,0px);height:min(92dvh,calc(var(--vvh,100dvh) - 10px));max-height:calc(100dvh - 10px);
+  .aichat-panel{height:min(92dvh,calc(var(--vvh,100dvh) - 10px));max-height:calc(100dvh - 10px);
     transition:transform .45s var(--ease)}
   /* with the keyboard up, space goes to the conversation, not chrome */
   .aichat-panel.kb-open .aichat-handle{display:none}
@@ -2521,27 +2405,12 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 
   /* spacing: one 16px gutter, one rhythm */
   .aichat-head{padding-left:16px;padding-right:8px}
-  .aichat-body{padding:0 16px}
-  .aichat-foot{padding:8px 12px calc(10px + env(safe-area-inset-bottom))}
-  .aichat-intro{padding:12px 0 4px}
 
   .aix{padding-top:22px}
 
-  .aitext .ailead{font-size:18px}
-  .aifigs{gap:12px 24px}
-  .aifig b{font-size:24px}
-  .aitext a.aicase{padding:12px 14px;gap:12px}
-  .aicase-t{font-size:16px}
   .aierr{padding:12px 14px 13px}
-  .ainext{padding:14px 0 18px}
-  .aicomposer{padding:10px 8px 8px 12px}
-  .aichat-input{max-height:120px}
-}
-@media (max-width:360px){
 
-  .aitext .ailead{font-size:17px}
-  .aifigs{gap:10px 18px}
-  .aifig{max-width:14ch}
+  .aichat-input{max-height:120px}
 }
 
 /* ══ ONE COLUMN ══════════════════════════════════════════════════════
@@ -2549,16 +2418,12 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
    What it did well, saying whose assistant this is, moves into the
    header as a profile: photo, name in the serif, the AI badge, role. */
 .aichat-panel{width:min(780px,calc(100vw - 48px));grid-template-columns:minmax(0,1fr)}
-.aichat-head{height:auto;min-height:72px;padding:14px 14px 14px 24px;gap:12px}
 
-.aichat-body{padding:0 32px}
 .aichat-foot{padding-left:32px;padding-right:32px}
 @media (max-width:900px){.aichat-head{padding-left:20px}}
 @media (max-width:640px){
   .aichat-panel{width:100%}
-  .aichat-head{min-height:56px;padding:8px 8px 8px 16px;gap:10px}
 
-  .aichat-body{padding:0 16px}
   .aichat-foot{padding-left:12px;padding-right:12px}
 }
 
@@ -2568,21 +2433,18 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
    left, a way out right), and rows that are just a dot, the question
    in ink and a short grey hint. No icons, no rules. Once the talk
    starts the tray folds away and the composer stands on its own. */
-.aichat-intro{justify-content:flex-end;padding-bottom:28px}
+.aichat-intro{padding-bottom:28px}
 .aitray{border-radius:24px}
-.aichat-foot.is-chatting .aitray{padding:0;background:transparent}
+
 .aichat-foot:not(.is-chatting) .aitray{padding:18px 14px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg))}
-.aichat-foot.is-chatting .aitray-top{display:none}
+
 .aitray-top{padding:0 10px 12px;animation:aiBlockIn .5s cubic-bezier(.22,1,.36,1) .12s both}
 
-.aichat-foot:not(.is-chatting) .aicomposer{box-shadow:0 0 0 1px var(--line),0 2px 10px -6px rgba(0,0,0,.14)}
 /* follow-ups: the same rows, without the tray */
 
 @media (max-width:640px){
   .aichat-foot:not(.is-chatting) .aitray{padding:14px 8px 8px;border-radius:20px}
-  .aitray-top{padding:0 8px 8px}
 
-  .aichat-panel.kb-open .aitray-top{display:none}
   .aichat-panel.kb-open .aichat-foot:not(.is-chatting) .aitray{padding:0;background:none}
 }
 @media (prefers-reduced-motion:reduce){.aitray-top{animation:none!important}}
@@ -2601,15 +2463,13 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 /* display */
 .aicase-t,.aifig b{font-family:var(--serif);font-weight:500}
 
-.aicase-t{font-size:18px;line-height:1.3;letter-spacing:-.018em}
-.aitext .ailead{font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.3;letter-spacing:-.02em}
-.aitext .ailead b{font-weight:700}
+.aitext .ailead{font-family:var(--serif);font-weight:500;letter-spacing:-.02em}
 
 /* body */
 .aitext,.aitext p,.aifacts dd,.aitext ol.aisteps li,.aierr-m{
   font-family:var(--display);font-size:15px;line-height:1.55;letter-spacing:-.009em}
 
-.aichat-input{font-size:15px;line-height:1.55;letter-spacing:-.009em}
+.aichat-input{letter-spacing:-.009em}
 
 /* ui */
 .aipill,.aitrace-sum,.aistep{font-family:var(--display);font-size:13px;letter-spacing:-.01em}
@@ -2620,13 +2480,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 
 /* meta */
-.aihint{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.05em}
-
-@media (hover:none),(max-width:640px){ .aichat-input{font-size:16px} }
-@media (max-width:640px){
-  .aitext .ailead{font-size:19px}
-
-}
+.aihint{font-weight:400;}
 
 /* ══ EVERYTHING EARNS ITS PLACE ══════════════════════════════════════
    The audit's changes:
@@ -2641,22 +2495,15 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
      like suggestions everywhere, not like paragraphs */
 
 .aichat:not(.has-chat) #aiChatReset{visibility:hidden}
-.aicomposer-row{justify-content:flex-end}
+
 .aicomposer{padding-bottom:8px}
 .aicomposer-row{margin-top:-4px}
-.aitext a.aicase{align-items:center}
-
-.ainext{margin:18px 0 26px;padding:14px 10px 8px;border-radius:20px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg))}
-
-@media (max-width:640px){.ainext{padding:12px 6px 6px;border-radius:18px}}
 
 /* copy on the "Worked for …" line; the composer is one row */
-.aitrace{display:flex;flex-wrap:wrap;align-items:center}
+.aitrace{flex-wrap:wrap;align-items:center}
 .aitrace .aitrace-list{flex:0 0 100%}
 
 .aicomposer{flex-direction:row;align-items:flex-end;gap:10px;padding:10px 8px 8px 14px}
-.aicomposer-row{margin:0}
-.aichat-input{padding:5px 0 5px}
 
 /* ══ PRESENCE ════════════════════════════════════════════════════════
    The agent is shown as a presence, built from the portfolio's own
@@ -2674,15 +2521,13 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 
 /* header: empty until there is a conversation (the presence is centre
    stage then); afterwards the small presence, the name, the state */
-.aichat-head{min-height:60px;padding:12px 12px 12px 24px}
 
 .aichat:not(.has-chat) .aichat-head{box-shadow:none}
 
 /* opening: centred, one column, one rhythm */
-.aichat-intro{align-items:center;justify-content:center;text-align:center;padding:24px 0 16px}
 
 /* the composer stands alone */
-.aitray,.aichat-foot:not(.is-chatting) .aitray{padding:0!important;background:none!important;border-radius:0}
+
 .aichat-foot:not(.is-chatting) .aicomposer{box-shadow:0 0 0 1px var(--line),0 4px 16px -10px rgba(0,0,0,.18)}
 
 /* in the answer: only the step happening now, marked by the presence */
@@ -2690,11 +2535,6 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aistep.is-live .aistep-i{width:13px;height:13px;border:0;box-shadow:none;background:var(--lavender);
   border-radius:var(--hero-shape);animation:aiFlip 1s cubic-bezier(.45,0,.55,1) infinite alternate}
 
-@media (max-width:640px){
-  .aichat-head{min-height:52px;padding:8px 8px 8px 16px}
-  .aichat-intro{justify-content:flex-end;padding:8px 0 16px}
-
-}
 @media (prefers-reduced-motion:reduce){
   .aistep.is-live .aistep-i{animation:none!important}
 }
@@ -2705,12 +2545,12 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
    sentence. No uppercase labels inside an answer, no figure rows, no
    step tracks, no stacked blocks: the only thing that stands out is the
    thing that answers. A measure of ~64 characters keeps it readable. */
-.aitext{max-width:64ch}
+
 .aitext .ailead{margin:0 0 14px;font-size:21px;line-height:1.3}
 .aitext p{margin:0 0 12px;color:color-mix(in srgb,var(--ink) 86%,var(--bg));font-size:15px;line-height:1.6}
 .aitext p b,.aitext li b{font-weight:600;color:var(--ink)}
-.aitext ul{margin:0 0 12px}
-.aitext ul li{padding-left:16px;margin-bottom:8px;font-size:15px;line-height:1.6;color:color-mix(in srgb,var(--ink) 86%,var(--bg))}
+
+.aitext ul li{padding-left:16px;margin-bottom:8px;color:color-mix(in srgb,var(--ink) 86%,var(--bg))}
 .aitext ul li::before{content:"";top:.72em;width:4px;height:4px;border-radius:50%;background:var(--faint)}
 /* anything structured the model still sends is set as text, not as blocks */
 .aifigs-wrap{margin:0 0 12px}
@@ -2727,15 +2567,14 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aifacts dt::after{content:": "}
 .aifacts dd{display:inline}
 /* the case study: one line, a place to go next */
-.aitext a.aicase{display:inline-flex;align-items:center;gap:10px;max-width:100%;margin:6px 0 0;padding:8px 12px;border-radius:10px;
-  background:transparent;box-shadow:inset 0 0 0 1px var(--line);text-decoration:none;color:var(--ink)}
-.aitext a.aicase:hover{background:color-mix(in srgb,var(--ink) 3.5%,transparent)}
-.aicase-k{flex:0 0 auto;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.aicase-t{min-width:0;font-family:var(--display);font-size:14px;font-weight:500;letter-spacing:-.005em;line-height:1.35;
+.aitext a.aicase{max-width:100%;
+  }
+
+.aicase-k{flex:0 0 auto;}
+.aicase-t{min-width:0;letter-spacing:-.005em;line-height:1.35;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .aitext a.aicase svg{margin:0;flex:0 0 auto}
 /* follow-ups: quiet, below the answer */
-.ainext{margin:20px 0 28px;padding:0;background:none;border-radius:0}
 
 @media (max-width:640px){ .aitext .ailead{font-size:19px} }
 
@@ -2745,7 +2584,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
    text is a mid grey (about 5.9:1 on the page, comfortably readable);
    the lead's grey is lighter still, as the hero's is, since it's set
    large. Nothing in an answer is bold. */
-.aitext .ailead{color:color-mix(in srgb,var(--ink) 55%,var(--bg))}
+
 .aitext .ailead b{font-weight:inherit;color:var(--ink)}
 .aitext p,.aitext ul li,.aifacts dd,.aitext ol li{color:color-mix(in srgb,var(--ink) 70%,var(--bg))}
 .aitext p b,.aitext li b,.aitext dd b,.aitext ol li b{font-weight:inherit;color:var(--ink)}
@@ -2768,7 +2607,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aix.is-past .aitrace{display:none}
 
 .aihint{font-family:var(--display);font-size:12px;letter-spacing:-.005em;color:var(--faint)}
-.aicase-k{font-family:var(--display);font-size:13px;font-weight:400;letter-spacing:-.005em;text-transform:none;color:var(--muted)}
+.aicase-k{font-weight:400;letter-spacing:-.005em;text-transform:none;}
 
 .aitrace-sum{font-weight:400;color:var(--muted)}
 
@@ -2786,7 +2625,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 
 /* window + header */
 .aichat-panel{background:var(--bg)}
-.aichat-head{height:56px;min-height:0;padding:0 12px 0 22px;gap:4px;box-shadow:none!important;background:var(--bg)}
+.aichat-head{min-height:0;gap:4px;box-shadow:none!important;background:var(--bg)}
 .aiwm{flex:1;min-width:0;display:flex;align-items:center;gap:8px;margin:0}
 .aiwm-n{font-family:var(--serif);font-size:16px;font-weight:500;letter-spacing:-.012em;color:var(--ink)}
 .aiwm-b{height:18px;display:inline-flex;align-items:center;padding:0 7px;border-radius:9999px;
@@ -2801,7 +2640,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aichat-foot > *{max-width:660px}
 
 /* home: the hero sits right on the tray */
-.aichat-intro{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:100%;padding:24px 0 24px;text-align:center}
+.aichat-intro{display:flex;flex-direction:column;align-items:center;min-height:100%;padding:24px 0 24px;text-align:center}
 .aihero{min-height:44px;display:flex;align-items:center;justify-content:center;perspective:600px}
 .aihero-t{margin:0;font-family:var(--serif);font-size:28px;font-weight:500;line-height:1.3;letter-spacing:-.02em;color:var(--ink);
   text-wrap:balance;transform-origin:50% 50%;transition:opacity .3s,transform .3s}
@@ -2818,11 +2657,11 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   padding:12px 8px 8px!important;background:var(--surface)!important;border-radius:24px!important}
 .aitray-top,.aichat-foot.is-chatting .aitray-top{display:flex;flex-direction:column;gap:6px;padding:0 8px;animation:none}
 .aitray-top[hidden]{display:none!important}
-.ailabel{margin:0;padding:0 0 0 4px;font-family:var(--display);font-size:10.5px;font-weight:500;line-height:16px;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left}
+.ailabel{margin:0;padding:0 0 0 4px;font-family:var(--display);line-height:16px;
+  text-transform:uppercase;text-align:left}
 .airows{display:flex;flex-direction:column;gap:2px}
 .airow{height:34px;display:flex;align-items:center;gap:8px;width:100%;margin:0;padding:0 4px 0 12px;border:0;border-radius:9999px;
-  background:transparent;cursor:pointer;text-align:left;color:var(--ink);font-family:var(--display);font-size:13.5px;line-height:18px;
+  background:transparent;cursor:pointer;text-align:left;color:var(--ink);font-family:var(--display);
   transition:background .15s;animation:aiFadeUp .35s cubic-bezier(.2,.7,.2,1) both}
 .airow:nth-child(2){animation-delay:.04s}.airow:nth-child(3){animation-delay:.08s}.airow:nth-child(4){animation-delay:.12s}
 .airow:hover{background:color-mix(in srgb,var(--ink) 5%,var(--surface))}
@@ -2834,13 +2673,13 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .airow:hover .airow-go,.airow:focus-visible .airow-go{display:inline-flex}
 
 /* composer: white, a 0.5px rule, 24px radius */
-.aicomposer,.aichat-foot:not(.is-chatting) .aicomposer{display:flex;flex-direction:column;align-items:stretch;gap:14px;
-  padding:12px 8px 8px;background:var(--card);border:.5px solid color-mix(in srgb,var(--ink) 34%,transparent);border-radius:24px;
+.aicomposer,.aichat-foot:not(.is-chatting) .aicomposer{display:flex;
+  background:var(--card);border:.5px solid color-mix(in srgb,var(--ink) 34%,transparent);border-radius:24px;
   box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .aicomposer:focus-within{box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .aichat-input{display:block;width:100%;min-height:24px;padding:3px 8px 0;font-family:var(--display);font-size:15px;line-height:22px;color:var(--ink)}
 .aichat-input::placeholder{color:var(--faint)}
-.aicomposer-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0}
+.aicomposer-row{display:flex;align-items:center;gap:8px;margin:0}
 .aichat-send{width:28px;height:28px;border-radius:9999px;background:var(--surface);color:var(--faint)}
 .aichat-send.is-ready,.aichat-send.is-busy{background:var(--ink);color:var(--bg)}
 
@@ -2853,13 +2692,13 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   overflow-wrap:anywhere;white-space:pre-wrap}
 .aiturn.is-first{font-size:30px;line-height:1.5}
 .aix:first-of-type{padding-top:36px}
-.aistatus{display:inline-flex;align-items:center;gap:4px;height:28px;font-family:var(--display);font-size:12.5px;font-weight:600;
-  line-height:16px;color:var(--muted);animation:aiStat 1.4s ease-in-out infinite}
+.aistatus{align-items:center;gap:4px;font-family:var(--display);font-size:12.5px;
+  line-height:16px;color:var(--muted);}
 .aistatus svg{color:var(--faint)}
 @keyframes aiStat{0%,100%{opacity:1}50%{opacity:.5}}
 .aians-x{min-width:0}
 .aitrace{display:none!important}
-.aicard.is-in{animation:aiFadeUp .35s cubic-bezier(.2,.7,.2,1) both}
+
 @keyframes aiFadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
 /* the answer: plain sans reading text, emphasis by shade */
@@ -2883,9 +2722,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aihint{justify-content:center;margin:8px 0 0}
 
 @media (max-width:640px){
-  .aichat-head{height:52px;padding:0 8px 0 16px}
-  .aichat-body{padding:0 16px}
-  .aichat-foot{padding:6px 10px calc(8px + env(safe-area-inset-bottom))}
+
   .aihero-t{font-size:24px}
   .aiturn{font-size:20px}.aiturn.is-first{font-size:25px}
   .airow{height:auto;min-height:40px;padding:8px 12px}
@@ -2908,8 +2745,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 .aichat-foot.is-chatting .aitray{padding:0!important;background:none!important;border-radius:0!important;gap:0}
 .aichat-foot.is-chatting .aitray-top{display:none!important}
 .ainext{margin:22px auto 28px;padding:0;background:none;border-radius:0;animation:aiFadeUp .35s cubic-bezier(.2,.7,.2,1) .15s both}
-.ainext .ailabel{padding:0;margin:0 0 6px}
-.ainext .airows{margin-left:-12px}
+.ainext .ailabel{padding:0;}
 
 /* the answer comes into focus: each word from a soft blur, in a wave */
 .bw{display:inline-block;animation:aiBlurIn .6s cubic-bezier(.2,.7,.2,1) both;will-change:filter,opacity}
@@ -2945,7 +2781,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 
 /* the intro paragraph at the portfolio's reading size: 15px, as on
    the About and Résumé pages and in the chat's answers */
-#top .hero-sub{font-size:15px;line-height:1.6}
+#top .hero-sub{font-size:15px;}
 
 /* ===== COPILOT DOCK (desktop) =====
    Agents on the web have moved out of the centred modal and into a
@@ -2978,7 +2814,7 @@ body.chat-open{overflow:hidden;position:fixed;left:0;right:0;width:100%}
   .aichat-foot{padding:6px 16px 10px}
   .aiturn{font-size:22px!important}
   .aiturn.is-first{font-size:24px!important}
-  .aichat-head{padding:0 10px 0 16px}
+
 }
 /* the agent points at the part of the page it's talking about */
 .workrow.ai-pointed .cardframe{box-shadow:0 0 0 2px #fff,0 0 0 4px #b17cff,0 0 32px -4px rgba(177,124,255,.55);transition:box-shadow .3s ease}
@@ -3007,7 +2843,7 @@ html:has(body.chat-open),body.chat-open{overscroll-behavior:none}
    Header buttons are 40px targets, and the header gets a hairline once
    the conversation scrolls under it, so a question never looks cut. */
 @media (max-width:640px){
-  .aichat-head{height:56px;padding:0 8px 0 16px;gap:2px;transition:box-shadow .2s}
+  .aichat-head{gap:2px;transition:box-shadow .2s}
   .aichat-head .aichat-iconbtn{width:40px;height:40px;padding:0;display:grid;place-items:center}
   .aichat-head .aichat-iconbtn svg{width:18px;height:18px}
   .aichat-panel.is-scrolled .aichat-head{box-shadow:inset 0 -.5px 0 color-mix(in srgb,var(--ink) 14%,transparent)}
@@ -3029,14 +2865,14 @@ html:has(body.chat-open),body.chat-open{overscroll-behavior:none}
    footer and while the chat is open. Email and LinkedIn stay, as
    quieter links under the box. */
 .askhand{display:block;width:20px;height:20px;flex:none}
-.heroask{display:flex;align-items:center;gap:10px;width:100%;max-width:460px;height:50px;margin-top:clamp(18px,2.6vw,26px);
-  padding:0 6px 0 16px;background:var(--card,#fff);border:.5px solid color-mix(in srgb,var(--ink) 16%,transparent);border-radius:9999px;
-  box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 22px -12px rgba(0,0,0,.16);transition:box-shadow .2s,border-color .2s;cursor:text}
+.heroask{display:flex;align-items:center;margin-top:clamp(18px,2.6vw,26px);
+  background:var(--card,#fff);border:.5px solid color-mix(in srgb,var(--ink) 16%,transparent);border-radius:9999px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 22px -12px rgba(0,0,0,.16);}
 .heroask:focus-within{border-color:color-mix(in srgb,var(--ink) 34%,transparent);box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 28px -12px rgba(0,0,0,.22)}
 
-.heroask-go{flex:none;width:38px;height:38px;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;
-  background:var(--ink);color:var(--bg);transition:transform .15s,opacity .15s}
-.heroask-go:hover{opacity:.88}.heroask-go:active{transform:scale(.92)}
+.heroask-go{flex:none;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;
+  background:var(--ink);}
+.heroask-go:active{transform:scale(.92)}
 
 .heroin .heroask-row{animation:settle .34s ease-out .60s backwards}
 /* the CTA leads; email and LinkedIn sit beside it as quiet round icons */
@@ -3056,7 +2892,7 @@ html:has(body.chat-open),body.chat-open{overscroll-behavior:none}
 /* the same voice as the headline: the lead-in in grey, the thing that
    matters in ink. Geist 14/500, the site's button setting, so it sits
    with the nav and the other pills rather than shouting. */
-.heroask-t{font-family:var(--display);font-size:14px;font-weight:500;letter-spacing:-.005em;color:var(--ink);white-space:nowrap}
+.heroask-t{font-family:var(--display);font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap}
 .heroask-q{color:var(--muted);font-weight:400}
 .askdock-t .heroask-q{color:inherit;font-weight:inherit}
 .heroask:hover{border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
@@ -3252,7 +3088,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    timeline ending 60px early before the footer. */
 :root{--navOff:var(--muted)}
 #top h1{line-height:1.3}
-.worktext h3{color:var(--ink);line-height:1.3}
+.worktext h3{color:var(--ink);}
 /* card titles in the notes card's voice: Geist 15/500, not the serif */
 .worktext h3{font-family:var(--sans,'Geist'),system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.45;letter-spacing:var(--tr-body)}
 /* 2x2 tiles: on hover a soft fade in the page's own colour rises from the
