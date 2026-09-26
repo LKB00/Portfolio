@@ -1580,7 +1580,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    1600x3299 image, padded a little. */
 .mgval{position:absolute;left:67.8%;width:22.5%;top:20.0%;height:2.37%;background:#F9FBFC;
   display:flex;align-items:center;justify-content:flex-end;padding-right:.5%;box-sizing:border-box;pointer-events:none}
-.mgval-n{font-size:4.85cqw;font-family:'Hind',var(--sans,'Geist'),sans-serif;font-weight:500;color:#2C333E;line-height:1;white-space:nowrap;letter-spacing:0}
+.mgval-n{font-size:4.85cqw;font-family:'Hind',var(--sans,'Geist'),sans-serif;font-weight:500;color:#2C333E;line-height:1.1;white-space:nowrap;letter-spacing:0;display:inline-flex;align-items:flex-start}
+.mgval-n .od-d{position:relative;display:inline-block;height:1.1em;overflow:hidden;vertical-align:top}
+/* the column is as wide as its own final digit (proportional, like the
+   app); the strip rides centred over it */
+.mgval-n .od-sz{display:block;visibility:hidden;line-height:1.1}
+.mgval-n .od-strip{position:absolute;top:0;left:50%;margin-left:-1em;width:2em;display:flex;flex-direction:column;will-change:transform}
+.mgval-n .od-strip > span{display:block;height:1.1em;line-height:1.1;text-align:center}
+.mgval-n .od-s{display:inline-block;height:1.1em;line-height:1.1}
 .workrow .cardframe.merge2 .mgphone-single{
   position:relative;display:block;width:100%;height:auto;
   filter:drop-shadow(-14px 22px 26px rgba(18,18,22,.24));
@@ -7044,19 +7051,42 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // current and target values; each frame current moves a fraction of the way to target
   var cur = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 }, tgt = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 };
   var inView = false, entered = false, raf = 0, last = 0, counted = false;
-  // Current Value counts up once the phone has landed
-  var val = frame.querySelector(".mgval-n"), TARGET = 12570.45;
-  function fmt(n){ return "\u20B9" + n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-  if (val) val.textContent = fmt(0);
-  function countUp(){
-    if (!val) return;
-    var t0 = 0, D = 1400;
-    (function step(now){
-      if (!t0) t0 = now;
-      var p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 3);
-      val.textContent = fmt(TARGET * e);
-      if (p < 1) requestAnimationFrame(step);
-    })(performance.now());
+  // Current Value rolls in like an odometer once the phone has landed:
+  // each digit is a strip of 0-9 twice over that scrolls to its place, the
+  // left digits travelling furthest, all settling together.
+  var val = frame.querySelector(".mgval-n"), FINAL = "₹12,570.45", strips = [];
+  if (val){
+    val.textContent = "";
+    FINAL.split("").forEach(function(ch){
+      if (/\d/.test(ch)){
+        var col = document.createElement("span"); col.className = "od-d";
+        var st = document.createElement("span"); st.className = "od-strip";
+        for (var k = 0; k < 20; k++){ var i = document.createElement("span"); i.textContent = k % 10; st.appendChild(i); }
+        var sz = document.createElement("span"); sz.className = "od-sz"; sz.textContent = ch;
+        col.appendChild(sz); col.appendChild(st); val.appendChild(col); strips.push({ el: st, d: +ch });
+      } else {
+        var c = document.createElement("span"); c.className = "od-s"; c.textContent = ch; val.appendChild(c);
+      }
+    });
+  }
+  function odoReset(){
+    strips.forEach(function(s){ s.el.style.transition = "none"; s.el.style.transform = "translateY(0)"; });
+  }
+  function odoRoll(){
+    var n = strips.length;
+    strips.forEach(function(s, i){
+      void s.el.offsetHeight;
+      s.el.style.transition = "transform " + (1700 - i * 60) + "ms cubic-bezier(.33,1,.68,1) " + (i * 45) + "ms";
+      s.el.style.transform = "translateY(" + (-(10 + s.d) * 1.1) + "em)";
+    });
+  }
+  odoReset();
+  function countUp(){ odoRoll(); }
+  // leaving the screen resets the phone and the number, so it plays again
+  function replayReset(){
+    if (!entered) return;
+    entered = false; counted = false;
+    tgt.enter = 1; cur.enter = 1; apply(); odoReset();
   }
 
   function measure(){
@@ -7090,7 +7120,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
   function kick(){ if (!raf) raf = requestAnimationFrame(tick); }
   if ("IntersectionObserver" in window){
-    new IntersectionObserver(function(es){ inView = es[es.length - 1].isIntersecting; if (inView) kick(); }, { rootMargin: "80px 0px" }).observe(frame);
+    new IntersectionObserver(function(es){ inView = es[es.length - 1].isIntersecting; if (inView) kick(); else replayReset(); }, { rootMargin: "80px 0px" }).observe(frame);
   } else { inView = true; }
   window.addEventListener("scroll", kick, { passive: true });
   window.addEventListener("resize", kick);
