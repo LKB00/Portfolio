@@ -77,6 +77,38 @@ p{margin:0}
 .gb-progress-tick.done{background:var(--accent);box-shadow:0 0 0 2px var(--accent)}
 @media (prefers-reduced-motion:reduce){.gb-progress-fill{transition:none}}
 
+/* score badge: always in view, top right. Chapters read and guesses made;
+   a tap takes her to the next guess she hasn't made */
+.gb-hud{all:unset;box-sizing:border-box;position:fixed;top:24px;right:24px;z-index:55;display:flex;align-items:center;gap:10px;height:40px;padding:0 16px;
+  border-radius:1000px;background:var(--card,#fff);box-shadow:0 0 0 1px var(--line),0 6px 20px -8px rgba(0,0,0,.18);
+  font-size:13px;letter-spacing:-.01em;color:var(--muted);cursor:pointer;transition:box-shadow .2s ease,transform .2s ease}
+.gb-hud:hover{box-shadow:0 0 0 1px var(--ink),0 6px 20px -8px rgba(0,0,0,.22)}
+.gb-hud:focus-visible{box-shadow:0 0 0 2px var(--ink)}
+.gb-hud b{font-weight:600;color:var(--ink)}
+.gb-hud-sep{width:1px;height:14px;background:var(--line)}
+.gb-hud.bump{transform:scale(1.08)}
+.gb-hud.done{box-shadow:0 0 0 1.5px #177A3C,0 6px 20px -8px rgba(0,0,0,.18)}
+.gb-hud.done .gb-hud-g,.gb-hud.done b{color:#177A3C}
+:root[data-theme="dark"] .gb-hud.done{box-shadow:0 0 0 1.5px #5FCB86}
+:root[data-theme="dark"] .gb-hud.done .gb-hud-g,:root[data-theme="dark"] .gb-hud.done b{color:#5FCB86}
+@media (max-width:900px){.gb-hud-ch,.gb-hud-sep{display:none}}
+@media (max-width:576px){.gb-hud{top:12px;right:12px;height:34px;padding:0 12px}}
+
+/* the invitation near the top */
+.gb-play{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:var(--s4);padding:clamp(20px,3vw,28px);
+  border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.gb-play-t{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1 1 320px}
+.gb-play-h{font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.gb-play-s{font-size:14px;color:var(--muted)}
+.gb-play-go{all:unset;box-sizing:border-box;cursor:pointer;flex:none;padding:12px 18px;border-radius:1000px;background:var(--ink);color:var(--bg);font-size:15px;font-weight:500;transition:opacity .15s ease}
+.gb-play-go:hover{opacity:.85}
+.gb-play-go[hidden]{display:none}
+.gb-play-go:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* a guess she was sent to: a brief ring so her eye lands on it */
+.gb-flash{animation:gbFlash 1.4s ease}
+@keyframes gbFlash{0%,100%{box-shadow:0 0 0 0 transparent}25%{box-shadow:0 0 0 3px var(--ink)}}
+@media (prefers-reduced-motion:reduce){.gb-flash{animation:none}.gb-hud{transition:none}}
+
 /* ══ NAV ════════════════════════════════════════════════════════════ */
 header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;margin:0;padding:0;z-index:50;pointer-events:none}
 /* On a phone the pill sits over the top status bar / notch and is a
@@ -901,6 +933,11 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <body>
 
 <div class="gb-progress" aria-hidden="true"><div class="gb-progress-fill" id="gbProgressFill"></div><div class="gb-progress-ticks" id="gbProgressTicks"></div></div>
+<button type="button" class="gb-hud" data-gb-next aria-label="Go to the next guess">
+<span class="gb-hud-ch"><span id="gbHudCh">0</span>/5 chapters</span>
+<span class="gb-hud-sep" aria-hidden="true"></span>
+<span class="gb-hud-g"><b data-gb-score>0</b>/4 guessed</span>
+</button>
 
 <header id="siteHeader">
   <div class="navpill">
@@ -979,6 +1016,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div><dt>For</dt><dd>Young Indians, 20–30, with ₹500–₹20,000 stuck with a company</dd></div>
 <div><dt>Status</dt><dd>Live prototype. Gemini reads what people send; sending is simulated. The evaluation (eval) and user testing haven’t been run yet.</dd></div>
 </dl>
+<div class="gb-play col" data-reveal="">
+<div class="gb-play-t"><p class="eyebrow">Play along</p><p class="gb-play-h">Four calls I had to make. Can you guess them before the page tells you?</p><p class="gb-play-s"><span data-gb-score>0</span> of 4 guessed · <span data-gb-right>0</span> right</p></div>
+<button type="button" class="gb-play-go" data-gb-next>Take the first guess <span aria-hidden="true">→</span></button>
+</div>
 <div class="col gb-sec" data-reveal="">
 <p class="eyebrow">The story in a minute</p>
 <div class="gb-points">
@@ -1763,19 +1804,24 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
     gbTicks.innerHTML='';
     gbChapters=['problem','ai-line','control','wrong','craft'].map(function(id){
       var el=document.getElementById(id); if(!el) return null;
-      var left=(el.offsetTop/max*100);
+      var top=el.getBoundingClientRect().top+window.scrollY;
       var tick=document.createElement('span');
-      tick.className='gb-progress-tick'; tick.style.left=left+'%';
+      tick.className='gb-progress-tick'; tick.style.left=Math.min(100,top/max*100)+'%';
       gbTicks.appendChild(tick);
-      return {top:el.offsetTop,tick:tick};
+      return {top:top,tick:tick};
     }).filter(Boolean);
+    gbUpdateProgress(Math.min(1,Math.max(0,window.scrollY/max)),window.scrollY);
   }
   function gbUpdateProgress(p,scrollY){
     if(gbFill) gbFill.style.width=(p*100).toFixed(2)+'%';
-    gbChapters.forEach(function(c){ c.tick.classList.toggle('done', scrollY>=c.top-4); });
+    var read=0;
+    gbChapters.forEach(function(c){ var on=scrollY>=c.top-4; c.tick.classList.toggle('done',on); if(on) read++; });
+    var ch=document.getElementById('gbHudCh'); if(ch) ch.textContent=read;
   }
   gbLayoutTicks();
   window.addEventListener('resize',gbLayoutTicks,{passive:true});
+  // folds opening and embeds sizing themselves move the chapters
+  if('ResizeObserver' in window){ var gbRelayout=0; new ResizeObserver(function(){ cancelAnimationFrame(gbRelayout); gbRelayout=requestAnimationFrame(gbLayoutTicks); }).observe(document.body); }
 
   // back-to-top button with scroll-progress ring
   var totop=document.getElementById('totop');
@@ -1981,6 +2027,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
           if(b!==btn && b.textContent===real) b.classList.add('correct');
         });
         updateTally();
+        document.dispatchEvent(new CustomEvent('gb:guess',{detail:{right:isRight}}));
       });
       box.appendChild(btn);
     });
@@ -2004,12 +2051,56 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
     if(tally) tally.textContent=right
       ? 'Right — the third version is the one that shipped.'
       : 'Not quite — the third version, marked Shipped below, is the one that made it live.';
+    document.dispatchEvent(new CustomEvent('gb:guess',{detail:{right:right}}));
   }
   figs.forEach(function(fig){
     var hit=fig.querySelector('.gb-guess-hit'); if(!hit) return;
     hit.addEventListener('click',function(){ pick(fig); });
     hit.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(fig); } });
   });
+})();
+
+/* the score: the badge and the invitation card count guesses, and either
+   one takes her to the next guess she hasn't made (opening its fold) */
+(function(){
+  var total=4, made=0, right=0;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hud=document.querySelector('.gb-hud');
+  var play=document.querySelector('.gb-play');
+  function nextTarget(){
+    var a=document.querySelector('[data-gb-guess] > div:not(.answered)');
+    if(a) return a;
+    return document.querySelector('[data-gb-guess-sketch]:not(.answered)');
+  }
+  function render(){
+    [].slice.call(document.querySelectorAll('[data-gb-score]')).forEach(function(el){ el.textContent=made; });
+    [].slice.call(document.querySelectorAll('[data-gb-right]')).forEach(function(el){ el.textContent=right; });
+    var go=play&&play.querySelector('.gb-play-go');
+    if(made>=total){
+      if(hud) hud.classList.add('done');
+      if(play){
+        play.querySelector('.gb-play-h').textContent='You matched '+right+' of '+total+' of my calls.';
+        if(go) go.hidden=true;
+      }
+    } else if(go && made>0){ go.innerHTML='Next guess <span aria-hidden="true">→</span>'; }
+  }
+  function goNext(){
+    var t=nextTarget();
+    if(!t){ if(play) play.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'}); return; }
+    var d=t.closest('details'); if(d&&!d.open) d.open=true;
+    setTimeout(function(){
+      t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+      t.classList.remove('gb-flash'); void t.offsetWidth; t.classList.add('gb-flash');
+      var f=t.querySelector('.gb-guess-btn,.gb-guess-hit'); if(f) f.focus({preventScroll:true});
+    },60);
+  }
+  [].slice.call(document.querySelectorAll('[data-gb-next]')).forEach(function(b){ b.addEventListener('click',goNext); });
+  document.addEventListener('gb:guess',function(e){
+    made=Math.min(total,made+1); if(e.detail&&e.detail.right) right++;
+    render();
+    if(hud&&!reduce){ hud.classList.add('bump'); setTimeout(function(){ hud.classList.remove('bump'); },200); }
+  });
+  render();
 })();
 </script>
 <script>
