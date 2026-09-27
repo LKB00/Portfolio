@@ -19,7 +19,9 @@
 <meta name="twitter:title" content="The desktop trading terminal: chart, watchlist, and orders on one screen, Rupeezy case study">
 <meta name="twitter:description" content="Nobody had asked for a second product. I designed one anyway, for the workflow mobile couldn't hold.">
 <link rel="icon" href="./favicon.ico" sizes="any">
-<link rel="apple-touch-icon" href="./apple-touch-icon.webp">
+<link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -31,16 +33,13 @@
    as one portfolio instead of three different design languages.
    ================================================================ */
 :root{
-  --s1:8px; --s2:16px; --s3:32px; --s4:56px; --s5:96px;
+   --s2:16px; --s3:32px; --s4:56px; --s5:96px;
 
-  --t-hero:40px;
-  --t-say:26px;
-  --t-lead:19px;
   --t-body:16px;
 
-  --bg:#FAFAFA; --ink:#242020; --body:#111111; --muted:#7A7676; --value:#535353; --faint:#B0ACAC;
-  --line:rgba(36,32,32,.10); --surface:#F2F2F2; --quote:#F9F4F4;
-  --accent:#006AD4; --neg:#C64B3D; --live:#177A3C;
+  --bg:#FAFAFA; --ink:#242020;  --muted:#7A7676;  --faint:#B0ACAC;
+  --line:rgba(36,32,32,.10); --surface:#F2F2F2;
+  --accent:#006AD4;  --live:#177A3C;
 
   --lav:#DFD6ED; --sky:#D2E3F3; --peach:#F3DAB2; --mint:#D7E8DC; --sand:#F0DFC2;
 
@@ -49,9 +48,9 @@
   --ease:cubic-bezier(.4,0,.2,1);
 }
 :root[data-theme="dark"]{
-  --bg:#0F0F0F; --ink:#F3EEEE; --body:#EDEDED; --muted:#A69E9E; --value:#C9C2C2; --faint:#6E6666;
-  --line:rgba(255,255,255,.10); --surface:#1A1A1A; --quote:#1D1818;
-  --accent:#5EA9F5; --neg:#E0665A; --live:#4ED07F;
+  --bg:#0F0F0F; --ink:#F3EEEE; --body:#EDEDED; --muted:#A69E9E;  --faint:#6E6666;
+  --line:rgba(255,255,255,.10); --surface:#1A1A1A;
+  --accent:#5EA9F5;  --live:#4ED07F;
 
   --lav:#332D4A; --sky:#233042; --peach:#4A3A22; --mint:#25352B; --sand:#3E3323;
 }
@@ -191,14 +190,14 @@ body.menu-open header{z-index:70}
   gap:10px;padding:11px 16px;border-radius:16px;background:var(--surface);color:var(--ink);
   box-shadow:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);white-space:nowrap}
 .toast.show{display:inline-flex}
-.totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;width:56px;height:56px;padding:0;border:0;border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:none;opacity:0;visibility:hidden;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1),visibility 0s linear .2s}
+.totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;padding:0;border:0;border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:none;opacity:0;visibility:hidden;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1),visibility 0s linear .2s}
 .totop.show{opacity:1;visibility:visible;transform:scale(1);pointer-events:auto;transition-delay:0s,0s,0s}
 .totop-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none}
-.totop-ring circle{fill:none;stroke-width:2}
+.totop-ring circle{fill:none;}
 .totop-track{stroke:var(--line)}
-.totop-prog{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;transition:stroke-dashoffset .1s linear}
-@media (prefers-reduced-motion:reduce){.totop-prog{transition:none}}
-@media (max-width:576px){.totop{width:44px;height:44px;left:50%;right:auto}.totop svg:not(.totop-ring){width:14px;height:14px}}
+.totop-prog{stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;}
+
+@media (max-width:576px){.totop{right:auto}.totop svg:not(.totop-ring){width:14px;height:14px}}
 /* Mobile back-to-top used to stack directly above the nav pill. Now
    they share one row, pill on the left, button on the right: the pill
    sits centred on its own until there's something to scroll back to,
@@ -209,11 +208,11 @@ body.menu-open header{z-index:70}
    the CSS never has to guess the button's visibility from outside it. */
 @media (max-width:576px){
   .totop{bottom:calc(16px + env(safe-area-inset-bottom));
-    transform:translateX(4px) scale(.86);
+
     transition:opacity .2s ease,transform .5s cubic-bezier(.34,1.56,.64,1),visibility 0s linear .2s}
-  .totop.show{transform:translateX(4px) scale(1)}
+
   .navpill{transition:background .2s var(--ease),box-shadow .2s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
-  header.totop-on .navpill{transform:translateX(calc(-50% - 4px))}
+
 }
 
 /* ---------------- LAYOUT — fixed left TOC rail, single reading column ---------------- */
@@ -235,8 +234,8 @@ body.menu-open header{z-index:70}
 
 /* ---------------- HERO ---------------- */
 .hero-shot{border-radius:8px;overflow:hidden}
-h1{font-family:var(--serif);font-weight:400;font-size:var(--t-hero);line-height:1.2;
-  letter-spacing:-.02em;color:var(--ink);margin:var(--s4) 0 0}
+h1{font-family:var(--serif);
+  color:var(--ink);margin:var(--s4) 0 0}
 .dek{font-family:var(--sans);font-weight:400;font-size:var(--t-body);line-height:1.6;
   color:var(--muted);margin-top:var(--s3);max-width:none}
 .dek b{color:var(--ink);font-weight:400}
@@ -260,7 +259,7 @@ h1{font-family:var(--serif);font-weight:400;font-size:var(--t-hero);line-height:
   border:1.5px solid currentColor;opacity:.55;animation:livepulse 2.6s var(--ease) infinite}
 @keyframes livepulse{0%{transform:scale(.4);opacity:.55}100%{transform:scale(1.7);opacity:0}}
 .livelink-text{display:inline-flex;align-items:baseline;gap:7px;font-family:var(--sans)}
-.livelink-label{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.livelink-label{font-size:14px;letter-spacing:-.01em}
 .livelink-domain{font-size:13px;font-weight:400;color:color-mix(in srgb,var(--live) 66%,var(--faint) 34%)}
 .livelink svg{flex:0 0 auto;transition:transform .3s var(--ease)}
 @media (hover:hover){
@@ -280,8 +279,8 @@ h1{font-family:var(--serif);font-weight:400;font-size:var(--t-hero);line-height:
 /* ---------------- SECTION RHYTHM ---------------- */
 section{margin-top:var(--s5)}
 .eyebrow{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--faint);margin:0 0 var(--s2)}
-h2.say{font-family:var(--serif);font-weight:400;font-size:var(--t-say);line-height:1.3;
-  letter-spacing:-.02em;color:var(--ink);margin:0 0 var(--s2)}
+h2.say{font-family:var(--serif);
+  color:var(--ink);margin:0 0 var(--s2)}
 p.body{font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:1.6;color:var(--muted)}
 p.body + p.body{margin-top:var(--s2)}
 p.body b{color:var(--ink);font-weight:400}
@@ -294,18 +293,7 @@ p.body b{color:var(--ink);font-weight:400}
    here and what it should contain, so the empty card is still legible in
    place of a real image. self-clearing: the instant a real <img> lands
    inside the card the placeholder disappears on its own. */
-.shot:has(img) .ph-slot{display:none}
-.ph-slot{position:absolute;inset:16px;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:7px;padding:20px;text-align:center;border-radius:6px;line-height:1.4;
-  border:1.5px dashed rgba(17,17,17,.25);color:rgba(17,17,17,.55)}
-.ph-slot p{margin:0}
-.ph-slot .ph-label{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:-.01em;color:rgba(17,17,17,.7)}
-.ph-slot .ph-file{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11.5px;color:rgba(17,17,17,.55)}
-.ph-slot .ph-hint{font-family:var(--sans);font-size:11.5px;line-height:1.45;max-width:230px;color:rgba(17,17,17,.45)}
-:root[data-theme="dark"] .ph-slot{border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.6)}
-:root[data-theme="dark"] .ph-slot .ph-label{color:rgba(255,255,255,.78)}
-:root[data-theme="dark"] .ph-slot .ph-file{color:rgba(255,255,255,.6)}
-:root[data-theme="dark"] .ph-slot .ph-hint{color:rgba(255,255,255,.5)}
+
 .shot.card{padding:clamp(20px,3vw,32px);line-height:0;
   background-image:linear-gradient(155deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%)}
 .shot.card img{border-radius:6px}
@@ -315,8 +303,7 @@ p.body b{color:var(--ink);font-weight:400}
 .shot.c-peach{background-color:var(--peach)}
 .shot.c-mint{background-color:var(--mint)}
 .shot.c-sand{background-color:var(--sand)}
-.cap{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--faint);margin-top:10px}
-.cap b{color:var(--value);font-weight:400}
+.cap{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--faint);}
 
 .smallpair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin-top:var(--s3)}
 .smallpair .shot{aspect-ratio:1/1}
@@ -333,7 +320,7 @@ p.body b{color:var(--ink);font-weight:400}
 .keys{list-style:none;margin:var(--s3) 0 0;padding:0;display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s2) var(--s4)}
 .keys li{display:flex;gap:10px}
-.keys i{font-style:normal;font-family:var(--sans);color:var(--accent);font-weight:600;min-width:15px;font-size:14px}
+
 .keys p{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--muted);line-height:1.6}
 
 /* ══ NEXT ═══════════════════════════════════════════════════════════ */
@@ -343,7 +330,7 @@ p.body b{color:var(--ink);font-weight:400}
   box-shadow:0 1px 2px rgba(0,0,0,.05),0 18px 36px -20px rgba(0,0,0,.3);
   background-image:linear-gradient(155deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 50%)}
 .nextlink .nextlbl{grid-column:1;font-family:var(--sans);font-size:14px;color:color-mix(in srgb,var(--bg) 60%,transparent)}
-.nextlink .nexttitle{grid-column:1;max-width:22ch;font-family:var(--serif);font-weight:400;font-size:clamp(22px,3vw,28px);line-height:1.15;letter-spacing:-.02em;color:var(--bg);margin-top:8px}
+.nextlink .nexttitle{grid-column:1;max-width:22ch;font-family:var(--serif);font-size:clamp(22px,3vw,28px);line-height:1.15;letter-spacing:-.02em;color:var(--bg);margin-top:8px}
 .nextlink svg{grid-column:2;grid-row:1 / 3;align-self:end;box-sizing:border-box;width:clamp(44px,5vw,56px);height:clamp(44px,5vw,56px);padding:14px;border-radius:50%;background:var(--bg);color:var(--ink);transition:transform .35s var(--ease)}
 @media (hover:hover){.nextlink:hover svg{transform:translateX(6px) rotate(-45deg)}}
 
@@ -351,10 +338,9 @@ p.body b{color:var(--ink);font-weight:400}
 #contact{margin-top:var(--s4);max-width:684px;margin-left:auto;margin-right:auto}
 @media(min-width:981px){#contact{margin-left:250px;margin-right:0}}
 #contact footer{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;width:auto;margin:0;padding:24px 0 36px;background:transparent;text-align:center}
-#contact .footcredit{margin:6px 0 0;font-family:var(--sans);font-size:12.5px;line-height:1.7;
+#contact .footcredit{margin:6px 0 0;font-family:var(--sans);
   color:var(--faint);text-align:center;white-space:nowrap}
-@media (max-width:400px){#contact .footcredit{font-size:11.5px}}
-@media (max-width:340px){#contact .footcredit{font-size:10.5px}}
+
 .fmark{display:inline-grid;place-items:center;
   width:20px;height:20px;flex:0 0 auto;
   border-radius:50%;overflow:hidden;margin:0 2px;
@@ -415,10 +401,10 @@ p.body b{color:var(--ink);font-weight:400}
    label. Captions and the live-product caveat 13px muted at one 12px
    gap (14px and 12.5px faint before), emphasis and the live link at
    500, off-palette greys retired, the credit line at 13px. */
-:root{--mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;--body:var(--ink);--value:var(--muted)}
+:root{--mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;--body:var(--ink);}
 h1{font-size:clamp(26px,3.6vw,36px);font-weight:500;line-height:1.3;letter-spacing:-.02em}
 h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-spacing:-.018em}
-h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter-spacing:-.012em}
+
 .nextlink .nexttitle{font-weight:500}
 .dek,p.body,.quote p{letter-spacing:-.01em}
 .dek b,p.body b,.quote p b{font-weight:500;color:var(--ink)}
@@ -426,8 +412,8 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
   font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase}
 .eyebrow{margin-bottom:12px;text-wrap:balance}
 .livelink-label{font-weight:500}
-.cap,.cite,figcaption,.livecaveat{font-size:13px;line-height:1.55;letter-spacing:-.01em;color:var(--muted)}
-.cap,.cite,figcaption{margin-top:12px}
+.cap,.livecaveat{font-size:13px;line-height:1.55;letter-spacing:-.01em;color:var(--muted)}
+.cap{margin-top:12px}
 .cap b{color:var(--ink);font-weight:500}
 #contact .footcredit{font-size:13px;line-height:1.55;letter-spacing:-.01em}
 @media (max-width:400px){#contact .footcredit{font-size:12px}}
@@ -890,5 +876,5 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
   f();
 })();
 </script>
-<script src="./aitwin.js?v=5" defer></script>
+<script src="./aitwin.js?v=6" defer></script>
 </body></html>

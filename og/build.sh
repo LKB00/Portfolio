@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Render og/card.html to ../og-image.png at exactly 1200x630.
+# Render og/card-v3.html to ../og-image-v3.png at exactly 1200x630.
 #
 # Rendered at 2x and downsampled: Geist at 158px resampled from 2x is
 # visibly cleaner than the same text rasterised at 1x, and the file is a
