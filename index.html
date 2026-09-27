@@ -3078,8 +3078,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    About: the same room above the footer as About's last section */
 #notes:has(+ #contact){padding-bottom:clamp(74px,7.8vw,100px)}
 /* ══ IN THEIR WORDS ══════════════════════════════════════════════════
-   Recommendations, one at a time: the line that matters in the serif, and the whole recommendation, word
-   for word, one tap away with a link to where it was written. The bar under
+   What people said, one at a time: the line that matters in the serif,
+   and a link to the rest of it where they wrote it. The bar under
    it fills while you read and moves on; hovering, focusing or opening the
    full text holds it. Reduced motion: no autoplay, no blur. */
 #words{max-width:var(--col);margin:0 auto;padding-bottom:clamp(46px,7vw,72px)}
@@ -3097,20 +3097,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-who b{font-size:14px;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
 .rec-who span{font-size:13px;color:var(--muted)}
 .rec-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:18px}
-/* the one action: a small outlined pill, so it reads as a button */
-.rec-toggle{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px 0 12px;border:0;border-radius:999px;cursor:pointer;
-  background:transparent;box-shadow:inset 0 0 0 1px var(--line);font:inherit;font-size:13px;font-weight:500;color:var(--ink);
-  transition:background .2s ease,box-shadow .2s ease}
-.rec-toggle:hover{background:var(--surface);box-shadow:inset 0 0 0 1px transparent}
-.rec-toggle svg{flex:none;color:var(--muted);transition:transform .25s var(--ease)}
-.rec-toggle[aria-expanded="true"] svg{transform:rotate(45deg)}
-.rec-full{margin:16px 0 0;max-width:62ch}
-.rec-full p{margin:0;font-size:14px;line-height:1.65;letter-spacing:var(--tr-body);color:var(--muted)}
-.rec-full p + p{margin-top:10px}
-/* the source: a plain link, underlined like one on hover */
-.rec-src{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);text-decoration:underline;text-decoration-color:transparent;
-  text-underline-offset:3px;white-space:nowrap;transition:color .2s ease,text-decoration-color .2s ease}
-.rec-src:hover{color:var(--ink);text-decoration-color:currentColor}
+/* the one action: the rest of what they wrote, where they wrote it */
+.rec-src{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);
+  font-size:13px;font-weight:500;color:var(--ink);text-decoration:none;white-space:nowrap;transition:background .2s ease,box-shadow .2s ease}
+.rec-src svg{color:var(--muted);transition:transform .2s var(--ease)}
+.rec-src:hover{background:var(--surface);box-shadow:inset 0 0 0 1px transparent}
+.rec-src:hover svg{transform:translate(1px,-1px)}
 .rec-nav{display:flex;align-items:center;gap:16px;margin-top:30px}
 .rec-bars{display:flex;gap:6px}
 .rec-bar{position:relative;width:36px;height:20px;padding:0;border:0;background:none;cursor:pointer}
@@ -3371,28 +3363,22 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <blockquote class="rec-q">Without a doubt, I’d love to have him on any team I lead in the future.</blockquote>
           <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">MR</span><span class="rec-who"><b>Mukesh Kumar Ranjan</b><span>Product Design Manager, Rupeezy · hired and managed Lokesh</span></span></figcaption>
           <div class="rec-links">
-            <button type="button" class="rec-toggle" aria-expanded="false" aria-controls="recFull1"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Read full recommendation</span></button>
-            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">Read the rest on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-          <div class="rec-full" id="recFull1" hidden><p>“I had the absolute pleasure of hiring and working closely with Lokesh as a Product Designer at Rupeezy, and watching his growth has been nothing short of inspiring.</p><p>From day one, Lokesh brought a unique combination of in-depth trading knowledge and a problem-solving mindset, which truly elevated his design contributions at Rupeezy. Whether it was the RISE Portal or multiple feature enhancements for traders at Rupeezy, his ability to translate complex trading concepts into clean, user-centric designs stood out.</p><p>What sets Lokesh apart is his hunger to learn, his eagerness to grow, and his ability to think smart. He started his journey as a beginner in product design, and today, he’s an exceptional problem solver who can take on any challenge with clarity and creativity. His collaboration skills, design intuition, and strategic thinking will take him far in his career.</p><p>As a design manager, I genuinely enjoyed working with him — and without a doubt, I’d love to have him on any team I lead in the future. Lokesh is amazing at what he does, and any team would be lucky to have him on board.”</p></div>
         </figure>
         <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true">
           <blockquote class="rec-q">One of the most collaborative designers I have ever worked with.</blockquote>
           <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">KR</span><span class="rec-who"><b>Kushagra Rustagi</b><span>Ex-PM, Fintech & SaaS · worked with Lokesh at Rupeezy</span></span></figcaption>
           <div class="rec-links">
-            <button type="button" class="rec-toggle" aria-expanded="false" aria-controls="recFull2"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Read full recommendation</span></button>
-            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">Read the rest on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-          <div class="rec-full" id="recFull2" hidden><p>“I’ve had the chance to work closely with Lokesh at Rupeezy, and honestly, he has been one of the most collaborative designers I have ever worked with.</p><p>What stood out right from the beginning was how deeply he thought from a user’s perspective. It wasn’t just about making things look good — Lokesh would jump on user calls, ask the right questions, and bring back insights that genuinely shaped the product. A lot of our design decisions became sharper and more grounded because of that.</p><p>If you’re someone who’s looking for a product designer who builds user first products, I can’t recommend Lokesh enough.”</p></div>
         </figure>
         <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true">
           <blockquote class="rec-q">His ability to transform complex requirements into clean, user-friendly designs consistently impressed the team.</blockquote>
           <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">DK</span><span class="rec-who"><b>Dharani KR</b><span>UI Engineer · worked on the same team</span></span></figcaption>
           <div class="rec-links">
-            <button type="button" class="rec-toggle" aria-expanded="false" aria-controls="recFull3"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Read full recommendation</span></button>
-            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">Read the rest on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-          <div class="rec-full" id="recFull3" hidden><p>“I can confidently say that Lokesh is an exceptional UI/UX designer, his ability to transform complex requirements into clean, user-friendly designs consistently impressed the team. Whether it was wireframing, prototyping, or conducting user research, they brought creativity and clarity to every stage of the process.”</p></div>
         </figure>
       </div>
       <div class="rec-nav">
@@ -4288,13 +4274,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // one showing makes it taller, and closing it (or moving on) brings it back.
   function fit(){
     var tallest = 0;
-    items.forEach(function(el){
-      var f = el.querySelector(".rec-full"), open = f && !f.hidden;
-      if (open) f.hidden = true;
-      tallest = Math.max(tallest, el.offsetHeight);
-      if (open) f.hidden = false;
-    });
-    stage.style.height = Math.max(tallest, items[i].offsetHeight) + "px";
+    items.forEach(function(el){ tallest = Math.max(tallest, el.offsetHeight); });
+    stage.style.height = tallest + "px";
   }
   function pad(n){ return (n < 10 ? "0" : "") + n; }
   function hold(why, on){ if (on) holds[why] = 1; else delete holds[why]; root.classList.toggle("is-held", Object.keys(holds).length > 0); }
@@ -4302,14 +4283,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     i = (n + items.length) % items.length;
     items.forEach(function(el, k){
       var on = k === i; el.classList.toggle("is-on", on); el.setAttribute("aria-hidden", on ? "false" : "true");
-      if (!on) setFull(el, false);
     });
     bars.forEach(function(b, k){
       b.classList.toggle("is-done", k < i); b.classList.remove("is-on");
       if (k === i){ void b.offsetWidth; b.classList.add("is-on"); b.setAttribute("aria-current", "true"); } else b.removeAttribute("aria-current");
     });
     count.textContent = pad(i + 1);
-    hold("more", false);
     fit();
   }
   fit();
@@ -4323,7 +4302,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     a.addEventListener("click", function(){ show(i + (+a.getAttribute("data-dir"))); });
   });
   root.addEventListener("keydown", function(e){
-    if (e.target.closest(".rec-toggle, a")) return;
+    if (e.target.closest("a")) return;
     if (e.key === "ArrowRight"){ e.preventDefault(); show(i + 1); } else if (e.key === "ArrowLeft"){ e.preventDefault(); show(i - 1); }
   });
   // hold while someone is reading it closely
@@ -4331,16 +4310,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   root.addEventListener("mouseleave", function(){ hold("hover", false); });
   root.addEventListener("focusin", function(){ hold("focus", true); });
   root.addEventListener("focusout", function(e){ if (!root.contains(e.relatedTarget)) hold("focus", false); });
-  // the whole recommendation, word for word, under its pull line
-  function setFull(el, open){
-    var b = el.querySelector(".rec-toggle"), f = el.querySelector(".rec-full"); if (!b || !f) return;
-    b.setAttribute("aria-expanded", open ? "true" : "false"); f.hidden = !open;
-    b.querySelector("span").textContent = open ? "Show less" : "Read full recommendation";
-  }
-  items.forEach(function(el){
-    var b = el.querySelector(".rec-toggle"); if (!b) return;
-    b.addEventListener("click", function(){ var open = b.getAttribute("aria-expanded") !== "true"; setFull(el, open); hold("more", open); fit(); });
-  });
   // a swipe on a phone
   var sx = null;
   root.querySelector(".rec-stage").addEventListener("touchstart", function(e){ sx = e.touches[0].clientX; }, { passive: true });
