@@ -831,6 +831,13 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 }
 @media (max-width:600px){.gbh{aspect-ratio:4/4.3}}
 @media (prefers-reduced-motion:reduce){.gbh-phone{animation:none}.gbh-sk{display:none}}
+
+/* the two reads of the case study: a quiet switch under the prototype link */
+.gb-versions{display:inline-flex;gap:2px;margin:16px 0 0;padding:3px;border-radius:999px;background:var(--surface);font:500 12.5px/1 var(--sans)}
+.gb-versions a,.gb-versions span{padding:8px 13px;border-radius:999px;color:var(--muted);text-decoration:none;transition:color .2s ease,background-color .2s ease}
+.gb-versions a:hover{color:var(--ink)}
+.gb-versions [aria-current]{background:var(--bg);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06),inset 0 0 0 1px var(--line)}
+.gb-hero .gb-versions{display:flex;width:max-content}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -904,6 +911,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <h1>Designing an AI agent that fights for your <em>refund</em></h1>
 <p class="dek">Ananya has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes her complaint, and never sends a word without her.</p>
 <a class="livelink gb-try" data-proto="/app?start=Flipkart.%20Bought%20a%20mixer%20grinder%20for%203499%20on%202%20Aug.%20Jar%20has%20rust.%20Asked%20replacement%20on%204%20Aug%2C%20they%20rejected%20saying%20photo%20validation%20failed.%20Called%203%20times%2C%20nothing." href="#" rel="noopener" target="_blank">Try the prototype <svg aria-hidden="true" fill="none" height="14" viewbox="0 0 16 16" width="14"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg></a>
+<p class="gb-versions"><a href="./getbaq-short.html">Short read · 8 min</a><span aria-current="page">Full case study · 40 min</span></p>
 </div>
 <dl class="meta col" data-reveal="">
 <div><dt>Type</dt><dd>Self-initiated, not client work. Not shipped to real users.</dd></div>
@@ -1167,7 +1175,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s3-7">
 <div class="col"><p class="eyebrow">Bugs I caught</p><h3 class="say sub">Five mistakes that would have cost people money, caught at the source, and one known gap</h3></div>
-<p class="col body">Checking every rule against the real cases, before anyone used the product, turned up five mistakes. Each would have cost someone money or days they didn’t have, and none of them would have shown up in a mock-up:</p>
+<p class="col body">Testing the rules, the dates and the letters, before anyone used the product, turned up five mistakes. Each would have cost someone money or days they didn’t have, and none of them would have shown up in a mock-up:</p>
 <div class="pair col gb-grid"><div><p class="cap"><b>01</b></p><h4>The UPI deadline was wrong</h4><p class="body">I gave every failed payment 5 days. RBI gives UPI one working day (T+1); 5 days is for cards. UPI users would have waited 4 days they didn’t have.</p></div><div><p class="cap"><b>02</b></p><h4>Two airline clocks were one rule</h4><p class="body">Card refunds: 7 days. Travel-site bookings: 14 working days. Those would have been flagged late a week early.</p></div><div><p class="cap"><b>03</b></p><h4>Deadlines moved with the timezone</h4><p class="body">Dates were read in the wrong timezone, so near midnight a deadline could wrongly show as missed. All dates now use one fixed timezone.</p></div><div><p class="cap"><b>04</b></p><h4>The model invented years</h4><p class="body">Asked to copy “2 Aug”, Gemini added the years 2023 and 2021. Now a year is kept only if she wrote one.</p></div><div><p class="cap"><b>05</b></p><h4>The UPI letter went to the wrong party</h4><p class="body">It was addressed to the shop, but the RBI rule applies to her bank. Now the app asks for her bank, and the letter goes there.</p></div><div><p class="cap"><b>06</b></p><h4>A known gap, documented</h4><p class="body">“14 working days” is counted as 14 calendar days for now, and the rule sheet says so.</p></div></div>
 <figure class="gb-ex col" data-embed="rule-fix" data-inner="460" data-note="Live">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
