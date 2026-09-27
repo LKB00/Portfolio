@@ -495,6 +495,25 @@ div.answered .gb-guess-btn.wrong{opacity:.55;text-decoration:line-through}
 :root[data-theme="dark"] div.answered .gb-guess-btn.correct{box-shadow:inset 0 0 0 1.5px #5FCB86;color:#5FCB86}
 [data-gb-guess] h4{margin-top:14px}
 
+/* the sketch v1/v2/v3 comparison: guess which one shipped before the
+   captions say so. Same reveal spirit, but the choice is the image itself.
+   A transparent hit-target sits over the live iframe so the guess click
+   never gets swallowed by the embedded prototype; it steps aside once
+   answered so the exhibit is still Live/Interactive as usual. */
+figure.gb-sketch{position:relative}
+[data-gb-guess-sketch]:not(.answered) figcaption{display:none}
+.gb-guess-hit{position:absolute;inset:0;z-index:3;cursor:pointer;border-radius:inherit;transition:box-shadow .15s ease}
+.gb-guess-hit:hover,.gb-guess-hit:focus-visible{box-shadow:inset 0 0 0 1.5px var(--ink)}
+[data-gb-guess-sketch].answered .gb-guess-hit{pointer-events:none}
+[data-gb-guess-sketch].answered figure.gb-sketch.picked .gb-ex-panel{box-shadow:0 0 0 2px var(--muted)}
+[data-gb-guess-sketch].answered figure.gb-sketch.picked.right .gb-ex-panel{box-shadow:0 0 0 2px #177A3C}
+[data-gb-guess-sketch].answered figure.gb-sketch[data-shipped] .gb-ex-panel{box-shadow:0 0 0 2px #177A3C}
+[data-gb-guess-sketch].answered figure.gb-sketch[data-shipped]:before{content:"Shipped";position:absolute;top:8px;right:8px;z-index:2;
+  font-size:11px;font-weight:500;letter-spacing:.04em;color:#177A3C;background:color-mix(in srgb,#177A3C 12%,var(--bg));padding:3px 8px;border-radius:99px}
+:root[data-theme="dark"] [data-gb-guess-sketch].answered figure.gb-sketch.picked.right .gb-ex-panel,
+:root[data-theme="dark"] [data-gb-guess-sketch].answered figure.gb-sketch[data-shipped] .gb-ex-panel{box-shadow:0 0 0 2px #5FCB86}
+:root[data-theme="dark"] [data-gb-guess-sketch].answered figure.gb-sketch[data-shipped]:before{color:#5FCB86;background:color-mix(in srgb,#5FCB86 16%,var(--bg))}
+
 /* a panel's verdict, in the sticky notes' tag style */
 .tag{margin:14px 0 0;font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase}
 .tag.t-pos{color:var(--gb-pos)}
@@ -1488,10 +1507,11 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <section class="gb-sec" data-reveal="" id="s3-8">
 <div class="col"><p class="eyebrow">Iteration</p><h3 class="say sub">One box that takes anything</h3></div>
 <p class="col body">People won’t sort a bot reply from an order page from a bank SMS. The first two versions made her sort; the third made it the agent’s job.</p>
-<div class="col gb-sketches s3">
-<figure class="gb-sketch gb-ex" data-embed="sketch-v1"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v1 · sketch. </b>A labelled box, plus chips that inserted a sentence. Still real effort.</figcaption></figure>
-<figure class="gb-sketch gb-ex" data-embed="sketch-v2"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v2 · sketch. </b>Screenshot first, typing as a small link. She still sorted her own input.</figcaption></figure>
-<figure class="gb-sketch gb-ex" data-embed="intake-now"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v3 · live. </b>One box. Sorting it is the agent’s job.</figcaption></figure>
+<p class="gb-guess-tally col" data-gb-tally="sketch">Three versions of the same intake box. Guess which one shipped, before the captions say.</p>
+<div class="col gb-sketches s3" data-gb-guess-sketch>
+<figure class="gb-sketch gb-ex" data-embed="sketch-v1"><div class="gb-ex-panel"><div class="gb-ex-inner"></div><div class="gb-guess-hit" tabindex="0" role="button" aria-label="Guess: was this the one that shipped?"></div></div><figcaption><b>v1 · sketch. </b>A labelled box, plus chips that inserted a sentence. Still real effort.</figcaption></figure>
+<figure class="gb-sketch gb-ex" data-embed="sketch-v2"><div class="gb-ex-panel"><div class="gb-ex-inner"></div><div class="gb-guess-hit" tabindex="0" role="button" aria-label="Guess: was this the one that shipped?"></div></div><figcaption><b>v2 · sketch. </b>Screenshot first, typing as a small link. She still sorted her own input.</figcaption></figure>
+<figure class="gb-sketch gb-ex" data-embed="intake-now" data-shipped><div class="gb-ex-panel"><div class="gb-ex-inner"></div><div class="gb-guess-hit" tabindex="0" role="button" aria-label="Guess: was this the one that shipped?"></div></div><figcaption><b>v3 · live. </b>One box. Sorting it is the agent’s job.</figcaption></figure>
 </div>
 <p class="col body"><b>One box, but not one process.</b> Text is scrubbed for OTPs, then read. A screenshot is read with vision, which is slower, and the trace says so.</p>
 <figure class="gb-ex col" data-embed="input-kinds" data-inner="520" data-note="Live">
@@ -1967,6 +1987,29 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
     it.querySelector('h4').before(box);
   });
   updateTally();
+})();
+
+/* guess-before-reveal, sketch version: pick which of the three intake
+   iterations actually shipped, then the captions (and a "Shipped" tag)
+   appear */
+(function(){
+  var wrap=document.querySelector('[data-gb-guess-sketch]'); if(!wrap) return;
+  var figs=[].slice.call(wrap.querySelectorAll('figure.gb-sketch'));
+  var tally=document.querySelector('[data-gb-tally="sketch"]');
+  function pick(fig){
+    if(wrap.classList.contains('answered')) return;
+    wrap.classList.add('answered');
+    var right=fig.hasAttribute('data-shipped');
+    fig.classList.add('picked'); if(right) fig.classList.add('right');
+    if(tally) tally.textContent=right
+      ? 'Right — the third version is the one that shipped.'
+      : 'Not quite — the third version, marked Shipped below, is the one that made it live.';
+  }
+  figs.forEach(function(fig){
+    var hit=fig.querySelector('.gb-guess-hit'); if(!hit) return;
+    hit.addEventListener('click',function(){ pick(fig); });
+    hit.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(fig); } });
+  });
 })();
 </script>
 <script>
