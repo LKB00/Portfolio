@@ -710,6 +710,14 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-call b{font:500 15px/1.4 var(--sans);color:var(--ink);letter-spacing:-.01em}
 .gb-call span{font:400 14px/1.55 var(--sans);color:var(--muted)}
 @media(max-width:760px){.gb-vis{grid-template-columns:1fr}}
+/* the tallest screens are capped at about a screen's height: they scroll
+   inside the frame, and a soft fade says there's more until the end */
+.gb-capped .gb-ex-panel{position:relative}
+.gb-capped .gb-ex-inner{max-height:620px;overflow-y:auto;scrollbar-width:none}
+.gb-capped .gb-ex-inner::-webkit-scrollbar{display:none}
+.gb-capped .gb-ex-panel:after{content:"";position:absolute;left:0;right:0;bottom:0;height:96px;border-radius:0 0 8px 8px;pointer-events:none;
+  background:linear-gradient(rgba(242,242,242,0),#F2F2F2 78%);transition:opacity .3s ease}
+.gb-capped.at-end .gb-ex-panel:after{opacity:0}
 .gb-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s2)}
 .gb-three > div{background:var(--surface);border-radius:8px;padding:clamp(16px,2.2vw,22px)}
 .gb-three .cap{margin:0 0 8px}
@@ -1023,13 +1031,13 @@ addEventListener("pagereveal",function(e){
 <p class="col body">The core AI risk is a wrong rule she never thinks to question. So <b>she’s never asked to approve what the AI itself doubts.</b></p>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex" data-embed="screen-notsure" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure><ol class="gb-call"><li><b>A label, not a percentage</b><span>A bare number invites false precision; a plain label comes with a reason.</span></li><li><b>Both sides of its reasoning</b><span>Why this rule might fit, and why it might not.</span></li><li><b>No Approve button</b><span>Nothing can be sent while it’s unsure. It asks instead.</span></li></ol></div>
 <p class="col body">Then I listed every way a case can go wrong, using Google PAIR’s error categories, and gave each one a next step:</p>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure><ol class="gb-call"><li><b>A fact is missing</b><span>One card asks for every gap at once, and says why each is needed.</span></li><li><b>It isn’t a refund</b><span>It says so, and points her to e-Jagriti, a lawyer or the bank.</span></li><li><b>No address it can trust</b><span>It won’t guess one; she gets the letter to send herself.</span></li><li><b>The company goes quiet</b><span>The 1915 complaint is already prepared. Still her tap.</span></li><li><b>The AI can’t be reached</b><span>A simpler reader or a fixed template steps in, and says so.</span></li></ol></div>
+<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure><ol class="gb-call"><li><b>A fact is missing</b><span>One card asks for every gap at once, and says why each is needed.</span></li><li><b>It isn’t a refund</b><span>It says so, and points her to e-Jagriti, a lawyer or the bank.</span></li><li><b>No address it can trust</b><span>It won’t guess one; she gets the letter to send herself.</span></li><li><b>The company goes quiet</b><span>The 1915 complaint is already prepared. Still her tap.</span></li><li><b>The AI can’t be reached</b><span>A simpler reader or a fixed template steps in, and says so.</span></li></ol></div>
 </section>
 </section>
 <section class="gb-chapter" id="rejected">
 <div class="col"><p class="eyebrow">05 · What I rejected</p><h2 class="say">From pages to one thread</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
-<div class="gb-vis" data-reveal=""><figure class="gb-ex" data-embed="thread" data-inner="480" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure><ol class="gb-call"><li><b>Rejected: a page per step</b><span>It felt like being sent somewhere else each time.</span></li><li><b>Rejected: a pure chat</b><span>The steps are decisions, so they’re cards she can act on.</span></li><li><b>Chose: one thread</b><span>Finished steps fold into receipts; the live card stays open.</span></li></ol></div>
+<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="thread" data-inner="480" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure><ol class="gb-call"><li><b>Rejected: a page per step</b><span>It felt like being sent somewhere else each time.</span></li><li><b>Rejected: a pure chat</b><span>The steps are decisions, so they’re cards she can act on.</span></li><li><b>Chose: one thread</b><span>Finished steps fold into receipts; the live card stays open.</span></li></ol></div>
 <p class="col body">The same happened to the first screen. Two versions made her sort her own evidence; the third made it the agent’s job.</p>
 <div class="col gb-sketches s3">
 <figure class="gb-sketch gb-ex" data-embed="sketch-v1"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v1 · rejected. </b>A labelled box, plus chips that inserted a sentence. Still real effort.</figcaption></figure>
@@ -1309,6 +1317,14 @@ addEventListener("pagereveal",function(e){
     f.setAttribute('scrolling','no');
     inner.appendChild(f);
     frames.push(f);
+  });
+  // capped screens: hide the fade once the end is in view
+  document.querySelectorAll('figure.gb-capped').forEach(function(fig){
+    var inner=fig.querySelector('.gb-ex-inner');
+    function check(){ fig.classList.toggle('at-end', inner.scrollTop+inner.clientHeight>=inner.scrollHeight-4); }
+    inner.addEventListener('scroll',check,{passive:true});
+    if('ResizeObserver' in window) new ResizeObserver(check).observe(inner.firstElementChild||inner);
+    check();
   });
 
   window.addEventListener('message',function(e){
