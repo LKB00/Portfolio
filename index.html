@@ -3078,25 +3078,19 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    About: the same room above the footer as About's last section */
 #notes:has(+ #contact){padding-bottom:clamp(74px,7.8vw,100px)}
 /* ══ IN THEIR WORDS ══════════════════════════════════════════════════
-   Recommendations, one at a time: a big faint numeral that rolls to the
-   next (the App Merge card's odometer, again), the company on a hairline,
-   the line that matters in the serif, and the whole recommendation, word
+   Recommendations, one at a time: the company on a hairline, the line
+   that matters in the serif, and the whole recommendation, word
    for word, one tap away with a link to where it was written. The bar under
    it fills while you read and moves on; hovering, focusing or opening the
    full text holds it. Reduced motion: no autoplay, no blur. */
 #words{max-width:var(--col);margin:0 auto;padding-bottom:clamp(46px,7vw,72px)}
-.rec{display:grid;grid-template-columns:clamp(84px,11vw,124px) minmax(0,1fr);column-gap:clamp(16px,3vw,32px)}
-.rec-num{grid-row:1/span 2;margin:0;height:1em;overflow:hidden;font-family:var(--serif);font-weight:400;
-  font-size:clamp(64px,8.4vw,96px);line-height:1;letter-spacing:-.04em;color:color-mix(in srgb,var(--ink) 13%,transparent);font-variant-numeric:lining-nums}
-.rec-roll{display:flex;flex-direction:column;transform:translateY(calc(var(--n,0) * -1em));transition:transform .8s cubic-bezier(.33,1,.68,1)}
-.rec-roll span{display:block;height:1em}
 .rec-stage{position:relative;min-width:0;transition:height .55s var(--ease)}
 .rec-item{position:absolute;top:0;left:0;right:0;margin:0;min-width:0;opacity:0;visibility:hidden;filter:blur(8px);transform:translateY(6px);
   transition:opacity .4s ease,filter .4s ease,transform .5s var(--ease),visibility 0s .4s}
 .rec-item.is-on{opacity:1;visibility:visible;filter:none;transform:none;transition:opacity .5s ease .14s,filter .5s ease .14s,transform .6s var(--ease) .14s,visibility 0s}
 .rec-co{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 .rec-co:before{content:"";width:24px;height:1px;background:var(--line)}
-.rec-q{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.7vw,30px);line-height:1.3;letter-spacing:-.015em;color:var(--ink);text-wrap:pretty}
+.rec-q{margin:0;max-width:720px;font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.7vw,30px);line-height:1.3;letter-spacing:-.015em;color:var(--ink);text-wrap:pretty}
 .rec-q:before{content:"\201C";margin-left:-.42em;padding-right:.04em;color:var(--faint)}
 .rec-q:after{content:"\201D";color:var(--faint)}
 .rec-by{display:flex;align-items:center;gap:12px;margin-top:22px}
@@ -3115,7 +3109,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-full p + p{margin-top:10px}
 .rec-src{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--faint);text-decoration:none;white-space:nowrap;transition:color .2s ease}
 .rec-src:hover{color:var(--ink)}
-.rec-nav{grid-column:2;display:flex;align-items:center;gap:16px;margin-top:30px}
+.rec-nav{display:flex;align-items:center;gap:16px;margin-top:30px}
 .rec-bars{display:flex;gap:6px}
 .rec-bar{position:relative;width:36px;height:20px;padding:0;border:0;background:none;cursor:pointer}
 .rec-bar:before,.rec-bar i{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;border-radius:2px}
@@ -3133,15 +3127,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-arrow:hover{background:color-mix(in srgb,var(--ink) 9%,var(--surface))}
 .rec-arrow:active{transform:scale(.94)}
 @media (max-width:576px){
-  .rec{grid-template-columns:minmax(0,1fr)}
-  .rec-num{grid-row:auto;font-size:56px;margin-bottom:14px}
-  .rec-nav{grid-column:1}
   .rec-bar{width:28px}
 }
 @media (prefers-reduced-motion:reduce){
   .rec-stage{transition:none}
   .rec-item,.rec-item.is-on{filter:none;transform:none;transition:opacity .2s ease,visibility 0s}
-  .rec-roll{transition:none}
   .rec-bar.is-on i{animation:none;transform:scaleX(1)}
 }
 </style>
@@ -3374,7 +3364,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="words" data-section="Recommendations" aria-label="Recommendations">
     <div class="rec" data-reveal>
-      <p class="rec-num" aria-hidden="true"><span class="rec-roll"><span>01</span><span>02</span><span>03</span></span></p>
       <div class="rec-stage">
         <figure class="rec-item is-on" role="group" aria-roledescription="slide" aria-label="1 of 3">
           <p class="rec-co">Rupeezy</p><blockquote class="rec-q">Without a doubt, I’d love to have him on any team I lead in the future.</blockquote>
@@ -4288,7 +4277,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   var root = document.querySelector("#words .rec"); if (!root) return;
   var items = [].slice.call(root.querySelectorAll(".rec-item")),
       bars  = [].slice.call(root.querySelectorAll(".rec-bar")),
-      roll  = root.querySelector(".rec-roll"), count = root.querySelector(".rec-count b"),
+      count = root.querySelector(".rec-count b"),
       stage = root.querySelector(".rec-stage"),
       still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
       i = 0, holds = {};
@@ -4306,7 +4295,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       b.classList.toggle("is-done", k < i); b.classList.remove("is-on");
       if (k === i){ void b.offsetWidth; b.classList.add("is-on"); b.setAttribute("aria-current", "true"); } else b.removeAttribute("aria-current");
     });
-    roll.style.setProperty("--n", i);
     count.textContent = pad(i + 1);
     hold("more", false);
     fit();
