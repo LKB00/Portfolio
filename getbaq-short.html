@@ -450,7 +450,7 @@ div.gb-sec{margin-top:var(--s5)}
 .figrow .fnum{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.4vw,32px);line-height:1;letter-spacing:-.02em;color:var(--ink)}
 .figrow .fnote{margin-top:8px;font-size:13px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
 .figrow .fsrc{margin-top:6px}
-@media(max-width:600px){.figrow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.figrow{grid-template-columns:repeat(2,1fr)}.figrow > div:last-child:nth-child(odd){grid-column:1/-1}}
 
 /* grey panels (App Merge's .pair) */
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
@@ -845,7 +845,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   padding:4px 7px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line)}
 
 /* stakes x reversibility: every action placed, the treatment named per quadrant */
-.gb-quad{position:relative;margin-top:8px;padding:0 0 26px 26px}
+.gb-quad{position:relative;padding:0 0 26px 26px}
 .gb-quad-y{position:absolute;left:0;top:50%;margin:0;transform:translate(-40%,-50%) rotate(-90deg);font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
 .gb-quad-x{position:absolute;left:26px;right:0;bottom:0;margin:0;text-align:center;font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .gb-quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -866,6 +866,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   .gb-quad-grid{grid-template-columns:1fr}
   .gb-quad-grid .q.hi.irr{order:0}
 }
+
+/* a chapter whose content has no sub-heading of its own (the short read):
+   its first block is text, not a heading, so the next block keeps its gap */
+.gb-flow > .col:first-child + *{margin-top:var(--s3)}
+.gb-flow > p.body:first-child + p.body{margin-top:var(--s2)}
+.gb-chapter > .gb-flow:first-of-type{margin-top:24px}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -961,6 +967,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-chapter" id="why">
 <div class="col"><p class="eyebrow">01 · Why an agent</p><h2 class="say">A problem people couldn’t solve alone before LLMs</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">Ananya orders a mixer grinder on Flipkart for ₹3,499. The jar arrives rusted, her replacement is rejected because a photo “failed validation”, and three calls get her the same line: 5 to 7 working days. She has a legal right to the refund, and a free helpline that more than 1,000 companies answer. She doesn’t know either exists.</p>
 <div class="col"><div class="figrow" style="--cols:3"><div><p class="fnum">66%</p><p class="fnote">of people with a major service problem got no help from the company</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p><p class="fsrc"><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></p></div><div><p class="fnum">+6.9 pts</p><p class="fnote">more likely to get relief when a complaint was AI-assisted</p><p class="fsrc"><a href="https://www.nature.com/articles/s41562-026-02409-4" target="_blank" rel="noopener noreferrer">Nature Human Behaviour, 2026 · 1.1M US complaints</a></p></div></div></div>
 <p class="col body">This is a job an LLM is actually suited to: reading messy evidence, matching it to the right rule, and writing a calm, specific letter, again and again, without tiring. ChatGPT can already draft the letter. But the letter is 10% of the job. Knowing the rule, the deadline and where to escalate, and following up when the company goes quiet, is the other 90%, and nobody does it for her.</p>
@@ -971,8 +978,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <p class="cite">From desk research: complaints on Reddit and X, app reviews, consumer forums and government data. I couldn’t recruit interviews in time, and it’s labelled that way throughout.</p>
 </div>
 </section>
+</section>
 <section class="gb-chapter" id="work">
 <div class="col"><p class="eyebrow">02 · Show your work</p><h2 class="say">The AI reads and writes. Code does every date and amount.</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A confidently wrong deadline is worse than no agent: she’d wait for a date that has already passed. So before any screen, I decided what the AI is allowed to do at all. It handles judgment on messy text. Deadlines and money are tested code, and the model is never even given a day count, so it has nothing to miscalculate.</p>
 <figure class="gb-ex col" data-embed="capability-map" data-note="Diagram">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
@@ -984,8 +993,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <figcaption>Finding the rule and writing the complaint for a real case, each step labelled AI, Rule sheet, Calculated or Safety check. <span class="gb-pat"><i>Process transparency</i><i>Citations</i></span></figcaption>
 </figure>
 </section>
+</section>
 <section class="gb-chapter" id="approver">
 <div class="col"><p class="eyebrow">03 · Approver, not autopilot</p><h2 class="say">She approves every send, in her own name</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">Most agents hand over more control as trust grows. I chose not to. A wrong or rude letter damages her, not the AI, so on the Knight Institute’s autonomy levels, <b>Ananya is an approver</b>: the agent does the work, and nothing leaves without her.</p>
 <p class="col body">But gating everything would make it useless. So I placed every action by how much is at stake and whether it can be undone, following Victor Yocco’s transparency framework, and let that decide the treatment. Only what’s high-stakes and can’t be undone waits for her tap:</p>
 <div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let her correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always her tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading her message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell her, for Stripping an OTP she pasted.">
@@ -998,8 +1009,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </figure><ul class="keys one gb-decisions"><li><i>1</i><p><b>It looks like an email.</b> <span>Familiar on purpose, so the novelty goes on the agent, not the letter. From shows her own name.</span></p></li><li><i>2</i><p><b>Amount and deadline first.</b> <span>The rule and how sure it is sit below, as backing.</span></p></li><li><i>3</i><p><b>One strong button.</b> <span>The only irreversible action looks unlike anything else; Edit and Not now are equally quiet.</span></p></li><li><i>4</i><p><b>Six seconds to undo,</b> <span>said right above the button she’s about to press.</span></p></li></ul></div>
 <p class="col body"><b>The letter first had no name on it.</b> Every one ended “Sent via Getbaq”, with nothing a grievance officer could match to her order. I’d treated “no accounts” as a feature, but a product that complains in someone’s name has to know who she is. Now, just above Send, it asks “Whose name goes on this letter?”: her name and the email or phone the company knows. Nothing more; it refuses Aadhaar, PAN and bank numbers if pasted.</p>
 </section>
+</section>
 <section class="gb-chapter" id="wrong">
 <div class="col"><p class="eyebrow">04 · Designing for being wrong</p><h2 class="say">Every failure ends in a next step, not a dead end</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">The core AI risk is a wrong rule she never thinks to question. So confidence is a plain label with a reason, never a bare number, and when it’s low, the Approve card never appears: <b>she’s never asked to approve what the AI itself doubts.</b></p>
 <figure class="gb-ex col" data-embed="screen-notsure" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Not sure screen: low confidence, both sides of its reasoning, and no Approve button. <span class="gb-pat"><i>Confidence signal</i><i>Explainable rationale</i></span></figcaption></figure>
 <p class="col body">Then I listed every way a case can go wrong, sorted by kind using Google PAIR’s error categories, and designed what she sees and what happens next for each:</p>
@@ -1020,8 +1033,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <figcaption>Every state is the real screen from the app. Fill in the questions, open the letter, press Send it and then Undo. <span class="gb-pat"><i>Graceful failure</i><i>Escalation pathway</i></span></figcaption>
 </figure>
 </section>
+</section>
 <section class="gb-chapter" id="rejected">
 <div class="col"><p class="eyebrow">05 · What I rejected</p><h2 class="say">The options I tried or considered, and why they lost</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
 <div class="col gb-rows">
 <div class="rh"><p class="eyebrow" style="margin:0">Rejected</p><p class="eyebrow" style="margin:0">Why, and what replaced it</p></div>
 <ul>
@@ -1043,8 +1058,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <figcaption>What replaced the pages: one thread, finished steps as receipts, and the one card that’s live now.</figcaption>
 </figure>
 </section>
+</section>
 <section class="gb-chapter" id="proof">
 <div class="col"><p class="eyebrow">06 · Evals and limits</p><h2 class="say">What’s tested, what’s built to be scored, and what isn’t proven</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
 <p class="col body"><b>Caught before anyone used it.</b> Testing the rules, the dates and the letters turned up five mistakes that would have cost people money: UPI got five days instead of RBI’s one working day; two airline refund clocks had been merged into one; deadlines shifted with the timezone near midnight; the model invented years when copying “2 Aug”; and UPI letters went to the shop instead of her bank. 210 automated tests now cover dates, money, states and safety.</p>
 <div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">8</p><p class="fnote">legal rules, each read from the source and marked verified</p></div><div><p class="fnum">30</p><p class="fnote">real, sourced cases in the evaluation set</p></div><div><p class="fnum">6</p><p class="fnote">traps where the right answer is “no rule covers this”</p></div><div><p class="fnum">3×</p><p class="fnote">runs per case; it passes only if all three pass</p></div></div></div>
 <p class="col body">The evaluation is built to catch the model inventing things: the case type, rule and amount are checked automatically, a person reads every draft for invented facts, and an invented rule fails outright. <b>It hasn’t been run yet.</b> The first attempt ran out of paid AI credit, and the free plan allows about 20 calls a day against the 90 it needs. The pass rate goes here when it exists, failures included.</p>
@@ -1057,6 +1074,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </ul>
 </div>
 <p class="col body"><b>How I’ll know it works:</b> money recovered, with a target of 3 of the first 5 real cases refunded. Behind it: days to refund, drafts sent without edits, a wrong-rule rate under 5% with zero invented rules, and no follow-up she has to write herself.</p>
+</section>
 </section>
 <!-- ================= TRADEOFFS ================= -->
 <section class="gb-chapter" id="close">

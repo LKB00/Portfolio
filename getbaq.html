@@ -450,7 +450,7 @@ div.gb-sec{margin-top:var(--s5)}
 .figrow .fnum{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.4vw,32px);line-height:1;letter-spacing:-.02em;color:var(--ink)}
 .figrow .fnote{margin-top:8px;font-size:13px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
 .figrow .fsrc{margin-top:6px}
-@media(max-width:600px){.figrow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.figrow{grid-template-columns:repeat(2,1fr)}.figrow > div:last-child:nth-child(odd){grid-column:1/-1}}
 
 /* grey panels (App Merge's .pair) */
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
@@ -845,7 +845,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   padding:4px 7px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line)}
 
 /* stakes x reversibility: every action placed, the treatment named per quadrant */
-.gb-quad{position:relative;margin-top:8px;padding:0 0 26px 26px}
+.gb-quad{position:relative;padding:0 0 26px 26px}
 .gb-quad-y{position:absolute;left:0;top:50%;margin:0;transform:translate(-40%,-50%) rotate(-90deg);font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
 .gb-quad-x{position:absolute;left:26px;right:0;bottom:0;margin:0;text-align:center;font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .gb-quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -866,6 +866,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   .gb-quad-grid{grid-template-columns:1fr}
   .gb-quad-grid .q.hi.irr{order:0}
 }
+
+/* a chapter whose content has no sub-heading of its own (the short read):
+   its first block is text, not a heading, so the next block keeps its gap */
+.gb-flow > .col:first-child + *{margin-top:var(--s3)}
+.gb-flow > p.body:first-child + p.body{margin-top:var(--s2)}
+.gb-chapter > .gb-flow:first-of-type{margin-top:24px}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
