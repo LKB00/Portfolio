@@ -3088,15 +3088,24 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    autoplay, no blur. */
 #words{max-width:var(--col);margin:0 auto;padding-bottom:calc(clamp(90px,12vw,130px) + 8px)}
 .rec{position:relative;padding:clamp(30px,5vw,56px) clamp(24px,6vw,72px);border-radius:8px;background:var(--surface)}
-.rec-bars{display:flex;gap:6px}
-.rec-bar{position:relative;flex:none;width:22px;height:20px;padding:0;border:0;background:none;cursor:pointer}
-.rec-bar:before,.rec-bar i{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;border-radius:2px}
-.rec-bar:before{background:color-mix(in srgb,var(--ink) 12%,transparent)}
-.rec-bar i{display:block;background:var(--ink);transform:scaleX(0);transform-origin:0 50%}
-.rec-bar.is-done i{transform:scaleX(1);opacity:.35}
-.rec-bar.is-on i{animation:recFill var(--rec-t,9s) linear forwards}
-.rec.is-held .rec-bar.is-on i,.rec:not(.is-seen) .rec-bar.is-on i{animation-play-state:paused}
-@keyframes recFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* the people are the way round: one small photo each. The one speaking is
+   in full colour, and the ring around it fills while their words are up;
+   the others wait, softer and in grey, until you pick one */
+.rec-bars{display:flex;align-items:center;gap:6px}
+.rec-bar{position:relative;display:grid;place-items:center;flex:none;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer}
+.rec-bar img{width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--bg);
+  filter:grayscale(1);opacity:.55;transform:scale(.8);
+  transition:filter .35s ease,opacity .35s ease,transform .45s var(--ease)}
+.rec-bar:hover img{filter:grayscale(.2);opacity:.9;transform:scale(.88)}
+.rec-bar.is-on img{filter:none;opacity:1;transform:none}
+.rec-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);fill:none;stroke-width:1.5;overflow:visible}
+.rec-ring circle{stroke:color-mix(in srgb,var(--ink) 12%,transparent);opacity:0;transition:opacity .3s ease}
+.rec-ring .rec-ring-fill{stroke:var(--ink);stroke-linecap:round;stroke-dasharray:128.8;stroke-dashoffset:128.8}
+.rec-bar.is-on .rec-ring circle{opacity:1}
+.rec-bar.is-on .rec-ring-fill{animation:recFill var(--rec-t,9s) linear forwards}
+.rec-bar:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.rec.is-held .rec-bar.is-on .rec-ring-fill,.rec:not(.is-seen) .rec-bar.is-on .rec-ring-fill{animation-play-state:paused}
+@keyframes recFill{from{stroke-dashoffset:128.8}to{stroke-dashoffset:0}}
 .rec-stage{position:relative;min-width:0}
 /* Each part changes the way it means something. The quote is said, so its
    words arrive one after another, drifting in from the side you moved
@@ -3128,9 +3137,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-q:before,.rec-q:after{opacity:0;transition:opacity 0s .32s}
 .rec-item.is-on .rec-q:before{opacity:1;transition:opacity .4s ease .16s}
 .rec-item.is-on .rec-q:after{opacity:1;transition:opacity .4s ease var(--t-end)}
-.rec-arrow svg{transition:transform .25s var(--ease)}
-.rec-arrow[data-dir="1"]:active svg{transform:translateX(3px)}
-.rec-arrow[data-dir="-1"]:active svg{transform:translateX(-3px)}
 .rec-q{margin:0;max-width:720px;font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.7vw,30px);line-height:1.3;letter-spacing:-.015em;color:var(--ink);text-wrap:pretty}
 .rec-q:before{content:"\201C";margin-left:-.42em;padding-right:.04em;color:var(--faint)}
 .rec-q:after{content:"\201D";color:var(--faint)}
@@ -3144,11 +3150,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-src{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);text-decoration:underline;text-decoration-color:transparent;
   text-underline-offset:3px;white-space:nowrap;transition:color .2s ease,text-decoration-color .2s ease}
 .rec-src:hover{color:var(--ink);text-decoration-color:currentColor}
-.rec-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:clamp(24px,3.4vw,32px)}
-.rec-arrow{display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;cursor:pointer;
-  background:var(--bg);color:var(--ink);transition:background .2s ease,transform .2s var(--ease)}
-.rec-arrow:hover{background:color-mix(in srgb,var(--ink) 7%,var(--bg))}
-.rec-arrow:active{transform:scale(.94)}
+.rec-nav{display:flex;align-items:center;justify-content:center;margin-top:clamp(20px,3vw,28px)}
 /* the component sits in the middle of the card: one block, as wide as the
    quote's measure, with everything inside it left-aligned as before */
 .rec-stage,.rec-nav{max-width:720px;margin-left:auto;margin-right:auto}
@@ -3167,7 +3169,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (prefers-reduced-motion:reduce){
   .rec-item,.rec-item.is-on,.rec-q .w,.rec-av,.rec-name b,.rec-who > span:last-child,.rec-src{filter:none!important;transform:none!important;transition-delay:0s!important}
   .rec-item,.rec-item.is-on{transition:opacity .2s ease,visibility 0s}
-  .rec-bar.is-on i{animation:none;transform:scaleX(1)}
+  .rec-bar.is-on .rec-ring-fill{animation:none;stroke-dashoffset:0}
 }
 </style>
 <script defer src="./analytics.js?v=3"></script>
@@ -3413,7 +3415,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <figcaption class="rec-by"><img class="rec-av" src="./assets/rec-dharani.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><span class="rec-who"><span class="rec-name"><b>Dharani KR</b><a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span><span>UI Engineer · worked on the same team</span></span></figcaption>
         </figure>
       </div>
-      <div class="rec-nav"><button type="button" class="rec-arrow" data-dir="-1" aria-label="Previous recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8h-11M6.5 4l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Recommendation 1 of 3" aria-current="true"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 2 of 3"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 3 of 3"><i></i></button></div><button type="button" class="rec-arrow" data-dir="1" aria-label="Next recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <div class="rec-nav"><div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Mukesh Kumar Ranjan, 1 of 3" aria-current="true"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-mukesh.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></button><button type="button" class="rec-bar" aria-label="Kushagra Rustagi, 2 of 3"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-kushagra.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></button><button type="button" class="rec-bar" aria-label="Dharani KR, 3 of 3"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-dharani.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></button></div></div>
     </div>
   </section>
 
@@ -4321,7 +4323,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       var on = k === i; el.classList.toggle("is-on", on); el.setAttribute("aria-hidden", on ? "false" : "true");
     });
     bars.forEach(function(b, k){
-      b.classList.toggle("is-done", k < i); b.classList.remove("is-on");
+      b.classList.remove("is-on");
       if (k === i){ void b.offsetWidth; b.classList.add("is-on"); b.setAttribute("aria-current", "true"); } else b.removeAttribute("aria-current");
     });
     fit();
@@ -4331,10 +4333,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   bars.forEach(function(b, k){
     b.addEventListener("click", function(){ show(k); });
-    b.querySelector("i").addEventListener("animationend", function(){ if (b.classList.contains("is-on")) show(i + 1, 1); });
-  });
-  [].forEach.call(root.querySelectorAll(".rec-arrow"), function(a){
-    a.addEventListener("click", function(){ var d = +a.getAttribute("data-dir"); show(i + d, d); });
+    b.querySelector(".rec-ring-fill").addEventListener("animationend", function(){ if (b.classList.contains("is-on")) show(i + 1, 1); });
   });
   root.addEventListener("keydown", function(e){
     if (e.target.closest("a")) return;
