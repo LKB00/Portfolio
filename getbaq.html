@@ -838,6 +838,34 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-versions a:hover{color:var(--ink)}
 .gb-versions [aria-current]{background:var(--bg);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06),inset 0 0 0 1px var(--line)}
 .gb-hero .gb-versions{display:flex;width:max-content}
+
+/* pattern names from the literature, set as quiet tags after a caption */
+.gb-pat{display:inline-flex;flex-wrap:wrap;gap:5px;margin-left:4px;vertical-align:1px}
+.gb-pat i{font:500 10.5px/1 var(--mono,'Geist Mono',monospace);font-style:normal;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+  padding:4px 7px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line)}
+
+/* stakes x reversibility: every action placed, the treatment named per quadrant */
+.gb-quad{position:relative;margin-top:8px;padding:0 0 26px 26px}
+.gb-quad-y{position:absolute;left:0;top:50%;margin:0;transform:translate(-40%,-50%) rotate(-90deg);font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.gb-quad-x{position:absolute;left:26px;right:0;bottom:0;margin:0;text-align:center;font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.gb-quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gb-quad-grid .q{padding:18px 18px 16px;border-radius:8px;background:var(--surface)}
+.gb-quad-grid .q.hi.irr{background:var(--ink);color:var(--bg)}
+.gb-quad-grid .q.hi.irr .q-where,.gb-quad-grid .q.hi.irr li span{color:color-mix(in srgb,var(--bg) 62%,transparent)}
+.gb-quad-grid .q.hi.irr li b{color:var(--bg)}
+.q-where{margin:0 0 6px;font:500 10.5px/1.3 var(--mono,'Geist Mono',monospace);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.q-t{margin:0 0 12px;font:400 19px/1.25 var(--serif);letter-spacing:-.01em}
+.gb-quad-grid ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.gb-quad-grid li{display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.45}
+.gb-quad-grid li b{font-weight:500;color:var(--ink)}
+.gb-quad-grid li span{color:var(--muted)}
+/* order: the top row is higher stakes, the right column can't be undone */
+.gb-quad-grid .q.hi.rev{order:1}.gb-quad-grid .q.hi.irr{order:2}.gb-quad-grid .q.lo.rev{order:3}.gb-quad-grid .q.lo.irr{order:4}
+@media (max-width:600px){
+  .gb-quad{padding:0}.gb-quad-y,.gb-quad-x{display:none}
+  .gb-quad-grid{grid-template-columns:1fr}
+  .gb-quad-grid .q.hi.irr{order:0}
+}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -911,7 +939,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <h1>Designing an AI agent that fights for your <em>refund</em></h1>
 <p class="dek">Ananya has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes her complaint, and never sends a word without her.</p>
 <a class="livelink gb-try" data-proto="/app?start=Flipkart.%20Bought%20a%20mixer%20grinder%20for%203499%20on%202%20Aug.%20Jar%20has%20rust.%20Asked%20replacement%20on%204%20Aug%2C%20they%20rejected%20saying%20photo%20validation%20failed.%20Called%203%20times%2C%20nothing." href="#" rel="noopener" target="_blank">Try the prototype <svg aria-hidden="true" fill="none" height="14" viewbox="0 0 16 16" width="14"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg></a>
-<p class="gb-versions"><a href="./getbaq-short.html">Short read · 8 min</a><span aria-current="page">Full case study · 40 min</span></p>
+<p class="gb-versions"><a href="./getbaq-short.html">Short read · 9 min</a><span aria-current="page">Full case study · 40 min</span></p>
 </div>
 <dl class="meta col" data-reveal="">
 <div><dt>Type</dt><dd>Self-initiated, not client work. Not shipped to real users.</dd></div>
@@ -968,20 +996,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="col gb-sec" data-reveal="">
 <p class="eyebrow">How I worked</p>
 <p class="body"><b>I designed in code, with a real AI model, not in static mock-ups.</b> The product screens on this page are the working prototype itself, and Gemini reads what people send, so I designed against its actual answers and mistakes, not imagined ones. That’s how I found it inventing years in dates (chapter 2). An AI coding assistant wrote much of the code; the research, decisions, prompts and evaluation are mine.</p>
-</div>
-<div class="col gb-folds" data-reveal="">
-<p class="eyebrow">The process</p>
-<div class="gb-fold-list">
-<details class="gb-fold"><summary><span class="gb-fold-t"><b>A Double Diamond, with a layer most processes don’t have</b><span>Plus prompts, evals and uncertain states. And one rule: every decision needs a reason.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
-<div class="gb-fold-body">
-<p class="col body">The space, money people lose to companies, was clear early. The right moment to step in wasn’t, and the first diamond earns its time finding it. But a normal Double Diamond has no step for prompts, eval sets or states where the system is unsure. For an AI agent, that’s the design work.</p>
-<figure class="gb-ex col" data-embed="process-diagram" data-note="Diagram">
-<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-<figcaption>Five phases, and the AI layer running through the last four.</figcaption>
-</figure>
-<div class="quote col"><p class="colhead">One rule for the whole project</p><p>Every decision needed a reason, and the reason had to be a number, a source, a constraint or a principle. “It felt right” didn’t count.</p></div>
-</div></details>
-</div>
 </div>
 </section>
 <!-- ================= 01 THE PROBLEM ================= -->
@@ -1258,7 +1272,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s3-2">
 <div class="col"><p class="eyebrow">Agentic decisions</p><h3 class="say sub">No autonomy dial, on purpose</h3></div>
-<p class="col body">Most agents hand over more control as trust grows: approve the first few, then let it run. I chose not to. Here a wrong or rude message damages her, not the AI, so growing trust never removes the need to approve.</p>
+<p class="col body">Most agents hand over more control as trust grows: approve the first few, then let it run. I chose not to. Here a wrong or rude message damages her, not the AI, so growing trust never removes the need to approve. In the language of the Knight Institute’s autonomy levels, <b>Ananya is an approver</b>: the agent does the work, and nothing leaves without her.</p>
+<p class="col body">Not every action needs the same gate, though. I placed each one by how much is at stake and whether it can be undone, following Victor Yocco’s transparency framework, and the treatment follows from where it lands. Only what’s both high-stakes and irreversible waits for her tap:</p>
+<div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let her correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always her tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading her message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell her, for Stripping an OTP she pasted.">
+<p class="gb-quad-y" aria-hidden="true">Stakes ↑</p><p class="gb-quad-x" aria-hidden="true">Can be undone ← → Can’t be undone</p>
+<div class="gb-quad-grid" aria-hidden="true"><div class="q hi rev"><p class="q-where">Higher stakes · can be undone</p><p class="q-t">Show it, and let her correct it</p><ul><li><b>The facts it read</b><span>restated first: “You confirmed · Flipkart · ₹3,499 · 2 Aug”</span></li><li><b>The rule it picked</b><span>cited, with a confidence label and a reason</span></li><li><b>The deadline</b><span>calculated by code, and labelled Calculated</span></li></ul></div><div class="q hi irr"><p class="q-where">Higher stakes · can’t be undone</p><p class="q-t">Always her tap</p><ul><li><b>Sending the complaint</b><span>the Approve card, her signature, six seconds to undo</span></li><li><b>Escalating to 1915</b><span>prepared for her, and still her tap</span></li></ul></div><div class="q lo rev"><p class="q-where">Lower stakes · can be undone</p><p class="q-t">Just do it, and show it</p><ul><li><b>Reading her message or screenshot</b><span>a live trace of the real steps</span></li><li><b>Drafting the letter</b><span>labelled AI-drafted, and she can edit it</span></li></ul></div><div class="q lo irr"><p class="q-where">Lower stakes · can’t be undone</p><p class="q-t">Do it, and tell her</p><ul><li><b>Stripping an OTP she pasted</b><span>removed before the model sees it, and she’s told</span></li></ul></div></div>
+</div>
 <div class="col gb-rows">
 <ul>
 <li><p>Every send needs approval, forever</p><p>The agent acts in her name (the Intent Preview pattern)</p></li>
@@ -1335,6 +1354,19 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <section class="gb-sec" data-reveal="" id="s3-3">
 <div class="col"><p class="eyebrow">States</p><h3 class="say sub">Five ways it can go wrong got the same care as the happy path</h3></div>
 <p class="col body">An AI agent will be wrong, unsure, ignored or stuck some of the time. What Ananya sees in those moments decides whether she trusts it the next time, so they’re where trust is won or lost. Pick any state to see the real screen, and try them: they all work.</p>
+<p class="col body">Each failure is sorted by kind, using Google PAIR’s error categories, and each ends in a next step rather than a dead end:</p>
+<div class="col"><div class="gb-table"><table style="min-width:560px">
+<thead><tr><th>What goes wrong</th><th>Kind</th><th>What she sees</th><th>What happens next</th></tr></thead>
+<tbody>
+<tr><td>A screenshot with no money in it</td><td>Input</td><td>“I read that screenshot, but I don’t see an order, a payment or a refund in it.”</td><td>No case is started from it</td></tr>
+<tr><td>A fact is missing: no company, no date</td><td>Input</td><td>One card that asks for every gap at once, and says why each is needed</td><td>She answers, or picks “I haven’t complained yet”</td></tr>
+<tr><td>No rule clearly fits</td><td>Failstate</td><td>Not sure: a confidence label, both sides of its reasoning, no Approve button</td><td>It asks. Nothing can be approved while it’s unsure</td></tr>
+<tr><td>It isn’t a refund complaint</td><td>Context</td><td>Out of scope: it says so, and where to go instead</td><td>She’s pointed to e-Jagriti, a lawyer, or the bank</td></tr>
+<tr><td>No grievance address it can trust</td><td>Failstate</td><td>Blocked: it won’t guess an address</td><td>She gets the letter to send herself; it keeps tracking the deadline</td></tr>
+<tr><td>The company goes quiet</td><td>Background</td><td>Ignored: the 1915 complaint is already prepared</td><td>One tap escalates, and it’s still her tap</td></tr>
+<tr><td>The AI can’t be reached, or fails code’s checks</td><td>System</td><td>The step says a simpler reader or a fixed template did it</td><td>The case carries on; she checks what it found</td></tr>
+</tbody>
+</table></div></div>
 <figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>Eleven states, each the real screen from the app. Fill in the questions, open the letter, press Send it and then Undo.</figcaption>
