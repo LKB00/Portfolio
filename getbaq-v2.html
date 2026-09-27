@@ -809,11 +809,13 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gbh-shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transform:translateY(4%);transition:opacity .8s var(--ease),transform 1s cubic-bezier(.2,.9,.25,1)}
 .gbh.is-screen .gbh-shot{opacity:1;transform:none}
 .gbh-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-/* while Getbaq works: soft placeholder lines with a light passing over them */
-.gbh-sk{position:absolute;left:9%;height:2.2%;border-radius:99px;opacity:0;transition:opacity .4s ease;
+/* while Getbaq works: soft placeholder lines with a light passing over them.
+   Visible from the start of the loop, not just its last moment, so the phone
+   isn't a dead rectangle while she's still typing on the left */
+.gbh-sk{position:absolute;left:9%;height:2.2%;border-radius:99px;opacity:1;transition:opacity .4s ease;
   background:linear-gradient(90deg,#E9E6DD 0%,#F5F3ED 50%,#E9E6DD 100%) 0 0/200% 100%;animation:gbhShine 1.3s linear infinite}
 .gbh-sk:nth-child(1){top:12%;width:46%}.gbh-sk:nth-child(2){top:17%;width:78%}.gbh-sk:nth-child(3){top:22%;width:70%}.gbh-sk:nth-child(4){top:27%;width:58%}
-.gbh.is-work .gbh-sk{opacity:1}.gbh.is-screen .gbh-sk{opacity:0}
+.gbh.is-screen .gbh-sk{opacity:0}
 @keyframes gbhShine{to{background-position:-200% 0}}
 
 /* the loop's end: everything settles out together before it starts again */
@@ -1955,11 +1957,11 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
     chars.forEach(function(c){ c.classList.add("on"); c.classList.remove("cur"); });
     marks.forEach(function(m){ m.classList.add("on"); });
     rows.forEach(function(r){ r.querySelector("b").style.transform = ""; r.classList.add("on"); });
-    st.classList.add("is-screen"); st.classList.remove("is-work", "is-out");
+    st.classList.add("is-screen"); st.classList.remove("is-out");
   }
   if (still){ finished(); return; }
   function reset(){
-    st.classList.remove("is-work", "is-screen", "is-out");
+    st.classList.remove("is-screen", "is-out");
     chars.forEach(function(c){ c.classList.remove("on", "cur"); });
     marks.forEach(function(m){ m.classList.remove("on"); });
     rows.forEach(function(r){ var b = r.querySelector("b"); r.classList.remove("on"); b.style.transition = "none"; b.style.transform = ""; b.offsetWidth; b.style.transition = ""; });
@@ -1983,7 +1985,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
     });
     t += 700;
     [0,1,2].forEach(function(i){ at(t, function(){ fly(i); }); t += 650; });
-    t += 250; at(t, function(){ if (prev) prev.classList.remove("cur"); st.classList.add("is-work"); });
+    t += 250; at(t, function(){ if (prev) prev.classList.remove("cur"); });
     t += 1200; at(t, function(){ st.classList.add("is-screen"); });
     t += 5600; at(t, function(){ st.classList.add("is-out"); });
     t += 800; at(t, play);
