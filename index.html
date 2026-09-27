@@ -3079,20 +3079,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 #notes:has(+ #contact){padding-bottom:clamp(74px,7.8vw,100px)}
 /* ══ WHAT PEOPLE SAID ══════════════════════════════════════════════════
    One card, read top to bottom:
-     progress   thin segments on the card's top edge, one per person, the
-                current one filling as it plays (how many, and where you are,
-                before you read a word)
      the quote  the line that matters, in the serif; it leads
-     footer     who said it on the left, with the source on their name line;
-                the arrows on the right, on the same row, beside what they
-                change. The footer is pinned to the bottom, so moving between
-                quotes never moves it.
+     who        who said it, with the source on their name line, pinned to
+                the bottom of the stage so moving between quotes never moves it
+     controls   bottom centre: previous, three short marks (the current one
+                filling as it plays), next
    Hover, focus or being off screen holds the clock; reduced motion: no
    autoplay, no blur. */
 #words{max-width:var(--col);margin:0 auto;padding-bottom:calc(clamp(90px,12vw,130px) + 8px)}
 .rec{position:relative;padding:clamp(22px,3.4vw,34px) clamp(22px,4.4vw,48px) clamp(22px,3.4vw,34px);border-radius:8px;background:var(--surface)}
-.rec-bars{display:flex;gap:6px;margin-bottom:clamp(24px,3.6vw,36px)}
-.rec-bar{position:relative;flex:1;height:16px;padding:0;border:0;background:none;cursor:pointer}
+.rec-bars{display:flex;gap:6px}
+.rec-bar{position:relative;flex:none;width:22px;height:20px;padding:0;border:0;background:none;cursor:pointer}
 .rec-bar:before,.rec-bar i{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;border-radius:2px}
 .rec-bar:before{background:color-mix(in srgb,var(--ink) 12%,transparent)}
 .rec-bar i{display:block;background:var(--ink);transform:scaleX(0);transform-origin:0 50%}
@@ -3108,7 +3105,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-q:before{content:"\201C";margin-left:-.42em;padding-right:.04em;color:var(--faint)}
 .rec-q:after{content:"\201D";color:var(--faint)}
 /* the footer row: pinned to the bottom, room kept on the right for the arrows */
-.rec-by{position:absolute;left:0;right:96px;bottom:0;display:flex;align-items:center;gap:12px;margin:0}
+.rec-by{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;margin:0}
 .rec-av{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--bg);font-size:12px;font-weight:500;letter-spacing:.02em;color:var(--muted)}
 .rec-who{display:flex;flex-direction:column;gap:2px;min-width:0}
 .rec-name{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 12px}
@@ -3117,7 +3114,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-src{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);text-decoration:underline;text-decoration-color:transparent;
   text-underline-offset:3px;white-space:nowrap;transition:color .2s ease,text-decoration-color .2s ease}
 .rec-src:hover{color:var(--ink);text-decoration-color:currentColor}
-.rec-nav{position:absolute;right:clamp(22px,4.4vw,48px);bottom:clamp(22px,3.4vw,34px);display:flex;gap:8px}
+.rec-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:clamp(24px,3.4vw,32px)}
 .rec-arrow{display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;cursor:pointer;
   background:var(--bg);color:var(--ink);transition:background .2s ease,transform .2s var(--ease)}
 .rec-arrow:hover{background:color-mix(in srgb,var(--ink) 7%,var(--bg))}
@@ -3125,9 +3122,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (max-width:576px){
   /* phone: name and role above, then one row of arrows on the left and the
      source on the right, level with them */
-  .rec-by{right:0;bottom:56px}
-  .rec-nav{left:clamp(22px,4.4vw,48px);right:auto}
-  .rec-src{position:absolute;right:0;bottom:-45px}
+  .rec-name{display:contents}
+  .rec-src{order:2;margin-top:2px}
 }
 @media (prefers-reduced-motion:reduce){
   .rec-item,.rec-item.is-on{filter:none;transform:none;transition:opacity .2s ease,visibility 0s}
@@ -3363,7 +3359,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="words" data-section="What people said" aria-label="What people said">
     <div class="rec" data-reveal>
-      <div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Recommendation 1 of 3" aria-current="true"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 2 of 3"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 3 of 3"><i></i></button></div>
       <div class="rec-stage">
         <figure class="rec-item is-on" role="group" aria-roledescription="slide" aria-label="1 of 3">
           <blockquote class="rec-q">Without a doubt, I’d love to have him on any team I lead in the future.</blockquote>
@@ -3378,7 +3373,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">DK</span><span class="rec-who"><span class="rec-name"><b>Dharani KR</b><a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span><span>UI Engineer · worked on the same team</span></span></figcaption>
         </figure>
       </div>
-      <div class="rec-nav"><button type="button" class="rec-arrow" data-dir="-1" aria-label="Previous recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8h-11M6.5 4l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" class="rec-arrow" data-dir="1" aria-label="Next recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <div class="rec-nav"><button type="button" class="rec-arrow" data-dir="-1" aria-label="Previous recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8h-11M6.5 4l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Recommendation 1 of 3" aria-current="true"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 2 of 3"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 3 of 3"><i></i></button></div><button type="button" class="rec-arrow" data-dir="1" aria-label="Next recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
     </div>
   </section>
 
@@ -4267,7 +4262,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   function fit(){
     var q = 0, by = 0, phone = window.innerWidth <= 576;
     items.forEach(function(el){ q = Math.max(q, el.querySelector(".rec-q").offsetHeight); by = Math.max(by, el.querySelector(".rec-by").offsetHeight); });
-    stage.style.height = (q + (phone ? 24 : 32) + by + (phone ? 56 : 0)) + "px";
+    stage.style.height = (q + (phone ? 24 : 32) + by) + "px";
   }
   function hold(why, on){ if (on) holds[why] = 1; else delete holds[why]; root.classList.toggle("is-held", Object.keys(holds).length > 0); }
   function show(n){
