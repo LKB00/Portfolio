@@ -699,10 +699,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .figrow .fsrc a{text-decoration:none}
 .figrow .fsrc a:hover{text-decoration:underline}
 /* visual-first: the live screen leads, short numbered callouts beside it */
-.gb-vis{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,3.4vw,40px);align-items:center;max-width:834px;margin:var(--s4) auto 0}
+.gb-vis{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,3.4vw,40px);align-items:start;max-width:834px;margin:var(--s4) auto 0}
 @media(min-width:981px){.gb-vis{margin-left:250px;margin-right:0}}
 .gb-vis figure.gb-ex{margin:0}
-.gb-call{list-style:none;margin:0;padding:0;counter-reset:c;display:grid;gap:18px}
+.gb-call{list-style:none;margin:0;padding:28px 0 0;counter-reset:c;display:grid;gap:18px}
+/* beside a tall screen, the callouts stay in view while it scrolls past */
+@media(min-width:761px){.gb-call{position:sticky;top:120px}}
 .gb-call li{counter-increment:c;display:grid;grid-template-columns:24px 1fr;column-gap:12px;row-gap:2px}
 .gb-call li:before{content:counter(c);grid-row:span 2;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg);font:500 12px/1 var(--sans)}
 .gb-call b{font:500 15px/1.4 var(--sans);color:var(--ink);letter-spacing:-.01em}
