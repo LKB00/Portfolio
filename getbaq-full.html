@@ -769,12 +769,13 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 @media (max-width:600px){.gbh{aspect-ratio:4/4.3}}
 @media (prefers-reduced-motion:reduce){.gbh-sk{display:none}}
 
-/* the two reads of the case study: a quiet switch under the prototype link */
-.gb-versions{display:inline-flex;gap:2px;margin:16px 0 0;padding:3px;border-radius:999px;background:var(--surface);font:500 12.5px/1 var(--sans)}
-.gb-versions a,.gb-versions span{padding:8px 13px;border-radius:999px;color:var(--muted);text-decoration:none;transition:color .2s ease,background-color .2s ease}
+/* the two reads of the case study: a switch above the hero, styled like
+   the Before / After toggle on the app-merge case study */
+.gb-versions{display:inline-flex;gap:2px;margin:0;padding:4px;border-radius:999px;background:var(--surface)}
+.gb-versions a,.gb-versions span{font:400 13px/1 var(--sans);padding:9px 16px;border-radius:999px;color:var(--muted);text-decoration:none;transition:all .2s var(--ease)}
 .gb-versions a:hover{color:var(--ink)}
-.gb-versions [aria-current]{background:var(--bg);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06),inset 0 0 0 1px var(--line)}
-.gb-hero .gb-versions{display:flex;width:max-content}
+.gb-versions [aria-current]{background:var(--bg);color:var(--ink)}
+figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 
 /* pattern names from the literature, set as quiet tags after a caption */
 .gb-pat{display:inline-flex;flex-wrap:wrap;gap:5px;margin-left:4px;vertical-align:1px}
@@ -866,6 +867,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </nav>
 <!-- ================= OVERVIEW ================= -->
 <section id="overview" style="margin-top:0">
+<div class="col" data-reveal=""><p class="gb-versions"><a href="./getbaq.html">Short read · 9 min</a><span aria-current="page">Full case study · 40 min</span></p></div>
 <figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="The Getbaq app on a MacBook. Ananya types: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. Getbaq reads it, checks ₹3,499, Flipkart and 2 Aug with her, and once she confirms, finds the rule, sets the reply-by date of 3 Sep 2026 and has her letter ready to sign.">
 <div class="gbh-mac" aria-hidden="true"><div class="gbh-screen">
@@ -878,7 +880,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <h1>Designing an AI agent that fights for your <em>refund</em></h1>
 <p class="dek">Ananya has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes her complaint, and never sends a word without her.</p>
 <a class="livelink gb-try" data-proto="/app?start=Flipkart.%20Bought%20a%20mixer%20grinder%20for%203499%20on%202%20Aug.%20Jar%20has%20rust.%20Asked%20replacement%20on%204%20Aug%2C%20they%20rejected%20saying%20photo%20validation%20failed.%20Called%203%20times%2C%20nothing." href="#" rel="noopener" target="_blank">Try the prototype <svg aria-hidden="true" fill="none" height="14" viewbox="0 0 16 16" width="14"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg></a>
-<p class="gb-versions"><a href="./getbaq.html">Short read · 9 min</a><span aria-current="page">Full case study · 40 min</span></p>
 </div>
 <dl class="meta col" data-reveal="">
 <div><dt>Type</dt><dd>Self-initiated, not client work. Not shipped to real users.</dd></div>
