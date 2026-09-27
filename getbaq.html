@@ -758,6 +758,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gbh-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .gbh-screen{position:absolute;left:10.83%;top:11.34%;width:78.34%;height:77.32%;overflow:hidden;background:#F6F4EE}
 .gbh-poster{position:absolute;inset:0;width:100%;height:100%}
+/* the poster is the app's first screen, so it matches where the loop starts;
+   with reduced motion there is no loop, so it's the finished letter instead */
+.gbh-poster-still{display:none}
+@media (prefers-reduced-motion:reduce){.gbh-poster-still{display:block}}
 /* the live app, drawn by getbaq-hero.js over the poster once it's ready */
 .gbh-app{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .4s ease}
 .gbh-app.on{opacity:1}
@@ -771,10 +775,25 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 
 /* the two reads of the case study: a switch above the hero, styled like
    the Before / After toggle on the app-merge case study */
-.gb-versions{display:inline-flex;gap:2px;margin:0;padding:4px;border-radius:999px;background:var(--surface)}
-.gb-versions a,.gb-versions span{font:400 13px/1 var(--sans);padding:9px 16px;border-radius:999px;color:var(--muted);text-decoration:none;transition:all .2s var(--ease)}
+/* the white pill is its own element, named for view transitions, so moving
+   between the two reads slides it from one tab to the other while the page
+   cross-fades underneath; the switch itself holds still */
+.gb-versions{display:inline-grid;grid-auto-flow:column;gap:2px;margin:0;padding:4px;border-radius:999px;background:var(--surface);isolation:isolate;view-transition-name:gb-versions}
+.gb-versions>*{grid-row:1}
+.gb-versions>:nth-child(2){grid-column:1}.gb-versions>:nth-child(3){grid-column:2}
+.gb-pill{grid-column:1;z-index:0;border-radius:999px;background:var(--bg);view-transition-name:gb-pill}
+.gb-versions[data-on="full"] .gb-pill{grid-column:2}
+.gb-versions a,.gb-versions span:not(.gb-pill){position:relative;z-index:1;font:400 13px/1 var(--sans);padding:9px 16px;border-radius:999px;color:var(--muted);text-decoration:none;transition:color .2s var(--ease)}
 .gb-versions a:hover{color:var(--ink)}
-.gb-versions [aria-current]{background:var(--bg);color:var(--ink)}
+.gb-versions span[aria-current]{color:var(--ink)}
+::view-transition-group(gb-pill){animation-duration:.55s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-group(gb-versions){animation-duration:.55s}
+/* the labels ride above the pill, so it slides under the words, not over them */
+.gb-versions>:nth-child(2){view-transition-name:gb-v1}.gb-versions>:nth-child(3){view-transition-name:gb-v2}
+::view-transition-new(gb-v1),::view-transition-new(gb-v2){animation:none}
+::view-transition-old(gb-v1),::view-transition-old(gb-v2){animation:gbLabelOut .35s ease both}
+@keyframes gbLabelOut{to{opacity:0}}
+.gb-swap [data-reveal]{transition:none!important}
 figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 
 /* pattern names from the literature, set as quiet tags after a caption */
@@ -812,6 +831,19 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 .gb-chapter > .gb-flow:first-of-type{margin-top:24px}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
+<script>
+/* moving between the two reads: what's already on screen is simply there on
+   the new page, not faded up again, so only the pill and the text below move */
+addEventListener("pagereveal",function(e){
+  if(!e.viewTransition) return;
+  var a=window.navigation&&navigation.activation,from=a&&a.from&&a.from.url||"";
+  if(!/\/getbaq(-full)?\.html/.test(from)) return;
+  var d=document.documentElement; d.classList.add("gb-swap");
+  [].forEach.call(document.querySelectorAll("[data-reveal]"),function(el){ if(el.getBoundingClientRect().top<innerHeight) el.classList.add("shown"); });
+  e.viewTransition.finished.finally(function(){ d.classList.remove("gb-swap"); });
+});
+</script>
+<script type="speculationrules">{"prerender":[{"source":"list","urls":["/getbaq-full.html"],"eagerness":"moderate"}]}</script>
 </head>
 <body>
 
@@ -868,11 +900,11 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 </nav>
 <!-- ================= OVERVIEW ================= -->
 <section id="overview" style="margin-top:0">
-<div class="col" data-reveal=""><p class="gb-versions"><span aria-current="page">Short read · 9 min</span><a href="./getbaq-full.html">Full case study · 40 min</a></p></div>
+<div class="col" data-reveal=""><p class="gb-versions" data-on="short"><span class="gb-pill" aria-hidden="true"></span><span aria-current="page">Short read · 9 min</span><a href="./getbaq-full.html">Full case study · 40 min</a></p></div>
 <figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="The Getbaq app on a MacBook. Ananya types: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. Getbaq reads it, checks ₹3,499, Flipkart and 2 Aug with her, and once she confirms, finds the rule, sets the reply-by date of 3 Sep 2026 and has her letter ready to sign.">
 <div class="gbh-mac" aria-hidden="true"><div class="gbh-screen">
-<img class="gbh-poster" src="./assets/getbaq-mac-ready.webp" width="1600" height="1039" alt="" fetchpriority="high" decoding="async">
+<img class="gbh-poster" src="./assets/getbaq-mac-start.webp" width="1600" height="1039" alt="" fetchpriority="high" decoding="async"><img class="gbh-poster gbh-poster-still" src="./assets/getbaq-mac-ready.webp" width="1600" height="1039" alt="" loading="lazy" decoding="async">
 <div class="gbh-app" inert></div>
 </div><img class="gbh-frame" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" fetchpriority="high" decoding="async"></div>
 </div>
@@ -1311,6 +1343,6 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
   openFor(location.hash);
 })();
 </script>
-<script src="./assets/getbaq-hero.js?v=5" defer></script>
+<script src="./assets/getbaq-hero.js?v=6" defer></script>
 <script src="./aitwin.js?v=6" defer></script>
 </body></html>

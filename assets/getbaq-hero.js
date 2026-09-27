@@ -147,6 +147,10 @@
     t += 550; at(t, play);
   }
 
+  // the first screen is there from the start, so nothing swaps in when the
+  // loop begins (or when you arrive from the other read)
+  build(); host.classList.add("on");
+
   var st = host.closest(".gbh") || host;
   if ("IntersectionObserver" in window){
     new IntersectionObserver(function(es){
