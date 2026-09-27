@@ -54,7 +54,7 @@
 
   --pad:18px;
    --frameSh:rgba(0,0,0,.14);
-  --accent:#006AD4;
+  --accent:#171717;
   --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
 
     --live:#177A3C;
@@ -69,7 +69,7 @@
   --yellow:#E5CB3C; --onYellow:#2A2400;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
    --frameSh:rgba(0,0,0,.6);
-  --accent:#5EA9F5;
+  --accent:#EDEDED;
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
 
     --live:#4ED07F;
@@ -701,15 +701,15 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 /* the slot: an empty dashed field that becomes the next entry */
 .path .expslot{display:inline-flex;align-items:center;gap:6px;justify-self:start;min-width:200px;max-width:100%;cursor:text;
-  padding:5px 7px 5px 9px;border-radius:8px;border:1px dashed color-mix(in srgb,var(--link) 40%,transparent);
-  background:color-mix(in srgb,var(--link) 5%,transparent);transition:border-color .2s ease,background .2s ease}
+  padding:5px 7px 5px 9px;border-radius:8px;border:1px dashed color-mix(in srgb,var(--accent) 40%,transparent);
+  background:color-mix(in srgb,var(--accent) 5%,transparent);transition:border-color .2s ease,background .2s ease}
 .path .expslot + .exp-desc{margin-top:8px}
 @media (hover:hover){
-  .path .expslot[data-state="empty"]:hover{border-color:color-mix(in srgb,var(--link) 66%,transparent);background:color-mix(in srgb,var(--link) 9%,transparent)}
-  .path .expslot[data-state="empty"]:hover .exphint{color:var(--link)}
+  .path .expslot[data-state="empty"]:hover{border-color:color-mix(in srgb,var(--accent) 66%,transparent);background:color-mix(in srgb,var(--accent) 9%,transparent)}
+  .path .expslot[data-state="empty"]:hover .exphint{color:var(--accent)}
   .path .expslot[data-state="empty"]:hover .expcaret{opacity:1;animation:expblink 1.15s step-end infinite}
 }
-.path .exphint{display:none;flex:0 0 auto;width:14px;height:14px;margin-left:6px;color:color-mix(in srgb,var(--link) 58%,transparent);transition:color .2s ease}
+.path .exphint{display:none;flex:0 0 auto;width:14px;height:14px;margin-left:6px;color:color-mix(in srgb,var(--accent) 58%,transparent);transition:color .2s ease}
 .path .exphint svg{width:14px;height:14px;display:block}
 .path .expslot[data-state="empty"] .exphint{display:inline-flex}
 .path .expfield{position:relative;display:inline-flex;align-items:center;min-width:0;flex:1}
@@ -717,7 +717,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .path .expinput{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:0}
 .path .expinput::placeholder{color:var(--faint);opacity:1}
 .path .expname{display:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.path .expcaret{display:inline-block;width:1.5px;height:15px;flex:0 0 auto;margin-right:5px;background:var(--link);border-radius:1px;opacity:0;transition:opacity .2s ease}
+.path .expcaret{display:inline-block;width:1.5px;height:15px;flex:0 0 auto;margin-right:5px;background:var(--accent);border-radius:1px;opacity:0;transition:opacity .2s ease}
 .path .expacts{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-height:24px}
 .path .expbtn{display:none;width:24px;height:24px;padding:0;border:0;cursor:pointer;border-radius:6px;background:transparent;color:var(--faint);
   align-items:center;justify-content:center;transition:background .18s ease,color .18s ease}
@@ -726,7 +726,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .path .expbtn.is-done:hover{color:var(--ok)}
 .path .expbtn.is-del:hover{color:var(--neg)}
 .path .expbtn.no-ring:focus-visible{outline:none}
-.path .expslot[data-state="editing"]{border-style:solid;border-color:color-mix(in srgb,var(--link) 65%,transparent);background:color-mix(in srgb,var(--link) 8%,transparent)}
+.path .expslot[data-state="editing"]{border-style:solid;border-color:color-mix(in srgb,var(--accent) 65%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
 .path .expslot[data-state="editing"] .expcaret{display:none}
 .path .expslot[data-state="editing"] .expbtn.is-done{display:inline-flex}
 .path .expslot[data-state="filled"]{border-color:transparent;background:transparent;padding-left:0}

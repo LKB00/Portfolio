@@ -87,7 +87,7 @@
   --col:821px;  --gap:24px;
   --pad:18px;   --measure:468px;
    --frameSh:rgba(0,0,0,.14);
-  --accent:#006AD4;
+  --accent:#171717;
   --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
   --tint:var(--surface);
 
@@ -108,7 +108,7 @@
 
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
    --frameSh:rgba(0,0,0,.6);
-  --accent:#5EA9F5;
+  --accent:#EDEDED;
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
   --tint:var(--surface);
 
@@ -1201,7 +1201,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    float. */
 .padblankadd{display:grid;place-items:center;width:56px;height:56px;padding:0;
   border:0;border-radius:50%;cursor:pointer;
-  background:var(--accent);color:#FFFFFF;
+  background:var(--accent);color:var(--onAccent);
   box-shadow:0 10px 24px -8px color-mix(in srgb,var(--accent) 55%,transparent),
              0 2px 6px -2px rgba(16,16,24,.18);
   animation:padHang 4.2s ease-in-out infinite;
@@ -1276,7 +1276,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   transition:border-color .3s var(--ease),background-color .2s var(--ease),
     opacity .18s linear,visibility 0s linear .18s}
 .padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
-  border-radius:50%;background:var(--accent);color:#FFFFFF;
+  border-radius:50%;background:var(--accent);color:var(--onAccent);
   transform:scale(1)}
 /* the heading and its supporting line, one container, always stacked —
    this no longer depends on viewport width the way it used to */
@@ -1486,7 +1486,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    ~1.4s, inside a 1.75s hold, so it finishes and can be read before it
    leaves.
    ═══════════════════════════════════════════════════════════════════ */
-/* Figma's selection blue, quoted literally. The site accent (#006AD4) is
+/* Figma's selection blue, quoted literally. A deeper blue (#006AD4) is
    a deeper navy and reads as "a blue box"; #0D99FF is the exact hue a
    designer sees a hundred times a day, and the recognition is the whole
    point of the gesture. It is the one piece of chrome here that does not
