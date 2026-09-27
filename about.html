@@ -686,6 +686,19 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 .path-body .path-role{margin:2px 0 0;font-size:13px;line-height:1.45;color:var(--faint)}
 .path-body .path-role + p{margin-top:6px}
 
+/* before the first job and after it: the rail is dashed through the
+   learning years and solid once the work starts, the change hidden under
+   one small tag on the line. Work dots are lightly filled. --path-split
+   (the tag's centre, measured by the rail script) is where the dashes end;
+   without it the whole rail is solid, as before. */
+.path:before{background:
+  linear-gradient(var(--line),var(--line)) 0 var(--path-split,0px)/100% 100% no-repeat,
+  repeating-linear-gradient(to bottom,var(--line) 0 3px,transparent 3px 7px) 0 0/100% var(--path-split,0px) no-repeat}
+.path-mark{position:relative;z-index:2;margin:0 0 clamp(20px,3vw,26px) -20px;line-height:0}
+.path-mark span{display:inline-block;padding:3px 8px;border-radius:999px;background:var(--bg);box-shadow:0 0 0 1px var(--line);
+  font-family:var(--mono);font-size:10px;font-weight:500;line-height:1.4;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.path-mark ~ .path-step:not(:last-child):before{background:var(--line)}
+
 /* the slot: an empty dashed field that becomes the next entry */
 .path .expslot{display:inline-flex;align-items:center;gap:6px;justify-self:start;min-width:200px;max-width:100%;cursor:text;
   padding:5px 7px 5px 9px;border-radius:8px;border:1px dashed color-mix(in srgb,var(--link) 40%,transparent);
@@ -1329,6 +1342,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
         <p class="path-when">2022</p>
         <div class="path-body"><p>I graduated into a market with no appetite for juniors. It took <span class="emph">four months of making work nobody asked for</span> before someone paid me for it.</p></div>
       </div>
+      <div class="path-mark" role="separator" aria-label="First job"><span>First job</span></div>
       <div class="path-step">
         <p class="path-when">Since then</p>
         <div class="path-body"><p>Mostly <span class="emph">the only designer on the product</span>, which taught me the parts of the job nobody assigns you and what solo work costs. <span class="mark">I learned to pressure-test my own thinking because there was nobody else to do it.</span> That story is in the case studies.</p></div>
@@ -1959,10 +1973,14 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
   var DOT_TOP = 5;    // matches .path-step::before's top offset
   var DOT_R = 5;       // half the 10px dot -- its centre, not its edge
 
+  var mark = path.querySelector(".path-mark");
+
   function measure(){
     var dotCenter = lastStep.offsetTop + DOT_TOP + DOT_R;
     var len = Math.max(0, dotCenter - LINE_TOP);
     path.style.setProperty("--path-line-h", len + "px");
+    // dashes above the first-job tag, solid below it
+    if (mark) path.style.setProperty("--path-split", Math.max(0, mark.offsetTop + mark.offsetHeight / 2 - LINE_TOP) + "px");
   }
 
   measure();
