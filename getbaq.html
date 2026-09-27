@@ -729,10 +729,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 
 /* ============ HERO: her words become a case ============
    One stage, laid out in its own width units so the composition holds at
-   any size. Her message on the left, the facts Getbaq takes from it below,
+   any size. Her message on the left, the case Getbaq builds from it below,
    the ready letter on the phone at the right. Each fact is coloured by who
    produced it, and the same colour marks the words it came from. */
-.gbh{--you:#177A3C;--calc:#9A761B;--ver:#3B5CA3;
+.gbh{--gb:#177A3C;
   position:relative;overflow:hidden;padding:0;aspect-ratio:16/10;container-type:inline-size;isolation:isolate;
   background:
     radial-gradient(70% 75% at 82% 18%,rgba(196,224,203,.75) 0%,rgba(196,224,203,0) 70%),
@@ -742,7 +742,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 /* a fine grain, so the gradient reads as a surface, not a fill */
 .gbh:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;mix-blend-mode:multiply;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-:root[data-theme="dark"] .gbh{--you:#5FCB86;--calc:#D9B45A;--ver:#8FA9E6;
+:root[data-theme="dark"] .gbh{--gb:#5FCB86;
   background:
     radial-gradient(70% 75% at 82% 18%,rgba(60,110,76,.38) 0%,rgba(60,110,76,0) 70%),
     radial-gradient(60% 60% at 8% 100%,rgba(90,76,50,.28) 0%,rgba(90,76,50,0) 70%),
@@ -751,36 +751,55 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 :root[data-theme="dark"] .gbh:before{mix-blend-mode:screen;opacity:.18}
 
 /* her message: a real chat bubble, sized before it's typed so nothing reflows */
-.gbh-msg{position:absolute;left:6.5%;top:11%;width:45%;padding:2.3cqw 2.6cqw 2.5cqw;border-radius:2.6cqw 2.6cqw 2.6cqw .9cqw;
-  background:rgba(255,255,255,.92);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 .3cqw .8cqw rgba(20,40,25,.05),0 2.4cqw 5cqw -2cqw rgba(20,40,25,.22);
+.gbh-msg{position:absolute;left:6.5%;top:10%;width:44%;padding:2.2cqw 2.6cqw 2.4cqw;border-radius:2.4cqw 2.4cqw 2.4cqw .8cqw;
+  background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(20,40,25,.05),0 .2cqw .6cqw rgba(20,40,25,.04),0 2.6cqw 5.4cqw -2.4cqw rgba(20,40,25,.24);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:opacity .6s var(--ease)}
 .gbh-head{display:flex;align-items:center;gap:.9cqw;margin:0 0 1.3cqw;font:500 max(10px,1.6cqw)/1 var(--sans);color:var(--muted)}
 .gbh-head b{font-weight:500;color:var(--ink)}
 .gbh-av{display:grid;place-items:center;width:max(18px,2.9cqw);height:max(18px,2.9cqw);border-radius:50%;background:#E3EDE5;color:#2F5A3B;font-size:max(9px,1.4cqw);font-weight:600}
-.gbh-text{margin:0;font:400 max(11.5px,2.15cqw)/1.55 var(--sans);letter-spacing:-.005em;color:#3A3636}
+.gbh-text{margin:0;font:400 max(11.5px,2.05cqw)/1.6 var(--sans);letter-spacing:-.006em;color:var(--ink)}
 .gbh-text .c{opacity:0}
 .gbh-text .c.on{opacity:1}
 .gbh-text .c.cur:after{content:"";display:inline-block;width:1.5px;height:1.05em;margin-left:1px;vertical-align:-.15em;background:var(--ink);animation:gbhBlink 1s steps(1) infinite}
 @keyframes gbhBlink{50%{opacity:0}}
-.gbh-text mark{color:inherit;background:transparent;border-radius:.5cqw;padding:0 .35cqw;margin:0 -.35cqw;transition:background-color .5s var(--ease),box-shadow .5s var(--ease)}
-.gbh-text mark[data-f="0"]{--k:var(--you)}.gbh-text mark[data-f="1"]{--k:var(--calc)}.gbh-text mark[data-f="2"]{--k:var(--ver)}
-.gbh-text mark.on{background:color-mix(in srgb,var(--k) 15%,transparent);box-shadow:inset 0 -1.5px 0 color-mix(in srgb,var(--k) 55%,transparent)}
+.gbh-text mark{color:inherit;padding:0;white-space:nowrap;background:linear-gradient(color-mix(in srgb,var(--gb) 70%,transparent),color-mix(in srgb,var(--gb) 70%,transparent)) 0 100%/0% 1.5px no-repeat;transition:background-size .7s cubic-bezier(.2,.9,.25,1)}
+.gbh-text mark.on{background-size:100% 1.5px}
 :root[data-theme="dark"] .gbh-msg{background:rgba(30,33,31,.9);box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 2.4cqw 5cqw -2cqw rgba(0,0,0,.6)}
 :root[data-theme="dark"] .gbh-text{color:#E4E0DA}
 :root[data-theme="dark"] .gbh-av{background:#23392A;color:#9FD7AE}
 
-/* the facts: each flies out of the word it came from and settles here */
-.gbh-facts{position:absolute;left:6.5%;top:61%;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;align-items:flex-start;gap:1.3cqw}
-.gbh-fact{display:flex;align-items:center;gap:1.4cqw;padding:1.05cqw 1.8cqw 1.05cqw 1.5cqw;border-radius:999px;white-space:nowrap;
-  background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(20,40,25,.06),0 1.6cqw 3.4cqw -1.8cqw rgba(20,40,25,.3);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  opacity:0;transition:transform .8s cubic-bezier(.2,.9,.25,1),opacity .45s ease}
-.gbh-fact.on{opacity:1}
-.gbh-fact b{font:500 max(11px,2cqw)/1 'Geist Mono',ui-monospace,monospace;letter-spacing:-.01em;color:var(--ink)}
-.gbh-fact i{display:flex;align-items:center;gap:.7cqw;font:400 max(9.5px,1.55cqw)/1 var(--sans);font-style:normal;color:var(--muted)}
-.gbh-fact i:before{content:"";width:max(5px,.8cqw);height:max(5px,.8cqw);border-radius:50%;background:var(--k);box-shadow:0 0 0 .45cqw color-mix(in srgb,var(--k) 16%,transparent)}
-.gbh-fact[data-k="you"]{--k:var(--you)}.gbh-fact[data-k="calc"]{--k:var(--calc)}.gbh-fact[data-k="ver"]{--k:var(--ver)}
-:root[data-theme="dark"] .gbh-fact{background:rgba(30,33,31,.88);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 1.6cqw 3.4cqw -1.8cqw rgba(0,0,0,.6)}
+/* the case: Getbaq's own case file, filling in from her words. Each value
+   flies out of the word it came from into its row, then says who produced
+   it; the status turns to ready when the letter is on the phone */
+.gbh-case{position:absolute;left:13%;top:53%;z-index:2;width:44%;padding:1.9cqw 2.3cqw .5cqw;border-radius:1.8cqw;
+  background:rgba(255,255,255,.95);box-shadow:inset 0 0 0 1px rgba(20,40,25,.06),0 .2cqw .6cqw rgba(20,40,25,.05),0 3.2cqw 6cqw -2.6cqw rgba(20,40,25,.32);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:opacity .6s ease}
+.gbh-case-h{display:flex;align-items:center;gap:.8cqw;margin:0 0 .9cqw;font:500 max(8.5px,1.3cqw)/1 'Geist Mono',ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.gbh-case-h b{font-weight:500;color:var(--ink)}
+.gbh-case-h b:before{content:"\00B7";margin-right:.8cqw;color:var(--faint)}
+.gbh-status{position:relative;margin-left:auto;display:flex;align-items:center;gap:.7cqw;font:400 max(9.5px,1.45cqw)/1 var(--sans);letter-spacing:0;text-transform:none;color:var(--muted)}
+.gbh-status:before{content:"";width:max(5px,.75cqw);height:max(5px,.75cqw);border-radius:50%;background:var(--faint);transition:background-color .4s ease,box-shadow .4s ease}
+.gbh-status .s-ready{display:none;color:var(--ink)}
+.gbh.is-screen .gbh-status .s-read{display:none}.gbh.is-screen .gbh-status .s-ready{display:inline}
+.gbh.is-screen .gbh-status:before{background:var(--gb);box-shadow:0 0 0 .5cqw color-mix(in srgb,var(--gb) 16%,transparent)}
+.gbh-case dl{margin:0}
+.gbh-row{display:grid;grid-template-columns:26% 1fr;align-items:center;gap:1.2cqw;padding:1.2cqw 0;border-top:1px solid rgba(36,32,32,.07)}
+.gbh-row dt{font:500 max(8px,1.2cqw)/1 'Geist Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.gbh-row dd{position:relative;margin:0;display:flex;align-items:center;justify-content:space-between;gap:1cqw;min-height:max(16px,2.6cqw)}
+.gbh-row b{display:block;font:500 max(11px,1.75cqw)/1.2 var(--sans);letter-spacing:-.01em;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;
+  opacity:0;transition:transform .85s cubic-bezier(.2,.9,.25,1),opacity .3s ease}
+.gbh-row i{flex:none;font:400 max(8.5px,1.25cqw)/1 var(--sans);font-style:normal;color:var(--muted);padding:.45cqw .9cqw;border-radius:99px;background:rgba(36,32,32,.05);
+  opacity:0;transform:translateX(-.6cqw);transition:opacity .4s ease,transform .5s var(--ease)}
+/* the empty slot a value lands in */
+.gbh-row dd:before{content:"";position:absolute;left:0;top:50%;width:42%;height:max(6px,.9cqw);margin-top:calc(max(6px,.9cqw) / -2);border-radius:99px;
+  background:linear-gradient(90deg,rgba(36,32,32,.06),rgba(36,32,32,.11),rgba(36,32,32,.06)) 0 0/200% 100%;animation:gbhShine 1.4s linear infinite;transition:opacity .25s ease}
+.gbh-row.on b{opacity:1}
+.gbh-row.on i{opacity:1;transform:none;transition-delay:.55s}
+.gbh-row.on dd:before{opacity:0}
+:root[data-theme="dark"] .gbh-case{background:rgba(30,33,31,.92);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 3.2cqw 6cqw -2.6cqw rgba(0,0,0,.6)}
+:root[data-theme="dark"] .gbh-row{border-top-color:rgba(255,255,255,.07)}
+:root[data-theme="dark"] .gbh-row i{background:rgba(255,255,255,.06)}
+:root[data-theme="dark"] .gbh-row dd:before{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.1),rgba(255,255,255,.05)) 0 0/200% 100%}
 
 /* the phone: the real frame, the screen working, then the letter */
 .gbh-phone{position:absolute;right:8%;top:7%;height:86%;aspect-ratio:1608/3316;
@@ -798,15 +817,17 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 @keyframes gbhShine{to{background-position:-200% 0}}
 
 /* the loop's end: everything settles out together before it starts again */
-.gbh.is-out .gbh-msg,.gbh.is-out .gbh-fact,.gbh.is-out .gbh-shot{opacity:0;transition:opacity .6s ease}
+.gbh.is-out .gbh-msg,.gbh.is-out .gbh-case,.gbh.is-out .gbh-shot{opacity:0;transition:opacity .6s ease}
 
-/* narrow: her message across the top, the phone below-right, the facts beside it */
+/* narrow: her message across the top, the phone below-right, the case beside it */
 @container (max-width:520px){
-  .gbh-msg{left:5%;top:5%;width:74%;padding:3.4cqw 3.8cqw 3.6cqw;border-radius:4cqw 4cqw 4cqw 1.4cqw}
+  .gbh-msg{left:5%;top:5%;width:78%;padding:3.4cqw 3.8cqw 3.6cqw;border-radius:3.6cqw 3.6cqw 3.6cqw 1.2cqw}
   .gbh-head{margin-bottom:2cqw}
-  .gbh-facts{left:4%;top:auto;bottom:7%;gap:2.2cqw}
-  .gbh-fact{padding:1.8cqw 2.8cqw 1.8cqw 2.4cqw;gap:2cqw}
-  .gbh-phone{right:3%;top:auto;bottom:-12%;height:64%}
+  .gbh-case{left:5%;top:auto;bottom:6%;width:60%;padding:3cqw 3.4cqw 1cqw;border-radius:3cqw}
+  .gbh-case-h{margin-bottom:1.6cqw}
+  .gbh-row{grid-template-columns:1fr;gap:1.4cqw;padding:2cqw 0}
+  .gbh-row i{padding:.8cqw 1.6cqw}
+  .gbh-phone{right:3%;top:auto;bottom:-10%;height:60%}
 }
 @media (max-width:600px){.gbh{aspect-ratio:4/4.3}}
 @media (prefers-reduced-motion:reduce){.gbh-phone{animation:none}.gbh-sk{display:none}}
@@ -870,11 +891,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="Ananya's message to Getbaq: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. From it Getbaq takes three facts: ₹3,499 (she told it), reply by 3 Sep (calculated), and Rule 4(4) (verified at the source), and drafts the complaint letter on her phone.">
 <div class="gbh-msg" aria-hidden="true"><p class="gbh-head"><span class="gbh-av">A</span><b>Ananya</b><span>to Getbaq</span></p><p class="gbh-text"><mark data-f="2">Flipkart</mark>. Bought a mixer grinder for <mark data-f="0">3499</mark> on 2 Aug. Jar has rust. Asked replacement on <mark data-f="1">4 Aug</mark>, they rejected saying photo validation failed. Called 3 times, nothing.</p></div>
-<ul class="gbh-facts" aria-hidden="true">
-<li class="gbh-fact" data-k="you"><b>₹3,499</b><i>You told me</i></li>
-<li class="gbh-fact" data-k="calc"><b>Reply by 3 Sep</b><i>Calculated</i></li>
-<li class="gbh-fact" data-k="ver"><b>Rule 4(4)</b><i>Verified at the source</i></li>
-</ul>
+<div class="gbh-case" aria-hidden="true"><p class="gbh-case-h"><span>Case</span><b>Flipkart</b><span class="gbh-status"><span class="s-read">Reading</span><span class="s-ready">Ready to send</span></span></p>
+<dl>
+<div class="gbh-row"><dt>At stake</dt><dd><b>₹3,499</b><i>You told me</i></dd></div>
+<div class="gbh-row"><dt>Reply by</dt><dd><b>3 Sep 2026</b><i>Calculated</i></dd></div>
+<div class="gbh-row"><dt>The rule</dt><dd><b>E-commerce Rules 4(4)</b><i>Verified</i></dd></div>
+</dl></div>
 <div class="gbh-phone" aria-hidden="true"><div class="gbh-screen"><span class="gbh-sk"></span><span class="gbh-sk"></span><span class="gbh-sk"></span><span class="gbh-sk"></span><img class="gbh-shot" src="./assets/getbaq-phone-thread-540.webp" width="540" height="1169" alt="" fetchpriority="high" decoding="async"></div><img class="gbh-frame" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" decoding="async"></div>
 </div>
 </figure><div class="col beat gb-hero" data-reveal="">
@@ -1892,7 +1914,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
    letter. Plays only while on screen; reduced motion gets the finished frame. */
 (function(){
   var st = document.querySelector(".gbh"); if (!st) return;
-  var text = st.querySelector(".gbh-text"), facts = [].slice.call(st.querySelectorAll(".gbh-fact"));
+  var text = st.querySelector(".gbh-text"), rows = [].slice.call(st.querySelectorAll(".gbh-row"));
   var chars = [];
   (function split(node){
     [].slice.call(node.childNodes).forEach(function(n){
@@ -1911,7 +1933,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   function finished(){
     chars.forEach(function(c){ c.classList.add("on"); c.classList.remove("cur"); });
     marks.forEach(function(m){ m.classList.add("on"); });
-    facts.forEach(function(f){ f.style.transform = ""; f.classList.add("on"); });
+    rows.forEach(function(r){ r.querySelector("b").style.transform = ""; r.classList.add("on"); });
     st.classList.add("is-screen"); st.classList.remove("is-work", "is-out");
   }
   if (still){ finished(); return; }
@@ -1919,16 +1941,16 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
     st.classList.remove("is-work", "is-screen", "is-out");
     chars.forEach(function(c){ c.classList.remove("on", "cur"); });
     marks.forEach(function(m){ m.classList.remove("on"); });
-    facts.forEach(function(f){ f.classList.remove("on"); f.style.transition = "none"; f.style.transform = ""; f.offsetWidth; f.style.transition = ""; });
+    rows.forEach(function(r){ var b = r.querySelector("b"); r.classList.remove("on"); b.style.transition = "none"; b.style.transform = ""; b.offsetWidth; b.style.transition = ""; });
   }
   function fly(i){
-    var m = marks[i], f = facts[i];
+    var m = marks[i], r = rows[i], f = r.querySelector("b");
     m.classList.add("on");
     f.style.transition = "none"; f.style.transform = "none";
     var a = m.getBoundingClientRect(), b = f.getBoundingClientRect();
-    f.style.transform = "translate(" + (a.left + a.width / 2 - (b.left + b.width / 2)) + "px," + (a.top + a.height / 2 - (b.top + b.height / 2)) + "px) scale(.5)";
+    f.style.transform = "translate(" + (a.left - b.left) + "px," + (a.top + a.height / 2 - (b.top + b.height / 2)) + "px) scale(.92)";
     f.offsetWidth; f.style.transition = "";
-    requestAnimationFrame(function(){ f.style.transform = ""; f.classList.add("on"); });
+    requestAnimationFrame(function(){ f.style.transform = ""; r.classList.add("on"); });
   }
   function play(){
     stop(); reset(); playing = true;
