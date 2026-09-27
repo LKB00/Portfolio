@@ -67,12 +67,11 @@
      --lavender wash, at a stronger tint so it can carry a solid card on
      its own rather than sit behind a photo. */
 
-  --ok:#1F9D4D;
   --r-pill:1000px;  --r-float:16px; --r-sm:10px;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);
   --display:'Geist','Inter',Helvetica,Arial,sans-serif;
   --serif:'STIX Two Text','STIX Two Math',Georgia,serif; --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-   --t-lead:16px; --t-body:16px; --t-title:14px; --t-meta:13px; --t-ui:13px;  --t-micro:11px;
+   --t-lead:16px; --t-body:16px; --t-title:14px; --t-meta:13px; --t-ui:13px;
   --t-h1:40px; --t-h2:26px;
     --t-mono:11px; --t-mono-lg:12px;
   --lh-body:1.42;
@@ -84,7 +83,7 @@
      (8/16/32/56/96px) — old step names kept so every declaration
      across the file picks up the shared values automatically */
    --s-2:8px; --s-3:8px; --s-4:16px; --s-5:16px;
-  --s-6:32px; --s-7:32px; --s-8:56px;
+    --s-8:56px;
   --col:821px;  --gap:24px;
   --pad:18px;   --measure:468px;
    --frameSh:rgba(0,0,0,.14);
@@ -92,7 +91,6 @@
   --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
   --tint:var(--surface);
 
-  --neg:#C64B3D;
   --card-tint-01:#F2F2F2; --card-tint-02:#F2F2F2;
 
 }
@@ -114,7 +112,6 @@
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
   --tint:var(--surface);
 
-  --neg:#E0665A;
   --card-tint-01:#1A1A1A; --card-tint-02:#1A1A1A;
   --navOff:#A1A1A1;
 }
@@ -213,17 +210,6 @@ h1{margin:0;font-family:var(--serif);font-size:var(--t-h1);line-height:1.02;lett
   .workrow + .workrow{padding-top:30px}
 }
 
-#experience{max-width:792px;margin:0 auto}
-.exptimeline{position:relative;}
-.exptimeline:before{content:"";position:absolute;left:5px;top:calc(20px + clamp(40px,5vw,64px) + 22px);bottom:12px;width:1px;background:var(--line)}
-.exprow{position:relative;border:0}
-.exprow:last-child{padding-bottom:0}
-.exprow:before{content:"";position:absolute;left:-40px;top:9px;width:11px;height:11px;border-radius:50%;background:var(--bg);box-shadow:0 0 0 1px var(--line)}
-
-.exp-date{font-family:var(--mono);}
-.exp-co{margin:0;font-family:var(--serif);line-height:1.2;}
-
-@media (max-width:576px){.exptimeline:before{left:4px}.exprow:before{left:-28px;width:9px;height:9px}}
 #contact{padding:0}
 #contact h2{margin:0;font-family:var(--serif);font-size:var(--t-h2);line-height:1.15;letter-spacing:-.012em;font-weight:400}
 #contact p{margin:10px 0 0;font-size:var(--t-body);color:var(--muted)}
@@ -316,15 +302,15 @@ img.bg{opacity:0;transition:opacity .5s ease}
 
 .wrap{padding:0 var(--pad)}
 section{position:relative;z-index:2;padding-bottom:clamp(42px,7vw,62px)}
-#top,#work,#notes,#experience,#contact{max-width:var(--col);margin:0 auto}
+#top,#work,#notes,#contact{max-width:var(--col);margin:0 auto}
 
 /* ── type: small, quiet, uniform ── */
 h1,h2,h3,.lead,#contact h2{
   font-family:var(--display);font-size:var(--t-body);font-weight:400;
   line-height:var(--lh-body);letter-spacing:var(--tr-body);color:var(--ink);margin:0}
-.exp-date,.worktext .num{
-  font-family:var(--display);font-size:var(--t-ui);font-weight:400;
-  letter-spacing:var(--tr-body);text-transform:none;color:var(--faint)}
+.worktext .num{
+
+  text-transform:none;}
 .mark{background-image:linear-gradient(transparent 68%,var(--markWash) 68%,var(--markWash) 95%,transparent 95%);-webkit-box-decoration-break:clone;box-decoration-break:clone;color:var(--ink)}
 
 /* ── nav: floating centred pill ── */
@@ -432,40 +418,20 @@ header.scrolled .navpill{background:color-mix(in srgb,var(--surface) 92%,transpa
 .hero-sub .co{color:var(--ink);font-weight:500}
 
 /* 3 — title: card + company names */
-.worktext h3,.exp-co,#contact h2{font-size:var(--t-title);font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.worktext h3,#contact h2{font-size:var(--t-title);font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
 
 /* 4 — meta: descriptions and supporting copy */
-.worktext .desc,.exp-role,#contact p{font-size:var(--t-meta);font-weight:400;line-height:1.45;color:var(--faint)}
+.worktext .desc,#contact p{font-size:var(--t-meta);font-weight:400;line-height:1.45;color:var(--faint)}
 
 /* 5 — micro: labels, dates, chips */
 
 /* section labels get room, not a sentence */
 
-#work,#experience,#contact{padding-top:var(--s-2)}
-.exprow{padding-bottom:var(--s-6)}
-.exp-date{margin-bottom:var(--s-2)}
-.exp-role{margin-top:1px}
-.exp-desc{margin-top:var(--s-2)}
+#work,#contact{padding-top:var(--s-2)}
 
 /* the hero gets the most air on the page */
 
 .hero-sub{margin-top:var(--s-4)}
-
-/* ── experience ── */
-
-.exptimeline:before,.exprow:before{display:none}
-
-.exp-date{margin:0 0 5px;font-size:var(--t-micro);font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
-.exp-co{font-size:var(--t-title);font-weight:500;letter-spacing:-.012em;color:var(--ink)}
-.exp-role{margin:2px 0 0;font-size:var(--t-meta);color:var(--muted)}
-.exp-desc{margin:var(--s-2) 0 0;font-size:var(--t-meta);line-height:1.55;color:var(--faint);}
-
-/* experience: two-up so the column isn't half empty */
-.exptimeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7) var(--gap);padding-left:0}
-.exprow{padding:0}
-
-.exp-desc{max-width:none}
-@media (max-width:684px){.exptimeline{grid-template-columns:minmax(0,1fr);gap:var(--s-6)}}
 
 /* ── hero rhythm: one even step, the way the reference does it ── */
 
@@ -501,7 +467,7 @@ a:hover{color:var(--link);opacity:.7}
 /* ── type scale: 30 display · 18 lead · 16 title · 15 ui · 14 meta · 12 label ── */
 h1,h2,h3{font-family:var(--serif);color:var(--ink);margin:0}
 
-.stage,.exp-date{font-family:var(--mono);font-size:11px;font-weight:500;
+.stage{font-family:var(--mono);font-size:11px;font-weight:500;
   letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin:0}
 
 /* ── nav pill ── */
@@ -562,8 +528,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 /* 2. RHYTHM. The gaps between sections decayed 94 -> 69 -> 52px, so the
    page visibly ran out of breath on the way down. The hero keeps the
    larger opening gap; every band after it is spaced the same. */
-#work,#experience{padding-bottom:clamp(46px,7vw,72px)}
-#experience:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
+#work{padding-bottom:clamp(46px,7vw,72px)}
 
 /* 3. THE END OF THE PAGE. #contact carried nothing but a copyright: the
    one place a reader has finished the work and decided to act had no way
@@ -751,43 +716,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 
 .hero-c{display:block}
 
-/* ══ WHERE I'VE WORKED — a rail, read top to bottom ══════════════ */
-#experience .exptimeline{position:relative;display:block;padding-left:20px;margin-top:2px;
-  grid-template-columns:none;gap:0}
-#experience .exptimeline:before{content:"";display:block;position:absolute;left:4px;top:9px;bottom:82px;
-  width:1px;background:var(--line)}
-
 /* one role per node */
-#experience .exprow{position:relative;display:grid;
-  grid-template-columns:minmax(0,152px) minmax(0,1fr);gap:0 clamp(13px,2.4vw,24px);
-  padding:0 0 22px;align-items:start;border:0;background:transparent}
-#experience .exprow:last-child{padding-bottom:0}
-#experience .exprow:before{content:"";display:block;position:absolute;left:-20px;top:4px;width:9px;height:9px;
-  border-radius:50%;background:var(--bg);box-shadow:0 0 0 1.5px var(--line)}
-#experience .exprow:first-of-type:before{background:var(--ink);box-shadow:0 0 0 1.5px var(--ink)}
-
-#experience .exp-date{margin:1px 0 0;font-size:11px;font-weight:500;letter-spacing:.09em;
-  text-transform:uppercase;color:var(--faint);white-space:nowrap}
-#experience .exp-co{margin:0;font-size:14px;font-weight:500;
-  letter-spacing:-.012em;color:var(--ink)}
-#experience .exp-role{margin:2px 0 0;font-size:13px;color:var(--muted)}
-#experience .exp-desc{margin:7px 0 0;font-size:13px;max-width:56ch}
-
-@media (max-width:576px){
-  #experience .exptimeline{padding-left:16px}
-  #experience .exptimeline:before{left:3px}
-  #experience .exprow{grid-template-columns:minmax(0,1fr);gap:4px;padding-bottom:20px}
-  #experience .exprow:before{left:-17px}
-  #experience .exp-date{margin-bottom:4px}
-}
-
-#experience .exp-date{grid-column:1;grid-row:1/span 3}
-#experience .exp-co{grid-column:2;grid-row:1}
-#experience .exp-role{grid-column:2;grid-row:2}
-#experience .exp-desc{grid-column:2;grid-row:3}
-@media (max-width:576px){
-  #experience .exp-date,#experience .exp-co,#experience .exp-role,#experience .exp-desc{grid-column:1;grid-row:auto}
-}
 
 #top h1{max-width:none;font-weight:500;
   letter-spacing:-.026em;
@@ -958,21 +887,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (prefers-reduced-motion:reduce){
   .msheet{transition:none}
 }
-/* ══ THE OPEN SLOT ═══════════════════════════════════════════════════
-   "Open to new work" was a line of blue text floating above the job
-   history. But the timeline is a list of filled roles — so the honest,
-   and more interesting, way to say it is to draw the NEXT row and leave
-   it unfilled: an empty form field, with the caret still blinking,
-   waiting for a company name.
-
-   A dashed outline already means "absent / not there yet" everywhere
-   else on this site (the unreachable node in the chain of access, the
-   `not done` gaps, the hidden cells in the payout black box), so this
-   reads in a language the rest of the portfolio has already taught.
-   ═══════════════════════════════════════════════════════════════════ */
-#experience .exprow.expopen:before{background:var(--link);
-  box-shadow:0 0 0 4px color-mix(in srgb,var(--link) 15%,transparent)}
-#experience .expopen .exp-date{color:var(--link)}
 
 /* ── the open slot, made fillable ──────────────────────────────────
    Three states on one element, driven by data-state:
@@ -981,113 +895,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
      filled  → reads as a real timeline entry, with edit / remove
    The payoff is the filled state: the visitor's team name sits in the
    career list looking exactly like the four real roles beneath it.  */
-/* Two failure modes, one on each side of the line.
-
-   It began by painting three "this field has keyboard focus" signals at
-   once — accent border, accent fill and a blinking caret — while nothing
-   was focused. A blinking caret is the operating system's word for "type
-   and it lands here", so anyone who believed it lost their keystrokes.
-
-   Stripping all three went too far the other way: a plain grey dashed
-   box reads as decoration, not as something you can write in.
-
-   So the resting state now says EDITABLE without saying FOCUSED. The
-   accent is back, at low strength, and it carries a pencil at the end of
-   the field — an unambiguous "you can write here" that no operating
-   system uses to mean focus. The caret, the only true focus signal in
-   the set, is the one thing held back for hover. */
-#experience .expslot{display:inline-flex;align-items:center;gap:6px;
-  justify-self:start;min-width:200px;max-width:100%;cursor:text;
-  padding:5px 7px 5px 9px;border-radius:8px;
-  border:1px dashed color-mix(in srgb,var(--link) 40%,transparent);
-  background:color-mix(in srgb,var(--link) 4%,transparent);
-  transition:border-color .25s ease,background .25s ease,padding .25s ease}
-@media (hover:hover){
-  #experience .expslot[data-state="empty"]:hover{
-    border-color:color-mix(in srgb,var(--link) 66%,transparent);
-    background:color-mix(in srgb,var(--link) 9%,transparent)}
-}
-
-/* the pencil: shown only on the empty slot, decorative, never in the tab
-   order — the input behind it is the real target */
-#experience .exphint{display:none;flex:0 0 auto;width:14px;height:14px;
-  margin-left:6px;color:color-mix(in srgb,var(--link) 58%,transparent);
-  transition:color .2s ease}
-#experience .exphint svg{width:14px;height:14px;display:block}
-#experience .expslot[data-state="empty"] .exphint{display:inline-flex}
-@media (hover:hover){
-  #experience .expslot[data-state="empty"]:hover .exphint{color:var(--link)}
-}
-#experience .expfield{position:relative;display:inline-flex;align-items:center;min-width:0;flex:1}
-
-#experience .expinput{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:0;
-  font-family:var(--serif);font-size:14px;font-weight:500;line-height:1.3;
-  letter-spacing:-.012em;color:var(--ink)}
-#experience .expinput::placeholder{color:var(--faint);opacity:1}
-#experience .expname{display:none;font-family:var(--serif);font-size:14px;font-weight:500;
-  line-height:1.3;letter-spacing:-.012em;color:var(--ink);white-space:nowrap;
-  overflow:hidden;text-overflow:ellipsis}
 
 /* the caret is kept, but only on hover — there it reads as a preview of
    where the text will go, not as a claim that the field already has the
    keyboard. It never blinks while unhovered, and the editing state hides
    it so it never fights the real one. */
-.expcaret{display:inline-block;width:1.5px;height:15px;flex:0 0 auto;margin-right:5px;
-  background:var(--link);border-radius:1px;opacity:0;
-  transition:opacity .2s ease}
-@media (hover:hover){
-  #experience .expslot[data-state="empty"]:hover .expcaret{
-    opacity:1;animation:expblink 1.15s step-end infinite}
-}
+
 @keyframes expblink{0%,100%{opacity:1}50%{opacity:0}}
 
-#experience .expacts{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-height:24px}
-#experience .expbtn.no-ring:focus-visible{outline:none}
-#experience .expbtn{display:none;width:24px;height:24px;padding:0;border:0;cursor:pointer;
-  border-radius:6px;background:transparent;color:var(--faint);
-  align-items:center;justify-content:center;transition:background .18s ease,color .18s ease}
-#experience .expbtn svg{width:15px;height:15px;display:block}
-#experience .expbtn:hover{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink)}
-#experience .expbtn.is-done:hover{color:var(--ok)}
-#experience .expbtn.is-del:hover{color:var(--neg)}
-
-/* ── editing ── */
-#experience .expslot[data-state="editing"]{border-style:solid;
-  border-color:color-mix(in srgb,var(--link) 65%,transparent);
-  background:color-mix(in srgb,var(--link) 8%,transparent)}
-#experience .expslot[data-state="editing"] .expcaret{display:none}
-#experience .expslot[data-state="editing"] .expbtn.is-done{display:inline-flex}
-
-/* ── filled: stop looking like a form, start looking like a role ── */
-#experience .expslot[data-state="filled"]{border-color:transparent;background:transparent;padding-left:0}
-#experience .expslot[data-state="filled"] .expcaret,
-#experience .expslot[data-state="filled"] .expinput{display:none}
-#experience .expslot[data-state="filled"] .expname{display:inline-block}
-#experience .expslot[data-state="filled"] .expbtn.is-edit,
-#experience .expslot[data-state="filled"] .expbtn.is-del{display:inline-flex;opacity:0;
-  transition:opacity .2s ease,background .18s ease,color .18s ease}
-#experience .expslot[data-state="filled"]:hover .expbtn.is-edit,
-#experience .expslot[data-state="filled"]:hover .expbtn.is-del,
-#experience .expslot[data-state="filled"]:focus-within .expbtn.is-edit,
-#experience .expslot[data-state="filled"]:focus-within .expbtn.is-del{opacity:1}
-
-@media (prefers-reduced-motion:reduce){#experience .expslot[data-state="empty"]:hover .expcaret{animation:none;opacity:.9}}
-/* ── touch ─────────────────────────────────────────────────────────
-   Three things break on a phone otherwise:
-   1. edit/remove are revealed by :hover, which touch cannot fire — so
-      on a coarse pointer they are simply always visible;
-   2. 24px icon buttons are under the ~44px tap minimum;
-   3. an input below 16px makes iOS zoom the page on focus.          */
-@media (pointer:coarse){
-  #experience .expbtn{width:38px;height:38px;border-radius:8px}
-  #experience .expslot{padding:3px 4px 3px 9px;gap:2px}
-  #experience .expslot[data-state="filled"] .expbtn.is-edit,
-  #experience .expslot[data-state="filled"] .expbtn.is-del{opacity:1}
-}
-@media (max-width:640px){
-  #experience .expinput,#experience .expname{font-size:16px}
-  #experience .expslot{min-width:0;width:100%}
-}
 /* ══ RUNABLE, AND THE SLOT AFTER IT ═══════════════════════════════════
    Runable was a full-width feature card. With more studies coming, the
    grid reads better as a plain 2x2: same two column widths on both
@@ -1644,27 +1459,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 #notes .padwrap[data-reveal]{transform:translateY(12px);
   transition:opacity .45s var(--ease),transform .45s var(--ease)}
 
-/* ── experience: the rail draws, the nodes land on it ── */
-#experience .exptimeline[data-reveal]{opacity:1;transform:none;transition:none}
-#experience .exptimeline:before{transform:scaleY(0);transform-origin:50% 0;
-  transition:transform 1.15s var(--ease)}
-#experience .exptimeline[data-reveal].shown:before{transform:scaleY(1)}
-#experience .exprow[data-reveal]{transform:translateY(14px);
-  transition:opacity .55s var(--ease),transform .55s var(--ease);
-  transition-delay:var(--rd,0s)}
-#experience .exprow[data-reveal].shown{transform:none}
-/* the dot lands just after its row, with a little overshoot — a node
-   snapping onto a rail, not a circle fading up */
-#experience .exprow:before{transform:scale(0);
-  transition:transform .5s cubic-bezier(.34,1.56,.64,1);
-  transition-delay:calc(var(--rd,0s) + .14s)}
-#experience .exprow[data-reveal].shown:before{transform:scale(1)}
-#experience .exprow:nth-child(1){--rd:.06s}
-#experience .exprow:nth-child(2){--rd:.14s}
-#experience .exprow:nth-child(3){--rd:.22s}
-#experience .exprow:nth-child(4){--rd:.30s}
-#experience .exprow:nth-child(5){--rd:.38s}
-
 /* ── the footer says goodbye quietly ── */
 #contact footer[data-reveal]{transform:translateY(10px);
   transition:opacity .6s var(--ease),transform .6s var(--ease)}
@@ -1672,11 +1466,8 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 
 @media (prefers-reduced-motion:reduce){
   #work .workrow[data-reveal],
-  #experience .exprow[data-reveal],
-  #experience .exprow:before,
-  #experience .exptimeline:before,
-  #notes .padwrap[data-reveal],
-  #contact footer[data-reveal]{
+#notes .padwrap[data-reveal],
+#contact footer[data-reveal]{
     transition:none!important;transition-delay:0s!important;
     opacity:1!important;transform:none!important;clip-path:none!important}
 }
@@ -3113,10 +2904,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (hover:none){ #work .cardframe::after{opacity:1} #work .worktext{opacity:1;transform:none;filter:none} }
 @media (prefers-reduced-motion:reduce){ #work .worktext{transform:none;filter:none} }
 @media (max-width:684px){ #work .workgrid{row-gap:24px} #work .workrow + .workrow{padding-top:0} }
-#experience .exp-co{line-height:1.3}
+
 #top .hero-sub{line-height:1.55;letter-spacing:var(--tr-body)}
-#experience .exp-desc{color:var(--muted);line-height:1.55;letter-spacing:var(--tr-body)}
-#experience .exp-role{line-height:1.45;letter-spacing:var(--tr-body)}
+
 .padtriggertext{font-size:15px;line-height:1.45;letter-spacing:var(--tr-body)}
 .padtriggerhint{font-size:13px;line-height:1.45;letter-spacing:var(--tr-body);color:var(--muted)}
 /* the views card reads at the notes card's sizes: they sit side by side */
@@ -3130,8 +2920,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (max-width:400px){#contact .footcredit{font-size:12px}}
 @media (max-width:340px){#contact .footcredit{white-space:normal}}
 /* 16px in the input only where a smaller one would make the phone zoom */
-@media (hover:hover) and (pointer:fine){#experience .expinput{font-size:14px}}
-#experience,#experience:has(+ #contact){padding-bottom:clamp(90px,12vw,130px)}
+
 #contact footer{padding-top:0}
 
 /* ===== GETBAQ CARD =====
@@ -3285,6 +3074,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .totop{left:calc(50% + var(--navpill-w,216px) / 2 - 18px);transform:scale(.86)}
   .totop.show{transform:scale(1)}
 }
+/* the notes board closes the page now that the work timeline lives on
+   About: the same room above the footer as About's last section */
+#notes:has(+ #contact){padding-bottom:clamp(74px,7.8vw,100px)}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3565,52 +3357,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </div>
   </section>
 
-  <section id="experience" data-section="Experience">
-    <div class="exptimeline" data-reveal>
-    <div class="exprow expopen" data-reveal>
-      <p class="exp-date">Now</p>
-      <div class="expslot" id="expSlot" data-state="empty">
-        <span class="expfield">
-          <span class="expcaret" aria-hidden="true"></span>
-          <input class="expinput" id="expInput" type="text" maxlength="26" autocomplete="off" spellcheck="false"
-                 placeholder="Your company here" aria-label="Type your company name into the timeline">
-          <span class="expname" id="expName" aria-live="polite"></span>
-          <span class="exphint" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/></svg></span>
-        </span>
-        <span class="expacts">
-          <button type="button" class="expbtn is-done" id="expDone" aria-label="Save" title="Save"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <button type="button" class="expbtn is-edit" id="expEdit" aria-label="Edit" title="Edit"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10.9 2.9a1.55 1.55 0 0 1 2.2 2.2L6 12.2l-3 .8.8-3z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <button type="button" class="expbtn is-del" id="expDel" aria-label="Remove" title="Remove"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 4.2 11.8 11.8M11.8 4.2 4.2 11.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
-        </span>
-      </div>
-      <p class="exp-desc">Open to work. The problem matters more than the industry.</p>
-    </div>
-    <div class="exprow" data-reveal>
-      <p class="exp-date">Dec 2025 – Apr 2026</p>
-      <h3 class="exp-co">ZZAZZ AI</h3>
-      <p class="exp-role">Product Designer</p>
-      <p class="exp-desc">Priced content for the post-AI web. Designed the publisher product and rebuilt the payment flow from seven steps to four.</p>
-    </div>
-    <div class="exprow" data-reveal>
-      <p class="exp-date">Sep 2025 – Nov 2025</p>
-      <h3 class="exp-co">Runable AI</h3>
-      <p class="exp-role">Founding Product Designer</p>
-      <p class="exp-desc">Only designer, no PM. Took an AI agent platform from concept to public launch.</p>
-    </div>
-    <div class="exprow" data-reveal>
-      <p class="exp-date">Feb 2024 – Aug 2025</p>
-      <h3 class="exp-co">Rupeezy</h3>
-      <p class="exp-role">Product Designer</p>
-      <p class="exp-desc">Owned the trading app end to end: 200K+ registered users, 97% of company revenue. Built the partner platform and the design system.</p>
-    </div>
-    <div class="exprow" data-reveal>
-      <p class="exp-date">Apr 2023 – Jan 2024</p>
-      <h3 class="exp-co">Sustainability Economics.ai</h3>
-      <p class="exp-role">UI/UX Designer</p>
-      <p class="exp-desc">Sole designer on a net-zero carbon accounting platform. Built for banks, insurers and corporates.</p>
-    </div>
-    </div>
-  </section>
 
   <section id="contact">
     <footer data-reveal>
@@ -3986,7 +3732,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   var paletteItems = [
     { label: "Home", href: "#top" },
     { label: "Selected work", href: "#work" },
-    { label: "Experience", href: "#experience" },
+    { label: "Experience", href: "./about.html#experience" },
     { label: "Contact", href: "#contact" },
     { label: "About", href: "./about.html" },
     { label: "Getbaq case study", href: "./getbaq.html" },
@@ -4039,66 +3785,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 </script>
 <script>
-</script>
-<script>
-(function(){
-  var slot=document.getElementById("expSlot"); if(!slot) return;
-  var input=document.getElementById("expInput"),
-      name =document.getElementById("expName"),
-      bDone=document.getElementById("expDone"),
-      bEdit=document.getElementById("expEdit"),
-      bDel =document.getElementById("expDel"),
-      role =slot.parentNode.querySelector(".exp-role"),
-      desc =slot.parentNode.querySelector(".exp-desc"),
-      KEY="lb.openslot", DESC0=desc?desc.textContent:"";
-
-  function store(v){ try{ v?localStorage.setItem(KEY,v):localStorage.removeItem(KEY);}catch(e){} }
-  function read(){ try{ return localStorage.getItem(KEY)||""; }catch(e){ return ""; } }
-
-  function setState(st){
-    slot.setAttribute("data-state",st);
-    // the row reads as a real entry once it is filled
-    if(desc) desc.textContent = st==="filled"
-      ? "That would work. Email me and let\u2019s talk."
-      : DESC0;
-  }
-  function fill(v){
-    name.textContent=v; input.value=v; store(v); setState("filled");
-  }
-  var mouseCommit=false;
-  function commit(){
-    var v=input.value.trim().replace(/\s+/g," ");
-    if(v){
-      fill(v);
-      if(mouseCommit) bEdit.classList.add("no-ring");
-      bEdit.focus();
-      if(mouseCommit) bEdit.addEventListener("blur",function h(){ bEdit.classList.remove("no-ring"); bEdit.removeEventListener("blur",h); });
-    } else { clear(); }
-  }
-  function clear(){ input.value=""; name.textContent=""; store(""); setState("empty"); }
-
-  /* the whole slot is the target, not just the 1px of text inside it */
-  slot.addEventListener("click",function(e){
-    if(e.target.closest("button")) return;
-    if(slot.getAttribute("data-state")==="empty") input.focus();
-  });
-  input.addEventListener("focus",function(){ if(slot.getAttribute("data-state")!=="filled") setState("editing"); });
-  input.addEventListener("blur", function(){
-    if(slot.getAttribute("data-state")==="editing" && !input.value.trim()) setState("empty");
-  });
-  input.addEventListener("keydown",function(e){
-    if(e.key==="Enter"){ e.preventDefault(); mouseCommit=false; commit(); }
-    else if(e.key==="Escape"){ e.preventDefault(); input.value=read(); read()?fill(read()):clear(); input.blur(); }
-  });
-  bDone.addEventListener("mousedown",function(e){ e.preventDefault(); mouseCommit=true; });
-  bDone.addEventListener("click",commit);
-  bEdit.addEventListener("click",function(){
-    setState("editing"); input.focus(); input.select();
-  });
-  bDel.addEventListener("click",function(){ clear(); input.focus(); });
-
-  var saved=read(); if(saved) fill(saved);
-})();
 
 
 /* ── the note board ───────────────────────────────────────────────────
