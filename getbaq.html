@@ -24,7 +24,7 @@
 <link rel="manifest" href="./site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@500&family=Libre+Baskerville&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
    TOKENS — same reference system as app-merge-v2 and rise-portal:
@@ -732,7 +732,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
    any size. Her message on the left, the case Getbaq builds from it below,
    the ready letter on the phone at the right. Each fact is coloured by who
    produced it, and the same colour marks the words it came from. */
-.gbh{--gb:#177A3C;
+.gbh{--gb:#177A3C;--app-sans:"Lato",system-ui,sans-serif;--app-mono:"Spline Sans Mono",ui-monospace,monospace;--app-serif:"Libre Baskerville",Georgia,serif;
   position:relative;overflow:hidden;padding:0;aspect-ratio:16/10;container-type:inline-size;isolation:isolate;
   background:
     radial-gradient(70% 75% at 82% 18%,rgba(196,224,203,.75) 0%,rgba(196,224,203,0) 70%),
@@ -754,10 +754,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gbh-msg{position:absolute;left:6.5%;top:10%;width:44%;padding:2.2cqw 2.6cqw 2.4cqw;border-radius:2.4cqw 2.4cqw 2.4cqw .8cqw;
   background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(20,40,25,.05),0 .2cqw .6cqw rgba(20,40,25,.04),0 2.6cqw 5.4cqw -2.4cqw rgba(20,40,25,.24);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:opacity .6s var(--ease)}
-.gbh-head{display:flex;align-items:center;gap:.9cqw;margin:0 0 1.3cqw;font:500 max(10px,1.6cqw)/1 var(--sans);color:var(--muted)}
-.gbh-head b{font-weight:500;color:var(--ink)}
+.gbh-head{display:flex;align-items:center;gap:.9cqw;margin:0 0 1.3cqw;font:400 max(10px,1.6cqw)/1 var(--app-sans);color:var(--muted)}
+.gbh-head b{font-weight:700;color:var(--ink)}
 .gbh-av{display:grid;place-items:center;width:max(18px,2.9cqw);height:max(18px,2.9cqw);border-radius:50%;background:#E3EDE5;color:#2F5A3B;font-size:max(9px,1.4cqw);font-weight:600}
-.gbh-text{margin:0;font:400 max(11.5px,2.05cqw)/1.6 var(--sans);letter-spacing:-.006em;color:var(--ink)}
+.gbh-text{margin:0;font:400 max(11.5px,2.1cqw)/1.6 var(--app-sans);color:var(--ink)}
 .gbh-text .c{opacity:0}
 .gbh-text .c.on{opacity:1}
 .gbh-text .c.cur:after{content:"";display:inline-block;width:1.5px;height:1.05em;margin-left:1px;vertical-align:-.15em;background:var(--ink);animation:gbhBlink 1s steps(1) infinite}
@@ -774,26 +774,26 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gbh-case{position:absolute;left:13%;top:53%;z-index:2;width:44%;padding:1.9cqw 2.3cqw .5cqw;border-radius:1.8cqw;
   background:rgba(255,255,255,.95);box-shadow:inset 0 0 0 1px rgba(20,40,25,.06),0 .2cqw .6cqw rgba(20,40,25,.05),0 3.2cqw 6cqw -2.6cqw rgba(20,40,25,.32);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:opacity .6s ease}
-.gbh-case-h{display:flex;align-items:center;gap:.8cqw;margin:0 0 .9cqw;font:500 max(8.5px,1.3cqw)/1 'Geist Mono',ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.gbh-case-h b{font-weight:500;color:var(--ink)}
-.gbh-case-h b:before{content:"\00B7";margin-right:.8cqw;color:var(--faint)}
-.gbh-status{position:relative;margin-left:auto;display:flex;align-items:center;gap:.7cqw;font:400 max(9.5px,1.45cqw)/1 var(--sans);letter-spacing:0;text-transform:none;color:var(--muted)}
+.gbh-case-h{display:flex;align-items:baseline;gap:.9cqw;margin:0 0 1cqw;font:400 max(8.5px,1.2cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gbh-case-h b{font:400 max(12px,2cqw)/1 var(--app-serif);letter-spacing:0;text-transform:none;color:var(--ink)}
+.gbh-status{position:relative;margin-left:auto;align-self:center;display:flex;align-items:center;gap:.7cqw;font:400 max(9.5px,1.4cqw)/1 var(--app-sans);letter-spacing:0;text-transform:none;color:var(--muted)}
 .gbh-status:before{content:"";width:max(5px,.75cqw);height:max(5px,.75cqw);border-radius:50%;background:var(--faint);transition:background-color .4s ease,box-shadow .4s ease}
 .gbh-status .s-ready{display:none;color:var(--ink)}
 .gbh.is-screen .gbh-status .s-read{display:none}.gbh.is-screen .gbh-status .s-ready{display:inline}
 .gbh.is-screen .gbh-status:before{background:var(--gb);box-shadow:0 0 0 .5cqw color-mix(in srgb,var(--gb) 16%,transparent)}
 .gbh-case dl{margin:0}
 .gbh-row{display:grid;grid-template-columns:26% 1fr;align-items:center;gap:1.2cqw;padding:1.2cqw 0;border-top:1px solid rgba(36,32,32,.07)}
-.gbh-row dt{font:500 max(8px,1.2cqw)/1 'Geist Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.gbh-row dt{font:400 max(8px,1.15cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .gbh-row dd{position:relative;margin:0;display:flex;align-items:center;justify-content:space-between;gap:1cqw;min-height:max(16px,2.6cqw)}
-.gbh-row b{display:block;font:500 max(11px,1.75cqw)/1.2 var(--sans);letter-spacing:-.01em;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;
+.gbh-row b{display:block;font:500 max(11px,1.75cqw)/1.2 var(--app-mono);letter-spacing:-.01em;color:var(--ink);white-space:nowrap;
   opacity:0;transition:transform .85s cubic-bezier(.2,.9,.25,1),opacity .3s ease}
-.gbh-row i{flex:none;font:400 max(8.5px,1.25cqw)/1 var(--sans);font-style:normal;color:var(--muted);padding:.45cqw .9cqw;border-radius:99px;background:rgba(36,32,32,.05);
+.gbh-row i{flex:none;font:400 max(8.5px,1.25cqw)/1 var(--app-sans);font-style:normal;color:var(--muted);padding:.45cqw .9cqw;border-radius:99px;background:rgba(36,32,32,.05);
   opacity:0;transform:translateX(-.6cqw);transition:opacity .4s ease,transform .5s var(--ease)}
 /* the empty slot a value lands in */
 .gbh-row dd:before{content:"";position:absolute;left:0;top:50%;width:42%;height:max(6px,.9cqw);margin-top:calc(max(6px,.9cqw) / -2);border-radius:99px;
   background:linear-gradient(90deg,rgba(36,32,32,.06),rgba(36,32,32,.11),rgba(36,32,32,.06)) 0 0/200% 100%;animation:gbhShine 1.4s linear infinite;transition:opacity .25s ease}
 .gbh-row.on b{opacity:1}
+.gbh-row:last-child b{font:700 max(11px,1.65cqw)/1.2 var(--app-sans);letter-spacing:0}
 .gbh-row.on i{opacity:1;transform:none;transition-delay:.55s}
 .gbh-row.on dd:before{opacity:0}
 :root[data-theme="dark"] .gbh-case{background:rgba(30,33,31,.92);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 3.2cqw 6cqw -2.6cqw rgba(0,0,0,.6)}
