@@ -751,7 +751,9 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 :root[data-theme="dark"] .gbh:before{mix-blend-mode:screen;opacity:.18}
 
 /* her message: a real chat bubble, sized before it's typed so nothing reflows */
-.gbh-msg{position:absolute;left:6.5%;top:10%;width:44%;padding:2.2cqw 2.6cqw 2.4cqw;border-radius:2.4cqw 2.4cqw 2.4cqw .8cqw;
+/* her message and, under it, the case it becomes: one column, same edge and width */
+.gbh-stack{position:absolute;left:6.5%;top:50%;transform:translateY(-50%);width:44%;display:flex;flex-direction:column;align-items:stretch;gap:1.4cqw}
+.gbh-msg{position:relative;z-index:3;padding:2.2cqw 2.6cqw 2.4cqw;border-radius:2.4cqw 2.4cqw 2.4cqw .8cqw;
   background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(20,40,25,.05),0 .2cqw .6cqw rgba(20,40,25,.04),0 2.6cqw 5.4cqw -2.4cqw rgba(20,40,25,.24);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:opacity .6s var(--ease)}
 .gbh-head{display:flex;align-items:center;gap:.9cqw;margin:0 0 1.3cqw;font:400 max(10px,1.6cqw)/1 var(--app-sans);color:var(--muted)}
@@ -771,11 +773,11 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 /* the case: Getbaq's own case file, filling in from her words. Each value
    flies out of the word it came from into its row, then says who produced
    it; the status turns to ready when the letter is on the phone */
-.gbh-case{position:absolute;left:13%;top:53%;z-index:2;width:44%;padding:1.9cqw 2.3cqw .5cqw;border-radius:1.8cqw;
+.gbh-case{position:relative;z-index:2;padding:1.9cqw 2.3cqw .5cqw;border-radius:1.8cqw;
   background:rgba(255,255,255,.95);box-shadow:inset 0 0 0 1px rgba(20,40,25,.06),0 .2cqw .6cqw rgba(20,40,25,.05),0 3.2cqw 6cqw -2.6cqw rgba(20,40,25,.32);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
 /* the case waits for her message: it arrives once she has finished typing */
-.gbh.is-live:not(.is-case) .gbh-case{opacity:0;transform:translateY(1.6cqw) scale(.97)}
+.gbh.is-live:not(.is-case) .gbh-case{opacity:0;transform:translateY(-60%) scale(.94)}
 .gbh-case-h{display:flex;align-items:baseline;gap:.9cqw;margin:0 0 1cqw;font:400 max(8.5px,1.2cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .gbh-case-h b{font:400 max(12px,2cqw)/1 var(--app-serif);letter-spacing:0;text-transform:none;color:var(--ink)}
 .gbh-status{position:relative;margin-left:auto;align-self:center;display:flex;align-items:center;gap:.7cqw;font:400 max(9.5px,1.4cqw)/1 var(--app-sans);letter-spacing:0;text-transform:none;color:var(--muted)}
@@ -823,9 +825,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 
 /* narrow: her message across the top, the phone below-right, the case beside it */
 @container (max-width:520px){
-  .gbh-msg{left:5%;top:5%;width:78%;padding:3.4cqw 3.8cqw 3.6cqw;border-radius:3.6cqw 3.6cqw 3.6cqw 1.2cqw}
+  .gbh-stack{left:5%;top:5%;transform:none;width:78%;gap:2.4cqw;align-items:flex-start}
+  .gbh-msg{align-self:stretch;padding:3.4cqw 3.8cqw 3.6cqw;border-radius:3.6cqw 3.6cqw 3.6cqw 1.2cqw}
   .gbh-head{margin-bottom:2cqw}
-  .gbh-case{left:5%;top:auto;bottom:6%;width:60%;padding:3cqw 3.4cqw 1cqw;border-radius:3cqw}
+  .gbh-case{width:70%;padding:3cqw 3.4cqw 1cqw;border-radius:3cqw}
   .gbh-case-h{margin-bottom:1.6cqw}
   .gbh-row{grid-template-columns:1fr;gap:1.4cqw;padding:2cqw 0}
   .gbh-row i{padding:.8cqw 1.6cqw}
@@ -934,6 +937,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <section id="overview" style="margin-top:0">
 <figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="Ananya's message to Getbaq: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. From it Getbaq takes three facts: ₹3,499 (she told it), reply by 3 Sep (calculated), and Rule 4(4) (verified at the source), and drafts the complaint letter on her phone.">
+<div class="gbh-stack">
 <div class="gbh-msg" aria-hidden="true"><p class="gbh-head"><span class="gbh-av">A</span><b>Ananya</b><span>to Getbaq</span></p><p class="gbh-text"><mark data-f="2">Flipkart</mark>. Bought a mixer grinder for <mark data-f="0">3499</mark> on 2 Aug. Jar has rust. Asked replacement on <mark data-f="1">4 Aug</mark>, they rejected saying photo validation failed. Called 3 times, nothing.</p></div>
 <div class="gbh-case" aria-hidden="true"><p class="gbh-case-h"><span>Case</span><b>Flipkart</b><span class="gbh-status"><span class="s-read">Reading</span><span class="s-ready">Ready to send</span></span></p>
 <dl>
@@ -941,6 +945,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="gbh-row"><dt>Reply by</dt><dd><b>3 Sep 2026</b><i>Calculated</i></dd></div>
 <div class="gbh-row"><dt>The rule</dt><dd><b>E-commerce Rules 4(4)</b><i>Verified</i></dd></div>
 </dl></div>
+</div>
 <div class="gbh-phone" aria-hidden="true"><div class="gbh-screen"><span class="gbh-sk"></span><span class="gbh-sk"></span><span class="gbh-sk"></span><span class="gbh-sk"></span><img class="gbh-shot" src="./assets/getbaq-phone-thread-603.webp" width="603" height="1311" alt="" fetchpriority="high" decoding="async"></div><img class="gbh-frame" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" decoding="async"></div>
 </div>
 </figure>
