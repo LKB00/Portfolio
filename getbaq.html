@@ -709,6 +709,8 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-call li:before{content:counter(c);grid-row:span 2;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg);font:500 12px/1 var(--sans)}
 .gb-call b{font:500 15px/1.4 var(--sans);color:var(--ink);letter-spacing:-.01em}
 .gb-call span{font:400 14px/1.55 var(--sans);color:var(--muted)}
+.gb-bugs i{font-style:normal;font-weight:500;color:var(--ink)}
+.gb-bugs i:not(:first-child){margin-left:2px}
 @media(max-width:760px){.gb-vis{grid-template-columns:1fr}}
 /* one height for every screen beside callouts: the tallest callout list
    (five points) sets it. Screens are drawn a little smaller, and anything
@@ -953,16 +955,16 @@ addEventListener("pagereveal",function(e){
 <nav aria-label="Sections" class="toc">
 <a href="#overview">Overview</a>
 <a href="#why">01 · Why an agent</a>
-<a href="#work">02 · Show your work</a>
-<a href="#approver">03 · Approver, not autopilot</a>
-<a href="#wrong">04 · Designing for being wrong</a>
+<a href="#work">02 · AI reads, code counts</a>
+<a href="#approver">03 · She stays responsible</a>
+<a href="#wrong">04 · Failure is part of it</a>
 <a href="#rejected">05 · What I rejected</a>
-<a href="#proof">06 · Evals and limits</a>
+<a href="#proof">06 · What I tested</a>
 <a href="#close">Tradeoffs</a>
 </nav>
 <!-- ================= OVERVIEW ================= -->
 <section id="overview" style="margin-top:0">
-<div class="col" data-reveal=""><p class="gb-versions" data-on="short"><span class="gb-pill" aria-hidden="true"></span><span aria-current="page">Short read · 9 min</span><a href="./getbaq-full.html">Full case study · 40 min</a></p></div>
+<div class="col" data-reveal=""><p class="gb-versions" data-on="short"><span class="gb-pill" aria-hidden="true"></span><span aria-current="page">Short read · 7 min</span><a href="./getbaq-full.html">Deep dive · 40 min</a></p></div>
 <figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="The Getbaq app on a MacBook. Ananya types: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. Getbaq reads it, checks ₹3,499, Flipkart and 2 Aug with her, and once she confirms, finds the rule, sets the reply-by date of 3 Sep 2026 and has her letter ready to sign.">
 <div class="gbh-mac" aria-hidden="true"><div class="gbh-screen">
@@ -974,13 +976,13 @@ addEventListener("pagereveal",function(e){
 <div class="col beat gb-hero" data-reveal="">
 <p class="eyebrow">Case study · AI product design · Getbaq</p>
 <h1>Designing an AI agent that fights for your <em>refund</em></h1>
-<p class="dek">Ananya has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes her complaint, and never sends a word without her.</p>
+<p class="dek">Ananya has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and drafts her complaint. <b>The hard part wasn’t making it act. It was deciding what it should never do.</b></p>
 <a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
 </div>
 <dl class="meta m3 col" data-reveal="">
 <div><dt>Timeline</dt><dd>Sep 2026 · 2 weeks</dd></div>
 <div><dt>Role</dt><dd>Solo designer, with an AI coding assistant</dd></div>
-<div><dt>Status</dt><dd>Live prototype on sample cases, not shipped</dd></div>
+<div><dt>Status</dt><dd>Prototype, not shipped. Eval and user tests not yet run</dd></div>
 </dl>
 <div class="col beat gb-open" data-reveal="">
 <div class="pair">
@@ -998,32 +1000,28 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <section class="gb-chapter" id="why">
-<div class="col"><p class="eyebrow">01 · Why an agent</p><h2 class="say">A job that only became automatable with LLMs</h2></div>
+<div class="col"><p class="eyebrow">01 · Why an agent</p><h2 class="say">ChatGPT can write the complaint. It can’t run the case.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">Ananya orders a mixer grinder on Flipkart for ₹3,499. The jar arrives rusted, the replacement is rejected because a photo “failed validation”, and three calls get her the same line: 5 to 7 working days. The law says Flipkart must resolve it within a month, and a free helpline can push it. She doesn’t know either exists.</p>
-<div class="col"><div class="figrow" style="--cols:3"><div><p class="fnum">66%</p><p class="fnote">of people with a major service problem got no help from the company</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p><p class="fsrc"><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></p></div><div><p class="fnum">+6.9 pts</p><p class="fnote">more likely to get relief when a complaint was AI-assisted</p><p class="fsrc"><a href="https://www.nature.com/articles/s41562-026-02409-4" target="_blank" rel="noopener noreferrer">Nature Human Behaviour, 2026 · 1.1M US complaints</a></p></div></div></div>
+<div class="col"><div class="figrow" style="--cols:2"><div><p class="fnum">66%</p><p class="fnote">of people with a major service problem got no help from the company</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p><p class="fsrc"><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></p></div></div></div>
 <p class="col body">ChatGPT can draft the letter, but that’s the easy part. The real work is knowing the rule, the deadline and where to escalate, and following up when the company goes quiet. That’s a job an agent suits: reading messy evidence, again and again, without tiring.</p>
-<p class="col body">I picked it over a “trading brake” for young options traders. 88.5% of under-30 traders lost money in FY26 (SEBI) and most kept trading: that product fights its own user. This one needs no behaviour change.</p>
-<div class="quote col">
-<p class="colhead">Problem statement</p>
-<p>The law is on her side and a free channel works, but she doesn’t know the rule, the channel or the deadline, and can’t afford the time to keep chasing. So the money stays with the company.</p>
-<p class="cite">From desk research: complaints on Reddit and X, app reviews, consumer forums and government data. I couldn’t recruit interviews in time, and it’s labelled that way throughout.</p>
-</div>
-<figure class="gb-ex col" data-embed="how-it-works" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>What the answer became: Getbaq’s four steps, on its real screens.</figcaption></figure>
+<figure class="gb-ex col" data-embed="how-it-works" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Getbaq in four steps, on its real screens.</figcaption></figure>
 </section>
 </section>
 <section class="gb-chapter" id="work">
-<div class="col"><p class="eyebrow">02 · Show your work</p><h2 class="say">The AI reads and writes. Code does every date and amount.</h2></div>
+<div class="col"><p class="eyebrow">02 · Decision 1</p><h2 class="say">AI reads. Code counts.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">A confidently wrong deadline is worse than no agent: she’d wait for a date that has already passed. So before any screen, I decided what the AI may do at all: judgment on messy text. Dates and money are tested code.</p>
-<figure class="gb-ex col" data-embed="capability-map" data-note="Diagram"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure>
+<p class="col body">A confidently wrong deadline is worse than no agent: she’d wait for a date that has already passed. So before any screen, I decided what the AI may do at all. It gets judgment on messy text. Dates and money are tested code, and the model is never even given a day count.</p>
+<figure class="gb-ex col" data-embed="capability-map" data-note="Diagram"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>What the AI judges, what code computes, and what the AI is never allowed to do.</figcaption></figure>
+<p class="col body">Testing that boundary against the real model, before anyone used the product, caught five mistakes that would have cost people money:</p>
+<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="rule-fix" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Designing against the real model: the rule cards those fixes protect.</figcaption></figure><ol class="gb-call gb-bugs"><li><b>The UPI deadline</b><span><i>Bug</i> every failed payment got 5 days. <i>Reality</i> RBI gives UPI one working day. <i>Response</i> the model no longer sees a day count; code does the dates.</span></li><li><b>Two airline clocks</b><span><i>Bug</i> one rule for both. <i>Reality</i> 7 days by card, 14 working days via an agent. <i>Response</i> two rules, each verified at the source.</span></li><li><b>The invented year</b><span><i>Bug</i> asked to copy “2 Aug”, it added 2023. <i>Response</i> a year is kept only if she wrote one.</span></li><li><b>The wrong recipient</b><span><i>Bug</i> the UPI letter went to the shop. <i>Reality</i> the RBI rule binds her bank. <i>Response</i> it asks for her bank, and the letter goes there.</span></li><li><b>The midnight deadline</b><span><i>Bug</i> dates read in the wrong timezone showed as missed. <i>Response</i> one fixed timezone for every date.</span></li></ol></div>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="sourced-steps" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure><ol class="gb-call"><li><b>Every step says who did it</b><span>AI, Rule sheet, Calculated or Safety check, so she can tell a judgment from a sum.</span></li><li><b>The deadline says Calculated</b><span>The model is never given a day count, so it has nothing to miscalculate.</span></li><li><b>The rule cites its law</b><span>She can check the work instead of taking it on trust.</span></li></ol></div>
 </section>
 </section>
 <section class="gb-chapter" id="approver">
-<div class="col"><p class="eyebrow">03 · Approver, not autopilot</p><h2 class="say">She approves every send, in her own name</h2></div>
+<div class="col"><p class="eyebrow">03 · Decision 2</p><h2 class="say">The agent acts. She stays responsible.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">A common pattern is to hand over more control as trust grows. I chose not to: a wrong or rude letter damages her, not the AI. On the Knight Institute’s autonomy levels, <b>Ananya is an approver</b>. But gating everything would make it useless, so I placed every action by its stakes and whether it can be undone, after Victor Yocco’s framework:</p>
+<p class="col body">A common pattern is to hand over more control as trust grows: approve a few, then let it send. I rejected that. A wrong or rude letter damages her, not the AI, so <b>every send waits for her tap, permanently</b>. But gating everything would make it useless, so each action is placed by its stakes and whether it can be undone. Only what’s high-stakes and irreversible waits for her:</p>
 <figure class="gb-ex col" data-embed="lifecycle-diagram" data-note="Diagram"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>It proposes, she approves, it acts, it reports back. Green is her decision, lilac the AI’s judgment, white is code.</figcaption></figure>
 <div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let her correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always her tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading her message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell her, for Stripping an OTP she pasted.">
 <p class="gb-quad-y" aria-hidden="true">Stakes ↑</p><p class="gb-quad-x" aria-hidden="true">Can be undone ← → Can’t be undone</p>
@@ -1033,16 +1031,16 @@ addEventListener("pagereveal",function(e){
 </section>
 </section>
 <section class="gb-chapter" id="wrong">
-<div class="col"><p class="eyebrow">04 · Designing for being wrong</p><h2 class="say">Every failure ends in a next step, not a dead end</h2></div>
+<div class="col"><p class="eyebrow">04 · Decision 3</p><h2 class="say">Failure is part of the product.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">The core AI risk is a wrong rule she never thinks to question. So <b>she’s never asked to approve what the AI itself doubts.</b></p>
+<p class="col body">An agent will be wrong, unsure, ignored or stuck some of the time, and those moments decide whether she trusts it next time. The core risk is a wrong rule she never thinks to question, so <b>she’s never asked to approve what the AI itself doubts.</b></p>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="screen-notsure" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure><ol class="gb-call"><li><b>A label, not a percentage</b><span>A bare number invites false precision; a plain label comes with a reason.</span></li><li><b>Both sides of its reasoning</b><span>Why this rule might fit, and why it might not.</span></li><li><b>No Approve button</b><span>Nothing can be sent while it’s unsure. It asks instead.</span></li></ol></div>
-<p class="col body">Then I listed every way a case can go wrong, using Google PAIR’s error categories, and gave each one a next step:</p>
+<p class="col body">Then every other way a case can go wrong got its own state, and each one ends in a next step, not a dead end:</p>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure><ol class="gb-call"><li><b>A fact is missing</b><span>One card asks for every gap at once, and says why each is needed.</span></li><li><b>It isn’t a refund</b><span>It says so, and points her to e-Jagriti, a lawyer or the bank.</span></li><li><b>No address it can trust</b><span>It won’t guess one; she gets the letter to send herself.</span></li><li><b>The company goes quiet</b><span>The 1915 complaint is already prepared. Still her tap.</span></li><li><b>The AI can’t be reached</b><span>A simpler reader or a fixed template steps in, and says so.</span></li></ol></div>
 </section>
 </section>
 <section class="gb-chapter" id="rejected">
-<div class="col"><p class="eyebrow">05 · What I rejected</p><h2 class="say">From pages to one thread</h2></div>
+<div class="col"><p class="eyebrow">05 · What I rejected</p><h2 class="say">Two ideas that lost, and what replaced them</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="thread" data-inner="480" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure><ol class="gb-call"><li><b>Rejected: a page per step</b><span>It felt like being sent somewhere else each time.</span></li><li><b>Rejected: a pure chat</b><span>The steps are decisions, so they’re cards she can act on.</span></li><li><b>Chose: one thread</b><span>Finished steps fold into receipts; the live card stays open.</span></li></ol></div>
 <p class="col body">The same happened to the first screen. Two versions made her sort her own evidence; the third made it the agent’s job.</p>
@@ -1054,15 +1052,15 @@ addEventListener("pagereveal",function(e){
 </section>
 </section>
 <section class="gb-chapter" id="proof">
-<div class="col"><p class="eyebrow">06 · Evals and limits</p><h2 class="say">What’s tested, what’s ready to score, and what isn’t proven</h2></div>
+<div class="col"><p class="eyebrow">06 · What I tested</p><h2 class="say">The biggest unknown: does it pick the right rule?</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">Testing the rules, the dates and the letters before anyone used the product turned up five mistakes that would have cost people money. 210 automated tests now cover dates, money, states and safety.</p>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="rule-fix" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The rule cards those fixes protect.</figcaption></figure><ol class="gb-call"><li><b>The UPI deadline was wrong</b><span>Every failed payment got 5 days. RBI gives UPI one working day; 5 days is for cards.</span></li><li><b>Two airline clocks were one rule</b><span>Card refunds: 7 days. Travel-site bookings: 14 working days.</span></li><li><b>Deadlines moved with the timezone</b><span>Near midnight a deadline could show as missed. All dates now use one timezone.</span></li><li><b>The model invented years</b><span>Asked to copy “2 Aug”, it added 2023. A year is kept only if she wrote one.</span></li><li><b>The UPI letter went to the wrong party</b><span>It was addressed to the shop; the RBI rule applies to her bank.</span></li></ol></div>
+<p class="col body">Everything with one right answer is tested by code: <b>210 automated tests</b> on dates, money, states and safety. The model’s judgment is the part that can’t be, so it gets a scored evaluation instead:</p>
 <div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">8</p><p class="fnote">legal rules, each read from the source and marked verified</p></div><div><p class="fnum">30</p><p class="fnote">real, sourced cases in the evaluation set</p></div><div><p class="fnum">6</p><p class="fnote">traps where the right answer is “no rule covers this”</p></div><div><p class="fnum">3×</p><p class="fnote">runs per case; it passes only if all three pass</p></div></div></div>
-<p class="col body">The evaluation checks the case type, rule and amount automatically, a person reads every draft for invented facts, and an invented rule fails outright. <b>It’s built and ready to run;</b> the pass rate goes here, failures included.</p>
+<p class="col body">Case type, rule and amount are checked automatically; a person reads every draft for invented facts; an invented rule fails outright. <b>Status: built, not yet scored.</b> The pass rate goes here, failures included.</p>
 <div class="col gb-three"><div><p class="cap"><b>Works today</b></p><p>Gemini reads words and screenshots, picks the rule and writes the letter, all checked by code. Google sign-in carries her cases across devices.</p></div><div><p class="cap"><b>Designed, not built</b></p><p>Sending from her own Gmail, which needs Google’s verification, and follow-ups while the app is closed.</p></div><div><p class="cap"><b>Not proven yet</b></p><p>The evaluation score, and whether real people trust an agent to complain in their name.</p></div></div>
-<p class="col body"><b>How I’ll know it works.</b> One number matters to her; four more tell me if it’s working:</p>
+<p class="col body"><b>Success criteria I proposed.</b> One number matters to her; three more tell me if it’s working:</p>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="screen-resolved" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The Resolved screen: the money back first, then how long it took and how little she had to do.</figcaption></figure><ol class="gb-call"><li><b>Money recovered</b><span>The only number she cares about. Target: 3 of the first 5 real cases refunded.</span></li><li><b>Days to refund</b><span>Inside the rule’s own deadline, beating the manual journey.</span></li><li><b>Drafts sent unedited</b><span>Draft quality, and trust. Most sent with no edits, or small ones.</span></li><li><b>Wrong-rule rate</b><span>Under 5% on the eval, and zero invented rules.</span></li></ol></div>
+<p class="col body"><b>Results:</b> not yet validated with real users.</p>
 </section>
 </section>
 <!-- ================= TRADEOFFS ================= -->
@@ -1070,7 +1068,7 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">Looking back</p><h2 class="say">Tradeoffs, and what I learned</h2></div>
 <section class="gb-sec" data-reveal="">
 <div class="col"><p class="eyebrow">Tradeoffs I made on purpose</p><h3 class="say sub">What it costs, and why it’s worth it</h3></div>
-<ul class="keys one col gb-trade"><li><i>•</i><p><b>A tap on every send.</b> <span>Slower than an autopilot, but it’s her name and her money.</span></p></li><li><i>•</i><p><b>No follow-ups while the app is closed.</b> <span>Kept the prototype honest about what runs; she sees the next step when she opens the case.</span></p></li><li><i>•</i><p><b>Simulated sending.</b> <span>Real Gmail sending needs Google’s review; a broken flow would have been worse than a clear line.</span></p></li><li><i>•</i><p><b>English only.</b> <span>So the rule and tone checks can be tested in one language first; Hindi is the first thing I’d add.</span></p></li><li><i>•</i><p><b>Desk research, not interviews.</b> <span>Recruiting didn’t fit the two weeks; interviews come with the first five real cases, to test trust and willingness to pay.</span></p></li></ul>
+<ul class="keys one col gb-trade"><li><i>•</i><p><b>A tap on every send.</b> <span>Slower than an autopilot, but it’s her name and her money.</span></p></li><li><i>•</i><p><b>No follow-ups while the app is closed.</b> <span>Kept the prototype honest about what runs; she sees the next step when she opens the case.</span></p></li><li><i>•</i><p><b>Desk research, not interviews.</b> <span>Recruiting didn’t fit the two weeks; interviews come with the first five real cases, to test trust and willingness to pay.</span></p></li></ul>
 </section>
 <section class="gb-sec" data-reveal="" id="learned">
 <div class="col"><p class="eyebrow">What I learned</p><h3 class="say sub">Three things this taught me about designing AI products</h3></div>
@@ -1078,7 +1076,7 @@ addEventListener("pagereveal",function(e){
 </section>
 <div class="col gb-sec" data-reveal="">
 <div class="hinge gb-close">
-<p>Next: run the evaluation, then five real cases with real people.</p>
+<p>Not shipped. Not user-tested yet. The next proof is real money recovered.</p>
 <a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
 </div>
 </div>
