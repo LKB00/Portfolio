@@ -802,7 +802,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </div><figure class="gb-ex" data-embed="intake-now" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">Where every case starts: one box that takes anything.</figcaption></figure>
 </div>
 <div class="col gb-sec" data-reveal="">
-<div class="figrow" style="--cols:4"><div><p class="fnum">5</p><p class="fnote">errors that would have cost people money, caught before any user saw them</p></div><div><p class="fnum">8</p><p class="fnote">legal rules, each verified at the source</p></div><div><p class="fnum">30</p><p class="fnote">real cases in the eval set, 6 of them traps</p></div><div><p class="fnum">182</p><p class="fnote">automated tests on dates, money, states and safety</p></div></div>
+<div class="figrow" style="--cols:4"><div><p class="fnum">5</p><p class="fnote">errors that would have cost people money, caught before any user saw them</p></div><div><p class="fnum">8</p><p class="fnote">legal rules, each verified at the source</p></div><div><p class="fnum">30</p><p class="fnote">real cases in the eval set, 6 of them traps</p></div><div><p class="fnum">210</p><p class="fnote">automated tests on dates, money, states and safety</p></div></div>
 </div>
 <div class="col gb-sec" data-reveal="">
 <p class="eyebrow">Four decisions that shaped it</p>
@@ -1029,6 +1029,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="rh"><p class="eyebrow" style="margin:0">If the model…</p><p class="eyebrow" style="margin:0">Code…</p></div>
 <ul>
 <li><p>Puts an amount or date in the letter she didn’t confirm</p><p>Drops the letter and uses the template, and says so</p></li>
+<li><p>Asks for the full amount back on an overcharge, instead of just the difference</p><p>Refuses the letter: only the confirmed difference may appear</p></li>
 <li><p>Cites a rule that isn’t on the verified sheet</p><p>Routes to Not sure. It can never reach Approve.</p></li>
 <li><p>Writes more than 150 words</p><p>Asks once to shorten, then drops the draft</p></li>
 <li><p>Says “sue”, “legal action”, “lawyer”, threatens, or uses “!”</p><p>Asks once to rewrite, then drops it</p></li>
@@ -1048,7 +1049,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s5-0">
 <div class="col"><p class="eyebrow">What’s tested today</p><h3 class="say sub">The code is tested. The model isn’t scored yet.</h3></div>
-<p class="col body">Everything that has one right answer is tested: <b>182 automated tests</b> cover dates, money, states and safety, the parts where being wrong costs real money. And I used the prototype myself, which is where the biggest change, pages to one thread, came from.</p>
+<p class="col body">Everything that has one right answer is tested: <b>210 automated tests</b> cover dates, money, states and safety, the parts where being wrong costs real money. And I used the prototype myself, which is where the biggest change, pages to one thread, came from.</p>
 <p class="col body">What isn’t scored yet is the model’s judgment: whether it reads a case correctly and picks the right rule. The rest of this chapter is how that will be measured.</p>
 </section>
 <section class="gb-sec" data-reveal="" id="s5-1">
@@ -1224,6 +1225,18 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </ul>
 </div>
 </section>
+<section class="gb-sec" data-reveal="" id="s3-19">
+<div class="col"><p class="eyebrow">A bug I found by using it</p><h3 class="say sub">A company’s name isn’t a case yet</h3></div>
+<p class="col body">I typed “zoom car” into my own prototype expecting it to ask what happened. Instead it either opened a case with an empty questionnaire about an order I’d never described, or said “Sorry, I’m not sure I followed that”, the same reply small talk gets. Neither is right: she named a company, so she isn’t making conversation, but nothing has gone wrong yet either.</p>
+<div class="col gb-rows">
+<div class="rh"><p class="eyebrow" style="margin:0">Now</p><p class="eyebrow" style="margin:0">Why</p></div>
+<ul>
+<li><p>Every message that isn’t small talk is read by the AI first, with the conversation so far, before code decides anything</p><p>So a bare company name gets a real answer, not a guess in either direction</p></li>
+<li><p>A company on its own asks back: “Are you trying to get money back from Zoomcar, or is it something else?”</p><p>Confirms there’s a case instead of assuming one from a single word</p></li>
+<li><p>A general question about a company’s policy gets an honest “I can’t check that” instead of a case</p><p>“What is Zoomcar’s cancellation policy?” isn’t a refund that’s stuck yet</p></li>
+</ul>
+</div>
+</section>
 <section class="gb-sec" data-reveal="" id="s5-6">
 <div class="col"><p class="eyebrow">Design vs prototype</p><h3 class="say sub">An honest audit of my own claims</h3></div>
 <p class="col body">Before publishing, I checked every claim here and on the live site against the code. Where the design and the prototype differ, it’s listed, not hidden.</p>
@@ -1393,6 +1406,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </ul>
 </div>
 <div class="quote col"><p class="colhead">A bug the motion found</p><p>The first version of the phone sheet made the conversation behind it jump 239 pixels as it opened. Giving the sheet keyboard focus while it was still below the screen made the browser scroll to show it. The fix was one option (focus without scrolling), plus a container that can’t scroll at all, so it can’t come back.</p></div>
+</div></details>
+<details class="gb-fold" id="s3-20"><summary><span class="gb-fold-t"><b>Her own words outgrew their type size</b><span>Set for a short tap, then the reply started sending full sentences.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
+<div class="gb-fold-body">
+<p class="col body">Her own message was set in the same big serif as the landing headline and the case’s final amount: right for a tap like “Zoomcar” or “yes”, too loud once a fix (s3-19) meant it carried full sentences like “CarDekho charged me more than they should have”, wrapping two lines above the agent’s own 14px reply. Cut from 32px to 26px for the first line and 24px to 19px for every one after, keeping the same proportion between them.</p>
 </div></details>
 <details class="gb-fold" id="s3-18"><summary><span class="gb-fold-t"><b>“Will this work for my problem?”</b><span>The landing page now says what it covers, and its limits.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div class="gb-fold-body">
