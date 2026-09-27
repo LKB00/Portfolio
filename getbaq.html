@@ -458,6 +458,11 @@ div.gb-sec{margin-top:var(--s5)}
 .meta{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3);margin-top:var(--s4);
   padding-top:var(--s3);border-top:1px solid var(--line)}
 .meta dd{margin:0;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--ink)}
+.meta.m3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:600px){.meta.m3{grid-template-columns:1fr}}
+.gb-open{margin-top:var(--s4)}
+.gb-open .pair{grid-template-columns:1fr 1fr}
+@media(max-width:600px){.gb-open .pair{grid-template-columns:1fr}}
 @media(max-width:600px){.meta{grid-template-columns:1fr}}
 
 /* numbered points (App Merge's .point) */
@@ -689,6 +694,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 /* a research figure links to its study, quietly */
 .figrow .fsrc a{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-underline-offset:2px}
 .figrow .fsrc a:hover{color:var(--ink);text-decoration-color:var(--ink)}
+/* sources read as a quiet line, not another label */
+.figrow .fsrc{font:400 12.5px/1.45 var(--sans);letter-spacing:0;text-transform:none;color:var(--faint)}
+.figrow .fsrc a{text-decoration:none}
+.figrow .fsrc a:hover{text-decoration:underline}
 
 /* sources: the rules and the research */
 .gb-sources{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
@@ -937,21 +946,25 @@ addEventListener("pagereveal",function(e){
 <p class="dek">Ananya has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes her complaint, and never sends a word without her.</p>
 <a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
 </div>
-<div class="col gb-sec" data-reveal="">
-<p class="eyebrow">In 30 seconds</p>
-<div class="gb-points gb-tldr">
-<div class="point"><p class="n">Challenge</p><p class="body">The law says Flipkart must resolve Ananya’s complaint within a month, and a free government helpline can push it. She doesn’t know the rule, the deadline or the channel. ChatGPT can draft her a letter. Nobody runs the fight.</p></div>
-<div class="point"><p class="n">Solution</p><p class="body">An agent where she’s the approver. It reads her messy messages and screenshots, cites the rule, has code calculate the deadline, and drafts the complaint. Nothing is sent or escalated without her tap.</p></div>
-<div class="point"><p class="n">My role</p><p class="body">Solo, about two weeks: problem selection, desk research, interaction and trust design, prompts and the evaluation plan, designed in code against a real model, Gemini. Built with an AI coding assistant; the product and trust decisions and the rules research are mine.</p></div>
-<div class="point"><p class="n">Takeaways</p><p class="body">The failure states are the design material. What the model is allowed to know is a design decision. And trust comes from showing where every answer came from.</p></div>
-</div>
-</div>
-<dl class="meta col" data-reveal="">
-<div><dt>Timeline</dt><dd>Sep 2026 · about 2 weeks, full-time</dd></div>
-<div><dt>Type</dt><dd>Self-initiated, not client work. Not shipped to real users.</dd></div>
-<div><dt>Status</dt><dd>Live prototype: Gemini reads what people send; sending is simulated.</dd></div>
-<div><dt>Prototype</dt><dd>Every screen below is the working product, running on sample cases, not a mock-up. Try them.</dd></div>
+<dl class="meta m3 col" data-reveal="">
+<div><dt>Timeline</dt><dd>Sep 2026 · 2 weeks</dd></div>
+<div><dt>Role</dt><dd>Solo designer, with an AI coding assistant</dd></div>
+<div><dt>Status</dt><dd>Live prototype on sample cases, not shipped</dd></div>
 </dl>
+<div class="col beat gb-open" data-reveal="">
+<div class="pair">
+<div><p class="cap"><b>The problem</b></p><ul class="keys one">
+<li><i>•</i><p>₹3,499 stuck with Flipkart, and a bot that says “5 to 7 working days”.</p></li>
+<li><i>•</i><p>The law says Flipkart must resolve it within a month, and the free 1915 helpline can push it.</p></li>
+<li><i>•</i><p>She doesn’t know the rule, the deadline or the channel. ChatGPT drafts a letter; nobody runs the fight.</p></li>
+</ul></div>
+<div><p class="cap"><b>What I designed</b></p><ul class="keys one">
+<li><i>•</i><p>An agent where she’s the approver: nothing is sent or escalated without her tap.</p></li>
+<li><i>•</i><p>It reads her messages and screenshots, finds the rule and drafts the complaint.</p></li>
+<li><i>•</i><p>Code, never the AI, calculates every date and amount.</p></li>
+</ul></div>
+</div>
+</div>
 </section>
 <section class="gb-chapter" id="why">
 <div class="col"><p class="eyebrow">01 · Why an agent</p><h2 class="say">A job that only became automatable with LLMs</h2></div>
@@ -978,7 +991,7 @@ addEventListener("pagereveal",function(e){
 <p class="col body">Then I made the split visible. Every step in the trace says who did it, the deadline says <b>Calculated</b>, and the rule cites the law it rests on, so she can check the work instead of taking it on trust.</p>
 <figure class="gb-ex col" data-embed="sourced-steps" data-inner="520" data-note="Live">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-<figcaption>Finding the rule and writing the complaint for a real case, each step labelled AI, Rule sheet, Calculated or Safety check. <span class="gb-pat"><i>Process transparency</i><i>Citations</i></span></figcaption>
+<figcaption>Finding the rule and writing the complaint for a real case, each step labelled AI, Rule sheet, Calculated or Safety check.</figcaption>
 </figure>
 </section>
 </section>
@@ -993,7 +1006,7 @@ addEventListener("pagereveal",function(e){
 </div>
 <div class="col gb-stack"><figure class="gb-ex" data-embed="approve" data-note="Interactive">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-<figcaption>The Approve card. Press Send it to see the undo window. <span class="gb-pat"><i>Intent preview</i><i>Action audit and undo</i></span></figcaption>
+<figcaption>The Approve card. Press Send it to see the undo window.</figcaption>
 </figure><ul class="keys one gb-decisions"><li><i>1</i><p><b>It looks like an email.</b> <span>Familiar on purpose, so the novelty goes on the agent, not the letter. From shows her own name.</span></p></li><li><i>2</i><p><b>Amount and deadline first.</b> <span>The rule and how sure it is sit below, as backing.</span></p></li><li><i>3</i><p><b>One strong button.</b> <span>The only irreversible action looks unlike anything else; Edit and Not now are equally quiet.</span></p></li><li><i>4</i><p><b>Six seconds to undo,</b> <span>said right above the button she’s about to press.</span></p></li></ul></div>
 <p class="col body"><b>The letter first had no name on it.</b> Every one ended “Sent via Getbaq”, with nothing a grievance officer could match to her order. I’d treated “no accounts” as a feature, but a product that complains in someone’s name has to know who she is. Now, just above Send, it asks “Whose name goes on this letter?”: her name and the email or phone the company knows. Nothing more; it refuses Aadhaar, PAN and bank numbers if pasted.</p>
 </section>
@@ -1002,23 +1015,23 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">04 · Designing for being wrong</p><h2 class="say">Every failure ends in a next step, not a dead end</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">The core AI risk is a wrong rule she never thinks to question. So confidence is a plain label with a reason, never a bare number, and when it’s low, the Approve card never appears: <b>she’s never asked to approve what the AI itself doubts.</b></p>
-<figure class="gb-ex col" data-embed="screen-notsure" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Not sure screen: low confidence, both sides of its reasoning, and no Approve button. <span class="gb-pat"><i>Confidence signal</i><i>Explainable rationale</i></span></figcaption></figure>
-<p class="col body">Then I listed every way a case can go wrong, sorted by kind using Google PAIR’s error categories, and designed what she sees and what happens next for each:</p>
-<div class="col"><div class="gb-table"><table style="min-width:560px">
-<thead><tr><th>What goes wrong</th><th>Kind</th><th>What she sees</th><th>What happens next</th></tr></thead>
+<figure class="gb-ex col" data-embed="screen-notsure" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Not sure screen: low confidence, both sides of its reasoning, and no Approve button.</figcaption></figure>
+<p class="col body">Then I listed every way a case can go wrong, using Google PAIR’s error categories, and designed what she sees and what happens next for each:</p>
+<div class="col"><div class="gb-table"><table style="min-width:480px">
+<thead><tr><th>What goes wrong</th><th>What she sees</th><th>What happens next</th></tr></thead>
 <tbody>
-<tr><td>A screenshot with no money in it</td><td>Input</td><td>“I read that screenshot, but I don’t see an order, a payment or a refund in it.”</td><td>No case is started from it</td></tr>
-<tr><td>A fact is missing: no company, no date</td><td>Input</td><td>One card that asks for every gap at once, and says why each is needed</td><td>She answers, or picks “I haven’t complained yet”</td></tr>
-<tr><td>No rule clearly fits</td><td>Failstate</td><td>Not sure: a confidence label, both sides of its reasoning, no Approve button</td><td>It asks. Nothing can be approved while it’s unsure</td></tr>
-<tr><td>It isn’t a refund complaint</td><td>Context</td><td>Out of scope: it says so, and where to go instead</td><td>She’s pointed to e-Jagriti, a lawyer, or the bank</td></tr>
-<tr><td>No grievance address it can trust</td><td>Failstate</td><td>Blocked: it won’t guess an address</td><td>She gets the letter to send herself; it keeps tracking the deadline</td></tr>
-<tr><td>The company goes quiet</td><td>Background</td><td>Ignored: the 1915 complaint is already prepared</td><td>One tap escalates, and it’s still her tap</td></tr>
-<tr><td>The AI can’t be reached, or fails code’s checks</td><td>System</td><td>The step says a simpler reader or a fixed template did it</td><td>The case carries on; she checks what it found</td></tr>
+<tr><td>A screenshot with no money in it</td><td>“I read that screenshot, but I don’t see an order, a payment or a refund in it.”</td><td>No case is started from it</td></tr>
+<tr><td>A fact is missing: no company, no date</td><td>One card that asks for every gap at once, and says why each is needed</td><td>She answers, or picks “I haven’t complained yet”</td></tr>
+<tr><td>No rule clearly fits</td><td>Not sure: a confidence label, both sides of its reasoning, no Approve button</td><td>It asks. Nothing can be approved while it’s unsure</td></tr>
+<tr><td>It isn’t a refund complaint</td><td>Out of scope: it says so, and where to go instead</td><td>She’s pointed to e-Jagriti, a lawyer, or the bank</td></tr>
+<tr><td>No grievance address it can trust</td><td>Blocked: it won’t guess an address</td><td>She gets the letter to send herself; it keeps tracking the deadline</td></tr>
+<tr><td>The company goes quiet</td><td>Ignored: the 1915 complaint is already prepared</td><td>One tap escalates, and it’s still her tap</td></tr>
+<tr><td>The AI can’t be reached, or fails code’s checks</td><td>The step says a simpler reader or a fixed template did it</td><td>The case carries on; she checks what it found</td></tr>
 </tbody>
 </table></div></div>
 <figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-<figcaption>Every state is the real screen from the app. Fill in the questions, open the letter, press Send it and then Undo. <span class="gb-pat"><i>Graceful failure</i><i>Escalation pathway</i></span></figcaption>
+<figcaption>Every state is the real screen from the app. Fill in the questions, open the letter, press Send it and then Undo.</figcaption>
 </figure>
 </section>
 </section>
