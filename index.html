@@ -3077,59 +3077,59 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* the notes board closes the page now that the work timeline lives on
    About: the same room above the footer as About's last section */
 #notes:has(+ #contact){padding-bottom:clamp(74px,7.8vw,100px)}
-/* ══ IN THEIR WORDS ══════════════════════════════════════════════════
-   What people said, one at a time: the line that matters in the serif,
-   and a link to the rest of it where they wrote it. The bar under
-   it fills while you read and moves on; hovering, focusing or opening the
-   full text holds it. Reduced motion: no autoplay, no blur. */
-#words{max-width:var(--col);margin:0 auto;padding-bottom:calc(clamp(90px,12vw,130px) + 8px)}  /* the same room below the card as above it */
-.rec-stage{position:relative;min-width:0;transition:height .55s var(--ease)}
-.rec-item{position:absolute;top:0;left:0;right:0;margin:0;min-width:0;opacity:0;visibility:hidden;filter:blur(8px);transform:translateY(6px);
-  transition:opacity .4s ease,filter .4s ease,transform .5s var(--ease),visibility 0s .4s}
-.rec-item.is-on{opacity:1;visibility:visible;filter:none;transform:none;transition:opacity .5s ease .14s,filter .5s ease .14s,transform .6s var(--ease) .14s,visibility 0s}
-.rec-q{margin:0;max-width:720px;font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.7vw,30px);line-height:1.3;letter-spacing:-.015em;color:var(--ink);text-wrap:pretty}
-.rec-q:before{content:"\201C";margin-left:-.42em;padding-right:.04em;color:var(--faint)}
-.rec-q:after{content:"\201D";color:var(--faint)}
-.rec-by{display:flex;align-items:center;gap:12px;margin-top:22px}
-.rec-av{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--surface);
-  font-size:12px;font-weight:500;letter-spacing:.02em;color:var(--muted)}
-.rec-who{display:flex;flex-direction:column;gap:1px;min-width:0}
-.rec-who b{font-size:14px;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
-.rec-who span{font-size:13px;color:var(--muted)}
-.rec-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:18px}
-/* the one action: a plain link to where they wrote it, underlined on hover */
-.rec-src{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);text-decoration:underline;text-decoration-color:transparent;
-  text-underline-offset:3px;white-space:nowrap;transition:color .2s ease,text-decoration-color .2s ease}
-.rec-src:hover{color:var(--ink);text-decoration-color:currentColor}
-.rec-nav{display:flex;align-items:center;gap:16px;margin-top:30px}
-.rec-bars{display:flex;gap:6px}
-.rec-bar{position:relative;width:36px;height:20px;padding:0;border:0;background:none;cursor:pointer}
+/* ══ WHAT PEOPLE SAID ══════════════════════════════════════════════════
+   One card, read top to bottom:
+     progress   thin segments on the card's top edge, one per person, the
+                current one filling as it plays (how many, and where you are,
+                before you read a word)
+     the quote  the line that matters, in the serif; it leads
+     footer     who said it on the left, with the source on their name line;
+                the arrows on the right, on the same row, beside what they
+                change. The footer is pinned to the bottom, so moving between
+                quotes never moves it.
+   Hover, focus or being off screen holds the clock; reduced motion: no
+   autoplay, no blur. */
+#words{max-width:var(--col);margin:0 auto;padding-bottom:calc(clamp(90px,12vw,130px) + 8px)}
+.rec{position:relative;padding:clamp(22px,3.4vw,34px) clamp(22px,4.4vw,48px) clamp(22px,3.4vw,34px);border-radius:8px;background:var(--surface)}
+.rec-bars{display:flex;gap:6px;margin-bottom:clamp(24px,3.6vw,36px)}
+.rec-bar{position:relative;flex:1;height:16px;padding:0;border:0;background:none;cursor:pointer}
 .rec-bar:before,.rec-bar i{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;border-radius:2px}
-.rec-bar:before{background:var(--line)}
+.rec-bar:before{background:color-mix(in srgb,var(--ink) 12%,transparent)}
 .rec-bar i{display:block;background:var(--ink);transform:scaleX(0);transform-origin:0 50%}
 .rec-bar.is-done i{transform:scaleX(1);opacity:.35}
 .rec-bar.is-on i{animation:recFill var(--rec-t,9s) linear forwards}
 .rec.is-held .rec-bar.is-on i,.rec:not(.is-seen) .rec-bar.is-on i{animation-play-state:paused}
 @keyframes recFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.rec-count{margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.09em;color:var(--faint)}
-.rec-count b{font-weight:500;color:var(--ink)}
-.rec-arrow{display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:50%;cursor:pointer;
-  background:var(--surface);color:var(--ink);transition:background .2s ease,transform .2s var(--ease)}
-.rec-arrow[data-dir="-1"]{margin-left:auto}
-.rec-arrow:hover{background:color-mix(in srgb,var(--ink) 9%,var(--surface))}
+.rec-stage{position:relative;min-width:0}
+.rec-item{position:absolute;inset:0;margin:0;min-width:0;opacity:0;visibility:hidden;filter:blur(8px);transform:translateY(6px);
+  transition:opacity .4s ease,filter .4s ease,transform .5s var(--ease),visibility 0s .4s}
+.rec-item.is-on{opacity:1;visibility:visible;filter:none;transform:none;transition:opacity .5s ease .14s,filter .5s ease .14s,transform .6s var(--ease) .14s,visibility 0s}
+.rec-q{margin:0;max-width:720px;font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.7vw,30px);line-height:1.3;letter-spacing:-.015em;color:var(--ink);text-wrap:pretty}
+.rec-q:before{content:"\201C";margin-left:-.42em;padding-right:.04em;color:var(--faint)}
+.rec-q:after{content:"\201D";color:var(--faint)}
+/* the footer row: pinned to the bottom, room kept on the right for the arrows */
+.rec-by{position:absolute;left:0;right:96px;bottom:0;display:flex;align-items:center;gap:12px;margin:0}
+.rec-av{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--bg);font-size:12px;font-weight:500;letter-spacing:.02em;color:var(--muted)}
+.rec-who{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rec-name{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 12px}
+.rec-name b{font-size:14px;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.rec-who > span:last-child{font-size:13px;color:var(--muted)}
+.rec-src{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);text-decoration:underline;text-decoration-color:transparent;
+  text-underline-offset:3px;white-space:nowrap;transition:color .2s ease,text-decoration-color .2s ease}
+.rec-src:hover{color:var(--ink);text-decoration-color:currentColor}
+.rec-nav{position:absolute;right:clamp(22px,4.4vw,48px);bottom:clamp(22px,3.4vw,34px);display:flex;gap:8px}
+.rec-arrow{display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:var(--bg);color:var(--ink);transition:background .2s ease,transform .2s var(--ease)}
+.rec-arrow:hover{background:color-mix(in srgb,var(--ink) 7%,var(--bg))}
 .rec-arrow:active{transform:scale(.94)}
 @media (max-width:576px){
-  .rec-bar{width:28px}
+  /* phone: name and role above, then one row of arrows on the left and the
+     source on the right, level with them */
+  .rec-by{right:0;bottom:56px}
+  .rec-nav{left:clamp(22px,4.4vw,48px);right:auto}
+  .rec-src{position:absolute;right:0;bottom:-45px}
 }
-/* the whole thing sits on a card, the same grey and corners as the work
-   cards above, so it reads as its own section; the small grey pieces
-   inside (initials, arrows) flip to the page colour to stay visible */
-.rec{padding:clamp(24px,4vw,44px) clamp(22px,4.4vw,48px) clamp(22px,3.4vw,36px);border-radius:8px;background:var(--surface)}
-.rec .rec-av,.rec .rec-arrow{background:var(--bg)}
-.rec .rec-arrow:hover{background:color-mix(in srgb,var(--ink) 7%,var(--bg))}
-.rec .rec-bar:before{background:color-mix(in srgb,var(--ink) 12%,transparent)}
 @media (prefers-reduced-motion:reduce){
-  .rec-stage{transition:none}
   .rec-item,.rec-item.is-on{filter:none;transform:none;transition:opacity .2s ease,visibility 0s}
   .rec-bar.is-on i{animation:none;transform:scaleX(1)}
 }
@@ -3361,37 +3361,24 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     </div>
   </section>
 
-  <section id="words" data-section="Recommendations" aria-label="Recommendations">
+  <section id="words" data-section="What people said" aria-label="What people said">
     <div class="rec" data-reveal>
+      <div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Recommendation 1 of 3" aria-current="true"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 2 of 3"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 3 of 3"><i></i></button></div>
       <div class="rec-stage">
         <figure class="rec-item is-on" role="group" aria-roledescription="slide" aria-label="1 of 3">
           <blockquote class="rec-q">Without a doubt, I’d love to have him on any team I lead in the future.</blockquote>
-          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">MR</span><span class="rec-who"><b>Mukesh Kumar Ranjan</b><span>Product Design Manager, Rupeezy · hired and managed Lokesh</span></span></figcaption>
-          <div class="rec-links">
-            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          </div>
+          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">MR</span><span class="rec-who"><span class="rec-name"><b>Mukesh Kumar Ranjan</b><a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span><span>Product Design Manager, Rupeezy · hired and managed Lokesh</span></span></figcaption>
         </figure>
         <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true">
           <blockquote class="rec-q">One of the most collaborative designers I have ever worked with.</blockquote>
-          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">KR</span><span class="rec-who"><b>Kushagra Rustagi</b><span>Ex-PM, Fintech & SaaS · worked with Lokesh at Rupeezy</span></span></figcaption>
-          <div class="rec-links">
-            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          </div>
+          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">KR</span><span class="rec-who"><span class="rec-name"><b>Kushagra Rustagi</b><a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span><span>Ex-PM, Fintech & SaaS · worked with Lokesh at Rupeezy</span></span></figcaption>
         </figure>
         <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true">
           <blockquote class="rec-q">His ability to transform complex requirements into clean, user-friendly designs consistently impressed the team.</blockquote>
-          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">DK</span><span class="rec-who"><b>Dharani KR</b><span>UI Engineer · worked on the same team</span></span></figcaption>
-          <div class="rec-links">
-            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          </div>
+          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">DK</span><span class="rec-who"><span class="rec-name"><b>Dharani KR</b><a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span><span>UI Engineer · worked on the same team</span></span></figcaption>
         </figure>
       </div>
-      <div class="rec-nav">
-        <div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Recommendation 1 of 3" aria-current="true"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 2 of 3"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 3 of 3"><i></i></button></div>
-        <p class="rec-count" aria-hidden="true"><b>01</b> / 03</p>
-        <button type="button" class="rec-arrow" data-dir="-1" aria-label="Previous recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8h-11M6.5 4l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <button type="button" class="rec-arrow" data-dir="1" aria-label="Next recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      </div>
+      <div class="rec-nav"><button type="button" class="rec-arrow" data-dir="-1" aria-label="Previous recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8h-11M6.5 4l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" class="rec-arrow" data-dir="1" aria-label="Next recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
     </div>
   </section>
 
@@ -4270,19 +4257,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   var root = document.querySelector("#words .rec"); if (!root) return;
   var items = [].slice.call(root.querySelectorAll(".rec-item")),
       bars  = [].slice.call(root.querySelectorAll(".rec-bar")),
-      count = root.querySelector(".rec-count b"),
       stage = root.querySelector(".rec-stage"),
       still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
       i = 0, holds = {};
   // One height for all of them: the tallest closed recommendation. Moving
   // between them never moves the controls; only opening the full text of the
   // one showing makes it taller, and closing it (or moving on) brings it back.
+  // the stage fits the longest quote plus the footer row, so nothing moves
   function fit(){
-    var tallest = 0;
-    items.forEach(function(el){ tallest = Math.max(tallest, el.offsetHeight); });
-    stage.style.height = tallest + "px";
+    var q = 0, by = 0, phone = window.innerWidth <= 576;
+    items.forEach(function(el){ q = Math.max(q, el.querySelector(".rec-q").offsetHeight); by = Math.max(by, el.querySelector(".rec-by").offsetHeight); });
+    stage.style.height = (q + (phone ? 24 : 32) + by + (phone ? 56 : 0)) + "px";
   }
-  function pad(n){ return (n < 10 ? "0" : "") + n; }
   function hold(why, on){ if (on) holds[why] = 1; else delete holds[why]; root.classList.toggle("is-held", Object.keys(holds).length > 0); }
   function show(n){
     i = (n + items.length) % items.length;
@@ -4293,7 +4279,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       b.classList.toggle("is-done", k < i); b.classList.remove("is-on");
       if (k === i){ void b.offsetWidth; b.classList.add("is-on"); b.setAttribute("aria-current", "true"); } else b.removeAttribute("aria-current");
     });
-    count.textContent = pad(i + 1);
     fit();
   }
   fit();
