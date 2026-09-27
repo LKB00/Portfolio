@@ -24,7 +24,7 @@
 <link rel="manifest" href="./site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@500&family=Libre+Baskerville&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@400;500;600&family=Libre+Baskerville&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
    TOKENS — same reference system as app-merge-v2 and rise-portal:
@@ -750,32 +750,17 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
 :root[data-theme="dark"] .gbh:before{mix-blend-mode:screen;opacity:.18}
 
-/* the MacBook: Apple's own bezel with the real Getbaq app on it. Each frame
-   is the live app captured at 1100 x 714, one step of Ananya's case; her
-   message is typed live into the app's own composer, placed in the same
-   1100-wide coordinates (--u) so it sits exactly where the real text does */
+/* the MacBook: Apple's own bezel with the real Getbaq app on it. The app is
+   its own markup and CSS, captured from getbaq.vercel.app, run by
+   assets/getbaq-hero.js; the finished screen is the poster underneath */
 .gbh-mac{position:absolute;left:2%;top:50%;width:96%;aspect-ratio:1930/1270;transform:translateY(-49%);
   filter:drop-shadow(0 2.4cqw 2.6cqw rgba(20,40,25,.16)) drop-shadow(0 .4cqw .6cqw rgba(20,40,25,.1))}
 .gbh-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.gbh-screen{position:absolute;left:10.83%;top:11.34%;width:78.34%;height:77.32%;overflow:hidden;container-type:size;background:#F6F4EE;--u:calc(100cqw / 1100)}
-.gbh-f{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .45s ease}
-.gbh-f.on{opacity:1}
-.gbh-f.now{transition:none}
-/* her message, typed into the composer */
-.gbh-type{position:absolute;z-index:50;left:calc(var(--u)*379);top:calc(var(--u)*368.8);width:calc(var(--u)*613);margin:0;font:400 calc(var(--u)*14)/calc(var(--u)*23) var(--app-sans);color:#242020}
-.gbh-type.off{display:none}
-.gbh-ph{position:absolute;left:0;top:0;white-space:nowrap;color:#8A857D}
-.gbh.is-typing .gbh-ph{display:none}
-.gbh-text .c{opacity:0}
-.gbh-text .c.on{opacity:1}
-.gbh-text .c.cur:after{content:"";display:inline-block;width:1px;height:1.1em;margin-left:.5px;vertical-align:-.18em;background:#242020;animation:gbhBlink 1s steps(1) infinite}
-@keyframes gbhBlink{50%{opacity:0}}
-/* where she taps: send, then "Yes, that's right" */
-.gbh-tap{position:absolute;z-index:51;width:calc(var(--u)*40);height:calc(var(--u)*40);margin:calc(var(--u)*-20) 0 0 calc(var(--u)*-20);border-radius:50%;background:rgba(36,32,32,.22);opacity:0;pointer-events:none}
-.gbh-tap-send{left:calc(var(--u)*986.5);top:calc(var(--u)*453)}
-.gbh-tap-yes{left:calc(var(--u)*928);top:calc(var(--u)*457)}
-.gbh.is-tap-send .gbh-tap-send,.gbh.is-tap-yes .gbh-tap-yes{animation:gbhTap .6s ease-out}
-@keyframes gbhTap{0%{opacity:1;transform:scale(.35)}100%{opacity:0;transform:scale(1.5)}}
+.gbh-screen{position:absolute;left:10.83%;top:11.34%;width:78.34%;height:77.32%;overflow:hidden;background:#F6F4EE}
+.gbh-poster{position:absolute;inset:0;width:100%;height:100%}
+/* the live app, drawn by getbaq-hero.js over the poster once it's ready */
+.gbh-app{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .4s ease}
+.gbh-app.on{opacity:1}
 
 /* narrow: the laptop comes close, onto the conversation */
 @container (max-width:520px){
@@ -884,15 +869,8 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="The Getbaq app on a MacBook. Ananya types: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. Getbaq reads it, checks ₹3,499, Flipkart and 2 Aug with her, and once she confirms, finds the rule, sets the reply-by date of 3 Sep 2026 and has her letter ready to sign.">
 <div class="gbh-mac" aria-hidden="true"><div class="gbh-screen">
-<img class="gbh-f on" src="./assets/getbaq-mac-0.webp" width="1600" height="1039" alt="" decoding="async" fetchpriority="high">
-<img class="gbh-f" src="./assets/getbaq-mac-1.webp" width="1600" height="1039" alt="" decoding="async" fetchpriority="low">
-<img class="gbh-f" src="./assets/getbaq-mac-2.webp" width="1600" height="1039" alt="" decoding="async" fetchpriority="low">
-<img class="gbh-f" src="./assets/getbaq-mac-3.webp" width="1600" height="1039" alt="" decoding="async" fetchpriority="low">
-<img class="gbh-f" src="./assets/getbaq-mac-4.webp" width="1600" height="1039" alt="" decoding="async" fetchpriority="low">
-<img class="gbh-f" src="./assets/getbaq-mac-5.webp" width="1600" height="1039" alt="" decoding="async" fetchpriority="low">
-<img class="gbh-f" src="./assets/getbaq-mac-6.webp" width="1600" height="1039" alt="" decoding="async" fetchpriority="low">
-<p class="gbh-type"><span class="gbh-ph">Type a message…</span><span class="gbh-text">Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing.</span></p>
-<span class="gbh-tap gbh-tap-send"></span><span class="gbh-tap gbh-tap-yes"></span>
+<img class="gbh-poster" src="./assets/getbaq-mac-ready.webp" width="1600" height="1039" alt="" fetchpriority="high" decoding="async">
+<div class="gbh-app" inert></div>
 </div><img class="gbh-frame" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" fetchpriority="high" decoding="async"></div>
 </div>
 </figure><div class="col beat gb-hero" data-reveal="">
@@ -1922,73 +1900,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   openFor(location.hash);
 })();
 </script>
-<script>
-/* Hero: Ananya's case on the real app, on a MacBook. Her message types into
-   the composer, she sends it, Getbaq reads it and checks the facts with her,
-   she confirms, and the letter is ready to sign. Plays only while on screen;
-   reduced motion gets the finished frame. */
-(function(){
-  var st = document.querySelector(".gbh"); if (!st) return;
-  var f = [].slice.call(st.querySelectorAll(".gbh-f")), type = st.querySelector(".gbh-type"), text = st.querySelector(".gbh-text");
-  var chars = [];
-  [].slice.call(text.childNodes).forEach(function(n){
-    if (n.nodeType !== 3) return;
-    var fr = document.createDocumentFragment();
-    n.textContent.split("").forEach(function(ch){ var s = document.createElement("span"); s.className = "c"; s.textContent = ch; fr.appendChild(s); chars.push(s); });
-    text.replaceChild(fr, n);
-  });
-  var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var timers = [], playing = false, z = 1, last = f.length - 1, cur = 0;
-  function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
-  function stop(){ timers.forEach(clearTimeout); timers = []; playing = false; }
-  // each frame fades in over the one before, which stays put underneath, so
-  // the screen never dips to empty between steps
-  function show(i, now){
-    var el = f[i];
-    if (now) el.classList.add("now");
-    el.style.zIndex = ++z; el.classList.add("on");
-    if (now){ void el.offsetWidth; el.classList.remove("now"); }
-    cur = i;
-  }
-  function tap(which){ st.classList.remove("is-tap-" + which); void st.offsetWidth; st.classList.add("is-tap-" + which); }
-  function finished(){
-    stop(); st.classList.remove("is-typing", "is-tap-send", "is-tap-yes"); type.classList.add("off");
-    f.forEach(function(x, j){ x.style.zIndex = ""; x.classList.toggle("on", j === last); });
-    cur = last;
-  }
-  if (still){ finished(); return; }
-  function play(){
-    stop(); playing = true; z = 1;
-    f.forEach(function(x, j){ x.style.zIndex = ""; if (j !== cur) x.classList.remove("on"); });
-    f[cur].style.zIndex = 1;
-    st.classList.remove("is-typing", "is-tap-send", "is-tap-yes");
-    chars.forEach(function(c){ c.classList.remove("on", "cur"); });
-    type.classList.remove("off");
-    show(0);
-    var t = 900, prev = null;
-    at(t, function(){ st.classList.add("is-typing"); });
-    chars.forEach(function(c){
-      var ch = c.textContent;
-      t += 8 + Math.random() * 9 + (ch === " " ? 5 : 0) + (ch === "." || ch === "," ? 100 : 0);
-      at(t, function(){ if (prev) prev.classList.remove("cur"); c.classList.add("on", "cur"); prev = c; });
-    });
-    t += 450; at(t, function(){ show(1, true); type.classList.add("off"); });
-    t += 700; at(t, function(){ tap("send"); });
-    t += 220; at(t, function(){ show(2); });
-    t += 1700; at(t, function(){ show(3); });
-    t += 1700; at(t, function(){ show(4); });
-    t += 2300; at(t, function(){ tap("yes"); });
-    t += 220; at(t, function(){ show(5); });
-    t += 1800; at(t, function(){ show(6); });
-    t += 5000; at(t, play);
-  }
-  if ("IntersectionObserver" in window){
-    new IntersectionObserver(function(es){
-      var on = es[es.length - 1].isIntersecting;
-      if (on && !playing) play(); else if (!on && playing) finished();
-    }, { threshold: .35 }).observe(st);
-  } else finished();
-})();
-</script>
+<script src="./assets/getbaq-hero.js?v=5" defer></script>
 <script src="./aitwin.js?v=6" defer></script>
 </body></html>
