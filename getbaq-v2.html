@@ -65,6 +65,18 @@ img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 p{margin:0}
 
+/* ══ READING PROGRESS ══════════════════════════════════════════════════
+   A thin rail across the very top edge, under the floating nav pill:
+   fills as she scrolls the chapters, with a tick at each one that lights
+   up once she's read past it. */
+.gb-progress{position:fixed;top:0;left:0;right:0;height:3px;background:var(--line);z-index:45;pointer-events:none}
+.gb-progress-fill{height:100%;width:0;background:var(--accent);transition:width .1s linear}
+.gb-progress-ticks{position:absolute;inset:0}
+.gb-progress-tick{position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translate(-50%,-50%);
+  background:var(--bg);box-shadow:0 0 0 2px var(--line);transition:background-color .35s ease,box-shadow .35s ease}
+.gb-progress-tick.done{background:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+@media (prefers-reduced-motion:reduce){.gb-progress-fill{transition:none}}
+
 /* ══ NAV ════════════════════════════════════════════════════════════ */
 header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;margin:0;padding:0;z-index:50;pointer-events:none}
 /* On a phone the pill sits over the top status bar / notch and is a
@@ -466,6 +478,23 @@ div.gb-sec{margin-top:var(--s5)}
 .pair > div > p:not([class]){font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted);margin-top:12px}
 .pair .keys{margin-top:12px}
 
+/* guess-before-reveal: the assumption stays visible, the two possible
+   decisions are buttons, and what actually shipped stays hidden until
+   she picks one */
+.gb-guess-tally{font-size:14px;color:var(--muted);margin:0 0 var(--s2)}
+[data-gb-guess] h4,[data-gb-guess] p.body{display:none}
+[data-gb-guess] > div.answered h4,[data-gb-guess] > div.answered p.body{display:block}
+.gb-guess-choices{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+.gb-guess-btn{all:unset;box-sizing:border-box;cursor:pointer;padding:10px 14px;border-radius:8px;background:var(--card,var(--bg));
+  box-shadow:inset 0 0 0 1px var(--line);font-size:15px;line-height:1.4;letter-spacing:-.01em;color:var(--ink);transition:background-color .15s ease,box-shadow .15s ease}
+.gb-guess-btn:hover{background:var(--surface)}
+.gb-guess-btn:focus-visible{box-shadow:inset 0 0 0 1.5px var(--ink)}
+div.answered .gb-guess-btn{cursor:default;pointer-events:none}
+div.answered .gb-guess-btn.correct{box-shadow:inset 0 0 0 1.5px #177A3C;color:#177A3C}
+div.answered .gb-guess-btn.wrong{opacity:.55;text-decoration:line-through}
+:root[data-theme="dark"] div.answered .gb-guess-btn.correct{box-shadow:inset 0 0 0 1.5px #5FCB86;color:#5FCB86}
+[data-gb-guess] h4{margin-top:14px}
+
 /* a panel's verdict, in the sticky notes' tag style */
 .tag{margin:14px 0 0;font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase}
 .tag.t-pos{color:var(--gb-pos)}
@@ -852,6 +881,8 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </head>
 <body>
 
+<div class="gb-progress" aria-hidden="true"><div class="gb-progress-fill" id="gbProgressFill"></div><div class="gb-progress-ticks" id="gbProgressTicks"></div></div>
+
 <header id="siteHeader">
   <div class="navpill">
     <nav class="navlinks" aria-label="Main">
@@ -1114,7 +1145,8 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </div></details>
 <details class="gb-fold" id="s1-5"><summary><span class="gb-fold-t"><b>Three assumptions I changed</b><span>1915 moved from last resort to first escalation, and two more.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div class="gb-fold-body">
-<div class="pair col gb-grid"><div><p class="cap"><b><s>People give up after 2–3 weeks</s></b></p><h4>No give-up trigger</h4><p class="body">No source supports a fixed timeline. So the product removes follow-up effort from day one.</p></div><div><p class="cap"><b><s>1915 is a last resort</s></b></p><h4>1915 moved to the front</h4><p class="body">It’s fast, and 1,000+ companies already respond to it. It became the early, primary escalation.</p></div><div><p class="cap"><b><s>I know the trust limits</s></b></p><h4>Designed conservatively</h4><p class="body">There’s no India evidence on fees or trust. So: free to start, approval on every action, and both stated as open risks.</p></div></div>
+<p class="gb-guess-tally col" data-gb-tally>Guess each one before you reveal it — then read why.</p>
+<div class="pair col gb-grid" data-gb-guess><div><p class="cap"><b><s>People give up after 2–3 weeks</s></b></p><h4>No give-up trigger</h4><p class="body">No source supports a fixed timeline. So the product removes follow-up effort from day one.</p></div><div><p class="cap"><b><s>1915 is a last resort</s></b></p><h4>1915 moved to the front</h4><p class="body">It’s fast, and 1,000+ companies already respond to it. It became the early, primary escalation.</p></div><div><p class="cap"><b><s>I know the trust limits</s></b></p><h4>Designed conservatively</h4><p class="body">There’s no India evidence on fees or trust. So: free to start, approval on every action, and both stated as open risks.</p></div></div>
 <figure class="gb-ex col" data-embed="screen-ignored" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Ignored screen. The 1915 complaint is already prepared, but it’s still a send, so it still needs her tap.</figcaption></figure>
 <p class="col body"><b>The agent had to know the rules, so I read them first</b>, from the primary sources rather than summaries: the E-Commerce Rules 2020; the circular from RBI, India’s central bank, on failed payments; the RBI Ombudsman, its free complaint service; the refund rules of DGCA, the aviation regulator; and the helpline’s programme that connects it to companies. And I collected 30 real cases, anonymised and sourced, that later became the eval set: 12 e-commerce, 7 travel, 4 UPI, 4 ed-tech or subscription, and 3 that are out of scope or fit no category. Six are traps with no matching rule.</p>
 </div></details>
@@ -1700,6 +1732,31 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   },{passive:true});
   onHeaderScroll();
 
+  // reading progress rail: one fill for the whole article, a tick per
+  // chapter that lights up once she's scrolled past its start
+  var gbFill=document.getElementById('gbProgressFill'), gbTicks=document.getElementById('gbProgressTicks');
+  var gbChapters=[];
+  function gbLayoutTicks(){
+    if(!gbTicks) return;
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    if(max<=0) return;
+    gbTicks.innerHTML='';
+    gbChapters=['problem','ai-line','control','wrong','craft'].map(function(id){
+      var el=document.getElementById(id); if(!el) return null;
+      var left=(el.offsetTop/max*100);
+      var tick=document.createElement('span');
+      tick.className='gb-progress-tick'; tick.style.left=left+'%';
+      gbTicks.appendChild(tick);
+      return {top:el.offsetTop,tick:tick};
+    }).filter(Boolean);
+  }
+  function gbUpdateProgress(p,scrollY){
+    if(gbFill) gbFill.style.width=(p*100).toFixed(2)+'%';
+    gbChapters.forEach(function(c){ c.tick.classList.toggle('done', scrollY>=c.top-4); });
+  }
+  gbLayoutTicks();
+  window.addEventListener('resize',gbLayoutTicks,{passive:true});
+
   // back-to-top button with scroll-progress ring
   var totop=document.getElementById('totop');
   var navpill=document.querySelector('.navpill');
@@ -1728,6 +1785,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
       var max=document.documentElement.scrollHeight-window.innerHeight;
       var p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
       totopRing.style.strokeDashoffset=(TOTOP_C*(1-p)).toFixed(2);
+      gbUpdateProgress(p,window.scrollY);
     }
     var totopTicking=false;
     window.addEventListener('scroll',function(){
@@ -1864,6 +1922,51 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   },{threshold:0,rootMargin:'0px 0px -10% 0px'});
   els.forEach(function(el){ io.observe(el); });
   setTimeout(showAll,2500);
+})();
+
+/* guess-before-reveal: each assumption offers a choice between what it
+   actually became and one of the other two real decisions, picked at
+   random, so the wrong answer is never invented — just misplaced */
+(function(){
+  var wrap=document.querySelector('[data-gb-guess]'); if(!wrap) return;
+  var items=[].slice.call(wrap.children);
+  var reals=items.map(function(it){ return it.querySelector('h4').textContent; });
+  var tally=document.querySelector('[data-gb-tally]');
+  var answered=0, correct=0;
+  function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function updateTally(){
+    if(!tally) return;
+    if(answered<items.length){ tally.textContent='Guess each one before you reveal it — then read why.'; }
+    else{ tally.textContent='You matched '+correct+' of '+items.length+' before seeing the answer.'; }
+  }
+  items.forEach(function(it,i){
+    var real=reals[i];
+    var others=reals.filter(function(r,j){ return j!==i; });
+    var distractor=others[Math.floor(Math.random()*others.length)];
+    var choices=shuffle([real,distractor]);
+    var box=document.createElement('div');
+    box.className='gb-guess-choices';
+    box.setAttribute('role','group');
+    box.setAttribute('aria-label','Guess what this became');
+    choices.forEach(function(label){
+      var btn=document.createElement('button');
+      btn.type='button'; btn.className='gb-guess-btn'; btn.textContent=label;
+      btn.addEventListener('click',function(){
+        if(it.classList.contains('answered')) return;
+        it.classList.add('answered'); answered++;
+        var isRight=label===real;
+        if(isRight) correct++;
+        btn.classList.add(isRight?'correct':'wrong');
+        [].slice.call(box.querySelectorAll('.gb-guess-btn')).forEach(function(b){
+          if(b!==btn && b.textContent===real) b.classList.add('correct');
+        });
+        updateTally();
+      });
+      box.appendChild(btn);
+    });
+    it.querySelector('h4').before(box);
+  });
+  updateTally();
 })();
 </script>
 <script>
