@@ -774,23 +774,30 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gbh-case{position:absolute;left:13%;top:53%;z-index:2;width:44%;padding:1.9cqw 2.3cqw .5cqw;border-radius:1.8cqw;
   background:rgba(255,255,255,.95);box-shadow:inset 0 0 0 1px rgba(20,40,25,.06),0 .2cqw .6cqw rgba(20,40,25,.05),0 3.2cqw 6cqw -2.6cqw rgba(20,40,25,.32);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:opacity .6s ease}
-.gbh-case-h{display:flex;align-items:baseline;gap:.9cqw;margin:0 0 1cqw;font:400 max(8.5px,1.2cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gbh-case-h{display:flex;align-items:center;gap:.9cqw;margin:0 0 1.2cqw;font:400 max(8.5px,1.2cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .gbh-case-h b{font:400 max(12px,2cqw)/1 var(--app-serif);letter-spacing:0;text-transform:none;color:var(--ink)}
-.gbh-status{position:relative;margin-left:auto;align-self:center;display:flex;align-items:center;gap:.7cqw;font:400 max(9.5px,1.4cqw)/1 var(--app-sans);letter-spacing:0;text-transform:none;color:var(--muted)}
-.gbh-status:before{content:"";width:max(5px,.75cqw);height:max(5px,.75cqw);border-radius:50%;background:var(--faint);transition:background-color .4s ease,box-shadow .4s ease}
-.gbh-status .s-ready{display:none;color:var(--ink)}
+/* status reads as a real chip, not just a dot: filled once she can act on it */
+.gbh-status{position:relative;margin-left:auto;align-self:center;display:flex;align-items:center;gap:.6cqw;font:400 max(9.5px,1.4cqw)/1 var(--app-sans);letter-spacing:0;text-transform:none;color:var(--muted);
+  padding:.4cqw 1cqw .4cqw .8cqw;border-radius:99px;background:transparent;transition:background-color .4s ease,color .4s ease}
+.gbh-status:before{content:"";width:max(5px,.75cqw);height:max(5px,.75cqw);border-radius:50%;background:var(--faint);transition:background-color .4s ease}
+.gbh-status .s-ready{display:none;color:inherit}
 .gbh.is-screen .gbh-status .s-read{display:none}.gbh.is-screen .gbh-status .s-ready{display:inline}
-.gbh.is-screen .gbh-status:before{background:var(--gb);box-shadow:0 0 0 .5cqw color-mix(in srgb,var(--gb) 16%,transparent)}
+.gbh.is-screen .gbh-status{background:color-mix(in srgb,var(--gb) 14%,transparent);color:var(--gb)}
+.gbh.is-screen .gbh-status:before{background:var(--gb)}
 .gbh-case dl{margin:0}
-.gbh-row{display:grid;grid-template-columns:26% 1fr;align-items:center;gap:1.2cqw;padding:1.2cqw 0;border-top:1px solid rgba(36,32,32,.07)}
+/* each row stacks label over value, with the value's provenance tied right
+   next to it — one statement read left to right, not two columns with a
+   dead gap between them */
+.gbh-row{display:flex;flex-direction:column;gap:.55cqw;padding:1.3cqw 0;border-top:1px solid rgba(36,32,32,.07)}
 .gbh-row dt{font:400 max(8px,1.15cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.gbh-row dd{position:relative;margin:0;display:flex;align-items:center;justify-content:space-between;gap:1cqw;min-height:max(16px,2.6cqw)}
+.gbh-row dd{position:relative;margin:0;display:flex;align-items:baseline;gap:.85cqw;min-height:max(16px,2.6cqw)}
 .gbh-row b{display:block;font:500 max(11px,1.75cqw)/1.2 var(--app-mono);letter-spacing:-.01em;color:var(--ink);white-space:nowrap;
   opacity:0;transition:transform .85s cubic-bezier(.2,.9,.25,1),opacity .3s ease}
-.gbh-row i{flex:none;font:400 max(8.5px,1.25cqw)/1 var(--app-sans);font-style:normal;color:var(--muted);padding:.45cqw .9cqw;border-radius:99px;background:rgba(36,32,32,.05);
-  opacity:0;transform:translateX(-.6cqw);transition:opacity .4s ease,transform .5s var(--ease)}
+.gbh-row i{flex:none;font:400 max(9px,1.3cqw)/1 var(--app-sans);font-style:normal;color:var(--muted);
+  opacity:0;transform:translateX(-.4cqw);transition:opacity .4s ease,transform .5s var(--ease)}
+.gbh-row i:before{content:"·";margin-right:.7cqw;opacity:.6}
 /* the empty slot a value lands in */
-.gbh-row dd:before{content:"";position:absolute;left:0;top:50%;width:42%;height:max(6px,.9cqw);margin-top:calc(max(6px,.9cqw) / -2);border-radius:99px;
+.gbh-row dd:before{content:"";position:absolute;left:0;top:50%;width:38%;height:max(6px,.9cqw);margin-top:calc(max(6px,.9cqw) / -2);border-radius:99px;
   background:linear-gradient(90deg,rgba(36,32,32,.06),rgba(36,32,32,.11),rgba(36,32,32,.06)) 0 0/200% 100%;animation:gbhShine 1.4s linear infinite;transition:opacity .25s ease}
 .gbh-row.on b{opacity:1}
 /* the amount leads, same as the Resolved screen argues: her money, first and biggest */
@@ -800,7 +807,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gbh-row.on dd:before{opacity:0}
 :root[data-theme="dark"] .gbh-case{background:rgba(30,33,31,.92);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 3.2cqw 6cqw -2.6cqw rgba(0,0,0,.6)}
 :root[data-theme="dark"] .gbh-row{border-top-color:rgba(255,255,255,.07)}
-:root[data-theme="dark"] .gbh-row i{background:rgba(255,255,255,.06)}
 :root[data-theme="dark"] .gbh-row dd:before{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.1),rgba(255,255,255,.05)) 0 0/200% 100%}
 
 /* the phone: the real frame, the screen working, then the letter */
@@ -829,8 +835,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   .gbh-head{margin-bottom:2cqw}
   .gbh-case{left:5%;top:auto;bottom:6%;width:60%;padding:3cqw 3.4cqw 1cqw;border-radius:3cqw}
   .gbh-case-h{margin-bottom:1.6cqw}
-  .gbh-row{grid-template-columns:1fr;gap:1.4cqw;padding:2cqw 0}
-  .gbh-row i{padding:.8cqw 1.6cqw}
+  .gbh-row{gap:1.6cqw;padding:2cqw 0}
   .gbh-phone{right:3%;top:auto;bottom:-10%;height:60%}
 }
 @media (max-width:600px){.gbh{aspect-ratio:4/4.3}}
