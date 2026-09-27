@@ -54,7 +54,7 @@
 
   --pad:18px;
    --frameSh:rgba(0,0,0,.14);
-  --accent:#006AD4;
+  --accent:#171717;
   --onAccent:#FFFFFF; --markWash:rgba(251,225,77,.55);
 
     --live:#177A3C;
@@ -69,7 +69,7 @@
   --yellow:#E5CB3C; --onYellow:#2A2400;
   --shadow-float:0 2px 10px -4px rgba(0,0,0,.5),0 0 50px -1px rgba(0,0,0,.35);
    --frameSh:rgba(0,0,0,.6);
-  --accent:#5EA9F5;
+  --accent:#EDEDED;
   --onAccent:#0F0F0F; --markWash:rgba(229,203,60,.30);
 
     --live:#4ED07F;
@@ -676,6 +676,78 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   .path-step:last-child:after{animation:none}
 }
 
+/* ── the work, on the same line ──
+   The story doesn't stop at "Since then": the roles carry on down the
+   same rail, oldest first, and the last dot (the live one) is Now, where
+   a visitor can type their company into the slot. Company in the serif,
+   the role under it, then one line on what the work was. */
+:root{--ok:#1F9D4D}
+.path-co{margin:0;font-family:var(--serif);font-size:15px;font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.path-body .path-role{margin:2px 0 0;font-size:13px;line-height:1.45;color:var(--faint)}
+.path-body .path-role + p{margin-top:6px}
+
+/* before the first job and after it: the rail is dashed through the
+   learning years and solid once the work starts, the change hidden under
+   one small tag on the line. Work dots are lightly filled. --path-split
+   (the tag's centre, measured by the rail script) is where the dashes end;
+   without it the whole rail is solid, as before. */
+.path:before{background:
+  linear-gradient(var(--line),var(--line)) 0 var(--path-split,0px)/100% 100% no-repeat,
+  repeating-linear-gradient(to bottom,var(--line) 0 3px,transparent 3px 7px) 0 0/100% var(--path-split,0px) no-repeat}
+.path-mark{position:relative;z-index:2;margin:0 0 clamp(20px,3vw,26px) -20px;line-height:0}
+.path-mark span{display:inline-block;padding:3px 8px;border-radius:999px;background:var(--bg);box-shadow:0 0 0 1px var(--line);
+  font-family:var(--mono);font-size:10px;font-weight:500;line-height:1.4;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.path-mark ~ .path-step:not(:last-child):before{background:var(--line)}
+
+/* the slot: an empty dashed field that becomes the next entry */
+.path .expslot{display:inline-flex;align-items:center;gap:6px;justify-self:start;min-width:200px;max-width:100%;cursor:text;
+  padding:5px 7px 5px 9px;border-radius:8px;border:1px dashed color-mix(in srgb,var(--accent) 40%,transparent);
+  background:color-mix(in srgb,var(--accent) 5%,transparent);transition:border-color .2s ease,background .2s ease}
+.path .expslot + .exp-desc{margin-top:8px}
+@media (hover:hover){
+  .path .expslot[data-state="empty"]:hover{border-color:color-mix(in srgb,var(--accent) 66%,transparent);background:color-mix(in srgb,var(--accent) 9%,transparent)}
+  .path .expslot[data-state="empty"]:hover .exphint{color:var(--accent)}
+  .path .expslot[data-state="empty"]:hover .expcaret{opacity:1;animation:expblink 1.15s step-end infinite}
+}
+.path .exphint{display:none;flex:0 0 auto;width:14px;height:14px;margin-left:6px;color:color-mix(in srgb,var(--accent) 58%,transparent);transition:color .2s ease}
+.path .exphint svg{width:14px;height:14px;display:block}
+.path .expslot[data-state="empty"] .exphint{display:inline-flex}
+.path .expfield{position:relative;display:inline-flex;align-items:center;min-width:0;flex:1}
+.path .expinput,.path .expname{font-family:var(--serif);font-size:15px;font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.path .expinput{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:0}
+.path .expinput::placeholder{color:var(--faint);opacity:1}
+.path .expname{display:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.path .expcaret{display:inline-block;width:1.5px;height:15px;flex:0 0 auto;margin-right:5px;background:var(--accent);border-radius:1px;opacity:0;transition:opacity .2s ease}
+.path .expacts{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-height:24px}
+.path .expbtn{display:none;width:24px;height:24px;padding:0;border:0;cursor:pointer;border-radius:6px;background:transparent;color:var(--faint);
+  align-items:center;justify-content:center;transition:background .18s ease,color .18s ease}
+.path .expbtn svg{width:15px;height:15px;display:block}
+.path .expbtn:hover{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink)}
+.path .expbtn.is-done:hover{color:var(--ok)}
+.path .expbtn.is-del:hover{color:var(--neg)}
+.path .expbtn.no-ring:focus-visible{outline:none}
+.path .expslot[data-state="editing"]{border-style:solid;border-color:color-mix(in srgb,var(--accent) 65%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.path .expslot[data-state="editing"] .expcaret{display:none}
+.path .expslot[data-state="editing"] .expbtn.is-done{display:inline-flex}
+.path .expslot[data-state="filled"]{border-color:transparent;background:transparent;padding-left:0}
+.path .expslot[data-state="filled"] .expcaret,.path .expslot[data-state="filled"] .expinput{display:none}
+.path .expslot[data-state="filled"] .expname{display:inline-block}
+.path .expslot[data-state="filled"] .expbtn.is-edit,.path .expslot[data-state="filled"] .expbtn.is-del{display:inline-flex;opacity:0;transition:opacity .2s ease,background .18s ease,color .18s ease}
+.path .expslot[data-state="filled"]:hover .expbtn,.path .expslot[data-state="filled"]:focus-within .expbtn{opacity:1}
+@keyframes expblink{0%,100%{opacity:1}50%{opacity:0}}
+@media (pointer:coarse){
+  .path .expbtn{width:38px;height:38px;border-radius:8px}
+  .path .expslot{padding:3px 4px 3px 9px;gap:2px}
+  .path .expslot[data-state="filled"] .expbtn.is-edit,.path .expslot[data-state="filled"] .expbtn.is-del{opacity:1}
+}
+@media (max-width:640px){
+  .path .expinput,.path .expname{font-size:16px}
+  .path .expslot{min-width:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .path .expslot[data-state="empty"]:hover .expcaret{animation:none;opacity:.9}
+}
+
 /* two things he does with AI and one he refuses — so the refusal looks
    like one, instead of reading as a third feature */
 .labelrow > div.is-no{background:none;box-shadow:inset 0 0 0 1px var(--line)}
@@ -1256,7 +1328,7 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="experience">
     <div class="path" data-reveal>
       <div class="path-step">
         <p class="path-when">IIT Guwahati</p>
@@ -1270,9 +1342,46 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
         <p class="path-when">2022</p>
         <div class="path-body"><p>I graduated into a market with no appetite for juniors. It took <span class="emph">four months of making work nobody asked for</span> before someone paid me for it.</p></div>
       </div>
+      <div class="path-mark" role="separator" aria-label="First job"><span>First job</span></div>
       <div class="path-step">
         <p class="path-when">Since then</p>
         <div class="path-body"><p>Mostly <span class="emph">the only designer on the product</span>, which taught me the parts of the job nobody assigns you and what solo work costs. <span class="mark">I learned to pressure-test my own thinking because there was nobody else to do it.</span> That story is in the case studies.</p></div>
+      </div>
+      <div class="path-step">
+        <p class="path-when">Apr 2023 – Jan 2024</p>
+        <div class="path-body"><h3 class="path-co">Sustainability Economics.ai</h3><p class="path-role">UI/UX Designer</p><p>Sole designer on a net-zero carbon accounting platform. Built for banks, insurers and corporates.</p></div>
+      </div>
+      <div class="path-step">
+        <p class="path-when">Feb 2024 – Aug 2025</p>
+        <div class="path-body"><h3 class="path-co">Rupeezy</h3><p class="path-role">Product Designer</p><p>Owned the trading app end to end: 200K+ registered users, 97% of company revenue. Built the partner platform and the design system.</p></div>
+      </div>
+      <div class="path-step">
+        <p class="path-when">Sep 2025 – Nov 2025</p>
+        <div class="path-body"><h3 class="path-co">Runable AI</h3><p class="path-role">Founding Product Designer</p><p>Only designer, no PM. Took an AI agent platform from concept to public launch.</p></div>
+      </div>
+      <div class="path-step">
+        <p class="path-when">Dec 2025 – Apr 2026</p>
+        <div class="path-body"><h3 class="path-co">ZZAZZ AI</h3><p class="path-role">Product Designer</p><p>Priced content for the post-AI web. Designed the publisher product and rebuilt the payment flow from seven steps to four.</p></div>
+      </div>
+      <div class="path-step">
+        <p class="path-when">Now</p>
+        <div class="path-body">
+          <div class="expslot" id="expSlot" data-state="empty">
+            <span class="expfield">
+              <span class="expcaret" aria-hidden="true"></span>
+              <input class="expinput" id="expInput" type="text" maxlength="26" autocomplete="off" spellcheck="false"
+                     placeholder="Your company here" aria-label="Type your company name into the timeline">
+              <span class="expname" id="expName" aria-live="polite"></span>
+              <span class="exphint" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/></svg></span>
+            </span>
+            <span class="expacts">
+              <button type="button" class="expbtn is-done" id="expDone" aria-label="Save" title="Save"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <button type="button" class="expbtn is-edit" id="expEdit" aria-label="Edit" title="Edit"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10.9 2.9a1.55 1.55 0 0 1 2.2 2.2L6 12.2l-3 .8.8-3z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <button type="button" class="expbtn is-del" id="expDel" aria-label="Remove" title="Remove"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 4.2 11.8 11.8M11.8 4.2 4.2 11.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+            </span>
+          </div>
+          <p class="exp-desc">Open to work. The problem matters more than the industry.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1864,10 +1973,14 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
   var DOT_TOP = 5;    // matches .path-step::before's top offset
   var DOT_R = 5;       // half the 10px dot -- its centre, not its edge
 
+  var mark = path.querySelector(".path-mark");
+
   function measure(){
     var dotCenter = lastStep.offsetTop + DOT_TOP + DOT_R;
     var len = Math.max(0, dotCenter - LINE_TOP);
     path.style.setProperty("--path-line-h", len + "px");
+    // dashes above the first-job tag, solid below it
+    if (mark) path.style.setProperty("--path-split", Math.max(0, mark.offsetTop + mark.offsetHeight / 2 - LINE_TOP) + "px");
   }
 
   measure();
@@ -1896,6 +2009,66 @@ section:has(+ #contact){padding-bottom:clamp(46px,7vw,72px)}
   }
   window.addEventListener("scroll",function(){ if(!t){ t=true; requestAnimationFrame(f); } },{passive:true});
   f();
+})();
+</script>
+<script>
+/* the Now slot: a visitor types their company in, and it stays for them */
+(function(){
+  var slot=document.getElementById("expSlot"); if(!slot) return;
+  var input=document.getElementById("expInput"),
+      name =document.getElementById("expName"),
+      bDone=document.getElementById("expDone"),
+      bEdit=document.getElementById("expEdit"),
+      bDel =document.getElementById("expDel"),
+      desc =slot.parentNode.querySelector(".exp-desc"),
+      KEY="lb.openslot", DESC0=desc?desc.textContent:"";
+
+  function store(v){ try{ v?localStorage.setItem(KEY,v):localStorage.removeItem(KEY);}catch(e){} }
+  function read(){ try{ return localStorage.getItem(KEY)||""; }catch(e){ return ""; } }
+
+  function setState(st){
+    slot.setAttribute("data-state",st);
+    // the row reads as a real entry once it is filled
+    if(desc) desc.textContent = st==="filled"
+      ? "That would work. Email me and let\u2019s talk."
+      : DESC0;
+  }
+  function fill(v){
+    name.textContent=v; input.value=v; store(v); setState("filled");
+  }
+  var mouseCommit=false;
+  function commit(){
+    var v=input.value.trim().replace(/\s+/g," ");
+    if(v){
+      fill(v);
+      if(mouseCommit) bEdit.classList.add("no-ring");
+      bEdit.focus();
+      if(mouseCommit) bEdit.addEventListener("blur",function h(){ bEdit.classList.remove("no-ring"); bEdit.removeEventListener("blur",h); });
+    } else { clear(); }
+  }
+  function clear(){ input.value=""; name.textContent=""; store(""); setState("empty"); }
+
+  /* the whole slot is the target, not just the 1px of text inside it */
+  slot.addEventListener("click",function(e){
+    if(e.target.closest("button")) return;
+    if(slot.getAttribute("data-state")==="empty") input.focus();
+  });
+  input.addEventListener("focus",function(){ if(slot.getAttribute("data-state")!=="filled") setState("editing"); });
+  input.addEventListener("blur", function(){
+    if(slot.getAttribute("data-state")==="editing" && !input.value.trim()) setState("empty");
+  });
+  input.addEventListener("keydown",function(e){
+    if(e.key==="Enter"){ e.preventDefault(); mouseCommit=false; commit(); }
+    else if(e.key==="Escape"){ e.preventDefault(); input.value=read(); read()?fill(read()):clear(); input.blur(); }
+  });
+  bDone.addEventListener("mousedown",function(e){ e.preventDefault(); mouseCommit=true; });
+  bDone.addEventListener("click",commit);
+  bEdit.addEventListener("click",function(){
+    setState("editing"); input.focus(); input.select();
+  });
+  bDel.addEventListener("click",function(){ clear(); input.focus(); });
+
+  var saved=read(); if(saved) fill(saved);
 })();
 </script>
 <script src="./aitwin.js?v=6" defer></script>

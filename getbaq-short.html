@@ -1,0 +1,1448 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Getbaq case study, short read: designing an AI agent that fights for your refund</title>
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
+<meta name="description" content="The short read: how I designed Getbaq, an AI agent where you stay the approver. It finds the rule, counts the deadline and writes the complaint, and never sends without you.">
+<link rel="canonical" href="https://www.lokeshbhatia.com/getbaq-short.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lokesh Bhatia">
+<meta property="og:title" content="Getbaq case study, short read: designing an AI agent that fights for your refund">
+<meta property="og:description" content="The short read: how I designed Getbaq, an AI agent where you stay the approver. It finds the rule, counts the deadline and writes the complaint, and never sends without you.">
+<meta property="og:url" content="https://www.lokeshbhatia.com/getbaq-short.html">
+<meta property="og:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
+<meta name="twitter:title" content="Getbaq case study, short read: designing an AI agent that fights for your refund">
+<meta name="twitter:description" content="The short read: how I designed Getbaq, an AI agent where you stay the approver. It finds the rule, counts the deadline and writes the complaint, and never sends without you.">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@500&family=Libre+Baskerville&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   TOKENS — same reference system as app-merge-v2 and rise-portal:
+   warm off-white ground, serif headings, Geist sans body, near-flat
+   neutral surfaces. Ported wholesale so all three case studies read
+   as one portfolio instead of three different design languages.
+   ================================================================ */
+:root{
+   --s2:16px; --s3:32px; --s4:56px; --s5:96px;
+
+  --t-body:16px;
+
+  --bg:#FAFAFA; --ink:#242020;  --muted:#7A7676;  --faint:#B0ACAC;
+  --line:rgba(36,32,32,.10); --surface:#F2F2F2;
+  --accent:#171717; --neg:#C64B3D; --live:#177A3C;
+
+  --serif:'STIX Two Text','STIX Two Math',Georgia,serif;
+  --sans:'Geist','Inter',system-ui,sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+:root[data-theme="dark"]{
+  --bg:#0F0F0F; --ink:#F3EEEE; --body:#EDEDED; --muted:#A69E9E;  --faint:#6E6666;
+  --line:rgba(255,255,255,.10); --surface:#1A1A1A;
+  --accent:#EDEDED; --neg:#E0665A; --live:#4ED07F;
+
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.6s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+[data-reveal].shown{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}::view-transition-old(root),::view-transition-new(root){animation:none}}
+html[data-theme="dark"]{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);
+  font-size:var(--t-body);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+p{margin:0}
+
+/* ══ NAV ════════════════════════════════════════════════════════════ */
+header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;margin:0;padding:0;z-index:50;pointer-events:none}
+/* On a phone the pill sits over the top status bar / notch and is a
+   long thumb-reach from where the hand actually holds the device.
+   Anchoring it to the bottom instead — same one-handed-reach logic as
+   iOS/Android's own bottom tab bars — fixes both. env() keeps it clear
+   of the home-indicator gesture area on notched phones. */
+@media (max-width:576px){
+  header,header.scrolled{top:auto;bottom:calc(16px + env(safe-area-inset-bottom))}
+}
+.navpill{pointer-events:auto;position:relative;width:max-content;margin:0 auto;display:flex;align-items:center;gap:2px;
+  padding:4px 5px;border:0;border-radius:999px;box-shadow:none;
+  background:color-mix(in srgb,var(--surface) 85%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4);
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+header.scrolled .navpill{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;
+  box-shadow:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08)}
+nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:500}
+.navlink{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;
+  font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:background .2s var(--ease),color .2s var(--ease)}
+.navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.navlink[aria-current="page"]{color:var(--ink)}
+.themebtn{width:28px;height:28px;margin-left:2px;padding:0;border:0;border-radius:999px;
+  background:transparent;color:var(--muted);display:inline-grid;place-items:center;cursor:pointer}
+.themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.icon-sun,.icon-moon{line-height:0}
+html:not([data-theme="dark"]) .icon-moon{display:none}
+html[data-theme="dark"] .icon-sun{display:none}
+.burger{position:relative;display:grid;place-items:center;width:34px;height:34px;border:0;
+  border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
+.burger span.bars{display:flex;flex-direction:column;gap:4px}
+.burger span.bars span{display:block;width:18px;height:2px;border-radius:2px;background:currentColor}
+.burger .bicon-bars,.burger .bicon-x{grid-area:1/1;display:grid;place-items:center;transition:opacity .22s ease,transform .22s ease}
+.burger .bicon-x{opacity:0;transform:rotate(-45deg)}
+.burger[aria-expanded="true"] .bicon-bars{opacity:0;transform:rotate(45deg)}
+.burger[aria-expanded="true"] .bicon-x{opacity:1;transform:rotate(0)}
+@media (min-width:641px){header .burger{display:none}}
+@media (max-width:576px){nav.navlinks a{display:none}}
+
+/* ══ MOBILE MENU ════════════════════════════════════════════════════ */
+body.menu-open{overflow:hidden;position:fixed;width:100%}
+body.menu-open header{z-index:70}
+.mobilenav{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;min-height:100dvh;
+  overflow-y:auto;overscroll-behavior:contain;padding-top:calc(59px + env(safe-area-inset-top));
+  background:var(--bg);visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s}
+.mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
+.mobilenav a:focus:not(:focus-visible),.mobilenav button:focus:not(:focus-visible){outline:none}
+/* ══ MOBILE MENU — the work leads, the wayfinding follows ═══════════════
+   Home/About is upkeep, not content -- you're already on one of them
+   once this sheet is open. The work is the actual reason a stranger
+   opens this menu, so it's promoted and given the page's own voice
+   back: a serif title, a small sans index number standing in for the
+   screenshot there's no room for here. Wayfinding drops to one quiet
+   line each. */
+.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:2px;padding:0 18px}
+.mrow{display:flex;align-items:center;gap:13px;min-height:48px;padding:12px 0;
+  color:var(--ink);border-bottom:1px solid var(--line);text-decoration:none}
+.mrow:last-child{border-bottom:0}
+.mrow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px}
+.mrow .mlabel{flex:1;font-family:var(--sans);font-size:16px;font-weight:400;line-height:1.2;
+  letter-spacing:-.01em;color:var(--faint)}
+.mrow.current .mlabel{color:var(--ink);font-weight:500}
+.mcases{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(30px,5.5vh,42px);padding:0 18px}
+.mgroup{margin:0 0 14px;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--faint)}
+.mcase{display:flex;align-items:flex-start;gap:14px;padding:16px 0;color:var(--ink);border-bottom:1px solid var(--line);text-decoration:none}
+.mcase:last-child{border-bottom:0}
+.mcase-num{flex:0 0 auto;padding-top:4px;font-family:var(--sans);font-size:11px;font-weight:500;
+  letter-spacing:.03em;color:var(--faint)}
+.mcase-x{flex:1;min-width:0}
+.mcase-t{display:block;font-family:var(--serif);font-size:19px;font-weight:400;line-height:1.32;
+  letter-spacing:-.008em;color:var(--ink)}
+.mcase-m{display:block;margin-top:6px;font-family:var(--sans);font-size:10.5px;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.mcase[aria-current="page"] .mcase-num,
+.mcase[aria-current="page"] .mcase-t{color:var(--accent)}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding:21px 18px clamp(22px,4vh,30px)}
+/* The header stays elevated above this full-screen menu so its own
+   close (X) button stays reachable -- but with the header now at the
+   bottom on phones, that puts it right on top of these buttons unless
+   the sheet leaves room for it. */
+@media (max-width:576px){
+  .mfoot{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+}
+/* ══ BOTTOM SHEET ═══════════════════════════════════════════════════
+   The header pill already lives at the bottom of the screen on phones
+   -- that's where the burger/close control sits -- so a full-screen
+   takeover panel opening from there reads backwards. A sheet that
+   rises from the same edge as its own trigger, leaves the rest of the
+   screen dimmed but glanceable, and can be dismissed with a downward
+   swipe or a tap outside is the pattern a thumb already expects. */
+@media (max-width:576px){
+  .mobilenav{justify-content:flex-end;padding-top:0;background:rgba(20,18,16,.42);overflow-y:hidden}
+  html[data-theme="dark"] .mobilenav{background:rgba(0,0,0,.6)}
+  .msheet{width:100%;max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    background:var(--bg);border-radius:20px 20px 0 0;
+    box-shadow:0 -14px 34px -18px rgba(0,0,0,.32);
+    padding-bottom:env(safe-area-inset-bottom);
+    transform:translateY(100%);transition:transform .34s cubic-bezier(.32,.72,0,1)}
+  .mobilenav.open .msheet{transform:translateY(0)}
+  .mhandle-zone{display:flex;justify-content:center;align-items:center;
+    padding:10px 0 6px;touch-action:none;cursor:grab}
+  .mhandle{width:36px;height:4px;border-radius:2px;background:var(--line)}
+  .mlinks{margin-top:2px}
+}
+@media (prefers-reduced-motion:reduce){
+  .msheet{transition:none}
+}
+.mailbtn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:52px;padding:0;border:0;
+  border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);background:transparent;
+  font-size:15px;font-weight:500;color:var(--ink);cursor:pointer}
+.mailbtn:hover{box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent)}
+.mresume{display:flex;align-items:center;justify-content:center;gap:7px;min-height:52px;
+  border-radius:999px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:500;text-decoration:none}
+.mresume:hover{background:var(--accent);color:var(--ink)}
+
+/* ══ OVERLAYS ═══════════════════════════════════════════════════════ */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;
+  gap:10px;padding:11px 16px;border-radius:16px;background:var(--surface);color:var(--ink);
+  box-shadow:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);white-space:nowrap}
+.toast.show{display:inline-flex}
+.totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;padding:0;border:0;border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:none;opacity:0;visibility:hidden;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1),visibility 0s linear .2s}
+.totop.show{opacity:1;visibility:visible;transform:scale(1);pointer-events:auto;transition-delay:0s,0s,0s}
+.totop-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none}
+.totop-ring circle{fill:none;}
+.totop-track{stroke:var(--line)}
+.totop-prog{stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;}
+
+@media (max-width:576px){.totop{right:auto}.totop svg:not(.totop-ring){width:14px;height:14px}}
+/* Mobile back-to-top used to stack directly above the nav pill. Now
+   they share one row, pill on the left, button on the right: the pill
+   sits centred on its own until there's something to scroll back to,
+   then steps aside to make room. Both sides use each element's own
+   -50%/+50% (not a guessed pixel width) so this holds regardless of
+   how wide the pill ends up. header.totop-on mirrors #totop's own
+   .show condition (same scrollY>400 check, toggled together in JS) so
+   the CSS never has to guess the button's visibility from outside it. */
+@media (max-width:576px){
+  .totop{bottom:calc(16px + env(safe-area-inset-bottom));
+
+    transition:opacity .2s ease,transform .5s cubic-bezier(.34,1.56,.64,1),visibility 0s linear .2s}
+
+  .navpill{transition:background .2s var(--ease),box-shadow .2s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
+
+}
+
+/* ---------------- LAYOUT — fixed left TOC rail, single reading column ---------------- */
+/* bottom padding dropped to 0: #contact footer already carries its own
+   36px bottom padding, matching the home page's footer exactly — the
+   64px here was stacking on top of that and pushing this page's true
+   bottom edge ~64px further than every other page's */
+.shell{position:relative;max-width:1180px;margin:0 auto;padding:110px clamp(18px,3.4vw,48px) 0}
+.toc{position:fixed;top:120px;left:clamp(18px,3.4vw,48px);width:170px;display:flex;flex-direction:column;gap:8px}
+.toc a{position:relative;font-family:var(--sans);font-size:13px;font-weight:400;color:var(--faint);text-decoration:none;
+  transition:color .3s var(--ease)}
+.toc a.active{color:var(--ink)}
+@media(max-width:980px){.toc{display:none}}
+
+.col{max-width:684px;margin-left:auto;margin-right:auto}
+@media(min-width:981px){.col{margin-left:250px;margin-right:0}}
+.wide{max-width:684px;margin-left:auto;margin-right:auto}
+@media(min-width:981px){.wide{margin-left:250px;margin-right:0}}
+
+/* ---------------- HERO ---------------- */
+.hero-shot{border-radius:8px;overflow:hidden}
+h1{font-family:var(--serif);
+  color:var(--ink);margin:var(--s4) 0 0}
+.dek{font-family:var(--sans);font-weight:400;font-size:var(--t-body);line-height:1.6;
+  color:var(--muted);margin-top:var(--s3);max-width:none}
+.dek b{color:var(--ink);font-weight:400}
+
+/* live-link: not just a small badge here — on this page it's the primary
+   way to reach the actual running product, so it earns more presence
+   than the compact home-card version. Three intuitive-design choices:
+   (1) the domain is spelled out in the pill itself, not hidden behind
+   the click — a link should say where it goes before you commit to it;
+   (2) the dot gets a soft expanding ring, the common "this is live/
+   active" signal, instead of sitting there as inert decoration;
+   (3) the arrow nudges along its own diagonal on hover, borrowing the
+   exact hover language .nextlink already uses elsewhere on this page,
+   so the two "leaving this page" affordances feel like one language. */
+.livelink{display:inline-flex;align-items:center;gap:10px;margin-top:var(--s3);padding:10px 16px;
+  border-radius:999px;text-decoration:none;white-space:nowrap;color:var(--live);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--live) 30%,transparent);
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+
+.livelink svg{flex:0 0 auto;transition:transform .3s var(--ease)}
+@media (hover:hover){
+  .livelink:hover{background:color-mix(in srgb,var(--live) 10%,transparent);
+    box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--live) 55%,transparent)}
+  .livelink:hover svg{transform:translate(2px,-2px)}
+}
+
+/* ---------------- SECTION RHYTHM ---------------- */
+section{margin-top:var(--s5)}
+.eyebrow{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--faint);margin:0 0 var(--s2)}
+h2.say{font-family:var(--serif);
+  color:var(--ink);margin:0 0 var(--s2)}
+p.body{font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:1.6;color:var(--muted)}
+p.body + p.body{margin-top:var(--s2)}
+p.body b{color:var(--ink);font-weight:400}
+.beat{margin-top:var(--s4)}
+
+/* placeholder for a screenshot not attached yet: shows which file belongs
+   here and what it should contain, so the empty card is still legible in
+   place of a real image. self-clearing: the instant a real <img> lands
+   inside the card the placeholder disappears on its own. */
+
+.cap{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--faint);margin-top:10px}
+
+/* ---------------- LIST (the reference's bulleted key/value rows) ---------------- */
+.keys{list-style:none;margin:var(--s3) 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s2) var(--s4)}
+.keys li{display:flex;gap:10px}
+.keys i{font-style:normal;font-family:var(--sans);color:var(--accent);font-weight:600;min-width:15px;font-size:14px}
+.keys p{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--muted);line-height:1.6}
+
+/* ══ NEXT ═══════════════════════════════════════════════════════════ */
+#next{margin-top:var(--s5);padding:0;max-width:684px;margin-left:auto;margin-right:auto}
+@media(min-width:981px){#next{margin-left:250px;margin-right:0}}
+.nextlink{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:18px 32px;padding:clamp(28px,4.6vw,48px);border-radius:16px;background-color:var(--ink);color:var(--bg);text-decoration:none;
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 18px 36px -20px rgba(0,0,0,.3);
+  background-image:linear-gradient(155deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 50%)}
+.nextlink .nextlbl{grid-column:1;font-family:var(--sans);font-size:14px;color:color-mix(in srgb,var(--bg) 60%,transparent)}
+.nextlink .nexttitle{grid-column:1;max-width:22ch;font-family:var(--serif);font-size:clamp(22px,3vw,28px);line-height:1.15;letter-spacing:-.02em;color:var(--bg);margin-top:8px}
+.nextlink svg{grid-column:2;grid-row:1 / 3;align-self:end;box-sizing:border-box;width:clamp(44px,5vw,56px);height:clamp(44px,5vw,56px);padding:14px;border-radius:50%;background:var(--bg);color:var(--ink);transition:transform .35s var(--ease)}
+@media (hover:hover){.nextlink:hover svg{transform:translateX(6px) rotate(-45deg)}}
+
+/* ══ FOOTER ═════════════════════════════════════════════════════════ */
+#contact{margin-top:var(--s4);max-width:684px;margin-left:auto;margin-right:auto}
+@media(min-width:981px){#contact{margin-left:250px;margin-right:0}}
+#contact footer{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;width:auto;margin:0;padding:24px 0 36px;background:transparent;text-align:center}
+#contact .footcredit{margin:6px 0 0;font-family:var(--sans);
+  color:var(--faint);text-align:center;white-space:nowrap}
+
+.fmark{display:inline-grid;place-items:center;
+  width:20px;height:20px;flex:0 0 auto;
+  border-radius:50%;overflow:hidden;margin:0 2px;
+  vertical-align:middle}
+.fme img{width:20px!important;height:20px!important;
+  object-fit:cover;display:block;border-radius:50%}
+.fai{background:color-mix(in srgb,var(--accent) 12%,transparent);
+  color:var(--accent);font-size:11px;line-height:1}
+.fbub{position:relative;display:inline-block;vertical-align:middle;line-height:0}
+.fbub::before,.fbub::after{opacity:0;pointer-events:none;
+  transition:opacity .16s var(--ease),transform .22s var(--ease)}
+.fbub::after{content:attr(data-bub);position:absolute;left:50%;bottom:calc(100% + 9px);
+  transform:translateX(-50%) translateY(3px);
+  white-space:nowrap;border-radius:6px;padding:5px 9px;
+  background:var(--ink);color:var(--bg);
+  font-family:var(--sans);font-size:11px;font-weight:500;
+  letter-spacing:-.005em;line-height:1.2;box-shadow:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);z-index:6}
+.fbub::before{content:"";position:absolute;left:50%;bottom:calc(100% + 5px);
+  width:7px;height:7px;background:var(--ink);
+  transform:translateX(-50%) translateY(3px) rotate(45deg);z-index:5}
+@media (hover:hover){
+  .fbub:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
+  .fbub:hover::before{opacity:1;transform:translateX(-50%) translateY(0) rotate(45deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .fbub::before,.fbub::after{transition:opacity .16s linear}
+  .fbub:hover::after{transform:translateX(-50%)}
+  .fbub:hover::before{transform:translateX(-50%) rotate(45deg)}
+}
+.fmark{transition:transform .34s var(--ease),background .34s var(--ease)}
+@media (hover:hover){
+  .fmark{cursor:default}
+  .fme:hover{transform:scale(1.35) rotate(-8deg)}
+  .fai:hover{transform:scale(1.35) rotate(180deg);
+    background:color-mix(in srgb,var(--accent) 26%,transparent)}
+}
+@media (prefers-reduced-motion:reduce){
+  .fmark{transition:none}
+  .fme:hover,.fai:hover{transform:none}
+}
+.fsr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
+  white-space:nowrap;border:0}
+
+@media(max-width:860px){
+  :root{--s5:64px;--s4:44px}
+}
+
+/* phones: the nav lives at the bottom of the screen, so the top no
+   longer needs a bar's worth of clearance; the page starts close to the
+   top edge, clear of the notch */
+@media (max-width:576px){ .shell{padding-top:calc(40px + env(safe-area-inset-top))} .shell > .wide:first-child,.shell > .toc + .wide{margin-top:0} }
+
+/* ===== TYPE & SPACING PASS =====
+   Same short list as the homepage, About and the other case studies.
+   Serif heads at 500 and 1.3, sized like the homepage (the title was
+   40px on a phone). Eyebrows and "Next case study" in the mono 11px
+   label. Captions and the live-product caveat 13px muted at one 12px
+   gap (14px and 12.5px faint before), emphasis and the live link at
+   500, off-palette greys retired, the credit line at 13px. */
+:root{--mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;--body:var(--ink);}
+h1{font-size:clamp(26px,3.6vw,36px);font-weight:500;line-height:1.3;letter-spacing:-.02em}
+h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-spacing:-.018em}
+h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter-spacing:-.012em}
+.nextlink .nexttitle{font-weight:500}
+.dek,p.body,.quote p{letter-spacing:-.01em}
+.dek b,p.body b,.quote p b{font-weight:500;color:var(--ink)}
+.eyebrow,.nextlink .nextlbl{
+  font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase}
+.eyebrow{margin-bottom:12px;text-wrap:balance}
+
+.cap,.cite,figcaption{font-size:13px;line-height:1.55;letter-spacing:-.01em;color:var(--muted)}
+.cap,.cite,figcaption{margin-top:12px}
+.cap b{color:var(--ink);font-weight:500}
+#contact .footcredit{font-size:13px;line-height:1.55;letter-spacing:-.01em}
+@media (max-width:400px){#contact .footcredit{font-size:12px}}
+@media (max-width:340px){#contact .footcredit{font-size:12px;white-space:normal}}
+
+/* ===== BACK TO TOP, READ AS PROGRESS =====
+   A blue arc sweeping round a grey circle is the loading spinner
+   everyone knows, so the ring read as "something is loading", not
+   "this is how far you are". Now it is a gauge: the whole track is
+   drawn, and the part you have read fills in ink. At the end of the
+   page the ring closes and the arrow lifts once: you are done here,
+   this takes you back up. */
+.totop-track{stroke:color-mix(in srgb,var(--ink) 12%,transparent)}
+.totop-prog{stroke:var(--ink);transition:stroke-dashoffset .1s linear,opacity .3s ease}
+.totop > svg:not(.totop-ring){transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.totop.is-done > svg:not(.totop-ring){animation:totopLift .9s cubic-bezier(.22,1,.36,1) .15s 1}
+@keyframes totopLift{0%{transform:none}40%{transform:translateY(-3px)}100%{transform:none}}
+/* 44px everywhere: at 56 it outweighed the nav pill (37) and the
+   AI twin pill (46). The ring's stroke grows to stay ~2px on screen. */
+.totop{width:44px;height:44px}
+.totop-ring circle{stroke-width:2.5}
+.totop > svg:not(.totop-ring){width:15px;height:15px}
+/* same baseline as the "Ask my AI twin" pill: its centre sits 41px
+   up (18px + 46/2), so this 44px button's bottom is 19px */
+@media (min-width:577px){ .totop{bottom:calc(19px + env(safe-area-inset-bottom))} }
+@media (hover:hover){ .totop:hover > svg:not(.totop-ring){transform:translateY(-2px)} }
+@media (prefers-reduced-motion:reduce){
+  .totop.is-done > svg:not(.totop-ring){animation:none}
+  .totop:hover > svg:not(.totop-ring){transform:none}
+}
+
+/* ===== GETBAQ, IN THE CASE-STUDY LAYOUT =====
+   Same layout as App Merge, Rise Portal and Web Terminal: one 684px
+   reading column beside the contents rail, the hero image first, then
+   label, title, intro and facts; sections as a label, a heading and body;
+   grey panels for side-by-side points, the tinted quote box, the hinge
+   statement between rules, Rise Portal's figure row for numbers. The
+   component rules below are App Merge's own; the few things only Getbaq
+   has (tables, "this, so that" rows, the live exhibits) get the plainest
+   styling in the same family. The words are unchanged. */
+:root{--card:#FFFFFF;--gb-pos:#2F8F4E}
+:root[data-theme="dark"]{--card:#161616;--gb-pos:#4ED07F}
+
+/* hero */
+.gb-hero .eyebrow{margin:0}
+.gb-hero h1{margin-top:var(--s2)}
+.gb-hero h1 em{font-style:normal}
+.gb-hero .livelink{margin-top:var(--s3)}
+h3.say{font-family:var(--serif);color:var(--ink);margin:0 0 var(--s2)}
+
+/* sections and chapters */
+div.gb-sec{margin-top:var(--s5)}
+.gb-sec > * + *{margin-top:var(--s3)}
+.gb-sec > .col:first-child + *{margin-top:0}
+.gb-sec > p.body + p.body{margin-top:var(--s2)}
+.gb-chapter > .gb-sec:first-of-type{margin-top:var(--s4)}
+.gb-chapter > .col:first-child .dek{margin-top:0}
+
+/* facts (App Merge's .meta, two across for four facts) */
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3);margin-top:var(--s4);
+  padding-top:var(--s3);border-top:1px solid var(--line)}
+.meta dd{margin:0;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--ink)}
+@media(max-width:600px){.meta{grid-template-columns:1fr}}
+
+/* numbered points (App Merge's .point) */
+.point{margin-top:var(--s4)}
+.point .n{margin-bottom:6px}
+.point p.body{margin:0}
+.gb-points .point{margin-top:var(--s3)}
+
+/* figures (Rise Portal's .figrow) */
+.figrow{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:var(--s2);margin-top:var(--s3)}
+.figrow > div{padding:clamp(18px,2.6vw,24px);border-radius:8px;background:var(--surface)}
+.figrow .fnum{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.4vw,32px);line-height:1;letter-spacing:-.02em;color:var(--ink)}
+.figrow .fnote{margin-top:8px;font-size:13px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
+.figrow .fsrc{margin-top:6px}
+@media(max-width:600px){.figrow{grid-template-columns:repeat(2,1fr)}.figrow > div:last-child:nth-child(odd){grid-column:1/-1}}
+
+/* grey panels (App Merge's .pair) */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+@media(max-width:600px){.pair{grid-template-columns:1fr}}
+.pair.one{grid-template-columns:1fr}
+.pair > div{background:var(--surface);border-radius:8px;padding:clamp(18px,2.6vw,28px)}
+.pair > div.hi{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.gb-grid > div:last-child:nth-child(odd){grid-column:1/-1}
+.pair .cap{margin:0 0 8px}
+.pair h4{font-family:var(--serif);font-weight:500;font-size:18px;line-height:1.3;letter-spacing:-.012em;color:var(--ink);margin:0 0 6px}
+.pair .cap b s{text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:13px}
+.pair p.body{margin:0}
+.pair > div > p:not([class]){font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted);margin-top:12px}
+.pair .keys{margin-top:12px}
+
+/* a panel's verdict, in the sticky notes' tag style */
+.tag{margin:14px 0 0;font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase}
+.tag.t-pos{color:var(--gb-pos)}
+.tag.t-att{color:#B8683C}
+.tag.t-cau{color:var(--muted)}
+.tag.t-neu{color:var(--faint)}
+.pills{display:flex;flex-wrap:wrap;gap:6px 18px}
+.pills .tag{margin:0}
+
+/* lists (App Merge's .keys) */
+.keys.one{grid-template-columns:1fr;gap:12px}
+/* the site's .keys margin shorthand would undo the reading column */
+ul.keys.col{margin-left:auto;margin-right:auto}
+@media(min-width:981px){ul.keys.col{margin-left:250px;margin-right:0}}
+.gb-sec > .col:first-child + ul.keys{margin-top:0}
+.gb-persona .keys{margin-top:0}
+.keys p b{color:var(--ink);font-weight:500}
+.keys p span{color:var(--muted)}
+.keys li.warn i{color:var(--neg)}
+
+/* persona (App Merge's .side) */
+.side{display:grid;grid-template-columns:minmax(190px,230px) 1fr;gap:var(--s4);align-items:start}
+@media(max-width:700px){.side{grid-template-columns:1fr;gap:var(--s2)}}
+.gb-persona h4{font-family:var(--serif);font-weight:500;font-size:20px;letter-spacing:-.015em;color:var(--ink);margin:0}
+.gb-persona .cap{margin-top:6px}
+.gb-persona .keys p{color:var(--ink)}
+
+/* quote box and statements (App Merge's .quote and .hinge) */
+.quote{background:rgba(243,218,178,.3);border-radius:0 2px 2px 0;padding:20px 28px 20px 24px}
+.quote p{font-size:var(--t-body);line-height:1.6;letter-spacing:-.01em;color:var(--ink)}
+.quote p.colhead{margin-bottom:8px;font-size:11px;color:var(--faint)}
+.quote p.cite{margin-top:12px;font-size:13px;line-height:1.55;color:var(--muted)}
+.hinge{padding:var(--s4) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hinge p{font-family:var(--serif);font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.35;letter-spacing:-.018em;color:var(--ink)}
+.hinge p + p{margin-top:var(--s2);font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:1.6;letter-spacing:-.01em;color:var(--muted)}
+.gb-sec > .hinge.col{margin-top:var(--s4)}
+.gb-close .livelink{margin-top:var(--s3)}
+
+/* labels, all in the site's mono label */
+.meta dt,.colhead,.point .n,.pair .cap b,.figrow .fsrc,.gb-rows .rh p,.gb-table th{
+  font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* "this, so that" rows */
+.gb-rows .rh{display:none;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.gb-rows .rh p{margin:0}
+.gb-rows ul{list-style:none;margin:0;padding:0}
+.gb-rows li{display:grid;gap:4px;padding:14px 0;border-bottom:1px solid var(--line)}
+.gb-rows li p{margin:0;font-size:16px;line-height:1.6;letter-spacing:-.01em}
+.gb-rows li p:first-child{color:var(--ink)}
+.gb-rows li p:last-child{color:var(--muted)}
+.gb-rows > ul:first-child{border-top:1px solid var(--line)}
+/* consistency: a stats row sits 16px under its heading like every other
+   block (its own top margin leaked through the wrapper and made it 32);
+   a rows list straight after a statement shares its rule, not a second one */
+.gb-sec .col > .figrow:first-child{margin-top:0}
+.hinge + .gb-rows > ul:first-child{border-top:0}
+@media(min-width:640px){
+  .gb-rows .rh,.gb-rows li{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px}
+  .gb-rows .rh{display:grid}
+}
+
+/* tables */
+.gb-table{overflow-x:auto}
+.gb-table table{width:100%;border-collapse:collapse;text-align:left;font-size:14px;letter-spacing:-.01em}
+.gb-table th{padding:0 10px 10px;vertical-align:bottom;border-bottom:1px solid var(--line)}
+.gb-table th.hi{color:var(--ink)}
+.gb-table td{padding:12px 10px;vertical-align:top;color:var(--muted);border-bottom:1px solid var(--line)}
+.gb-table th:first-child,.gb-table td:first-child{padding-left:0}
+.gb-table td:first-child{color:var(--ink)}
+.gb-table td.hi{background:var(--surface);color:var(--ink)}
+.gb-table .num{font-family:var(--mono);font-size:13px}
+.gb-mk{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%}
+.gb-mk.y{background:var(--surface);color:var(--ink)}
+.gb-mk.s{color:var(--muted);font-size:13px;line-height:1}
+.gb-mk.n{color:var(--faint)}
+.gb-mk.d{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 45%,transparent);color:var(--ink)}
+.gb-legend-note{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--muted)}
+
+/* detail one tap away, and questions */
+.gb-more{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.gb-more summary,.gb-faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;cursor:pointer;list-style:none;
+  font-size:16px;letter-spacing:-.01em;color:var(--ink)}
+.gb-more summary::-webkit-details-marker,.gb-faq summary::-webkit-details-marker{display:none}
+.gb-more summary svg,.gb-faq summary svg{flex:none;color:var(--muted);transition:transform .25s var(--ease)}
+.gb-more[open] summary svg,.gb-faq[open] summary svg{transform:rotate(45deg)}
+.gb-more > div{padding:0 0 20px}
+.gb-more > div > * + *{margin-top:16px}
+.gb-more .gb-rows li:last-child{border-bottom:0}
+.gb-skills{list-style:none;margin:0;padding:0;display:grid;gap:0 32px}
+@media(min-width:640px){.gb-skills{grid-template-columns:1fr 1fr}}
+.gb-skills a{display:block;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.gb-skills a span{color:var(--muted)}
+.gb-faqs{border-top:1px solid var(--line)}
+.gb-faq{border-bottom:1px solid var(--line)}
+.gb-faq p{margin:0 0 18px;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted)}
+
+/* small inline pieces */
+.gb-fields{display:flex;flex-wrap:wrap;gap:6px}
+.gb-fields code{font-family:var(--mono);font-size:12.5px;padding:4px 8px;border-radius:6px;background:var(--surface);color:var(--ink)}
+
+.gb-loop{margin-top:var(--s3)}
+.gb-loop-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.7fr);gap:22px}
+.gb-loop-steps > li{position:relative;display:flex;flex-direction:column;gap:8px;padding:14px 14px 16px;border-radius:8px;background:#F2F2F2;font-size:14px;line-height:1.35;color:var(--ink)}
+.gb-loop-steps > li + li::before{content:"\2192";position:absolute;left:-17px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+.gb-loop-steps i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.gb-loop-steps > li.fix{background:#E3F3EE}
+.gb-fix{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:nowrap;gap:6px;align-items:center}
+.gb-fix li{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-size:13px;background:#fff}
+.gb-fix li{position:relative}
+.gb-fix li + li{margin-left:16px}
+.gb-fix li + li::before{content:"\2192";position:absolute;left:-17px;color:var(--muted);font-size:12px}
+.gb-fix .p1{background:#2E7D6B;color:#fff}
+.gb-fix .p2{background:#A3D3C4;color:#173F36}
+.gb-fix .p3{background:#fff;color:var(--muted);box-shadow:inset 0 0 0 1px #C6E5DB}
+/* the return: a dashed line from under the fix back to under step 1 */
+.gb-loop-back{position:relative;display:block;height:18px;margin:6px 12% 0 7%;border:1.5px dashed #A3D3C4;border-top:0;border-radius:0 0 14px 14px}
+.gb-loop-back::before{content:"";position:absolute;left:-6.5px;top:-7px;border:5.5px solid transparent;border-bottom:7px solid #A3D3C4;border-top:0}
+@media(max-width:600px){
+  .gb-loop-steps{grid-template-columns:1fr;gap:18px}
+  .gb-loop-steps > li + li::before{content:"\2193";left:50%;top:-16px;transform:translateX(-50%)}
+  .gb-loop-back{display:none}
+}
+.gb-legend{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.gb-legend li{font-size:14px;color:var(--muted)}
+.gb-legend .tag{display:inline-block;margin:0 10px 0 0}
+.gb-stack > * + *{margin-top:var(--s3)}
+.gb-stack > p.body + p.body{margin-top:var(--s2)}
+
+/* the live exhibits, framed like the other case studies' image panels */
+figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
+.gb-stack figure.gb-ex,.gb-sketches figure.gb-ex,.col > figure.gb-ex{margin-left:0;margin-right:0}
+.gb-stack figure.gb-ex:first-child{margin-top:0}
+.gb-ex-panel{position:relative;background:#F2F2F2;border-radius:8px;padding:clamp(16px,3vw,28px)}
+
+.gb-ex-inner{margin:0 auto}
+.gb-ex iframe{display:block;width:100%;height:320px;border:0;background:#F2F2F2;color-scheme:light;transition:height .25s var(--ease)}
+.gb-ex-hero{margin-top:0}
+.gb-sketches{display:grid;gap:var(--s2);grid-template-columns:1fr 1fr}
+.gb-sketches.s3 > :last-child{grid-column:1/-1}
+@media(max-width:600px){.gb-sketches{grid-template-columns:1fr}}
+.gb-sketches .gb-ex-panel{padding:16px}
+.gb-sketches figure.gb-ex{margin-top:0;display:flex;flex-direction:column}
+.gb-sketches figure.gb-ex > .gb-ex-panel{flex:1}
+.gb-sketches figcaption b{color:var(--ink);font-weight:500}
+
+/* the four decisions the page argues for, each a door to its chapter */
+.gb-decide{list-style:none;margin:var(--s2) 0 0;padding:0;display:grid;gap:var(--s2)}
+@media(min-width:640px){.gb-decide{grid-template-columns:1fr 1fr}}
+.gb-decide a{display:flex;gap:16px;height:100%;box-sizing:border-box;padding:clamp(18px,2.6vw,24px);border-radius:8px;background:var(--surface);color:var(--ink);text-decoration:none;transition:background-color .2s var(--ease)}
+.gb-decide a:hover{background:color-mix(in srgb,var(--surface) 92%,var(--ink))}
+.gb-decide .n{flex:none;font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.4vw,32px);line-height:1;color:var(--faint)}
+.gb-decide .x{display:flex;flex-direction:column;gap:6px}
+.gb-decide .h{font-family:var(--serif);font-weight:500;font-size:18px;line-height:1.3;letter-spacing:-.012em}
+.gb-decide .w{font-size:15px;line-height:1.55;letter-spacing:-.01em;color:var(--muted)}
+.gb-decide .go{margin-top:6px;font-size:14px;color:var(--ink)}
+.gb-decide .go span{display:inline-block;transition:transform .2s var(--ease)}
+.gb-decide a:hover .go span{transform:translateX(2px)}
+
+/* folds: each chapter shows its load-bearing sections in full, and the
+   rest as one-line entries (the point, stated) that open to the whole
+   section. Nothing is cut; it's one tap away. */
+.gb-folds{margin-top:var(--s5)}
+.gb-fold-list{margin-top:var(--s2);border-top:1px solid var(--line)}
+.gb-fold{border-bottom:1px solid var(--line);scroll-margin-top:80px}
+.gb-fold > summary{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:18px 0;cursor:pointer;list-style:none}
+.gb-fold > summary::-webkit-details-marker{display:none}
+.gb-fold-t{display:flex;flex-direction:column;gap:4px;min-width:0}
+.gb-fold-t b{font-family:var(--serif);font-weight:500;font-size:18px;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.gb-fold-t span{font-size:15px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
+.gb-fold > summary svg{flex:none;margin-top:4px;color:var(--muted);transition:transform .25s var(--ease)}
+.gb-fold[open] > summary svg{transform:rotate(45deg)}
+.gb-fold > summary:hover .gb-fold-t b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.gb-fold-body{padding:4px 0 var(--s4)}
+.gb-fold-body > * + *{margin-top:var(--s3)}
+.gb-fold-body > p.body + p.body{margin-top:var(--s2)}
+.gb-fold-body .col,.gb-fold-body ul.keys.col{margin-left:0;margin-right:0;max-width:none}
+.gb-fold-body > .hinge.col{margin-top:var(--s4)}
+/* consistency: a fold opens with its content 4px under the summary and
+   ends 56px above the next rule, whatever block comes first or last; a
+   label sits 16px over what it labels, in folds and overview blocks alike */
+.gb-fold-body > :first-child{margin-top:0}
+.gb-fold-body > :last-child{margin-bottom:0}
+.gb-fold-body > p.eyebrow + *,div.gb-sec > p.eyebrow:first-child + *{margin-top:var(--s2)}
+.gb-points .point:first-of-type{margin-top:0}
+
+/* trust patterns: the pattern and who named it, then where it lives */
+.gb-patterns{list-style:none;margin:0;padding:0;display:grid;gap:0 32px;border-top:1px solid var(--line)}
+@media(min-width:640px){.gb-patterns{grid-template-columns:1fr 1fr}}
+.gb-patterns li{padding:14px 0;border-bottom:1px solid var(--line)}
+.gb-patterns .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.gb-patterns .p{margin:0;font-family:var(--serif);font-weight:500;font-size:17px;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.gb-patterns .s{margin:0;flex:none;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.gb-patterns .w{margin:4px 0 0;font-size:15px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
+
+/* the closing statement after the last folds: the folds' own bottom rule
+   already closes that stretch, so no second rule a few lines under it */
+.gb-folds + div.gb-sec > .gb-close{border-top:0;padding-top:0}
+
+/* a research figure links to its study, quietly */
+.figrow .fsrc a{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-underline-offset:2px}
+.figrow .fsrc a:hover{color:var(--ink);text-decoration-color:var(--ink)}
+
+/* sources: the rules and the research */
+.gb-sources{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.gb-sources li{padding:12px 0;border-bottom:1px solid var(--line)}
+.gb-sources a{font-size:16px;letter-spacing:-.01em;color:var(--ink);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 25%,transparent);text-underline-offset:4px}
+.gb-sources a:hover{text-decoration-color:var(--ink)}
+.gb-sources p{margin:2px 0 0;font-size:14px;line-height:1.5;color:var(--muted)}
+
+/* one product, two screens: the same case on a laptop and on a phone,
+   drawn as crisp CSS devices around real screenshots of the live app */
+.gb-devices{position:relative;padding:4% 0 6%}
+/* the laptop is Apple's MacBook Pro 14" (M5, silver) product bezel, with
+   the screenshot set into its screen opening: 10.83% in from the left,
+   11.34% from the top, 78.34% × 77.32% of the 3860×2540 frame. The
+   screenshot is taken at that screen's own size (1512×982 at 2x), so it
+   fills the opening exactly, nothing cropped */
+.gb-laptop{position:relative;width:80%;aspect-ratio:3860/2540;filter:drop-shadow(0 20px 24px rgba(0,0,0,.18))}
+.gb-laptop img{position:absolute;left:10.83%;top:11.34%;width:78.34%;height:77.32%;object-fit:cover;object-position:center top}
+.gb-laptop img.gb-laptop-frame{left:0;top:0;width:100%;height:100%;object-fit:fill}
+/* the phones are a real iPhone frame (the one App Merge uses) with the
+   screenshot set into its screen opening: 4.17% in from each side, 1.7% from
+   the top and bottom of the 1608×3316 frame */
+.gb-phone{position:absolute;width:20%;aspect-ratio:1608/3316;filter:drop-shadow(0 22px 26px rgba(0,0,0,.28))}
+.gb-phone img{position:absolute;left:4.17%;top:1.69%;width:91.67%;height:96.62%;object-fit:cover;object-position:top;border-radius:16.3%/7.5%}
+.gb-phone img.gb-phone-frame{left:0;top:0;width:100%;height:100%;border-radius:0}
+.gb-phone-a{right:14.5%;bottom:0;z-index:2}
+.gb-phone-b{right:0;bottom:7%;z-index:1}
+@media(max-width:600px){
+  .gb-devices{padding:2% 0 4%}
+  .gb-laptop{width:100%;margin:0}
+  .gb-phone{position:relative;display:inline-block;width:42%;right:auto;bottom:auto;transform:none;margin-top:9%;vertical-align:top}
+  .gb-phone-a{margin-left:6%}
+  .gb-phone-b{margin-left:4%}
+}
+/* phones: the nav pill and back-to-top sit at the bottom of the screen,
+   so the footer line needs room below it to scroll clear of them */
+@media (max-width:576px){#contact footer{padding-bottom:calc(88px + env(safe-area-inset-bottom))}}
+/* phones: Home, About and Resume sit in the nav pill as icons, beside the
+   AI twin's hand; the menu keeps only the case studies and the email */
+.navico,.navsep{display:none}
+@media (max-width:576px){
+  nav.navlinks{gap:4px}
+  nav.navlinks a.navlink{display:inline-grid;place-items:center;width:30px;height:30px;padding:0;margin:0;border-radius:1000px;background:transparent;color:var(--muted)}
+  nav.navlinks a.navlink[aria-current="page"]{color:var(--ink)}
+  nav.navlinks a.navlink .navtext{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  nav.navlinks a.navlink .navico{display:block;width:17px;height:17px}
+  /* pill and back-to-top share one height; the AI twin leads, a hairline
+     sets it apart from the pages and the theme */
+  .navpill{height:44px;box-sizing:border-box}
+  nav.navlinks .navsep{display:block;width:1px;height:18px;margin:0 4px;background:currentColor;opacity:.25;flex:none}
+  .mobilenav .mlinks,.mobilenav .mresume{display:none}
+  header .burger{display:none}
+  /* the wider pill and back-to-top now move as one centred row: the pill
+     steps left by half the button (+ gap), the button sits at its right
+     edge (--navpill-w is kept current by aitwin.js) */
+  header.totop-on .navpill{transform:translateX(-26px)}
+  .totop{left:calc(50% + var(--navpill-w,216px) / 2 - 18px);transform:scale(.86)}
+  .totop.show{transform:scale(1)}
+}
+
+/* ============ HERO: her words become a case ============
+   One stage, laid out in its own width units so the composition holds at
+   any size. Her message on the left, the case Getbaq builds from it below,
+   the ready letter on the phone at the right. Each fact is coloured by who
+   produced it, and the same colour marks the words it came from. */
+.gbh{--gb:#177A3C;--app-sans:"Lato",system-ui,sans-serif;--app-mono:"Spline Sans Mono",ui-monospace,monospace;--app-serif:"Libre Baskerville",Georgia,serif;
+  position:relative;overflow:hidden;padding:0;aspect-ratio:16/10;container-type:inline-size;isolation:isolate;
+  background:
+    radial-gradient(70% 75% at 82% 18%,rgba(196,224,203,.75) 0%,rgba(196,224,203,0) 70%),
+    radial-gradient(60% 60% at 8% 100%,rgba(236,226,206,.8) 0%,rgba(236,226,206,0) 70%),
+    #F1F2EE;
+  box-shadow:inset 0 0 0 1px rgba(20,40,25,.05)}
+/* a fine grain, so the gradient reads as a surface, not a fill */
+.gbh:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;mix-blend-mode:multiply;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+:root[data-theme="dark"] .gbh{--gb:#5FCB86;
+  background:
+    radial-gradient(70% 75% at 82% 18%,rgba(60,110,76,.38) 0%,rgba(60,110,76,0) 70%),
+    radial-gradient(60% 60% at 8% 100%,rgba(90,76,50,.28) 0%,rgba(90,76,50,0) 70%),
+    #141614;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+:root[data-theme="dark"] .gbh:before{mix-blend-mode:screen;opacity:.18}
+
+/* her message: a real chat bubble, sized before it's typed so nothing reflows */
+.gbh-msg{position:absolute;left:6.5%;top:10%;width:44%;padding:2.2cqw 2.6cqw 2.4cqw;border-radius:2.4cqw 2.4cqw 2.4cqw .8cqw;
+  background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(20,40,25,.05),0 .2cqw .6cqw rgba(20,40,25,.04),0 2.6cqw 5.4cqw -2.4cqw rgba(20,40,25,.24);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:opacity .6s var(--ease)}
+.gbh-head{display:flex;align-items:center;gap:.9cqw;margin:0 0 1.3cqw;font:400 max(10px,1.6cqw)/1 var(--app-sans);color:var(--muted)}
+.gbh-head b{font-weight:700;color:var(--ink)}
+.gbh-av{display:grid;place-items:center;width:max(18px,2.9cqw);height:max(18px,2.9cqw);border-radius:50%;background:#E3EDE5;color:#2F5A3B;font-size:max(9px,1.4cqw);font-weight:600}
+.gbh-text{margin:0;font:400 max(11.5px,2.1cqw)/1.6 var(--app-sans);color:var(--ink)}
+.gbh-text .c{opacity:0}
+.gbh-text .c.on{opacity:1}
+.gbh-text .c.cur:after{content:"";display:inline-block;width:1.5px;height:1.05em;margin-left:1px;vertical-align:-.15em;background:var(--ink);animation:gbhBlink 1s steps(1) infinite}
+@keyframes gbhBlink{50%{opacity:0}}
+.gbh-text mark{color:inherit;padding:0;white-space:nowrap;background:linear-gradient(color-mix(in srgb,var(--gb) 70%,transparent),color-mix(in srgb,var(--gb) 70%,transparent)) 0 100%/0% 1.5px no-repeat;transition:background-size .7s cubic-bezier(.2,.9,.25,1)}
+.gbh-text mark.on{background-size:100% 1.5px}
+:root[data-theme="dark"] .gbh-msg{background:rgba(30,33,31,.9);box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 2.4cqw 5cqw -2cqw rgba(0,0,0,.6)}
+:root[data-theme="dark"] .gbh-text{color:#E4E0DA}
+:root[data-theme="dark"] .gbh-av{background:#23392A;color:#9FD7AE}
+
+/* the case: Getbaq's own case file, filling in from her words. Each value
+   flies out of the word it came from into its row, then says who produced
+   it; the status turns to ready when the letter is on the phone */
+.gbh-case{position:absolute;left:13%;top:53%;z-index:2;width:44%;padding:1.9cqw 2.3cqw .5cqw;border-radius:1.8cqw;
+  background:rgba(255,255,255,.95);box-shadow:inset 0 0 0 1px rgba(20,40,25,.06),0 .2cqw .6cqw rgba(20,40,25,.05),0 3.2cqw 6cqw -2.6cqw rgba(20,40,25,.32);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:opacity .6s ease}
+.gbh-case-h{display:flex;align-items:baseline;gap:.9cqw;margin:0 0 1cqw;font:400 max(8.5px,1.2cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gbh-case-h b{font:400 max(12px,2cqw)/1 var(--app-serif);letter-spacing:0;text-transform:none;color:var(--ink)}
+.gbh-status{position:relative;margin-left:auto;align-self:center;display:flex;align-items:center;gap:.7cqw;font:400 max(9.5px,1.4cqw)/1 var(--app-sans);letter-spacing:0;text-transform:none;color:var(--muted)}
+.gbh-status:before{content:"";width:max(5px,.75cqw);height:max(5px,.75cqw);border-radius:50%;background:var(--faint);transition:background-color .4s ease,box-shadow .4s ease}
+.gbh-status .s-ready{display:none;color:var(--ink)}
+.gbh.is-screen .gbh-status .s-read{display:none}.gbh.is-screen .gbh-status .s-ready{display:inline}
+.gbh.is-screen .gbh-status:before{background:var(--gb);box-shadow:0 0 0 .5cqw color-mix(in srgb,var(--gb) 16%,transparent)}
+.gbh-case dl{margin:0}
+.gbh-row{display:grid;grid-template-columns:26% 1fr;align-items:center;gap:1.2cqw;padding:1.2cqw 0;border-top:1px solid rgba(36,32,32,.07)}
+.gbh-row dt{font:400 max(8px,1.15cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gbh-row dd{position:relative;margin:0;display:flex;align-items:center;justify-content:space-between;gap:1cqw;min-height:max(16px,2.6cqw)}
+.gbh-row b{display:block;font:500 max(11px,1.75cqw)/1.2 var(--app-mono);letter-spacing:-.01em;color:var(--ink);white-space:nowrap;
+  opacity:0;transition:transform .85s cubic-bezier(.2,.9,.25,1),opacity .3s ease}
+.gbh-row i{flex:none;font:400 max(8.5px,1.25cqw)/1 var(--app-sans);font-style:normal;color:var(--muted);padding:.45cqw .9cqw;border-radius:99px;background:rgba(36,32,32,.05);
+  opacity:0;transform:translateX(-.6cqw);transition:opacity .4s ease,transform .5s var(--ease)}
+/* the empty slot a value lands in */
+.gbh-row dd:before{content:"";position:absolute;left:0;top:50%;width:42%;height:max(6px,.9cqw);margin-top:calc(max(6px,.9cqw) / -2);border-radius:99px;
+  background:linear-gradient(90deg,rgba(36,32,32,.06),rgba(36,32,32,.11),rgba(36,32,32,.06)) 0 0/200% 100%;animation:gbhShine 1.4s linear infinite;transition:opacity .25s ease}
+.gbh-row.on b{opacity:1}
+.gbh-row:last-child b{font:700 max(11px,1.65cqw)/1.2 var(--app-sans);letter-spacing:0}
+.gbh-row.on i{opacity:1;transform:none;transition-delay:.55s}
+.gbh-row.on dd:before{opacity:0}
+:root[data-theme="dark"] .gbh-case{background:rgba(30,33,31,.92);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 3.2cqw 6cqw -2.6cqw rgba(0,0,0,.6)}
+:root[data-theme="dark"] .gbh-row{border-top-color:rgba(255,255,255,.07)}
+:root[data-theme="dark"] .gbh-row i{background:rgba(255,255,255,.06)}
+:root[data-theme="dark"] .gbh-row dd:before{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.1),rgba(255,255,255,.05)) 0 0/200% 100%}
+
+/* the phone: the real frame, the screen working, then the letter */
+.gbh-phone{position:absolute;right:8%;top:7%;height:86%;aspect-ratio:1608/3316;
+  filter:drop-shadow(0 2.4cqw 2.6cqw rgba(20,40,25,.2)) drop-shadow(0 .4cqw .6cqw rgba(20,40,25,.12));animation:gbhFloat 7s ease-in-out infinite}
+@keyframes gbhFloat{50%{transform:translateY(-.7cqw)}}
+.gbh-screen{position:absolute;left:4.17%;top:1.69%;width:91.67%;height:96.62%;border-radius:16.3%/7.5%;overflow:hidden;background:#F6F4EE}
+.gbh-shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transform:translateY(4%);transition:opacity .8s var(--ease),transform 1s cubic-bezier(.2,.9,.25,1)}
+.gbh.is-screen .gbh-shot{opacity:1;transform:none}
+.gbh-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* while Getbaq works: soft placeholder lines with a light passing over them */
+.gbh-sk{position:absolute;left:9%;height:2.2%;border-radius:99px;opacity:0;transition:opacity .4s ease;
+  background:linear-gradient(90deg,#E9E6DD 0%,#F5F3ED 50%,#E9E6DD 100%) 0 0/200% 100%;animation:gbhShine 1.3s linear infinite}
+.gbh-sk:nth-child(1){top:12%;width:46%}.gbh-sk:nth-child(2){top:17%;width:78%}.gbh-sk:nth-child(3){top:22%;width:70%}.gbh-sk:nth-child(4){top:27%;width:58%}
+.gbh.is-work .gbh-sk{opacity:1}.gbh.is-screen .gbh-sk{opacity:0}
+@keyframes gbhShine{to{background-position:-200% 0}}
+
+/* the loop's end: everything settles out together before it starts again */
+.gbh.is-out .gbh-msg,.gbh.is-out .gbh-case,.gbh.is-out .gbh-shot{opacity:0;transition:opacity .6s ease}
+
+/* narrow: her message across the top, the phone below-right, the case beside it */
+@container (max-width:520px){
+  .gbh-msg{left:5%;top:5%;width:78%;padding:3.4cqw 3.8cqw 3.6cqw;border-radius:3.6cqw 3.6cqw 3.6cqw 1.2cqw}
+  .gbh-head{margin-bottom:2cqw}
+  .gbh-case{left:5%;top:auto;bottom:6%;width:60%;padding:3cqw 3.4cqw 1cqw;border-radius:3cqw}
+  .gbh-case-h{margin-bottom:1.6cqw}
+  .gbh-row{grid-template-columns:1fr;gap:1.4cqw;padding:2cqw 0}
+  .gbh-row i{padding:.8cqw 1.6cqw}
+  .gbh-phone{right:3%;top:auto;bottom:-10%;height:60%}
+}
+@media (max-width:600px){.gbh{aspect-ratio:4/4.3}}
+@media (prefers-reduced-motion:reduce){.gbh-phone{animation:none}.gbh-sk{display:none}}
+
+/* the two reads of the case study: a quiet switch under the prototype link */
+.gb-versions{display:inline-flex;gap:2px;margin:16px 0 0;padding:3px;border-radius:999px;background:var(--surface);font:500 12.5px/1 var(--sans)}
+.gb-versions a,.gb-versions span{padding:8px 13px;border-radius:999px;color:var(--muted);text-decoration:none;transition:color .2s ease,background-color .2s ease}
+.gb-versions a:hover{color:var(--ink)}
+.gb-versions [aria-current]{background:var(--bg);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06),inset 0 0 0 1px var(--line)}
+.gb-hero .gb-versions{display:flex;width:max-content}
+
+/* pattern names from the literature, set as quiet tags after a caption */
+.gb-pat{display:inline-flex;flex-wrap:wrap;gap:5px;margin-left:4px;vertical-align:1px}
+.gb-pat i{font:500 10.5px/1 var(--mono,'Geist Mono',monospace);font-style:normal;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+  padding:4px 7px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line)}
+
+/* stakes x reversibility: every action placed, the treatment named per quadrant */
+.gb-quad{position:relative;padding:0 0 26px 26px}
+.gb-quad-y{position:absolute;left:0;top:50%;margin:0;transform:translate(-40%,-50%) rotate(-90deg);font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.gb-quad-x{position:absolute;left:26px;right:0;bottom:0;margin:0;text-align:center;font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.gb-quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gb-quad-grid .q{padding:18px 18px 16px;border-radius:8px;background:var(--surface)}
+.gb-quad-grid .q.hi.irr{background:var(--ink);color:var(--bg)}
+.gb-quad-grid .q.hi.irr .q-where,.gb-quad-grid .q.hi.irr li span{color:color-mix(in srgb,var(--bg) 62%,transparent)}
+.gb-quad-grid .q.hi.irr li b{color:var(--bg)}
+.q-where{margin:0 0 6px;font:500 10.5px/1.3 var(--mono,'Geist Mono',monospace);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.q-t{margin:0 0 12px;font:400 19px/1.25 var(--serif);letter-spacing:-.01em}
+.gb-quad-grid ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.gb-quad-grid li{display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.45}
+.gb-quad-grid li b{font-weight:500;color:var(--ink)}
+.gb-quad-grid li span{color:var(--muted)}
+/* order: the top row is higher stakes, the right column can't be undone */
+.gb-quad-grid .q.hi.rev{order:1}.gb-quad-grid .q.hi.irr{order:2}.gb-quad-grid .q.lo.rev{order:3}.gb-quad-grid .q.lo.irr{order:4}
+@media (max-width:600px){
+  .gb-quad{padding:0}.gb-quad-y,.gb-quad-x{display:none}
+  .gb-quad-grid{grid-template-columns:1fr}
+  .gb-quad-grid .q.hi.irr{order:0}
+}
+
+/* a chapter whose content has no sub-heading of its own (the short read):
+   its first block is text, not a heading, so the next block keeps its gap */
+.gb-flow > .col:first-child + *{margin-top:var(--s3)}
+.gb-flow > p.body:first-child + p.body{margin-top:var(--s2)}
+.gb-chapter > .gb-flow:first-of-type{margin-top:24px}
+</style><script defer src="./analytics.js?v=3"></script>
+<script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="navpill">
+    <nav class="navlinks" aria-label="Main">
+      <a class="navlink" href="./index.html"><span class="navtext">Home</span><svg class="navico" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.2 7.2 8 2.4l5.8 4.8"/><path d="M3.8 6v7.1c0 .5.4.9.9.9h2.1v-3.6h2.4V14h2.1c.5 0 .9-.4.9-.9V6"/></svg></a>
+      <a class="navlink" href="./about.html"><span class="navtext">About</span><svg class="navico" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="5.4" r="2.9"/><path d="M2.6 14a5.4 5.4 0 0 1 10.8 0"/></svg></a>
+      <a class="navlink" href="./resume.html"><span class="navtext">Resume</span><svg class="navico" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.6 1.8H4.4c-.6 0-1.1.5-1.1 1.1v10.2c0 .6.5 1.1 1.1 1.1h7.2c.6 0 1.1-.5 1.1-1.1V4.9z"/><path d="M9.6 1.8v3.1h3.1"/><path d="M5.8 8.6h4.4M5.8 11.2h4.4"/></svg></a>
+      <button class="themebtn" id="themeToggle" type="button" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="icon-moon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span></button>
+      <button class="burger" id="burgerBtn" type="button" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></button>
+    </nav>
+  </div>
+</header>
+
+<div class="mobilenav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile menu">
+  <div class="msheet">
+    <div class="mhandle-zone" aria-hidden="true"><span class="mhandle"></span></div>
+    <nav class="mlinks" aria-label="Primary">
+    <a class="mrow" href="./index.html"><span class="mlabel">Home</span></a>
+    <a class="mrow" href="./about.html"><span class="mlabel">About</span></a>
+  </nav>
+    <div class="mcases">
+    <p class="mgroup">Case studies</p>
+    <a class="mcase" href="./getbaq.html" aria-current="page"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Designing an AI agent that fights for your refund</span><span class="mcase-m">Getbaq &#183; AI agent</span></span></a>
+    <a class="mcase" href="./app-merge.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">Unifying the investing journey in one app</span><span class="mcase-m">Rupeezy &middot; Consumer app</span></span></a>
+    <a class="mcase" href="./rise-portal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&rsquo;s partners ever had</span><span class="mcase-m">Rupeezy &middot; B2B platform</span></span></a>
+    <a class="mcase" href="./web-terminal.html"><span class="mcase-num">04</span><span class="mcase-x"><span class="mcase-t">Designing the desktop trading experience</span><span class="mcase-m">Rupeezy &middot; Web trading terminal</span></span></a>
+  </div>
+    <div class="mfoot">
+    <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
+    <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+  </div>
+</div>
+
+<button type="button" class="totop" id="totop" aria-label="Back to top">
+  <svg class="totop-ring" viewBox="0 0 56 56" aria-hidden="true"><circle class="totop-track" cx="28" cy="28" r="25"/><circle class="totop-prog" cx="28" cy="28" r="25"/></svg>
+  <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Copied to clipboard</span></div>
+
+<div class="shell gb">
+<nav aria-label="Sections" class="toc">
+<a href="#overview">Overview</a>
+<a href="#why">01 · Why an agent</a>
+<a href="#work">02 · Show your work</a>
+<a href="#approver">03 · Approver, not autopilot</a>
+<a href="#wrong">04 · Designing for being wrong</a>
+<a href="#rejected">05 · What I rejected</a>
+<a href="#proof">06 · Evals and limits</a>
+<a href="#close">Tradeoffs</a>
+</nav>
+<!-- ================= OVERVIEW ================= -->
+<section id="overview" style="margin-top:0">
+<figure class="gb-ex gb-ex-hero col" data-reveal="">
+<div class="gb-ex-panel gbh" role="img" aria-label="Ananya's message to Getbaq: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. From it Getbaq takes three facts: ₹3,499 (she told it), reply by 3 Sep (calculated), and Rule 4(4) (verified at the source), and drafts the complaint letter on her phone.">
+<div class="gbh-msg" aria-hidden="true"><p class="gbh-head"><span class="gbh-av">A</span><b>Ananya</b><span>to Getbaq</span></p><p class="gbh-text"><mark data-f="2">Flipkart</mark>. Bought a mixer grinder for <mark data-f="0">3499</mark> on 2 Aug. Jar has rust. Asked replacement on <mark data-f="1">4 Aug</mark>, they rejected saying photo validation failed. Called 3 times, nothing.</p></div>
+<div class="gbh-case" aria-hidden="true"><p class="gbh-case-h"><span>Case</span><b>Flipkart</b><span class="gbh-status"><span class="s-read">Reading</span><span class="s-ready">Ready to send</span></span></p>
+<dl>
+<div class="gbh-row"><dt>At stake</dt><dd><b>₹3,499</b><i>You told me</i></dd></div>
+<div class="gbh-row"><dt>Reply by</dt><dd><b>3 Sep 2026</b><i>Calculated</i></dd></div>
+<div class="gbh-row"><dt>The rule</dt><dd><b>E-commerce Rules 4(4)</b><i>Verified</i></dd></div>
+</dl></div>
+<div class="gbh-phone" aria-hidden="true"><div class="gbh-screen"><span class="gbh-sk"></span><span class="gbh-sk"></span><span class="gbh-sk"></span><span class="gbh-sk"></span><img class="gbh-shot" src="./assets/getbaq-phone-thread-603.webp" width="603" height="1311" alt="" fetchpriority="high" decoding="async"></div><img class="gbh-frame" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" decoding="async"></div>
+</div>
+</figure>
+<div class="col beat gb-hero" data-reveal="">
+<p class="eyebrow">Case study · AI product design · Getbaq</p>
+<h1>Designing an AI agent that fights for your <em>refund</em></h1>
+<p class="dek">Ananya has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes her complaint, and never sends a word without her.</p>
+<a class="livelink gb-try" data-proto="/app?start=Flipkart.%20Bought%20a%20mixer%20grinder%20for%203499%20on%202%20Aug.%20Jar%20has%20rust.%20Asked%20replacement%20on%204%20Aug%2C%20they%20rejected%20saying%20photo%20validation%20failed.%20Called%203%20times%2C%20nothing." href="#" rel="noopener" target="_blank">Try the prototype <svg aria-hidden="true" fill="none" height="14" viewbox="0 0 16 16" width="14"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg></a>
+<p class="gb-versions"><span aria-current="page">Short read · 9 min</span><a href="./getbaq.html">Full case study · 40 min</a></p>
+</div>
+<div class="col gb-sec" data-reveal="">
+<p class="eyebrow">In 30 seconds</p>
+<div class="gb-points gb-tldr">
+<div class="point"><p class="n">Challenge</p><p class="body">Ananya has a legal right to her refund and a free government helpline that works, but doesn’t know the rule, the deadline or the channel. ChatGPT can draft her a letter. Nobody runs the fight.</p></div>
+<div class="point"><p class="n">Solution</p><p class="body">An agent where she’s the approver. It reads her messy messages and screenshots, cites the rule, has code calculate the deadline, and drafts the complaint. Nothing is sent or escalated without her tap.</p></div>
+<div class="point"><p class="n">My role</p><p class="body">Solo, about two weeks: problem selection, desk research, interaction and trust design, prompts and the evaluation plan, designed in code against a real model, Gemini.</p></div>
+<div class="point"><p class="n">Takeaways</p><p class="body">The failure states are the design material. What the model is allowed to know is a design decision. And the evaluation, built but not yet run, is the result still missing.</p></div>
+</div>
+</div>
+<dl class="meta col" data-reveal="">
+<div><dt>Timeline</dt><dd>Sep 2026 · about 2 weeks, full-time</dd></div>
+<div><dt>Type</dt><dd>Self-initiated, not client work. Not shipped to real users.</dd></div>
+<div><dt>Status</dt><dd>Live prototype: Gemini reads what people send; sending is simulated.</dd></div>
+<div><dt>Prototype</dt><dd>Every screen below is the working product, not a mock-up. Try them.</dd></div>
+</dl>
+</section>
+<section class="gb-chapter" id="why">
+<div class="col"><p class="eyebrow">01 · Why an agent</p><h2 class="say">A problem people couldn’t solve alone before LLMs</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
+<p class="col body">Ananya orders a mixer grinder on Flipkart for ₹3,499. The jar arrives rusted, her replacement is rejected because a photo “failed validation”, and three calls get her the same line: 5 to 7 working days. She has a legal right to the refund, and a free helpline that more than 1,000 companies answer. She doesn’t know either exists.</p>
+<div class="col"><div class="figrow" style="--cols:3"><div><p class="fnum">66%</p><p class="fnote">of people with a major service problem got no help from the company</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p><p class="fsrc"><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></p></div><div><p class="fnum">+6.9 pts</p><p class="fnote">more likely to get relief when a complaint was AI-assisted</p><p class="fsrc"><a href="https://www.nature.com/articles/s41562-026-02409-4" target="_blank" rel="noopener noreferrer">Nature Human Behaviour, 2026 · 1.1M US complaints</a></p></div></div></div>
+<p class="col body">This is a job an LLM is actually suited to: reading messy evidence, matching it to the right rule, and writing a calm, specific letter, again and again, without tiring. ChatGPT can already draft the letter. But the letter is 10% of the job. Knowing the rule, the deadline and where to escalate, and following up when the company goes quiet, is the other 90%, and nobody does it for her.</p>
+<p class="col body">I picked this over a higher-impact idea, a “trading brake” for young options traders, because that product fights its own user: 88.5% of under-30 traders lost money in FY26, and most kept trading anyway. A refund agent needs no behaviour change. She already wants the outcome.</p>
+<div class="quote col">
+<p class="colhead">Problem statement</p>
+<p>She has the right to a refund and a free channel that works, but doesn’t know the rule, the channel or the deadline, and can’t afford the time to keep chasing. So the money stays with the company.</p>
+<p class="cite">From desk research: complaints on Reddit and X, app reviews, consumer forums and government data. I couldn’t recruit interviews in time, and it’s labelled that way throughout.</p>
+</div>
+</section>
+</section>
+<section class="gb-chapter" id="work">
+<div class="col"><p class="eyebrow">02 · Show your work</p><h2 class="say">The AI reads and writes. Code does every date and amount.</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
+<p class="col body">A confidently wrong deadline is worse than no agent: she’d wait for a date that has already passed. So before any screen, I decided what the AI is allowed to do at all. It handles judgment on messy text. Deadlines and money are tested code, and the model is never even given a day count, so it has nothing to miscalculate.</p>
+<figure class="gb-ex col" data-embed="capability-map" data-note="Diagram">
+<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
+<figcaption>What the AI judges, what code computes, and what the AI is never allowed to do.</figcaption>
+</figure>
+<p class="col body">Then I made the split visible. Every step in the trace says who did it, the deadline says <b>Calculated</b>, and the rule cites the law it rests on, so she can check the work instead of taking it on trust.</p>
+<figure class="gb-ex col" data-embed="sourced-steps" data-inner="520" data-note="Live">
+<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
+<figcaption>Finding the rule and writing the complaint for a real case, each step labelled AI, Rule sheet, Calculated or Safety check. <span class="gb-pat"><i>Process transparency</i><i>Citations</i></span></figcaption>
+</figure>
+</section>
+</section>
+<section class="gb-chapter" id="approver">
+<div class="col"><p class="eyebrow">03 · Approver, not autopilot</p><h2 class="say">She approves every send, in her own name</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
+<p class="col body">Most agents hand over more control as trust grows. I chose not to. A wrong or rude letter damages her, not the AI, so on the Knight Institute’s autonomy levels, <b>Ananya is an approver</b>: the agent does the work, and nothing leaves without her.</p>
+<p class="col body">But gating everything would make it useless. So I placed every action by how much is at stake and whether it can be undone, following Victor Yocco’s transparency framework, and let that decide the treatment. Only what’s high-stakes and can’t be undone waits for her tap:</p>
+<div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let her correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always her tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading her message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell her, for Stripping an OTP she pasted.">
+<p class="gb-quad-y" aria-hidden="true">Stakes ↑</p><p class="gb-quad-x" aria-hidden="true">Can be undone ← → Can’t be undone</p>
+<div class="gb-quad-grid" aria-hidden="true"><div class="q hi rev"><p class="q-where">Higher stakes · can be undone</p><p class="q-t">Show it, and let her correct it</p><ul><li><b>The facts it read</b><span>restated first: “You confirmed · Flipkart · ₹3,499 · 2 Aug”</span></li><li><b>The rule it picked</b><span>cited, with a confidence label and a reason</span></li><li><b>The deadline</b><span>calculated by code, and labelled Calculated</span></li></ul></div><div class="q hi irr"><p class="q-where">Higher stakes · can’t be undone</p><p class="q-t">Always her tap</p><ul><li><b>Sending the complaint</b><span>the Approve card, her signature, six seconds to undo</span></li><li><b>Escalating to 1915</b><span>prepared for her, and still her tap</span></li></ul></div><div class="q lo rev"><p class="q-where">Lower stakes · can be undone</p><p class="q-t">Just do it, and show it</p><ul><li><b>Reading her message or screenshot</b><span>a live trace of the real steps</span></li><li><b>Drafting the letter</b><span>labelled AI-drafted, and she can edit it</span></li></ul></div><div class="q lo irr"><p class="q-where">Lower stakes · can’t be undone</p><p class="q-t">Do it, and tell her</p><ul><li><b>Stripping an OTP she pasted</b><span>removed before the model sees it, and she’s told</span></li></ul></div></div>
+</div>
+<div class="col gb-stack"><figure class="gb-ex" data-embed="approve" data-note="Interactive">
+<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
+<figcaption>The Approve card. Press Send it to see the undo window. <span class="gb-pat"><i>Intent preview</i><i>Action audit and undo</i></span></figcaption>
+</figure><ul class="keys one gb-decisions"><li><i>1</i><p><b>It looks like an email.</b> <span>Familiar on purpose, so the novelty goes on the agent, not the letter. From shows her own name.</span></p></li><li><i>2</i><p><b>Amount and deadline first.</b> <span>The rule and how sure it is sit below, as backing.</span></p></li><li><i>3</i><p><b>One strong button.</b> <span>The only irreversible action looks unlike anything else; Edit and Not now are equally quiet.</span></p></li><li><i>4</i><p><b>Six seconds to undo,</b> <span>said right above the button she’s about to press.</span></p></li></ul></div>
+<p class="col body"><b>The letter first had no name on it.</b> Every one ended “Sent via Getbaq”, with nothing a grievance officer could match to her order. I’d treated “no accounts” as a feature, but a product that complains in someone’s name has to know who she is. Now, just above Send, it asks “Whose name goes on this letter?”: her name and the email or phone the company knows. Nothing more; it refuses Aadhaar, PAN and bank numbers if pasted.</p>
+</section>
+</section>
+<section class="gb-chapter" id="wrong">
+<div class="col"><p class="eyebrow">04 · Designing for being wrong</p><h2 class="say">Every failure ends in a next step, not a dead end</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
+<p class="col body">The core AI risk is a wrong rule she never thinks to question. So confidence is a plain label with a reason, never a bare number, and when it’s low, the Approve card never appears: <b>she’s never asked to approve what the AI itself doubts.</b></p>
+<figure class="gb-ex col" data-embed="screen-notsure" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Not sure screen: low confidence, both sides of its reasoning, and no Approve button. <span class="gb-pat"><i>Confidence signal</i><i>Explainable rationale</i></span></figcaption></figure>
+<p class="col body">Then I listed every way a case can go wrong, sorted by kind using Google PAIR’s error categories, and designed what she sees and what happens next for each:</p>
+<div class="col"><div class="gb-table"><table style="min-width:560px">
+<thead><tr><th>What goes wrong</th><th>Kind</th><th>What she sees</th><th>What happens next</th></tr></thead>
+<tbody>
+<tr><td>A screenshot with no money in it</td><td>Input</td><td>“I read that screenshot, but I don’t see an order, a payment or a refund in it.”</td><td>No case is started from it</td></tr>
+<tr><td>A fact is missing: no company, no date</td><td>Input</td><td>One card that asks for every gap at once, and says why each is needed</td><td>She answers, or picks “I haven’t complained yet”</td></tr>
+<tr><td>No rule clearly fits</td><td>Failstate</td><td>Not sure: a confidence label, both sides of its reasoning, no Approve button</td><td>It asks. Nothing can be approved while it’s unsure</td></tr>
+<tr><td>It isn’t a refund complaint</td><td>Context</td><td>Out of scope: it says so, and where to go instead</td><td>She’s pointed to e-Jagriti, a lawyer, or the bank</td></tr>
+<tr><td>No grievance address it can trust</td><td>Failstate</td><td>Blocked: it won’t guess an address</td><td>She gets the letter to send herself; it keeps tracking the deadline</td></tr>
+<tr><td>The company goes quiet</td><td>Background</td><td>Ignored: the 1915 complaint is already prepared</td><td>One tap escalates, and it’s still her tap</td></tr>
+<tr><td>The AI can’t be reached, or fails code’s checks</td><td>System</td><td>The step says a simpler reader or a fixed template did it</td><td>The case carries on; she checks what it found</td></tr>
+</tbody>
+</table></div></div>
+<figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive">
+<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
+<figcaption>Every state is the real screen from the app. Fill in the questions, open the letter, press Send it and then Undo. <span class="gb-pat"><i>Graceful failure</i><i>Escalation pathway</i></span></figcaption>
+</figure>
+</section>
+</section>
+<section class="gb-chapter" id="rejected">
+<div class="col"><p class="eyebrow">05 · What I rejected</p><h2 class="say">The options I tried or considered, and why they lost</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
+<div class="col gb-rows">
+<div class="rh"><p class="eyebrow" style="margin:0">Rejected</p><p class="eyebrow" style="margin:0">Why, and what replaced it</p></div>
+<ul>
+<li><p>An autonomy dial: approve a few, then let it send</p><p>A wrong or rude letter lands on her, not the AI. Approval stays, permanently.</p></li>
+<li><p>Making her sort her own evidence (two versions)</p><p>People won’t label a bot reply versus an order page versus a bank SMS. One box; sorting is the agent’s job.</p></li>
+<li><p>A new page for every step</p><p>It felt like being sent somewhere else each time. One thread; finished steps fold into receipts.</p></li>
+<li><p>A pure chat</p><p>The steps are decisions, so they’re cards she can act on, inside the conversation.</p></li>
+<li><p>Asking who she is at the start</p><p>It would feel like a sign-up form. The name is asked for just above Send, when it matters.</p></li>
+<li><p>A confidence percentage</p><p>A bare number invites false precision. A plain label with a reason, and no Approve when it’s low.</p></li>
+</ul>
+</div>
+<div class="col gb-sketches s3">
+<figure class="gb-sketch gb-ex" data-embed="sketch-v1"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v1 · rejected. </b>A labelled box, plus chips that inserted a sentence. Still real effort.</figcaption></figure>
+<figure class="gb-sketch gb-ex" data-embed="sketch-v2"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v2 · rejected. </b>Screenshot first, typing as a small link. She still sorted her own input.</figcaption></figure>
+<figure class="gb-sketch gb-ex" data-embed="intake-now"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v3 · live. </b>One box. Sorting it is the agent’s job.</figcaption></figure>
+</div>
+<figure class="gb-ex col" data-embed="thread" data-inner="480" data-note="Live">
+<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
+<figcaption>What replaced the pages: one thread, finished steps as receipts, and the one card that’s live now.</figcaption>
+</figure>
+</section>
+</section>
+<section class="gb-chapter" id="proof">
+<div class="col"><p class="eyebrow">06 · Evals and limits</p><h2 class="say">What’s tested, what’s built to be scored, and what isn’t proven</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
+<p class="col body"><b>Caught before anyone used it.</b> Testing the rules, the dates and the letters turned up five mistakes that would have cost people money: UPI got five days instead of RBI’s one working day; two airline refund clocks had been merged into one; deadlines shifted with the timezone near midnight; the model invented years when copying “2 Aug”; and UPI letters went to the shop instead of her bank. 210 automated tests now cover dates, money, states and safety.</p>
+<div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">8</p><p class="fnote">legal rules, each read from the source and marked verified</p></div><div><p class="fnum">30</p><p class="fnote">real, sourced cases in the evaluation set</p></div><div><p class="fnum">6</p><p class="fnote">traps where the right answer is “no rule covers this”</p></div><div><p class="fnum">3×</p><p class="fnote">runs per case; it passes only if all three pass</p></div></div></div>
+<p class="col body">The evaluation is built to catch the model inventing things: the case type, rule and amount are checked automatically, a person reads every draft for invented facts, and an invented rule fails outright. <b>It hasn’t been run yet.</b> The first attempt ran out of paid AI credit, and the free plan allows about 20 calls a day against the 90 it needs. The pass rate goes here when it exists, failures included.</p>
+<div class="col gb-rows">
+<div class="rh"><p class="eyebrow" style="margin:0">Honest audit</p><p class="eyebrow" style="margin:0"></p></div>
+<ul>
+<li><p>Works today</p><p>Gemini reads words and screenshots, picks the rule and writes the letter, all checked by code; Google sign-in carries her cases across devices</p></li>
+<li><p>Designed, not built</p><p>Sending from her own Gmail, which needs Google’s verification, and follow-ups that run while the app is closed</p></li>
+<li><p>Not proven yet</p><p>The evaluation score, and whether real people trust an agent to complain in their name</p></li>
+</ul>
+</div>
+<p class="col body"><b>How I’ll know it works:</b> money recovered, with a target of 3 of the first 5 real cases refunded. Behind it: days to refund, drafts sent without edits, a wrong-rule rate under 5% with zero invented rules, and no follow-up she has to write herself.</p>
+</section>
+</section>
+<!-- ================= TRADEOFFS ================= -->
+<section class="gb-chapter" id="close">
+<div class="col"><p class="eyebrow">Looking back</p><h2 class="say">Tradeoffs, and what I learned</h2></div>
+<section class="gb-sec" data-reveal="">
+<div class="col"><p class="eyebrow">Tradeoffs I made on purpose</p><h3 class="say sub">What it costs, and why it’s worth it</h3></div>
+<div class="col gb-rows">
+<ul>
+<li><p>A tap on every send</p><p>Slower than an autopilot, but it’s her name and her money</p></li>
+<li><p>No follow-ups while the app is closed</p><p>Kept the prototype honest about what runs; she sees the next step when she opens the case</p></li>
+<li><p>Simulated sending</p><p>Real Gmail sending needs Google’s review; a broken flow would have been worse than a clear line</p></li>
+<li><p>English only</p><p>So the rule and tone checks can be tested in one language first; Hindi is the first thing I’d add</p></li>
+<li><p>Desk research, not interviews</p><p>Recruiting didn’t come through in time; trust limits and willingness to pay are still open</p></li>
+</ul>
+</div>
+</section>
+<section class="gb-sec" data-reveal="" id="learned">
+<div class="col"><p class="eyebrow">What I learned</p><h3 class="say sub">Three things this taught me about designing AI products</h3></div>
+<ul class="keys one col"><li><i>1</i><p><b>The design material is the failure.</b> Wrong, unsure, ignored and blocked are where trust is decided, so they deserve the same care as the happy path, and a real model to design against.</p></li><li><i>2</i><p><b>What the model is allowed to know is a design decision.</b> Keeping day counts away from it made a whole class of wrong deadlines impossible, not just unlikely.</p></li><li><i>3</i><p><b>Trust comes from showing where things came from.</b> Labelling every step AI, Calculated or Verified lets her check the work instead of taking it on faith.</p></li></ul>
+</section>
+<div class="col gb-sec" data-reveal="">
+<div class="hinge gb-close">
+<p>Getbaq isn’t shipped, and I’m not claiming it is.</p>
+<p>The full case study has the research, the scoring, the guardrails, the prompt and every smaller decision.</p>
+<a class="livelink gb-try" data-proto="/app?start=Flipkart.%20Bought%20a%20mixer%20grinder%20for%203499%20on%202%20Aug.%20Jar%20has%20rust.%20Asked%20replacement%20on%204%20Aug%2C%20they%20rejected%20saying%20photo%20validation%20failed.%20Called%203%20times%2C%20nothing." href="#" rel="noopener" target="_blank">Try the prototype <svg aria-hidden="true" fill="none" height="14" viewbox="0 0 16 16" width="14"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg></a>
+<p style="margin-top:14px"><a class="livelink" href="./getbaq.html">Read the full case study <span aria-hidden="true">→</span></a></p>
+</div>
+</div>
+</section>
+<section id="next" data-reveal>
+    <a class="nextlink" href="./app-merge.html">
+      <span class="nextlbl">Next case study</span>
+      <span class="nexttitle">Unifying the investing journey in one app</span>
+      <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </section>
+
+  <section id="contact" data-reveal>
+    <footer>
+      <p class="footcredit">Designed and built by <span class="fbub" data-bub="The decision maker"><span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" loading="lazy" decoding="async"></span></span><span class="fsr">me</span>, with <span class="fbub" data-bub="The OG assistant"><span class="fmark fai" aria-hidden="true">&#10022;</span></span><span class="fsr">an AI</span> that argued back.</p>
+    </footer>
+  </section>
+</div>
+
+<script>
+(function(){
+  var doc=document.documentElement, tb=document.getElementById('themeToggle');
+  if(tb) tb.addEventListener('click',function(){
+    var t=doc.getAttribute('data-theme')==='dark'?'light':'dark';
+    doc.setAttribute('data-theme',t); doc.style.removeProperty('background-color');
+    try{localStorage.setItem('portfolio-theme',t)}catch(e){}
+  });
+
+  // fixed nav pill: solidify once the page has scrolled past the hero
+  var header=document.getElementById('siteHeader');
+  function onHeaderScroll(){ if(window.scrollY>70) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }
+  var headerTicking=false;
+  window.addEventListener('scroll',function(){
+    if(headerTicking) return;
+    headerTicking=true;
+    requestAnimationFrame(function(){ onHeaderScroll(); headerTicking=false; });
+  },{passive:true});
+  onHeaderScroll();
+
+  // back-to-top button with scroll-progress ring
+  var totop=document.getElementById('totop');
+  var navpill=document.querySelector('.navpill');
+  if(totop){
+    var totopRing=totop.querySelector('.totop-prog'), TOTOP_C=157.08;
+    /* Chromium sometimes leaves this pair's transform painted at its
+       pre-toggle spot even though layout is already correct by the time
+       the transition should have finished (proven by forcing a reflow
+       and watching it snap to the right place). A plain offsetHeight
+       read only flushes layout, not the compositor, so it doesn't fix
+       this -- toggling display does, but doing that on every scroll
+       tick would fight the transition and could flash the element, so
+       it only runs once, right after a real show/hide flip. */
+    var totopWasOn=false;
+    function fixTotopPaint(){
+      setTimeout(function(){
+        totop.style.display='none'; void totop.offsetHeight; totop.style.display='';
+        navpill.style.display='none'; void navpill.offsetHeight; navpill.style.display='';
+      },550);
+    }
+    function onTotopScroll(){
+      var totopOn=window.scrollY>400;
+      if(totopOn) totop.classList.add('show'); else totop.classList.remove('show');
+      header.classList.toggle('totop-on', totopOn);
+      if(totopOn!==totopWasOn){ totopWasOn=totopOn; fixTotopPaint(); }
+      var max=document.documentElement.scrollHeight-window.innerHeight;
+      var p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
+      totopRing.style.strokeDashoffset=(TOTOP_C*(1-p)).toFixed(2);
+    }
+    var totopTicking=false;
+    window.addEventListener('scroll',function(){
+      if(totopTicking) return;
+      totopTicking=true;
+      requestAnimationFrame(function(){ onTotopScroll(); totopTicking=false; });
+    },{passive:true});
+    onTotopScroll();
+    totop.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  }
+
+  // mobile nav drawer
+  var burger=document.getElementById('burgerBtn'), mobileNav=document.getElementById('mobileNav'), navScrollY=0;
+  function closeMenu(){
+    if(!mobileNav.classList.contains('open')) return;
+    mobileNav.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+    document.body.classList.remove('menu-open');
+    document.body.style.top='';
+    window.scrollTo(0,navScrollY);
+    burger.focus();
+  }
+  function openMenu(){
+    navScrollY=window.scrollY;
+    mobileNav.classList.add('open');
+    burger.setAttribute('aria-expanded','true');
+    document.body.classList.add('menu-open');
+    document.body.style.top=(-navScrollY)+'px';
+    var first=mobileNav.querySelector('a, button');
+    if(first) first.focus({preventScroll:true});
+  }
+  burger.addEventListener('click',function(){ mobileNav.classList.contains('open')?closeMenu():openMenu(); });
+  mobileNav.querySelectorAll('a').forEach(function(el){ el.addEventListener('click',closeMenu); });
+  document.addEventListener('keydown',function(e){
+    if(!mobileNav.classList.contains('open')) return;
+    if(e.key==='Escape'){ closeMenu(); return; }
+    if(e.key!=='Tab') return;
+    var f=mobileNav.querySelectorAll('a, button');
+    if(!f.length) return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  });
+  window.addEventListener('resize',function(){ if(window.innerWidth>640) closeMenu(); });
+
+  // bottom-sheet: tap the dimmed backdrop, or swipe the handle down, to dismiss
+  mobileNav.addEventListener('click', function(e){
+    if (e.target === mobileNav) closeMenu();
+  });
+  var msheet = mobileNav.querySelector('.msheet');
+  var mhandle = mobileNav.querySelector('.mhandle-zone');
+  if (msheet && mhandle){
+    var dragStartY = 0, dragY = 0, dragging = false;
+    mhandle.addEventListener('touchstart', function(e){
+      dragging = true; dragY = 0;
+      dragStartY = e.touches[0].clientY;
+      msheet.style.transition = 'none';
+    }, { passive: true });
+    mhandle.addEventListener('touchmove', function(e){
+      if (!dragging) return;
+      dragY = Math.max(0, e.touches[0].clientY - dragStartY);
+      msheet.style.transform = 'translateY(' + dragY + 'px)';
+    }, { passive: true });
+    function endSheetDrag(){
+      if (!dragging) return;
+      dragging = false;
+      msheet.style.transition = '';
+      msheet.style.transform = '';
+      if (dragY > 70) closeMenu();
+    }
+    mhandle.addEventListener('touchend', endSheetDrag);
+    mhandle.addEventListener('touchcancel', endSheetDrag);
+  }
+  var here=location.pathname.split('/').pop()||'index.html';
+  mobileNav.querySelectorAll('.mrow, .mcase').forEach(function(el){
+    var href=el.getAttribute('href');
+    var target=href.split('#')[0].split('/').pop()||'index.html';
+    if(target===here) el.classList.add('current');
+  });
+
+  // copy-to-clipboard toast (mobile nav email button)
+  var toast=document.getElementById('toast'), toastTimer;
+  function copyText(text){
+    function feedback(){
+      if(!toast) return;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(function(){ toast.classList.remove('show'); },2000);
+    }
+    function fallback(){
+      try{
+        var ta=document.createElement('textarea');
+        ta.value=text; ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+        document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,text.length);
+        document.execCommand('copy'); document.body.removeChild(ta);
+      }catch(e){}
+      feedback();
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(feedback,fallback);
+    else fallback();
+  }
+  document.querySelectorAll('.copyEmailBtn').forEach(function(btn){
+    btn.addEventListener('click',function(){ copyText('hi.lokeshux@gmail.com'); });
+  });
+
+  // TOC scroll-spy: active link darkens as its section comes into view
+  var tocLinks=[].slice.call(document.querySelectorAll('.toc a'));
+  var sections=tocLinks.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  if('IntersectionObserver' in window && tocLinks.length){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var i=sections.indexOf(en.target);
+        if(i<0) return;
+        if(en.isIntersecting){
+          tocLinks.forEach(function(l){l.classList.remove('active');});
+          tocLinks[i].classList.add('active');
+        }
+      });
+    },{rootMargin:'-45% 0px -50% 0px'});
+    sections.forEach(function(s){ if(s) io.observe(s); });
+  }
+})();
+
+(function(){
+  var els=[].slice.call(document.querySelectorAll('[data-reveal]'));
+  if(!els.length) return;
+  function showAll(){ els.forEach(function(el){ el.classList.add('shown'); }); }
+  if(!('IntersectionObserver' in window)){ showAll(); return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('shown'); io.unobserve(en.target); }
+    });
+  },{threshold:0,rootMargin:'0px 0px -10% 0px'});
+  els.forEach(function(el){ io.observe(el); });
+  setTimeout(showAll,2500);
+})();
+</script>
+<script>
+/* back to top: mark the end of the page so the arrow can invite a return */
+(function(){
+  var b=document.getElementById("totop"); if(!b) return;
+  var t=false;
+  function f(){ t=false;
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    b.classList.toggle("is-done", max>0 && window.scrollY>=max-24);
+  }
+  window.addEventListener("scroll",function(){ if(!t){ t=true; requestAnimationFrame(f); } },{passive:true});
+  f();
+})();
+</script>
+<script>
+/* Getbaq exhibits: each figure[data-embed] becomes a frame onto the live
+   prototype's /embed/<name> page. Frames load lazily, and each one tells
+   this page its height (postMessage from the prototype), so the frame
+   always fits its exhibit, including the ones that grow when used.
+   They always come from the deployed prototype. */
+(function(){
+  // Always the deployed prototype, even when this page is opened locally:
+  // a local prototype server isn't always running, and when it wasn't,
+  // every exhibit panel stood empty. The deployed embeds are the same.
+  var PROTO='https://getbaq.vercel.app';
+
+  document.querySelectorAll('a[data-proto]').forEach(function(a){ a.href=PROTO+a.getAttribute('data-proto'); });
+
+  var frames=[];
+  document.querySelectorAll('figure[data-embed]').forEach(function(fig){
+    var name=fig.getAttribute('data-embed');
+    var panel=fig.querySelector('.gb-ex-panel');
+    var inner=fig.querySelector('.gb-ex-inner');
+    // no corner label: the other case studies don't label their images
+    var max=fig.getAttribute('data-inner');
+    if(max) inner.style.maxWidth=max+'px';
+    var f=document.createElement('iframe');
+    f.src=PROTO+'/embed/'+name+'?theme=portfolio';
+    f.loading='lazy';
+    f.title=(fig.querySelector('figcaption')||{}).textContent||('Getbaq '+name);
+    f.setAttribute('scrolling','no');
+    inner.appendChild(f);
+    frames.push(f);
+  });
+
+  window.addEventListener('message',function(e){
+    var d=e.data;
+    if(!d||d.type!=='getbaq-embed'||typeof d.height!=='number') return;
+    for(var i=0;i<frames.length;i++){
+      if(frames[i].contentWindow===e.source){
+        frames[i].style.height=Math.max(40,Math.min(4000,d.height))+'px';
+        frames[i].closest('figure').classList.add('is-sized');
+        break;
+      }
+    }
+  });
+})();
+</script>
+<script>
+/* a link to a folded section opens it first, then lands on it */
+(function(){
+  function openFor(hash){
+    if(!hash||hash.length<2) return;
+    var el=document.getElementById(decodeURIComponent(hash.slice(1)));
+    if(!el) return;
+    var d=el.matches('details.gb-fold')?el:el.closest('details.gb-fold');
+    if(d&&!d.open){ d.open=true; setTimeout(function(){ el.scrollIntoView({block:'start'}); },60); }
+  }
+  document.addEventListener('click',function(e){ var a=e.target.closest('a[href^="#"]'); if(a) openFor(a.getAttribute('href')); });
+  window.addEventListener('hashchange',function(){ openFor(location.hash); });
+  openFor(location.hash);
+})();
+</script>
+<script>
+/* Hero: her words become a case. Types her message, lifts each fact out of
+   the word it came from into its label, shows Getbaq working, then the
+   letter. Plays only while on screen; reduced motion gets the finished frame. */
+(function(){
+  var st = document.querySelector(".gbh"); if (!st) return;
+  var text = st.querySelector(".gbh-text"), rows = [].slice.call(st.querySelectorAll(".gbh-row"));
+  var chars = [];
+  (function split(node){
+    [].slice.call(node.childNodes).forEach(function(n){
+      if (n.nodeType === 3){
+        var f = document.createDocumentFragment();
+        n.textContent.split("").forEach(function(ch){ var s = document.createElement("span"); s.className = "c"; s.textContent = ch; f.appendChild(s); chars.push(s); });
+        node.replaceChild(f, n);
+      } else split(n);
+    });
+  })(text);
+  var marks = [0,1,2].map(function(i){ return text.querySelector('mark[data-f="' + i + '"]'); });
+  var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var timers = [], playing = false;
+  function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
+  function stop(){ timers.forEach(clearTimeout); timers = []; playing = false; }
+  function finished(){
+    chars.forEach(function(c){ c.classList.add("on"); c.classList.remove("cur"); });
+    marks.forEach(function(m){ m.classList.add("on"); });
+    rows.forEach(function(r){ r.querySelector("b").style.transform = ""; r.classList.add("on"); });
+    st.classList.add("is-screen"); st.classList.remove("is-work", "is-out");
+  }
+  if (still){ finished(); return; }
+  function reset(){
+    st.classList.remove("is-work", "is-screen", "is-out");
+    chars.forEach(function(c){ c.classList.remove("on", "cur"); });
+    marks.forEach(function(m){ m.classList.remove("on"); });
+    rows.forEach(function(r){ var b = r.querySelector("b"); r.classList.remove("on"); b.style.transition = "none"; b.style.transform = ""; b.offsetWidth; b.style.transition = ""; });
+  }
+  function fly(i){
+    var m = marks[i], r = rows[i], f = r.querySelector("b");
+    m.classList.add("on");
+    f.style.transition = "none"; f.style.transform = "none";
+    var a = m.getBoundingClientRect(), b = f.getBoundingClientRect();
+    f.style.transform = "translate(" + (a.left - b.left) + "px," + (a.top + a.height / 2 - (b.top + b.height / 2)) + "px) scale(.92)";
+    f.offsetWidth; f.style.transition = "";
+    requestAnimationFrame(function(){ f.style.transform = ""; r.classList.add("on"); });
+  }
+  function play(){
+    stop(); reset(); playing = true;
+    var t = 500, prev = null;
+    chars.forEach(function(c){
+      var ch = c.textContent;
+      t += 9 + Math.random() * 11 + (ch === " " ? 6 : 0) + (ch === "." || ch === "," ? 110 : 0);
+      at(t, function(){ if (prev) prev.classList.remove("cur"); c.classList.add("on", "cur"); prev = c; });
+    });
+    t += 700;
+    [0,1,2].forEach(function(i){ at(t, function(){ fly(i); }); t += 650; });
+    t += 250; at(t, function(){ if (prev) prev.classList.remove("cur"); st.classList.add("is-work"); });
+    t += 1200; at(t, function(){ st.classList.add("is-screen"); });
+    t += 5600; at(t, function(){ st.classList.add("is-out"); });
+    t += 800; at(t, play);
+  }
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){
+      var on = es[es.length - 1].isIntersecting;
+      if (on && !playing) play(); else if (!on && playing){ stop(); finished(); }
+    }, { threshold: .35 }).observe(st);
+  } else finished();
+})();
+</script>
+<script src="./aitwin.js?v=6" defer></script>
+</body></html>

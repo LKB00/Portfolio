@@ -24,7 +24,7 @@
 <link rel="manifest" href="./site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@500&family=Libre+Baskerville&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
    TOKENS — same reference system as app-merge-v2 and rise-portal:
@@ -39,7 +39,7 @@
 
   --bg:#FAFAFA; --ink:#242020;  --muted:#7A7676;  --faint:#B0ACAC;
   --line:rgba(36,32,32,.10); --surface:#F2F2F2;
-  --accent:#006AD4; --neg:#C64B3D; --live:#177A3C;
+  --accent:#171717; --neg:#C64B3D; --live:#177A3C;
 
   --serif:'STIX Two Text','STIX Two Math',Georgia,serif;
   --sans:'Geist','Inter',system-ui,sans-serif;
@@ -48,7 +48,7 @@
 :root[data-theme="dark"]{
   --bg:#0F0F0F; --ink:#F3EEEE; --body:#EDEDED; --muted:#A69E9E;  --faint:#6E6666;
   --line:rgba(255,255,255,.10); --surface:#1A1A1A;
-  --accent:#5EA9F5; --neg:#E0665A; --live:#4ED07F;
+  --accent:#EDEDED; --neg:#E0665A; --live:#4ED07F;
 
 }
 *{box-sizing:border-box}
@@ -450,7 +450,7 @@ div.gb-sec{margin-top:var(--s5)}
 .figrow .fnum{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.4vw,32px);line-height:1;letter-spacing:-.02em;color:var(--ink)}
 .figrow .fnote{margin-top:8px;font-size:13px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
 .figrow .fsrc{margin-top:6px}
-@media(max-width:600px){.figrow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.figrow{grid-template-columns:repeat(2,1fr)}.figrow > div:last-child:nth-child(odd){grid-column:1/-1}}
 
 /* grey panels (App Merge's .pair) */
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
@@ -603,7 +603,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-ex-inner{margin:0 auto}
 .gb-ex iframe{display:block;width:100%;height:320px;border:0;background:#F2F2F2;color-scheme:light;transition:height .25s var(--ease)}
 .gb-ex-hero{margin-top:0}
-.gb-ex-hero .gb-ex-panel{padding:36px 0 0;overflow:hidden}
 .gb-sketches{display:grid;gap:var(--s2);grid-template-columns:1fr 1fr}
 .gb-sketches.s3 > :last-child{grid-column:1/-1}
 @media(max-width:600px){.gb-sketches{grid-template-columns:1fr}}
@@ -679,19 +678,25 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 /* one product, two screens: the same case on a laptop and on a phone,
    drawn as crisp CSS devices around real screenshots of the live app */
 .gb-devices{position:relative;padding:4% 0 6%}
-.gb-laptop{position:relative;width:70%;margin-left:3%}
-.gb-lid{background:#1d1d1f;border-radius:14px 14px 6px 6px;padding:2% 2% 2.4%;box-shadow:0 22px 40px -22px rgba(0,0,0,.35)}
-.gb-lid img{display:block;width:100%;height:auto;border-radius:3px}
-.gb-base{position:relative;height:12px;margin:0 -7%;border-radius:2px 2px 14px 14px;background:linear-gradient(#e2e2e4,#c5c5c8)}
-.gb-base::before{content:"";position:absolute;left:50%;top:0;width:16%;height:5px;transform:translateX(-50%);border-radius:0 0 6px 6px;background:#b3b3b7}
-.gb-phone{position:absolute;width:19%;padding:.9%;border-radius:15%/7%;background:#121214;box-shadow:0 26px 40px -18px rgba(0,0,0,.45),inset 0 0 0 1.5px #3a3a3e}
-.gb-phone img{display:block;width:100%;height:auto;border-radius:12.5%/5.8%}
+/* the laptop is Apple's MacBook Pro 14" (M5, silver) product bezel, with
+   the screenshot set into its screen opening: 10.83% in from the left,
+   11.34% from the top, 78.34% × 77.32% of the 3860×2540 frame. The
+   screenshot is taken at that screen's own size (1512×982 at 2x), so it
+   fills the opening exactly, nothing cropped */
+.gb-laptop{position:relative;width:80%;aspect-ratio:3860/2540;filter:drop-shadow(0 20px 24px rgba(0,0,0,.18))}
+.gb-laptop img{position:absolute;left:10.83%;top:11.34%;width:78.34%;height:77.32%;object-fit:cover;object-position:center top}
+.gb-laptop img.gb-laptop-frame{left:0;top:0;width:100%;height:100%;object-fit:fill}
+/* the phones are a real iPhone frame (the one App Merge uses) with the
+   screenshot set into its screen opening: 4.17% in from each side, 1.7% from
+   the top and bottom of the 1608×3316 frame */
+.gb-phone{position:absolute;width:20%;aspect-ratio:1608/3316;filter:drop-shadow(0 22px 26px rgba(0,0,0,.28))}
+.gb-phone img{position:absolute;left:4.17%;top:1.69%;width:91.67%;height:96.62%;object-fit:cover;object-position:top;border-radius:16.3%/7.5%}
+.gb-phone img.gb-phone-frame{left:0;top:0;width:100%;height:100%;border-radius:0}
 .gb-phone-a{right:14.5%;bottom:0;z-index:2}
 .gb-phone-b{right:0;bottom:7%;z-index:1}
 @media(max-width:600px){
   .gb-devices{padding:2% 0 4%}
   .gb-laptop{width:100%;margin:0}
-  .gb-base{margin:0 -4%}
   .gb-phone{position:relative;display:inline-block;width:42%;right:auto;bottom:auto;transform:none;margin-top:9%;vertical-align:top}
   .gb-phone-a{margin-left:6%}
   .gb-phone-b{margin-left:4%}
@@ -721,6 +726,152 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   .totop{left:calc(50% + var(--navpill-w,216px) / 2 - 18px);transform:scale(.86)}
   .totop.show{transform:scale(1)}
 }
+
+/* ============ HERO: her words become a case ============
+   One stage, laid out in its own width units so the composition holds at
+   any size. Her message on the left, the case Getbaq builds from it below,
+   the ready letter on the phone at the right. Each fact is coloured by who
+   produced it, and the same colour marks the words it came from. */
+.gbh{--gb:#177A3C;--app-sans:"Lato",system-ui,sans-serif;--app-mono:"Spline Sans Mono",ui-monospace,monospace;--app-serif:"Libre Baskerville",Georgia,serif;
+  position:relative;overflow:hidden;padding:0;aspect-ratio:16/10;container-type:inline-size;isolation:isolate;
+  background:
+    radial-gradient(70% 75% at 82% 18%,rgba(196,224,203,.75) 0%,rgba(196,224,203,0) 70%),
+    radial-gradient(60% 60% at 8% 100%,rgba(236,226,206,.8) 0%,rgba(236,226,206,0) 70%),
+    #F1F2EE;
+  box-shadow:inset 0 0 0 1px rgba(20,40,25,.05)}
+/* a fine grain, so the gradient reads as a surface, not a fill */
+.gbh:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;mix-blend-mode:multiply;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+:root[data-theme="dark"] .gbh{--gb:#5FCB86;
+  background:
+    radial-gradient(70% 75% at 82% 18%,rgba(60,110,76,.38) 0%,rgba(60,110,76,0) 70%),
+    radial-gradient(60% 60% at 8% 100%,rgba(90,76,50,.28) 0%,rgba(90,76,50,0) 70%),
+    #141614;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+:root[data-theme="dark"] .gbh:before{mix-blend-mode:screen;opacity:.18}
+
+/* her message: a real chat bubble, sized before it's typed so nothing reflows */
+.gbh-msg{position:absolute;left:6.5%;top:10%;width:44%;padding:2.2cqw 2.6cqw 2.4cqw;border-radius:2.4cqw 2.4cqw 2.4cqw .8cqw;
+  background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(20,40,25,.05),0 .2cqw .6cqw rgba(20,40,25,.04),0 2.6cqw 5.4cqw -2.4cqw rgba(20,40,25,.24);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:opacity .6s var(--ease)}
+.gbh-head{display:flex;align-items:center;gap:.9cqw;margin:0 0 1.3cqw;font:400 max(10px,1.6cqw)/1 var(--app-sans);color:var(--muted)}
+.gbh-head b{font-weight:700;color:var(--ink)}
+.gbh-av{display:grid;place-items:center;width:max(18px,2.9cqw);height:max(18px,2.9cqw);border-radius:50%;background:#E3EDE5;color:#2F5A3B;font-size:max(9px,1.4cqw);font-weight:600}
+.gbh-text{margin:0;font:400 max(11.5px,2.1cqw)/1.6 var(--app-sans);color:var(--ink)}
+.gbh-text .c{opacity:0}
+.gbh-text .c.on{opacity:1}
+.gbh-text .c.cur:after{content:"";display:inline-block;width:1.5px;height:1.05em;margin-left:1px;vertical-align:-.15em;background:var(--ink);animation:gbhBlink 1s steps(1) infinite}
+@keyframes gbhBlink{50%{opacity:0}}
+.gbh-text mark{color:inherit;padding:0;white-space:nowrap;background:linear-gradient(color-mix(in srgb,var(--gb) 70%,transparent),color-mix(in srgb,var(--gb) 70%,transparent)) 0 100%/0% 1.5px no-repeat;transition:background-size .7s cubic-bezier(.2,.9,.25,1)}
+.gbh-text mark.on{background-size:100% 1.5px}
+:root[data-theme="dark"] .gbh-msg{background:rgba(30,33,31,.9);box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 2.4cqw 5cqw -2cqw rgba(0,0,0,.6)}
+:root[data-theme="dark"] .gbh-text{color:#E4E0DA}
+:root[data-theme="dark"] .gbh-av{background:#23392A;color:#9FD7AE}
+
+/* the case: Getbaq's own case file, filling in from her words. Each value
+   flies out of the word it came from into its row, then says who produced
+   it; the status turns to ready when the letter is on the phone */
+.gbh-case{position:absolute;left:13%;top:53%;z-index:2;width:44%;padding:1.9cqw 2.3cqw .5cqw;border-radius:1.8cqw;
+  background:rgba(255,255,255,.95);box-shadow:inset 0 0 0 1px rgba(20,40,25,.06),0 .2cqw .6cqw rgba(20,40,25,.05),0 3.2cqw 6cqw -2.6cqw rgba(20,40,25,.32);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:opacity .6s ease}
+.gbh-case-h{display:flex;align-items:baseline;gap:.9cqw;margin:0 0 1cqw;font:400 max(8.5px,1.2cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gbh-case-h b{font:400 max(12px,2cqw)/1 var(--app-serif);letter-spacing:0;text-transform:none;color:var(--ink)}
+.gbh-status{position:relative;margin-left:auto;align-self:center;display:flex;align-items:center;gap:.7cqw;font:400 max(9.5px,1.4cqw)/1 var(--app-sans);letter-spacing:0;text-transform:none;color:var(--muted)}
+.gbh-status:before{content:"";width:max(5px,.75cqw);height:max(5px,.75cqw);border-radius:50%;background:var(--faint);transition:background-color .4s ease,box-shadow .4s ease}
+.gbh-status .s-ready{display:none;color:var(--ink)}
+.gbh.is-screen .gbh-status .s-read{display:none}.gbh.is-screen .gbh-status .s-ready{display:inline}
+.gbh.is-screen .gbh-status:before{background:var(--gb);box-shadow:0 0 0 .5cqw color-mix(in srgb,var(--gb) 16%,transparent)}
+.gbh-case dl{margin:0}
+.gbh-row{display:grid;grid-template-columns:26% 1fr;align-items:center;gap:1.2cqw;padding:1.2cqw 0;border-top:1px solid rgba(36,32,32,.07)}
+.gbh-row dt{font:400 max(8px,1.15cqw)/1 var(--app-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gbh-row dd{position:relative;margin:0;display:flex;align-items:center;justify-content:space-between;gap:1cqw;min-height:max(16px,2.6cqw)}
+.gbh-row b{display:block;font:500 max(11px,1.75cqw)/1.2 var(--app-mono);letter-spacing:-.01em;color:var(--ink);white-space:nowrap;
+  opacity:0;transition:transform .85s cubic-bezier(.2,.9,.25,1),opacity .3s ease}
+.gbh-row i{flex:none;font:400 max(8.5px,1.25cqw)/1 var(--app-sans);font-style:normal;color:var(--muted);padding:.45cqw .9cqw;border-radius:99px;background:rgba(36,32,32,.05);
+  opacity:0;transform:translateX(-.6cqw);transition:opacity .4s ease,transform .5s var(--ease)}
+/* the empty slot a value lands in */
+.gbh-row dd:before{content:"";position:absolute;left:0;top:50%;width:42%;height:max(6px,.9cqw);margin-top:calc(max(6px,.9cqw) / -2);border-radius:99px;
+  background:linear-gradient(90deg,rgba(36,32,32,.06),rgba(36,32,32,.11),rgba(36,32,32,.06)) 0 0/200% 100%;animation:gbhShine 1.4s linear infinite;transition:opacity .25s ease}
+.gbh-row.on b{opacity:1}
+.gbh-row:last-child b{font:700 max(11px,1.65cqw)/1.2 var(--app-sans);letter-spacing:0}
+.gbh-row.on i{opacity:1;transform:none;transition-delay:.55s}
+.gbh-row.on dd:before{opacity:0}
+:root[data-theme="dark"] .gbh-case{background:rgba(30,33,31,.92);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 3.2cqw 6cqw -2.6cqw rgba(0,0,0,.6)}
+:root[data-theme="dark"] .gbh-row{border-top-color:rgba(255,255,255,.07)}
+:root[data-theme="dark"] .gbh-row i{background:rgba(255,255,255,.06)}
+:root[data-theme="dark"] .gbh-row dd:before{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.1),rgba(255,255,255,.05)) 0 0/200% 100%}
+
+/* the phone: the real frame, the screen working, then the letter */
+.gbh-phone{position:absolute;right:8%;top:7%;height:86%;aspect-ratio:1608/3316;
+  filter:drop-shadow(0 2.4cqw 2.6cqw rgba(20,40,25,.2)) drop-shadow(0 .4cqw .6cqw rgba(20,40,25,.12));animation:gbhFloat 7s ease-in-out infinite}
+@keyframes gbhFloat{50%{transform:translateY(-.7cqw)}}
+.gbh-screen{position:absolute;left:4.17%;top:1.69%;width:91.67%;height:96.62%;border-radius:16.3%/7.5%;overflow:hidden;background:#F6F4EE}
+.gbh-shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transform:translateY(4%);transition:opacity .8s var(--ease),transform 1s cubic-bezier(.2,.9,.25,1)}
+.gbh.is-screen .gbh-shot{opacity:1;transform:none}
+.gbh-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* while Getbaq works: soft placeholder lines with a light passing over them */
+.gbh-sk{position:absolute;left:9%;height:2.2%;border-radius:99px;opacity:0;transition:opacity .4s ease;
+  background:linear-gradient(90deg,#E9E6DD 0%,#F5F3ED 50%,#E9E6DD 100%) 0 0/200% 100%;animation:gbhShine 1.3s linear infinite}
+.gbh-sk:nth-child(1){top:12%;width:46%}.gbh-sk:nth-child(2){top:17%;width:78%}.gbh-sk:nth-child(3){top:22%;width:70%}.gbh-sk:nth-child(4){top:27%;width:58%}
+.gbh.is-work .gbh-sk{opacity:1}.gbh.is-screen .gbh-sk{opacity:0}
+@keyframes gbhShine{to{background-position:-200% 0}}
+
+/* the loop's end: everything settles out together before it starts again */
+.gbh.is-out .gbh-msg,.gbh.is-out .gbh-case,.gbh.is-out .gbh-shot{opacity:0;transition:opacity .6s ease}
+
+/* narrow: her message across the top, the phone below-right, the case beside it */
+@container (max-width:520px){
+  .gbh-msg{left:5%;top:5%;width:78%;padding:3.4cqw 3.8cqw 3.6cqw;border-radius:3.6cqw 3.6cqw 3.6cqw 1.2cqw}
+  .gbh-head{margin-bottom:2cqw}
+  .gbh-case{left:5%;top:auto;bottom:6%;width:60%;padding:3cqw 3.4cqw 1cqw;border-radius:3cqw}
+  .gbh-case-h{margin-bottom:1.6cqw}
+  .gbh-row{grid-template-columns:1fr;gap:1.4cqw;padding:2cqw 0}
+  .gbh-row i{padding:.8cqw 1.6cqw}
+  .gbh-phone{right:3%;top:auto;bottom:-10%;height:60%}
+}
+@media (max-width:600px){.gbh{aspect-ratio:4/4.3}}
+@media (prefers-reduced-motion:reduce){.gbh-phone{animation:none}.gbh-sk{display:none}}
+
+/* the two reads of the case study: a quiet switch under the prototype link */
+.gb-versions{display:inline-flex;gap:2px;margin:16px 0 0;padding:3px;border-radius:999px;background:var(--surface);font:500 12.5px/1 var(--sans)}
+.gb-versions a,.gb-versions span{padding:8px 13px;border-radius:999px;color:var(--muted);text-decoration:none;transition:color .2s ease,background-color .2s ease}
+.gb-versions a:hover{color:var(--ink)}
+.gb-versions [aria-current]{background:var(--bg);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06),inset 0 0 0 1px var(--line)}
+.gb-hero .gb-versions{display:flex;width:max-content}
+
+/* pattern names from the literature, set as quiet tags after a caption */
+.gb-pat{display:inline-flex;flex-wrap:wrap;gap:5px;margin-left:4px;vertical-align:1px}
+.gb-pat i{font:500 10.5px/1 var(--mono,'Geist Mono',monospace);font-style:normal;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+  padding:4px 7px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line)}
+
+/* stakes x reversibility: every action placed, the treatment named per quadrant */
+.gb-quad{position:relative;padding:0 0 26px 26px}
+.gb-quad-y{position:absolute;left:0;top:50%;margin:0;transform:translate(-40%,-50%) rotate(-90deg);font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.gb-quad-x{position:absolute;left:26px;right:0;bottom:0;margin:0;text-align:center;font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.gb-quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gb-quad-grid .q{padding:18px 18px 16px;border-radius:8px;background:var(--surface)}
+.gb-quad-grid .q.hi.irr{background:var(--ink);color:var(--bg)}
+.gb-quad-grid .q.hi.irr .q-where,.gb-quad-grid .q.hi.irr li span{color:color-mix(in srgb,var(--bg) 62%,transparent)}
+.gb-quad-grid .q.hi.irr li b{color:var(--bg)}
+.q-where{margin:0 0 6px;font:500 10.5px/1.3 var(--mono,'Geist Mono',monospace);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.q-t{margin:0 0 12px;font:400 19px/1.25 var(--serif);letter-spacing:-.01em}
+.gb-quad-grid ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.gb-quad-grid li{display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.45}
+.gb-quad-grid li b{font-weight:500;color:var(--ink)}
+.gb-quad-grid li span{color:var(--muted)}
+/* order: the top row is higher stakes, the right column can't be undone */
+.gb-quad-grid .q.hi.rev{order:1}.gb-quad-grid .q.hi.irr{order:2}.gb-quad-grid .q.lo.rev{order:3}.gb-quad-grid .q.lo.irr{order:4}
+@media (max-width:600px){
+  .gb-quad{padding:0}.gb-quad-y,.gb-quad-x{display:none}
+  .gb-quad-grid{grid-template-columns:1fr}
+  .gb-quad-grid .q.hi.irr{order:0}
+}
+
+/* a chapter whose content has no sub-heading of its own (the short read):
+   its first block is text, not a heading, so the next block keeps its gap */
+.gb-flow > .col:first-child + *{margin-top:var(--s3)}
+.gb-flow > p.body:first-child + p.body{margin-top:var(--s2)}
+.gb-chapter > .gb-flow:first-of-type{margin-top:24px}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -778,34 +929,44 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </nav>
 <!-- ================= OVERVIEW ================= -->
 <section id="overview" style="margin-top:0">
-<figure class="gb-ex gb-ex-hero col" data-embed="hero-shot" data-reveal="">
-<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
+<figure class="gb-ex gb-ex-hero col" data-reveal="">
+<div class="gb-ex-panel gbh" role="img" aria-label="Ananya's message to Getbaq: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. From it Getbaq takes three facts: ₹3,499 (she told it), reply by 3 Sep (calculated), and Rule 4(4) (verified at the source), and drafts the complaint letter on her phone.">
+<div class="gbh-msg" aria-hidden="true"><p class="gbh-head"><span class="gbh-av">A</span><b>Ananya</b><span>to Getbaq</span></p><p class="gbh-text"><mark data-f="2">Flipkart</mark>. Bought a mixer grinder for <mark data-f="0">3499</mark> on 2 Aug. Jar has rust. Asked replacement on <mark data-f="1">4 Aug</mark>, they rejected saying photo validation failed. Called 3 times, nothing.</p></div>
+<div class="gbh-case" aria-hidden="true"><p class="gbh-case-h"><span>Case</span><b>Flipkart</b><span class="gbh-status"><span class="s-read">Reading</span><span class="s-ready">Ready to send</span></span></p>
+<dl>
+<div class="gbh-row"><dt>At stake</dt><dd><b>₹3,499</b><i>You told me</i></dd></div>
+<div class="gbh-row"><dt>Reply by</dt><dd><b>3 Sep 2026</b><i>Calculated</i></dd></div>
+<div class="gbh-row"><dt>The rule</dt><dd><b>E-commerce Rules 4(4)</b><i>Verified</i></dd></div>
+</dl></div>
+<div class="gbh-phone" aria-hidden="true"><div class="gbh-screen"><span class="gbh-sk"></span><span class="gbh-sk"></span><span class="gbh-sk"></span><span class="gbh-sk"></span><img class="gbh-shot" src="./assets/getbaq-phone-thread-603.webp" width="603" height="1311" alt="" fetchpriority="high" decoding="async"></div><img class="gbh-frame" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" decoding="async"></div>
+</div>
 </figure><div class="col beat gb-hero" data-reveal="">
 <p class="eyebrow">Case study · AI product design · Getbaq</p>
 <h1>Designing an AI agent that fights for your <em>refund</em></h1>
-<p class="dek">How I designed an AI agent people can trust with their money and their name: what the AI decides, what code calculates, and what they always approve themselves.</p>
+<p class="dek">Ananya has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes her complaint, and never sends a word without her.</p>
 <a class="livelink gb-try" data-proto="/app?start=Flipkart.%20Bought%20a%20mixer%20grinder%20for%203499%20on%202%20Aug.%20Jar%20has%20rust.%20Asked%20replacement%20on%204%20Aug%2C%20they%20rejected%20saying%20photo%20validation%20failed.%20Called%203%20times%2C%20nothing." href="#" rel="noopener" target="_blank">Try the prototype <svg aria-hidden="true" fill="none" height="14" viewbox="0 0 16 16" width="14"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path></svg></a>
+<p class="gb-versions"><a href="./getbaq-short.html">Short read · 9 min</a><span aria-current="page">Full case study · 40 min</span></p>
 </div>
 <dl class="meta col" data-reveal="">
 <div><dt>Type</dt><dd>Self-initiated, not client work. Not shipped to real users.</dd></div>
 <div><dt>Timeline</dt><dd>Sep 2026 · about 2 weeks, full-time</dd></div>
-<div><dt>Role</dt><dd>Solo: research, strategy, design, prompts and eval design.</dd></div>
+<div><dt>Role</dt><dd>Solo product designer: research, strategy, interaction and trust design, prompts, and the evaluation plan.</dd></div>
 <div><dt>For</dt><dd>Young Indians, 20–30, with ₹500–₹20,000 stuck with a company</dd></div>
 <div><dt>Status</dt><dd>Live prototype. Gemini reads what people send; sending is simulated. The evaluation (eval) and user testing haven’t been run yet.</dd></div>
 </dl>
 <div class="col gb-sec" data-reveal="">
-<p class="eyebrow">The short version</p>
+<p class="eyebrow">The story in a minute</p>
 <div class="gb-points">
-<div class="point"><p class="n">The problem</p><p class="body">People like Ananya, 24, have a right to their refund and a free government channel that works. They don’t know the rule or the deadline, and run out of time to chase. So the company keeps the money.</p></div>
-<div class="point"><p class="n">The insight</p><p class="body">Many tools, including ChatGPT, can draft a complaint. None of them run the whole fight: track the deadline, follow up, escalate. And the worst moment isn’t losing the money. It’s having no next step.</p></div>
-<div class="point"><p class="n">What’s proven, and what isn’t</p><p class="body">Proven: a live prototype anyone can use, and five errors that would have cost people money, found and fixed before anyone used it. Not yet: the evaluation and testing with real people. Both results will go here, failures included.</p></div>
+<div class="point"><p class="n">The problem</p><p class="body">Ananya, 24, has a legal right to her refund and a free government helpline that works. She doesn’t know the rule, the deadline or the channel, and she’s tired of chasing a bot. So the company keeps the money.</p></div>
+<div class="point"><p class="n">What I designed</p><p class="body">ChatGPT can draft her a complaint. Nobody runs the whole fight: finds the rule, counts the days, follows up and escalates. Getbaq does. The AI reads and writes, tested code handles every date and amount, and nothing is sent without her tap.</p></div>
+<div class="point"><p class="n">Where it stands</p><p class="body">A live prototype anyone can try, and five errors that would have cost people money, caught and fixed before anyone used it. Not run yet: the AI evaluation and tests with real people. Both results go here when they exist, failures included.</p></div>
 </div><figure class="gb-ex" data-embed="intake-now" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">Where every case starts: one box that takes anything.</figcaption></figure>
 </div>
 <div class="col gb-sec" data-reveal="">
-<div class="figrow" style="--cols:4"><div><p class="fnum">5</p><p class="fnote">errors that would have cost people money, caught before any user saw them</p></div><div><p class="fnum">8</p><p class="fnote">legal rules, each verified at the source</p></div><div><p class="fnum">30</p><p class="fnote">real cases in the eval set, 6 of them traps</p></div><div><p class="fnum">182</p><p class="fnote">automated tests on dates, money, states and safety</p></div></div>
+<div class="figrow" style="--cols:4"><div><p class="fnum">5</p><p class="fnote">errors that would have cost people money, caught before any user saw them</p></div><div><p class="fnum">8</p><p class="fnote">legal rules, each verified at the source</p></div><div><p class="fnum">30</p><p class="fnote">real cases in the eval set, 6 of them traps</p></div><div><p class="fnum">210</p><p class="fnote">automated tests on dates, money, states and safety</p></div></div>
 </div>
 <div class="col gb-sec" data-reveal="">
-<p class="eyebrow">Four decisions that shaped it</p>
+<p class="eyebrow">The four decisions this story is about</p>
 <ol class="gb-decide"><li><a href="#problem"><span class="n">01</span><span class="x"><span class="h">Choose a problem where AI is the product</span><span class="w">A trading brake had more impact on paper, and lost: it fights its own user.</span><span class="go">Read the chapter <span aria-hidden="true">→</span></span></span></a></li><li><a href="#ai-line"><span class="n">02</span><span class="x"><span class="h">The model reads and writes. Code counts.</span><span class="w">Deadlines and money are calculated by tested code, never by the AI.</span><span class="go">Read the chapter <span aria-hidden="true">→</span></span></span></a></li><li><a href="#control"><span class="n">03</span><span class="x"><span class="h">She approves everything, in her own name</span><span class="w">No autonomy dial. Every send waits for her tap, signed by her, with six seconds to undo.</span><span class="go">Read the chapter <span aria-hidden="true">→</span></span></span></a></li><li><a href="#wrong"><span class="n">04</span><span class="x"><span class="h">Design for being wrong</span><span class="w">The failure states got the same care as the happy path, and I audited my own claims.</span><span class="go">Read the chapter <span aria-hidden="true">→</span></span></span></a></li></ol>
 </div>
 <div class="col beat" data-reveal="">
@@ -842,32 +1003,20 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <p class="eyebrow">How I worked</p>
 <p class="body"><b>I designed in code, with a real AI model, not in static mock-ups.</b> The product screens on this page are the working prototype itself, and Gemini reads what people send, so I designed against its actual answers and mistakes, not imagined ones. That’s how I found it inventing years in dates (chapter 2). An AI coding assistant wrote much of the code; the research, decisions, prompts and evaluation are mine.</p>
 </div>
-<div class="col gb-folds" data-reveal="">
-<p class="eyebrow">The process</p>
-<div class="gb-fold-list">
-<details class="gb-fold"><summary><span class="gb-fold-t"><b>A Double Diamond, with a layer most processes don’t have</b><span>Plus prompts, evals and uncertain states. And one rule: every decision needs a reason.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
-<div class="gb-fold-body">
-<p class="col body">The space, money people lose to companies, was clear early. The right moment to step in wasn’t, and the first diamond earns its time finding it. But a normal Double Diamond has no step for prompts, eval sets or states where the system is unsure. For an AI agent, that’s the design work.</p>
-<figure class="gb-ex col" data-embed="process-diagram" data-note="Diagram">
-<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-<figcaption>Five phases, and the AI layer running through the last four.</figcaption>
-</figure>
-<div class="quote col"><p class="colhead">One rule for the whole project</p><p>Every decision needed a reason, and the reason had to be a number, a source, a constraint or a principle. “It felt right” didn’t count.</p></div>
-</div></details>
-</div>
-</div>
 </section>
 <!-- ================= 01 THE PROBLEM ================= -->
 <section class="gb-chapter" id="problem">
 <div class="col"><p class="eyebrow">01 · The problem</p><h2 class="say">Choose a problem where AI is the product, not a feature</h2><p class="dek">Which problem is worth an AI agent, who has it, and when is the moment to step in?</p></div>
 <section class="gb-sec" data-reveal="" id="s1-1">
 <div class="col"><p class="eyebrow">The starting question</p><h3 class="say sub">I didn’t start with refunds. I started with a question.</h3></div>
+<p class="col body">Most AI features I’d seen were a chatbot added to a product that already worked. I wanted the reverse: a problem most people simply couldn’t solve before LLMs, so that the AI is the product, not decoration. So I started with a question instead of a solution.</p>
 <div class="hinge col"><p>What could a young Indian not do before LLMs, that they can do now?</p></div>
-<p class="col body">Not adding AI to something, but finding a problem where AI is the whole point. Every idea had to pass six tests:</p>
+<p class="col body">Every idea had to pass six tests before I’d design anything for it:</p>
 <div class="pair col gb-grid"><div><p class="cap"><b>01</b></p><h4>How many people have it?</h4><p class="body">Scale.</p></div><div><p class="cap"><b>02</b></p><h4>Do they lose money, time or a chance?</h4><p class="body">Real pain, not annoyance.</p></div><div><p class="cap"><b>03</b></p><h4>Do they already try to solve it?</h4><p class="body">Proof the pain is real.</p></div><div><p class="cap"><b>04</b></p><h4>Is AI actually needed?</h4><p class="body">Not decoration.</p></div><div><p class="cap"><b>05</b></p><h4>Is there room next to existing players?</h4><p class="body">Not a copy.</p></div><div><p class="cap"><b>06</b></p><h4>Does it force hard AI design?</h4><p class="body">Wrong answers hurt; actions have consequences.</p></div></div>
 </section>
 <section class="gb-sec" data-reveal="" id="s1-3">
 <div class="col"><p class="eyebrow">Three rounds of ideas</p><h3 class="say sub">The first two rounds failed my own filter</h3></div>
+<p class="col body">I ran three rounds of ideas against those tests. The first two taught me what the filter was really for: telling a real loss apart from an annoyance.</p>
 <div class="pair col gb-grid"><div><p class="cap"><b>Round 1</b></p><h4>Annoyances, not problems</h4><p class="body">Scam-checking, a screenshot organiser, a money-leak tracker. Nobody loses real money to a messy camera roll, and a big player could ship any of these in a week.</p><p class="tag t-att">Failed the filter</p></div><div><p class="cap"><b>Round 2</b></p><h4>Scale, but not sharp</h4><p class="body">Job readiness: huge, crowded, vague. Scam protection: ₹22,495 crore (over US$2.5 billion) lost in 2025, but very hard to distribute.</p><p class="tag t-cau">Too broad</p></div><div class="hi"><p class="cap"><b>Round 3</b></p><h4>A better question</h4><p class="body">Not “what’s painful”, but “what was impossible before LLMs”: an advocate for people who can’t afford one, who knows the rules and never tires of following up.</p><p class="tag t-pos">The direction</p></div></div>
 <figure class="gb-ex col" data-embed="how-it-works" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">What Round 3’s answer became: Getbaq’s four steps, on its real screens.</figcaption></figure>
 </section>
@@ -897,12 +1046,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </tbody>
 </table></div></div>
 </details></div>
-<p class="col body">Then, where to start inside refunds:</p>
+<p class="col body">“Refunds” still covered very different situations, so I picked the one where a first version could prove itself fastest:</p>
 <div class="pair col gb-grid"><div class="hi"><p class="cap"><b>₹500–₹50,000 · days to weeks</b></p><h4>E-commerce and travel</h4><p class="body">60% of helpline refund complaints, and results fast enough to measure.</p><p class="tag t-pos">Start here</p></div><div><p class="cap"><b>₹50,000–₹2,00,000 · months</b></p><h4>Rent deposits</h4><p class="body">The strongest story, but too slow to prove.</p><p class="tag t-neu">Later</p></div><div><p class="cap"><b>1–3 months’ pay · months</b></p><h4>Unpaid salary</h4><p class="body">The highest impact, and the slowest proof.</p><p class="tag t-neu">Later</p></div></div>
 </section>
 <section class="gb-sec" data-reveal="" id="s1-4">
 <div class="col"><p class="eyebrow">Research</p><h3 class="say sub">I couldn’t recruit in time, so I changed the method, not the questions</h3></div>
-<p class="col body">I planned 5–8 interviews with people holding a stuck refund. Recruiting didn’t come through in time, so I answered the same questions from public evidence: Reddit and X complaints, app reviews, consumer forums, news and government data. It’s labelled desk research everywhere, never primary research.</p>
+<p class="col body">I planned 5–8 interviews with people holding a stuck refund. Recruiting didn’t come through in time, so I answered the same questions from public evidence: Reddit and X complaints, app reviews, consumer forums, news and government data. It’s labelled desk research everywhere, never primary research, and every finding below carries a confidence label, so strong evidence and educated guesses never look the same.</p>
 <div class="col"><details class="gb-more">
 <summary>The interview guide: what I’d ask, and what each question tests <svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div><div class="gb-rows">
@@ -921,6 +1070,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s1-6">
 <div class="col"><p class="eyebrow">What the evidence said</p><h3 class="say sub">Most people with a real problem never get help, and almost nobody knows the channel that works</h3></div>
+<p class="col body">The evidence told one consistent story. The problem isn’t that people don’t complain. It’s that complaining to the company rarely works, and the channel that does work is one almost nobody has heard of.</p>
 <div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">66%</p><p class="fnote">of people with a major service problem got no help from the company</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">36%</p><p class="fnote">were refused outright</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p><p class="fsrc"><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></p></div><div><p class="fnum">+6.9 pts</p><p class="fnote">more likely to get relief when a complaint was AI-assisted</p><p class="fsrc"><a href="https://www.nature.com/articles/s41562-026-02409-4" target="_blank" rel="noopener noreferrer">Nature Human Behaviour, 2026 · 1.1M US complaints</a></p></div></div></div>
 <div class="pair col gb-grid"><div><h4>What goes wrong</h4><p class="body">Cancelled orders, fake items, returns never refunded, flights stuck between airline and agent, failed UPI. Mostly ₹500–₹20,000.</p><p class="tag t-pos">High confidence</p></div><div><h4>What companies reply</h4><p class="body">“5 to 7 working days.” “We are very sorry sir.” Tickets closed with nothing fixed.</p><p class="tag t-pos">High confidence</p></div><div><h4>Whether they know 1915</h4><p class="body">Mostly not. Those who find it often get refunds in days.</p><p class="tag t-pos">High confidence</p></div><div><h4>What it costs emotionally</h4><p class="body">Stress, “a merry chase”, powerlessness. Then strong relief.</p><p class="tag t-cau">Medium–high</p></div><div><h4>What they won’t let an agent do</h4><p class="body">Share an OTP or bank details. Send anything false or rude.</p><p class="tag t-att">Low: inferred, not surveyed</p></div><div><h4>Whether they’d pay</h4><p class="body">Paid options exist (₹199 to a 35% fee), but no India data on small refunds.</p><p class="tag t-att">Low</p></div></div>
 <figure class="gb-ex col" data-embed="screen-blocked" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Blocked screen. It won’t guess a grievance address, because a wrong one means the complaint goes nowhere; it hands her the letter to send herself and keeps tracking the deadline.</figcaption></figure>
@@ -937,6 +1087,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <li><p>Doesn’t know the 1915 helpline exists.</p></li>
 </ul>
 </div>
+<p class="col body">Picture her in August. The mixer grinder she ordered for ₹3,499 arrives with a rusted jar. She asks for a replacement, and it’s rejected because a photo “failed validation”. She calls three times and gets nowhere. <b>That Flipkart case runs through the rest of this story</b>, and it’s the sample the prototype opens with.</p>
 <figure class="gb-ex col" data-embed="journey-map" data-note="Diagram">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>Same trigger, two journeys. The Getbaq row is the design; its “nothing until needed” depends on notifications, not built yet.</figcaption>
@@ -970,7 +1121,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </table></div></div>
 <p class="col gb-legend-note"><span aria-label="Designed, not built yet" class="gb-mk d"><svg aria-hidden="true" fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="12"><path d="M20 6 9 17l-5-5"></path></svg></span> Designed, not built yet. In the prototype, sending is simulated and nothing follows up in the background (see the audit, chapter 4).</p>
 <div class="pair col gb-grid"><div><h4>ChatGPT is the real default</h4><p class="body">People already paste “write a strong complaint” into it. But the letter is 10% of the job. Knowing the rule, where to send it, when to escalate, and following up is the other 90%.</p></div><div><h4>DoNotPay is the cautionary tale</h4><p class="body">It called itself a “robot lawyer” and paid $193,000 to settle an FTC case for overpromising. Getbaq never claims to be a lawyer, on any screen.</p></div><div><h4>Companies already have AI</h4><p class="body">Tools like Intercom Fin auto-resolve support tickets. The consumer side has nothing.</p></div><div><h4>The risk, stated openly</h4><p class="body">The helpline could add its own AI; Voxya could add an LLM. The defence is speed, mobile-first design and respect for her time, not technology.</p></div></div>
-<figure class="gb-ex col" data-embed="screen-waiting" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Waiting screen. A date they must reply by, a date the agent follows up on, and the next step if they don’t.</figcaption></figure>
+<figure class="gb-ex col" data-embed="screen-waiting" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Waiting screen. A date they must reply by, the date to follow up, and the next step if they don’t. In the prototype, that next letter is one tap when she opens the case.</figcaption></figure>
 </div></details>
 <details class="gb-fold" id="s1-5"><summary><span class="gb-fold-t"><b>Three assumptions I changed</b><span>1915 moved from last resort to first escalation, and two more.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div class="gb-fold-body">
@@ -998,20 +1149,22 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="pair col gb-grid"><div><h4>Turn a screenshot of a bot reply into a rule-backed complaint in under a minute?</h4><p class="body">Starting must cost less than one more follow-up.</p></div><div><h4>Let her approve every action in one tap, without reading a legal letter?</h4><p class="body">Approval is mandatory; reading effort isn’t.</p></div><div><h4>Show what happens next and when, so she stops checking?</h4><p class="body">The cost is uncertainty, not just money.</p></div><div><h4>Make the agent’s confidence visible, so a wrong rule never surprises her?</h4><p class="body">Wrong answers are the core AI risk.</p></div><div><h4>Make 1915 feel like a normal step, not scary government stuff?</h4><p class="body">Awareness is low, and it’s the strongest channel.</p></div></div>
 <figure class="gb-ex col" data-embed="screen-notsure" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Not sure screen. Low confidence, both sides of its reasoning, and no Approve button: she’s never asked to approve what the AI itself doubts.</figcaption></figure>
 </div></details>
-<details class="gb-fold" id="s2-4"><summary><span class="gb-fold-t"><b>Five principles, used to settle every argument</b><span>Effort down. Nothing leaves without a tap. Show the doubt.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
-<div class="gb-fold-body">
+</div>
+</div>
+<section class="gb-sec" data-reveal="" id="s2-4">
+<div class="col"><p class="eyebrow">From problem to principles</p><h3 class="say sub">Five principles that settled every design argument</h3></div>
+<p class="col body">Before drawing a screen, I turned the research into five principles. Whenever two options were both reasonable, these decided between them, and they come back in every chapter that follows.</p>
 <ul class="keys one col"><li><i>1</i><p><b>Effort down, not process up.</b> If a screen adds work, cut it.</p></li><li><i>2</i><p><b>Nothing leaves without a tap.</b> Every send is previewed and approved.</p></li><li><i>3</i><p><b>Show the rule, the deadline and the doubt.</b> Cite sources. Say when unsure.</p></li><li><i>4</i><p><b>Factual, never angry.</b> Short, calm complaints get faster replies.</p></li><li><i>5</i><p><b>Honest about limits.</b> It helps you complain. It is not a lawyer.</p></li></ul>
 <figure class="gb-ex col" data-embed="screen-scope" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Out of scope screen. When it isn’t a refund complaint, it says so and says where to actually go.</figcaption></figure>
-</div></details>
-</div>
-</div>
+</section>
 </section>
 <!-- ================= 02 WHERE AI STOPS ================= -->
 <section class="gb-chapter" id="ai-line">
 <div class="col"><p class="eyebrow">02 · Where AI stops</p><h2 class="say">The model reads and writes. Code counts.</h2><p class="dek">Which parts need AI judgment, which need exact calculation, and how would I know the AI is right?</p></div>
 <section class="gb-sec" data-reveal="" id="s2-5">
 <div class="col"><p class="eyebrow">The capability map</p><h3 class="say sub">AI for judgment, code for anything exact, and a list it never touches</h3></div>
-<p class="col body">Deadlines and money must be exact, so they’re tested code. AI is only needed for judgment on messy text. The “never” column came from the trust research.</p>
+<p class="col body">An agent that’s confidently wrong about a deadline is worse than no agent: Ananya would wait for a date that has already passed. So the first design decision here wasn’t a screen. It was deciding which parts of the job the AI is allowed to do at all.</p>
+<p class="col body">Deadlines and money must be exact, so they’re tested code. The AI is only needed for judgment on messy text: her message, a screenshot, a company’s reply. The “never” column came straight from the trust research.</p>
 <figure class="gb-ex col" data-embed="capability-map" data-note="Diagram">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>The capability map: what the AI judges, what code computes, and what the AI is never allowed to do.</figcaption>
@@ -1025,10 +1178,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s3-5">
 <div class="col"><p class="eyebrow">Guardrails</p><h3 class="say sub">The model’s output is never trusted directly</h3></div>
+<p class="col body">Drawing the line isn’t enough, because the model will still sometimes misbehave. So nothing it writes reaches her until code has checked it, and each check ends in something she can see, never a silent failure:</p>
 <div class="col gb-rows">
 <div class="rh"><p class="eyebrow" style="margin:0">If the model…</p><p class="eyebrow" style="margin:0">Code…</p></div>
 <ul>
 <li><p>Puts an amount or date in the letter she didn’t confirm</p><p>Drops the letter and uses the template, and says so</p></li>
+<li><p>Asks for the full amount back on an overcharge, instead of just the difference</p><p>Refuses the letter: only the confirmed difference may appear</p></li>
 <li><p>Cites a rule that isn’t on the verified sheet</p><p>Routes to Not sure. It can never reach Approve.</p></li>
 <li><p>Writes more than 150 words</p><p>Asks once to shorten, then drops the draft</p></li>
 <li><p>Says “sue”, “legal action”, “lawyer”, threatens, or uses “!”</p><p>Asks once to rewrite, then drops it</p></li>
@@ -1040,6 +1195,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s3-7">
 <div class="col"><p class="eyebrow">Bugs I caught</p><h3 class="say sub">Five mistakes that would have cost people money, caught at the source, and one known gap</h3></div>
+<p class="col body">Testing the rules, the dates and the letters, before anyone used the product, turned up five mistakes. Each would have cost someone money or days they didn’t have, and none of them would have shown up in a mock-up:</p>
 <div class="pair col gb-grid"><div><p class="cap"><b>01</b></p><h4>The UPI deadline was wrong</h4><p class="body">I gave every failed payment 5 days. RBI gives UPI one working day (T+1); 5 days is for cards. UPI users would have waited 4 days they didn’t have.</p></div><div><p class="cap"><b>02</b></p><h4>Two airline clocks were one rule</h4><p class="body">Card refunds: 7 days. Travel-site bookings: 14 working days. Those would have been flagged late a week early.</p></div><div><p class="cap"><b>03</b></p><h4>Deadlines moved with the timezone</h4><p class="body">Dates were read in the wrong timezone, so near midnight a deadline could wrongly show as missed. All dates now use one fixed timezone.</p></div><div><p class="cap"><b>04</b></p><h4>The model invented years</h4><p class="body">Asked to copy “2 Aug”, Gemini added the years 2023 and 2021. Now a year is kept only if she wrote one.</p></div><div><p class="cap"><b>05</b></p><h4>The UPI letter went to the wrong party</h4><p class="body">It was addressed to the shop, but the RBI rule applies to her bank. Now the app asks for her bank, and the letter goes there.</p></div><div><p class="cap"><b>06</b></p><h4>A known gap, documented</h4><p class="body">“14 working days” is counted as 14 calendar days for now, and the rule sheet says so.</p></div></div>
 <figure class="gb-ex col" data-embed="rule-fix" data-inner="460" data-note="Live">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
@@ -1048,7 +1204,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s5-0">
 <div class="col"><p class="eyebrow">What’s tested today</p><h3 class="say sub">The code is tested. The model isn’t scored yet.</h3></div>
-<p class="col body">Everything that has one right answer is tested: <b>182 automated tests</b> cover dates, money, states and safety, the parts where being wrong costs real money. And I used the prototype myself, which is where the biggest change, pages to one thread, came from.</p>
+<p class="col body">Everything that has one right answer is tested: <b>210 automated tests</b> cover dates, money, states and safety, the parts where being wrong costs real money. And I used the prototype myself, which is where the biggest change, pages to one thread, came from.</p>
 <p class="col body">What isn’t scored yet is the model’s judgment: whether it reads a case correctly and picks the right rule. The rest of this chapter is how that will be measured.</p>
 </section>
 <section class="gb-sec" data-reveal="" id="s5-1">
@@ -1090,7 +1246,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </div></details>
 <details class="gb-fold" id="s3-6"><summary><span class="gb-fold-t"><b>Built so an accidental auto-send is impossible, not just forbidden</b><span>A send can only come from a real tap.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div class="gb-fold-body">
-<div class="pair col gb-grid"><div><h4>What can happen, separate from who did it</h4><p class="body">One part of the system only knows which steps are allowed next. Another records whether her tap, the AI or code caused each one.</p></div><div><h4>Every rule marked as verified</h4><p class="body">A rule nobody has checked against the law can never appear in a letter. This is where invented law is stopped.</p></div><div><h4>All dates and money in one tested file</h4><p class="body">The one place where being wrong costs real money.</p></div><div><h4>The evaluation before the screens</h4><p class="body">If the AI picks the wrong rule 40% of the time, the screens are decoration. The score decides what to design.</p></div><div><h4>A real AI, not a Figma mock-up</h4><p class="body">The evaluation needs real answers. WhatsApp is imitated in a web app, because WhatsApp takes weeks to approve a business.</p></div><div><h4>Switched from Claude to Gemini</h4><p class="body">Claude needed paid credit; Gemini has a free plan. The AI is connected in one place, so switching didn’t touch the prompt, the rules or the screens.</p></div><div><h4>Cases saved under an anonymous ID</h4><p class="body">Her cases are kept without asking her to sign up. Optional Google sign-in brings them to any device.</p></div><div><h4>Stop, rather than fake it</h4><p class="body">The first evaluation ran out of paid AI credit before a single case finished. It’s built and honestly unscored, not faked.</p></div></div>
+<div class="pair col gb-grid"><div><h4>What can happen, separate from who did it</h4><p class="body">One part of the system only knows which steps are allowed next. Another records whether her tap, the AI or code caused each one.</p></div><div><h4>Every rule marked as verified</h4><p class="body">A rule nobody has checked against the law can never appear in a letter. This is where invented law is stopped.</p></div><div><h4>All dates and money in one tested file</h4><p class="body">The one place where being wrong costs real money.</p></div><div><h4>The evaluation decides what to design next</h4><p class="body">If the AI picks the wrong rule 40% of the time, the screens are decoration. So the evaluation set was built alongside the screens, and its score, not taste, decides what gets redesigned.</p></div><div><h4>A real AI, not a Figma mock-up</h4><p class="body">The evaluation needs real answers. WhatsApp is imitated in a web app, because WhatsApp takes weeks to approve a business.</p></div><div><h4>Switched from Claude to Gemini</h4><p class="body">Claude needed paid credit; Gemini has a free plan. The AI is connected in one place, so switching didn’t touch the prompt, the rules or the screens.</p></div><div><h4>Cases saved under an anonymous ID</h4><p class="body">Her cases are kept without asking her to sign up. Optional Google sign-in brings them to any device.</p></div><div><h4>Stop, rather than fake it</h4><p class="body">The first evaluation ran out of paid AI credit before a single case finished. It’s built and honestly unscored, not faked.</p></div></div>
 </div></details>
 <details class="gb-fold" id="s5-4"><summary><span class="gb-fold-t"><b>Fix the source before the prompt, and the prompt before the UI</b><span>Most model errors come from unclear reference material.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div class="gb-fold-body">
@@ -1113,7 +1269,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <div class="col"><p class="eyebrow">03 · Her control</p><h2 class="say">She approves everything, in her own name</h2><p class="dek">How much should an agent do on its own when it’s her money and her name?</p></div>
 <section class="gb-sec" data-reveal="" id="s3-1">
 <div class="col"><p class="eyebrow">The lifecycle</p><h3 class="say sub">It proposes, she approves, it acts, it reports back</h3></div>
-<p class="col body">Every action has the same shape. Escalation isn’t exempt: even after a company has ignored her for weeks, the 1915 complaint still needs her tap.</p>
+<p class="col body">An agent that acts on its own is the whole appeal, and the whole risk. A wrong or rude letter goes out under Ananya’s name, to a company that is holding her money. So every action has the same four beats, whoever set it off. Escalation isn’t exempt: even after a company has ignored her for weeks, the 1915 complaint still needs her tap.</p>
 <p class="col body"><b>It says back what it understood before it acts.</b> Before any rule is found or letter written, she sees “You confirmed · Flipkart · ₹3,499 · 2 Aug” and can fix a wrong fact there, not in a finished letter. It’s the pattern known as prompt reflection: the AI restates the request before doing anything with it.</p>
 <figure class="gb-ex col" data-embed="lifecycle-diagram" data-note="Diagram">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
@@ -1122,7 +1278,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s3-2">
 <div class="col"><p class="eyebrow">Agentic decisions</p><h3 class="say sub">No autonomy dial, on purpose</h3></div>
-<p class="col body">Most agents hand over more control as trust grows. Here, a wrong or rude message damages her, not the AI, so trust never removes the need to approve.</p>
+<p class="col body">Most agents hand over more control as trust grows: approve the first few, then let it run. I chose not to. Here a wrong or rude message damages her, not the AI, so growing trust never removes the need to approve. In the language of the Knight Institute’s autonomy levels, <b>Ananya is an approver</b>: the agent does the work, and nothing leaves without her.</p>
+<p class="col body">Not every action needs the same gate, though. I placed each one by how much is at stake and whether it can be undone, following Victor Yocco’s transparency framework, and the treatment follows from where it lands. Only what’s both high-stakes and irreversible waits for her tap:</p>
+<div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let her correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always her tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading her message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell her, for Stripping an OTP she pasted.">
+<p class="gb-quad-y" aria-hidden="true">Stakes ↑</p><p class="gb-quad-x" aria-hidden="true">Can be undone ← → Can’t be undone</p>
+<div class="gb-quad-grid" aria-hidden="true"><div class="q hi rev"><p class="q-where">Higher stakes · can be undone</p><p class="q-t">Show it, and let her correct it</p><ul><li><b>The facts it read</b><span>restated first: “You confirmed · Flipkart · ₹3,499 · 2 Aug”</span></li><li><b>The rule it picked</b><span>cited, with a confidence label and a reason</span></li><li><b>The deadline</b><span>calculated by code, and labelled Calculated</span></li></ul></div><div class="q hi irr"><p class="q-where">Higher stakes · can’t be undone</p><p class="q-t">Always her tap</p><ul><li><b>Sending the complaint</b><span>the Approve card, her signature, six seconds to undo</span></li><li><b>Escalating to 1915</b><span>prepared for her, and still her tap</span></li></ul></div><div class="q lo rev"><p class="q-where">Lower stakes · can be undone</p><p class="q-t">Just do it, and show it</p><ul><li><b>Reading her message or screenshot</b><span>a live trace of the real steps</span></li><li><b>Drafting the letter</b><span>labelled AI-drafted, and she can edit it</span></li></ul></div><div class="q lo irr"><p class="q-where">Lower stakes · can’t be undone</p><p class="q-t">Do it, and tell her</p><ul><li><b>Stripping an OTP she pasted</b><span>removed before the model sees it, and she’s told</span></li></ul></div></div>
+</div>
 <div class="col gb-rows">
 <ul>
 <li><p>Every send needs approval, forever</p><p>The agent acts in her name (the Intent Preview pattern)</p></li>
@@ -1133,6 +1294,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <section class="gb-sec" data-reveal="" id="s4-3">
 <div class="col"><p class="eyebrow">Approve, up close</p><h3 class="say sub">Eight decisions on one card</h3></div>
+<p class="col body">The Approve card is the moment the whole product exists for: she’s about to put her name to something. Nothing on it is decoration.</p>
 <div class="col gb-stack"><figure class="gb-ex" data-embed="approve" data-note="Interactive">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>Press Send it to see the undo window.</figcaption>
@@ -1196,8 +1358,21 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <section class="gb-chapter" id="wrong">
 <div class="col"><p class="eyebrow">04 · Being wrong</p><h2 class="say">Design for being wrong: the AI’s, and my own</h2><p class="dek">What does she see when it’s unsure, ignored or blocked, and what did I get wrong?</p></div>
 <section class="gb-sec" data-reveal="" id="s3-3">
-<div class="col"><p class="eyebrow">States</p><h3 class="say sub">Five ways it can go wrong got the same care as the happy path</h3></div>
-<p class="col body">Failure states are where trust is won or lost. Pick any state to see the real screen, and try them: they all work.</p>
+<div class="col"><p class="eyebrow">States</p><h3 class="say sub">Every way it can go wrong got the same care as the happy path</h3></div>
+<p class="col body">An AI agent will be wrong, unsure, ignored or stuck some of the time. What Ananya sees in those moments decides whether she trusts it the next time, so they’re where trust is won or lost. Pick any state to see the real screen, and try them: they all work.</p>
+<p class="col body">Each failure is sorted by kind, using Google PAIR’s error categories, and each ends in a next step rather than a dead end:</p>
+<div class="col"><div class="gb-table"><table style="min-width:560px">
+<thead><tr><th>What goes wrong</th><th>Kind</th><th>What she sees</th><th>What happens next</th></tr></thead>
+<tbody>
+<tr><td>A screenshot with no money in it</td><td>Input</td><td>“I read that screenshot, but I don’t see an order, a payment or a refund in it.”</td><td>No case is started from it</td></tr>
+<tr><td>A fact is missing: no company, no date</td><td>Input</td><td>One card that asks for every gap at once, and says why each is needed</td><td>She answers, or picks “I haven’t complained yet”</td></tr>
+<tr><td>No rule clearly fits</td><td>Failstate</td><td>Not sure: a confidence label, both sides of its reasoning, no Approve button</td><td>It asks. Nothing can be approved while it’s unsure</td></tr>
+<tr><td>It isn’t a refund complaint</td><td>Context</td><td>Out of scope: it says so, and where to go instead</td><td>She’s pointed to e-Jagriti, a lawyer, or the bank</td></tr>
+<tr><td>No grievance address it can trust</td><td>Failstate</td><td>Blocked: it won’t guess an address</td><td>She gets the letter to send herself; it keeps tracking the deadline</td></tr>
+<tr><td>The company goes quiet</td><td>Background</td><td>Ignored: the 1915 complaint is already prepared</td><td>One tap escalates, and it’s still her tap</td></tr>
+<tr><td>The AI can’t be reached, or fails code’s checks</td><td>System</td><td>The step says a simpler reader or a fixed template did it</td><td>The case carries on; she checks what it found</td></tr>
+</tbody>
+</table></div></div>
 <figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>Eleven states, each the real screen from the app. Fill in the questions, open the letter, press Send it and then Undo.</figcaption>
@@ -1221,6 +1396,18 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <li><p>Screenshots and typed words are read by Gemini, in one call</p><p>Facts come only from what she sent</p></li>
 <li><p>A screenshot that isn’t about money doesn’t start a case</p><p>“I read that screenshot, but I don’t see an order, a payment or a refund in it.”</p></li>
 <li><p>If the AI can’t be reached, a simpler backup reads it, and says so</p><p>“Read your message with a simpler reader. Check what I found.”</p></li>
+</ul>
+</div>
+</section>
+<section class="gb-sec" data-reveal="" id="s3-19">
+<div class="col"><p class="eyebrow">Another bug I found by using it</p><h3 class="say sub">A company’s name isn’t a case yet</h3></div>
+<p class="col body">I typed “zoom car” into my own prototype expecting it to ask what happened. Instead it either opened a case with an empty questionnaire about an order I’d never described, or said “Sorry, I’m not sure I followed that”, the same reply small talk gets. Neither is right: she named a company, so she isn’t making conversation, but nothing has gone wrong yet either.</p>
+<div class="col gb-rows">
+<div class="rh"><p class="eyebrow" style="margin:0">Now</p><p class="eyebrow" style="margin:0">Why</p></div>
+<ul>
+<li><p>Every message that isn’t small talk is read by the AI first, with the conversation so far, before code decides anything</p><p>So a bare company name gets a real answer, not a guess in either direction</p></li>
+<li><p>A company on its own asks back: “Are you trying to get money back from Zoomcar, or is it something else?”</p><p>Confirms there’s a case instead of assuming one from a single word</p></li>
+<li><p>A general question about a company’s policy gets an honest “I can’t check that” instead of a case</p><p>“What is Zoomcar’s cancellation policy?” isn’t a refund that’s stuck yet</p></li>
 </ul>
 </div>
 </section>
@@ -1285,7 +1472,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </section>
 <!-- ================= 05 THE CRAFT ================= -->
 <section class="gb-chapter" id="craft">
-<div class="col"><p class="eyebrow">05 · The craft</p><h2 class="say">Smaller decisions that make it feel like one product</h2><p class="dek">The two changes that mattered most, then everything else in a line each.</p></div>
+<div class="col"><p class="eyebrow">05 · The craft</p><h2 class="say">Smaller decisions that make it feel like one product</h2><p class="dek">The two changes that mattered most, then the smaller ones, each with the reason it changed.</p></div>
 <section class="gb-sec" data-reveal="" id="s3-10">
 <div class="col"><p class="eyebrow">Iteration</p><h3 class="say sub">From pages to one thread</h3></div>
 <p class="col body">Using my own prototype, every step felt like being sent to a new page. I kept the logic the same and changed only how it looks: each step adds to one conversation, and finished steps fold into one-line receipts. It reads like a conversation but isn’t only chat: the steps are cards she can act on. As Perplexity’s head of design puts it, not everything should be a chat.</p>
@@ -1333,9 +1520,9 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </div>
 <figure class="gb-ex col gb-devices-fig">
 <div class="gb-ex-panel"><div class="gb-devices" role="img" aria-label="The same Flipkart case in Getbaq on a laptop and on a phone. On the laptop, the case list, the thread with the Approve card and the case file sit side by side. On the phone, the thread fills the screen and the case file opens as a sheet from the bottom.">
-<div class="gb-laptop" aria-hidden="true"><div class="gb-lid"><img src="./assets/getbaq-desktop-1600.webp" srcset="./assets/getbaq-desktop-960.webp 960w, ./assets/getbaq-desktop-1600.webp 1600w" sizes="(max-width:600px) 90vw, 520px" width="1600" height="1000" alt="" loading="lazy" decoding="async"></div><div class="gb-base"></div></div>
-<div class="gb-phone gb-phone-a" aria-hidden="true"><img src="./assets/getbaq-phone-thread-540.webp" width="540" height="1169" alt="" loading="lazy" decoding="async"></div>
-<div class="gb-phone gb-phone-b" aria-hidden="true"><img src="./assets/getbaq-phone-casefile-540.webp" width="540" height="1169" alt="" loading="lazy" decoding="async"></div>
+<div class="gb-laptop" aria-hidden="true"><img src="./assets/getbaq-desktop-mbp-1512.webp" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:600px) 70vw, 420px" width="1512" height="982" alt="" loading="lazy" decoding="async"><img class="gb-laptop-frame" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" loading="lazy" decoding="async"></div>
+<div class="gb-phone gb-phone-a" aria-hidden="true"><img src="./assets/getbaq-phone-thread-603.webp" width="603" height="1311" alt="" loading="lazy" decoding="async"><img class="gb-phone-frame" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></div>
+<div class="gb-phone gb-phone-b" aria-hidden="true"><img src="./assets/getbaq-phone-casefile-603.webp" width="603" height="1311" alt="" loading="lazy" decoding="async"><img class="gb-phone-frame" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></div>
 </div></div>
 <figcaption>The same case on a laptop and on a phone. On a wide screen, the list, the thread and the case file sit side by side; on a phone, the list is a drawer and the case file a sheet.</figcaption>
 </figure>
@@ -1394,6 +1581,10 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 </div>
 <div class="quote col"><p class="colhead">A bug the motion found</p><p>The first version of the phone sheet made the conversation behind it jump 239 pixels as it opened. Giving the sheet keyboard focus while it was still below the screen made the browser scroll to show it. The fix was one option (focus without scrolling), plus a container that can’t scroll at all, so it can’t come back.</p></div>
 </div></details>
+<details class="gb-fold" id="s3-20"><summary><span class="gb-fold-t"><b>Her own words outgrew their type size</b><span>Set for a short tap, then the reply started sending full sentences.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
+<div class="gb-fold-body">
+<p class="col body">Her own message was set in the same big serif as the landing headline and the case’s final amount: right for a tap like “Zoomcar” or “yes”, too loud once the “zoom car” fix (chapter 4) meant it carried full sentences like “CarDekho charged me more than they should have”, wrapping two lines above the agent’s own 14px reply. Cut from 32px to 26px for the first line and 24px to 19px for every one after, keeping the same proportion between them.</p>
+</div></details>
 <details class="gb-fold" id="s3-18"><summary><span class="gb-fold-t"><b>“Will this work for my problem?”</b><span>The landing page now says what it covers, and its limits.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
 <div class="gb-fold-body">
 <p class="col body">With the product settled, I reread the landing page as someone with a stuck refund. It explained how it works, but never answered the first question: is mine one of these? Its trust badges spoke our language (“dates computed by code”), not hers. And the honest limits, that it doesn’t email the company yet and can’t remind her, were hidden inside step descriptions.</p>
@@ -1414,11 +1605,15 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 <!-- ================= LOOKING BACK ================= -->
 <section class="gb-chapter" id="close">
 <div class="col"><h2 class="say">Looking back</h2></div>
+<section class="gb-sec" data-reveal="" id="learned">
+<div class="col"><p class="eyebrow">What I learned</p><h3 class="say sub">Three things this taught me about designing AI products</h3></div>
+<ul class="keys one col"><li><i>1</i><p><b>The design material is the failure.</b> Wrong, unsure, ignored and blocked are where trust is decided, so they deserve the same care as the happy path, and a real model to design against.</p></li><li><i>2</i><p><b>What the model is allowed to know is a design decision.</b> Keeping day counts away from it made a whole class of wrong deadlines impossible, not just unlikely.</p></li><li><i>3</i><p><b>Trust comes from showing where things came from.</b> Labelling every step AI, Calculated or Verified lets her check the work instead of taking it on faith.</p></li></ul>
+</section>
 <section class="gb-sec" data-reveal="">
 <div class="col"><p class="eyebrow">Reflection</p><h3 class="say sub">What I’d do differently, and what I’d keep</h3></div>
 <div class="pair col">
 <div><p class="cap"><b>Differently</b></p><ul class="keys one">
-<li><p><b>Run the eval earlier.</b> <span>I polished screens before seeing real AI output. The evaluation should come before the screens.</span></p></li>
+<li><p><b>Run the eval earlier.</b> <span>I designed against the model’s real answers one case at a time, but polished screens before its answers were scored across all 30. The score should come before the polish.</span></p></li>
 <li><p><b>Recruit before designing.</b> <span>Trust limits and willingness to pay are still open. Only real people can close them.</span></p></li>
 <li><p><b>Write the marketing from the code.</b> <span>The landing page promised more than the prototype did. The audit caught it; it shouldn’t have had to.</span></p></li>
 <li><p><b>Question “no accounts” earlier.</b> <span>A complaint needs a name on it (chapter 3).</span></p></li>
@@ -1770,6 +1965,73 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   document.addEventListener('click',function(e){ var a=e.target.closest('a[href^="#"]'); if(a) openFor(a.getAttribute('href')); });
   window.addEventListener('hashchange',function(){ openFor(location.hash); });
   openFor(location.hash);
+})();
+</script>
+<script>
+/* Hero: her words become a case. Types her message, lifts each fact out of
+   the word it came from into its label, shows Getbaq working, then the
+   letter. Plays only while on screen; reduced motion gets the finished frame. */
+(function(){
+  var st = document.querySelector(".gbh"); if (!st) return;
+  var text = st.querySelector(".gbh-text"), rows = [].slice.call(st.querySelectorAll(".gbh-row"));
+  var chars = [];
+  (function split(node){
+    [].slice.call(node.childNodes).forEach(function(n){
+      if (n.nodeType === 3){
+        var f = document.createDocumentFragment();
+        n.textContent.split("").forEach(function(ch){ var s = document.createElement("span"); s.className = "c"; s.textContent = ch; f.appendChild(s); chars.push(s); });
+        node.replaceChild(f, n);
+      } else split(n);
+    });
+  })(text);
+  var marks = [0,1,2].map(function(i){ return text.querySelector('mark[data-f="' + i + '"]'); });
+  var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var timers = [], playing = false;
+  function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
+  function stop(){ timers.forEach(clearTimeout); timers = []; playing = false; }
+  function finished(){
+    chars.forEach(function(c){ c.classList.add("on"); c.classList.remove("cur"); });
+    marks.forEach(function(m){ m.classList.add("on"); });
+    rows.forEach(function(r){ r.querySelector("b").style.transform = ""; r.classList.add("on"); });
+    st.classList.add("is-screen"); st.classList.remove("is-work", "is-out");
+  }
+  if (still){ finished(); return; }
+  function reset(){
+    st.classList.remove("is-work", "is-screen", "is-out");
+    chars.forEach(function(c){ c.classList.remove("on", "cur"); });
+    marks.forEach(function(m){ m.classList.remove("on"); });
+    rows.forEach(function(r){ var b = r.querySelector("b"); r.classList.remove("on"); b.style.transition = "none"; b.style.transform = ""; b.offsetWidth; b.style.transition = ""; });
+  }
+  function fly(i){
+    var m = marks[i], r = rows[i], f = r.querySelector("b");
+    m.classList.add("on");
+    f.style.transition = "none"; f.style.transform = "none";
+    var a = m.getBoundingClientRect(), b = f.getBoundingClientRect();
+    f.style.transform = "translate(" + (a.left - b.left) + "px," + (a.top + a.height / 2 - (b.top + b.height / 2)) + "px) scale(.92)";
+    f.offsetWidth; f.style.transition = "";
+    requestAnimationFrame(function(){ f.style.transform = ""; r.classList.add("on"); });
+  }
+  function play(){
+    stop(); reset(); playing = true;
+    var t = 500, prev = null;
+    chars.forEach(function(c){
+      var ch = c.textContent;
+      t += 9 + Math.random() * 11 + (ch === " " ? 6 : 0) + (ch === "." || ch === "," ? 110 : 0);
+      at(t, function(){ if (prev) prev.classList.remove("cur"); c.classList.add("on", "cur"); prev = c; });
+    });
+    t += 700;
+    [0,1,2].forEach(function(i){ at(t, function(){ fly(i); }); t += 650; });
+    t += 250; at(t, function(){ if (prev) prev.classList.remove("cur"); st.classList.add("is-work"); });
+    t += 1200; at(t, function(){ st.classList.add("is-screen"); });
+    t += 5600; at(t, function(){ st.classList.add("is-out"); });
+    t += 800; at(t, play);
+  }
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){
+      var on = es[es.length - 1].isIntersecting;
+      if (on && !playing) play(); else if (!on && playing){ stop(); finished(); }
+    }, { threshold: .35 }).observe(st);
+  } else finished();
 })();
 </script>
 <script src="./aitwin.js?v=6" defer></script>
