@@ -3098,9 +3098,39 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec.is-held .rec-bar.is-on i,.rec:not(.is-seen) .rec-bar.is-on i{animation-play-state:paused}
 @keyframes recFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .rec-stage{position:relative;min-width:0}
-.rec-item{position:absolute;inset:0;margin:0;min-width:0;opacity:0;visibility:hidden;filter:blur(8px);transform:translateY(6px);
-  transition:opacity .4s ease,filter .4s ease,transform .5s var(--ease),visibility 0s .4s}
-.rec-item.is-on{opacity:1;visibility:visible;filter:none;transform:none;transition:opacity .5s ease .14s,filter .5s ease .14s,transform .6s var(--ease) .14s,visibility 0s}
+/* Each part changes the way it means something. The quote is said, so its
+   words arrive one after another, drifting in from the side you moved
+   towards (--dx: 1 next, -1 back). The person changes, so the photo steps in
+   with a small spring. The name and role follow the words, the way a
+   signature follows a letter, and the source link comes last. Leaving is one
+   quick fade of the whole slide, so only the arrival is read. */
+.rec-item{position:absolute;inset:0;margin:0;min-width:0;opacity:0;visibility:hidden;
+  transform:translateX(calc(var(--dx,1) * -10px));filter:blur(4px);
+  transition:opacity .28s ease,transform .32s var(--ease),filter .28s ease,visibility 0s .32s}
+.rec-item.is-on{opacity:1;visibility:visible;transform:none;filter:none;transition:visibility 0s}
+.rec-q .w{display:inline-block;opacity:0;filter:blur(6px);transform:translateX(calc(var(--dx,1) * 10px))}
+.rec-item.is-on .rec-q .w{opacity:1;filter:none;transform:none;
+  transition:opacity .45s ease,filter .45s ease,transform .6s var(--ease);
+  transition-delay:calc(160ms + var(--i) * 32ms)}
+.rec-av{opacity:0;transform:scale(.7)}
+.rec-item.is-on .rec-av{opacity:1;transform:none;
+  transition:opacity .3s ease var(--t-by),transform .55s cubic-bezier(.34,1.5,.64,1) var(--t-by)}
+.rec-name b,.rec-who > span:last-child,.rec-src{opacity:0;transform:translateY(6px)}
+.rec-item.is-on .rec-name b,.rec-item.is-on .rec-who > span:last-child,.rec-item.is-on .rec-src{opacity:1;transform:none;
+  transition:opacity .4s ease,transform .5s var(--ease),color .2s ease,text-decoration-color .2s ease}
+.rec-item.is-on .rec-name b{transition-delay:calc(var(--t-by) + 80ms),calc(var(--t-by) + 80ms),0s,0s}
+.rec-item.is-on .rec-who > span:last-child{transition-delay:calc(var(--t-by) + 160ms),calc(var(--t-by) + 160ms),0s,0s}
+.rec-item.is-on .rec-src{transition-delay:calc(var(--t-by) + 280ms),calc(var(--t-by) + 280ms),0s,0s}
+/* on the way out the parts hold still while the slide fades, and only reset
+   once it's gone */
+.rec-item .w,.rec-item .rec-av,.rec-item .rec-name b,.rec-item .rec-who > span:last-child,.rec-item .rec-src{transition:opacity 0s .32s,transform 0s .32s,filter 0s .32s,color .2s ease,text-decoration-color .2s ease}
+/* the marks open with the first word and close after the last */
+.rec-q:before,.rec-q:after{opacity:0;transition:opacity 0s .32s}
+.rec-item.is-on .rec-q:before{opacity:1;transition:opacity .4s ease .16s}
+.rec-item.is-on .rec-q:after{opacity:1;transition:opacity .4s ease var(--t-end)}
+.rec-arrow svg{transition:transform .25s var(--ease)}
+.rec-arrow[data-dir="1"]:active svg{transform:translateX(3px)}
+.rec-arrow[data-dir="-1"]:active svg{transform:translateX(-3px)}
 .rec-q{margin:0;max-width:720px;font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.7vw,30px);line-height:1.3;letter-spacing:-.015em;color:var(--ink);text-wrap:pretty}
 .rec-q:before{content:"\201C";margin-left:-.42em;padding-right:.04em;color:var(--faint)}
 .rec-q:after{content:"\201D";color:var(--faint)}
@@ -3135,7 +3165,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .rec-src{order:2;margin-top:2px}
 }
 @media (prefers-reduced-motion:reduce){
-  .rec-item,.rec-item.is-on{filter:none;transform:none;transition:opacity .2s ease,visibility 0s}
+  .rec-item,.rec-item.is-on,.rec-q .w,.rec-av,.rec-name b,.rec-who > span:last-child,.rec-src{filter:none!important;transform:none!important;transition-delay:0s!important}
+  .rec-item,.rec-item.is-on{transition:opacity .2s ease,visibility 0s}
   .rec-bar.is-on i{animation:none;transform:scaleX(1)}
 }
 </style>
@@ -4273,8 +4304,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     items.forEach(function(el){ q = Math.max(q, el.querySelector(".rec-q").offsetHeight); by = Math.max(by, el.querySelector(".rec-by").offsetHeight); });
     stage.style.height = (q + (phone ? 24 : 32) + by) + "px";
   }
+  // the quote is said word by word: each word gets its place in the line,
+  // and the name follows once most of the words have landed
+  items.forEach(function(el){
+    var q = el.querySelector(".rec-q"), words = q.textContent.trim().split(/\s+/);
+    q.setAttribute("aria-label", q.textContent.trim());
+    q.innerHTML = words.map(function(w, k){ return '<span class="w" aria-hidden="true" style="--i:' + k + '">' + w.replace(/&/g,"&amp;").replace(/</g,"&lt;") + '</span>'; }).join(" ");
+    el.style.setProperty("--t-by", Math.round(160 + words.length * 32 * .7) + "ms");
+    el.style.setProperty("--t-end", (160 + words.length * 32) + "ms");
+  });
   function hold(why, on){ if (on) holds[why] = 1; else delete holds[why]; root.classList.toggle("is-held", Object.keys(holds).length > 0); }
-  function show(n){
+  function show(n, dir){
+    root.style.setProperty("--dx", dir || (n < i ? -1 : 1));
     i = (n + items.length) % items.length;
     items.forEach(function(el, k){
       var on = k === i; el.classList.toggle("is-on", on); el.setAttribute("aria-hidden", on ? "false" : "true");
@@ -4290,14 +4331,14 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   bars.forEach(function(b, k){
     b.addEventListener("click", function(){ show(k); });
-    b.querySelector("i").addEventListener("animationend", function(){ if (b.classList.contains("is-on")) show(i + 1); });
+    b.querySelector("i").addEventListener("animationend", function(){ if (b.classList.contains("is-on")) show(i + 1, 1); });
   });
   [].forEach.call(root.querySelectorAll(".rec-arrow"), function(a){
-    a.addEventListener("click", function(){ show(i + (+a.getAttribute("data-dir"))); });
+    a.addEventListener("click", function(){ var d = +a.getAttribute("data-dir"); show(i + d, d); });
   });
   root.addEventListener("keydown", function(e){
     if (e.target.closest("a")) return;
-    if (e.key === "ArrowRight"){ e.preventDefault(); show(i + 1); } else if (e.key === "ArrowLeft"){ e.preventDefault(); show(i - 1); }
+    if (e.key === "ArrowRight"){ e.preventDefault(); show(i + 1, 1); } else if (e.key === "ArrowLeft"){ e.preventDefault(); show(i - 1, -1); }
   });
   // hold while someone is reading it closely
   root.addEventListener("mouseenter", function(){ hold("hover", true); });
@@ -4309,11 +4350,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   root.querySelector(".rec-stage").addEventListener("touchstart", function(e){ sx = e.touches[0].clientX; }, { passive: true });
   root.querySelector(".rec-stage").addEventListener("touchend", function(e){
     if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null;
-    if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
   });
   // the clock only runs while it's on screen, and never with reduced motion
   if (!still && "IntersectionObserver" in window){
-    new IntersectionObserver(function(es){ root.classList.toggle("is-seen", es[es.length - 1].isIntersecting); }, { threshold: .5 }).observe(root);
+    items[0].classList.remove("is-on");
+    var said = false;
+    new IntersectionObserver(function(es){
+      var on = es[es.length - 1].isIntersecting;
+      root.classList.toggle("is-seen", on);
+      if (on && !said){ said = true; show(0, 1); }
+    }, { threshold: .5 }).observe(root);
   }
 })();
 </script>
