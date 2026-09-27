@@ -3110,7 +3110,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-toggle svg{transition:transform .25s var(--ease)}
 .rec-toggle[aria-expanded="true"] svg{transform:rotate(45deg)}
 .rec-toggle:hover{color:var(--ink)}
-.rec-full{margin:12px 0 0;max-width:62ch;font-size:14px;line-height:1.65;letter-spacing:var(--tr-body);color:var(--muted)}
+.rec-full{margin:12px 0 0;max-width:62ch}
+.rec-full p{margin:0;font-size:14px;line-height:1.65;letter-spacing:var(--tr-body);color:var(--muted)}
+.rec-full p + p{margin-top:10px}
 .rec-src{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--faint);text-decoration:none;white-space:nowrap;transition:color .2s ease}
 .rec-src:hover{color:var(--ink)}
 .rec-nav{grid-column:2;display:flex;align-items:center;gap:16px;margin-top:30px}
@@ -3372,30 +3374,39 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="words" data-section="Recommendations" aria-label="Recommendations">
     <div class="rec" data-reveal>
-      <p class="rec-num" aria-hidden="true"><span class="rec-roll"><span>01</span><span>02</span></span></p>
+      <p class="rec-num" aria-hidden="true"><span class="rec-roll"><span>01</span><span>02</span><span>03</span></span></p>
       <div class="rec-stage">
-        <figure class="rec-item is-on" role="group" aria-roledescription="slide" aria-label="1 of 2">
-          <p class="rec-co">Rupeezy</p><blockquote class="rec-q">One of the most collaborative designers I have ever worked with.</blockquote>
-          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">KR</span><span class="rec-who"><b>Kushagra Rustagi</b><span>Worked with Lokesh at Rupeezy</span></span></figcaption>
+        <figure class="rec-item is-on" role="group" aria-roledescription="slide" aria-label="1 of 3">
+          <p class="rec-co">Rupeezy</p><blockquote class="rec-q">Without a doubt, I’d love to have him on any team I lead in the future.</blockquote>
+          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">MR</span><span class="rec-who"><b>Mukesh Kumar Ranjan</b><span>Product Design Manager, Rupeezy · hired and managed Lokesh</span></span></figcaption>
           <div class="rec-links">
             <button type="button" class="rec-toggle" aria-expanded="false" aria-controls="recFull1"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Read all of it</span></button>
             <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-          <p class="rec-full" id="recFull1" hidden>“I’ve had the chance to work closely with Lokesh at Rupeezy, and honestly, he has been one of the most collaborative designers I have ever worked with. What stood out right from the beginning was how deeply he thought from a user’s perspective. It wasn’t just about making things look good — Lokesh would jump on user calls, ask the right questions, and bring back insights that genuinely shaped the product. A lot of our design decisions became sharper and more grounded because of that. If you’re someone who’s looking for a product designer who builds user first products, I can’t recommend Lokesh enough.”</p>
+          <div class="rec-full" id="recFull1" hidden><p>“I had the absolute pleasure of hiring and working closely with Lokesh as a Product Designer at Rupeezy, and watching his growth has been nothing short of inspiring.</p><p>From day one, Lokesh brought a unique combination of in-depth trading knowledge and a problem-solving mindset, which truly elevated his design contributions at Rupeezy. Whether it was the RISE Portal or multiple feature enhancements for traders at Rupeezy, his ability to translate complex trading concepts into clean, user-centric designs stood out.</p><p>What sets Lokesh apart is his hunger to learn, his eagerness to grow, and his ability to think smart. He started his journey as a beginner in product design, and today, he’s an exceptional problem solver who can take on any challenge with clarity and creativity. His collaboration skills, design intuition, and strategic thinking will take him far in his career.</p><p>As a design manager, I genuinely enjoyed working with him — and without a doubt, I’d love to have him on any team I lead in the future. Lokesh is amazing at what he does, and any team would be lucky to have him on board.”</p></div>
         </figure>
-        <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="2 of 2" aria-hidden="true">
-          <blockquote class="rec-q">His ability to transform complex requirements into clean, user-friendly designs consistently impressed the team.</blockquote>
-          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">DK</span><span class="rec-who"><b>Dharani KR</b><span>Recommendation on LinkedIn</span></span></figcaption>
+        <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true">
+          <p class="rec-co">Rupeezy</p><blockquote class="rec-q">One of the most collaborative designers I have ever worked with.</blockquote>
+          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">KR</span><span class="rec-who"><b>Kushagra Rustagi</b><span>Ex-PM, Fintech & SaaS · worked with Lokesh at Rupeezy</span></span></figcaption>
           <div class="rec-links">
             <button type="button" class="rec-toggle" aria-expanded="false" aria-controls="recFull2"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Read all of it</span></button>
             <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-          <p class="rec-full" id="recFull2" hidden>“I can confidently say that Lokesh is an exceptional UI/UX designer, his ability to transform complex requirements into clean, user-friendly designs consistently impressed the team. Whether it was wireframing, prototyping, or conducting user research, they brought creativity and clarity to every stage of the process.”</p>
+          <div class="rec-full" id="recFull2" hidden><p>“I’ve had the chance to work closely with Lokesh at Rupeezy, and honestly, he has been one of the most collaborative designers I have ever worked with.</p><p>What stood out right from the beginning was how deeply he thought from a user’s perspective. It wasn’t just about making things look good — Lokesh would jump on user calls, ask the right questions, and bring back insights that genuinely shaped the product. A lot of our design decisions became sharper and more grounded because of that.</p><p>If you’re someone who’s looking for a product designer who builds user first products, I can’t recommend Lokesh enough.”</p></div>
+        </figure>
+        <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true">
+          <blockquote class="rec-q">His ability to transform complex requirements into clean, user-friendly designs consistently impressed the team.</blockquote>
+          <figcaption class="rec-by"><span class="rec-av" aria-hidden="true">DK</span><span class="rec-who"><b>Dharani KR</b><span>UI Engineer · worked on the same team</span></span></figcaption>
+          <div class="rec-links">
+            <button type="button" class="rec-toggle" aria-expanded="false" aria-controls="recFull3"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Read all of it</span></button>
+            <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="rec-full" id="recFull3" hidden><p>“I can confidently say that Lokesh is an exceptional UI/UX designer, his ability to transform complex requirements into clean, user-friendly designs consistently impressed the team. Whether it was wireframing, prototyping, or conducting user research, they brought creativity and clarity to every stage of the process.”</p></div>
         </figure>
       </div>
       <div class="rec-nav">
-        <div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Recommendation 1 of 2" aria-current="true"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 2 of 2"><i></i></button></div>
-        <p class="rec-count" aria-hidden="true"><b>01</b> / 02</p>
+        <div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Recommendation 1 of 3" aria-current="true"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 2 of 3"><i></i></button><button type="button" class="rec-bar" aria-label="Recommendation 3 of 3"><i></i></button></div>
+        <p class="rec-count" aria-hidden="true"><b>01</b> / 03</p>
         <button type="button" class="rec-arrow" data-dir="-1" aria-label="Previous recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8h-11M6.5 4l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button type="button" class="rec-arrow" data-dir="1" aria-label="Next recommendation"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
