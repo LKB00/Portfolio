@@ -3082,7 +3082,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    and a link to the rest of it where they wrote it. The bar under
    it fills while you read and moves on; hovering, focusing or opening the
    full text holds it. Reduced motion: no autoplay, no blur. */
-#words{max-width:var(--col);margin:0 auto;padding-bottom:clamp(46px,7vw,72px)}
+#words{max-width:var(--col);margin:0 auto;padding-bottom:calc(clamp(90px,12vw,130px) + 8px)}  /* the same room below the card as above it */
 .rec-stage{position:relative;min-width:0;transition:height .55s var(--ease)}
 .rec-item{position:absolute;top:0;left:0;right:0;margin:0;min-width:0;opacity:0;visibility:hidden;filter:blur(8px);transform:translateY(6px);
   transition:opacity .4s ease,filter .4s ease,transform .5s var(--ease),visibility 0s .4s}
@@ -3121,6 +3121,13 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (max-width:576px){
   .rec-bar{width:28px}
 }
+/* the whole thing sits on a card, the same grey and corners as the work
+   cards above, so it reads as its own section; the small grey pieces
+   inside (initials, arrows) flip to the page colour to stay visible */
+.rec{padding:clamp(24px,4vw,44px) clamp(22px,4.4vw,48px) clamp(22px,3.4vw,36px);border-radius:8px;background:var(--surface)}
+.rec .rec-av,.rec .rec-arrow{background:var(--bg)}
+.rec .rec-arrow:hover{background:color-mix(in srgb,var(--ink) 7%,var(--bg))}
+.rec .rec-bar:before{background:color-mix(in srgb,var(--ink) 12%,transparent)}
 @media (prefers-reduced-motion:reduce){
   .rec-stage{transition:none}
   .rec-item,.rec-item.is-on{filter:none;transform:none;transition:opacity .2s ease,visibility 0s}
