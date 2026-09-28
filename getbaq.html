@@ -714,16 +714,115 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-call b{font:500 15px/1.4 var(--sans);color:var(--ink);letter-spacing:-.01em}
 .gb-call span{font:400 14px/1.55 var(--sans);color:var(--muted)}
 .gb-bugs i{font-style:normal;font-weight:500;color:var(--ink)}
-/* the case, step by step: a numbered rail, each step with who does it */
-.gb-steps{list-style:none;margin:var(--s4) auto 0;padding:0;counter-reset:st;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.gb-steps li{counter-increment:st;position:relative;background:var(--surface);border-radius:8px;padding:38px 14px 14px;display:grid;gap:4px;align-content:start}
-.gb-steps li:before{content:counter(st,decimal-leading-zero);position:absolute;left:14px;top:12px;font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--faint)}
-.gb-steps li:after{content:"";position:absolute;right:-9px;top:50%;width:8px;height:8px;margin-top:-4px;border-top:1.5px solid var(--faint);border-right:1.5px solid var(--faint);transform:rotate(45deg)}
-.gb-steps li:nth-child(4n):after,.gb-steps li:last-child:after{display:none}
-.gb-steps b{font:500 15px/1.3 var(--sans);color:var(--ink);letter-spacing:-.01em}
-.gb-steps span{font:400 13px/1.45 var(--sans);color:var(--muted)}
-.gb-steps i{margin-top:4px;font:500 10.5px/1 var(--mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-@media(max-width:700px){.gb-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.gb-steps li:nth-child(4n):after{display:block}.gb-steps li:nth-child(2n):after{display:none}}
+/* the case, step by step: eight tinted columns, each with who does it,
+   a small screen of that step, and what it means. Wider than the text
+   column (it runs to the section's right edge); two rows of four on
+   desktop, two across on narrower screens, a swipeable row on phones */
+.gb-sys-pair{margin-top:var(--s3);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;padding:18px 22px;border-radius:14px;background:var(--surface)}
+.gb-sys-pair p{margin:0;font:400 15px/1.4 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.gb-sys-pair span{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--muted)}
+.gb-sys-pair svg,.gb-sys svg{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.gb-sys-pair > i{width:9px;height:9px;border-top:1.5px solid var(--faint);border-right:1.5px solid var(--faint);transform:rotate(45deg)}
+.gb-sys{margin-top:var(--s3);container-type:inline-size}
+@media(min-width:981px){.gb-sys{margin-left:250px}}
+.gb-sys-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:12px;row-gap:12px}
+.gb-sys-steps > li{--h:#2F6BD8;--t:#5B8DEF;position:relative;display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:14px;min-width:0;
+  padding:18px 14px 16px;border-radius:16px;background:linear-gradient(180deg,color-mix(in srgb,var(--t) 13%,var(--bg)),color-mix(in srgb,var(--t) 5%,var(--bg)))}
+.gb-sys-steps > li.s1{--h:#2F6BD8;--t:#9AA0AA}
+.gb-sys-steps > li.s3{--h:#23824A;--t:#4CAF72}
+.gb-sys-steps > li.s4{--h:#A8650A;--t:#F2C14E}
+.gb-sys-steps > li.s6{--h:#C43D32;--t:#F08A80}
+.gb-sys-steps > li.s7,.gb-sys-steps > li.s8{--h:#6247C9;--t:#9C8CE6}
+.gb-sys-steps > li:after{content:"";position:absolute;right:-10px;top:66px;width:7px;height:7px;border-top:1.5px solid var(--faint);border-right:1.5px solid var(--faint);transform:rotate(45deg)}
+.gb-sys-steps > li:nth-child(4n):after,.gb-sys-steps > li:last-child:after{display:none}
+.gb-sys-h{display:flex;flex-direction:column;gap:6px}
+.gb-sys-n{font:500 12px/1 var(--mono);letter-spacing:.04em;color:var(--muted)}
+.gb-sys-h b{margin-top:6px;font:500 19px/1.2 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.gb-sys-h p{margin:0;font:400 13.5px/1.45 var(--sans);color:var(--muted)}
+.gb-sys-who{align-self:start;justify-self:start;display:inline-flex;align-items:center;gap:6px;margin:0;padding:6px 11px;border-radius:99px;
+  font:600 10.5px/1.2 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--h);background:color-mix(in srgb,var(--h) 11%,var(--bg))}
+.gb-sys-who svg{width:13px;height:13px;stroke-width:1.6}
+.gb-sys-f{align-self:end;margin:0;font:400 13px/1.5 var(--sans);color:var(--muted)}
+/* the small screen of each step */
+.gb-ui{align-self:start;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:9px;padding:13px;border-radius:12px;background:var(--card);
+  box-shadow:0 1px 2px rgba(20,20,20,.05),0 8px 20px -12px rgba(20,20,20,.18);font:400 12px/1.45 var(--sans);color:var(--ink);min-width:0}
+.gb-ui p{margin:0}
+.gb-ui-h{font-weight:600;font-size:12.5px;letter-spacing:-.01em}
+.gb-ui-ico{display:flex;align-items:center;gap:7px}
+.gb-ui-ico.hue{color:var(--h)}
+.gb-ui-p{color:var(--muted)}
+.gb-ui-pill{padding:4px 9px;border-radius:99px;font-size:11px;font-weight:500;color:var(--h);background:color-mix(in srgb,var(--h) 11%,var(--bg))}
+.gb-ui-src{font-size:11px;color:var(--h)}
+.gb-ui-src span{display:block;color:var(--faint)}
+.gb-ui-kv{margin:0;width:100%;display:grid;gap:9px}
+.gb-ui-kv > div{display:grid;grid-template-columns:16px 1fr;column-gap:9px;align-items:start}
+.gb-ui-kv svg{grid-row:span 2;margin-top:1px;color:var(--muted)}
+.gb-ui-kv dt{font-size:11px;color:var(--muted)}
+.gb-ui-kv dd{margin:0;font-weight:500}
+.gb-ui-date{display:flex;gap:10px;align-items:flex-start}
+.gb-ui-date svg{width:22px;height:22px;color:var(--muted);stroke-width:1.3}
+.gb-ui-date span{display:block;font-size:11px;color:var(--muted)}
+.gb-ui-date b{display:block;font:500 17px/1.25 var(--sans);letter-spacing:-.01em}
+.gb-ui-date.sm svg{width:16px;height:16px;color:var(--h)}
+.gb-ui-date.sm b{font-size:13px;font-weight:600}
+.gb-ui-note{display:flex;gap:7px;align-items:flex-start;width:100%;padding:8px 9px;border-radius:8px;font-size:11px;color:var(--muted);background:var(--surface)}
+.gb-ui-note svg{width:13px;height:13px;margin-top:1px;color:var(--h)}
+.gb-ui-field{width:100%;padding-bottom:7px;border-bottom:1px solid var(--line);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gb-ui-field span{display:block;font-size:10.5px;color:var(--faint)}
+.gb-ui-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:8px;border-radius:8px;font-size:12px;font-weight:500;box-shadow:inset 0 0 0 1px var(--line)}
+.gb-ui-btn.dark{background:var(--ink);color:var(--bg);box-shadow:none}
+.gb-ui-btn svg{width:13px;height:13px}
+.gb-ui-bar{width:100%;height:5px;border-radius:99px;background:color-mix(in srgb,var(--h) 13%,var(--bg))}
+.gb-ui-bar i{display:block;width:14%;height:100%;border-radius:inherit;background:var(--h)}
+.gb-ui-in{align-self:stretch;min-height:128px}
+.gb-ui-photo{display:grid;place-items:center;width:64px;height:52px;border-radius:9px;color:#fff;background:linear-gradient(135deg,#8C6A4F,#5E4634 60%,#3E2E22)}
+.gb-ui-photo svg{width:20px;height:20px;opacity:.85}
+.gb-ui-bubble{padding:7px 10px;border-radius:10px 10px 10px 3px;background:var(--surface);color:var(--muted);font-size:11.5px}
+.gb-ui-plus{position:absolute;right:11px;bottom:11px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--bg);font:400 17px/1 var(--sans)}
+:root[data-theme="dark"] .gb-sys-steps > li{--h:#7FA8F5}
+:root[data-theme="dark"] .gb-sys-steps > li.s3{--h:#6CCB8F}
+:root[data-theme="dark"] .gb-sys-steps > li.s4{--h:#E9B54A}
+:root[data-theme="dark"] .gb-sys-steps > li.s6{--h:#F08A80}
+:root[data-theme="dark"] .gb-sys-steps > li.s7,:root[data-theme="dark"] .gb-sys-steps > li.s8{--h:#AC9CF0}
+:root[data-theme="dark"] .gb-sys-steps > li{background:linear-gradient(180deg,color-mix(in srgb,var(--t) 12%,var(--bg)),color-mix(in srgb,var(--t) 5%,var(--bg)))}
+:root[data-theme="dark"] .gb-ui{box-shadow:inset 0 0 0 1px var(--line)}
+/* the rail underneath: from a conversation to a case */
+.gb-sys-rail{margin-top:var(--s3);display:grid;grid-template-columns:1fr 1.3fr 1fr;align-items:center;gap:18px}
+.gb-sys-end{display:flex;align-items:center;gap:12px}
+.gb-sys-end.r{justify-content:flex-end;text-align:right}
+.gb-sys-end p{margin:0;font-size:13px;line-height:1.45;color:var(--muted)}
+.gb-sys-end b{display:block;font-weight:500;font-size:14px;color:var(--ink)}
+.gb-sys-ic{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:50%;color:#2F6BD8;background:color-mix(in srgb,#5B8DEF 14%,var(--bg))}
+.gb-sys-end.r .gb-sys-ic{color:#6247C9;background:color-mix(in srgb,#9C8CE6 16%,var(--bg))}
+.gb-sys-ic svg{width:20px;height:20px}
+.gb-sys-mid{position:relative;text-align:center}
+.gb-sys-line{position:absolute;left:-12px;right:-12px;top:15px;height:2px;border-radius:2px;background:linear-gradient(90deg,#5B8DEF,#4CAF72,#F2C14E,#F08A80,#9C8CE6)}
+.gb-sys-line:before,.gb-sys-line:after{content:"";position:absolute;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;box-shadow:0 0 0 3px var(--bg)}
+.gb-sys-line:before{left:14%;background:#4CAF72}
+.gb-sys-line:after{left:86%;background:#F08A80}
+.gb-sys-mid b{position:relative;display:inline-block;padding:7px 14px;border-radius:99px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);
+  font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.gb-sys-mid p{margin:10px 0 0;font-size:13px;line-height:1.45;color:var(--muted)}
+.gb-sys-swipe{display:none}
+@container (max-width:780px){
+  .gb-sys-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gb-sys-steps > li:nth-child(4n):after{display:block}
+  .gb-sys-steps > li:nth-child(2n):after{display:none}
+  .gb-sys-rail{grid-template-columns:1fr 1fr;row-gap:22px}
+  .gb-sys-mid{grid-column:1/-1;grid-row:1}
+}
+@container (max-width:520px){
+  .gb-sys-steps{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;grid-template-rows:repeat(4,auto);overflow-x:auto;scroll-snap-type:x mandatory;
+    margin:0 -18px;padding:0 18px 6px;scroll-padding:0 18px;scrollbar-width:none}
+  .gb-sys-steps::-webkit-scrollbar{display:none}
+  .gb-sys-steps > li{scroll-snap-align:start;grid-row:1/-1}
+  .gb-sys-steps > li:after{display:none!important}
+  .gb-sys-swipe{display:block;margin:12px 0 0;font-size:13px;color:var(--muted)}
+  .gb-sys-rail{grid-template-columns:1fr;row-gap:16px}
+  .gb-sys-line{left:0;right:0}
+  .gb-sys-end.r{justify-content:flex-start;flex-direction:row-reverse;text-align:left}
+}
+@media(max-width:560px){.gb-sys-pair{grid-template-columns:1fr;gap:12px}.gb-sys-pair > i{transform:rotate(135deg);margin-left:4px}}
 
 .gb-bugs i:not(:first-child){margin-left:2px}
 /* the hero bug: model vs. reality, in the site's own numerals */
@@ -1046,7 +1145,58 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">02 · Not a chatbot</p><h2 class="say">The interface is a conversation. The product is a case-resolution system.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">The chat box is only the way in. What happens to a case after that is a fixed sequence, and each step is done by whoever is best at it: the AI reads and writes, code counts and checks, and she decides.</p>
-<ol class="gb-steps col" aria-label="What happens to a case inside Getbaq"><li><b>Input</b><span>a screenshot, a forwarded chat, or typed words</span><i>her</i></li><li><b>Understand</b><span>facts extracted: company, amount, dates</span><i>AI</i></li><li><b>Verify</b><span>the one rule that applies, cited</span><i>AI · rule sheet</i></li><li><b>Calculate</b><span>the deadline and what’s owed</span><i>code</i></li><li><b>Draft</b><span>a short, factual complaint</span><i>AI · checked by code</i></li><li><b>Approve</b><span>she signs and sends, or edits, or says no</span><i>her</i></li><li><b>Track</b><span>the deadline and the company’s reply</span><i>code</i></li><li><b>Escalate</b><span>the 1915 complaint, prepared; still her tap</span><i>AI · her</i></li></ol>
+<div class="col gb-sys-pair" aria-hidden="true">
+<div><p>A conversation handles ambiguity.</p><span><svg viewBox="0 0 16 16"><path d="M2.5 7.5c0-2.8 2.5-4.5 5.5-4.5s5.5 1.7 5.5 4.5S11 12 8 12c-.8 0-1.6-.1-2.3-.4L3 12.8l.8-2.2C3 9.8 2.5 8.7 2.5 7.5z"/></svg>Interface</span></div>
+<i></i>
+<div><p>A case carries her to resolution.</p><span><svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg>Product</span></div>
+</div>
+<div class="gb-sys">
+<ol class="gb-sys-steps" aria-label="What happens to a case inside Getbaq">
+<li class="s1"><div class="gb-sys-h"><span class="gb-sys-n">01</span><b>Input</b><p>A screenshot, a forwarded chat, or typed words.</p></div>
+<p class="gb-sys-who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Her</p>
+<div class="gb-ui gb-ui-in" aria-hidden="true"><span class="gb-ui-photo"><svg viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><circle cx="5.5" cy="6.5" r="1.3"/><path d="m2 12 3.5-3.5 3 3 2-2 3.5 3.5"/></svg></span><p class="gb-ui-bubble">They delivered a rusted product…</p><span class="gb-ui-plus">+</span></div>
+<p class="gb-sys-f">Give it everything in one place.</p></li>
+<li class="s2"><div class="gb-sys-h"><span class="gb-sys-n">02</span><b>Understand</b><p>Facts extracted: company, amount, dates, issue.</p></div>
+<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</p>
+<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h">Extracted details</p><dl class="gb-ui-kv">
+<div><svg viewBox="0 0 16 16"><path d="M2.5 14.5v-9l5.5-3 5.5 3v9M6 14.5v-4h4v4"/></svg><dt>Company</dt><dd>Flipkart</dd></div>
+<div><svg viewBox="0 0 16 16"><path d="M4.5 3h7M4.5 6h7M6 3c3.5 0 3.5 6 0 6H4.5l5 5"/></svg><dt>Amount</dt><dd>₹3,499</dd></div>
+<div><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg><dt>Order date</dt><dd>2 Aug 2026</dd></div>
+<div><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5M8 11h0"/></svg><dt>Issue</dt><dd>Rusted jar</dd></div>
+</dl></div>
+<p class="gb-sys-f">The agent turns messy input into structured facts.</p></li>
+<li class="s3"><div class="gb-sys-h"><span class="gb-sys-n">03</span><b>Verify</b><p>Find the one rule that applies, with its source and confidence.</p></div>
+<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg>AI + rule sheet</p>
+<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h">E-commerce Rules 4(4)</p><span class="gb-ui-pill">High confidence</span><p class="gb-ui-p">The platform must redress her complaint within one month of receiving it.</p><p class="gb-ui-src"><span>Source</span>Consumer Protection (E-Commerce) Rules, 2020</p></div>
+<p class="gb-sys-f">The agent finds the rule and shows its source.</p></li>
+<li class="s4"><div class="gb-sys-h"><span class="gb-sys-n">04</span><b>Calculate</b><p>The deadline and what’s owed.</p></div>
+<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p>
+<div class="gb-ui" aria-hidden="true"><div class="gb-ui-date"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg><p><span>Reply deadline</span><b>3 Sep 2026</b></p></div><span class="gb-ui-pill">Calculated</span><p class="gb-ui-note"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 7.5V11M8 5h0"/></svg>By code, in one fixed timezone. The model never sees a day count.</p></div>
+<p class="gb-sys-f">Dates and amounts are calculated by code, not by the model.</p></li>
+<li class="s5"><div class="gb-sys-h"><span class="gb-sys-n">05</span><b>Draft</b><p>A short, factual complaint.</p></div>
+<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI · checked by code</p>
+<div class="gb-ui" aria-hidden="true"><p class="gb-ui-field"><span>To</span>Flipkart grievance officer</p><p class="gb-ui-field"><span>Subject</span>Refund of ₹3,499</p><p class="gb-ui-p">Dear Grievance Officer, I am writing to ask for a refund of ₹3,499 for my order of 2 Aug…</p></div>
+<p class="gb-sys-f">The agent drafts it from verified facts and the rule.</p></li>
+<li class="s6"><div class="gb-sys-h"><span class="gb-sys-n">06</span><b>Approve</b><p>She signs and sends, or edits, or says no.</p></div>
+<p class="gb-sys-who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Her</p>
+<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h gb-ui-ico"><svg viewBox="0 0 16 16"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="m2 4 6 5 6-5"/></svg>Send complaint</p><p class="gb-ui-field"><span>To</span>Flipkart grievance officer</p><span class="gb-ui-btn dark"><svg viewBox="0 0 16 16"><path d="M14.5 1.5 7 9M14.5 1.5 10 14.5 7 9 1.5 6z"/></svg>Send as me</span><span class="gb-ui-btn">Edit</span><p class="gb-ui-note"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 7.5V11M8 5h0"/></svg>Six seconds to undo.</p></div>
+<p class="gb-sys-f">The decision stays with her. It goes out in her name.</p></li>
+<li class="s7"><div class="gb-sys-h"><span class="gb-sys-n">07</span><b>Track</b><p>The deadline and the company’s reply.</p></div>
+<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p>
+<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h gb-ui-ico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.5 1.5"/></svg>Waiting for Flipkart</p><span class="gb-ui-bar"><i></i></span><div class="gb-ui-date sm"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg><p><span>If no reply by 3 Sep 2026</span><b>Escalate to 1915</b></p></div></div>
+<p class="gb-sys-f">The case keeps the deadline and watches for the reply.</p></li>
+<li class="s8"><div class="gb-sys-h"><span class="gb-sys-n">08</span><b>Escalate</b><p>The 1915 complaint, prepared; still her tap.</p></div>
+<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI + her</p>
+<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h gb-ui-ico hue"><svg viewBox="0 0 16 16"><path d="M5 1.5 6.5 5 5 6.3a8 8 0 0 0 4.7 4.7L11 9.5l3.5 1.5v2.5a1.5 1.5 0 0 1-1.6 1.5C7 14.5 1.5 9 1.5 3.1A1.5 1.5 0 0 1 3 1.5z"/></svg>Escalation ready</p><p class="gb-ui-p">I’ve prepared a 1915 complaint with all the details from this case.</p><span class="gb-ui-btn dark">Review and send</span><span class="gb-ui-btn">Not now</span></div>
+<p class="gb-sys-f">If there’s no reply, the agent prepares it. She still approves.</p></li>
+</ol>
+<p class="gb-sys-swipe" aria-hidden="true">Swipe through the eight steps →</p>
+<div class="gb-sys-rail">
+<div class="gb-sys-end"><span class="gb-sys-ic"><svg viewBox="0 0 16 16"><path d="M2.5 7.5c0-2.8 2.5-4.5 5.5-4.5s5.5 1.7 5.5 4.5S11 12 8 12c-.8 0-1.6-.1-2.3-.4L3 12.8l.8-2.2C3 9.8 2.5 8.7 2.5 7.5z"/></svg></span><p><b>Conversation</b>Handles ambiguity and questions.</p></div>
+<div class="gb-sys-mid"><span class="gb-sys-line" aria-hidden="true"></span><b>A case-resolution system</b><p>Turns a messy complaint into a verifiable case she can act on.</p></div>
+<div class="gb-sys-end r"><p><b>Case</b>Carries the state, deadline and next steps to resolution.</p><span class="gb-sys-ic"><svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg></span></div>
+</div>
+</div>
 </section>
 </section>
 <section class="gb-chapter" id="work">
