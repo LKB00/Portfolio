@@ -24,7 +24,7 @@
 <link rel="manifest" href="./site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@400;500;600&family=Libre+Baskerville&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@400;500;600&family=Libre+Baskerville&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
    TOKENS — same reference system as app-merge-v2 and rise-portal:
@@ -1622,6 +1622,146 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb #agent .gb-agentline li svg{flex:none;width:18px;height:18px;padding:3px;box-sizing:border-box;border-radius:50%;background:var(--bg);color:var(--a)}
 .gb #agent .gb-agentline li.a-her{font-weight:500}
 @media(max-width:600px){.gb #agent .cx-cmp{grid-template-columns:1fr;gap:12px}}
+/* =====================================================================
+   LAB · FIONA FANG LAYER (fionafang.ca/projects/luma, /guide).
+   A centred 684px column, plain sentence-case labels in light grey,
+   regular-weight serif headings (40 / 26), sans subheads at 20, grey body
+   with key phrases in ink, a quiet rail with a dot, more air between
+   sections, soft pastel frames behind the product.
+   ===================================================================== */
+.gb{--pf-lav:#E6E2F1;--pf-blue:#D6E9F2;--pf-peach:#FBE7CB;--pf-sand:#F4F2F1;--pf-bar:#DCD8D8}
+:root[data-theme="dark"] .gb{--pf-lav:#211F2A;--pf-blue:#1A242A;--pf-peach:#2A231A;--pf-sand:#1A1A1A;--pf-bar:#3A3636}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb{--pf-lav:#211F2A;--pf-blue:#1A242A;--pf-peach:#2A231A;--pf-sand:#1A1A1A;--pf-bar:#3A3636}}
+/* column: centred on the page, the rail sits in the left margin */
+@media(min-width:981px){.gb .cx-w,.gb .cx-bleed{margin-left:max(calc((100% - 684px)/2),200px);margin-right:auto;max-width:684px}}
+/* rail: 16px, light grey, the current one in ink with a small dot, Back above */
+.gb .toc{top:108px;left:48px;gap:8px}
+.gb .toc a{font-size:16px;line-height:21px;color:var(--faint)}
+.gb .toc a.active{color:var(--ink)}
+.gb .toc a.active:before{content:"";position:absolute;left:-14px;top:8px;width:5px;height:5px;border-radius:50%;background:#E88A8A}
+.gb .toc .cx-rail-back{margin-bottom:40px}
+/* labels: plain words, not mono capitals */
+.gb .cx-label{margin:0 0 12px;font:400 16px/1.3 var(--sans);letter-spacing:0;text-transform:none;color:var(--faint)}
+.gb :is(.cx-meta-l,.cx-arch-r,.cx-archline li,.cx-ax-x span,.cx-ax-y span,.cx-f-n,.cx-fails dt,.cx-cc-line,.lab,#proof dt,#proof .h,#case span.cx-meta-l){font-family:var(--sans)!important;text-transform:none!important;letter-spacing:0!important}
+.gb :is(.cx-meta-l,.cx-ann-l .cx-meta-l,#agent .cx-cmp-row .cx-meta-l){font-size:14px!important;font-weight:400!important;color:var(--faint)}
+.gb .cx-f-n{font-size:14px}
+.gb .cx-fails dt{font-size:13px}
+/* type */
+.gb h1.cx-display{font:400 40px/1.2 var(--serif);letter-spacing:-.02em;color:var(--ink)}
+.gb .cx-h{font:400 26px/1.3 var(--serif);letter-spacing:-.02em;color:var(--ink)}
+.gb .cx-dek{font:400 20px/1.4 var(--serif)}
+.gb :is(.cx-say,.cx-h3,.cx-q-t,.cx-lim-t,.cx-journey,.cx-peak .cx-f-h b,.cx-lessons b){font-family:var(--sans)!important;font-size:20px!important;font-weight:450!important;line-height:1.3!important;letter-spacing:-.02em!important}
+.gb .cx-q-t{font-size:18px!important}
+.gb :is(.cx-lead,.cx-body,.cx-rep-d,.cx-lim-x){font-size:16px;line-height:1.6;letter-spacing:0;color:var(--muted)}
+.gb :is(.cx-lead,.cx-body) :is(b,strong){font-weight:400;color:var(--ink)}
+.gb .cx-h + .cx-lead{margin-top:16px!important}
+/* air: sections further apart, the label a step above the heading */
+.gb section.cx-sec{margin-top:128px}
+.gb .cx-vis,.gb .cx-peak > .cx-vis,.gb .cx-peak .cx-casecmp{margin-top:36px}
+.gb .cx-say{margin-top:56px}
+/* hero: product, title, then Timeline / Role / Team style facts, no rule above */
+.gb .cx-hero-h .cx-meta{margin-top:36px;padding-top:0;border-top:0;display:flex;justify-content:space-between;gap:24px}
+.gb .cx-hero-h .cx-meta dt{margin-bottom:20px;font:400 16px/1.5 var(--sans)!important;text-transform:none!important;letter-spacing:0!important;color:var(--faint)}
+.gb .cx-hero-h .cx-meta dd{color:#535353;line-height:1.6}
+:root[data-theme="dark"] .gb .cx-hero-h .cx-meta dd{color:var(--muted)}
+.gb .gbh-demo,.gb .gb-ex-hero .gb-ex-panel{background:var(--pf-lav)}
+.gb .cx-hero .cx-foot{border:0}
+/* the "how might we" block: a quiet box with a grey bar on the left */
+.gb .cx-rep{margin-top:36px;padding:24px 28px;border-left:4px solid var(--pf-bar);border-radius:0 2px 2px 0;background:var(--pf-sand)}
+.gb .cx-rep-t{font:400 16px/1.6 var(--sans);color:var(--ink)}
+/* frames: soft pastel grounds behind the big product shots */
+.gb .cx-pv-wide .cx-pv-f{background:var(--pf-blue)}
+.gb #approve .gb-ex-panel{background:var(--pf-peach)}
+.gb .cx-pv-case .cx-pv-f{background:var(--pf-lav)}
+.gb .cx-pv figcaption{margin-top:16px;font-size:14px;line-height:1.5;color:var(--ink);text-align:center}
+.gb .cx-hero .cx-foot,.gb .cx-hero .cx-foot li{background:var(--pf-lav)}
+.gb .cx-hero .cx-foot li + li{border-color:color-mix(in srgb,var(--ink) 10%,transparent)}
+/* looking back: Fiona's numbered notes, a small grey 01. above a sans title */
+.gb .cx-lessons li{display:block;padding:28px 0 0;border-top:0}
+.gb .cx-lessons li:first-child{padding-top:0}
+.gb .cx-lessons span{display:block;padding:0;margin-bottom:14px;font:400 16px/1.3 var(--sans);color:var(--faint)}
+.gb .cx-lessons span:after{content:"."}
+.gb .cx-lessons b{display:block;margin-bottom:10px}
+/* hero title block, sharper: one clear title, the dek and the line under it as one
+   paragraph group, then four facts on one grid, the prototype as the fourth */
+.gb .cx-hero .cx-hero-h,.gb .cx-hero .cx-foot + .cx-hero-h{margin-top:64px!important}
+.gb h1.cx-display{margin-top:0!important;font-size:44px;line-height:1.12;letter-spacing:-.025em}
+.gb .cx-hero-h .cx-dek{margin-top:24px!important;max-width:560px;font:400 20px/1.45 var(--serif);letter-spacing:-.01em;color:var(--ink)}
+.gb .cx-hero-h .cx-lead{margin-top:10px!important;max-width:560px;font-size:16px;line-height:1.6;color:var(--muted)}
+.gb .cx-hero-h .cx-meta{display:grid!important;grid-template-columns:1.25fr 1.35fr 1fr .8fr;gap:24px;margin-top:48px;padding-top:24px;border-top:1px solid var(--line)}
+.gb .cx-hero-h .cx-meta dt{margin-bottom:6px!important;font-size:14px!important;line-height:1.4!important}
+.gb .cx-hero-h .cx-meta dd{font-size:15px;line-height:1.5}
+.gb .cx-meta-go{display:inline-flex;align-items:center;gap:5px;color:var(--ink);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--ink) 25%,transparent);transition:border-color .2s}
+.gb .cx-meta-go:hover{border-color:var(--ink)}
+.gb .cx-meta-go svg{transition:transform .25s}
+.gb .cx-meta-go:hover svg{transform:translate(2px,-2px)}
+@media(max-width:600px){.gb h1.cx-display{font-size:34px}.gb .cx-hero-h .cx-meta{grid-template-columns:1fr 1fr;row-gap:20px}}
+/* closing: the prototype card from the old hero, under the last line */
+.gb .cx-final-card{display:block;margin-top:40px}
+.gb .cx-final-card a.gb-proto{display:flex;max-width:440px;margin-top:0;padding:14px 18px 14px 14px;border:0;border-bottom:0;font:inherit}
+.gb .cx-final-card a.gb-proto:before{content:none}
+/* status: three rows instead of three cramped columns — the state on the left,
+   what it covers on the right, hairlines between, like Fiona's numbered notes */
+.gb .cx-status-l{display:block;margin-top:56px;border-top:1px solid var(--line)}
+.gb .cx-status-l > div{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;align-items:baseline;padding:20px 0;border-top:0;border-bottom:1px solid var(--line)}
+.gb .cx-status-l dt{font:400 16px/1.5 var(--sans)!important;letter-spacing:0!important;text-transform:none!important;color:var(--ink)}
+.gb .cx-status-l dt:before{flex:none;transform:translateY(-1px)}
+.gb .cx-status-l dd{margin:0;font-size:16px;line-height:1.6;color:var(--muted)}
+@media(max-width:600px){.gb .cx-status-l > div{grid-template-columns:1fr;gap:6px}}
+/* the next case sits on the same column */
+@media(min-width:981px){.gb #next{margin-left:max(calc((100% - 684px)/2),200px);margin-right:auto}}
+@media(max-width:600px){.gb .cx-h{font-size:24px}}
+
+/* sk:css — hand-drawn illustrations (storyboard, journey circles, versions, stat blobs) */
+.gb{--sk-ink:#1F1D1B;--sk-paper:#FFFFFF;--sk-dim:#8C8784;--sk-lime:#E2F6A4;--sk-lav:#DAD6FA;--sk-peach:#FFD9A8;--sk-yel:#FFD66E;--sk-rust:#B8642E;--sk-no:#C1443A;--sk-ind:#4B45E6;--sk-gnd:#E7E5E2}
+:root[data-theme="dark"] .gb{--sk-ink:#ECE8E4;--sk-paper:#1B1B1B;--sk-dim:#8E8884;--sk-lime:#3A4A17;--sk-lav:#2E2B4A;--sk-peach:#4A3520;--sk-yel:#5A4716;--sk-rust:#D98A52;--sk-no:#E0675C;--sk-ind:#A7A3FF;--sk-gnd:#242424}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb{--sk-ink:#ECE8E4;--sk-paper:#1B1B1B;--sk-dim:#8E8884;--sk-lime:#3A4A17;--sk-lav:#2E2B4A;--sk-peach:#4A3520;--sk-yel:#5A4716;--sk-rust:#D98A52;--sk-no:#E0675C;--sk-ind:#A7A3FF;--sk-gnd:#242424}}
+.sk-defs{position:absolute;width:0;height:0;overflow:hidden}
+.gb :is(.sk-story,.sk-journey,.sk-versions) svg{display:block;width:100%;height:auto;overflow:visible}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .k{fill:none;stroke:var(--sk-ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .fr{stroke-width:2.4}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .kf{fill:var(--sk-ink)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .w{fill:var(--sk-paper)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .lav{fill:var(--sk-lav)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .lime{fill:var(--sk-lime)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .peach{fill:var(--sk-peach)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .yel{fill:var(--sk-yel)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .rust{fill:var(--sk-rust);opacity:.85}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .no{fill:var(--sk-paper);stroke:var(--sk-no)!important}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .nok{fill:none;stroke:var(--sk-no);stroke-width:3;stroke-linecap:round}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .dim2{stroke:var(--sk-dim);stroke-width:1.6}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .dash{stroke-dasharray:5 5}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .gnd{fill:var(--sk-gnd)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .hand{font-family:"Caveat",cursive;font-weight:600;fill:var(--sk-ink)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .hand.dim{fill:var(--sk-dim);font-weight:500}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .hand.ind{fill:var(--sk-ind)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .hand.inv{fill:var(--sk-paper)}
+.gb :is(.sk-story,.sk-journey,.sk-versions) .ink-i{fill:none;stroke:var(--sk-ind);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* storyboard: six panels, three across, a quiet number and a caption under each */
+.gb .sk-story{margin-top:40px}
+.gb .sk-story ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 20px;margin:0;padding:0;list-style:none}
+.gb .sk-story p{display:flex;gap:8px;margin:10px 0 0;font-size:14px;line-height:1.45;color:var(--muted)}
+.gb .sk-story p i{flex:none;display:grid;place-items:center;width:18px;height:18px;margin-top:1px;border-radius:50%;background:var(--ink);color:var(--bg);font:500 10.5px/1 var(--sans);font-style:normal}
+@media(max-width:600px){.gb .sk-story ol{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 14px}.gb .sk-story p{font-size:13px}}
+/* journey circles: Complaint is the one step a chatbot covers */
+.gb .sk-journey{margin-top:40px}
+.gb .sk-journey .jc-g{fill:var(--sk-lime);stroke:color-mix(in srgb,var(--sk-ink) 45%,transparent);stroke-width:1.4}
+.gb .sk-journey .jc-me{fill:var(--sk-paper);stroke:var(--sk-ink);stroke-width:1.6}
+.gb .sk-journey figcaption{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 10px;margin-top:14px;font-size:14px;color:var(--muted);text-align:left}
+.gb .sk-key{display:inline-block;width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1.4px color-mix(in srgb,var(--sk-ink) 45%,transparent)}
+.gb .sk-key-g{background:var(--sk-lime)}
+.gb .sk-lg{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.gb .sk-journey figcaption{column-gap:24px}
+.gb .sk-key-me{background:var(--sk-paper);box-shadow:inset 0 0 0 1.6px var(--sk-ink)}
+.gb .sk-journey + .cx-journey,.gb .sk-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* versions of the input, each standing on its own patch of ground */
+.gb .sk-versions{margin-top:48px}
+/* stats as sketchnote blobs */
+.gb .cx-mini dt{position:relative;display:inline-grid;place-items:center;min-width:132px;height:84px;padding:0 22px;font:600 44px/1 "Caveat",cursive;color:var(--sk-ink);isolation:isolate}
+.gb .cx-mini dt:before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sk-peach);border-radius:58% 42% 55% 45% / 52% 60% 40% 48%;transform:rotate(-3deg)}
+.gb .cx-mini > div + div dt:before{background:var(--sk-lime);border-radius:45% 55% 40% 60% / 60% 45% 55% 40%;transform:rotate(4deg)}
+.gb .cx-mini dd{margin-top:14px}
+/* /sk:css */
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1638,7 +1778,10 @@ addEventListener("pagereveal",function(e){
 </script>
 <script type="speculationrules">{"prerender":[{"source":"list","urls":["/getbaq-full.html"],"eagerness":"moderate"}]}</script>
 </head>
-<body>
+<body><!--sk:defs--><svg class="sk-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+<filter id="sk-w" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+</defs></svg><!--/sk:defs-->
+
 
 <header id="siteHeader">
   <div class="navpill">
@@ -1681,7 +1824,7 @@ addEventListener("pagereveal",function(e){
 <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Copied to clipboard</span></div>
 
 <div class="shell gb">
-<nav aria-label="Case study progress" class="toc cx-rail"><a href="#problem">The problem</a><a href="#walkthrough">Solution</a><a href="#autonomy">Key decisions</a><a href="#failure">Edge cases</a><a href="#case">In practice</a><a href="#proof">Outcome</a></nav>
+<nav aria-label="Case study progress" class="toc cx-rail"><a class="cx-rail-back" href="./index.html#work">Back</a><a href="#problem">The problem</a><a href="#walkthrough">Solution</a><a href="#autonomy">Key decisions</a><a href="#failure">Edge cases</a><a href="#case">In practice</a><a href="#proof">Outcome</a></nav>
 <div class="cx-mprog" aria-hidden="true"><i></i></div>
 <section id="overview" class="cx-hero">
 <div class="cx-w" data-reveal=""><p class="gb-versions" data-on="short"><span class="gb-pill" aria-hidden="true"></span><span aria-current="page">Short read · 8 min</span><a href="./getbaq-full.html">Deep dive · 40 min</a></p></div>
@@ -1722,15 +1865,123 @@ addEventListener("pagereveal",function(e){
 <h1 class="cx-display">Designing an AI agent that fights for your <em>refund</em></h1>
 <p class="cx-dek">The hard part wasn’t making it act.<br>It was deciding what it should never do.</p>
 <p class="cx-lead">Getbaq turns a messy consumer dispute into a verifiable case.</p>
-<div class="cx-hero-links"><a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></div>
-<dl class="cx-meta"><div><dt>Project</dt><dd>Self-initiated, Sep 2026</dd></div><div><dt>Role</dt><dd>Product design and prototype build</dd></div><div><dt>Stage</dt><dd>Working prototype</dd></div></dl>
+<dl class="cx-meta"><div><dt>Project</dt><dd>Self-initiated, Sep 2026</dd></div><div><dt>Role</dt><dd>Product design and prototype build</dd></div><div><dt>Stage</dt><dd>Working prototype</dd></div><div><dt>Prototype</dt><dd><a class="cx-meta-go" data-proto="/" href="https://getbaq.vercel.app/" rel="noopener" target="_blank">Try it live<svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></dd></div></dl>
 </div>
 </section>
 <section class="cx-sec " id="problem" data-reveal="">
 <div class="cx-w cx-head "><p class="cx-label">The problem</p><h2 class="cx-h">A refund isn’t a writing problem. It’s a follow-through problem.</h2></div>
 <div class="cx-w cx-rep"><p class="cx-meta-l">A representative case · from desk research</p><p class="cx-rep-t">₹3,499 · Flipkart · Refund pending</p><p class="cx-rep-d">The customer has shared screenshots, contacted the merchant several times and been told to wait “5 to 7 working days”. They still don’t know what rule applies, when the refund is due, or what to do next.</p></div>
+<!--sk:story--><figure class="cx-w sk-story" aria-label="A representative case, drawn as a storyboard">
+<ol>
+<li><svg class="sk-p" viewBox="0 0 240 150" aria-hidden="true">
+<defs><clipPath id="skc0"><rect x="3" y="3" width="234" height="144" rx="3"/></clipPath></defs>
+<g clip-path="url(#skc0)" filter="url(#sk-w)"><g>
+<path class="w k" d="M34,152 C35,114 40,92 62,86 L63,78 L77,78 L78,86 C100,92 105,114 106,152"/>
+<path class="k" d="M62,86 Q70,93 78,86"/>
+<circle class="w k" cx="70" cy="66" r="14"/>
+<path class="kf" d="M55.5,65 C55,47 83,45 84.5,64 C78,57 68,56 61,61 C59,63 57,65 55.5,65Z"/>
+<circle class="kf" cx="65" cy="67" r="1.7"/><circle class="kf" cx="75" cy="67" r="1.7"/>
+<path class="k" d="M65,73 Q70,77.5 75,73"/>
+</g>
+<path class="w k" d="M138,78 L154,62 L224,62 L208,78 Z"/>
+<path class="w k" d="M208,78 L224,62 L224,118 L208,134 Z"/>
+<rect class="w k" x="138" y="78" width="70" height="56"/>
+<path class="k" d="M166,78 L182,62"/><path class="k" d="M166,78 L166,96"/>
+<path class="peach k" d="M140,18 L204,18 L214,30 L204,42 L140,42 Z"/><circle class="w k" cx="206" cy="30" r="2.4"/>
+<path class="k" d="M207,33 C212,46 192,52 182,62"/><text class="hand" x="172" y="36" font-size="18" text-anchor="middle">₹3,499</text></g>
+<rect class="k fr" x="3" y="3" width="234" height="144" rx="3" filter="url(#sk-w)"/>
+</svg><p><i>1</i><span>They pay ₹3,499 for a mixer grinder on 2 Aug.</span></p></li>
+<li><svg class="sk-p" viewBox="0 0 240 150" aria-hidden="true">
+<defs><clipPath id="skc1"><rect x="3" y="3" width="234" height="144" rx="3"/></clipPath></defs>
+<g clip-path="url(#skc1)" filter="url(#sk-w)"><g>
+<path class="w k" d="M26,152 C27,114 32,92 54,86 L55,78 L69,78 L70,86 C92,92 97,114 98,152"/>
+<path class="k" d="M54,86 Q62,93 70,86"/>
+<circle class="w k" cx="62" cy="66" r="14"/>
+<path class="kf" d="M47.5,65 C47,47 75,45 76.5,64 C70,57 60,56 53,61 C51,63 49,65 47.5,65Z"/>
+<circle class="kf" cx="57" cy="67" r="1.7"/><circle class="kf" cx="67" cy="67" r="1.7"/>
+<ellipse class="k" cx="62" cy="74.5" rx="2.2" ry="2.8"/>
+</g>
+<rect class="w k" x="126" y="40" width="58" height="11" rx="3"/>
+<path class="w k" d="M131,51 L179,51 L172,124 L138,124 Z"/>
+<path class="k" d="M178,64 C200,66 200,104 173,108"/>
+<rect class="w k" x="130" y="124" width="50" height="14" rx="2"/>
+<path class="rust" d="M146,74 c5,-4 12,-1 10,5 c-1,6 -10,6 -12,2 c-2,-3 -1,-5 2,-7z"/>
+<path class="rust" d="M158,98 c4,-3 9,0 8,4 c-1,4 -8,5 -9,2 c-1,-2 -1,-4 1,-6z"/>
+<path class="rust" d="M141,106 c3,-2 6,0 5,3 c-1,3 -5,3 -6,1 c0,-2 0,-3 1,-4z"/>
+<path class="k" d="M132,120 L178,120"/><text class="hand" x="96" y="40" font-size="30" text-anchor="middle">!</text><text class="hand dim" x="206" y="34" font-size="16" text-anchor="middle" transform="rotate(8 206 34)">rust</text></g>
+<rect class="k fr" x="3" y="3" width="234" height="144" rx="3" filter="url(#sk-w)"/>
+</svg><p><i>2</i><span>The jar arrives rusted, so they ask for a replacement.</span></p></li>
+<li><svg class="sk-p" viewBox="0 0 240 150" aria-hidden="true">
+<defs><clipPath id="skc2"><rect x="3" y="3" width="234" height="144" rx="3"/></clipPath></defs>
+<g clip-path="url(#skc2)" filter="url(#sk-w)"><g>
+<path class="w k" d="M24,152 C25,114 30,92 52,86 L53,78 L67,78 L68,86 C90,92 95,114 96,152"/>
+<path class="k" d="M52,86 Q60,93 68,86"/>
+<circle class="w k" cx="60" cy="66" r="14"/>
+<path class="kf" d="M45.5,65 C45,47 73,45 74.5,64 C68,57 58,56 51,61 C49,63 47,65 45.5,65Z"/>
+<circle class="kf" cx="55" cy="67" r="1.7"/><circle class="kf" cx="65" cy="67" r="1.7"/>
+<path class="k" d="M55,76 Q60,71.5 65,76"/>
+</g>
+<rect class="w k" x="126" y="16" width="84" height="128" rx="12"/>
+<rect class="kf" x="156" y="22" width="24" height="5" rx="2.5"/>
+<path class="k dim2" d="M140,42 L196,42 M140,52 L180,52"/>
+<circle class="no k" cx="168" cy="86" r="19"/>
+<path class="nok" d="M160,78 L176,94 M176,78 L160,94"/><text class="hand" x="168" y="122" font-size="15" text-anchor="middle">photo check</text><text class="hand" x="168" y="136" font-size="15" text-anchor="middle">failed</text></g>
+<rect class="k fr" x="3" y="3" width="234" height="144" rx="3" filter="url(#sk-w)"/>
+</svg><p><i>3</i><span>It’s rejected: the photo check failed.</span></p></li>
+<li><svg class="sk-p" viewBox="0 0 240 150" aria-hidden="true">
+<defs><clipPath id="skc3"><rect x="3" y="3" width="234" height="144" rx="3"/></clipPath></defs>
+<g clip-path="url(#skc3)" filter="url(#sk-w)"><g>
+<path class="w k" d="M22,158 C23,120 28,98 50,92 L51,84 L65,84 L66,92 C88,98 93,120 94,158"/>
+<path class="k" d="M50,92 Q58,99 66,92"/>
+<circle class="w k" cx="58" cy="72" r="14"/>
+<path class="kf" d="M43.5,71 C43,53 71,51 72.5,70 C66,63 56,62 49,67 C47,69 45,71 43.5,71Z"/>
+<circle class="kf" cx="55" cy="73" r="1.7"/><circle class="kf" cx="65" cy="73" r="1.7"/>
+<path class="k" d="M54,80.5 L62,80"/>
+</g>
+<rect class="w k" x="67" y="60" width="11" height="24" rx="4" transform="rotate(16 72 72)"/><path class="k" d="M84,62 q5,4 0,9 M89,58 q8,8 0,17"/>
+<path class="w k" d="M104,16 L226,16 Q230,16 230,20 L230,42 Q230,46 226,46 L118,46 L108,54 L110,46 L104,46 Q100,46 100,42 L100,20 Q100,16 104,16 Z"/>
+<g opacity=".72"><path class="w k" d="M114,62 L226,62 Q230,62 230,66 L230,88 Q230,92 226,92 L128,92 L118,100 L120,92 L114,92 Q110,92 110,88 L110,66 Q110,62 114,62 Z"/></g>
+<g opacity=".45"><path class="w k" d="M124,108 L226,108 Q230,108 230,112 L230,134 Q230,138 226,138 L138,138 L128,146 L130,138 L124,138 Q120,138 120,134 L120,112 Q120,108 124,108 Z"/></g><text class="hand" x="165" y="37" font-size="17" text-anchor="middle">5–7 working days</text><g opacity=".72"><text class="hand" x="170" y="83" font-size="17" text-anchor="middle">5–7 working days</text></g><g opacity=".45"><text class="hand" x="175" y="129" font-size="17" text-anchor="middle">5–7 working days</text></g></g>
+<rect class="k fr" x="3" y="3" width="234" height="144" rx="3" filter="url(#sk-w)"/>
+</svg><p><i>4</i><span>Three calls. “5 to 7 working days,” every time.</span></p></li>
+<li><svg class="sk-p" viewBox="0 0 240 150" aria-hidden="true">
+<defs><clipPath id="skc4"><rect x="3" y="3" width="234" height="144" rx="3"/></clipPath></defs>
+<g clip-path="url(#skc4)" filter="url(#sk-w)"><g>
+<path class="w k" d="M30,158 C31,120 36,98 58,92 L59,84 L73,84 L74,92 C96,98 101,120 102,158"/>
+<path class="k" d="M58,92 Q66,99 74,92"/>
+<circle class="w k" cx="66" cy="72" r="14"/>
+<path class="kf" d="M51.5,71 C51,53 79,51 80.5,70 C74,63 64,62 57,67 C55,69 53,71 51.5,71Z"/>
+<circle class="kf" cx="59" cy="73" r="1.7"/><circle class="kf" cx="69" cy="73" r="1.7"/>
+<path class="k" d="M62,80.5 L70,80"/>
+</g><text class="hand" x="34" y="40" font-size="32" text-anchor="middle">?</text><text class="hand" x="102" y="34" font-size="26" text-anchor="middle" transform="rotate(12 102 34)">?</text>
+<path class="w k" d="M134,26 L178,26 L188,36 L188,96 L134,96 Z"/><path class="k" d="M178,26 L178,36 L188,36"/>
+<path class="k dim2" d="M144,64 L178,64 M144,74 L172,74 M144,84 L176,84"/><text class="hand" x="161" y="56" font-size="22" text-anchor="middle">§ ?</text>
+<rect class="w k" x="168" y="80" width="58" height="56" rx="4"/><path class="lav k" d="M168,94 L226,94 L226,84 Q226,80 222,80 L172,80 Q168,80 168,84 Z"/>
+<path class="k" d="M182,74 L182,86 M212,74 L212,86"/><text class="hand" x="197" y="128" font-size="30" text-anchor="middle">?</text></g>
+<rect class="k fr" x="3" y="3" width="234" height="144" rx="3" filter="url(#sk-w)"/>
+</svg><p><i>5</i><span>Which rule applies? When is it due? They can’t tell.</span></p></li>
+<li><svg class="sk-p" viewBox="0 0 240 150" aria-hidden="true">
+<defs><clipPath id="skc5"><rect x="3" y="3" width="234" height="144" rx="3"/></clipPath></defs>
+<g clip-path="url(#skc5)" filter="url(#sk-w)">
+<rect class="w k" x="22" y="34" width="96" height="100" rx="4"/><path class="lav k" d="M22,52 L118,52 L118,38 Q118,34 114,34 L26,34 Q22,34 22,38 Z"/>
+<path class="k" d="M40,26 L40,40 M100,26 L100,40"/><path class="k" d="M34,60 l12,12 M46,60 l-12,12"/><path class="k" d="M62,60 l12,12 M74,60 l-12,12"/><path class="k" d="M90,60 l12,12 M102,60 l-12,12"/><path class="k" d="M34,84 l12,12 M46,84 l-12,12"/><path class="k" d="M62,84 l12,12 M74,84 l-12,12"/><path class="k" d="M90,84 l12,12 M102,84 l-12,12"/><path class="k" d="M34,108 l12,12 M46,108 l-12,12"/><path class="k" d="M62,108 l12,12 M74,108 l-12,12"/><path class="k" d="M90,108 l12,12 M102,108 l-12,12"/><g>
+<path class="w k" d="M146,156 C147,118 152,96 174,90 L175,82 L189,82 L190,90 C212,96 217,118 218,156"/>
+<path class="k" d="M174,90 Q182,97 190,90"/>
+<circle class="w k" cx="182" cy="70" r="14"/>
+<path class="kf" d="M167.5,69 C167,51 195,49 196.5,68 C190,61 180,60 173,65 C171,67 169,69 167.5,69Z"/>
+<circle class="kf" cx="176" cy="71" r="1.7"/><circle class="kf" cx="186" cy="71" r="1.7"/>
+<path class="k" d="M177,80 Q182,75.5 187,80"/>
+</g>
+<circle class="peach k" cx="136" cy="30" r="11"/><text class="hand" x="136" y="35.5" font-size="15" text-anchor="middle">₹</text><path class="k dash" d="M126,36 C110,46 118,20 100,14"/></g>
+<rect class="k fr" x="3" y="3" width="234" height="144" rx="3" filter="url(#sk-w)"/>
+</svg><p><i>6</i><span>Weeks pass. The money stays with the company.</span></p></li>
+</ol>
+</figure><!--/sk:story-->
 <p class="cx-w cx-body">The complaint is only one step. The harder work is everything around it: what happened, which rule applies, which deadline matters, and what to do when the company goes quiet.</p>
-<ol class="cx-w cx-vis cx-journey" aria-label="What getting a refund back takes"><li>Evidence</li><li>Rule</li><li>Deadline</li><li class="w">Complaint</li><li>Follow-up</li><li>Escalation</li></ol>
+<!--sk:journey--><figure class="cx-w cx-vis sk-journey" role="img" aria-label="What getting a refund back takes: evidence, rule, deadline, complaint, follow-up, escalation. ChatGPT can write the complaint; Getbaq runs every step.">
+<svg viewBox="0 0 684 304" aria-hidden="true"><circle class="jc-g" cx="62" cy="152" r="59"/><circle class="jc-g" cx="173" cy="152" r="59"/><circle class="jc-g" cx="284" cy="152" r="59"/><circle class="jc-me" cx="395" cy="152" r="59"/><circle class="jc-g" cx="506" cy="152" r="59"/><circle class="jc-g" cx="617" cy="152" r="59"/><g filter="url(#sk-w)"><rect class="w k" x="45" y="124" width="34" height="56" rx="6"/><rect class="lav" x="51" y="133" width="22" height="18" rx="2"/><path class="k" d="M51,149 l7,-8 l5,5 l4,-4 l6,7"/><path class="k" d="M52,160 L70,160 M52,167 L65,167"/></g><g filter="url(#sk-w)"><path class="w k" d="M153,126 L185,126 L193,134 L193,178 L153,178 Z"/><path class="k" d="M185,126 L185,134 L193,134"/><text class="hand ink" x="173" y="158" font-size="30" text-anchor="middle">§</text><path class="k" d="M161,168 L185,168"/></g><g filter="url(#sk-w)"><rect class="w k" x="259" y="132" width="50" height="46" rx="4"/><path class="k" d="M259,144 L309,144 M271,125 L271,138 M297,125 L297,138"/><text class="hand ink" x="284" y="169" font-size="20" text-anchor="middle">30</text><ellipse class="k" cx="284" cy="162" rx="14" ry="11" transform="rotate(-8 284 162)"/></g><g filter="url(#sk-w)"><rect class="w k" x="368" y="134" width="54" height="38" rx="3"/><path class="k" d="M368,134 L395,156 L422,134"/><path class="w k" d="M405,182 L425,148 L431,152 L411,186 Z"/><path class="k" d="M405,182 L403,190 L411,186"/></g><g filter="url(#sk-w)"><circle class="w k" cx="506" cy="152" r="23"/><path class="k" d="M506,139 L506,152 L516,158"/><path class="k" d="M533,140 C540,158 534,178 516,183"/><path class="k" d="M521,177 L516,183 L523,187"/></g><g filter="url(#sk-w)"><path class="w k" d="M591,176 L591,162 L607,162 L607,148 L623,148 L623,134 L641,134 L641,176 Z"/><path class="k" d="M597,144 L615,126 M605,125 L615,126 L614,136"/></g><text class="hand ind" x="54" y="40" font-size="24" text-anchor="middle" transform="rotate(-3 54 40)">Evidence</text><path class="ink-i" d="M92,34 C114,36 104,64 84,90"/><path class="ink-i" d="M78,84 L84,90 L91,84"/><text class="hand ind" x="179" y="290" font-size="24" text-anchor="middle" transform="rotate(3 179 290)">Rule</text><path class="ink-i" d="M139,270 C121,262 133,236 155,214"/><path class="ink-i" d="M147,216 L155,214 L156,222"/><text class="hand ind" x="276" y="40" font-size="24" text-anchor="middle" transform="rotate(-3 276 40)">Deadline</text><path class="ink-i" d="M314,34 C336,36 326,64 306,90"/><path class="ink-i" d="M300,84 L306,90 L313,84"/><text class="hand ind" x="401" y="290" font-size="24" text-anchor="middle" transform="rotate(3 401 290)">Complaint</text><path class="ink-i" d="M361,270 C343,262 355,236 377,214"/><path class="ink-i" d="M369,216 L377,214 L378,222"/><text class="hand ind" x="498" y="40" font-size="24" text-anchor="middle" transform="rotate(-3 498 40)">Follow-up</text><path class="ink-i" d="M536,34 C558,36 548,64 528,90"/><path class="ink-i" d="M522,84 L528,90 L535,84"/><text class="hand ind" x="623" y="290" font-size="24" text-anchor="middle" transform="rotate(3 623 290)">Escalation</text><path class="ink-i" d="M583,270 C565,262 577,236 599,214"/><path class="ink-i" d="M591,216 L599,214 L600,222"/></svg>
+<figcaption><span class="sk-lg"><span class="sk-key sk-key-g"></span>The follow-through Getbaq runs</span><span class="sk-lg"><span class="sk-key sk-key-me"></span>The one step ChatGPT covers</span></figcaption>
+</figure><!--/sk:journey--><ol class="cx-w cx-vis cx-journey" aria-label="What getting a refund back takes"><li>Evidence</li><li>Rule</li><li>Deadline</li><li class="w">Complaint</li><li>Follow-up</li><li>Escalation</li></ol>
 <p class="cx-w cx-say">ChatGPT can write the complaint. Getbaq is designed to run the case.</p>
 <div class="cx-w"><dl class="cx-mini"><div><dt>66%</dt><dd>of people with a major service problem got no help from the company. <a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles, 2026</a></dd></div><div><dt>+6.9 pts</dt><dd>more likely to get relief when a complaint was AI-assisted. <a href="https://www.nature.com/articles/s41562-026-02409-4" target="_blank" rel="noopener noreferrer">Nature Human Behaviour, 2026</a></dd></div></dl></div>
 </section>
@@ -1829,6 +2080,24 @@ addEventListener("pagereveal",function(e){
 <li><div class="gb-dc-txt"><p class="r-t">An autonomy dial</p><p class="why">Trust shouldn’t decide who bears the consequence.</p><p class="c-t"><span aria-hidden="true">→</span>Permission follows the consequence</p><p class="cx-cwhy">Anything that can’t be undone always waits for the user.</p></div>
 <div class="gb-dc-vis"><div class="gb-dc-p rej"><p class="lab"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Rejected</p><div class="ui"><p class="dl">Autonomy</p><p class="track"><i></i></p><p class="ends"><span>Ask me</span><span>Do it all</span></p></div></div><div class="gb-dc-p cho"><p class="lab"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Chosen</p><div class="ui"><p class="pr"><span>Can be undone</span><b>Just do it</b></p><p class="pr"><span>Can’t be undone</span><b class="tap">User’s tap</b></p></div></div></div></li>
 </ol></div>
+<!--sk:versions--><figure class="cx-w cx-vis sk-versions" role="img" aria-label="The one-box input, three versions: a form with category chips, an upload-first screen, and one box that asks what happened.">
+<svg viewBox="0 0 684 304" aria-hidden="true"><ellipse class="gnd" cx="112" cy="252" rx="92" ry="13"/><ellipse class="gnd" cx="342" cy="252" rx="92" ry="13"/><ellipse class="gnd" cx="572" cy="252" rx="92" ry="13"/><g transform="rotate(-4 112 160)" filter="url(#sk-w)">
+<rect class="w k" x="40" y="92" width="144" height="128" rx="6"/><text class="hand ink" x="56" y="116" font-size="15" text-anchor="start">Describe your problem</text>
+<rect class="w k" x="54" y="126" width="116" height="42" rx="4"/><path class="k dim2" d="M62,138 L150,138 M62,148 L130,148"/>
+<rect class="yel k" x="54" y="180" width="34" height="16" rx="8"/><rect class="yel k" x="94" y="180" width="34" height="16" rx="8"/><rect class="yel k" x="134" y="180" width="34" height="16" rx="8"/>
+<path class="k" d="M58,206 L98,206"/></g><g transform="rotate(3 342 156)" filter="url(#sk-w)">
+<rect class="w k" x="266" y="86" width="152" height="136" rx="6"/>
+<rect class="k dash" x="282" y="104" width="120" height="82" rx="6"/>
+<path class="yel k" d="M322,152 C308,152 308,132 322,134 C324,120 346,118 350,132 C364,128 370,150 356,152 Z"/>
+<path class="k" d="M342,160 L342,138 M335,145 L342,138 L349,145"/><text class="hand ink" x="342" y="178" font-size="14" text-anchor="middle">upload a screenshot</text><text class="hand dim" x="342" y="208" font-size="13" text-anchor="middle">or type it instead</text></g><path class="lime" d="M488,78 C520,48 628,52 660,84 C688,112 676,214 640,232 C600,252 506,246 484,214 C462,180 456,108 488,78 Z"/>
+<g transform="rotate(-2 572 150)" filter="url(#sk-w)">
+<rect class="w k" x="500" y="80" width="146" height="142" rx="8"/>
+<rect class="kf" x="562" y="92" width="20" height="20" rx="5"/><text class="hand inv" x="572" y="108" font-size="17" text-anchor="middle">g</text><text class="hand ink" x="572" y="136" font-size="20" text-anchor="middle">What happened?</text>
+<rect class="w k" x="514" y="148" width="118" height="40" rx="10"/><path class="k dim2" d="M524,162 L580,162"/>
+<circle class="lime k" cx="616" cy="176" r="8"/><path class="k" d="M616,180 L616,172 M612,176 L616,172 L620,176"/>
+<rect class="w k" x="516" y="198" width="36" height="13" rx="6.5"/><rect class="w k" x="556" y="198" width="36" height="13" rx="6.5"/><rect class="w k" x="596" y="198" width="30" height="13" rx="6.5"/></g><path class="ink-i" d="M196,150 C214,138 232,138 250,150"/><path class="ink-i" d="M242,143 L250,150 L241,155"/>
+<path class="ink-i" d="M430,150 C448,138 466,138 482,150"/><path class="ink-i" d="M474,143 L482,150 L473,155"/><text class="hand ind" x="112" y="290" font-size="22" text-anchor="middle">v1 · fill in a form</text><text class="hand ind" x="342" y="290" font-size="22" text-anchor="middle">v2 · upload first</text><text class="hand ind" x="572" y="290" font-size="22" text-anchor="middle">now · just say it</text></svg>
+</figure><!--/sk:versions-->
 <p class="cx-w cx-note">The one-box input took three versions to get right. That exploration, with the research, ideation and prompts, is in the <a href="./getbaq-full.html">deep dive</a>.</p>
 </section>
 <section class="cx-sec" id="close" data-reveal="">
@@ -1838,7 +2107,7 @@ addEventListener("pagereveal",function(e){
 <section class="cx-sec cx-final" data-reveal="" aria-label="Closing">
 <p class="cx-w cx-final-t"><span>Cases, not conversations.</span> <span>Evidence, not prompts.</span> <span>Actions, not answers.</span> <span>Resolution, not response generation.</span></p>
 <p class="cx-w cx-final-s">Getbaq isn’t shipped. The next proof is whether real people trust it with real money.</p>
-<p class="cx-w cx-final-l"><a data-proto="/" href="#" rel="noopener" target="_blank">Try the prototype <span aria-hidden="true">↗</span></a></p>
+<div class="cx-w cx-final-l cx-final-card"><a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></div>
 </section>
 <dialog class="cx-lb" aria-label="Enlarged screen"><button type="button" class="cx-lb-x" aria-label="Close">×</button><img alt=""></dialog>
 <section id="next" data-reveal>
@@ -2012,7 +2281,7 @@ addEventListener("pagereveal",function(e){
 
   // Progress rail: the chapter in view is active; the rail and the thin
   // mobile bar fill with progress through the story (hero to close).
-  var tocLinks=[].slice.call(document.querySelectorAll('.cx-rail a'));
+  var tocLinks=[].slice.call(document.querySelectorAll('.cx-rail a[href^="#"]'));
   var chapters=tocLinks.map(function(a){return document.querySelector(a.getAttribute('href'));});
   var railBar=document.querySelector('.cx-rail-bar'), mprog=document.querySelector('.cx-mprog');
   var storyStart=document.getElementById('problem'), storyEnd=document.getElementById('close');
