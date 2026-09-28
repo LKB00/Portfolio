@@ -943,7 +943,7 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 .cx-flow3 b{display:block;font:500 var(--fs-h4)/1.3 var(--sans);letter-spacing:-.01em;color:var(--c-ink)}
 .cx-flow3 span{display:block;margin-top:4px;font-size:var(--fs-caption);line-height:1.45;color:var(--c-ink-2)}
 .cx-hero-meta{margin-top:var(--sp-64)}
-.cx-meta,.cx-status{margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.cx-meta,.cx-status{margin-top:0;margin-bottom:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
 .cx-meta dt,.cx-status dt{font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
 .cx-meta dd,.cx-status dd{margin:6px 0 0;font-size:var(--fs-small);line-height:1.5;color:var(--c-ink)}
 .cx-status{margin-top:var(--sp-24);padding-top:var(--sp-24);border-top:1px solid var(--c-line)}
@@ -1147,6 +1147,70 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 /* hero device sits on a flat surface, no gradient */
 .gb .cx-hero-v .gbh{background:var(--c-surface)!important}
 @media(max-width:700px){.cx-arch{grid-template-columns:1fr}.cx-arch-t{margin:var(--sp-12) 0 var(--sp-16)!important}.cx-dr{grid-template-columns:1fr}.cx-dr > span{display:none}}
+
+/* =====================================================================
+   ART DIRECTION. Weight goes to five moments: the hero product, the
+   AI / Code / You boundary, the five failure modes, the case model and
+   the whole workspace. Everything between them is quieter: fewer
+   filled boxes, lines instead of cards, one screen height per row.
+   ===================================================================== */
+/* peaks get more air than ordinary sections */
+.cx-peak{padding-top:var(--sp-160)}
+.cx-peak > .cx-vis,.cx-peak .cx-casecmp{margin-top:var(--sp-64)}
+.cx-band.cx-peak{padding-top:var(--sp-128);padding-bottom:var(--sp-128)}
+.cx-band + .cx-band.cx-peak{padding-top:var(--sp-128)}
+@media(max-width:760px){.cx-peak{padding-top:var(--sp-96)}.cx-band.cx-peak,.cx-band + .cx-band.cx-peak{padding-top:var(--sp-80);padding-bottom:var(--sp-80)}}
+
+/* the two product showcases may reach into the gutter beside the rail */
+@media(min-width:1280px){.cx-bleed{margin-left:calc(var(--rail) - 128px);max-width:calc(var(--w-content) + 128px)}}
+.cx-stage{margin-top:var(--sp-96)}
+.cx-stage .cx-pv-f{padding:var(--sp-16)}
+.cx-stage figcaption{margin-top:var(--sp-16)}
+
+/* walkthrough: every thumbnail the same height, cropped from the top */
+.cx-tr-ph .cx-zoom img{height:132px;object-fit:contain;object-position:center top}
+
+/* boundary: the pipeline is the proof under the peak, so it drops its tints */
+.cx-sub .gb-pipe li{padding:0;background:none;border-radius:0}
+.cx-sub .gb-pipe-art{background:var(--c-card);min-height:120px}
+.cx-sub .gb-pipe b{margin:var(--sp-8) 0 var(--sp-12)}
+
+/* autonomy: quadrant titles on the type scale; the y-axis sits in the gutter so the grid keeps the column edge */
+.cx-q-t{font-size:var(--fs-h3)}
+@media(min-width:981px){.cx-matrix{display:block;position:relative}.cx-ax-y{position:absolute;left:-44px;top:0;bottom:44px}.cx-ax-x{margin-top:var(--sp-16)}}
+
+/* failure states: a little more room per state */
+.cx-w .gb-fails{gap:var(--sp-12)}
+.cx-w .gb-fails > div{padding:var(--sp-24) var(--sp-16) var(--sp-16)}
+
+/* the five failure modes: an editorial list, name on the left, the evidence on the right */
+.cx-peak .cx-fails > li{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--gap);padding:var(--sp-32) 0}
+.cx-peak .cx-f-h{flex-direction:column;align-items:flex-start;gap:var(--sp-8);margin:0}
+.cx-peak .cx-f-h b{font:400 var(--fs-h3)/1.15 var(--serif);letter-spacing:-.018em}
+.cx-peak .cx-f-h i{margin-left:0}
+.cx-peak .cx-fails dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-16) var(--gap)}
+.cx-peak .cx-fails dd{font-size:var(--fs-small)}
+@media(max-width:760px){.cx-peak .cx-fails > li{grid-template-columns:1fr}}
+
+/* case model: the case file is the hero of this section, so it gets the width */
+.cx-cc-body{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:var(--sp-24)}
+@media(min-width:1100px){.cx-casecmp{grid-template-columns:minmax(0,4fr) auto minmax(0,8fr)}}
+@media(max-width:1099px){.cx-casecmp{grid-template-columns:1fr}.cx-cc-arrow{transform:rotate(90deg);justify-self:center}.cx-cc-chat{max-width:420px}}
+
+/* decisions: rows on lines, not boxes; the small screens are the only filled shapes */
+.cx-w .gb-dc{gap:0}
+.cx-w .gb-dc > li{padding:var(--sp-32) 0;border-radius:0;background:none;border-top:1px solid var(--c-line)}
+.cx-w .gb-dc > li:last-child{border-bottom:1px solid var(--c-line)}
+.cx-w .gb-dc-p .ui{background:var(--c-surface)}
+.cx-w .gb-dc .b.me,.cx-w .gb-dc .pr,.cx-w .gb-dc .track{background:var(--c-card)}
+
+/* proof: the two panels breathe; the ledger sits clearly below */
+.cx-proof{gap:var(--sp-12)}
+.cx-pf{padding:var(--sp-32)}
+
+/* the ending: every line stays whole */
+.cx-final-t{font-size:clamp(30px,4.2vw,46px);line-height:1.12}
+@media(max-width:520px){.cx-cc-body{grid-template-columns:1fr}.cx-pv-case{max-width:320px}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1216,7 +1280,7 @@ addEventListener("pagereveal",function(e){
 <p class="cx-dek">The hard part wasn’t making it act.<br>It was deciding what it should never do.</p>
 <p class="cx-lead">Getbaq turns a messy consumer dispute into a verifiable case: it understands the evidence, finds the applicable rule, prepares the next action, and keeps the user in control of every consequential action.</p>
 </div>
-<div class="cx-w cx-hero-v"><figure class="gb-ex gb-ex-hero col" data-reveal="">
+<div class="cx-w cx-hero-v cx-bleed"><figure class="gb-ex gb-ex-hero" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="The Getbaq app on a MacBook. The user types: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. Getbaq reads it, checks ₹3,499, Flipkart and 2 Aug with the user, and once they confirm, finds the rule, sets the reply-by date of 3 Sep 2026 and has the letter ready to sign.">
 <div class="gbh-mac" aria-hidden="true"><div class="gbh-screen">
 <img class="gbh-poster" src="./assets/getbaq-mac-start.webp" width="1600" height="1039" alt="" fetchpriority="high" decoding="async"><img class="gbh-poster gbh-poster-still" src="./assets/getbaq-mac-ready.webp" width="1600" height="1039" alt="" loading="lazy" decoding="async">
@@ -1315,7 +1379,7 @@ addEventListener("pagereveal",function(e){
 </div></div>
 <details class="cx-w cx-more"><summary>Explore every state in the live app</summary><figure class="gb-ex" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure></details>
 </section>
-<section class="cx-sec cx-band cx-band-2" id="real" data-reveal="">
+<section class="cx-sec cx-band cx-band-2 cx-peak" id="real" data-reveal="">
 <div class="cx-w cx-head "><p class="cx-label">04 · Real model</p><h2 class="cx-h">I didn’t design against a perfect AI.<br>I designed against its mistakes.</h2><p class="cx-lead">Five failure modes surfaced while testing against a real model. <b>One came from the model. Four came from the rules and code around it.</b> Reliability is a system problem.</p></div>
 <ol class="cx-w cx-vis cx-fails"><li><p class="cx-f-h"><span class="cx-f-n">Failure 01</span><b>Wrong deadline</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>Every failed payment got 5 days.</dd></div><div><dt>Actual</dt><dd>RBI gives UPI one working day (T+1).</dd></div><div><dt>Risk</dt><dd>UPI users would have waited four days they didn’t have.</dd></div><div class="resp"><dt>Design response</dt><dd>A separate UPI rule, checked against the RBI circular. The date is computed by code.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 02</span><b>Merged rules</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>Airline refunds shared one clock.</dd></div><div><dt>Actual</dt><dd>Card refunds: 7 days. Travel-site bookings: 14 working days.</dd></div><div><dt>Risk</dt><dd>Cases flagged late a week early.</dd></div><div class="resp"><dt>Design response</dt><dd>Separate rules, each with its own source.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 03</span><b>Timezone</b><i class="src-code">Code</i></p><dl><div><dt>System output</dt><dd>Dates were read in the wrong timezone.</dd></div><div><dt>Actual</dt><dd>The deadline hadn’t passed.</dd></div><div><dt>Risk</dt><dd>Near midnight, a deadline showed as missed.</dd></div><div class="resp"><dt>Design response</dt><dd>One fixed timezone for every date.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 04</span><b>Invented year</b><i class="src-ai">Model</i></p><dl><div><dt>Model output</dt><dd>Asked to copy “2 Aug”, the model added 2023 and 2021.</dd></div><div><dt>Actual</dt><dd>The user never wrote a year.</dd></div><div><dt>Risk</dt><dd>A wrong year makes a wrong deadline.</dd></div><div class="resp"><dt>Design response</dt><dd>A year is kept only if the user wrote one.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 05</span><b>Wrong recipient</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>The UPI letter was addressed to the shop.</dd></div><div><dt>Actual</dt><dd>The RBI rule applies to the user’s bank.</dd></div><div><dt>Risk</dt><dd>The complaint goes somewhere that can’t act on it.</dd></div><div class="resp"><dt>Design response</dt><dd>It asks for the bank and addresses the letter there.</dd></div></dl></li></ol>
 <p class="cx-w cx-say">None of this appears in a static mock-up.</p>
@@ -1336,7 +1400,7 @@ addEventListener("pagereveal",function(e){
 <ol class="cx-cc-notes"><li><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></li><li><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></li><li><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></li><li><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></li></ol></div></div>
 </div>
 <p class="cx-w cx-say">The conversation handles ambiguity. The case carries the state.</p>
-<div class="cx-w cx-vis"><figure class="cx-pv cx-pv-wide"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/getbaq-desktop-mbp-1512.webp" data-alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" aria-label="Enlarge: The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right"><img src="./assets/getbaq-desktop-mbp-1512.webp" width="1512" height="982" alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" loading="lazy" decoding="async" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:760px) 92vw, 834px"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div><figcaption>The whole workspace: the case list, the thread, and the case file beside it.</figcaption></figure></div>
+<div class="cx-w cx-stage cx-bleed"><figure class="cx-pv cx-pv-wide"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/getbaq-desktop-mbp-1512.webp" data-alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" aria-label="Enlarge: The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right"><img src="./assets/getbaq-desktop-mbp-1512.webp" width="1512" height="982" alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" loading="lazy" decoding="async" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:760px) 92vw, 834px"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div><figcaption>The whole workspace: the case list, the thread, and the case file beside it.</figcaption></figure></div>
 </section>
 <section class="cx-sec " id="proof" data-reveal="">
 <div class="cx-w cx-head "><p class="cx-label">06 · Proof</p><h2 class="cx-h">What’s tested, and what isn’t proven yet.</h2><p class="cx-lead">Everything with one right answer is tested deterministically. The model’s judgment needs a scored evaluation, and that hasn’t completed a clean run yet.</p></div>
