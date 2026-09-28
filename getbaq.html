@@ -461,6 +461,10 @@ div.gb-sec{margin-top:var(--s5)}
 .meta.m3{grid-template-columns:repeat(3,1fr)}
 @media(max-width:600px){.meta.m3{grid-template-columns:1fr}}
 .gb-open{margin-top:var(--s4)}
+.gb-lede{margin-top:var(--s4);font:400 19px/1.5 var(--serif);letter-spacing:-.012em;color:var(--ink)}
+.gb-chips{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.gb-chips li{font:500 12px/1 var(--sans);letter-spacing:.02em;color:var(--muted);padding:7px 12px;border-radius:99px;background:var(--surface)}
+
 .gb-open .pair{grid-template-columns:1fr 1fr}
 @media(max-width:600px){.gb-open .pair{grid-template-columns:1fr}}
 @media(max-width:600px){.meta{grid-template-columns:1fr}}
@@ -722,6 +726,29 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 @media(max-width:700px){.gb-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.gb-steps li:nth-child(4n):after{display:block}.gb-steps li:nth-child(2n):after{display:none}}
 
 .gb-bugs i:not(:first-child){margin-left:2px}
+/* the hero bug: model vs. reality, in the site's own numerals */
+.gb-herobug{margin-top:var(--s3);background:var(--surface);border-radius:8px;padding:clamp(20px,3vw,32px)}
+.gb-herobug-row{display:flex;align-items:center;justify-content:center;gap:clamp(16px,4vw,40px);text-align:center}
+.gb-herobug-row .cap{margin:0 0 4px}
+.gb-herobug-big{font:500 clamp(32px,6vw,48px)/1 var(--mono);letter-spacing:-.01em;color:var(--ink)}
+.gb-herobug-arrow{font-size:24px;color:var(--faint)}
+.gb-herobug-risk{margin:20px 0 0;text-align:center;font:400 16px/1.5 var(--sans);color:var(--muted)}
+.gb-herobug-fix{margin:12px 0 0;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:16px;line-height:1.55;letter-spacing:-.01em;color:var(--ink)}
+.gb-fixgrid{margin-top:var(--s2);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s2)}
+.gb-fixgrid > div{background:var(--surface);border-radius:8px;padding:clamp(16px,2.2vw,22px)}
+/* failure as a system: six product states, not error messages */
+.gb-states{margin-top:var(--s3);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s2)}
+.gb-states > div{background:var(--surface);border-radius:8px;padding:clamp(16px,2.2vw,20px)}
+.gb-states-t{margin:0 0 6px;font:500 15px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.gb-states > div > p:not(.gb-states-t):not(.gb-states-next){margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
+.gb-states-next{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line);font-size:13px;line-height:1.5;color:var(--ink)}
+@media(max-width:700px){.gb-states{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.gb-states{grid-template-columns:1fr}}
+
+.gb-fixgrid p:not(.cap){margin:0;font-size:14.5px;line-height:1.55;color:var(--muted)}
+.gb-fixgrid p:not(.cap) i{font-style:normal;font-weight:500;color:var(--ink)}
+@media(max-width:600px){.gb-fixgrid{grid-template-columns:1fr}.gb-herobug-row{flex-direction:column;gap:10px}.gb-herobug-arrow{transform:rotate(90deg)}}
+
 @media(max-width:760px){.gb-vis{grid-template-columns:1fr}}
 /* one height for every screen beside callouts: the tallest callout list
    (five points) sets it. Screens are drawn a little smaller, and anything
@@ -967,13 +994,14 @@ addEventListener("pagereveal",function(e){
 <a href="#overview">Overview</a>
 <a href="#why">01 · Why an agent</a>
 <a href="#system">02 · Not a chatbot</a>
-<a href="#work">03 · AI reads, code counts</a>
-<a href="#approver">04 · It can’t speak for you</a>
-<a href="#inspect">05 · Inspectable</a>
-<a href="#case">06 · The case persists</a>
-<a href="#wrong">07 · Failure is the product</a>
-<a href="#rejected">08 · What I rejected</a>
-<a href="#proof">09 · What I tested</a>
+<a href="#work">03 · The boundary</a>
+<a href="#bugs">04 · A real bug</a>
+<a href="#approver">05 · It can’t speak for you</a>
+<a href="#inspect">06 · Inspectable</a>
+<a href="#case">07 · The case persists</a>
+<a href="#wrong">08 · Failure is the product</a>
+<a href="#rejected">09 · What I rejected</a>
+<a href="#proof">10 · What I tested</a>
 <a href="#close">Tradeoffs</a>
 </nav>
 <!-- ================= OVERVIEW ================= -->
@@ -998,20 +1026,12 @@ addEventListener("pagereveal",function(e){
 <div><dt>Role</dt><dd>Solo designer, with an AI coding assistant</dd></div>
 <div><dt>Status</dt><dd>Prototype, not shipped. Eval and user tests not yet run</dd></div>
 </dl>
-<div class="col beat gb-open" data-reveal="">
-<div class="pair">
-<div><p class="cap"><b>The problem</b></p><ul class="keys one">
-<li><i>•</i><p>₹3,499 stuck with Flipkart, and a bot that says “5 to 7 working days”.</p></li>
-<li><i>•</i><p>The law says Flipkart must resolve it within a month, and the free 1915 helpline can push it.</p></li>
-<li><i>•</i><p>She doesn’t know the rule, the deadline or the channel. ChatGPT drafts a letter; nobody runs the fight.</p></li>
-</ul></div>
-<div><p class="cap"><b>What I designed</b></p><ul class="keys one">
-<li><i>•</i><p>An agent where she’s the approver: nothing is sent or escalated without her tap.</p></li>
-<li><i>•</i><p>It reads her messages and screenshots, finds the rule and drafts the complaint.</p></li>
-<li><i>•</i><p>Code, never the AI, calculates every date and amount.</p></li>
-</ul></div>
-</div>
-</div>
+<p class="col gb-lede" data-reveal="">I wanted to design an AI agent for a problem where being wrong has real consequences: getting money back from a company that won’t cooperate.</p>
+<ul class="gb-chips col" data-reveal="">
+<li>Working prototype</li>
+<li>Sending simulated</li>
+<li>Eval and user tests not run</li>
+</ul>
 </section>
 <section class="gb-chapter" id="why">
 <div class="col"><p class="eyebrow">01 · Why an agent</p><h2 class="say">ChatGPT can write the complaint. It can’t run the case.</h2></div>
@@ -1030,16 +1050,36 @@ addEventListener("pagereveal",function(e){
 </section>
 </section>
 <section class="gb-chapter" id="work">
-<div class="col"><p class="eyebrow">03 · Decision 1</p><h2 class="say">AI reads. Code counts.</h2></div>
+<div class="col"><p class="eyebrow">03 · The boundary</p><h2 class="say">The agent needed a boundary.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A confidently wrong deadline is worse than no agent: she’d wait for a date that has already passed. So before any screen, I decided what the AI may do at all. It gets judgment on messy text. Dates and money are tested code, and the model is never even given a day count.</p>
 <figure class="gb-ex col" data-embed="capability-map" data-note="Diagram"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>What the AI judges, what code computes, and what the AI is never allowed to do.</figcaption></figure>
-<p class="col body">Testing that boundary against the real model, before anyone used the product, caught five mistakes that would have cost people money:</p>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="rule-fix" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Designing against the real model: the rule cards those fixes protect.</figcaption></figure><ol class="gb-call gb-bugs"><li><b>The UPI deadline</b><span><i>Bug</i> every failed payment got 5 days. <i>Reality</i> RBI gives UPI one working day. <i>Response</i> the model no longer sees a day count; code does the dates.</span></li><li><b>Two airline clocks</b><span><i>Bug</i> one rule for both. <i>Reality</i> 7 days by card, 14 working days via an agent. <i>Response</i> two rules, each verified at the source.</span></li><li><b>The invented year</b><span><i>Bug</i> asked to copy “2 Aug”, it added 2023. <i>Response</i> a year is kept only if she wrote one.</span></li><li><b>The wrong recipient</b><span><i>Bug</i> the UPI letter went to the shop. <i>Reality</i> the RBI rule binds her bank. <i>Response</i> it asks for her bank, and the letter goes there.</span></li><li><b>The midnight deadline</b><span><i>Bug</i> dates read in the wrong timezone showed as missed. <i>Response</i> one fixed timezone for every date.</span></li></ol></div>
+</section>
+</section>
+<section class="gb-chapter" id="bugs">
+<div class="col"><p class="eyebrow">04 · A real bug</p><h2 class="say">I designed against a real model.</h2></div>
+<section class="gb-sec gb-flow" data-reveal="">
+<p class="col body">Testing that boundary against the real model, before anyone used the product, caught five mistakes that would have cost people money. The worst one:</p>
+<div class="col gb-herobug" data-reveal="">
+<div class="gb-herobug-row">
+<div><p class="cap">Model said</p><p class="gb-herobug-big">5 days</p></div>
+<div class="gb-herobug-arrow" aria-hidden="true">→</div>
+<div><p class="cap">RBI says</p><p class="gb-herobug-big">T+1</p></div>
+</div>
+<p class="gb-herobug-risk">She’d have waited four days she didn’t have.</p>
+<p class="gb-herobug-fix"><b>Decision:</b> the model never sees a day count. <b>Code calculates every date.</b></p>
+</div>
+<div class="col gb-fixgrid" data-reveal="">
+<div><p class="cap"><b>Two airline clocks</b></p><p><i>Wrong:</i> one rule for both. <i>Fix:</i> 7 days by card, 14 working days via an agent, each verified at the source.</p></div>
+<div><p class="cap"><b>The invented year</b></p><p><i>Wrong:</i> asked to copy “2 Aug”, it added 2023. <i>Fix:</i> a year is kept only if she wrote one.</p></div>
+<div><p class="cap"><b>The wrong recipient</b></p><p><i>Wrong:</i> the UPI letter went to the shop. <i>Fix:</i> the RBI rule binds her bank, so it asks for her bank and sends it there.</p></div>
+<div><p class="cap"><b>The midnight deadline</b></p><p><i>Wrong:</i> dates read in the wrong timezone showed as missed. <i>Fix:</i> one fixed timezone for every date.</p></div>
+</div>
+<p class="col body">These weren’t found in a mock-up. They appeared when I designed against a real model.</p>
 </section>
 </section>
 <section class="gb-chapter" id="approver">
-<div class="col"><p class="eyebrow">04 · Decision 2</p><h2 class="say">The agent can act. It can’t speak for you.</h2></div>
+<div class="col"><p class="eyebrow">05 · Decision 2</p><h2 class="say">The agent can act. It can’t speak for you.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A common pattern is to hand over more control as trust grows: approve a few, then let it send. I rejected that. A wrong or rude letter damages her, not the AI, so <b>every send waits for her tap, permanently</b>. But gating everything would make it useless, so each action is placed by its stakes and whether it can be undone. Only what’s high-stakes and irreversible waits for her:</p>
 <div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let her correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always her tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading her message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell her, for Stripping an OTP she pasted.">
@@ -1049,7 +1089,7 @@ addEventListener("pagereveal",function(e){
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="approve" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The Approve card. Press Send it to see the undo window.</figcaption></figure><ol class="gb-call"><li><b>Her identity is visible</b><span>The letter goes out from her, in her name. Getbaq only drafts it.</span></li><li><b>The consequence is visible</b><span>₹3,499 and the reply-by date sit above the fold, before she approves.</span></li><li><b>The evidence is visible</b><span>The rule, its source and how sure the agent is, as backing.</span></li><li><b>The irreversible action is isolated</b><span>One strong button, unlike anything else on the screen, and six seconds to undo.</span></li></ol></div></section>
 </section>
 <section class="gb-chapter" id="inspect">
-<div class="col"><p class="eyebrow">05 · Decision 3</p><h2 class="say">Make the system’s work inspectable.</h2></div>
+<div class="col"><p class="eyebrow">06 · Decision 3</p><h2 class="say">Make the system’s work inspectable.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">Trust can’t rest on the AI sounding sure. So the rule card says what should happen, why, and how certain the system is, and every step in the trace says who did it:</p>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="rule-card-now" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The rule card, as she sees it.</figcaption></figure><ol class="gb-call"><li><b>Outcome first</b><span>“Flipkart must fix this by 3 Sep 2026.” She never has to read the regulation.</span></li><li><b>Source named</b><span>The rule is cited and marked Verified: it was read from the law, not remembered by the model.</span></li><li><b>Confidence, with a reason</b><span>A plain label and why, never a bare number. When it’s low, the Approve button doesn’t exist.</span></li></ol></div>
@@ -1057,22 +1097,28 @@ addEventListener("pagereveal",function(e){
 </section>
 </section>
 <section class="gb-chapter" id="case">
-<div class="col"><p class="eyebrow">06 · Decision 4</p><h2 class="say">The conversation is temporary. The case is persistent.</h2></div>
+<div class="col"><p class="eyebrow">07 · Decision 4</p><h2 class="say">The conversation is temporary. The case is persistent.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A chat is good at taking messy input and explaining things. It’s bad at holding a deadline. So the thread handles ambiguity, and a separate case file holds progress: the facts, the rule, the dates, the status and what happens next.</p>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped"><div class="gb-ex-panel"><div class="gb-ex-inner"><img src="./assets/getbaq-desktop-mbp-1512.webp" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:760px) 90vw, 440px" width="1512" height="982" alt="The Getbaq desktop layout: the case list on the left, the conversation in the middle, and the case file on the right holding the deadline, the facts and the rule" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;border-radius:8px"></div></div><figcaption>On a wide screen the case file sits beside the thread; on a phone it opens as a sheet.</figcaption></figure><ol class="gb-call"><li><b>The thread</b><span>Where she pastes, asks and reads. Finished steps fold into receipts.</span></li><li><b>The case file</b><span>The deadline, the facts, the rule and where the case is at. It doesn’t scroll away, and it outlives the conversation.</span></li><li><b>The status</b><span>Fifteen states behind the scenes; she sees four: needs your input, getting ready, waiting for their reply, resolved.</span></li></ol></div></section>
 </section>
 <section class="gb-chapter" id="wrong">
-<div class="col"><p class="eyebrow">07 · Failure is the product</p><h2 class="say">The real product starts when the AI is wrong.</h2></div>
+<div class="col"><p class="eyebrow">08 · Failure is the product</p><h2 class="say">The real product starts when the AI is wrong.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">An agent will be wrong, unsure, ignored or stuck some of the time, and those moments decide whether she trusts it next time. The core risk is a wrong rule she never thinks to question, so <b>she’s never asked to approve what the AI itself doubts.</b></p>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="screen-notsure" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure><ol class="gb-call"><li><b>A label, not a percentage</b><span>A bare number invites false precision; a plain label comes with a reason.</span></li><li><b>Both sides of its reasoning</b><span>Why this rule might fit, and why it might not.</span></li><li><b>No Approve button</b><span>Nothing can be sent while it’s unsure. It asks instead.</span></li></ol></div>
-<p class="col body">Then every other way a case can go wrong got its own state, and each one ends in a next step, not a dead end:</p>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure><ol class="gb-call"><li><b>A fact is missing</b><span>One card asks for every gap at once, and says why each is needed.</span></li><li><b>It isn’t a refund</b><span>It says so, and points her to e-Jagriti, a lawyer or the bank.</span></li><li><b>No address it can trust</b><span>It won’t guess one; she gets the letter to send herself.</span></li><li><b>The company goes quiet</b><span>The 1915 complaint is already prepared. Still her tap.</span></li><li><b>The AI can’t be reached</b><span>A simpler reader or a fixed template steps in, and says so.</span></li></ol></div>
+<p class="col body">An agent will be wrong, unsure, ignored or stuck some of the time, and those moments decide whether she trusts it next time. Each one is a product state, not an error message, and each ends in a next step:</p>
+<div class="col gb-states" data-reveal="">
+<div><p class="gb-states-t">Not sure</p><p>No rule fits well enough to trust.</p><p class="gb-states-next">No Approve button. It asks instead.</p></div>
+<div><p class="gb-states-t">Missing</p><p>A fact she needs is absent.</p><p class="gb-states-next">One card asks for every gap at once.</p></div>
+<div><p class="gb-states-t">Blocked</p><p>No grievance address it can trust.</p><p class="gb-states-next">Won’t guess. She gets the letter to send herself.</p></div>
+<div><p class="gb-states-t">Out of scope</p><p>It isn’t a refund complaint.</p><p class="gb-states-next">Points her to e-Jagriti, a lawyer, or the bank.</p></div>
+<div><p class="gb-states-t">Ignored</p><p>The company goes quiet.</p><p class="gb-states-next">The 1915 complaint is already prepared. Still her tap.</p></div>
+<div><p class="gb-states-t">System failure</p><p>The AI can’t be reached.</p><p class="gb-states-next">A simpler reader or fixed template steps in, and says so.</p></div>
+</div>
+<figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure>
 </section>
 </section>
 <section class="gb-chapter" id="rejected">
-<div class="col"><p class="eyebrow">08 · What I rejected</p><h2 class="say">Two ideas that lost, and what replaced them</h2></div>
+<div class="col"><p class="eyebrow">09 · What I rejected</p><h2 class="say">Two ideas that lost, and what replaced them</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="thread" data-inner="480" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div></figure><ol class="gb-call"><li><b>Rejected: a page per step</b><span>It felt like being sent somewhere else each time.</span></li><li><b>Rejected: a pure chat</b><span>The steps are decisions, so they’re cards she can act on.</span></li><li><b>Chose: one thread</b><span>Finished steps fold into receipts; the live card stays open.</span></li></ol></div>
 <p class="col body">The same happened to the first screen. Two versions made her sort her own evidence; the third made it the agent’s job.</p>
@@ -1084,7 +1130,7 @@ addEventListener("pagereveal",function(e){
 </section>
 </section>
 <section class="gb-chapter" id="proof">
-<div class="col"><p class="eyebrow">09 · What I tested</p><h2 class="say">The biggest unknown: does it pick the right rule?</h2></div>
+<div class="col"><p class="eyebrow">10 · What I tested</p><h2 class="say">The biggest unknown: does it pick the right rule?</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">Everything with one right answer is tested by code: <b>210 automated tests</b> on dates, money, states and safety. The model’s judgment is the part that can’t be, so it gets a scored evaluation instead:</p>
 <div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">8</p><p class="fnote">legal rules, each read from the source and marked verified</p></div><div><p class="fnum">30</p><p class="fnote">real, sourced cases in the evaluation set</p></div><div><p class="fnum">6</p><p class="fnote">traps where the right answer is “no rule covers this”</p></div><div><p class="fnum">3×</p><p class="fnote">runs per case; it passes only if all three pass</p></div></div></div>
