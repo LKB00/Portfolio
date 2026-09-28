@@ -1271,8 +1271,6 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 
 /* the AI twin bar would sit on the product screens, so here it waits for the ending */
 html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
-/* the ending is one line now, so it carries the ink */
-.cx-final-s{margin-top:0;color:var(--c-ink)}
 
 /* hero, one title block: the pitch, the two actions, one line of facts; then the product,
    with the three steps as its caption strip so picture and caption read as one piece */
@@ -1438,6 +1436,100 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
   .cx-cc-notes li{position:absolute;left:0;right:0;top:var(--t);margin-top:-2px;opacity:0;transform:translateY(4px);transition:opacity .35s var(--ease),transform .35s var(--ease);pointer-events:none}
   .cx-cc-notes li.on{opacity:1;transform:none;pointer-events:auto}
 }
+
+/* ===== feedback round ===== */
+/* problem: the whole job, of which the complaint is one step */
+.cx-journey{list-style:none;padding:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-12) 0;font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.015em;color:var(--c-ink-3)}
+.cx-journey li + li:before{content:"→";margin:0 14px;font-family:var(--sans);font-size:.7em;color:var(--c-faint)}
+.cx-journey li.w{color:var(--c-ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.cx-journey + .cx-say{margin-top:var(--sp-32)}
+@media(max-width:600px){
+  .cx-journey{flex-direction:column;align-items:flex-start;gap:var(--sp-8);position:relative;padding-left:var(--sp-24)}
+  .cx-journey:before{content:"";position:absolute;left:5px;top:12px;bottom:12px;width:1.5px;background:var(--c-line)}
+  .cx-journey li{position:relative}
+  .cx-journey li + li:before{content:none}
+  .cx-journey li:after{content:"";position:absolute;left:-24px;top:.45em;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--c-bg);border:2px solid var(--c-line)}
+  .cx-journey li.w:after{border-color:var(--c-ink)}
+}
+/* AI / Code / You: one thin line of what each hands on */
+.cx-archline{list-style:none;padding:0;margin-top:var(--sp-16);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-12)}
+.cx-archline li{position:relative;padding-top:var(--sp-12);border-top:1px solid var(--c-line);font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-2)}
+.cx-archline li + li:before{content:"→";position:absolute;left:-12px;top:-9px;width:12px;text-align:center;background:var(--c-band);font-family:var(--sans);color:var(--c-faint);letter-spacing:0}
+@media(max-width:700px){.cx-archline{display:flex;flex-wrap:wrap;gap:0}.cx-archline li{border-top:0;padding:0}.cx-archline li + li:before{position:static;content:"→";margin:0 10px;background:none}}
+/* pipeline: the date the user sees carries the weight; the code is the quiet proof */
+.cx-sub .gb-pipe{grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,1.3fr)}
+.cx-sub .gb-pipe-art.code p{font-size:11px;color:var(--c-ink-3)}
+.cx-sub .gb-pipe-art.code .out{color:var(--code)}
+.cx-sub .gb-pipe-art.ui{padding:var(--sp-24) var(--sp-16)}
+.cx-sub .gb-pipe-art.ui .date{font-size:30px}
+@media(max-width:600px){.cx-sub .gb-pipe{grid-template-columns:1fr}}
+/* autonomy: the hard limit sits apart from the matrix */
+.cx-limits{margin-top:var(--sp-32);padding-top:var(--sp-24);border-top:1px solid var(--c-line);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--gap);align-items:center}
+.cx-limits p{margin:0}
+.cx-lim-t{margin-top:var(--sp-8)!important;font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.015em;color:var(--c-ink)}
+.cx-lim-x{margin-top:var(--sp-8)!important;font-size:var(--fs-small);line-height:1.55;color:var(--c-ink-2)}
+@media(max-width:700px){.cx-limits{grid-template-columns:1fr}}
+/* failure states: one featured state, then the rest of the system */
+@media(min-width:761px){
+  .cx-w .gb-fails > div:first-child{grid-column:1/3;grid-row:1/3;padding:var(--sp-32)}
+  .cx-w .gb-fails > div:first-child .gb-fl-t{font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.015em}
+  .cx-w .gb-fails > div:first-child .gb-fl-t svg{width:22px;height:22px}
+  .cx-w .gb-fails > div:first-child .gb-fl-when{font-size:var(--fs-small);margin-bottom:var(--sp-24)}
+  .cx-w .gb-fails > div:first-child .gb-fl-ui{padding:var(--sp-24)}
+  .cx-w .gb-fails > div:first-child .gb-fl-ui .ey{font-size:11px}
+  .cx-w .gb-fails > div:first-child .gb-fl-ui .hd{font-size:18px;line-height:1.4}
+  .cx-w .gb-fails > div:first-child .gb-fl-ui .btns span{padding:8px 14px;font-size:13px}
+  .cx-w .gb-fails > div:first-child .gb-fl-out{font-size:var(--fs-small)}
+}
+/* the five mistakes: each one a chain, what it said → what's true → the risk → the fix */
+.cx-peak .cx-fails > li{grid-template-columns:1fr;gap:var(--sp-16)}
+.cx-peak .cx-f-h{flex-direction:row;align-items:baseline;flex-wrap:wrap;gap:var(--sp-8) var(--sp-12)}
+.cx-peak .cx-fails dl{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-32)}
+.cx-peak .cx-fails dl > div{position:relative}
+.cx-peak .cx-fails dl > div + div:before{content:"→";position:absolute;left:-22px;top:0;color:var(--c-faint)}
+.cx-peak .cx-fails .resp{padding-left:var(--sp-12);box-shadow:inset 1.5px 0 0 var(--c-ink)}
+.cx-peak .cx-fails .resp:before{left:-34px!important}
+@media(max-width:760px){
+  .cx-peak .cx-fails dl{grid-template-columns:1fr;gap:var(--sp-24)}
+  .cx-peak .cx-fails dl > div:nth-child(n+3){grid-column:auto}
+  .cx-peak .cx-fails dl > div + div:before{content:"↓";left:0;top:-20px;font-size:13px}
+  .cx-peak .cx-fails .resp:before{left:0!important}
+}
+/* conversation → case: the transformation, named once */
+.cx-cc-line{display:none}
+@media(min-width:1100px){
+  .cx-cc-line{grid-column:1/-1;display:flex;align-items:center;gap:var(--sp-12);margin:0 0 var(--sp-24);font:500 var(--fs-meta)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-2)}
+  .cx-cc-line i{position:relative;flex:1;height:1px;background:var(--c-line)}
+  .cx-cc-line i:after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid var(--c-ink-3);border-right:1px solid var(--c-ink-3);transform:rotate(45deg)}
+}
+/* the ending */
+.cx-final-t{font:400 clamp(30px,4.2vw,46px)/1.12 var(--serif);letter-spacing:-.028em;color:var(--c-ink)}
+
+.cx-final-t span{display:block;padding-left:.55em;text-indent:-.55em}
+.cx-journey li + li:before{display:inline-block;text-decoration:none}
+@media(min-width:761px){
+  .cx-w .gb-fails > div:first-child .gb-fl-ui{margin-top:0}
+  .cx-w .gb-fails > div:first-child .gb-fl-out{margin-top:auto;padding-top:var(--sp-24)}
+  .cx-w .gb-fails > div:first-child .gb-fl-when{margin-bottom:var(--sp-32)}
+}
+
+/* one background: every section sits on the page's white. The former bands
+   drop their tint and take the same rhythm as every other section */
+.gb .cx-band,.gb .cx-band-2{background:none;box-shadow:none;clip-path:none;margin-top:var(--s5);padding-top:var(--sp-128);padding-bottom:0}
+.gb .cx-band.cx-peak{padding-top:var(--sp-160)}
+.gb .cx-band + .cx-band,.gb .cx-band + .cx-band.cx-peak{padding-top:var(--sp-128)}
+.gb .cx-band + .cx-sec:not(.cx-band){padding-top:var(--sp-128)}
+@media(max-width:760px){
+  .gb .cx-band,.gb .cx-band-2,.gb .cx-band + .cx-band,.gb .cx-band + .cx-band.cx-peak,.gb .cx-band + .cx-sec:not(.cx-band){padding-top:var(--sp-80)}
+  .gb .cx-band.cx-peak{padding-top:var(--sp-96)}
+}
+/* surfaces that were drawn for the tinted bands, redrawn for white */
+.gb .cx-band .cx-tr-ph:before{background:var(--c-bg)}
+.gb .cx-band-2 .gb-fails > div{background:var(--c-surface)}
+.gb .cx-band-2 .gb-fl-ui{background:var(--c-card)}
+.gb .cx-sub .gb-pipe-art{background:var(--c-surface)}
+.gb .cx-archline li + li:before{background:var(--c-bg)}
+.gb .cx-f-h .src-rule{background:var(--c-surface)}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1543,9 +1635,11 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <section class="cx-sec " id="problem" data-reveal="">
-<div class="cx-w cx-head "><p class="cx-label">The problem</p><h2 class="cx-h">A refund is a follow-through problem.</h2></div>
+<div class="cx-w cx-head "><p class="cx-label">The problem</p><h2 class="cx-h">A refund isn’t a writing problem. It’s a follow-through problem.</h2></div>
 <div class="cx-w cx-rep"><p class="cx-meta-l">A representative case · from desk research</p><p class="cx-rep-t">₹3,499 · Flipkart · Refund pending</p><p class="cx-rep-d">The customer has shared screenshots, contacted the merchant several times and been told to wait “5 to 7 working days”. They still don’t know what rule applies, when the refund is due, or what to do next.</p></div>
 <p class="cx-w cx-body">The complaint is only one step. The harder work is everything around it: what happened, which rule applies, which deadline matters, and what to do when the company goes quiet.</p>
+<ol class="cx-w cx-vis cx-journey" aria-label="What getting a refund back takes"><li>Evidence</li><li>Rule</li><li>Deadline</li><li class="w">Complaint</li><li>Follow-up</li><li>Escalation</li></ol>
+<p class="cx-w cx-say">ChatGPT can write the complaint. Getbaq is designed to run the case.</p>
 <div class="cx-w"><dl class="cx-mini"><div><dt>66%</dt><dd>of people with a major service problem got no help from the company. <a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles, 2026</a></dd></div><div><dt>+6.9 pts</dt><dd>more likely to get relief when a complaint was AI-assisted. <a href="https://www.nature.com/articles/s41562-026-02409-4" target="_blank" rel="noopener noreferrer">Nature Human Behaviour, 2026</a></dd></div></dl></div>
 </section>
 <section class="cx-sec " id="agent" data-reveal="">
@@ -1564,6 +1658,7 @@ addEventListener("pagereveal",function(e){
 <section class="cx-sec cx-band cx-peak" id="architecture" data-reveal="">
 <div class="cx-w cx-head "><p class="cx-label">The boundary</p><h2 class="cx-h">AI reads. Code counts. You decide.</h2><p class="cx-lead">Each part of the system gets the job it’s good at, and nothing else.</p></div>
 <div class="cx-w cx-vis cx-arch"><div class="cx-arch-c o-ai"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</p><p class="cx-arch-t">AI reads.</p><ul><li>Understand</li><li>Interpret</li><li>Summarize</li><li>Draft</li></ul></div><div class="cx-arch-c o-code"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p><p class="cx-arch-t">Code counts.</p><ul><li>Calculate</li><li>Validate</li><li>Enforce</li></ul></div><div class="cx-arch-c o-you"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</p><p class="cx-arch-t">You decide.</p><ul><li>Confirm</li><li>Edit</li><li>Approve</li><li>Send</li><li>Escalate</li></ul></div></div>
+<ol class="cx-w cx-archline" aria-label="Interpretation, then verification, then action"><li>Interpretation</li><li>Verification</li><li>Action</li></ol>
 <div class="cx-w cx-sub"><h3 class="cx-h3">Don’t ask the model to calculate what can be calculated.</h3>
 <div class="cx-dr"><div><p class="cx-meta-l">Decision</p><p>A confidently wrong deadline is worse than no agent. The model shouldn’t calculate dates.</p></div><span aria-hidden="true">→</span><div><p class="cx-meta-l">Response</p><p>Calculation lives in code. The date is a computed result, backed by a verified rule.</p></div></div>
 <div class="cx-vis-s"><ol class="gb-pipe" data-reveal="" aria-label="AI finds the rule, Rule 4(4): within one month. Code calculates the deadline: 4 Aug 2026 plus 30 days is 3 Sep 2026. The UI shows 3 Sep 2026, labelled Calculated.">
@@ -1577,9 +1672,10 @@ addEventListener("pagereveal",function(e){
 <div class="cx-w cx-head "><p class="cx-label">Autonomy</p><h2 class="cx-h">Not every action deserves the same autonomy.</h2><p class="cx-lead">As consequence and irreversibility increase, control shifts from the agent to the user.</p></div>
 <div class="cx-w cx-vis cx-matrix" role="group" aria-label="Autonomy by consequence and reversibility">
 <p class="cx-ax-y" aria-hidden="true"><span>Consequence</span><em>Low → High</em></p>
-<div class="cx-q-grid"><p class="cx-q-g cx-q-g-hi">High consequence</p><p class="cx-q-g cx-q-g-lo">Low consequence</p><div class="cx-q hi rev"><p class="cx-q-tag"><span>High consequence</span><span>Can be undone</span></p><p class="cx-q-t">Show it. Let them correct it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-rule.webp" data-alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" aria-label="Enlarge: The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified"><img src="./assets/gb-quad2-rule.webp" width="1000" height="500" alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">The facts it read, the rule it picked, the deadline.</p></div><div class="cx-q hi irr"><p class="cx-q-tag"><span>High consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Your tap. Always.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-approve.webp" data-alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" aria-label="Enlarge: Nothing is sent until you approve it. Approve and send, Edit, Not now"><img src="./assets/gb-quad2-approve.webp" width="1000" height="329" alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Sending the complaint. Escalating to 1915.</p></div><div class="cx-q lo rev"><p class="cx-q-tag"><span>Low consequence</span><span>Can be undone</span></p><p class="cx-q-t">Do it. Show it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-trace.webp" data-alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" aria-label="Enlarge: The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline"><img src="./assets/gb-quad2-trace.webp" width="1000" height="387" alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Reading a message or screenshot. Drafting the letter.</p></div><div class="cx-q lo irr"><p class="cx-q-tag"><span>Low consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Do it. Tell them.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-otp.webp" data-alt="A message with its OTP removed, and the step Removed an OTP from your message" aria-label="Enlarge: A message with its OTP removed, and the step Removed an OTP from your message"><img src="./assets/gb-quad2-otp.webp" width="1000" height="266" alt="A message with its OTP removed, and the step Removed an OTP from your message" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Stripping an OTP before the model ever sees it.</p></div></div>
+<div class="cx-q-grid"><p class="cx-q-g cx-q-g-hi">High consequence</p><p class="cx-q-g cx-q-g-lo">Low consequence</p><div class="cx-q hi rev"><p class="cx-q-tag"><span>High consequence</span><span>Can be undone</span></p><p class="cx-q-t">Show it. Let them correct it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-rule.webp" data-alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" aria-label="Enlarge: The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified"><img src="./assets/gb-quad2-rule.webp" width="1000" height="500" alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">The facts it read, the rule it picked, the deadline.</p></div><div class="cx-q hi irr"><p class="cx-q-tag"><span>High consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Your tap. Always.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-approve.webp" data-alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" aria-label="Enlarge: Nothing is sent until you approve it. Approve and send, Edit, Not now"><img src="./assets/gb-quad2-approve.webp" width="1000" height="329" alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Sending the complaint. Escalating to 1915.</p></div><div class="cx-q lo rev"><p class="cx-q-tag"><span>Low consequence</span><span>Can be undone</span></p><p class="cx-q-t">Do it. Show it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-trace.webp" data-alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" aria-label="Enlarge: The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline"><img src="./assets/gb-quad2-trace.webp" width="1000" height="387" alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Reading a message or screenshot. Drafting the letter.</p></div><div class="cx-q lo irr"><p class="cx-q-tag"><span>Low consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Do it. Tell them.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-quiet.webp" data-alt="Flipkart went quiet: their deadline was 3 Sep 2026 and they said nothing, so the case moves to its next step" aria-label="Enlarge: Flipkart went quiet: their deadline was 3 Sep 2026 and they said nothing, so the case moves to its next step"><img src="./assets/gb-quad2-quiet.webp" width="1000" height="345" alt="Flipkart went quiet: their deadline was 3 Sep 2026 and they said nothing, so the case moves to its next step" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Marking a missed deadline and moving the case to its next step.</p></div></div>
 <p class="cx-ax-x" aria-hidden="true"><span>Reversibility</span><em>Can be undone → Can’t be undone</em></p>
 </div>
+<div class="cx-w cx-limits"><div><p class="cx-meta-l">Hard limit · outside the matrix</p><p class="cx-lim-t">OTPs, PINs and passwords never reach the model.</p><p class="cx-lim-x">They’re stripped from the message before the model reads it, whatever the stakes. This is a rule, so it sits outside the matrix.</p></div><figure class="cx-pv cx-pv-sm"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-otp.webp" data-alt="A message with its OTP removed, and the step Removed an OTP from your message" aria-label="Enlarge: A message with its OTP removed, and the step Removed an OTP from your message"><img src="./assets/gb-quad2-otp.webp" width="1000" height="266" alt="A message with its OTP removed, and the step Removed an OTP from your message" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure></div>
 </section>
 <section class="cx-sec " id="approve" data-reveal="">
 <div class="cx-w cx-head "><p class="cx-label">Approval</p><h2 class="cx-h">The agent can act. It can’t speak for you.</h2><p class="cx-lead">Anything that goes out in the user’s name waits for their approval, however much they come to trust the agent.</p></div>
@@ -1590,7 +1686,7 @@ addEventListener("pagereveal",function(e){
 <div class="cx-w"><ol class="cx-order" aria-label="The safety order"><li>Review</li><li>Approve</li><li>Send</li><li>Undo</li></ol></div>
 </section>
 <section class="cx-sec cx-band cx-band-2" id="failure" data-reveal="">
-<div class="cx-w cx-head "><p class="cx-label">Failure</p><h2 class="cx-h">The real product starts when the AI is wrong.</h2><p class="cx-lead">Each failure is a designed product state with a next step.</p></div>
+<div class="cx-w cx-head "><p class="cx-label">Design for failure · what the product does</p><h2 class="cx-h">The real product starts when the AI is wrong.</h2><p class="cx-lead">Each failure is a designed product state with a next step.</p></div>
 <div class="cx-w cx-vis"><div class="gb-fails" data-reveal="" aria-label="Six failure states, each shown with what the app actually says and the next step it offers.">
 <div class="t-ask"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Not sure</p><p class="gb-fl-when">No rule fits well enough to trust.</p><div class="gb-fl-ui"><p class="ey">Low confidence</p><p class="hd">I think this is an ecommerce case, but I am not sure. Is that right?</p><p class="btns"><span>Yes, that’s right</span><span>No, it’s not</span></p></div><p class="gb-fl-out">No Approve button</p></div>
 <div class="t-ask"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17h.01"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"/></svg>Missing</p><p class="gb-fl-when">A fact the case needs is absent.</p><div class="gb-fl-ui"><p class="hd">2 quick questions</p><p class="tabs"><span class="on"><i>1</i>Company</span><span><i>2</i>Complained</span></p><p class="sub">Which company or app was this with?</p></div><p class="gb-fl-out">Ask only for the missing facts</p></div>
@@ -1602,12 +1698,13 @@ addEventListener("pagereveal",function(e){
 <details class="cx-w cx-more"><summary>Explore every state in the live app</summary><figure class="gb-ex" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure></details>
 </section>
 <section class="cx-sec cx-band cx-band-2 cx-peak" id="real" data-reveal="">
-<div class="cx-w cx-head "><p class="cx-label">Real model</p><h2 class="cx-h">The model made one mistake.<br>The system around it made four.</h2><p class="cx-lead">Five failure modes surfaced while testing against a real model, Gemini Flash. Reliability is a system problem.</p></div>
+<div class="cx-w cx-head "><p class="cx-label">Design for failure · what testing found</p><h2 class="cx-h">The model made one mistake.<br>The system around it made four.</h2><p class="cx-lead">Five failure modes surfaced while testing against a real model, Gemini Flash. Reliability is a system problem.</p></div>
 <ol class="cx-w cx-vis cx-fails"><li><p class="cx-f-h"><span class="cx-f-n">Failure 01</span><b>Wrong deadline</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>Every failed payment got 5 days.</dd></div><div><dt>Actual</dt><dd>RBI gives UPI one working day (T+1).</dd></div><div><dt>Risk</dt><dd>UPI users would have waited four days they didn’t have.</dd></div><div class="resp"><dt>Fix</dt><dd>A separate UPI rule, checked against the RBI circular. The date is computed by code.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 02</span><b>Merged rules</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>Airline refunds shared one clock.</dd></div><div><dt>Actual</dt><dd>Card refunds: 7 days. Travel-site bookings: 14 working days.</dd></div><div><dt>Risk</dt><dd>Cases flagged late a week early.</dd></div><div class="resp"><dt>Fix</dt><dd>Separate rules, each with its own source.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 03</span><b>Timezone</b><i class="src-code">Code</i></p><dl><div><dt>System output</dt><dd>Dates were read in the wrong timezone.</dd></div><div><dt>Actual</dt><dd>The deadline hadn’t passed.</dd></div><div><dt>Risk</dt><dd>Near midnight, a deadline showed as missed.</dd></div><div class="resp"><dt>Fix</dt><dd>One fixed timezone for every date.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 04</span><b>Invented year</b><i class="src-ai">Model</i></p><dl><div><dt>Model output</dt><dd>Asked to copy “2 Aug”, the model added 2023 and 2021.</dd></div><div><dt>Actual</dt><dd>The user never wrote a year.</dd></div><div><dt>Risk</dt><dd>A wrong year makes a wrong deadline.</dd></div><div class="resp"><dt>Fix</dt><dd>A year is kept only if the user wrote one.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 05</span><b>Wrong recipient</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>The UPI letter was addressed to the shop.</dd></div><div><dt>Actual</dt><dd>The RBI rule applies to the user’s bank.</dd></div><div><dt>Risk</dt><dd>The complaint goes somewhere that can’t act on it.</dd></div><div class="resp"><dt>Fix</dt><dd>It asks for the bank and addresses the letter there.</dd></div></dl></li></ol>
 </section>
 <section class="cx-sec cx-peak" id="case" data-reveal="">
 <div class="cx-w cx-head "><p class="cx-label">The case</p><h2 class="cx-h">A conversation starts the case.<br>The case carries it.</h2></div>
 <div class="cx-w cx-vis cx-casecmp">
+<p class="cx-cc-line" aria-hidden="true"><span>Messy input</span><i></i><span>Structured state</span></p>
 <div class="cx-cc-chat"><div class="gb-conv-chat" aria-hidden="true">
 <p class="cx-meta-l">Conversation</p><p class="cx-tags"><span>Messy</span><span>Temporary</span><span>Ambiguous</span></p>
 <p class="m">flipkart rejected my replacement 🙄 jar has rust</p>
@@ -1647,7 +1744,8 @@ addEventListener("pagereveal",function(e){
 <ol class="cx-w cx-lessons"><li><span>01</span><b>Failure is product material.</b><p>AI products need designed responses for uncertainty and failure.</p></li><li><span>02</span><b>Model boundaries are interface decisions.</b><p>Deciding what the AI, code and the user each control changes the product itself.</p></li><li><span>03</span><b>An agent earns its name by completing work.</b><p>The goal is moving the case closer to resolution.</p></li></ol>
 </section>
 <section class="cx-sec cx-final" data-reveal="" aria-label="Closing">
-<p class="cx-w cx-final-s">The next proof is whether real people trust it with real money.</p>
+<p class="cx-w cx-final-t"><span>Cases, not conversations.</span> <span>Evidence, not prompts.</span> <span>Actions, not answers.</span> <span>Resolution, not response generation.</span></p>
+<p class="cx-w cx-final-s">Getbaq isn’t shipped. The next proof is whether real people trust it with real money.</p>
 <p class="cx-w cx-final-l"><a data-proto="/" href="#" rel="noopener" target="_blank">Try the prototype <span aria-hidden="true">↗</span></a><a href="./getbaq-full.html">Read the deep dive <span aria-hidden="true">→</span></a></p>
 </section>
 <dialog class="cx-lb" aria-label="Enlarged screen"><button type="button" class="cx-lb-x" aria-label="Close">×</button><img alt=""></dialog>
