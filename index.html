@@ -406,6 +406,14 @@ header.scrolled .navpill{background:color-mix(in srgb,var(--surface) 92%,transpa
 .macframe.zoom{left:2.45%;top:16%;bottom:-15.08%;width:124.8%;height:99.08%;aspect-ratio:auto}
 @media (hover:hover){.workrow:hover .macframe.zoom{transform:translateY(-6px)}}
 
+/* the trading-terminal card plays the real prototype (./rupeezy/, ?embed=demo):
+   a cursor opens Market Depth, buys on MTF and gets the confirmation. The
+   still screenshot stays underneath as the poster until the frame is ready,
+   and the card stays one link: the frame never takes the pointer. */
+.macframe .macshot-live{position:absolute;left:9.6%;top:4.1%;width:80.6%;height:85.3%;z-index:1;border:0;display:block;
+  background:#fff;opacity:0;pointer-events:none;transition:opacity .5s ease}
+.macframe .macshot-live.is-on{opacity:1}
+
 /* ══ TYPE SCALE — five clear steps ═════════════════════════════════
    30 display · 18 lead · 16 title · 14 meta · 12 micro
    ════════════════════════════════════════════════════════════════ */
@@ -3379,6 +3387,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <div class="cardframe runshot" style="background:var(--card-tint-01)">
             <div class="macframe zoom">
               <img class="macshot" loading="eager" decoding="async" data-src="./assets/watchlist-shell-card-1050.webp" data-srcset="./assets/watchlist-shell-card-700.webp 700w, ./assets/watchlist-shell-card-1050.webp 1050w, ./assets/watchlist-shell-card-1400.webp 1400w" sizes="(max-width:900px) 72vw, 460px" width="1050" height="747" alt="The Rupeezy web trading terminal, with the watchlist, index ticker and order window">
+              <iframe class="macshot-live" data-src="./rupeezy/index.html?embed=demo" title="The Rupeezy web terminal in use" aria-hidden="true" tabindex="-1"></iframe>
               <img class="macdevice" src="./assets/macbook-mockup.webp" alt="" aria-hidden="true" loading="eager" decoding="async">
             </div>
           </div>
@@ -4583,6 +4592,22 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(es){ seen=es[0].isIntersecting },{threshold:.35}).observe(root);
   } else seen=true;
+})();
+</script>
+<script>
+/* trading-terminal card: load the live demo when the card comes near, fade it
+   in once it reports ready, and let it play only while the card is on screen */
+(function(){
+  var f=document.querySelector('.macshot-live'); if(!f||!('IntersectionObserver' in window)) return;
+  window.addEventListener('message',function(e){
+    if(e.source===f.contentWindow&&e.data&&e.data.type==='rupeezy-embed') f.classList.add('is-on');
+  });
+  new IntersectionObserver(function(es){
+    if(es[0].isIntersecting&&!f.src) f.src=f.getAttribute('data-src');
+  },{rootMargin:'400px 0px'}).observe(f);
+  new IntersectionObserver(function(es){
+    if(f.contentWindow) f.contentWindow.postMessage({type:'rupeezy-play',on:es[0].isIntersecting},'*');
+  },{threshold:.2}).observe(f);
 })();
 </script>
 </body>
