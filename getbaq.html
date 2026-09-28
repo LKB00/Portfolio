@@ -921,20 +921,12 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-conv > div:not(.gb-conv-arrow){padding:18px;border-radius:12px;height:100%;box-sizing:border-box}
 .gb-conv .k{margin:0 0 12px;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .gb-conv .f{margin:12px 0 0;font-size:12.5px;color:var(--muted)}
-.gb-conv-chat{background:var(--surface)}
+.gb-conv-chat{background:var(--surface);height:auto!important;align-self:center}
 .gb-conv-chat .m{margin:0 0 6px;padding:8px 11px;border-radius:12px 12px 12px 4px;background:var(--bg);font-size:13px;line-height:1.4;color:var(--ink);width:fit-content;max-width:92%}
 .gb-conv-chat .m:nth-child(3){margin-left:10px;transform:rotate(.6deg)}.gb-conv-chat .m:nth-child(4){transform:rotate(-.8deg)}
+.gb-conv-case{background:var(--surface)}
+.gb-conv-case img{display:block;width:100%;height:auto;border-radius:8px}
 .gb-conv-arrow svg{width:40px;height:16px;fill:none;stroke:var(--faint);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.gb-conv-case{background:var(--char);color:#EDEDED}
-.gb-conv-case .k{color:var(--lime)}
-.gb-conv-case dl{margin:0;display:grid;gap:0}
-.gb-conv-case dl > div{display:grid;grid-template-columns:78px 1fr;gap:8px;padding:7px 0;border-top:1px solid rgba(255,255,255,.08);font-size:13px}
-.gb-conv-case dl > div:first-child{border-top:0}
-.gb-conv-case dt{color:rgba(237,237,237,.55)}
-.gb-conv-case dd{margin:0;color:#fff;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.gb-conv-case .mono{font-family:var(--mono)}
-.gb-conv-case i{font:500 9.5px/1 var(--mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--lime)}
-.gb-conv-case .f{color:rgba(237,237,237,.55)}
 @media(max-width:640px){.gb-conv{grid-template-columns:1fr}.gb-conv-arrow{justify-self:center;transform:rotate(90deg)}}
 
 /* 10 step cards: a coloured top edge per actor */
@@ -1414,7 +1406,7 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">09 · The case model</p><h2 class="say">A conversation starts the case. The case carries it.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A conversation can answer a question. A case has to remember what happened and what happens next: the facts, the rule, the deadline, the status and the next action.</p>
-<div class="col gb-conv" data-reveal="" role="img" aria-label="A messy chat turns into a structured case: Flipkart, ₹3,499, the rule verified, a deadline of 3 Sep 2026, waiting for their reply, next step 1915.">
+<div class="col gb-conv" data-reveal="" role="img" aria-label="A messy chat turns into the app’s real case file: Flipkart, ₹3,499, a deadline of 3 Sep 2026 with 20 days left, and the facts she gave.">
 <div class="gb-conv-chat" aria-hidden="true">
 <p class="k">Conversation</p>
 <p class="m">flipkart rejected my replacement 🙄 jar has rust</p>
@@ -1424,15 +1416,8 @@ addEventListener("pagereveal",function(e){
 </div>
 <div class="gb-conv-arrow" aria-hidden="true"><svg viewBox="0 0 40 16"><path d="M2 8h34M30 3l6 5-6 5"/></svg></div>
 <div class="gb-conv-case" aria-hidden="true">
-<p class="k">Case</p>
-<dl>
-<div><dt>Company</dt><dd>Flipkart</dd></div>
-<div><dt>At stake</dt><dd class="mono">₹3,499</dd></div>
-<div><dt>Rule</dt><dd>Rule 4(4) <i class="a-rule">Verified</i></dd></div>
-<div><dt>Reply by</dt><dd class="mono">3 Sep 2026 <i class="a-code">Calculated</i></dd></div>
-<div><dt>Status</dt><dd>Waiting for their reply</dd></div>
-<div><dt>Next</dt><dd>1915 complaint, if they go quiet</dd></div>
-</dl>
+<p class="k">Case file</p>
+<img src="./assets/gb-casefile.webp" width="800" height="1001" alt="" loading="lazy" decoding="async">
 <p class="f">Structured, and it persists.</p>
 </div>
 </div>
