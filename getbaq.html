@@ -1211,6 +1211,110 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 /* the ending: every line stays whole */
 .cx-final-t{font-size:clamp(30px,4.2vw,46px);line-height:1.12}
 @media(max-width:520px){.cx-cc-body{grid-template-columns:1fr}.cx-pv-case{max-width:320px}}
+
+/* =====================================================================
+   MOBILE. Below 768px the page is laid out for a phone, not shrunk:
+   flows become vertical timelines, the matrix becomes two groups,
+   side notes sit inline, and the two product showcases go edge to edge.
+   ===================================================================== */
+.cx-q-g,.cx-cc-m{display:none}
+.cx-final-t span{display:block;padding-left:.55em;text-indent:-.55em}
+
+/* walkthrough as a vertical timeline: each screen at its own height, larger */
+@media(max-width:860px){.cx-tr-ph .cx-zoom img{height:auto}}
+
+@media(max-width:760px){
+  /* rhythm: one step down the spacing scale */
+  .cx-vis{margin-top:var(--sp-32)}
+  .cx-peak > .cx-vis,.cx-peak .cx-casecmp{margin-top:var(--sp-48)}
+  .cx-say{margin-top:var(--sp-48)}
+  .cx-sub,.cx-stage{margin-top:var(--sp-64)}
+  .cx-hero-meta{margin-top:var(--sp-48)}
+  .cx-hero-h{margin-top:var(--sp-32)}
+
+  /* hero flow: a vertical timeline, the same dots as the walkthrough */
+  .cx-flow3{position:relative;gap:var(--sp-24);padding-left:var(--sp-24)}
+  .cx-flow3:before{content:"";position:absolute;left:5px;top:10px;bottom:10px;width:1.5px;background:var(--c-line)}
+  .cx-flow3 li{padding-top:0;border-top:0}
+  .cx-flow3 li:after{content:"";position:absolute;left:-24px;top:4px;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--c-bg);border:2px solid var(--c-ink)}
+
+  /* larger tap areas for the text links, without moving their underlines */
+  .cx-deep,.cx-final-l a,.cx-more summary{position:relative}
+  .cx-deep:before,.cx-final-l a:before,.cx-more summary:before{content:"";position:absolute;inset:-13px -8px}
+  .gb-versions a:before{content:"";position:absolute;inset:-6px -2px}
+
+  /* reveals travel less on a small screen */
+  [data-reveal]{transform:translateY(10px);transition-duration:.5s}
+
+  /* proof panels give the terminal its width back */
+  .cx-pf{padding:var(--sp-24) var(--sp-16)}
+  .cx-num b{font-size:56px}
+
+  /* lessons: the number sits above its line instead of taking a column */
+  .cx-lessons li{grid-template-columns:1fr}
+  .cx-lessons span{grid-row:auto;padding:0 0 var(--sp-12)}
+}
+
+@media(max-width:700px){
+  /* autonomy: two groups by consequence, the reversibility on each card */
+  .cx-q-g{display:flex;align-items:center;gap:var(--sp-12);margin:var(--sp-24) 0 var(--sp-4,4px);font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-2)}
+  .cx-q-g:after{content:"";flex:1;height:1px;background:var(--c-line)}
+  .cx-q-g-hi{order:1;margin-top:0}
+  .cx-q.hi.irr{order:2}.cx-q.hi.rev{order:3}.cx-q-g-lo{order:4}.cx-q.lo.rev{order:5}.cx-q.lo.irr{order:6}
+  .cx-q-tag span:first-child{display:none}
+  .cx-q{padding:var(--sp-24) var(--sp-16) var(--sp-16)}
+  .cx-q-g{grid-column:1/-1}
+
+  /* boundary: each owner's jobs in two short columns */
+  .cx-arch-c{padding:var(--sp-24) var(--sp-16)}
+  .cx-arch ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--sp-16)}
+}
+/* a large phone or small tablet has room for each group's two cards side by side */
+@media(min-width:561px) and (max-width:700px){.cx-q-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+@media(max-width:600px){
+  /* why an agent: the two ways side by side, step against step */
+  .cx-cmp{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-rows:auto repeat(7,auto);gap:var(--sp-8) var(--sp-12);padding:var(--sp-24) 0;border-top:1px solid var(--c-line);border-bottom:1px solid var(--c-line)}
+  .cx-cmp-row,.cx-cmp-row:last-child{display:grid;grid-row:1/-1;grid-template-rows:subgrid;padding:0;border:0}
+  .cx-cmp-row .cx-meta-l{align-self:end;margin:0 0 var(--sp-8)}
+  .cx-steps,.cx-cmp .gb-agentline{display:grid;grid-row:2/-1;grid-template-rows:subgrid;gap:inherit}
+  .cx-steps li{display:flex;align-items:center;font-size:14px;line-height:1.3}
+  .cx-steps li + li:before,.cx-cmp .gb-agentline li + li:before{content:none}
+  .cx-cmp .gb-agentline li{justify-self:start;align-self:center;padding:8px 10px;font-size:12.5px;white-space:nowrap}
+
+  /* the five failures: output against actual, then risk and response in full */
+  .cx-peak .cx-fails dl > div:nth-child(n+3){grid-column:1/-1}
+  .cx-peak .cx-fails > li{gap:var(--sp-16);padding:var(--sp-24) 0}
+
+  /* case file: read top to bottom, each part followed by its note */
+  .cx-cc-body{display:none}
+  .cx-cc-m{display:grid;list-style:none;margin:0;padding:var(--sp-12);border-radius:var(--r-l);background:var(--c-surface)}
+  .cx-cc-m > li{container-type:inline-size}
+  .cx-sl{height:calc((var(--b) - var(--a)) * 100cqw / 800);overflow:hidden;border-radius:var(--r-m);background:#fff}
+  .cx-sl img{display:block;width:100cqw;max-width:none;height:auto;margin-top:calc(var(--a) * -100cqw / 800)}
+  .cx-sl-n{display:grid;grid-template-columns:18px 1fr;gap:10px;padding:var(--sp-12) 4px var(--sp-16)}
+  .cx-cc-m > li:last-child .cx-sl-n{padding-bottom:4px}
+  .cx-sl-n i{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--c-ink);color:var(--c-bg);font:500 10px/1 var(--mono);font-style:normal}
+  .cx-sl-n p{margin:0}
+  .cx-sl-n p + p{margin-top:4px;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink)}
+  .cx-cc-chat{max-width:none}
+
+  /* the two product showcases go edge to edge */
+  .cx-hero-v,.cx-stage{margin-left:calc(-1 * clamp(18px,3.4vw,48px));margin-right:calc(-1 * clamp(18px,3.4vw,48px))}
+  .cx-hero-v .gbh,.cx-hero-v .gb-ex-panel{border-radius:0}
+  .cx-stage .cx-pv-f{padding:var(--sp-16) 0;border-radius:0}
+  .cx-stage .cx-pv img,.cx-stage .cx-zoom{border-radius:0}
+  .cx-stage figcaption{padding:0 clamp(18px,3.4vw,48px)}
+}
+
+/* lightbox on a phone: full screen; a wide screen opens readable and pans sideways */
+@media(max-width:700px){
+  .cx-lb{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0;background:#0E0E0E;overscroll-behavior:contain}
+  .cx-lb[open]{display:flex}
+  .cx-lb img{flex:none;width:100%;max-width:none;max-height:none;margin:auto}
+  .cx-lb.is-wide img{width:1100px}
+  .cx-lb-x{position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;float:none;margin:0;width:44px;height:44px;background:rgba(255,255,255,.16)}
+}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1349,7 +1453,7 @@ addEventListener("pagereveal",function(e){
 <div class="cx-w cx-head "><p class="cx-label">03 · Autonomy</p><h2 class="cx-h">Not every action deserves the same autonomy.</h2><p class="cx-lead">As consequence and irreversibility increase, control shifts from the agent to the user.</p></div>
 <div class="cx-w cx-vis cx-matrix" role="group" aria-label="Autonomy by consequence and reversibility">
 <p class="cx-ax-y" aria-hidden="true"><span>Consequence</span><em>Low → High</em></p>
-<div class="cx-q-grid"><div class="cx-q hi rev"><p class="cx-q-tag"><span>High consequence</span><span>Can be undone</span></p><p class="cx-q-t">Show it. Let them correct it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-rule.webp" data-alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" aria-label="Enlarge: The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified"><img src="./assets/gb-quad2-rule.webp" width="1000" height="500" alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">The facts it read, the rule it picked, the deadline.</p></div><div class="cx-q hi irr"><p class="cx-q-tag"><span>High consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Your tap. Always.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-approve.webp" data-alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" aria-label="Enlarge: Nothing is sent until you approve it. Approve and send, Edit, Not now"><img src="./assets/gb-quad2-approve.webp" width="1000" height="329" alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Sending the complaint. Escalating to 1915.</p></div><div class="cx-q lo rev"><p class="cx-q-tag"><span>Low consequence</span><span>Can be undone</span></p><p class="cx-q-t">Do it. Show it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-trace.webp" data-alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" aria-label="Enlarge: The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline"><img src="./assets/gb-quad2-trace.webp" width="1000" height="387" alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Reading a message or screenshot. Drafting the letter.</p></div><div class="cx-q lo irr"><p class="cx-q-tag"><span>Low consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Do it. Tell them.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-otp.webp" data-alt="A message with its OTP removed, and the step Removed an OTP from your message" aria-label="Enlarge: A message with its OTP removed, and the step Removed an OTP from your message"><img src="./assets/gb-quad2-otp.webp" width="1000" height="266" alt="A message with its OTP removed, and the step Removed an OTP from your message" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Stripping an OTP before the model ever sees it.</p></div></div>
+<div class="cx-q-grid"><p class="cx-q-g cx-q-g-hi">High consequence</p><p class="cx-q-g cx-q-g-lo">Low consequence</p><div class="cx-q hi rev"><p class="cx-q-tag"><span>High consequence</span><span>Can be undone</span></p><p class="cx-q-t">Show it. Let them correct it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-rule.webp" data-alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" aria-label="Enlarge: The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified"><img src="./assets/gb-quad2-rule.webp" width="1000" height="500" alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">The facts it read, the rule it picked, the deadline.</p></div><div class="cx-q hi irr"><p class="cx-q-tag"><span>High consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Your tap. Always.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-approve.webp" data-alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" aria-label="Enlarge: Nothing is sent until you approve it. Approve and send, Edit, Not now"><img src="./assets/gb-quad2-approve.webp" width="1000" height="329" alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Sending the complaint. Escalating to 1915.</p></div><div class="cx-q lo rev"><p class="cx-q-tag"><span>Low consequence</span><span>Can be undone</span></p><p class="cx-q-t">Do it. Show it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-trace.webp" data-alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" aria-label="Enlarge: The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline"><img src="./assets/gb-quad2-trace.webp" width="1000" height="387" alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Reading a message or screenshot. Drafting the letter.</p></div><div class="cx-q lo irr"><p class="cx-q-tag"><span>Low consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Do it. Tell them.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-otp.webp" data-alt="A message with its OTP removed, and the step Removed an OTP from your message" aria-label="Enlarge: A message with its OTP removed, and the step Removed an OTP from your message"><img src="./assets/gb-quad2-otp.webp" width="1000" height="266" alt="A message with its OTP removed, and the step Removed an OTP from your message" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Stripping an OTP before the model ever sees it.</p></div></div>
 <p class="cx-ax-x" aria-hidden="true"><span>Reversibility</span><em>Can be undone → Can’t be undone</em></p>
 </div>
 </section>
@@ -1397,7 +1501,7 @@ addEventListener("pagereveal",function(e){
 <div class="cx-cc-arrow" aria-hidden="true">→</div>
 <div class="cx-cc-case"><p class="cx-meta-l">Case</p><p class="cx-tags"><span>Structured</span><span>Persistent</span><span>Actionable</span></p>
 <div class="cx-cc-body"><figure class="cx-pv cx-pv-case"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-casefile-full.webp" data-alt="The Getbaq case file" aria-label="Enlarge: the Getbaq case file"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The Getbaq case file for Flipkart, ₹3,499: the deadline 3 Sep 2026 with 20 days left, what I know, the rule and its source, and where the case is at" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button><span class="cx-mark" style="top:10.5%"><i>1</i></span><span class="cx-mark" style="top:32.5%"><i>2</i></span><span class="cx-mark" style="top:54%"><i>3</i></span><span class="cx-mark" style="top:71%"><i>4</i></span></div></figure>
-<ol class="cx-cc-notes"><li><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></li><li><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></li><li><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></li><li><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></li></ol></div></div>
+<ol class="cx-cc-notes"><li><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></li><li><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></li><li><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></li><li><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></li></ol></div><ol class="cx-cc-m" aria-label="The case file, part by part"><li><div class="cx-sl" style="--a:0;--b:588"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The case file for Flipkart, ₹3,499. Deadline: Flipkart must fix this by 3 Sep 2026, 20 days left" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></div></li><li><div class="cx-sl" style="--a:591;--b:1003"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="What I know: company Flipkart, amount ₹3,499, date 2 Aug 2026, first complaint 4 Aug 2026" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></div></li><li><div class="cx-sl" style="--a:1007;--b:1328"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The rule: the platform must redress the complaint within one month (30 days) of receiving it. Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></div></li><li><div class="cx-sl" style="--a:1332;--b:1896"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="Where it's at: you told me, facts checked, rule found, complaint sent now; their reply and resolved still to come" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></div></li></ol></div>
 </div>
 <p class="cx-w cx-say">The conversation handles ambiguity. The case carries the state.</p>
 <div class="cx-w cx-stage cx-bleed"><figure class="cx-pv cx-pv-wide"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/getbaq-desktop-mbp-1512.webp" data-alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" aria-label="Enlarge: The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right"><img src="./assets/getbaq-desktop-mbp-1512.webp" width="1512" height="982" alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" loading="lazy" decoding="async" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:760px) 92vw, 834px"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div><figcaption>The whole workspace: the case list, the thread, and the case file beside it.</figcaption></figure></div>
@@ -1427,7 +1531,7 @@ addEventListener("pagereveal",function(e){
 <ol class="cx-w cx-lessons"><li><span>01</span><b>Failure is product material.</b><p>AI products need designed responses for uncertainty and failure, not just the happy path.</p></li><li><span>02</span><b>Model boundaries are interface decisions.</b><p>Deciding what the AI, code and the user each control changes the product itself.</p></li><li><span>03</span><b>An agent earns its name by completing work.</b><p>The goal isn’t a better answer. It’s moving the case closer to resolution.</p></li></ol>
 </section>
 <section class="cx-sec cx-final" data-reveal="" aria-label="Closing">
-<p class="cx-w cx-final-t">Cases, not conversations.<br>Evidence, not prompts.<br>Actions, not answers.<br>Resolution, not response generation.</p>
+<p class="cx-w cx-final-t"><span>Cases, not conversations.</span> <span>Evidence, not prompts.</span> <span>Actions, not answers.</span> <span>Resolution, not response generation.</span></p>
 <p class="cx-w cx-final-s">Getbaq isn’t shipped. The next proof is whether real people trust it with real money.</p>
 <p class="cx-w cx-final-l"><a data-proto="/" href="#" rel="noopener" target="_blank">Try the prototype <span aria-hidden="true">↗</span></a><a href="./getbaq-full.html">Read the deep dive <span aria-hidden="true">→</span></a></p>
 </section>
@@ -1626,6 +1730,8 @@ addEventListener("pagereveal",function(e){
   var lb=document.querySelector('.cx-lb');
   if(lb && lb.showModal){
     var lbImg=lb.querySelector('img'), lbFrom=null;
+    // on a phone, a wide screen opens at a readable size and pans sideways
+    lbImg.addEventListener('load',function(){ lb.classList.toggle('is-wide', lbImg.naturalWidth>=1200 && lbImg.naturalWidth>lbImg.naturalHeight*1.3); if(lb.open) lb.scrollLeft=0; });
     document.querySelectorAll('.cx-zoom').forEach(function(btn){
       btn.addEventListener('click',function(){ lbFrom=btn; lbImg.src=btn.getAttribute('data-zoom'); lbImg.alt=btn.getAttribute('data-alt')||''; lb.showModal(); });
     });
