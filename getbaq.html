@@ -1002,6 +1002,26 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-pipe[data-reveal] li:nth-child(2){transition-delay:.15s}.gb-pipe[data-reveal] li:nth-child(3){transition-delay:.3s}
 .gb-pipe.shown li{opacity:1;transform:none}
 @media(max-width:600px){.gb-pipe{grid-template-columns:1fr;gap:22px}.gb-pipe li + li:before{content:"↓";left:50%;top:-20px;transform:translateX(-50%)}}
+/* claim trail: each claim, its real source, and the check that stamps it */
+.gb-claims{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:8px;border-radius:12px;background:var(--surface);display:grid;gap:6px}
+.gb-claims li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) 128px;gap:16px;align-items:center;padding:12px 14px;border-radius:8px;background:var(--bg)}
+.gb-claims li.gb-claims-h{background:none;padding:6px 14px 2px}
+.gb-claims-h span{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.gb-claims b{font:500 14.5px/1.4 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-claims .src{padding:8px 10px;border-radius:6px;background:var(--surface)}
+.gb-claims .src p{margin:0}
+.gb-claims .src .k{font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+.gb-claims .src .msg{font:400 13.5px/1.35 var(--sans);color:var(--ink)}
+.gb-claims .src .msg2{font:400 13px/1.4 var(--sans);color:var(--ink)}
+.gb-claims .src mark{background:var(--her-bg);color:var(--her);padding:0 3px;border-radius:3px;font-weight:500}
+.gb-claims .src .mono{font:400 12.5px/1.35 var(--mono);color:var(--ink)}
+.gb-claims .src em{font-style:normal;color:var(--code);font-weight:500}
+.gb-claims .chk{margin:0;justify-self:start;display:inline-flex;align-items:center;gap:6px;padding:6px 10px 6px 8px;border-radius:99px;background:var(--ab);color:var(--a);font:500 12px/1 var(--sans);white-space:nowrap}
+.gb-claims .chk svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gb-claims[data-reveal] .chk{opacity:0;transform:scale(.85);transition:opacity .35s ease,transform .35s cubic-bezier(.3,1.5,.5,1)}
+.gb-claims li:nth-child(3) .chk{transition-delay:.15s}.gb-claims li:nth-child(4) .chk{transition-delay:.3s}.gb-claims li:nth-child(5) .chk{transition-delay:.45s}
+.gb-claims.shown .chk{opacity:1;transform:none}
+@media(max-width:640px){.gb-claims li{grid-template-columns:1fr;gap:8px}.gb-claims li.gb-claims-h{display:none}}
 /* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
@@ -1400,13 +1420,13 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">06 · Decision 02</p><h2 class="say">Don’t hide the work behind “High confidence”.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A confidence label on its own just asks her to trust the system. So every important claim carries a trail: where it came from, and how it was checked.</p>
-<div class="col gb-trail" data-reveal="">
-<div class="gb-trail-h"><span>Claim</span><span>Where it came from</span><span>How it’s checked</span></div>
-<div><b>₹3,499 is at stake</b><span>What she wrote</span><i class="a-her">She confirmed</i></div>
-<div><b>E-Commerce Rules, Rule 4(4) applies</b><span>The rule sheet, read from the law</span><i class="a-rule">Verified</i></div>
-<div><b>Flipkart must reply by 3 Sep 2026</b><span>Her complaint date, 4 Aug, plus 30 days</span><i class="a-code">Calculated</i></div>
-<div><b>The letter says only what she confirmed</b><span>The facts she approved</span><i class="a-code">Safety check</i></div>
-</div>
+<ol class="col gb-claims" data-reveal="" aria-label="Every important claim carries a trail. ₹3,499 at stake: from her own message, she confirmed it. E-Commerce Rules, Rule 4(4) applies: from the rule sheet, verified. Flipkart must reply by 3 Sep 2026: her complaint date plus 30 days, calculated. The letter says only what she confirmed: checked against her facts before sending.">
+<li class="gb-claims-h" aria-hidden="true"><span>Claim</span><span>Where it came from</span><span>Check</span></li>
+<li class="a-her"><b>₹3,499 is at stake</b><div class="src"><p class="k">Her message</p><p class="msg">paid <mark>3499</mark> on 2 aug</p></div><p class="chk"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>She confirmed</p></li>
+<li class="a-rule"><b>Rule 4(4) applies</b><div class="src"><p class="k">Rule sheet</p><p class="mono">E-Commerce Rules 2020 · 4(4)</p></div><p class="chk"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Verified</p></li>
+<li class="a-code"><b>Flipkart must reply by 3 Sep 2026</b><div class="src"><p class="k">deadlines.ts</p><p class="mono">4 Aug + 30 days <em>= 3 Sep</em></p></div><p class="chk"><svg viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>Calculated</p></li>
+<li class="a-code"><b>The letter says only what she confirmed</b><div class="src"><p class="k">Before it’s sent</p><p class="msg2">Every amount and date matched to her facts</p></div><p class="chk"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Safety check</p></li>
+</ol>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="sourced-steps" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The trace for a real case: every step, and who did it.</figcaption></figure><ol class="gb-call"><li><b>Every step says who did it</b><span>AI, Rule sheet, Calculated or Safety check, so she can tell a judgment from a sum.</span></li><li><b>Confidence comes with its reason</b><span>A plain label and why it holds, never a bare score. When it’s low, there’s no Approve button.</span></li><li><b>The rule cites its law</b><span>She can check the work instead of taking it on trust.</span></li></ol></div>
 <div class="col gb-kicker"><p class="cap"><b>Why this matters</b></p><p>Transparency is part of the product itself, not an explanation added after the fact.</p></div>
 </section>
