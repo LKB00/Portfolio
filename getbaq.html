@@ -1134,6 +1134,7 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 /* autonomy: quadrant titles on the type scale; the y-axis sits in the gutter so the grid keeps the column edge */
 .cx-q-t{font-size:var(--fs-h3)}
 @media(min-width:981px){.cx-matrix{display:block;position:relative}.cx-ax-y{position:absolute;left:-44px;top:0;bottom:44px}.cx-ax-x{margin-top:var(--sp-16)}}
+.cx-matrix > .cx-ax-x{margin-top:var(--sp-16) !important}
 
 /* failure states: a little more room per state */
 .cx-w .gb-fails{gap:var(--sp-12)}
@@ -1470,6 +1471,9 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .cx-lim-x{margin-top:var(--sp-8)!important;font-size:var(--fs-small);line-height:1.55;color:var(--c-ink-2)}
 @media(max-width:700px){.cx-limits{grid-template-columns:1fr}}
 /* failure states: one featured state, then the rest of the system */
+/* the smaller states share one size: same text slots, same product-UI box */
+@media(min-width:561px){.cx-w .gb-fails > div:not(:first-child) .gb-fl-ui{flex:1 0 auto;margin-top:0;min-height:115px}}
+@media(min-width:861px){.cx-w .gb-fails > div:not(:first-child) .gb-fl-ui{min-height:150px}.cx-w .gb-fails > div:not(:first-child) .gb-fl-when{min-height:calc(2em*1.45)}.cx-w .gb-fails > div:not(:first-child) .gb-fl-out{min-height:calc(2em*1.35)}}
 @media(min-width:761px){
   .cx-w .gb-fails > div:first-child{grid-column:1/3;grid-row:1/3;padding:var(--sp-32)}
   .cx-w .gb-fails > div:first-child .gb-fl-t{font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.015em}
