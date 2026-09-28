@@ -991,15 +991,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb .gb-chain-bars .gb i{background:var(--ink);box-shadow:none}
 .gb .gb-chain-steps li.w{box-shadow:inset 0 0 0 1px var(--ink)}
 /* 02 agent line: plain steps, a dot for who acts, her step in ink */
-.gb .gb-agentline{gap:8px 0}
-.gb .gb-agentline li{background:none;box-shadow:none;padding:6px 2px;color:var(--ink);font-weight:400;gap:7px}
-.gb .gb-agentline li:after{content:"";order:-1;width:7px;height:7px;border-radius:50%;background:var(--a)}
-.gb .gb-agentline li{position:relative}
-.gb .gb-agentline li + li{margin-left:26px}
-.gb .gb-agentline li + li:before{position:absolute;left:-19px;top:50%;transform:translateY(-50%);margin:0;color:var(--faint)!important}
-.gb .gb-agentline li.a-her{background:none;color:var(--ink);font-weight:500;box-shadow:none}
-.gb .gb-agentline li.a-her:nth-child(6){background:var(--ink);color:var(--bg);padding:6px 12px;border-radius:99px}
-.gb .gb-agentline li.a-her:nth-child(6):after{background:var(--lime)}
 /* 03 quad: neutral cards, only her tap in charcoal */
 .gb .gb-quad-grid .q.lo.irr{background:var(--surface)}
 .gb .gb-quad-grid .q.lo.irr .q-badge,.gb .gb-quad-grid .q.hi.rev .q-badge,.gb .gb-quad-grid .q.lo.rev .q-badge{color:var(--muted)}
@@ -1383,7 +1374,7 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">02 · Why an agent</p><h2 class="say">She shouldn’t have to become the workflow.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A traditional refund flow asks her to structure the information, find the policy, count the days, write the complaint, send it and remember what to do next. An agent can take that work off her.</p>
-<ol class="col gb-agentline" aria-label="The agent model"><li class="a-her">Give me what you have</li><li class="a-ai">I understand</li><li class="a-ai">I investigate</li><li class="a-code">I verify</li><li class="a-ai">I prepare</li><li class="a-her">You approve</li><li class="a-code">I monitor</li></ol>
+<ol class="col gb-agentline" aria-label="The agent model"><li class="a-her"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Give me what you have</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I understand</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I investigate</li><li class="a-code"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>I verify</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I prepare</li><li class="a-her"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You approve</li><li class="a-code"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>I monitor</li></ol>
 <p class="col body">The agent handles the work. Deterministic code handles what should never be guessed. She stays responsible for anything consequential.</p>
 </section>
 </section>
