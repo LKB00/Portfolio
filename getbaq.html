@@ -1022,6 +1022,37 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-claims li:nth-child(3) .chk{transition-delay:.15s}.gb-claims li:nth-child(4) .chk{transition-delay:.3s}.gb-claims li:nth-child(5) .chk{transition-delay:.45s}
 .gb-claims.shown .chk{opacity:1;transform:none}
 @media(max-width:640px){.gb-claims li{grid-template-columns:1fr;gap:8px}.gb-claims li.gb-claims-h{display:none}}
+/* failure states: each with the app's own words and next step */
+.gb-fails{margin-top:var(--s3);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gb-fails > div{--tone:var(--ai);display:flex;flex-direction:column;padding:16px;border-radius:12px;background:var(--surface)}
+.gb-fails .t-stop,.gb-fails .t-sys{--tone:var(--clay)}.gb-fails .t-away{--tone:var(--code)}.gb-fails .t-wait{--tone:var(--her)}
+.gb-fl-t{display:flex;align-items:center;gap:8px;margin:0;font:500 15px/1.2 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-fl-t svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--tone);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.gb-fl-when{margin:6px 0 14px;font-size:13px;line-height:1.45;color:var(--muted)}
+.gb-fl-ui{margin-top:auto;padding:12px;border-radius:8px;background:var(--bg);font-family:var(--sans)}
+.gb-fl-ui p{margin:0}
+.gb-fl-ui .ey{display:flex;align-items:center;gap:6px;margin-bottom:6px;font:500 9.5px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.gb-fl-ui .ey:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--clay)}
+.gb-fl-ui .hd{font:600 13.5px/1.35 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-fl-ui .sub{margin-top:5px;font-size:12px;line-height:1.45;color:var(--muted)}
+.gb-fl-ui .btns{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.gb-fl-ui .btns span{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:99px;font-size:10.5px;white-space:nowrap;line-height:1.2;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.gb-fl-ui .btns .dark{background:var(--ink);color:var(--bg);box-shadow:none}
+.gb-fl-ui .btns svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gb-fl-ui .tabs{display:flex;gap:10px;margin:8px 0 2px;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--faint)}
+.gb-fl-ui .tabs span{display:inline-flex;align-items:center;gap:5px}
+.gb-fl-ui .tabs .on{color:var(--ink)}
+.gb-fl-ui .tabs i{display:grid;place-items:center;width:14px;height:14px;border-radius:50%;font:500 9px/1 var(--sans);font-style:normal;background:var(--surface);color:var(--muted)}
+.gb-fl-ui .tabs .on i{background:var(--ink);color:var(--bg)}
+.gb-fl-ui .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
+.gb-fl-ui .chips span{padding:4px 8px;border-radius:6px;background:var(--surface);font-size:11px;color:var(--ink)}
+.gb-fl-ui .step{display:grid;grid-template-columns:16px 1fr;gap:8px;font-size:12px;line-height:1.4}
+.gb-fl-ui .step i{display:grid;place-items:center;width:16px;height:16px;margin-top:1px;border-radius:50%;font:600 10px/1 var(--sans);font-style:normal;background:var(--clay-bg);color:var(--clay)}
+.gb-fl-ui .step b{display:block;font-weight:500;color:var(--ink)}
+.gb-fl-ui .step span{color:var(--clay)}
+.gb-fl-ui .step em{grid-column:2;font:500 9.5px/1 var(--sans);font-style:normal;color:var(--faint);margin-top:4px}
+@media(max-width:860px){.gb-fails{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.gb-fails{grid-template-columns:1fr}}
 /* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
@@ -1442,13 +1473,13 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">08 · Failure</p><h2 class="say">The real product starts when the AI is wrong.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">An agent has to know when it doesn’t know. Each failure is designed as a product state, not an error message, and each one ends in a next step, not a dead end.</p>
-<div class="col gb-states" data-reveal="">
-<div class="t-ask"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Not sure</p><p>No rule fits well enough to trust.</p><p class="gb-states-next">No Approve button. It asks instead.</p></div>
-<div class="t-ask"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17h.01"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"/></svg>Missing</p><p>A fact she needs is absent.</p><p class="gb-states-next">One card asks for every gap at once.</p></div>
-<div class="t-stop"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>Blocked</p><p>No grievance address it can trust.</p><p class="gb-states-next">Won’t guess. She gets the letter to send herself.</p></div>
-<div class="t-away"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>Out of scope</p><p>It isn’t a refund complaint.</p><p class="gb-states-next">Points her to e-Jagriti, a lawyer, or the bank.</p></div>
-<div class="t-wait"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ignored</p><p>The company goes quiet.</p><p class="gb-states-next">The 1915 complaint is already prepared. Still her tap.</p></div>
-<div class="t-sys"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>System failure</p><p>The AI can’t be reached.</p><p class="gb-states-next">A simpler reader or fixed template steps in, and says so.</p></div>
+<div class="col gb-fails" data-reveal="" aria-label="Six failure states, each shown with what the app actually says and the next step it offers.">
+<div class="t-ask"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Not sure</p><p class="gb-fl-when">No rule fits well enough to trust.</p><div class="gb-fl-ui"><p class="ey">Low confidence</p><p class="hd">I think this is an ecommerce case, but I am not sure. Is that right?</p><p class="btns"><span>Yes, that’s right</span><span>No, it’s not</span></p></div></div>
+<div class="t-ask"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17h.01"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"/></svg>Missing</p><p class="gb-fl-when">A fact she needs is absent.</p><div class="gb-fl-ui"><p class="hd">2 quick questions</p><p class="tabs"><span class="on"><i>1</i>Company</span><span><i>2</i>Complained</span></p><p class="sub">Which company or app was this with?</p></div></div>
+<div class="t-stop"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>Blocked</p><p class="gb-fl-when">No grievance address it can trust.</p><div class="gb-fl-ui"><p class="hd">This one needs you to send it</p><p class="sub">Mirraw doesn’t publish a grievance email I can check, and I won’t guess one.</p><p class="btns"><span class="dark">Copy complaint<svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></p></div></div>
+<div class="t-away"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>Out of scope</p><p class="gb-fl-when">It isn’t a refund complaint.</p><div class="gb-fl-ui"><p class="ey">Outside what I can do</p><p class="hd">This isn’t a refund complaint I can write</p><p class="chips"><span>e-Jagriti</span><span>A lawyer</span><span>Cyber Crime (1930)</span></p></div></div>
+<div class="t-wait"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ignored</p><p class="gb-fl-when">The company goes quiet.</p><div class="gb-fl-ui"><p class="ey">No reply</p><p class="hd">Flipkart went quiet</p><p class="sub">I’ve already written it. You check it, then send.</p><p class="btns"><span class="dark">Review the 1915 complaint<svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></p></div></div>
+<div class="t-sys"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>System failure</p><p class="gb-fl-when">The AI can’t be reached.</p><div class="gb-fl-ui"><p class="step"><i>!</i><span><b>Read your message with a simpler reader</b>The AI reader couldn’t be reached, so check what I found</span><em>Calculated</em></p></div></div>
 </div>
 <figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure>
 </section>
