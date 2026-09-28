@@ -851,6 +851,14 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 .gb-flow > .col:first-child + *{margin-top:var(--s3)}
 .gb-flow > p.body:first-child + p.body{margin-top:var(--s2)}
 .gb-chapter > .gb-flow:first-of-type{margin-top:24px}
+
+/* ===== match App Merge: flat grey hero panel, the title straight under it,
+   three facts per row, chapters named without numbers ===== */
+.gb-ex-hero .gbh{background:var(--surface)!important;box-shadow:none}
+.gb-ex-hero .gbh:before{display:none}
+.gb-hero h1{margin-top:0}
+.meta{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:600px){.meta{grid-template-columns:1fr}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -912,11 +920,11 @@ addEventListener("pagereveal",function(e){
 <div class="shell gb">
 <nav aria-label="Sections" class="toc">
 <a href="#overview">Overview</a>
-<a href="#problem">01 · The problem</a>
-<a href="#ai-line">02 · Where AI stops</a>
-<a href="#control">03 · The user’s control</a>
-<a href="#wrong">04 · Being wrong</a>
-<a href="#craft">05 · The craft</a>
+<a href="#problem">The problem</a>
+<a href="#ai-line">Where AI stops</a>
+<a href="#control">The user’s control</a>
+<a href="#wrong">Being wrong</a>
+<a href="#craft">The craft</a>
 <a href="#close">Looking back</a>
 </nav>
 <!-- ================= OVERVIEW ================= -->
@@ -930,7 +938,6 @@ addEventListener("pagereveal",function(e){
 </div><img class="gbh-frame" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" fetchpriority="high" decoding="async"></div>
 </div>
 </figure><div class="col beat gb-hero" data-reveal="">
-<p class="eyebrow">Case study · AI product design · Getbaq</p>
 <h1>Designing an AI agent that fights for your <em>refund</em></h1>
 <p class="dek">A customer has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes their complaint, and never sends a word without them.</p>
 <a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
@@ -994,7 +1001,7 @@ addEventListener("pagereveal",function(e){
 </section>
 <!-- ================= 01 THE PROBLEM ================= -->
 <section class="gb-chapter" id="problem">
-<div class="col"><p class="eyebrow">01 · The problem</p><h2 class="say">Choose a problem where AI is the product, not a feature</h2><p class="dek">Which problem is worth an AI agent, who has it, and when is the moment to step in?</p></div>
+<div class="col"><p class="eyebrow">The problem</p><h2 class="say">Choose a problem where AI is the product, not a feature</h2><p class="dek">Which problem is worth an AI agent, who has it, and when is the moment to step in?</p></div>
 <section class="gb-sec" data-reveal="" id="s1-1">
 <div class="col"><p class="eyebrow">The starting question</p><h3 class="say sub">I didn’t start with refunds. I started with a question.</h3></div>
 <p class="col body">Most AI features I’d seen were a chatbot added to a product that already worked. I wanted the reverse: a problem that only became practical to solve with LLMs, so that the AI is the product, not decoration. So I started with a question instead of a solution.</p>
@@ -1148,7 +1155,7 @@ addEventListener("pagereveal",function(e){
 </section>
 <!-- ================= 02 WHERE AI STOPS ================= -->
 <section class="gb-chapter" id="ai-line">
-<div class="col"><p class="eyebrow">02 · Where AI stops</p><h2 class="say">The model reads and writes. Code counts.</h2><p class="dek">Which parts need AI judgment, which need exact calculation, and how would I know the AI is right?</p></div>
+<div class="col"><p class="eyebrow">Where AI stops</p><h2 class="say">The model reads and writes. Code counts.</h2><p class="dek">Which parts need AI judgment, which need exact calculation, and how would I know the AI is right?</p></div>
 <section class="gb-sec" data-reveal="" id="s2-5">
 <div class="col"><p class="eyebrow">The capability map</p><h3 class="say sub">AI for judgment, code for anything exact, and a list it never touches</h3></div>
 <p class="col body">An agent that’s confidently wrong about a deadline is worse than no agent: the user would wait for a date that has already passed. So the first design decision here wasn’t a screen. It was deciding which parts of the job the AI is allowed to do at all.</p>
@@ -1254,7 +1261,7 @@ addEventListener("pagereveal",function(e){
 </section>
 <!-- ================= 03 HER CONTROL ================= -->
 <section class="gb-chapter" id="control">
-<div class="col"><p class="eyebrow">03 · The user’s control</p><h2 class="say">The user approves everything, in their own name</h2><p class="dek">How much should an agent do on its own when it’s their money and their name?</p></div>
+<div class="col"><p class="eyebrow">The user’s control</p><h2 class="say">The user approves everything, in their own name</h2><p class="dek">How much should an agent do on its own when it’s their money and their name?</p></div>
 <section class="gb-sec" data-reveal="" id="s3-1">
 <div class="col"><p class="eyebrow">The lifecycle</p><h3 class="say sub">It proposes, they approve, it acts, it reports back</h3></div>
 <p class="col body">An agent that acts on its own is the whole appeal, and the whole risk. A wrong or rude letter goes out under the user’s name, to a company that is holding their money. So every action has the same four beats, whoever set it off. Escalation isn’t exempt: even after a company has ignored them for weeks, the 1915 complaint still needs their tap.</p>
@@ -1344,7 +1351,7 @@ addEventListener("pagereveal",function(e){
 </section>
 <!-- ================= 04 BEING WRONG ================= -->
 <section class="gb-chapter" id="wrong">
-<div class="col"><p class="eyebrow">04 · Being wrong</p><h2 class="say">Design for being wrong: the AI’s, and my own</h2><p class="dek">What does the user see when it’s unsure, ignored or blocked, and what did I get wrong?</p></div>
+<div class="col"><p class="eyebrow">Being wrong</p><h2 class="say">Design for being wrong: the AI’s, and my own</h2><p class="dek">What does the user see when it’s unsure, ignored or blocked, and what did I get wrong?</p></div>
 <section class="gb-sec" data-reveal="" id="s3-3">
 <div class="col"><p class="eyebrow">States</p><h3 class="say sub">Every way it can go wrong got the same care as the happy path</h3></div>
 <p class="col body">An AI agent will be wrong, unsure, ignored or stuck some of the time. What the user sees in those moments decides whether they trust it the next time, so they’re where trust is won or lost. Pick any state to see the real screen, and try them: they all work.</p>
@@ -1460,7 +1467,7 @@ addEventListener("pagereveal",function(e){
 </section>
 <!-- ================= 05 THE CRAFT ================= -->
 <section class="gb-chapter" id="craft">
-<div class="col"><p class="eyebrow">05 · The craft</p><h2 class="say">Smaller decisions that make it feel like one product</h2><p class="dek">The two changes that mattered most, then the smaller ones, each with the reason it changed.</p></div>
+<div class="col"><p class="eyebrow">The craft</p><h2 class="say">Smaller decisions that make it feel like one product</h2><p class="dek">The two changes that mattered most, then the smaller ones, each with the reason it changed.</p></div>
 <section class="gb-sec" data-reveal="" id="s3-10">
 <div class="col"><p class="eyebrow">Iteration</p><h3 class="say sub">From pages to one thread</h3></div>
 <p class="col body">Using my own prototype, every step felt like being sent to a new page. I kept the logic the same and changed only how it looks: each step adds to one conversation, and finished steps fold into one-line receipts. It reads like a conversation but isn’t only chat: the steps are cards they can act on. As Perplexity’s head of design puts it, not everything should be a chat.</p>
