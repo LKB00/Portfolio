@@ -820,6 +820,33 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .a-her{--a:var(--her);--ab:var(--her-bg)}.a-ai{--a:var(--ai);--ab:var(--ai-bg)}.a-code{--a:var(--code);--ab:var(--code-bg)}.a-rule{--a:var(--code);--ab:var(--code-bg)}.a-ui{--a:var(--ink);--ab:var(--surface)}
 
 /* 01 chain */
+.gb-mx{margin-top:var(--s3);padding:20px;border-radius:8px;background:var(--surface)}
+.gb-mx ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:68px repeat(6,minmax(0,1fr));column-gap:6px}
+.gb-mx li{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;min-width:0;grid-row:span 3;row-gap:6px}
+.gb-mx p{margin:0}
+.gb-mx-h{display:flex;flex-direction:column;gap:6px;padding:2px 2px 8px}
+.gb-mx-h span{font:500 10.5px/1 var(--mono);color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
+.gb-mx-h b{font:500 13.5px/1.3 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-mx-r{display:flex;flex-direction:column;justify-content:center;gap:4px;height:44px}
+.gb-mx-r b{font:600 13px/1 var(--sans);color:var(--ink)}
+.gb-mx-r span{font:500 10.5px/1 var(--mono);color:var(--muted);letter-spacing:.04em}
+.gb-mx-c span{display:flex;align-items:center;gap:5px;height:44px;padding:0 8px;border-radius:6px;font:500 12px/1 var(--sans);transition:background .5s ease,color .5s ease;transition-delay:calc(var(--i)*90ms + .2s)}
+.gb-mx-c svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gb-mx .c-her{background:var(--bg);color:var(--muted)}
+.gb-mx .c-gpt{background:color-mix(in srgb,var(--ink) 14%,var(--bg));color:var(--ink)}
+.gb-mx .c-gb{background:var(--bg);color:var(--faint)}
+.gb-mx.shown .c-gb{background:var(--ink);color:var(--bg)}
+.gb-mx-foot{display:flex;justify-content:space-between;gap:16px;margin-top:14px!important;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+@media(max-width:640px){
+ .gb-mx{padding:14px}
+ .gb-mx ol{grid-template-columns:minmax(0,1fr) 84px 104px;row-gap:6px}
+ .gb-mx li{grid-template-rows:none;grid-template-columns:subgrid;grid-column:span 3;grid-row:auto;column-gap:6px}
+ .gb-mx-h{flex-direction:row;align-items:center;gap:8px;padding:0}
+ .gb-mx-h b{font-size:13px}
+ .gb-mx-r{height:auto;padding-bottom:4px}
+ .gb-mx-lab .gb-mx-h span{visibility:hidden}
+ .gb-mx-c span{height:38px;padding:0 8px;font-size:12px}
+ .gb-mx-foot{flex-direction:column;gap:6px}}
 .gb-chain{margin-top:var(--s3);padding:22px 20px 18px;border-radius:12px;background:var(--surface)}
 .gb-chain-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
 .gb-chain-steps li{display:flex;flex-direction:column;gap:6px;padding:12px 10px;border-radius:8px;background:var(--bg);min-height:78px}
@@ -1337,19 +1364,17 @@ addEventListener("pagereveal",function(e){
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">She may have a screenshot, a payment receipt, a chat with the bot and an order number, and still not know what to do next. The law says Flipkart must resolve her complaint within a month, and a free helpline can push it. She doesn’t know either exists.</p>
 <div class="col"><div class="figrow" style="--cols:2"><div><p class="fnum">66%</p><p class="fnote">of people with a major service problem got no help from the company</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p><p class="fsrc"><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></p></div></div></div>
-<div class="col gb-chain" data-reveal="" role="img" aria-label="Six steps to get a refund back. ChatGPT covers one of them, writing the complaint. Getbaq is designed to cover all six.">
-<ol class="gb-chain-steps" aria-hidden="true">
-<li><span>01</span><b>Understand the evidence</b></li>
-<li><span>02</span><b>Find the rule</b></li>
-<li><span>03</span><b>Count the deadline</b></li>
-<li class="w"><span>04</span><b>Write the complaint</b></li>
-<li><span>05</span><b>Follow up</b></li>
-<li><span>06</span><b>Escalate</b></li>
+<div class="col gb-mx" data-reveal="" role="img" aria-label="Six steps to get a refund back. With ChatGPT, it drafts the complaint and she does the other five. With Getbaq, the agent carries all six and she approves before anything is sent.">
+<ol aria-hidden="true">
+<li class="gb-mx-lab"><p class="gb-mx-h"><span>Step</span></p><p class="gb-mx-r"><b>ChatGPT</b><span>1 of 6</span></p><p class="gb-mx-r"><b>Getbaq</b><span>6 of 6</span></p></li>
+<li class="gb-mx-step" style="--i:0"><p class="gb-mx-h"><span>01</span><b>Understand the evidence</b></p><p class="gb-mx-c"><span class="c-her"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>You</span></p><p class="gb-mx-c"><span class="c-gb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Reads it</span></p></li>
+<li class="gb-mx-step" style="--i:1"><p class="gb-mx-h"><span>02</span><b>Find the rule</b></p><p class="gb-mx-c"><span class="c-her"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>You</span></p><p class="gb-mx-c"><span class="c-gb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Finds it</span></p></li>
+<li class="gb-mx-step" style="--i:2"><p class="gb-mx-h"><span>03</span><b>Count the deadline</b></p><p class="gb-mx-c"><span class="c-her"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>You</span></p><p class="gb-mx-c"><span class="c-gb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Counts</span></p></li>
+<li class="gb-mx-step w" style="--i:3"><p class="gb-mx-h"><span>04</span><b>Write the complaint</b></p><p class="gb-mx-c"><span class="c-gpt"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Drafted</span></p><p class="gb-mx-c"><span class="c-gb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Drafts</span></p></li>
+<li class="gb-mx-step" style="--i:4"><p class="gb-mx-h"><span>05</span><b>Follow up</b></p><p class="gb-mx-c"><span class="c-her"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>You</span></p><p class="gb-mx-c"><span class="c-gb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Tracks</span></p></li>
+<li class="gb-mx-step" style="--i:5"><p class="gb-mx-h"><span>06</span><b>Escalate</b></p><p class="gb-mx-c"><span class="c-her"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>You</span></p><p class="gb-mx-c"><span class="c-gb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Escalates</span></p></li>
 </ol>
-<div class="gb-chain-bars" aria-hidden="true">
-<p class="gpt"><i></i><span>ChatGPT</span></p>
-<p class="gb"><i></i><span>Getbaq</span></p>
-</div>
+<p class="gb-mx-foot" aria-hidden="true"><span>With ChatGPT, five steps are still hers.</span><span>With Getbaq, she approves before anything is sent.</span></p>
 </div>
 <p class="col body"><b>ChatGPT can write the complaint. Getbaq is designed to run the case</b>: not to generate a good response, but to move a real-world case toward resolution.</p>
 </section>
@@ -1359,7 +1384,6 @@ addEventListener("pagereveal",function(e){
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A traditional refund flow asks her to structure the information, find the policy, count the days, write the complaint, send it and remember what to do next. An agent can take that work off her.</p>
 <ol class="col gb-agentline" aria-label="The agent model"><li class="a-her">Give me what you have</li><li class="a-ai">I understand</li><li class="a-ai">I investigate</li><li class="a-code">I verify</li><li class="a-ai">I prepare</li><li class="a-her">You approve</li><li class="a-code">I monitor</li></ol>
-<p class="col gb-actors" aria-hidden="true"><span class="a-her">Her</span><span class="a-ai">AI</span><span class="a-code">Code</span></p>
 <p class="col body">The agent handles the work. Deterministic code handles what should never be guessed. She stays responsible for anything consequential.</p>
 </section>
 </section>
