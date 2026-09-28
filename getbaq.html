@@ -1601,6 +1601,23 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb .cx-ann-l .cx-meta-l{margin-bottom:6px;font:500 11px/1.6 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 .gb .cx-ann-l p + p{margin-top:0;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted)}
 @media(max-width:860px){.gb .cx-ann-l li + li{margin-top:var(--s3)}}
+
+/* why an agent: App Merge's before / after cards — the user's whole to-do list
+   on grey, the agent's version on green with each step's owner */
+.gb #agent .cx-cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;gap:16px;padding:0;border:0}
+.gb #agent .cx-cmp-row,.gb #agent .cx-cmp-row:last-child{display:block;grid-row:auto;padding:24px 24px 28px;border:0;border-radius:8px;background:var(--surface)}
+.gb #agent .cx-cmp-row.is-new{background:var(--her-bg)}
+.gb #agent .cx-cmp-row .cx-meta-l{margin:0 0 16px;font:500 11px/1.6 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.gb #agent .cx-cmp-row.is-new .cx-meta-l{color:color-mix(in srgb,var(--her) 70%,transparent)}
+.gb #agent .cx-steps,.gb #agent .gb-agentline{display:grid;grid-row:auto;grid-template-rows:none;gap:12px;margin:0}
+.gb #agent .cx-steps li,.gb #agent .gb-agentline li{display:flex;align-items:center;gap:10px;padding:0;background:none;box-shadow:none;border-radius:0;font:400 15px/1.35 var(--sans);letter-spacing:-.01em;white-space:normal;justify-self:stretch}
+.gb #agent .cx-steps li{color:var(--muted)}
+.gb #agent .cx-steps li:before,.gb #agent .cx-steps li + li:before{content:"";flex:none;width:5px;height:5px;margin:0 6px 0 2px;border-radius:50%;background:var(--faint)}
+.gb #agent .gb-agentline li + li:before{content:none}
+.gb #agent .gb-agentline li{color:var(--ink)}
+.gb #agent .gb-agentline li svg{flex:none;width:18px;height:18px;padding:3px;box-sizing:border-box;border-radius:50%;background:var(--bg);color:var(--a)}
+.gb #agent .gb-agentline li.a-her{font-weight:500}
+@media(max-width:600px){.gb #agent .cx-cmp{grid-template-columns:1fr;gap:12px}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
