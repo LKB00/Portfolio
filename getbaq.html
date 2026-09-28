@@ -1426,30 +1426,6 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 /* hero: the home page's Getbaq card animation, in the product panel */
 .gbh-demo{position:relative;overflow:hidden;aspect-ratio:16/9;background:#F2F2F2;border-radius:8px 8px 0 0}
 @media(max-width:600px){.gbh-demo{aspect-ratio:4/4.3;border-radius:0}}
-
-/* case model: the conversation, then the case file read part by part with
-   each note level with the part it explains (no numbers, no side column) */
-.cx-casecmp{display:block}
-.cx-cc-chat{max-width:440px}
-.cx-cc-chat .gb-conv-chat .cx-meta-l{margin-bottom:var(--sp-16)}
-.cx-cc-arrow{display:block;width:max-content;margin:var(--sp-16) 0 var(--sp-16) var(--sp-32);transform:rotate(90deg)}
-.cx-cc-case > .cx-meta-l{margin-bottom:var(--sp-16)}
-@media(min-width:601px){
-  .cx-cc-m{--sw:420px;display:grid;grid-template-columns:var(--sw) minmax(0,1fr);column-gap:var(--sp-48);list-style:none;margin:0;padding:0;background:none;border-radius:0}
-  .cx-cc-m > li{display:contents}
-  .cx-cc-m .cx-sl{grid-column:1;width:var(--sw);height:calc((var(--b) - var(--a)) * var(--sw) / 800);overflow:hidden;border-radius:0;background:#fff;box-shadow:inset 1px 0 0 var(--c-line),inset -1px 0 0 var(--c-line)}
-  .cx-cc-m .cx-sl img{display:block;width:var(--sw);max-width:none;height:auto;margin-top:calc(var(--a) * var(--sw) / -800)}
-  .cx-cc-m > li:first-child .cx-sl{border-radius:var(--r-l) var(--r-l) 0 0;box-shadow:inset 0 1px 0 var(--c-line),inset 1px 0 0 var(--c-line),inset -1px 0 0 var(--c-line)}
-  .cx-cc-m > li + li .cx-sl{box-shadow:inset 0 1px 0 var(--c-line),inset 1px 0 0 var(--c-line),inset -1px 0 0 var(--c-line)}
-  .cx-cc-m > li:last-child .cx-sl{border-radius:0 0 var(--r-l) var(--r-l);box-shadow:inset 0 1px 0 var(--c-line),inset 1px 0 0 var(--c-line),inset -1px 0 0 var(--c-line),inset 0 -1px 0 var(--c-line)}
-  .cx-cc-m .cx-sl-n{grid-column:2;display:block;align-self:start;padding:var(--sp-24) 0 0}
-  .cx-cc-m .cx-sl-n i{display:none}
-  /* the first part opens with the case header, so its note starts level with DEADLINE */
-  .cx-cc-m > li:first-child .cx-sl-n{padding-top:calc(240 * var(--sw) / 800)}
-  .cx-cc-m > li + li .cx-sl-n{padding-top:calc(46 * var(--sw) / 800)}
-  .cx-cc-m .cx-sl-n p + p{font-size:var(--fs-small)}
-}
-@media(min-width:601px) and (max-width:860px){.cx-cc-m{--sw:340px;column-gap:var(--sp-32)}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1621,15 +1597,16 @@ addEventListener("pagereveal",function(e){
 <div class="cx-w cx-head "><p class="cx-label">The case</p><h2 class="cx-h">A conversation starts the case.<br>The case carries it.</h2></div>
 <div class="cx-w cx-vis cx-casecmp">
 <div class="cx-cc-chat"><div class="gb-conv-chat" aria-hidden="true">
-<p class="cx-meta-l">Conversation · messy, temporary, ambiguous</p>
+<p class="cx-meta-l">Conversation</p><p class="cx-tags"><span>Messy</span><span>Temporary</span><span>Ambiguous</span></p>
 <p class="m">flipkart rejected my replacement 🙄 jar has rust</p>
 <p class="m">called 3 times, they keep saying 5-7 working days</p>
 <p class="m">paid 3499 on 2 aug</p>
 
 </div></div>
 <div class="cx-cc-arrow" aria-hidden="true">→</div>
-<div class="cx-cc-case"><p class="cx-meta-l">Case · structured, persistent, actionable</p>
-<ol class="cx-cc-m" aria-label="The case file, part by part"><li><div class="cx-sl" style="--a:0;--b:588"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The case file for Flipkart, ₹3,499. Deadline: Flipkart must fix this by 3 Sep 2026, 20 days left" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></div></li><li><div class="cx-sl" style="--a:591;--b:1003"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="What I know: company Flipkart, amount ₹3,499, date 2 Aug 2026, first complaint 4 Aug 2026" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></div></li><li><div class="cx-sl" style="--a:1007;--b:1328"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The rule: the platform must redress the complaint within one month (30 days) of receiving it. Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></div></li><li><div class="cx-sl" style="--a:1332;--b:1896"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="Where it's at: you told me, facts checked, rule found, complaint sent now; their reply and resolved still to come" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></div></li></ol></div>
+<div class="cx-cc-case"><p class="cx-meta-l">Case</p><p class="cx-tags"><span>Structured</span><span>Persistent</span><span>Actionable</span></p>
+<div class="cx-cc-body"><figure class="cx-pv cx-pv-case"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-casefile-full.webp" data-alt="The Getbaq case file" aria-label="Enlarge: the Getbaq case file"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The Getbaq case file for Flipkart, ₹3,499: the deadline 3 Sep 2026 with 20 days left, what I know, the rule and its source, and where the case is at" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button><span class="cx-mark" style="top:10.5%"><i>1</i></span><span class="cx-mark" style="top:32.5%"><i>2</i></span><span class="cx-mark" style="top:54%"><i>3</i></span><span class="cx-mark" style="top:71%"><i>4</i></span></div></figure>
+<ol class="cx-cc-notes"><li><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></li><li><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></li><li><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></li><li><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></li></ol></div><ol class="cx-cc-m" aria-label="The case file, part by part"><li><div class="cx-sl" style="--a:0;--b:588"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The case file for Flipkart, ₹3,499. Deadline: Flipkart must fix this by 3 Sep 2026, 20 days left" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></div></li><li><div class="cx-sl" style="--a:591;--b:1003"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="What I know: company Flipkart, amount ₹3,499, date 2 Aug 2026, first complaint 4 Aug 2026" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></div></li><li><div class="cx-sl" style="--a:1007;--b:1328"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The rule: the platform must redress the complaint within one month (30 days) of receiving it. Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></div></li><li><div class="cx-sl" style="--a:1332;--b:1896"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="Where it's at: you told me, facts checked, rule found, complaint sent now; their reply and resolved still to come" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></div></li></ol></div>
 </div>
 <div class="cx-w cx-stage cx-bleed"><figure class="cx-pv cx-pv-wide"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/getbaq-desktop-mbp-1512.webp" data-alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" aria-label="Enlarge: The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right"><img src="./assets/getbaq-desktop-mbp-1512.webp" width="1512" height="982" alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" loading="lazy" decoding="async" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:760px) 92vw, 834px"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div><figcaption>The whole workspace: the case list, the thread, and the case file beside it.</figcaption></figure></div>
 </section>
