@@ -1426,6 +1426,18 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 /* hero: the home page's Getbaq card animation, in the product panel */
 .gbh-demo{position:relative;overflow:hidden;aspect-ratio:16/9;background:#F2F2F2;border-radius:8px 8px 0 0}
 @media(max-width:600px){.gbh-demo{aspect-ratio:4/4.3;border-radius:0}}
+
+/* case file notes: one open at a time, level with its number; hover or focus a
+   number to open its note, otherwise they take turns */
+.cx-mark{padding:0;border:0;background:none;cursor:pointer}
+.cx-mark i{background:var(--c-card);color:var(--c-ink-3);box-shadow:0 0 0 3px var(--c-bg),inset 0 0 0 1px var(--c-line);transition:background .25s var(--ease),color .25s var(--ease)}
+.cx-mark.on i{background:var(--c-ink);color:var(--c-bg);box-shadow:0 0 0 3px var(--c-bg)}
+@media(min-width:601px){
+  .cx-cc-body{align-items:stretch}
+  .cx-cc-notes{position:relative;padding:0}
+  .cx-cc-notes li{position:absolute;left:0;right:0;top:var(--t);margin-top:-2px;opacity:0;transform:translateY(4px);transition:opacity .35s var(--ease),transform .35s var(--ease);pointer-events:none}
+  .cx-cc-notes li.on{opacity:1;transform:none;pointer-events:auto}
+}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1605,8 +1617,8 @@ addEventListener("pagereveal",function(e){
 </div></div>
 <div class="cx-cc-arrow" aria-hidden="true">→</div>
 <div class="cx-cc-case"><p class="cx-meta-l">Case</p><p class="cx-tags"><span>Structured</span><span>Persistent</span><span>Actionable</span></p>
-<div class="cx-cc-body"><figure class="cx-pv cx-pv-case"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-casefile-full.webp" data-alt="The Getbaq case file" aria-label="Enlarge: the Getbaq case file"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The Getbaq case file for Flipkart, ₹3,499: the deadline 3 Sep 2026 with 20 days left, what I know, the rule and its source, and where the case is at" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button><span class="cx-mark" style="top:10.5%"><i>1</i></span><span class="cx-mark" style="top:32.5%"><i>2</i></span><span class="cx-mark" style="top:54%"><i>3</i></span><span class="cx-mark" style="top:71%"><i>4</i></span></div></figure>
-<ol class="cx-cc-notes"><li><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></li><li><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></li><li><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></li><li><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></li></ol></div><ol class="cx-cc-m" aria-label="The case file, part by part"><li><div class="cx-sl" style="--a:0;--b:588"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The case file for Flipkart, ₹3,499. Deadline: Flipkart must fix this by 3 Sep 2026, 20 days left" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></div></li><li><div class="cx-sl" style="--a:591;--b:1003"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="What I know: company Flipkart, amount ₹3,499, date 2 Aug 2026, first complaint 4 Aug 2026" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></div></li><li><div class="cx-sl" style="--a:1007;--b:1328"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The rule: the platform must redress the complaint within one month (30 days) of receiving it. Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></div></li><li><div class="cx-sl" style="--a:1332;--b:1896"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="Where it's at: you told me, facts checked, rule found, complaint sent now; their reply and resolved still to come" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></div></li></ol></div>
+<div class="cx-cc-body"><figure class="cx-pv cx-pv-case"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-casefile-full.webp" data-alt="The Getbaq case file" aria-label="Enlarge: the Getbaq case file"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The Getbaq case file for Flipkart, ₹3,499: the deadline 3 Sep 2026 with 20 days left, what I know, the rule and its source, and where the case is at" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button><button type="button" class="cx-mark on" style="top:10.5%" data-i="0" aria-label="Show note 1: Deadline"><i>1</i></button><button type="button" class="cx-mark" style="top:32.5%" data-i="1" aria-label="Show note 2: Facts"><i>2</i></button><button type="button" class="cx-mark" style="top:54%" data-i="2" aria-label="Show note 3: Rule"><i>3</i></button><button type="button" class="cx-mark" style="top:71%" data-i="3" aria-label="Show note 4: Status"><i>4</i></button></div></figure>
+<ol class="cx-cc-notes" aria-live="polite"><li class="on" style="--t:10.5%" data-i="0"><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></li><li style="--t:32.5%" data-i="1"><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></li><li style="--t:54%" data-i="2"><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></li><li style="--t:71%" data-i="3"><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></li></ol></div><ol class="cx-cc-m" aria-label="The case file, part by part"><li><div class="cx-sl" style="--a:0;--b:588"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The case file for Flipkart, ₹3,499. Deadline: Flipkart must fix this by 3 Sep 2026, 20 days left" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></div></li><li><div class="cx-sl" style="--a:591;--b:1003"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="What I know: company Flipkart, amount ₹3,499, date 2 Aug 2026, first complaint 4 Aug 2026" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></div></li><li><div class="cx-sl" style="--a:1007;--b:1328"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The rule: the platform must redress the complaint within one month (30 days) of receiving it. Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></div></li><li><div class="cx-sl" style="--a:1332;--b:1896"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="Where it's at: you told me, facts checked, rule found, complaint sent now; their reply and resolved still to come" loading="lazy" decoding="async"></div><div class="cx-sl-n"><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></div></li></ol></div>
 </div>
 <div class="cx-w cx-stage cx-bleed"><figure class="cx-pv cx-pv-wide"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/getbaq-desktop-mbp-1512.webp" data-alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" aria-label="Enlarge: The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right"><img src="./assets/getbaq-desktop-mbp-1512.webp" width="1512" height="982" alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" loading="lazy" decoding="async" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:760px) 92vw, 834px"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div><figcaption>The whole workspace: the case list, the thread, and the case file beside it.</figcaption></figure></div>
 </section>
@@ -2063,6 +2075,25 @@ addEventListener("pagereveal",function(e){
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(es){ seen=es[0].isIntersecting },{threshold:.35}).observe(root);
   } else seen=true;
+})();
+</script>
+<script>
+/* case file: one note at a time; a number opens its note on hover or focus,
+   otherwise the notes take turns every few seconds while the section is on screen */
+(function(){
+  var body=document.querySelector('.cx-cc-body'); if(!body) return;
+  var marks=[].slice.call(body.querySelectorAll('.cx-mark')), notes=[].slice.call(body.querySelectorAll('.cx-cc-notes li'));
+  var cur=0, hold=false, seen=false;
+  function show(i){ cur=i; marks.forEach(function(m,k){m.classList.toggle('on',k===i)}); notes.forEach(function(n,k){n.classList.toggle('on',k===i)}); }
+  marks.forEach(function(m,k){
+    m.addEventListener('mouseenter',function(){hold=true;show(k)}); m.addEventListener('focus',function(){hold=true;show(k)});
+    m.addEventListener('click',function(){hold=true;show(k)});
+    m.addEventListener('mouseleave',function(){hold=false}); m.addEventListener('blur',function(){hold=false});
+  });
+  notes.forEach(function(n){ n.addEventListener('mouseenter',function(){hold=true}); n.addEventListener('mouseleave',function(){hold=false}); });
+  if('IntersectionObserver' in window) new IntersectionObserver(function(es){seen=es[0].isIntersecting},{threshold:.3}).observe(body); else seen=true;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  setInterval(function(){ if(seen&&!hold&&!document.hidden) show((cur+1)%marks.length); },3500);
 })();
 </script>
 </body></html>
