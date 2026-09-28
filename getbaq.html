@@ -972,6 +972,21 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-finale:before{content:"";position:absolute;left:-80px;bottom:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lime) 22%,transparent),transparent 70%)}
 .gb-finale-t{position:relative;margin:0;font:400 clamp(26px,3.6vw,36px)/1.2 var(--serif)!important;letter-spacing:-.02em;color:#fff!important}
 .gb-finale-t span{color:var(--lime)}
+/* quad, quieter: column headings once, one dark box, lists as a line */
+.gb .gb-quad{padding-bottom:0}
+.gb .gb-quad-x{display:none}
+.gb-quad-cols{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.gb-quad-cols span{padding-left:18px}
+.gb .gb-quad-grid .q-badge{display:none}
+.gb .gb-quad-grid .q.lo.irr{background:var(--surface)}
+.gb .gb-quad-grid ul{display:block}
+.gb .gb-quad-grid li{display:inline;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.gb .gb-quad-grid li + li:before{content:" · "}
+.gb .gb-quad-grid li b{font-weight:400;color:inherit}
+.gb .gb-quad-grid li span{color:inherit}.gb .gb-quad-grid li span:before{content:", "}
+.gb .gb-quad-grid .q.hi.irr li{color:rgba(237,237,237,.62)}
+.gb .gb-quad-grid .q-shot{margin-bottom:12px}
+@media(max-width:600px){.gb-quad-cols{display:none}.gb .gb-quad-grid .q-badge{display:inline-block}}
 /* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
@@ -1330,6 +1345,7 @@ addEventListener("pagereveal",function(e){
 <p class="col body">Most agents hand over more control as trust grows. I tied control to the consequence instead: the higher the stakes and the harder an action is to undo, the more control goes back to her.</p>
 <div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let her correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always her tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading her message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell her, for Stripping an OTP she pasted.">
 <p class="gb-quad-y" aria-hidden="true">Stakes ↑</p><p class="gb-quad-x" aria-hidden="true">Can be undone ← → Can’t be undone</p>
+<p class="gb-quad-cols" aria-hidden="true"><span>Can be undone</span><span>Can’t be undone</span></p>
 <div class="gb-quad-grid" aria-hidden="true">
 <div class="q hi rev"><span class="q-badge">Can be undone</span><p class="q-t">Show it, and let her correct it</p><img class="q-shot" src="./assets/gb-quad2-rule.webp" width="1000" height="500" alt="" loading="lazy" decoding="async"><ul><li>The facts it read</li><li>The rule it picked</li><li>The deadline</li></ul></div>
 <div class="q hi irr"><span class="q-badge">Can’t be undone</span><p class="q-t">Always her tap</p><img class="q-shot" src="./assets/gb-quad2-approve.webp" width="1000" height="330" alt="" loading="lazy" decoding="async"><ul><li>Sending the complaint</li><li>Escalating to 1915</li></ul></div>
