@@ -744,43 +744,23 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   font:500 10px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--h);background:color-mix(in srgb,var(--h) 8%,transparent)}
 .gb-sys-who svg{width:12px;height:12px;stroke-width:1.5}
 .gb-sys-f{align-self:end;margin:0;font:400 12.5px/1.5 var(--sans);color:var(--muted)}
-/* the small screen of each step: flat, a hairline, nothing floating */
-.gb-ui{align-self:start;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border-radius:6px;background:var(--card);
-  box-shadow:inset 0 0 0 1px var(--line);font:400 11.5px/1.45 var(--sans);color:var(--ink);min-width:0}
-.gb-ui p{margin:0}
-.gb-ui-h{font-weight:500;font-size:12px;letter-spacing:-.005em}
-.gb-ui-ico{display:flex;align-items:center;gap:6px}
-.gb-ui-ico.hue{color:var(--h)}
-.gb-ui-ico svg{width:13px;height:13px}
-.gb-ui-p{color:var(--muted)}
-.gb-ui-pill{padding:3px 7px;border-radius:99px;font-size:10.5px;font-weight:500;color:var(--h);background:color-mix(in srgb,var(--h) 8%,transparent)}
-.gb-ui-src{font-size:10.5px;color:var(--h)}
-.gb-ui-src span{display:block;color:var(--faint)}
-.gb-ui-kv{margin:0;width:100%;display:grid;gap:8px}
-.gb-ui-kv > div{display:grid;grid-template-columns:14px 1fr;column-gap:8px;align-items:start}
-.gb-ui-kv svg{grid-row:span 2;width:13px;height:13px;margin-top:1px;color:var(--faint)}
-.gb-ui-kv dt{font-size:10.5px;color:var(--muted)}
-.gb-ui-kv dd{margin:0;font-weight:500}
-.gb-ui-date{display:flex;gap:9px;align-items:flex-start}
-.gb-ui-date svg{width:18px;height:18px;color:var(--faint);stroke-width:1.3}
-.gb-ui-date span{display:block;font-size:10.5px;color:var(--muted)}
-.gb-ui-date b{display:block;font:500 15px/1.3 var(--sans);letter-spacing:-.01em}
-.gb-ui-date.sm svg{width:14px;height:14px;color:var(--h)}
-.gb-ui-date.sm b{font-size:12px}
-.gb-ui-note{display:flex;gap:6px;align-items:flex-start;width:100%;padding-top:8px;border-top:1px solid var(--line);font-size:10.5px;color:var(--muted)}
-.gb-ui-note svg{width:12px;height:12px;margin-top:1px;color:var(--faint)}
-.gb-ui-field{width:100%;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gb-ui-field span{display:block;font-size:10px;color:var(--faint)}
-.gb-ui-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:6px;border-radius:6px;font-size:11px;font-weight:500;box-shadow:inset 0 0 0 1px var(--line)}
-.gb-ui-btn.dark{background:var(--ink);color:var(--bg);box-shadow:none}
-.gb-ui-btn svg{width:12px;height:12px}
-.gb-ui-bar{width:100%;height:3px;border-radius:99px;background:var(--line)}
-.gb-ui-bar i{display:block;width:14%;height:100%;border-radius:inherit;background:var(--h)}
-.gb-ui-in{align-self:stretch;min-height:120px}
-.gb-ui-photo{display:grid;place-items:center;width:52px;height:42px;border-radius:4px;color:#fff;background:#7A6352}
-.gb-ui-photo svg{width:16px;height:16px;opacity:.8}
-.gb-ui-bubble{padding:6px 9px;border-radius:6px;background:var(--surface);color:var(--muted);font-size:11px}
-.gb-ui-plus{position:absolute;right:10px;bottom:10px;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted);font:400 14px/1 var(--sans)}
+/* each step's screen: a real crop of the Getbaq app where it happens
+   in the app, framed by a hairline; the one step that reaches her
+   outside the app is a native iOS notification */
+.gb-shot{align-self:start;margin:0;border-radius:6px;overflow:hidden;background:#F6F4EE;outline:1px solid var(--line);outline-offset:-1px}
+.gb-shot img{display:block;width:100%;height:auto}
+.gb-shot.fade img{-webkit-mask-image:linear-gradient(90deg,#000 72%,transparent);mask-image:linear-gradient(90deg,#000 72%,transparent)}
+:root[data-theme="dark"] .gb-shot{outline:none}
+.gb-ios{align-self:start;display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;background:rgba(245,245,245,.92);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+  font:400 10.5px/1.35 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;color:#1C1C1E}
+.gb-ios img{width:26px;height:26px;border-radius:6px;flex:none}
+.gb-ios > div{min-width:0;flex:1}
+.gb-ios p{margin:0}
+.gb-ios-top{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.gb-ios-top b{font-weight:600;font-size:11px}
+.gb-ios-top span{flex:none;font-size:9.5px;color:#6C6C70}
+:root[data-theme="dark"] .gb-ios{background:rgba(44,44,46,.92);color:#F2F2F7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+:root[data-theme="dark"] .gb-ios-top span{color:#98989F}
 :root[data-theme="dark"] .gb-sys-steps > li{--h:#8DB1F2}
 :root[data-theme="dark"] .gb-sys-steps > li.s3{--h:#79C99A}
 :root[data-theme="dark"] .gb-sys-steps > li.s4{--h:#E3B65A}
@@ -1150,40 +1130,35 @@ addEventListener("pagereveal",function(e){
 <ol class="gb-sys-steps" aria-label="What happens to a case inside Getbaq">
 <li class="s1"><div class="gb-sys-h"><span class="gb-sys-n">01</span><b>Input</b><p>A screenshot, a forwarded chat, or typed words.</p></div>
 <p class="gb-sys-who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Her</p>
-<div class="gb-ui gb-ui-in" aria-hidden="true"><span class="gb-ui-photo"><svg viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><circle cx="5.5" cy="6.5" r="1.3"/><path d="m2 12 3.5-3.5 3 3 2-2 3.5 3.5"/></svg></span><p class="gb-ui-bubble">They delivered a rusted product…</p><span class="gb-ui-plus">+</span></div>
+<figure class="gb-shot"><img src="./assets/gbs-input.webp" width="640" height="345" loading="lazy" alt="Getbaq’s start screen: What happened? Paste a screenshot, forward the chat, or just type it."></figure>
 <p class="gb-sys-f">Give it everything in one place.</p></li>
 <li class="s2"><div class="gb-sys-h"><span class="gb-sys-n">02</span><b>Understand</b><p>Facts extracted: company, amount, dates, issue.</p></div>
 <p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</p>
-<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h">Extracted details</p><dl class="gb-ui-kv">
-<div><svg viewBox="0 0 16 16"><path d="M2.5 14.5v-9l5.5-3 5.5 3v9M6 14.5v-4h4v4"/></svg><dt>Company</dt><dd>Flipkart</dd></div>
-<div><svg viewBox="0 0 16 16"><path d="M4.5 3h7M4.5 6h7M6 3c3.5 0 3.5 6 0 6H4.5l5 5"/></svg><dt>Amount</dt><dd>₹3,499</dd></div>
-<div><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg><dt>Order date</dt><dd>2 Aug 2026</dd></div>
-<div><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5M8 11h0"/></svg><dt>Issue</dt><dd>Rusted jar</dd></div>
-</dl></div>
+<figure class="gb-shot"><img src="./assets/gbs-understand.webp" width="298" height="135" loading="lazy" alt="Getbaq’s case file, What I know: Flipkart, ₹3,499, 2 Aug 2026, first complaint 4 Aug 2026."></figure>
 <p class="gb-sys-f">The agent turns messy input into structured facts.</p></li>
 <li class="s3"><div class="gb-sys-h"><span class="gb-sys-n">03</span><b>Verify</b><p>Find the one rule that applies, with its source and confidence.</p></div>
 <p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg>AI + rule sheet</p>
-<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h">E-commerce Rules 4(4)</p><span class="gb-ui-pill">High confidence</span><p class="gb-ui-p">The platform must redress her complaint within one month of receiving it.</p><p class="gb-ui-src"><span>Source</span>Consumer Protection (E-Commerce) Rules, 2020</p></div>
+<figure class="gb-shot"><img src="./assets/gbs-verify.webp" width="298" height="98" loading="lazy" alt="Getbaq’s case file, The rule: the platform must redress the complaint within one month (30 days) of receiving it. Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)."></figure>
 <p class="gb-sys-f">The agent finds the rule and shows its source.</p></li>
 <li class="s4"><div class="gb-sys-h"><span class="gb-sys-n">04</span><b>Calculate</b><p>The deadline and what’s owed.</p></div>
 <p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p>
-<div class="gb-ui" aria-hidden="true"><div class="gb-ui-date"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg><p><span>Reply deadline</span><b>3 Sep 2026</b></p></div><span class="gb-ui-pill">Calculated</span><p class="gb-ui-note"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 7.5V11M8 5h0"/></svg>By code, in one fixed timezone. The model never sees a day count.</p></div>
+<figure class="gb-shot"><img src="./assets/gbs-calculate.webp" width="298" height="124" loading="lazy" alt="Getbaq’s case file, Deadline: Flipkart must fix this by 3 Sep 2026, 20 days left."></figure>
 <p class="gb-sys-f">Dates and amounts are calculated by code, not by the model.</p></li>
 <li class="s5"><div class="gb-sys-h"><span class="gb-sys-n">05</span><b>Draft</b><p>A short, factual complaint.</p></div>
 <p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI · checked by code</p>
-<div class="gb-ui" aria-hidden="true"><p class="gb-ui-field"><span>To</span>Flipkart grievance officer</p><p class="gb-ui-field"><span>Subject</span>Refund of ₹3,499</p><p class="gb-ui-p">Dear Grievance Officer, I am writing to ask for a refund of ₹3,499 for my order of 2 Aug…</p></div>
+<figure class="gb-shot fade"><img src="./assets/gbs-draft.webp" width="390" height="132" loading="lazy" alt="The start of her letter in Getbaq: I bought a mixer grinder from Flipkart on 2 Aug for ₹3,499…"></figure>
 <p class="gb-sys-f">The agent drafts it from verified facts and the rule.</p></li>
 <li class="s6"><div class="gb-sys-h"><span class="gb-sys-n">06</span><b>Approve</b><p>She signs and sends, or edits, or says no.</p></div>
 <p class="gb-sys-who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Her</p>
-<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h gb-ui-ico"><svg viewBox="0 0 16 16"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="m2 4 6 5 6-5"/></svg>Send complaint</p><p class="gb-ui-field"><span>To</span>Flipkart grievance officer</p><span class="gb-ui-btn dark"><svg viewBox="0 0 16 16"><path d="M14.5 1.5 7 9M14.5 1.5 10 14.5 7 9 1.5 6z"/></svg>Send as me</span><span class="gb-ui-btn">Edit</span><p class="gb-ui-note"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 7.5V11M8 5h0"/></svg>Six seconds to undo.</p></div>
+<figure class="gb-shot"><img src="./assets/gbs-approve.webp" width="552" height="300" loading="lazy" alt="Getbaq’s send block: Sign the letter, then Send it, with Edit and Not now beside it."></figure>
 <p class="gb-sys-f">The decision stays with her. It goes out in her name.</p></li>
 <li class="s7"><div class="gb-sys-h"><span class="gb-sys-n">07</span><b>Track</b><p>The deadline and the company’s reply.</p></div>
 <p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p>
-<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h gb-ui-ico"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.5 1.5"/></svg>Waiting for Flipkart</p><span class="gb-ui-bar"><i></i></span><div class="gb-ui-date sm"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg><p><span>If no reply by 3 Sep 2026</span><b>Escalate to 1915</b></p></div></div>
+<figure class="gb-shot"><img src="./assets/gbs-track.webp" width="298" height="192" loading="lazy" alt="Getbaq’s case file, Where it’s at: you told me, facts checked, rule found, complaint sent now; their reply and resolved still to come."></figure>
 <p class="gb-sys-f">The case keeps the deadline and watches for the reply.</p></li>
 <li class="s8"><div class="gb-sys-h"><span class="gb-sys-n">08</span><b>Escalate</b><p>The 1915 complaint, prepared; still her tap.</p></div>
 <p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI + her</p>
-<div class="gb-ui" aria-hidden="true"><p class="gb-ui-h gb-ui-ico hue"><svg viewBox="0 0 16 16"><path d="M5 1.5 6.5 5 5 6.3a8 8 0 0 0 4.7 4.7L11 9.5l3.5 1.5v2.5a1.5 1.5 0 0 1-1.6 1.5C7 14.5 1.5 9 1.5 3.1A1.5 1.5 0 0 1 3 1.5z"/></svg>Escalation ready</p><p class="gb-ui-p">I’ve prepared a 1915 complaint with all the details from this case.</p><span class="gb-ui-btn dark">Review and send</span><span class="gb-ui-btn">Not now</span></div>
+<div class="gb-ios" role="img" aria-label="An iPhone notification from Getbaq: Flipkart hasn’t replied by 3 Sep. Your 1915 complaint is ready. Tap to review and send."><img src="./assets/gbs-icon.webp" width="54" height="54" alt=""><div><p class="gb-ios-top"><b>Flipkart hasn’t replied</b><span>now</span></p><p>Your 1915 complaint is ready. Tap to review and send.</p></div></div>
 <p class="gb-sys-f">If there’s no reply, the agent prepares it. She still approves.</p></li>
 </ol>
 <p class="gb-sys-swipe" aria-hidden="true">Swipe through the eight steps →</p>
