@@ -2910,6 +2910,20 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     transition:opacity .55s cubic-bezier(.22,1,.36,1) .06s,transform .7s cubic-bezier(.22,1,.36,1) .06s,filter .55s cubic-bezier(.22,1,.36,1) .06s}
 }
 @media (hover:none){ #work .cardframe::after{opacity:1} #work .worktext{opacity:1;transform:none;filter:none} }
+/* dark mode: the light screenshots showed through the 78% fade as a milky grey
+   band. Here the foot is denser and dims what's under it instead of lifting it,
+   over a longer ramp, and the title takes the lighter ink */
+:root[data-theme="dark"] #work .cardframe::after{background:color-mix(in srgb,var(--bg) 92%,transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(.5) brightness(.55);backdrop-filter:blur(14px) saturate(.5) brightness(.55);
+  -webkit-mask-image:linear-gradient(to top,#000 0%,#000 38%,rgba(0,0,0,.6) 70%,transparent 100%);mask-image:linear-gradient(to top,#000 0%,#000 38%,rgba(0,0,0,.6) 70%,transparent 100%)}
+:root[data-theme="dark"] #work .worktext h3{color:var(--ink)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) #work .cardframe::after{background:color-mix(in srgb,var(--bg) 92%,transparent);
+    -webkit-backdrop-filter:blur(14px) saturate(.5) brightness(.55);backdrop-filter:blur(14px) saturate(.5) brightness(.55);
+    -webkit-mask-image:linear-gradient(to top,#000 0%,#000 38%,rgba(0,0,0,.6) 70%,transparent 100%);mask-image:linear-gradient(to top,#000 0%,#000 38%,rgba(0,0,0,.6) 70%,transparent 100%)}
+  :root:not([data-theme="light"]) #work .worktext h3{color:var(--ink)}
+}
+
 @media (prefers-reduced-motion:reduce){ #work .worktext{transform:none;filter:none} }
 @media (max-width:684px){ #work .workgrid{row-gap:24px} #work .workrow + .workrow{padding-top:0} }
 
