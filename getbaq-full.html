@@ -921,7 +921,7 @@ addEventListener("pagereveal",function(e){
 </nav>
 <!-- ================= OVERVIEW ================= -->
 <section id="overview" style="margin-top:0">
-<div class="col" data-reveal=""><p class="gb-versions" data-on="full"><span class="gb-pill" aria-hidden="true"></span><a href="./getbaq.html">Short read · 9 min</a><span aria-current="page">Deep dive · 40 min</span></p></div>
+<div class="col" data-reveal=""><p class="gb-versions" data-on="full"><span class="gb-pill" aria-hidden="true"></span><a href="./getbaq.html">Short read · 7 min</a><span aria-current="page">Deep dive · 40 min</span></p></div>
 <figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="The Getbaq app on a MacBook. Ananya types: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. Getbaq reads it, checks ₹3,499, Flipkart and 2 Aug with her, and once she confirms, finds the rule, sets the reply-by date of 3 Sep 2026 and has her letter ready to sign.">
 <div class="gbh-mac" aria-hidden="true"><div class="gbh-screen">
@@ -951,7 +951,7 @@ addEventListener("pagereveal",function(e){
 </div><figure class="gb-ex" data-embed="intake-now" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">Where every case starts: one box that takes anything.</figcaption></figure>
 </div>
 <div class="col gb-sec" data-reveal="">
-<div class="figrow" style="--cols:4"><div><p class="fnum">5</p><p class="fnote">errors that would have cost people money, caught before any user saw them</p></div><div><p class="fnum">8</p><p class="fnote">legal rules, each verified at the source</p></div><div><p class="fnum">30</p><p class="fnote">real cases in the eval set, 6 of them traps</p></div><div><p class="fnum">210</p><p class="fnote">automated tests on dates, money, states and safety</p></div></div>
+<div class="figrow" style="--cols:4"><div><p class="fnum">5</p><p class="fnote">errors that would have cost people money, caught before any user saw them</p></div><div><p class="fnum">8</p><p class="fnote">legal rules, each verified at the source</p></div><div><p class="fnum">30</p><p class="fnote">test cases from real public complaints, 6 of them traps</p></div><div><p class="fnum">214</p><p class="fnote">deterministic tests on dates, money, states and safety, all passing</p></div></div>
 </div>
 <div class="col gb-sec" data-reveal="">
 <p class="eyebrow">The four decisions this story is about</p>
@@ -1197,14 +1197,14 @@ addEventListener("pagereveal",function(e){
 </section>
 <section class="gb-sec" data-reveal="" id="s5-1">
 <div class="col"><p class="eyebrow">The evaluation</p><h3 class="say sub">Built to catch the model inventing things</h3></div>
-<div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">8</p><p class="fnote">rules, each read from the actual legal text and marked verified</p></div><div><p class="fnum">30</p><p class="fnote">real, sourced cases, rewritten with testable dates</p></div><div><p class="fnum">6</p><p class="fnote">traps where the right answer is “no rule covers this”</p></div><div><p class="fnum">3×</p><p class="fnote">runs per case; it passes only if all three pass</p></div></div></div>
+<div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">8</p><p class="fnote">rules, each read from the actual legal text and marked verified</p></div><div><p class="fnum">30</p><p class="fnote">test cases from real public complaints, rewritten with testable dates</p></div><div><p class="fnum">6</p><p class="fnote">traps where the right answer is “no rule covers this”</p></div><div><p class="fnum">3×</p><p class="fnote">runs per case; it passes only if all three pass</p></div></div></div>
 <p class="col body">Some cases have two fair answers. Several are missing a company, date or amount, to test whether it asks instead of guessing. The case type, rule and amount are checked automatically, and <b>a person reads every draft for invented facts.</b> An invented rule fails outright, like a wrong deadline.</p>
 </section>
 <section class="gb-sec" data-reveal="" id="s5-5">
-<div class="col"><p class="eyebrow">Status</p><h3 class="say sub">Built, and ready to run</h3></div>
+<div class="col"><p class="eyebrow">Status</p><h3 class="say sub">Built, but no clean run yet</h3></div>
 <div class="pair one col"><div>
-<div class="pills"><span class="tag t-pos">Test set built</span><span class="tag t-pos">Rules verified</span><span class="tag t-pos">30 cases ready</span><span class="tag t-att">Not run yet</span></div>
-<p>It’s built and ready to run: 30 cases, three runs each, 90 calls in all. The real pass rate goes here, failures included.</p>
+<div class="pills"><span class="tag t-pos">Test set built</span><span class="tag t-pos">Rules verified</span><span class="tag t-pos">30 cases ready</span><span class="tag t-att">No clean run yet</span></div>
+<p>The harness is built: 30 cases, three runs each, 90 calls in all. It hasn’t completed a clean run yet. The real pass rate goes here, failures included.</p>
 </div></div>
 </section>
 <div class="col gb-folds" data-reveal="">
@@ -1474,10 +1474,11 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">Iteration</p><h3 class="say sub">One box that takes anything</h3></div>
 <p class="col body">People won’t sort a bot reply from an order page from a bank SMS. The first two versions made her sort; the third made it the agent’s job.</p>
 <div class="col gb-sketches s3">
-<figure class="gb-sketch gb-ex" data-embed="sketch-v1"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v1 · sketch. </b>A labelled box, plus chips that inserted a sentence. Still real effort.</figcaption></figure>
-<figure class="gb-sketch gb-ex" data-embed="sketch-v2"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v2 · sketch. </b>Screenshot first, typing as a small link. She still sorted her own input.</figcaption></figure>
-<figure class="gb-sketch gb-ex" data-embed="intake-now"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v3 · live. </b>One box. Sorting it is the agent’s job.</figcaption></figure>
+<figure class="gb-sketch gb-ex" data-embed="sketch-v1"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>V1 · Structured input. </b>A labelled box, plus chips that inserted a sentence. The user had to decide what kind of evidence they were giving.</figcaption></figure>
+<figure class="gb-sketch gb-ex" data-embed="sketch-v2"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>V2 · More flexible. </b>Screenshot first, typing as a small link. Fewer decisions up front, but the user still sorted their own input.</figcaption></figure>
+<figure class="gb-sketch gb-ex" data-embed="intake-now"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>V3 · One box. </b>Paste whatever you have; classifying it is the agent’s job.</figcaption></figure>
 </div>
+<div class="hinge col"><p>The user shouldn’t have to understand the agent’s input model before they can use it.</p></div>
 <p class="col body"><b>One box, but not one process.</b> Text is scrubbed for OTPs, then read. A screenshot is read with vision, which is slower, and the trace says so.</p>
 <figure class="gb-ex col" data-embed="input-kinds" data-inner="520" data-note="Live">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
@@ -1614,8 +1615,8 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <section class="gb-sec" data-reveal="" id="s2-6">
-<div class="col"><p class="eyebrow">How I’ll know it works</p><h3 class="say sub">One number matters to her. Four more tell me if it’s working.</h3></div>
-<div class="pair col gb-grid"><div class="hi"><h4>Money recovered</h4><p class="body">The only number she cares about. Target: 3 of the first 5 real cases refunded.</p></div><div><h4>Days to refund</h4><p class="body">Target: inside the rule’s own deadline, beating the manual journey.</p></div><div><h4>Drafts sent unedited</h4><p class="body">Draft quality, and trust. Target: most sent with no edits, or small ones.</p></div><div><h4>Wrong-rule rate</h4><p class="body">Measures invented law directly. Target: under 5% on the eval, and zero invented rules.</p></div><div><h4>Follow-ups by the agent</h4><p class="body">Effort removed. Target: she never writes a follow-up herself.</p></div></div>
+<div class="col"><p class="eyebrow">How I’ll know it works</p><h3 class="say sub">Proposed success criteria. Not measured yet.</h3></div>
+<div class="pair col gb-grid"><div class="hi"><h4>Money recovered</h4><p class="body">The only number the user cares about. Target: 3 of the first 5 real cases refunded. Not measured yet.</p></div><div><h4>Days to refund</h4><p class="body">Target: inside the rule’s own deadline, beating the manual journey.</p></div><div><h4>Drafts sent unedited</h4><p class="body">Draft quality, and trust. Target: most sent with no edits, or small ones.</p></div><div><h4>Wrong-rule rate</h4><p class="body">Measures invented law directly. Target: under 5% on the eval, and zero invented rules.</p></div><div><h4>Follow-ups by the agent</h4><p class="body">Effort removed. Target: she never writes a follow-up herself.</p></div></div>
 <figure class="gb-ex col" data-embed="screen-resolved" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption class="cap">The Resolved screen. The money she got back, first and biggest, then how long it took and how little she had to do.</figcaption></figure>
 <p class="col body">The targets are hypotheses to test, not results. <b>The riskiest assumptions, ranked:</b> people let an agent send in their name; companies answer rule-backed complaints faster; the helpline accepts agent-prepared ones; the AI picks the right rule; and people will pay, which this project didn’t test.</p>
 </section>
