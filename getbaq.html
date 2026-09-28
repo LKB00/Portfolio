@@ -416,12 +416,6 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
    styling in the same family. The words are unchanged. */
 :root{--card:#FFFFFF;--gb-pos:#2F8F4E}
 :root[data-theme="dark"]{--card:#161616;--gb-pos:#4ED07F}
-
-/* hero */
-.gb-hero .eyebrow{margin:0}
-.gb-hero h1{margin-top:var(--s2)}
-.gb-hero h1 em{font-style:normal}
-.gb-hero .livelink{margin-top:var(--s3)}
 /* the prototype, as a quiet card in the portfolio's own terms: a flat
    surface, Getbaq's mark, two lines, an arrow. Hover darkens the surface
    and nudges the arrow, the same way the work cards respond */
@@ -446,34 +440,18 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
 
 h3.say{font-family:var(--serif);color:var(--ink);margin:0 0 var(--s2)}
 
-/* sections and chapters */
-div.gb-sec{margin-top:var(--s5)}
-.gb-sec > * + *{margin-top:var(--s3)}
-.gb-sec > .col:first-child + *{margin-top:0}
-.gb-sec > p.body + p.body{margin-top:var(--s2)}
-.gb-chapter > .gb-sec:first-of-type{margin-top:var(--s4)}
-.gb-chapter > .col:first-child .dek{margin-top:0}
-
 /* facts (App Merge's .meta, two across for four facts) */
 .meta{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3);margin-top:var(--s4);
   padding-top:var(--s3);border-top:1px solid var(--line)}
 .meta dd{margin:0;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--ink)}
 .meta.m3{grid-template-columns:repeat(3,1fr)}
 @media(max-width:600px){.meta.m3{grid-template-columns:1fr}}
-.gb-open{margin-top:var(--s4)}
-.gb-lede{margin-top:var(--s4);font:400 19px/1.5 var(--serif);letter-spacing:-.012em;color:var(--ink)}
-.gb-chips{list-style:none;margin-top:14px;margin-bottom:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-.gb-chips li{font:500 12px/1 var(--sans);letter-spacing:.02em;color:var(--muted);padding:7px 12px;border-radius:99px;background:var(--surface)}
-
-.gb-open .pair{grid-template-columns:1fr 1fr}
-@media(max-width:600px){.gb-open .pair{grid-template-columns:1fr}}
 @media(max-width:600px){.meta{grid-template-columns:1fr}}
 
 /* numbered points (App Merge's .point) */
 .point{margin-top:var(--s4)}
 .point .n{margin-bottom:6px}
 .point p.body{margin:0}
-.gb-points .point{margin-top:var(--s3)}
 
 /* figures (Rise Portal's .figrow) */
 .figrow{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:var(--s2);margin-top:var(--s3)}
@@ -489,7 +467,6 @@ div.gb-sec{margin-top:var(--s5)}
 .pair.one{grid-template-columns:1fr}
 .pair > div{background:var(--surface);border-radius:8px;padding:clamp(18px,2.6vw,28px)}
 .pair > div.hi{box-shadow:inset 0 0 0 1.5px var(--ink)}
-.gb-grid > div:last-child:nth-child(odd){grid-column:1/-1}
 .pair .cap{margin:0 0 8px}
 .pair h4{font-family:var(--serif);font-weight:500;font-size:18px;line-height:1.3;letter-spacing:-.012em;color:var(--ink);margin:0 0 6px}
 .pair .cap b s{text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:13px}
@@ -511,8 +488,6 @@ div.gb-sec{margin-top:var(--s5)}
 /* the site's .keys margin shorthand would undo the reading column */
 ul.keys.col{margin-left:auto;margin-right:auto}
 @media(min-width:981px){ul.keys.col{margin-left:250px;margin-right:0}}
-.gb-sec > .col:first-child + ul.keys{margin-top:0}
-.gb-persona .keys{margin-top:0}
 .keys p b{color:var(--ink);font-weight:500}
 .keys p span{color:var(--muted)}
 .keys li.warn i{color:var(--neg)}
@@ -520,9 +495,6 @@ ul.keys.col{margin-left:auto;margin-right:auto}
 /* persona (App Merge's .side) */
 .side{display:grid;grid-template-columns:minmax(190px,230px) 1fr;gap:var(--s4);align-items:start}
 @media(max-width:700px){.side{grid-template-columns:1fr;gap:var(--s2)}}
-.gb-persona h4{font-family:var(--serif);font-weight:500;font-size:20px;letter-spacing:-.015em;color:var(--ink);margin:0}
-.gb-persona .cap{margin-top:6px}
-.gb-persona .keys p{color:var(--ink)}
 
 /* quote box and statements (App Merge's .quote and .hinge) */
 .quote{background:rgba(243,218,178,.3);border-radius:0 2px 2px 0;padding:20px 28px 20px 24px}
@@ -532,168 +504,24 @@ ul.keys.col{margin-left:auto;margin-right:auto}
 .hinge{padding:var(--s4) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .hinge p{font-family:var(--serif);font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.35;letter-spacing:-.018em;color:var(--ink)}
 .hinge p + p{margin-top:var(--s2);font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:1.6;letter-spacing:-.01em;color:var(--muted)}
-.gb-sec > .hinge.col{margin-top:var(--s4)}
-.gb-close .livelink{margin-top:var(--s3)}
 
 /* labels, all in the site's mono label */
 .meta dt,.colhead,.point .n,.pair .cap b,.figrow .fsrc,.gb-rows .rh p,.gb-table th{
   font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 
-/* "this, so that" rows */
-.gb-rows .rh{display:none;padding-bottom:10px;border-bottom:1px solid var(--line)}
-.gb-rows .rh p{margin:0}
-.gb-rows ul{list-style:none;margin:0;padding:0}
-.gb-rows li{display:grid;gap:4px;padding:14px 0;border-bottom:1px solid var(--line)}
-.gb-rows li p{margin:0;font-size:16px;line-height:1.6;letter-spacing:-.01em}
-.gb-rows li p:first-child{color:var(--ink)}
-.gb-rows li p:last-child{color:var(--muted)}
-.gb-rows > ul:first-child{border-top:1px solid var(--line)}
-/* consistency: a stats row sits 16px under its heading like every other
-   block (its own top margin leaked through the wrapper and made it 32);
-   a rows list straight after a statement shares its rule, not a second one */
-.gb-sec .col > .figrow:first-child{margin-top:0}
-.hinge + .gb-rows > ul:first-child{border-top:0}
-@media(min-width:640px){
-  .gb-rows .rh,.gb-rows li{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px}
-  .gb-rows .rh{display:grid}
-}
-
-/* tables */
-.gb-table{overflow-x:auto}
-.gb-table table{width:100%;border-collapse:collapse;text-align:left;font-size:14px;letter-spacing:-.01em}
-.gb-table th{padding:0 10px 10px;vertical-align:bottom;border-bottom:1px solid var(--line)}
-.gb-table th.hi{color:var(--ink)}
-.gb-table td{padding:12px 10px;vertical-align:top;color:var(--muted);border-bottom:1px solid var(--line)}
-.gb-table th:first-child,.gb-table td:first-child{padding-left:0}
-.gb-table td:first-child{color:var(--ink)}
-.gb-table td.hi{background:var(--surface);color:var(--ink)}
-.gb-table .num{font-family:var(--mono);font-size:13px}
-.gb-mk{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%}
-.gb-mk.y{background:var(--surface);color:var(--ink)}
-.gb-mk.s{color:var(--muted);font-size:13px;line-height:1}
-.gb-mk.n{color:var(--faint)}
-.gb-mk.d{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 45%,transparent);color:var(--ink)}
-.gb-legend-note{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--muted)}
-
-/* detail one tap away, and questions */
-.gb-more{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.gb-more summary,.gb-faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;cursor:pointer;list-style:none;
-  font-size:16px;letter-spacing:-.01em;color:var(--ink)}
-.gb-more summary::-webkit-details-marker,.gb-faq summary::-webkit-details-marker{display:none}
-.gb-more summary svg,.gb-faq summary svg{flex:none;color:var(--muted);transition:transform .25s var(--ease)}
-.gb-more[open] summary svg,.gb-faq[open] summary svg{transform:rotate(45deg)}
-.gb-more > div{padding:0 0 20px}
-.gb-more > div > * + *{margin-top:16px}
-.gb-more .gb-rows li:last-child{border-bottom:0}
-.gb-skills{list-style:none;margin:0;padding:0;display:grid;gap:0 32px}
-@media(min-width:640px){.gb-skills{grid-template-columns:1fr 1fr}}
-.gb-skills a{display:block;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
-.gb-skills a span{color:var(--muted)}
-.gb-faqs{border-top:1px solid var(--line)}
-.gb-faq{border-bottom:1px solid var(--line)}
-.gb-faq p{margin:0 0 18px;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted)}
-
-/* small inline pieces */
-.gb-fields{display:flex;flex-wrap:wrap;gap:6px}
-.gb-fields code{font-family:var(--mono);font-size:12.5px;padding:4px 8px;border-radius:6px;background:var(--surface);color:var(--ink)}
-
-.gb-loop{margin-top:var(--s3)}
-.gb-loop-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.7fr);gap:22px}
-.gb-loop-steps > li{position:relative;display:flex;flex-direction:column;gap:8px;padding:14px 14px 16px;border-radius:8px;background:#F2F2F2;font-size:14px;line-height:1.35;color:var(--ink)}
-.gb-loop-steps > li + li::before{content:"\2192";position:absolute;left:-17px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
-.gb-loop-steps i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted)}
-.gb-loop-steps > li.fix{background:#E3F3EE}
-.gb-fix{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:nowrap;gap:6px;align-items:center}
-.gb-fix li{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-size:13px;background:#fff}
-.gb-fix li{position:relative}
-.gb-fix li + li{margin-left:16px}
-.gb-fix li + li::before{content:"\2192";position:absolute;left:-17px;color:var(--muted);font-size:12px}
-.gb-fix .p1{background:#2E7D6B;color:#fff}
-.gb-fix .p2{background:#A3D3C4;color:#173F36}
-.gb-fix .p3{background:#fff;color:var(--muted);box-shadow:inset 0 0 0 1px #C6E5DB}
-/* the return: a dashed line from under the fix back to under step 1 */
-.gb-loop-back{position:relative;display:block;height:18px;margin:6px 12% 0 7%;border:1.5px dashed #A3D3C4;border-top:0;border-radius:0 0 14px 14px}
-.gb-loop-back::before{content:"";position:absolute;left:-6.5px;top:-7px;border:5.5px solid transparent;border-bottom:7px solid #A3D3C4;border-top:0}
-@media(max-width:600px){
-  .gb-loop-steps{grid-template-columns:1fr;gap:18px}
-  .gb-loop-steps > li + li::before{content:"\2193";left:50%;top:-16px;transform:translateX(-50%)}
-  .gb-loop-back{display:none}
-}
-.gb-legend{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-.gb-legend li{font-size:14px;color:var(--muted)}
-.gb-legend .tag{display:inline-block;margin:0 10px 0 0}
-.gb-stack > * + *{margin-top:var(--s3)}
-.gb-stack > p.body + p.body{margin-top:var(--s2)}
-
 /* the live exhibits, framed like the other case studies' image panels */
 figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-stack figure.gb-ex,.gb-sketches figure.gb-ex,.col > figure.gb-ex{margin-left:0;margin-right:0}
-.gb-stack figure.gb-ex:first-child{margin-top:0}
 .gb-ex-panel{position:relative;background:#F2F2F2;border-radius:8px;padding:clamp(16px,3vw,28px)}
 
 .gb-ex-inner{margin:0 auto}
 .gb-ex iframe{display:block;width:100%;height:320px;border:0;background:#F2F2F2;color-scheme:light;transition:height .25s var(--ease)}
 .gb-ex-hero{margin-top:0}
-.gb-sketches{display:grid;gap:var(--s2);grid-template-columns:1fr 1fr}
-.gb-sketches.s3 > :last-child{grid-column:1/-1}
-@media(max-width:600px){.gb-sketches{grid-template-columns:1fr}}
-.gb-sketches .gb-ex-panel{padding:16px}
-.gb-sketches figure.gb-ex{margin-top:0;display:flex;flex-direction:column}
-.gb-sketches figure.gb-ex > .gb-ex-panel{flex:1}
-.gb-sketches figcaption b{color:var(--ink);font-weight:500}
-
-/* the four decisions the page argues for, each a door to its chapter */
-.gb-decide{list-style:none;margin:var(--s2) 0 0;padding:0;display:grid;gap:var(--s2)}
-@media(min-width:640px){.gb-decide{grid-template-columns:1fr 1fr}}
-.gb-decide a{display:flex;gap:16px;height:100%;box-sizing:border-box;padding:clamp(18px,2.6vw,24px);border-radius:8px;background:var(--surface);color:var(--ink);text-decoration:none;transition:background-color .2s var(--ease)}
-.gb-decide a:hover{background:color-mix(in srgb,var(--surface) 92%,var(--ink))}
-.gb-decide .n{flex:none;font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.4vw,32px);line-height:1;color:var(--faint)}
-.gb-decide .x{display:flex;flex-direction:column;gap:6px}
-.gb-decide .h{font-family:var(--serif);font-weight:500;font-size:18px;line-height:1.3;letter-spacing:-.012em}
-.gb-decide .w{font-size:15px;line-height:1.55;letter-spacing:-.01em;color:var(--muted)}
-.gb-decide .go{margin-top:6px;font-size:14px;color:var(--ink)}
-.gb-decide .go span{display:inline-block;transition:transform .2s var(--ease)}
-.gb-decide a:hover .go span{transform:translateX(2px)}
-
-/* folds: each chapter shows its load-bearing sections in full, and the
-   rest as one-line entries (the point, stated) that open to the whole
-   section. Nothing is cut; it's one tap away. */
-.gb-folds{margin-top:var(--s5)}
-.gb-fold-list{margin-top:var(--s2);border-top:1px solid var(--line)}
 .gb-fold{border-bottom:1px solid var(--line);scroll-margin-top:80px}
 .gb-fold > summary{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:18px 0;cursor:pointer;list-style:none}
 .gb-fold > summary::-webkit-details-marker{display:none}
-.gb-fold-t{display:flex;flex-direction:column;gap:4px;min-width:0}
-.gb-fold-t b{font-family:var(--serif);font-weight:500;font-size:18px;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
-.gb-fold-t span{font-size:15px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
 .gb-fold > summary svg{flex:none;margin-top:4px;color:var(--muted);transition:transform .25s var(--ease)}
 .gb-fold[open] > summary svg{transform:rotate(45deg)}
-.gb-fold > summary:hover .gb-fold-t b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
-.gb-fold-body{padding:4px 0 var(--s4)}
-.gb-fold-body > * + *{margin-top:var(--s3)}
-.gb-fold-body > p.body + p.body{margin-top:var(--s2)}
-.gb-fold-body .col,.gb-fold-body ul.keys.col{margin-left:0;margin-right:0;max-width:none}
-.gb-fold-body > .hinge.col{margin-top:var(--s4)}
-/* consistency: a fold opens with its content 4px under the summary and
-   ends 56px above the next rule, whatever block comes first or last; a
-   label sits 16px over what it labels, in folds and overview blocks alike */
-.gb-fold-body > :first-child{margin-top:0}
-.gb-fold-body > :last-child{margin-bottom:0}
-.gb-fold-body > p.eyebrow + *,div.gb-sec > p.eyebrow:first-child + *{margin-top:var(--s2)}
-.gb-points .point:first-of-type{margin-top:0}
-
-/* trust patterns: the pattern and who named it, then where it lives */
-.gb-patterns{list-style:none;margin:0;padding:0;display:grid;gap:0 32px;border-top:1px solid var(--line)}
-@media(min-width:640px){.gb-patterns{grid-template-columns:1fr 1fr}}
-.gb-patterns li{padding:14px 0;border-bottom:1px solid var(--line)}
-.gb-patterns .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.gb-patterns .p{margin:0;font-family:var(--serif);font-weight:500;font-size:17px;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
-.gb-patterns .s{margin:0;flex:none;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
-.gb-patterns .w{margin:4px 0 0;font-size:15px;line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
-
-/* the closing statement after the last folds: the folds' own bottom rule
-   already closes that stretch, so no second rule a few lines under it */
-.gb-folds + div.gb-sec > .gb-close{border-top:0;padding-top:0}
 
 /* a research figure links to its study, quietly */
 .figrow .fsrc a{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-underline-offset:2px}
@@ -712,53 +540,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-call li:before{content:counter(c);grid-row:span 2;display:grid;place-items:center;width:20px;height:20px;margin-top:1px;border-radius:50%;background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--muted);font:500 11px/1 var(--mono)}
 .gb-call b{font:500 15px/1.4 var(--sans);color:var(--ink);letter-spacing:-.01em}
 .gb-call span{font:400 14px/1.55 var(--sans);color:var(--muted)}
-.gb-bugs i{font-style:normal;font-weight:500;color:var(--ink)}
-/* the case, step by step: eight quiet columns, each with who does it, a
-   small flat screen of that step, and what it means. Same language as the
-   rest of the page: 8px corners, hairlines, no shadows. Runs to the
-   section's right edge; two rows of four on desktop, two across on
-   narrower screens, a swipeable row on phones */
-.gb-sys-pair{margin-top:var(--s3);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;padding:16px 20px;border-radius:8px;background:var(--surface)}
-.gb-sys-pair p{margin:0;font:400 15px/1.45 var(--sans);letter-spacing:-.01em;color:var(--ink)}
-.gb-sys-pair span{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:13px;color:var(--muted)}
-.gb-sys-pair svg,.gb-sys svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.gb-sys-pair > i{width:7px;height:7px;border-top:1.4px solid var(--faint);border-right:1.4px solid var(--faint);transform:rotate(45deg)}
-.gb-sys{margin-top:var(--s2);container-type:inline-size;max-width:684px;margin-left:auto;margin-right:auto}
-@media(min-width:981px){.gb-sys{margin-left:250px}}
-.gb-sys-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.gb-sys-steps > li{position:relative;display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:12px;min-width:0;
-  padding:16px 14px 14px;border-radius:8px;background:var(--surface)}
-.gb-sys-h{display:flex;flex-direction:column;gap:4px}
-.gb-sys-n{font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--faint)}
-.gb-sys-h b{margin-top:8px;font:500 16px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
-.gb-sys-h p{margin:0;font:400 13px/1.45 var(--sans);color:var(--muted)}
-/* who does the step: her in ink (the moments she decides), the AI in the
-   capability map's lavender, code as a quiet outline */
-.gb-sys-who{align-self:start;justify-self:start;display:inline-flex;align-items:center;gap:5px;margin:0;padding:4px 8px;border-radius:99px;white-space:nowrap;
-  font:500 10px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.w-her .gb-sys-who{background:var(--ink);color:var(--bg)}
-.w-ai .gb-sys-who{background:#ECEAF6;color:#4E4775}
-.w-code .gb-sys-who{color:var(--muted);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
-:root[data-theme="dark"] .w-ai .gb-sys-who{background:rgba(160,146,232,.16);color:#CBC3F4}
-.gb-sys-who svg{width:12px;height:12px;stroke-width:1.5}
-/* each step's screen: a real crop of the Getbaq app where it happens
-   in the app, framed by a hairline; the one step that reaches her
-   outside the app is a native iOS notification */
-.gb-shot{align-self:stretch;display:flex;align-items:center;height:118px;margin:0;border-radius:6px;overflow:hidden;background:#F6F4EE;outline:1px solid var(--line);outline-offset:-1px}
-.gb-shot img{display:block;width:100%;height:auto}
-.gb-shot.fade img{-webkit-mask-image:linear-gradient(90deg,#000 72%,transparent);mask-image:linear-gradient(90deg,#000 72%,transparent)}
-:root[data-theme="dark"] .gb-shot{outline:none}
-.gb-ios{align-self:center;display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;background:rgba(245,245,245,.92);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
-  font:400 10.5px/1.35 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;color:#1C1C1E}
-.gb-ios img{width:26px;height:26px;border-radius:6px;flex:none}
-.gb-ios > div{min-width:0;flex:1}
-.gb-ios p{margin:0}
-.gb-ios-top{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
-.gb-ios-top b{font-weight:600;font-size:11px}
-.gb-ios-top span{flex:none;font-size:9.5px;color:#6C6C70}
-:root[data-theme="dark"] .gb-ios{background:rgba(44,44,46,.92);color:#F2F2F7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-:root[data-theme="dark"] .gb-ios-top span{color:#98989F}
-.gb-sys-swipe{display:none}
 @container (max-width:780px){
   .gb-sys-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .gb-shot{height:150px}
@@ -770,45 +551,11 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   .gb-sys-steps > li{scroll-snap-align:start;grid-row:1/-1}
   .gb-sys-swipe{display:block;margin:10px 0 0;font-size:12.5px;color:var(--muted)}
 }
-@media(max-width:560px){.gb-sys-pair{grid-template-columns:1fr;gap:12px}.gb-sys-pair > i{transform:rotate(135deg);margin-left:4px}}
-
-.gb-bugs i:not(:first-child){margin-left:2px}
-/* the hero bug: model vs. reality, in the site's own numerals */
-.gb-herobug{margin-top:var(--s3);background:var(--surface);border-radius:8px;padding:clamp(20px,3vw,32px)}
-.gb-herobug-row{display:flex;align-items:center;justify-content:center;gap:clamp(16px,4vw,40px);text-align:center}
-.gb-herobug-row .cap{margin:0 0 4px}
-.gb-herobug-big{font:500 clamp(32px,6vw,48px)/1 var(--mono);letter-spacing:-.01em;color:var(--ink)}
-.gb-herobug-arrow{font-size:24px;color:var(--faint)}
-.gb-herobug-risk{margin:20px 0 0;text-align:center;font:400 16px/1.5 var(--sans);color:var(--muted)}
-.gb-herobug-fix{margin:12px 0 0;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:16px;line-height:1.55;letter-spacing:-.01em;color:var(--ink)}
-.gb-fixgrid{margin-top:var(--s2);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s2)}
-.gb-fixgrid > div{background:var(--surface);border-radius:8px;padding:clamp(16px,2.2vw,22px)}
-/* the doc-driven blocks: two-column problem, the agent's line, claim trail, decisions */
-.gb-split{margin-top:var(--s3);display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
-.gb-split > div{background:var(--surface);border-radius:8px;padding:clamp(16px,2.4vw,22px)}
-.gb-split > div.hi{background:var(--ink);color:var(--bg)}
-.gb-split .cap{margin:0 0 10px}.gb-split > div.hi .cap b{color:color-mix(in srgb,var(--bg) 65%,transparent)}
-.gb-split ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;counter-reset:n}
-.gb-split li{counter-increment:n;display:flex;gap:10px;font-size:15px;line-height:1.4}
-.gb-split li:before{content:counter(n,decimal-leading-zero);font:500 11px/1.9 var(--mono);color:var(--faint)}
-.gb-split > div.hi li:before{color:color-mix(in srgb,var(--bg) 45%,transparent)}
 .gb-agentline{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 4px;align-items:center}
 .gb-agentline li{display:flex;align-items:center;gap:4px;font:500 13px/1 var(--sans);color:var(--ink);background:var(--surface);padding:9px 12px;border-radius:99px}
 .gb-agentline li + li:before{content:"→";margin-right:6px;color:var(--faint);font-weight:400}
 .gb-agentline li.her{background:var(--ink);color:var(--bg)}
 .gb-agentline li.her:before{color:color-mix(in srgb,var(--bg) 50%,transparent)}
-.gb-kicker{margin-top:var(--s3);padding:16px 20px;border-left:2px solid var(--ink);border-radius:0}
-.gb-kicker .cap{margin:0 0 4px}.gb-kicker p:not(.cap){margin:0;font:400 17px/1.5 var(--serif);letter-spacing:-.01em;color:var(--ink)}
-.gb-trail,.gb-rejected{margin-top:var(--s3);border-radius:8px;background:var(--surface);padding:6px 18px}
-.gb-trail > div,.gb-rejected > div{display:grid;grid-template-columns:1.25fr 1.2fr .75fr;gap:14px;padding:13px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.45}
-.gb-rejected > div{grid-template-columns:.8fr 1.1fr 1.3fr}
-.gb-trail > div:first-child,.gb-rejected > div:first-child{border-top:0}
-.gb-trail-h span,.gb-rejected-h span{font:500 10.5px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.gb-trail b,.gb-rejected b{font-weight:500;color:var(--ink)}
-.gb-trail span,.gb-rejected span{color:var(--muted)}
-.gb-trail i{font-style:normal;justify-self:start;align-self:start;font:500 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);padding:5px 8px;border-radius:99px;background:var(--bg)}
-.gb-trail-h i,.gb-rejected-h i{display:none}
-.gb-rejected em{font-style:normal;color:var(--ink)}
 
 /* ============ the case study's visual language ============
    One colour per actor, the same everywhere: her (green), the AI (violet),
@@ -842,142 +589,27 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
  .gb-cov-s b{font-size:13px}
  .gb-cov-l b{font-size:13px}
  .gb-cov-t svg{width:16px;height:16px}}
-.gb-chain{margin-top:var(--s3);padding:22px 20px 18px;border-radius:12px;background:var(--surface)}
-.gb-chain-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
-.gb-chain-steps li{display:flex;flex-direction:column;gap:6px;padding:12px 10px;border-radius:8px;background:var(--bg);min-height:78px}
-.gb-chain-steps span{font:500 10.5px/1 var(--mono);color:var(--faint);letter-spacing:.06em}
-.gb-chain-steps b{font:500 13.5px/1.3 var(--sans);color:var(--ink);letter-spacing:-.01em}
-.gb-chain-steps li.w{box-shadow:inset 0 0 0 1.5px var(--ink)}
-.gb-chain-bars{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:10px}
-.gb-chain-bars p{margin:0;display:flex;align-items:center;gap:8px;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.gb-chain-bars i{height:8px;border-radius:99px;flex:1}
-.gb-chain-bars .gpt{grid-column:4/5;color:var(--muted);flex-direction:column;align-items:stretch;gap:6px}
-.gb-chain-bars .gpt i{flex:none;background:color-mix(in srgb,var(--ink) 22%,transparent)}
-.gb-chain-bars .gb{grid-column:1/-1;grid-row:2;margin-top:8px;flex-direction:column;align-items:stretch;gap:6px;color:var(--ink)}
-.gb-chain-bars .gb i{flex:none;background:var(--char);box-shadow:inset 0 0 0 2px var(--lime)}
-@media(max-width:640px){.gb-chain-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.gb-chain-steps li{min-height:0}
- .gb-chain-bars{grid-template-columns:1fr}.gb-chain-bars .gpt,.gb-chain-bars .gb{grid-column:1;grid-row:auto}
- .gb-chain-bars .gpt span:after{content:" · step 04 only"}.gb-chain-bars .gb span:after{content:" · all six steps"}}
 
 /* 02 agent line */
 .gb-agentline li{background:var(--ab);color:var(--a)}
 .gb-agentline li svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .gb-agentline li + li:before{color:var(--faint)}
 .gb-agentline li.a-her{background:var(--her-bg);color:var(--her);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--her) 35%,transparent)}
-.gb-actors{display:flex;gap:16px;margin-top:12px;margin-bottom:0;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.gb-actors span{display:inline-flex;align-items:center;gap:6px}
-.gb-actors span:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--a)}
-
-/* 03 quad: clay for the irreversible column, charcoal and lime for her tap */
-.gb .gb-quad-grid .q.lo.irr{background:var(--clay-bg)}
-.gb .gb-quad-grid .q.hi.irr{background:var(--char);color:#EDEDED}
-.gb .gb-quad-grid .q.hi.irr .q-t,.gb .gb-quad-grid .q.hi.irr li{color:#EDEDED}
-.gb .gb-quad-grid .q.hi.irr .q-badge{background:var(--lime);color:#1E2226}
-.gb .gb-quad-grid .q.lo.irr .q-badge{background:var(--bg);color:var(--clay)}
-.gb .gb-quad-grid .q.hi.rev .q-badge,.gb .gb-quad-grid .q.lo.rev .q-badge{color:var(--code)}
-.gb-quad-foot{background:var(--char);color:#EDEDED}
-.gb-quad-foot:before{content:"";display:inline-block;width:8px;height:8px;margin-right:10px;border-radius:50%;background:var(--lime);vertical-align:1px}
-
-/* 04 trio */
-.gb-trio{margin-top:var(--s3);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.gb-trio > div{padding:18px;border-radius:12px;background:var(--ab);color:var(--a)}
-.gb-trio svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.gb-trio b{display:block;margin:12px 0 4px;font:400 clamp(22px,2.6vw,27px)/1.1 var(--serif);letter-spacing:-.02em;color:var(--a)}
-.gb-trio span{font-size:13.5px;line-height:1.45;color:color-mix(in srgb,var(--a) 72%,var(--ink))}
-@media(max-width:600px){.gb-trio{grid-template-columns:1fr}}
-
-/* 05 pipeline */
-
-/* 06 trail checks */
-.gb-trail i[class]{background:var(--ab);color:var(--a)}
-.gb-kicker{border-left-color:var(--lime);background:linear-gradient(90deg,color-mix(in srgb,var(--lime) 14%,transparent),transparent 70%)}
-
-/* 07 band */
-.gb-band{margin-top:var(--s3);padding:clamp(24px,4vw,40px);border-radius:14px;background:var(--char);color:#EDEDED;position:relative;overflow:hidden}
-.gb-band:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lime) 30%,transparent),transparent 70%)}
-.gb-band-k{margin:0 0 10px;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--lime)}
-.gb-band-t{position:relative;margin:0;font:400 clamp(24px,3.2vw,32px)/1.2 var(--serif);letter-spacing:-.02em;color:#fff;max-width:520px}
-.gb-band-s{position:relative;margin:14px 0 0;font-size:15px;line-height:1.6;color:rgba(237,237,237,.72);max-width:520px}
 
 /* 08 states */
 .gb-states > div{position:relative;border-top:3px solid var(--tone)}
 .gb-states .t-ask{--tone:var(--ai);--tb:var(--ai-bg)}.gb-states .t-stop,.gb-states .t-sys{--tone:var(--clay);--tb:var(--clay-bg)}
 .gb-states .t-away{--tone:var(--code);--tb:var(--code-bg)}.gb-states .t-wait{--tone:var(--her);--tb:var(--her-bg)}
-.gb-states-ic{display:grid;place-items:center;width:30px;height:30px;margin-bottom:10px;border-radius:8px;background:var(--tb);color:var(--tone)}
-.gb-states-ic svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.gb-states-next{color:var(--tone)!important;font-weight:500}
 
 /* 09 conversation -> case */
 .gb-conv{margin-top:var(--s3);display:grid;grid-template-columns:1fr 40px 1.15fr;align-items:center;gap:12px}
-.gb-conv > div:not(.gb-conv-arrow){padding:18px;border-radius:12px;height:100%;box-sizing:border-box}
 .gb-conv .k{margin:0 0 12px;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .gb-conv .f{margin:12px 0 0;font-size:12.5px;color:var(--muted)}
 .gb-conv-chat{background:var(--surface);height:auto!important;align-self:center}
 .gb-conv-chat .m{margin:0 0 6px;padding:8px 11px;border-radius:12px 12px 12px 4px;background:var(--bg);font-size:13px;line-height:1.4;color:var(--ink);width:fit-content;max-width:92%}
 .gb-conv-chat .m:nth-child(3){margin-left:10px;transform:rotate(.6deg)}.gb-conv-chat .m:nth-child(4){transform:rotate(-.8deg)}
-.gb-conv-case{background:var(--surface)}
-.gb-conv-case img{display:block;width:100%;height:auto;border-radius:8px}
-.gb-conv-arrow svg{width:40px;height:16px;fill:none;stroke:var(--faint);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-@media(max-width:640px){.gb-conv{grid-template-columns:1fr}.gb-conv-arrow{justify-self:center;transform:rotate(90deg)}}
-
-/* 10 step cards: a coloured top edge per actor */
-.gb-sys-steps > li{box-shadow:inset 0 3px 0 var(--sa,transparent)}
+@media(max-width:640px){.gb-conv{grid-template-columns:1fr}}
 .w-her{--sa:var(--her)}.w-ai{--sa:var(--ai)}.w-code{--sa:var(--code)}
-.w-her .gb-sys-who{background:var(--her-bg);color:var(--her)}
-.w-ai .gb-sys-who{background:var(--ai-bg);color:var(--ai)}
-.w-code .gb-sys-who{background:var(--code-bg);color:var(--code);box-shadow:none}
-
-/* 11 bugs: a dark band with lime numbers */
-.gb-herobug{background:var(--char);color:#EDEDED;border-radius:14px}
-.gb-herobug .cap,.gb-herobug .cap b{color:rgba(237,237,237,.55)}
-.gb-herobug-big{color:#fff}
-.gb-herobug-row > div:last-child .gb-herobug-big{color:var(--lime)}
-.gb-herobug-row > div:first-child .gb-herobug-big{text-decoration:line-through;text-decoration-color:var(--clay);text-decoration-thickness:3px}
-.gb-herobug-arrow{color:rgba(237,237,237,.35)}
-.gb-herobug-risk{color:#F0B08A}
-.gb-herobug-fix{border-top-color:rgba(255,255,255,.1);color:rgba(237,237,237,.85)}
-.gb-herobug-fix b{color:#fff}
-.gb-fixgrid > div{border-left:3px solid var(--clay);border-radius:0 8px 8px 0}
-.gb-fixgrid p:not(.cap) i{color:var(--clay)}
-.gb-fixgrid p:not(.cap) i + i,.gb-fixgrid p:not(.cap) i:nth-of-type(2){color:var(--her)}
-
-/* 12 rejected cards */
-.gb-rej{margin-top:var(--s3);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.gb-rej > div{display:flex;flex-direction:column;border-radius:12px;background:var(--surface);overflow:hidden}
-.gb-rej p{margin:0;padding:0 16px}
-.gb-rej .x{padding-top:16px;display:flex;flex-direction:column;gap:6px}
-.gb-rej span{font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
-.gb-rej .x span{color:var(--clay)}
-.gb-rej s{font:400 18px/1.25 var(--serif);color:var(--muted);text-decoration-color:var(--clay);text-decoration-thickness:1.5px}
-.gb-rej .why{margin:8px 0 16px;font-size:13.5px;line-height:1.45;color:var(--muted)}
-.gb-rej .ok{margin-top:auto;padding:14px 16px;background:var(--her-bg);color:var(--her);font-size:14px;line-height:1.4;font-weight:500;display:flex;flex-direction:column;gap:6px}
-@media(max-width:640px){.gb-rej{grid-template-columns:1fr}}
-
-/* 13 status */
-.gb-status > div{border-top:3px solid var(--st)}
-.gb-status .st-built{--st:var(--her)}.gb-status .st-sim{--st:#C9962B}.gb-status .st-open{--st:var(--faint);background:transparent;box-shadow:inset 0 0 0 1px var(--line);border-top-style:dashed}
-.gb-status .cap b{color:var(--st)}
-
-/* finale */
-.gb-finale{border:0!important;padding:clamp(28px,5vw,48px)!important;border-radius:16px;background:var(--char);color:#EDEDED;position:relative;overflow:hidden}
-.gb-finale:before{content:"";position:absolute;left:-80px;bottom:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lime) 22%,transparent),transparent 70%)}
-.gb-finale-t{position:relative;margin:0;font:400 clamp(26px,3.6vw,36px)/1.2 var(--serif)!important;letter-spacing:-.02em;color:#fff!important}
-.gb-finale-t span{color:var(--lime)}
-/* quad, quieter: column headings once, one dark box, lists as a line */
-.gb .gb-quad{padding-bottom:0}
-.gb .gb-quad-x{display:none}
-.gb-quad-cols{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.gb-quad-cols span{padding-left:18px}
-.gb .gb-quad-grid .q-badge{display:none}
-.gb .gb-quad-grid .q.lo.irr{background:var(--surface)}
-.gb .gb-quad-grid ul{display:block}
-.gb .gb-quad-grid li{display:inline;font-size:13.5px;line-height:1.5;color:var(--muted)}
-.gb .gb-quad-grid li + li:before{content:" · "}
-.gb .gb-quad-grid li b{font-weight:400;color:inherit}
-.gb .gb-quad-grid li span{color:inherit}.gb .gb-quad-grid li span:before{content:", "}
-.gb .gb-quad-grid .q.hi.irr li{color:rgba(237,237,237,.62)}
-.gb .gb-quad-grid .q-shot{margin-bottom:12px}
-@media(max-width:600px){.gb-quad-cols{display:none}.gb .gb-quad-grid .q-badge{display:inline-block}}
 .gb-pipe{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;position:relative}
 .gb-pipe li{position:relative;padding:16px;border-radius:12px;background:var(--ab);display:flex;flex-direction:column}
 .gb-pipe li + li:before{content:"→";position:absolute;left:-22px;top:50%;width:18px;height:18px;display:grid;place-items:center;transform:translateY(-50%);font-size:13px;color:var(--faint)}
@@ -1002,26 +634,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-pipe[data-reveal] li:nth-child(2){transition-delay:.15s}.gb-pipe[data-reveal] li:nth-child(3){transition-delay:.3s}
 .gb-pipe.shown li{opacity:1;transform:none}
 @media(max-width:600px){.gb-pipe{grid-template-columns:1fr;gap:22px}.gb-pipe li + li:before{content:"↓";left:50%;top:-20px;transform:translateX(-50%)}}
-/* claim trail: each claim, its real source, and the check that stamps it */
-.gb-claims{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:8px;border-radius:12px;background:var(--surface);display:grid;gap:6px}
-.gb-claims li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) 128px;gap:16px;align-items:center;padding:12px 14px;border-radius:8px;background:var(--bg)}
-.gb-claims li.gb-claims-h{background:none;padding:6px 14px 2px}
-.gb-claims-h span{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.gb-claims b{font:500 14.5px/1.4 var(--sans);color:var(--ink);letter-spacing:-.01em}
-.gb-claims .src{padding:8px 10px;border-radius:6px;background:var(--surface)}
-.gb-claims .src p{margin:0}
-.gb-claims .src .k{font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
-.gb-claims .src .msg{font:400 13.5px/1.35 var(--sans);color:var(--ink)}
-.gb-claims .src .msg2{font:400 13px/1.4 var(--sans);color:var(--ink)}
-.gb-claims .src mark{background:var(--her-bg);color:var(--her);padding:0 3px;border-radius:3px;font-weight:500}
-.gb-claims .src .mono{font:400 12.5px/1.35 var(--mono);color:var(--ink)}
-.gb-claims .src em{font-style:normal;color:var(--code);font-weight:500}
-.gb-claims .chk{margin:0;justify-self:start;display:inline-flex;align-items:center;gap:6px;padding:6px 10px 6px 8px;border-radius:99px;background:var(--ab);color:var(--a);font:500 12px/1 var(--sans);white-space:nowrap}
-.gb-claims .chk svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.gb-claims[data-reveal] .chk{opacity:0;transform:scale(.85);transition:opacity .35s ease,transform .35s cubic-bezier(.3,1.5,.5,1)}
-.gb-claims li:nth-child(3) .chk{transition-delay:.15s}.gb-claims li:nth-child(4) .chk{transition-delay:.3s}.gb-claims li:nth-child(5) .chk{transition-delay:.45s}
-.gb-claims.shown .chk{opacity:1;transform:none}
-@media(max-width:640px){.gb-claims li{grid-template-columns:1fr;gap:8px}.gb-claims li.gb-claims-h{display:none}}
 /* failure states: each with the app's own words and next step */
 .gb-fails{margin-top:var(--s3);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .gb-fails > div{--tone:var(--ai);display:flex;flex-direction:column;padding:16px;border-radius:12px;background:var(--surface)}
@@ -1053,27 +665,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-fl-ui .step em{grid-column:2;font:500 9.5px/1 var(--sans);font-style:normal;color:var(--faint);margin-top:4px}
 @media(max-width:860px){.gb-fails{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.gb-fails{grid-template-columns:1fr}}
-/* agent flow: one line, each step with its real screen */
-.gb-trk{list-style:none;margin:0;padding:0 0 0 30px;position:relative;display:grid;gap:36px}
-.gb-trk:before{content:"";position:absolute;left:5px;top:12px;bottom:12px;width:1.5px;background:color-mix(in srgb,var(--ink) 12%,transparent)}
-.gb-trk .w-her{--a:var(--her);--ab:var(--her-bg)}.gb-trk .w-ai{--a:var(--ai);--ab:var(--ai-bg)}.gb-trk .w-code{--a:var(--code);--ab:var(--code-bg)}
-.gb-trk li{position:relative;display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:28px;align-items:start}
-.gb-trk li:before{content:"";position:absolute;left:-30px;top:6px;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--bg);border:2px solid var(--a)}
-.gb-trk li.key:before{background:var(--a)}
-.gb-trk-m{padding-top:2px}
-.gb-trk-who{display:inline-flex;align-items:center;gap:5px;margin:0;padding:4px 9px 4px 7px;border-radius:99px;background:var(--ab);color:var(--a);font:500 11px/1 var(--sans)}
-.gb-trk-who svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.gb-trk-m b{display:block;margin-top:12px;font:400 22px/1.15 var(--serif);letter-spacing:-.015em;color:var(--ink)}
-.gb-trk-m p:last-child{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--muted)}
-.gb-trk-shot{margin:0;padding:10px;border-radius:12px;background:var(--surface)}
-.gb-trk-shot img{display:block;width:100%;height:auto;border-radius:8px}
-@media(max-width:640px){.gb-trk{gap:30px;padding-left:24px}.gb-trk:before{left:4px}.gb-trk li{grid-template-columns:1fr;gap:14px}.gb-trk li:before{left:-24px}}
-/* status: the real evidence, then an honest ledger */
-.gb-proof{margin-top:var(--s3);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.gb-proof-c{display:flex;flex-direction:column;padding:16px;border-radius:12px;background:var(--surface)}
-.gb-proof-k{display:inline-flex;align-self:flex-start;align-items:center;gap:5px;margin:0;padding:4px 9px 4px 7px;border-radius:99px;background:var(--ab);color:var(--a);font:500 11px/1 var(--sans)}
-.gb-proof-k svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.gb-proof-t{margin:10px 0 12px;font:400 20px/1.2 var(--serif);letter-spacing:-.015em;color:var(--ink)}
 .gb-term{margin:0;flex:1;justify-content:center;padding:14px;border-radius:8px;background:#1E2226;color:#C9CDD2;font:400 11.5px/1.75 var(--mono);display:flex;flex-direction:column;overflow:hidden}
 .gb-term span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gb-term i{font-style:normal;color:#8BD17C;margin-right:8px}
@@ -1088,20 +679,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-evcase .q{margin-top:8px;font:400 14px/1.45 var(--serif);color:var(--ink)}
 .gb-evcase .x{margin-top:8px;font-size:12.5px;line-height:1.45;color:var(--muted)}
 .gb-evcase code{font:500 12px/1 var(--mono);color:var(--code)}
-.gb-proof-n{margin:8px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
-.gb-proof-n div{padding:10px;border-radius:8px;background:var(--bg)}
-.gb-proof-n dt{font:400 22px/1 var(--serif);color:var(--ink)}
-.gb-proof-n div{display:flex;align-items:baseline;gap:8px}
-.gb-proof-n dd{margin:0;font-size:11.5px;line-height:1.35;color:var(--muted)}
-.gb-ledger{margin-top:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.gb-ledger > div{--c:var(--her);padding:16px;border-radius:12px;background:var(--surface)}
-.gb-ledger .l-sim{--c:var(--clay)}.gb-ledger .l-open{--c:var(--muted)}
-.gb-ledger .h{display:flex;align-items:center;gap:8px;margin:0 0 10px;font:500 15px/1.2 var(--sans);color:var(--ink);letter-spacing:-.01em}
-.gb-ledger .h svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--c);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.gb-ledger ul{list-style:none;margin:0;padding:0}
-.gb-ledger li{padding:7px 0;border-top:1px solid var(--line);font-size:13.5px;line-height:1.45;color:var(--muted)}
-.gb-ledger li:first-child{border-top:0}
-@media(max-width:700px){.gb-proof,.gb-ledger{grid-template-columns:1fr}}
 
 /* decisions: rejected vs chosen, each shown as a small picture */
 .gb-dc{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:grid;gap:8px}
@@ -1142,92 +719,18 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-dc .pr{display:flex;flex-wrap:wrap;gap:4px;justify-content:space-between;align-items:center;padding:7px 8px;border-radius:6px;background:var(--surface);font-size:10.5px;color:var(--muted)}
 .gb-dc .pr b{font-weight:500;color:var(--ink)}
 .gb-dc .pr b.tap{padding:3px 8px;border-radius:99px;background:var(--ink);color:var(--bg)}
-.gb-vers{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;counter-reset:none}
-.gb-vers figure{margin:0;padding:10px;border-radius:12px;background:var(--surface);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;box-sizing:border-box}
-.gb-vers img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:6px}
-.gb-vers p{margin:8px 0 0;font-size:12.5px;line-height:1.45;color:var(--muted)}
-.gb-vers b{display:block;margin-bottom:2px;font:500 10.5px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--clay)}
-.gb-vers .live b{color:var(--her)}
-@media(max-width:700px){.gb-dc > li{grid-template-columns:1fr;gap:14px}.gb-vers{grid-template-columns:1fr}.gb-vers figure{aspect-ratio:auto}}
-/* review round: representative case, bigger boundary, failure outcomes */
-.gb-repcase{margin-top:0;padding:18px 20px;border-radius:12px;background:var(--surface)}
-.gb-repcase p{margin:0}
-.gb-repcase .k{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.gb-repcase .t{margin-top:10px;font:400 24px/1.2 var(--serif);letter-spacing:-.015em;color:var(--ink)}
-.gb-repcase .d{margin-top:8px;font-size:15px;line-height:1.55;color:var(--muted)}
-.gb-repcase + .body{margin-top:var(--s3)}
-.gb-trio{gap:10px}
-.gb-trio > div{padding:22px 20px}
-.gb-trio .v{margin:14px 0 0;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--a)}
-.gb-trio b{margin:8px 0 14px!important;font-size:clamp(28px,3.4vw,36px)!important}
-.gb-trio ul{list-style:none;margin:0;padding:0}
-.gb-trio li{padding:7px 0;border-top:1px solid color-mix(in srgb,var(--a) 18%,transparent);font-size:14px;line-height:1.4;color:color-mix(in srgb,var(--a) 72%,var(--ink))}
-.gb-trio-line{margin-top:18px;font:400 clamp(20px,2.4vw,24px)/1.3 var(--serif);letter-spacing:-.015em;color:var(--ink)}
+@media(max-width:700px){.gb-dc > li{grid-template-columns:1fr;gap:14px}}
 .gb-fl-out{margin:10px 0 0;font:500 13px/1.35 var(--sans);color:var(--ink);letter-spacing:-.01em}
 .gb-fl-out:before{content:"→ ";color:var(--tone)}
-.gb-herobug-tag{display:flex;align-items:center;gap:8px;margin:0 0 14px!important;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(237,237,237,.7)}
-.gb-herobug-tag i{font-style:normal;padding:3px 7px;border-radius:99px;background:rgba(255,255,255,.1);color:#EDEDED}
-.gb-fm{list-style:none;margin-top:8px;margin-bottom:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.gb-fm li{padding:16px;border-radius:12px;background:var(--surface)}
-.gb-fm p{margin:0;font-size:13.5px;line-height:1.45;color:var(--muted)}
-.gb-fm p + p{margin-top:6px}
-.gb-fm .h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-.gb-fm .h b{font:500 15px/1.2 var(--sans);color:var(--ink);letter-spacing:-.01em}
-.gb-fm .h i{font:500 10px/1 var(--mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:99px}
-.gb-fm .src-rule{background:var(--bg);color:var(--ink)}.gb-fm .src-code{background:var(--code-bg);color:var(--code)}.gb-fm .src-model{background:var(--ai-bg);color:var(--ai)}
-.gb-fm p span{display:inline-block;width:34px;font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
-@media(max-width:600px){.gb-fm{grid-template-columns:1fr}}
-/* agent trace in four phases */
-.gb-trk li{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.gb-trk > li:before{border:2px solid var(--ink);background:var(--bg)}
-.gb-trk-ph{margin:0;font:400 24px/1.1 var(--serif);letter-spacing:-.015em;color:var(--ink)}
-.gb-trk-sub{margin:6px 0 14px!important;font-size:14px;line-height:1.45;color:var(--muted)}
-.gb-trk-steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.gb-trk-steps li{display:grid!important;grid-template-columns:auto 1fr!important;gap:10px!important;align-items:baseline}
-.gb-trk-steps li:before{display:none}
-.gb-trk-steps i{font:500 10px/1 var(--mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:99px;white-space:nowrap}
-.gb-trk-steps span{font-size:13.5px;line-height:1.45;color:var(--ink)}
-.gb-trk-steps .t-user{background:var(--her-bg);color:var(--her)}.gb-trk-steps .t-ai{background:var(--ai-bg);color:var(--ai)}
-.gb-trk-steps .t-code{background:var(--code-bg);color:var(--code)}.gb-trk-steps .t-rule{background:var(--surface);color:var(--ink)}
-.gb-trk-steps .t-safe{background:var(--clay-bg);color:var(--clay)}.gb-trk-steps .t-case{background:var(--ink);color:var(--bg)}
-.gb-trk-note{margin:12px 0 0!important;font-size:12.5px!important;line-height:1.45;color:var(--muted)!important}
-.gb-proof-t b{font-weight:400;color:var(--a)}
-.gb-lessons{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:grid;gap:0}
-.gb-lessons li{display:grid;grid-template-columns:44px 1fr;column-gap:12px;padding:22px 0;border-top:1px solid var(--line)}
-.gb-lessons li:first-child{border-top:0;padding-top:4px}
-.gb-lessons span{grid-row:span 2;font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--faint);padding-top:10px}
-.gb-lessons b{font:400 clamp(24px,3vw,30px)/1.15 var(--serif);letter-spacing:-.02em;color:var(--ink)}
-.gb-lessons p{margin:8px 0 0;font-size:15px;line-height:1.55;color:var(--muted)}
-.gb .gb-finale-t{font-size:clamp(18px,2.2vw,22px)!important;line-height:1.45!important;color:rgba(237,237,237,.72)!important}
-.gb .gb-finale-t span{color:var(--lime)}
-.gb .gb-finale .gb-close-sub{margin-top:22px;font:400 clamp(28px,3.8vw,40px)/1.15 var(--serif)!important;letter-spacing:-.02em;color:#fff!important}
 /* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
-.gb .gb-states-next{color:var(--ink)!important}
-.gb .gb-states-t{display:flex;align-items:center;gap:8px}
-.gb .gb-states-t:before{display:none}
 .gb .gb-states-lic{width:18px;height:18px;flex:none;fill:none;stroke:var(--tone);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.gb .gb-states-t{gap:10px}
-.gb-finale .gb-close-sub{position:relative;color:rgba(237,237,237,.7)!important}
-.gb-finale .gb-proto{position:relative;background:rgba(255,255,255,.06)}
-.gb-finale .gb-proto-text b{color:#fff}.gb-finale .gb-proto-text span{color:rgba(237,237,237,.6)}
-.gb-finale .gb-proto-go{background:var(--lime);color:#1E2226}
-.gb-close-sub{margin-top:10px!important;font-size:16px!important;color:var(--muted)!important}
-@media(max-width:600px){.gb-split{grid-template-columns:1fr}
- .gb-trail > div,.gb-rejected > div{grid-template-columns:1fr;gap:4px}.gb-trail-h,.gb-rejected-h{display:none!important}}
 
 /* failure as a system: six product states, not error messages */
 .gb-states{margin-top:var(--s3);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s2)}
 .gb-states > div{background:var(--surface);border-radius:8px;padding:clamp(16px,2.2vw,20px)}
-.gb-states-t{margin:0 0 6px;font:500 15px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
-.gb-states > div > p:not(.gb-states-t):not(.gb-states-next){margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
-.gb-states-next{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line);font-size:13px;line-height:1.5;color:var(--ink)}
 @media(max-width:700px){.gb-states{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:460px){.gb-states{grid-template-columns:1fr}}
-
-.gb-fixgrid p:not(.cap){margin:0;font-size:14.5px;line-height:1.55;color:var(--muted)}
-.gb-fixgrid p:not(.cap) i{font-style:normal;font-weight:500;color:var(--ink)}
-@media(max-width:600px){.gb-fixgrid{grid-template-columns:1fr}.gb-herobug-row{flex-direction:column;gap:10px}.gb-herobug-arrow{transform:rotate(90deg)}}
 
 @media(max-width:760px){.gb-vis{grid-template-columns:1fr}}
 /* one height for every screen beside callouts: the tallest callout list
@@ -1243,46 +746,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
   background:linear-gradient(rgba(242,242,242,0),#F2F2F2 78%);transition:opacity .3s ease}
 .gb-capped.at-end .gb-ex-panel:after{opacity:0}
 @media(max-width:760px){.gb-capped .gb-ex-inner{max-height:540px}}
-.gb-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s2)}
-.gb-three > div{background:var(--surface);border-radius:8px;padding:clamp(16px,2.2vw,22px)}
-.gb-three .cap{margin:0 0 8px}
-.gb-three p:not(.cap){margin:0;font-size:14.5px;line-height:1.55;color:var(--muted)}
-@media(max-width:700px){.gb-three{grid-template-columns:1fr}}
-
-
-/* sources: the rules and the research */
-.gb-sources{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.gb-sources li{padding:12px 0;border-bottom:1px solid var(--line)}
-.gb-sources a{font-size:16px;letter-spacing:-.01em;color:var(--ink);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 25%,transparent);text-underline-offset:4px}
-.gb-sources a:hover{text-decoration-color:var(--ink)}
-.gb-sources p{margin:2px 0 0;font-size:14px;line-height:1.5;color:var(--muted)}
-
-/* one product, two screens: the same case on a laptop and on a phone,
-   drawn as crisp CSS devices around real screenshots of the live app */
-.gb-devices{position:relative;padding:4% 0 6%}
-/* the laptop is Apple's MacBook Pro 14" (M5, silver) product bezel, with
-   the screenshot set into its screen opening: 10.83% in from the left,
-   11.34% from the top, 78.34% × 77.32% of the 3860×2540 frame. The
-   screenshot is taken at that screen's own size (1512×982 at 2x), so it
-   fills the opening exactly, nothing cropped */
-.gb-laptop{position:relative;width:80%;aspect-ratio:3860/2540;filter:drop-shadow(0 20px 24px rgba(0,0,0,.18))}
-.gb-laptop img{position:absolute;left:10.83%;top:11.34%;width:78.34%;height:77.32%;object-fit:cover;object-position:center top}
-.gb-laptop img.gb-laptop-frame{left:0;top:0;width:100%;height:100%;object-fit:fill}
-/* the phones are a real iPhone frame (the one App Merge uses) with the
-   screenshot set into its screen opening: 4.17% in from each side, 1.7% from
-   the top and bottom of the 1608×3316 frame */
-.gb-phone{position:absolute;width:20%;aspect-ratio:1608/3316;filter:drop-shadow(0 22px 26px rgba(0,0,0,.28))}
-.gb-phone img{position:absolute;left:4.17%;top:1.69%;width:91.67%;height:96.62%;object-fit:cover;object-position:top;border-radius:16.3%/7.5%}
-.gb-phone img.gb-phone-frame{left:0;top:0;width:100%;height:100%;border-radius:0}
-.gb-phone-a{right:14.5%;bottom:0;z-index:2}
-.gb-phone-b{right:0;bottom:7%;z-index:1}
-@media(max-width:600px){
-  .gb-devices{padding:2% 0 4%}
-  .gb-laptop{width:100%;margin:0}
-  .gb-phone{position:relative;display:inline-block;width:42%;right:auto;bottom:auto;transform:none;margin-top:9%;vertical-align:top}
-  .gb-phone-a{margin-left:6%}
-  .gb-phone-b{margin-left:4%}
-}
 /* phones: the nav pill and back-to-top sit at the bottom of the screen,
    so the footer line needs room below it to scroll clear of them */
 @media (max-width:576px){#contact footer{padding-bottom:calc(88px + env(safe-area-inset-bottom))}}
@@ -1375,51 +838,315 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 ::view-transition-new(gb-v1),::view-transition-new(gb-v2){animation:none}
 ::view-transition-old(gb-v1),::view-transition-old(gb-v2){animation:gbLabelOut .35s ease both}
 @keyframes gbLabelOut{to{opacity:0}}
-.gb-swap [data-reveal]{transition:none!important}
 figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
-
-/* pattern names from the literature, set as quiet tags after a caption */
-.gb-pat{display:inline-flex;flex-wrap:wrap;gap:5px;margin-left:4px;vertical-align:1px}
-.gb-pat i{font:500 10.5px/1 var(--mono,'Geist Mono',monospace);font-style:normal;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
-  padding:4px 7px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line)}
-
-/* stakes x reversibility: every action placed, the treatment named per quadrant */
-.gb-quad{position:relative;padding:0 0 26px 26px}
-.gb-quad-y{position:absolute;left:0;top:50%;margin:0;transform:translate(-40%,-50%) rotate(-90deg);font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
-.gb-quad-x{position:absolute;left:26px;right:0;bottom:0;margin:0;text-align:center;font:500 10.5px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.gb-quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.gb-quad-grid .q{padding:18px 18px 16px;border-radius:8px;background:var(--surface)}
-.gb-quad-grid .q.hi.irr{background:var(--ink);color:var(--bg)}
-.gb-quad-grid .q.hi.irr .q-where,.gb-quad-grid .q.hi.irr li span{color:color-mix(in srgb,var(--bg) 62%,transparent)}
-.gb-quad-grid .q.hi.irr li b{color:var(--bg)}
-.q-where{margin:0 0 6px;font:500 10.5px/1.3 var(--mono,'Geist Mono',monospace);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .q-t{margin:0 0 12px;font:400 19px/1.25 var(--serif);letter-spacing:-.01em}
-.gb-quad-grid ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
-.gb-quad-grid li{display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.45}
-.gb-quad-grid li b{font-weight:500;color:var(--ink)}
-.gb-quad-grid li span{color:var(--muted)}
-/* order: the top row is higher stakes, the right column can't be undone */
-.gb-quad-grid .q.hi.rev{order:1}.gb-quad-grid .q.hi.irr{order:2}.gb-quad-grid .q.lo.rev{order:3}.gb-quad-grid .q.lo.irr{order:4}
-/* the quad, enriched: a badge, the real screen, a short list, and a closing line */
-.gb-quad-grid .q{position:relative}
-.q-badge{display:inline-block;margin-bottom:10px;padding:4px 10px;border-radius:99px;font:500 10px/1 var(--mono,'Geist Mono',monospace);letter-spacing:.06em;text-transform:uppercase;background:var(--bg);color:var(--muted)}
-.gb-quad-grid .q.hi.irr .q-badge{background:rgba(255,255,255,.1);color:color-mix(in srgb,var(--bg) 70%,transparent)}
-.q-shot{display:block;width:100%;height:auto;margin:2px 0 12px;border-radius:6px}
-.gb-quad-grid .q.lo.irr ul{margin-top:2px}
-.gb-quad-foot{margin:8px 0 0;padding:14px 18px;border-radius:8px;background:var(--surface);font-size:14.5px;line-height:1.5;color:var(--ink)}
-@media(max-width:600px){.gb-quad-foot{margin-top:8px}}
+/* =====================================================================
+   CASE-STUDY SYSTEM (cx-). One set of tokens, one layout grid and one
+   set of section patterns for the whole short read. Section markup
+   only combines these; nothing below is styled per section by hand.
+   ===================================================================== */
+.gb{
+  /* colour */
+  --c-bg:var(--bg); --c-surface:var(--surface); --c-card:#FFFFFF; --c-ink:var(--ink); --c-ink-2:#666262; --c-ink-3:#77726F; --c-faint:var(--faint);
+  --c-line:var(--line); --c-line-2:rgba(36,32,32,.06);
+  --c-ok:var(--her); --c-ok-bg:var(--her-bg); --c-warn:var(--clay); --c-warn-bg:var(--clay-bg); --c-err:#B42318; --c-accent:var(--ink);
+  --c-band:#F4F3F0; --c-band-2:#EDECE8;
+  /* type */
+  --fs-display:clamp(38px,5.4vw,60px); --fs-h2:clamp(28px,3.6vw,40px); --fs-h3:clamp(21px,2.4vw,26px); --fs-h4:17px;
+  --fs-body:17px; --fs-small:15px; --fs-caption:13px; --fs-meta:11.5px;
+  /* space */
+  --sp-8:8px; --sp-12:12px; --sp-16:16px; --sp-24:24px; --sp-32:32px; --sp-48:48px; --sp-64:64px; --sp-80:80px; --sp-96:96px; --sp-128:128px; --sp-160:160px;
+  /* radius, shadow */
+  --r-s:6px; --r-m:10px; --r-l:14px; --sh-1:0 1px 2px rgba(0,0,0,.06);
+  /* layout: the content area right of the progress rail is the 12-column field */
+  --w-content:834px; --w-text:640px; --gap:24px; --rail:250px;
+}
+:root[data-theme="dark"] .gb{--c-ink-2:#B3ACAC; --c-ink-3:#A39C9C; --c-card:#1B1B1B; --c-line-2:rgba(255,255,255,.06); --c-band:#131313; --c-band-2:#171717; --c-err:#F97066}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb{--c-card:#1B1B1B; --c-line-2:rgba(255,255,255,.06); --c-band:#131313; --c-band-2:#171717; --c-err:#F97066}}
 
-@media (max-width:600px){
-  .gb-quad{padding:0}.gb-quad-y,.gb-quad-x{display:none}
-  .gb-quad-grid{grid-template-columns:1fr}
-  .gb-quad-grid .q.hi.irr{order:0}
+/* ---------- layout primitives ---------- */
+.cx-w{max-width:var(--w-content);margin-left:auto;margin-right:auto}
+@media(min-width:981px){.cx-w{margin-left:var(--rail);margin-right:0}}
+.cx-g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap)}
+.cx-sec{padding-top:var(--sp-128)}
+.cx-band{position:relative;margin-top:var(--sp-128);padding-top:var(--sp-96);padding-bottom:var(--sp-96);background:var(--c-band);box-shadow:0 0 0 100vmax var(--c-band);clip-path:inset(0 -100vmax)}
+.cx-band-2{background:var(--c-band-2);box-shadow:0 0 0 100vmax var(--c-band-2)}
+.cx-band + .cx-band{margin-top:0;padding-top:var(--sp-32)}
+.cx-band + .cx-sec:not(.cx-band){padding-top:var(--sp-128)}
+@media(max-width:760px){.cx-sec{padding-top:var(--sp-80)}.cx-band{margin-top:var(--sp-80);padding-top:var(--sp-64);padding-bottom:var(--sp-64)}.cx-band + .cx-sec:not(.cx-band){padding-top:var(--sp-80)}}
+
+/* ---------- type ---------- */
+.cx-head p{margin:0}
+.cx-label,.cx-meta-l{font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-meta-l{color:var(--c-ink-2)}
+.cx-h{margin:var(--sp-16) 0 0;max-width:var(--w-text);font:400 var(--fs-h2)/1.1 var(--serif);letter-spacing:-.022em;color:var(--c-ink);text-wrap:balance}
+.gb h1.cx-display{margin:var(--sp-16) 0 0;max-width:760px;font:400 var(--fs-display)/1.04 var(--serif);letter-spacing:-.028em;color:var(--c-ink);text-wrap:balance}
+.cx-display em{font-style:italic}
+.cx-h3{margin:0;max-width:var(--w-text);font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.018em;color:var(--c-ink);text-wrap:balance}
+.cx-lead{margin-top:var(--sp-16)!important;max-width:var(--w-text);font-size:18px;line-height:1.55;color:var(--c-ink-2)}
+.cx-lead b{font-weight:500;color:var(--c-ink)}
+.cx-body{margin-top:var(--sp-24);max-width:var(--w-text)}
+.cx-body,.cx-note{font-size:var(--fs-body);line-height:1.6;color:var(--c-ink-2)}
+.cx-note{margin-top:var(--sp-24);max-width:var(--w-text);font-size:var(--fs-small)}
+.cx-note a{color:var(--c-ink)}
+.cx-say{margin-top:var(--sp-48);max-width:var(--w-text);font:400 var(--fs-h3)/1.25 var(--serif);letter-spacing:-.018em;color:var(--c-ink);text-wrap:balance}
+.cx-vis{margin-top:var(--sp-48)}
+.cx-vis > *{margin-top:0!important}
+.cx-small{font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-tags{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.cx-tags span{padding:3px 8px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--c-line);font:500 11px/1.3 var(--sans);color:var(--c-ink-2)}
+
+/* ---------- owners (AI / Rule / Code / You / Case): text + icon, never colour alone ---------- */
+.cx-own,.cx-stamp{display:inline-flex;align-items:center;gap:5px;padding:4px 8px 4px 7px;border-radius:99px;font:500 10.5px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.cx-own svg,.cx-stamp svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.o-ai{--a:var(--ai);--ab:var(--ai-bg)}.o-code{--a:var(--code);--ab:var(--code-bg)}.o-you{--a:var(--her);--ab:var(--her-bg)}
+.o-rule{--a:var(--c-ink);--ab:var(--c-surface)}.o-case{--a:var(--c-bg);--ab:var(--c-ink)}
+.cx-own,.cx-stamp{background:var(--ab);color:var(--a)}
+
+/* ---------- ProductVisual: one treatment for every static screen ---------- */
+.cx-pv{margin:0}
+.cx-pv-f{position:relative;padding:var(--sp-12);border-radius:var(--r-l);background:var(--c-surface)}
+.cx-pv img{display:block;width:100%;height:auto;border-radius:var(--r-m)}
+.cx-pv figcaption{margin-top:var(--sp-12);font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-pv-sm .cx-pv-f{padding:6px;border-radius:var(--r-m)}
+.cx-pv-sm img{border-radius:var(--r-s)}
+.cx-zoom{position:relative;display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;border-radius:var(--r-m)}
+.cx-zoom-i{position:absolute;right:8px;top:8px;display:grid;place-items:center;width:28px;height:28px;border-radius:99px;background:rgba(20,20,20,.72);color:#fff;opacity:0;transition:opacity .2s var(--ease)}
+.cx-zoom-i svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cx-zoom:hover .cx-zoom-i,.cx-zoom:focus-visible .cx-zoom-i{opacity:1}
+@media(hover:none){.cx-zoom-i{opacity:.9}}
+.gb a:focus-visible,.gb button:focus-visible,.gb summary:focus-visible{outline:2px solid var(--c-ink);outline-offset:3px;border-radius:4px}
+.cx-lb{width:fit-content;max-width:94vw;max-height:92vh;padding:0;border:0;border-radius:var(--r-l);background:var(--c-bg);overflow:auto}
+.cx-lb::backdrop{background:rgba(10,10,10,.76)}
+.cx-lb img{display:block;width:auto;max-width:100%;max-height:88vh;height:auto;margin:auto}
+.cx-lb-x{position:sticky;top:10px;float:right;margin:10px 10px -50px 0;z-index:2;width:40px;height:40px;border:0;border-radius:99px;background:rgba(20,20,20,.8);color:#fff;font:400 24px/1 var(--sans);cursor:pointer}
+
+/* ---------- progress rail ---------- */
+.cx-rail{gap:14px!important;padding-left:14px}
+.cx-rail a{display:flex;gap:10px;align-items:baseline;font-size:13px}
+.cx-rail a span{font:500 10.5px/1 var(--mono);letter-spacing:.04em;color:var(--c-ink-3)}
+.cx-rail a.active,.cx-rail a.active span{color:var(--c-ink)}
+.cx-rail-bar{position:absolute;left:0;top:2px;bottom:2px;width:1.5px;background:var(--c-line)}
+.cx-rail-bar i{position:absolute;left:0;top:0;width:100%;height:calc(var(--p,0)*100%);background:var(--c-ink);transition:height .2s linear}
+.cx-mprog{display:none}
+@media(max-width:980px){.cx-mprog{display:block;position:fixed;left:0;right:0;top:0;height:2px;z-index:60;background:transparent}.cx-mprog i{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--c-ink)}}
+
+/* ---------- hero ---------- */
+.cx-hero{padding-top:0}
+.cx-hero-h{margin-top:var(--sp-48)}
+.cx-dek{margin-top:var(--sp-24)!important;font:400 var(--fs-h3)/1.3 var(--serif);letter-spacing:-.015em;color:var(--c-ink-2)}
+.cx-hero-v{margin-top:var(--sp-48)}
+.cx-hero-v figure.gb-ex{margin:0}
+.cx-flow3{list-style:none;margin-top:var(--sp-24);padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.cx-flow3 li{position:relative;padding-top:var(--sp-12);border-top:1.5px solid var(--c-ink)}
+.cx-flow3 li + li:before{content:"→";position:absolute;left:-19px;top:10px;color:var(--c-faint)}
+.cx-flow3 b{display:block;font:500 var(--fs-h4)/1.3 var(--sans);letter-spacing:-.01em;color:var(--c-ink)}
+.cx-flow3 span{display:block;margin-top:4px;font-size:var(--fs-caption);line-height:1.45;color:var(--c-ink-2)}
+.cx-hero-meta{margin-top:var(--sp-64)}
+.cx-meta,.cx-status{margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.cx-meta dt,.cx-status dt{font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-meta dd,.cx-status dd{margin:6px 0 0;font-size:var(--fs-small);line-height:1.5;color:var(--c-ink)}
+.cx-status{margin-top:var(--sp-24);padding-top:var(--sp-24);border-top:1px solid var(--c-line)}
+.cx-status dt{display:flex;align-items:center;gap:7px;color:var(--c-ink-2)}
+.cx-status dt:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c-ok)}
+.cx-status .s-sim dt:before{background:var(--c-warn)}
+.cx-status .s-open dt:before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c-ink-3)}
+.cx-status dd{color:var(--c-ink-2)}
+.cx-hero-links{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-16) var(--sp-32);margin-top:var(--sp-32)}
+.cx-hero-links .gb-proto{margin:0}
+.cx-deep{font:500 var(--fs-small)/1 var(--sans);color:var(--c-ink);text-decoration:none;border-bottom:1px solid var(--c-line);padding-bottom:3px}
+.cx-deep:hover{border-color:var(--c-ink)}
+
+/* ---------- problem ---------- */
+.cx-rep{margin-top:var(--sp-32);padding-left:var(--sp-16);border-left:1.5px solid var(--c-ink)}
+.cx-rep p{margin:0}
+.cx-rep-t{margin-top:6px!important;font:500 18px/1.35 var(--mono);letter-spacing:-.01em;color:var(--c-ink)}
+.cx-rep-d{margin-top:6px!important;max-width:var(--w-text);font-size:var(--fs-small);line-height:1.55;color:var(--c-ink-2)}
+.cx-mini{margin:var(--sp-32) 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap)}
+.cx-mini dt{font:400 28px/1 var(--serif);color:var(--c-ink)}
+.cx-mini dd{margin:6px 0 0;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-mini a{color:var(--c-ink-3)}
+
+/* ---------- comparison (why an agent) ---------- */
+.cx-cmp{display:grid;gap:0}
+.cx-cmp-row{padding:var(--sp-24) 0;border-top:1px solid var(--c-line)}
+.cx-cmp-row:last-child{border-bottom:1px solid var(--c-line)}
+.cx-cmp-row .cx-meta-l{margin:0 0 var(--sp-12)}
+.cx-steps{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 0}
+.cx-steps li{font-size:var(--fs-small);color:var(--c-ink-2)}
+.cx-steps li + li:before{content:"→";margin:0 10px;color:var(--c-faint)}
+.cx-cmp .gb-agentline{margin:0!important}
+
+/* ---------- agent trace ---------- */
+.cx-trace{list-style:none;margin:0;padding:var(--sp-24) 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);position:relative}
+.cx-trace:before{content:"";position:absolute;left:0;right:0;top:5px;height:1.5px;background:var(--c-line)}
+.cx-tr-ph{position:relative;display:flex;flex-direction:column}
+.cx-tr-ph:before{content:"";position:absolute;left:0;top:-24px;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--c-bg);border:2px solid var(--c-ink)}
+.cx-band .cx-tr-ph:before{background:var(--c-band)}
+.cx-tr-n{margin:0;font:500 var(--fs-h4)/1.25 var(--sans);letter-spacing:-.01em;color:var(--c-ink)}
+.cx-tr-s{margin:4px 0 var(--sp-16)!important;font-size:var(--fs-caption);line-height:1.45;color:var(--c-ink-2)}
+.cx-tr-steps{list-style:none;margin:0 0 var(--sp-16);padding:0;display:grid;gap:var(--sp-12)}
+.cx-tr-steps li{display:grid;gap:4px}
+.cx-tr-steps .cx-own{justify-self:start}
+.cx-tr-steps b{font:500 14px/1.3 var(--sans);color:var(--c-ink)}
+.cx-tr-steps span:not(.cx-own){font-size:var(--fs-caption);line-height:1.45;color:var(--c-ink-2)}
+.cx-tr-ph .cx-pv{margin-top:auto}
+.cx-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:var(--sp-32) 0 0}
+.cx-legend > span:first-child{margin-right:6px;font-size:var(--fs-caption);color:var(--c-ink-2)}
+@media(max-width:860px){
+  .cx-trace{grid-template-columns:1fr;gap:var(--sp-32);padding:0 0 0 var(--sp-24)}
+  .cx-trace:before{left:5px;right:auto;top:6px;bottom:6px;width:1.5px;height:auto}
+  .cx-tr-ph:before{left:-24px;top:3px}
+  .cx-tr-ph .cx-pv{max-width:420px}
 }
 
-/* a chapter whose content has no sub-heading of its own (the short read):
-   its first block is text, not a heading, so the next block keeps its gap */
-.gb-flow > .col:first-child + *{margin-top:var(--s3)}
-.gb-flow > p.body:first-child + p.body{margin-top:var(--s2)}
-.gb-chapter > .gb-flow:first-of-type{margin-top:24px}
+/* ---------- architecture ---------- */
+.cx-arch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-12)}
+.cx-arch-c{padding:var(--sp-24);border-radius:var(--r-l);background:var(--ab)}
+.cx-arch-r{display:flex;align-items:center;gap:6px;margin:0;font:500 var(--fs-meta)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--a)}
+.cx-arch-r svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.cx-arch-t{margin:var(--sp-16) 0 var(--sp-24)!important;font:400 clamp(30px,3.8vw,42px)/1.02 var(--serif);letter-spacing:-.025em;color:var(--c-ink)}
+.cx-arch ul{list-style:none;margin:0;padding:0}
+.cx-arch li{padding:8px 0;border-top:1px solid color-mix(in srgb,var(--a) 20%,transparent);font-size:var(--fs-small);color:color-mix(in srgb,var(--a) 70%,var(--c-ink))}
+.cx-sub{margin-top:var(--sp-96)}
+.cx-dr{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:var(--sp-16);align-items:start;margin-top:var(--sp-24)}
+.cx-dr > span{padding-top:18px;color:var(--c-faint)}
+.cx-dr p{margin:0}
+.cx-dr p + p{margin-top:6px}
+.cx-dr p:not(.cx-meta-l){font-size:var(--fs-small);line-height:1.55;color:var(--c-ink)}
+.cx-vis-s{margin-top:var(--sp-32)}
+.cx-vis-s > *{margin-top:0!important}
+
+/* ---------- autonomy matrix ---------- */
+.cx-matrix{display:grid;grid-template-columns:28px minmax(0,1fr);grid-template-rows:auto auto;gap:var(--sp-12)}
+.cx-ax-y{grid-row:1;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;gap:10px;align-items:center;justify-content:center;margin:0}
+.cx-ax-x{grid-column:2;display:flex;gap:10px;justify-content:center;margin:0}
+.cx-ax-y span,.cx-ax-x span{font:500 var(--fs-meta)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-2)}
+.cx-ax-y em,.cx-ax-x em{font:400 var(--fs-caption)/1 var(--sans);font-style:normal;color:var(--c-ink-3)}
+.cx-q-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-8)}
+.cx-q{display:flex;flex-direction:column;gap:var(--sp-12);padding:var(--sp-24);border-radius:var(--r-l);background:var(--c-surface)}
+.cx-q.hi.irr{background:var(--char);color:#EDEDED}
+.cx-q-tag{display:none;flex-wrap:wrap;gap:6px;margin:0}
+.cx-q-tag span{font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--c-line);color:var(--c-ink-2)}
+.cx-q.hi.irr .cx-q-tag span{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);color:rgba(237,237,237,.75)}
+.cx-q-t{margin:0;font:400 22px/1.2 var(--serif);letter-spacing:-.015em;color:var(--c-ink)}
+.cx-q.hi.irr .cx-q-t{color:#fff}
+.cx-q .cx-pv-f{padding:0;background:none}
+.cx-q-x{margin:0;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-q.hi.irr .cx-q-x{color:rgba(237,237,237,.7)}
+@media(max-width:700px){.cx-matrix{grid-template-columns:1fr}.cx-ax-y,.cx-ax-x{display:none}.cx-q-grid{grid-template-columns:1fr}.cx-q-tag{display:flex}
+  .cx-q.hi.irr{order:-1}}
+
+/* ---------- provenance ---------- */
+.cx-prov{list-style:none;margin:0;padding:0}
+.cx-prov li{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr) minmax(0,1.5fr) auto;gap:var(--sp-16);align-items:start;padding:var(--sp-16) 0;border-top:1px solid var(--c-line)}
+.cx-prov li:last-child{border-bottom:1px solid var(--c-line)}
+.cx-prov-h{border-top:0!important;padding-top:0!important}
+.cx-prov-h span{font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-prov p{margin:0}
+.cx-pr-c{font:500 var(--fs-small)/1.4 var(--sans);color:var(--c-ink)}
+.cx-pr-e{font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-pr-e mark{background:var(--c-ok-bg);color:var(--c-ok);padding:0 3px;border-radius:3px;font-weight:500}
+.cx-pr-e em{font-style:normal;font-weight:500;color:var(--code)}
+.cx-pr-s .cx-own{white-space:normal;line-height:1.25}
+@media(max-width:760px){.cx-prov li{grid-template-columns:1fr;gap:var(--sp-8)}.cx-prov-h{display:none!important}}
+
+/* ---------- annotation layout (approval) ---------- */
+.cx-ann{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--sp-32);align-items:start}
+.cx-ann-l{list-style:none;margin:0;padding:0}
+.cx-ann-l li{padding:var(--sp-16) 0;border-top:1px solid var(--c-line)}
+.cx-ann-l li:first-child{border-top:0;padding-top:0}
+.cx-ann-l p{margin:0}
+.cx-ann-l p + p{margin-top:6px;font-size:var(--fs-small);line-height:1.5;color:var(--c-ink)}
+.cx-ann .cx-embed{margin:0}
+.cx-order{list-style:none;margin:var(--sp-32) 0 0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px 0}
+.cx-order li{font:500 var(--fs-small)/1 var(--sans);color:var(--c-ink)}
+.cx-order li + li:before{content:"→";margin:0 12px;color:var(--c-faint)}
+.cx-order li:last-child{color:var(--c-ink-2);font-weight:400}
+@media(max-width:860px){.cx-ann{grid-template-columns:1fr}.cx-ann .cx-embed{order:-1}}
+
+/* ---------- failure states & more ---------- */
+.cx-band-2 .gb-fails > div{background:var(--c-card)}
+.cx-band-2 .gb-fl-ui{background:var(--c-surface)}
+.cx-more{margin-top:var(--sp-32)}
+.cx-more summary{display:inline-flex;align-items:center;gap:8px;cursor:pointer;list-style:none;font:500 var(--fs-small)/1 var(--sans);color:var(--c-ink);border-bottom:1px solid var(--c-line);padding-bottom:4px}
+.cx-more summary::-webkit-details-marker{display:none}
+.cx-more summary:after{content:"↓";color:var(--c-faint);transition:transform .2s var(--ease)}
+.cx-more[open] summary:after{transform:rotate(180deg)}
+.cx-more figure.gb-ex{margin-top:var(--sp-24)}
+
+/* ---------- five failures ---------- */
+.cx-fails{list-style:none;padding:0;margin-bottom:0}
+.cx-fails > li{padding:var(--sp-24) 0;border-top:1px solid var(--c-line)}
+.cx-fails > li:last-child{border-bottom:1px solid var(--c-line)}
+.cx-f-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 var(--sp-16)}
+.cx-f-n{font:500 var(--fs-meta)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-f-h b{font:500 var(--fs-h4)/1.25 var(--sans);letter-spacing:-.01em;color:var(--c-ink)}
+.cx-f-h i{margin-left:auto;font:500 10px/1 var(--mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:99px}
+.cx-f-h .src-rule{background:var(--c-card);color:var(--c-ink)}.cx-f-h .src-code{background:var(--code-bg);color:var(--code)}.cx-f-h .src-ai{background:var(--ai-bg);color:var(--ai)}
+.cx-fails dl{margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+.cx-fails dt{font:500 10.5px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-fails dd{margin:6px 0 0;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-fails .resp dd{color:var(--c-ink);font-weight:500}
+@media(max-width:760px){.cx-fails dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-16)}}
+@media(max-width:420px){.cx-fails dl{grid-template-columns:1fr}}
+
+/* ---------- case model ---------- */
+.cx-casecmp{display:grid;grid-template-columns:minmax(0,5fr) auto minmax(0,7fr);gap:var(--sp-16);align-items:center}
+.cx-cc-chat .gb-conv-chat{padding:var(--sp-24);border-radius:var(--r-l);background:var(--c-surface)}
+.cx-cc-chat .cx-tags,.cx-cc-case .cx-tags{margin:8px 0 var(--sp-16)}
+.cx-cc-arrow{font-size:20px;color:var(--c-faint)}
+.cx-cc-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--sp-16);align-items:start}
+.cx-pv-case .cx-pv-f{padding:var(--sp-12)}
+.cx-mark{position:absolute;right:2px}
+.cx-mark i,.cx-cc-notes i{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--c-ink);color:var(--c-bg);font:500 10px/1 var(--mono);font-style:normal}
+.cx-mark i{box-shadow:0 0 0 3px var(--c-bg)}
+.cx-cc-notes{list-style:none;margin:0;padding:var(--sp-12) 0 0;display:grid;gap:var(--sp-24)}
+.cx-cc-notes li{display:grid;grid-template-columns:18px 1fr;gap:10px}
+.cx-cc-notes p{margin:0}
+.cx-cc-notes p + p{margin-top:4px;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink)}
+@media(max-width:860px){.cx-casecmp{grid-template-columns:1fr}.cx-cc-arrow{transform:rotate(90deg);justify-self:center}}
+@media(max-width:520px){.cx-cc-body{grid-template-columns:1fr}.cx-pv-case{max-width:340px}}
+
+/* ---------- proof ---------- */
+.cx-proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-8)}
+.cx-pf{display:flex;flex-direction:column;gap:var(--sp-16);padding:var(--sp-24);border-radius:var(--r-l);background:var(--c-surface)}
+.cx-pf p{margin:0}
+.cx-num{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.cx-num b{font:400 64px/.95 var(--serif);letter-spacing:-.03em;color:var(--c-ink)}
+.cx-num span{max-width:220px;font-size:var(--fs-small);line-height:1.4;color:var(--c-ink-2)}
+.cx-num-2 b{font-size:44px}
+.cx-pf-state{align-self:flex-start;padding:5px 10px;border-radius:99px;background:var(--c-warn-bg);color:var(--c-warn);font:500 12px/1 var(--sans)}
+.cx-pf .gb-term{margin-top:auto}
+.cx-pf .gb-evcase{margin-top:auto}
+.cx-status-l{margin-top:var(--sp-48);padding-top:0;border-top:0}
+.cx-status-l > div{padding-top:var(--sp-16);border-top:1px solid var(--c-line)}
+@media(max-width:760px){.cx-proof{grid-template-columns:1fr}.cx-meta,.cx-status{grid-template-columns:1fr;gap:var(--sp-16)}}
+
+/* ---------- decisions ---------- */
+.cx-cwhy{margin:4px 0 0 18px!important;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+
+/* ---------- close ---------- */
+.cx-lessons{list-style:none;margin-top:var(--sp-48);margin-bottom:0;padding:0}
+.cx-lessons li{display:grid;grid-template-columns:48px 1fr;column-gap:var(--sp-12);padding:var(--sp-24) 0;border-top:1px solid var(--c-line)}
+.cx-lessons li:first-child{border-top:0;padding-top:0}
+.cx-lessons span{grid-row:span 2;padding-top:10px;font:500 var(--fs-meta)/1 var(--mono);color:var(--c-ink-3)}
+.cx-lessons b{font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.018em;color:var(--c-ink)}
+.cx-lessons p{margin:6px 0 0;font-size:var(--fs-small);line-height:1.55;color:var(--c-ink-2)}
+.cx-final{padding-top:var(--sp-160);padding-bottom:var(--sp-96)}
+.cx-final-t{font:400 clamp(34px,5vw,58px)/1.08 var(--serif);letter-spacing:-.028em;color:var(--c-ink)}
+.cx-final-s{margin-top:var(--sp-48);max-width:var(--w-text);font:400 var(--fs-h3)/1.3 var(--serif);letter-spacing:-.015em;color:var(--c-ink-2)}
+.cx-final-l{display:flex;flex-wrap:wrap;gap:var(--sp-24);margin-top:var(--sp-32)}
+.cx-final-l a{font:500 var(--fs-small)/1 var(--sans);color:var(--c-ink);text-decoration:none;border-bottom:1px solid var(--c-line);padding-bottom:4px}
+.cx-final-l a:hover{border-color:var(--c-ink)}
+@media(max-width:760px){.cx-final{padding-top:var(--sp-96);padding-bottom:var(--sp-64)}.cx-flow3{grid-template-columns:1fr;gap:var(--sp-16)}.cx-flow3 li + li:before{content:none}}
+
+/* reused blocks lose their old outer margins inside the new layout */
+.cx-w .gb-cov,.cx-w .gb-agentline,.cx-w .gb-pipe,.cx-w .gb-fails,.cx-w .gb-dc{margin-top:0}
+
+/* hero device sits on a flat surface, no gradient */
+.gb .cx-hero-v .gbh{background:var(--c-surface)!important}
+@media(max-width:700px){.cx-arch{grid-template-columns:1fr}.cx-arch-t{margin:var(--sp-12) 0 var(--sp-16)!important}.cx-dr{grid-template-columns:1fr}.cx-dr > span{display:none}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1479,53 +1206,36 @@ addEventListener("pagereveal",function(e){
 <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Copied to clipboard</span></div>
 
 <div class="shell gb">
-<nav aria-label="Sections" class="toc">
-<a href="#overview">Overview</a>
-<a href="#why">01 · The problem</a>
-<a href="#agent">02 · Why an agent</a>
-<a href="#control">03 · The design question</a>
-<a href="#boundary">04 · The boundary</a>
-<a href="#calculate">05 · Code counts</a>
-<a href="#evidence">06 · Show the work</a>
-<a href="#approve">07 · It can’t speak for you</a>
-<a href="#wrong">08 · Failure</a>
-<a href="#case">09 · The case</a>
-<a href="#flow">10 · Agent flow</a>
-<a href="#real">11 · Not a mock-up</a>
-<a href="#rejected">12 · Decisions</a>
-<a href="#status">13 · Status</a>
-<a href="#close">Looking back</a>
-</nav>
-<!-- ================= OVERVIEW ================= -->
-<section id="overview" style="margin-top:0">
-<div class="col" data-reveal=""><p class="gb-versions" data-on="short"><span class="gb-pill" aria-hidden="true"></span><span aria-current="page">Short read · 7 min</span><a href="./getbaq-full.html">Deep dive · 40 min</a></p></div>
-<figure class="gb-ex gb-ex-hero col" data-reveal="">
+<nav aria-label="Case study progress" class="toc cx-rail"><span class="cx-rail-bar" aria-hidden="true"><i></i></span><a href="#problem"><span>01</span>Problem</a><a href="#walkthrough"><span>02</span>Agent</a><a href="#autonomy"><span>03</span>Trust</a><a href="#failure"><span>04</span>Failure</a><a href="#case"><span>05</span>Case</a><a href="#proof"><span>06</span>Proof</a></nav>
+<div class="cx-mprog" aria-hidden="true"><i></i></div>
+<section id="overview" class="cx-hero">
+<div class="cx-w" data-reveal=""><p class="gb-versions" data-on="short"><span class="gb-pill" aria-hidden="true"></span><span aria-current="page">Short read · 7 min</span><a href="./getbaq-full.html">Deep dive · 40 min</a></p></div>
+<div class="cx-w cx-hero-h" data-reveal="">
+<p class="cx-label">Case study · AI product design · Getbaq</p>
+<h1 class="cx-display">Designing an AI agent that fights for your <em>refund</em></h1>
+<p class="cx-dek">The hard part wasn’t making it act.<br>It was deciding what it should never do.</p>
+<p class="cx-lead">Getbaq turns a messy consumer dispute into a verifiable case: it understands the evidence, finds the applicable rule, prepares the next action, and keeps the user in control of every consequential action.</p>
+</div>
+<div class="cx-w cx-hero-v"><figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh" role="img" aria-label="The Getbaq app on a MacBook. The user types: Flipkart. Bought a mixer grinder for 3499 on 2 Aug. Jar has rust. Asked replacement on 4 Aug, they rejected saying photo validation failed. Called 3 times, nothing. Getbaq reads it, checks ₹3,499, Flipkart and 2 Aug with the user, and once they confirm, finds the rule, sets the reply-by date of 3 Sep 2026 and has the letter ready to sign.">
 <div class="gbh-mac" aria-hidden="true"><div class="gbh-screen">
 <img class="gbh-poster" src="./assets/getbaq-mac-start.webp" width="1600" height="1039" alt="" fetchpriority="high" decoding="async"><img class="gbh-poster gbh-poster-still" src="./assets/getbaq-mac-ready.webp" width="1600" height="1039" alt="" loading="lazy" decoding="async">
 <div class="gbh-app" inert></div>
 </div><img class="gbh-frame" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" fetchpriority="high" decoding="async"></div>
 </div>
-</figure>
-<div class="col beat gb-hero" data-reveal="">
-<p class="eyebrow">Case study · AI product design · Getbaq</p>
-<h1>Designing an AI agent that fights for your <em>refund</em></h1>
-<p class="dek">The hard part wasn’t making it act. <b>It was deciding what it should never do.</b></p>
-<a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+</figure></div>
+<ol class="cx-w cx-flow3" data-reveal="" aria-label="What the product does"><li><b>Messy input</b><span>Screenshots, chats, typed words</span></li><li><b>Verified case</b><span>Facts confirmed, rule sourced, deadline calculated</span></li><li><b>Approved action</b><span>Nothing is sent until the user approves</span></li></ol>
+<div class="cx-w cx-hero-meta" data-reveal="">
+<dl class="cx-meta"><div><dt>Project</dt><dd>Self-initiated, Sep 2026</dd></div><div><dt>Role</dt><dd>AI product design, end to end</dd></div><div><dt>Stage</dt><dd>Working prototype, not shipped</dd></div></dl>
+<dl class="cx-status"><div class="s-built"><dt>Built</dt><dd>Reading, rules, deadlines, drafting, approval, every failure state</dd></div><div class="s-sim"><dt>Simulated</dt><dd>Sending, and follow-ups while the app is closed</dd></div><div class="s-open"><dt>Not yet proven</dt><dd>Model accuracy, real refunds, real-user trust</dd></div></dl>
+<div class="cx-hero-links"><a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a><a class="cx-deep" href="./getbaq-full.html">Read the deep dive <span aria-hidden="true">→</span></a></div>
 </div>
-<dl class="meta m3 col" data-reveal="">
-<div><dt>Project</dt><dd>Self-initiated AI product, Sep 2026</dd></div>
-<div><dt>Role</dt><dd>Product designer, end to end, built with an AI coding assistant</dd></div>
-<div><dt>Status</dt><dd>Working prototype. Eval hasn’t completed a clean run; user tests not yet run</dd></div>
-</dl>
-<p class="col gb-lede" data-reveal="">Getbaq turns a messy consumer dispute into a verifiable case: it understands the evidence, finds the applicable rule, prepares the next action, and keeps the user in control of every consequential action.</p></section>
-<section class="gb-chapter" id="why">
-<div class="col"><p class="eyebrow">01 · The problem</p><h2 class="say">A refund isn’t a writing problem. It’s a follow-through problem.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<div class="col gb-repcase"><p class="k">A representative case</p><p class="t">₹3,499 · Flipkart · Refund pending</p><p class="d">The customer has already shared screenshots, contacted the merchant several times, and been told to wait “5 to 7 working days”. They still don’t know what rule applies, when the refund is actually due, or what to do next.</p></div>
-<p class="col body">The complaint is only one step. The harder work is figuring out what happened, what rule applies, what deadline matters, and what to do when the company doesn’t respond. The law says Flipkart must resolve a complaint within a month, and a free government helpline can push it. Most people don’t know either exists.</p>
-<div class="col"><div class="figrow" style="--cols:2"><div><p class="fnum">66%</p><p class="fnote">of people with a major service problem got no help from the company</p><p class="fsrc"><a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles survey, 2026</a></p></div><div><p class="fnum">1,000+</p><p class="fnote">companies answer complaints sent through 1915, India’s free National Consumer Helpline</p><p class="fsrc"><a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">National Consumer Helpline</a></p></div></div></div>
-<div class="col gb-cov" data-reveal="" role="img" aria-label="Six steps to get a refund back. ChatGPT covers one of them, writing the complaint. Getbaq is designed to cover all six, and the user approves before anything is sent.">
+</section>
+<section class="cx-sec " id="problem" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">01 · The problem</p><h2 class="cx-h">A refund isn’t a writing problem. It’s a follow-through problem.</h2></div>
+<div class="cx-w cx-rep"><p class="cx-meta-l">A representative case</p><p class="cx-rep-t">₹3,499 · Flipkart · Refund pending</p><p class="cx-rep-d">The customer has shared screenshots, contacted the merchant several times and been told to wait “5 to 7 working days”. They still don’t know what rule applies, when the refund is due, or what to do next.</p></div>
+<p class="cx-w cx-body">The complaint is only one step. The harder work is everything around it: what happened, which rule applies, which deadline matters, and what to do when the company goes quiet.</p>
+<div class="cx-w cx-vis"><div class="gb-cov" data-reveal="" role="img" aria-label="Six steps to get a refund back. ChatGPT covers one of them, writing the complaint. Getbaq is designed to cover all six, and the user approves before anything is sent.">
 <div class="gb-cov-g" aria-hidden="true">
 <p class="gb-cov-s" style="--c:2"><svg viewBox="0 0 24 24"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M4.268 21a2 2 0 0 0 1.727 1H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"/><path d="m9 18-1.5-1.5"/><circle cx="5" cy="14" r="3"/></svg><b>Understand the evidence</b></p>
 <p class="gb-cov-s" style="--c:3"><svg viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg><b>Find the rule</b></p>
@@ -1542,200 +1252,122 @@ addEventListener("pagereveal",function(e){
 <i class="gb-cov-t r1" style="--c:6"></i><i class="gb-cov-t r2 on" style="--c:6"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></i>
 <i class="gb-cov-t r1" style="--c:7"></i><i class="gb-cov-t r2 on" style="--c:7"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></i>
 </div>
+</div></div>
+<p class="cx-w cx-say">The user doesn’t need another chatbot. They need the case to move forward.</p>
+<div class="cx-w"><dl class="cx-mini"><div><dt>66%</dt><dd>of people with a major service problem got no help from the company. <a href="https://www.localcircles.com/a/press/page/class-action-survey" target="_blank" rel="noopener noreferrer">LocalCircles, 2026</a></dd></div><div><dt>1,000+</dt><dd>companies answer complaints sent through 1915, India’s free National Consumer Helpline. <a href="https://consumerhelpline.gov.in/public/convergenceprogram" target="_blank" rel="noopener noreferrer">NCH</a></dd></div></dl></div>
+</section>
+<section class="cx-sec " id="agent" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">01 · Why an agent</p><h2 class="cx-h">The user shouldn’t have to become the workflow.</h2></div>
+<div class="cx-w cx-vis cx-cmp">
+<div class="cx-cmp-row is-old"><p class="cx-meta-l">Without an agent · the user does all of it</p><ol class="cx-steps"><li>Find the order</li><li>Find the policy</li><li>Understand the rule</li><li>Calculate the deadline</li><li>Write the complaint</li><li>Send it</li><li>Remember to follow up</li></ol></div>
+<div class="cx-cmp-row is-new"><p class="cx-meta-l">With Getbaq · the user approves</p><ol class="gb-agentline" aria-label="The agent model"><li class="a-her"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Give me what you have</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I understand</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I investigate</li><li class="a-code"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>I verify</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I prepare</li><li class="a-her"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You approve</li><li class="a-code"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>I monitor</li></ol></div>
 </div>
-<p class="col body"><b>ChatGPT can write the complaint. Getbaq is designed to run the case</b>: not to generate a good response, but to move a real-world case toward resolution.</p>
+<p class="cx-w cx-note">The agent handles the work. Code handles what should never be guessed. The user stays responsible for anything consequential.</p>
 </section>
+<section class="cx-sec " id="walkthrough" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">02 · Walkthrough</p><h2 class="cx-h">From messy input to resolution.</h2><p class="cx-lead">One representative case, end to end. Every step says who owns it.</p></div>
+<div class="cx-w cx-vis"><ol class="cx-trace" aria-label="One case, end to end, in four phases"><li class="cx-tr-ph"><p class="cx-tr-n">Understand</p><p class="cx-tr-s">Messy input becomes facts</p><ol class="cx-tr-steps"><li><span class="cx-own o-you"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</span><b>Input</b><span>A screenshot, a chat or typed words</span></li><li><span class="cx-own o-ai"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</span><b>Understand</b><span>Flipkart · ₹3,499 · 2 Aug</span></li></ol><figure class="cx-pv cx-pv-sm"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gbf-understand.webp" data-alt="The case file, What I know: Flipkart, ₹3,499, 2 Aug 2026, first complaint 4 Aug 2026" aria-label="Enlarge: The case file, What I know: Flipkart, ₹3,499, 2 Aug 2026, first complaint 4 Aug 2026"><img src="./assets/gbf-understand.webp" width="900" height="438" alt="The case file, What I know: Flipkart, ₹3,499, 2 Aug 2026, first complaint 4 Aug 2026" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure></li><li class="cx-tr-ph"><p class="cx-tr-n">Verify</p><p class="cx-tr-s">A sourced rule, then a date</p><ol class="cx-tr-steps"><li><span class="cx-own o-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg>Rule</span><b>Verify</b><span>E-Commerce Rules 2020 · 4(4)</span></li><li><span class="cx-own o-code"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</span><b>Calculate</b><span>Reply by 3 Sep 2026</span></li></ol><figure class="cx-pv cx-pv-sm"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gbf-calculate.webp" data-alt="The deadline card: Flipkart must fix this by 3 Sep 2026, 20 days left" aria-label="Enlarge: The deadline card: Flipkart must fix this by 3 Sep 2026, 20 days left"><img src="./assets/gbf-calculate.webp" width="900" height="435" alt="The deadline card: Flipkart must fix this by 3 Sep 2026, 20 days left" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure></li><li class="cx-tr-ph"><p class="cx-tr-n">Act</p><p class="cx-tr-s">A draft, checked, then approved</p><ol class="cx-tr-steps"><li><span class="cx-own o-ai"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</span><b>Draft</b><span>A short, factual complaint</span></li><li><span class="cx-own o-code"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</span><b>Safety check</b><span>Facts, rule and recipient checked</span></li><li><span class="cx-own o-you"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</span><b>Approve</b><span>Nothing is sent without it</span></li></ol><figure class="cx-pv cx-pv-sm"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gbf-act.webp" data-alt="Review before sending: to Flipkart’s grievance officer, with the AI-drafted letter" aria-label="Enlarge: Review before sending: to Flipkart’s grievance officer, with the AI-drafted letter"><img src="./assets/gbf-act.webp" width="900" height="709" alt="Review before sending: to Flipkart’s grievance officer, with the AI-drafted letter" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure></li><li class="cx-tr-ph"><p class="cx-tr-n">Persist</p><p class="cx-tr-s">The case outlives the chat</p><ol class="cx-tr-steps"><li><span class="cx-own o-case"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/></svg>Case</span><b>Track</b><span>Waiting · 20 days left</span></li><li><span class="cx-own o-case"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/></svg>Case</span><b>Escalate or resolve</b><span>1915 if they go quiet; still the user’s tap</span></li></ol><figure class="cx-pv cx-pv-sm"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gbf-track.webp" data-alt="20 days left, waiting for Flipkart to reply by 3 Sep 2026" aria-label="Enlarge: 20 days left, waiting for Flipkart to reply by 3 Sep 2026"><img src="./assets/gbf-track.webp" width="900" height="296" alt="20 days left, waiting for Flipkart to reply by 3 Sep 2026" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure></li></ol>
+<p class="cx-legend"><span>Who owns each step</span><span class="cx-own o-ai"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</span><span class="cx-own o-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg>Rule</span><span class="cx-own o-code"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</span><span class="cx-own o-you"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</span><span class="cx-own o-case"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/></svg>Case</span></p></div>
+<p class="cx-w cx-note">Background follow-ups while the app is closed aren’t built yet. The case state, the deadline and the next step persist.</p>
 </section>
-<section class="gb-chapter" id="agent">
-<div class="col"><p class="eyebrow">02 · Why an agent</p><h2 class="say">The user shouldn’t have to become the workflow.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">A traditional refund flow asks the user to structure the information, find the policy, count the days, write the complaint, send it and remember what to do next. An agent can take that work off them.</p>
-<ol class="col gb-agentline" aria-label="The agent model"><li class="a-her"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Give me what you have</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I understand</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I investigate</li><li class="a-code"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>I verify</li><li class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>I prepare</li><li class="a-her"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You approve</li><li class="a-code"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>I monitor</li></ol>
-<p class="col body">The agent handles the work. Deterministic code handles what should never be guessed. The user stays responsible for anything consequential.</p>
-</section>
-</section>
-<section class="gb-chapter" id="control">
-<div class="col"><p class="eyebrow">03 · The design question</p><h2 class="say">How do you make an agent useful without giving it too much control?</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">Most agents hand over more control as trust grows. I tied control to the consequence instead: the higher the stakes and the harder an action is to undo, the more control goes back to the user.</p>
-<div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let them correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always the user’s tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading their message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell them, for Stripping an OTP they pasted.">
-<p class="gb-quad-y" aria-hidden="true">Stakes ↑</p><p class="gb-quad-x" aria-hidden="true">Can be undone ← → Can’t be undone</p>
-<p class="gb-quad-cols" aria-hidden="true"><span>Can be undone</span><span>Can’t be undone</span></p>
-<div class="gb-quad-grid" aria-hidden="true">
-<div class="q hi rev"><span class="q-badge">Can be undone</span><p class="q-t">Show it, and let them correct it</p><img class="q-shot" src="./assets/gb-quad2-rule.webp" width="1000" height="500" alt="" loading="lazy" decoding="async"><ul><li>The facts it read</li><li>The rule it picked</li><li>The deadline</li></ul></div>
-<div class="q hi irr"><span class="q-badge">Can’t be undone</span><p class="q-t">Always the user’s tap</p><img class="q-shot" src="./assets/gb-quad2-approve.webp" width="1000" height="329" alt="" loading="lazy" decoding="async"><ul><li>Sending the complaint</li><li>Escalating to 1915</li></ul></div>
-<div class="q lo rev"><span class="q-badge">Can be undone</span><p class="q-t">Just do it, and show it</p><img class="q-shot" src="./assets/gb-quad2-trace.webp" width="1000" height="387" alt="" loading="lazy" decoding="async"><ul><li>Reading their message or screenshot</li><li>Drafting the letter</li></ul></div>
-<div class="q lo irr"><span class="q-badge">Can’t be undone</span><p class="q-t">Do it, and tell them</p><img class="q-shot" src="./assets/gb-quad2-otp.webp" width="1000" height="266" alt="" loading="lazy" decoding="async"><ul><li><b>Stripping an OTP they pasted</b><span>removed before the model sees it, and they’re told</span></li></ul></div>
-</div>
-<p class="gb-quad-foot">The agent can do the work, but it never becomes the person responsible.</p>
-</div>
-</section>
-</section>
-<section class="gb-chapter" id="boundary">
-<div class="col"><p class="eyebrow">04 · The boundary</p><h2 class="say">AI reads. Code counts. You decide.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">The model interprets messy language and screenshots. Code does dates, amounts and state, which can be calculated and shouldn’t be guessed. The user owns the consequences.</p>
-<div class="col gb-trio" data-reveal="">
-<div class="a-ai"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg><p class="v">AI · Interpret</p><b>AI reads.</b><ul><li>Messy language</li><li>Screenshots</li><li>Merchant replies</li></ul></div>
-<div class="a-code"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg><p class="v">Code · Calculate</p><b>Code counts.</b><ul><li>Dates</li><li>Amounts</li><li>State transitions</li></ul></div>
-<div class="a-her"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg><p class="v">User · Decide</p><b>You decide.</b><ul><li>Confirm</li><li>Edit</li><li>Approve</li><li>Send</li></ul></div>
-</div>
-<p class="col gb-trio-line">Give each part of the system the job it’s good at.</p>
-<figure class="gb-ex col" data-embed="capability-map" data-note="Diagram"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>What the AI judges, what code computes, and what the AI is never allowed to do.</figcaption></figure>
-</section>
-</section>
-<section class="gb-chapter" id="calculate">
-<div class="col"><p class="eyebrow">05 · Decision 01</p><h2 class="say">Don’t ask the model to calculate what can be calculated.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">A language model can produce a convincing answer and still get a deadline wrong, and a confidently wrong deadline is worse than no agent: the user would wait for a date that has already passed. So calculation lives outside the model. The date isn’t an AI answer; it’s a computed result backed by a verified rule.</p>
-<ol class="col gb-pipe" data-reveal="" aria-label="AI finds the rule, Rule 4(4): within one month. Code calculates the deadline: 4 Aug 2026 plus 30 days is 3 Sep 2026. The UI shows 3 Sep 2026, labelled Calculated.">
+<section class="cx-sec cx-band cx-peak" id="architecture" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">02 · The boundary</p><h2 class="cx-h">AI reads. Code counts. You decide.</h2><p class="cx-lead">Each part of the system gets the job it’s good at, and nothing else.</p></div>
+<div class="cx-w cx-vis cx-arch"><div class="cx-arch-c o-ai"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</p><p class="cx-arch-t">AI reads.</p><ul><li>Understand</li><li>Interpret</li><li>Summarize</li><li>Draft</li></ul></div><div class="cx-arch-c o-code"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p><p class="cx-arch-t">Code counts.</p><ul><li>Calculate</li><li>Validate</li><li>Enforce</li></ul></div><div class="cx-arch-c o-you"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</p><p class="cx-arch-t">You decide.</p><ul><li>Confirm</li><li>Edit</li><li>Approve</li><li>Send</li><li>Escalate</li></ul></div></div>
+<div class="cx-w cx-sub"><h3 class="cx-h3">Don’t ask the model to calculate what can be calculated.</h3>
+<div class="cx-dr"><div><p class="cx-meta-l">Decision</p><p>A confidently wrong deadline is worse than no agent. The model shouldn’t calculate dates.</p></div><span aria-hidden="true">→</span><div><p class="cx-meta-l">Response</p><p>Calculation lives in code. The date isn’t an AI answer; it’s a computed result backed by a verified rule.</p></div></div>
+<div class="cx-vis-s"><ol class="gb-pipe" data-reveal="" aria-label="AI finds the rule, Rule 4(4): within one month. Code calculates the deadline: 4 Aug 2026 plus 30 days is 3 Sep 2026. The UI shows 3 Sep 2026, labelled Calculated.">
 <li class="a-ai"><p class="gb-pipe-h"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg><span>AI</span></p><b>Finds the rule</b><div class="gb-pipe-art"><p class="gb-pl">E-Commerce Rules · 4(4)</p><p class="gb-pq">“…redress the complaint within <mark>one month</mark> of receiving it.”</p></div></li>
 <li class="a-code"><p class="gb-pipe-h"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg><span>Code</span></p><b>Calculates the deadline</b><div class="gb-pipe-art code"><p><i>computeDeadline</i>(</p><p class="in">"2026-08-04",</p><p class="in">{ days: 30 }</p><p>)</p><p class="out">→ "2026-09-03"</p></div></li>
 <li class="a-ui"><p class="gb-pipe-h"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 6.5h.01M10 6.5h.01"/></svg><span>What the user sees</span></p><b>Shows where it came from</b><div class="gb-pipe-art ui"><p class="lab">Flipkart must fix this by</p><p class="date">3 Sep 2026</p><p class="tag">Calculated</p></div></li>
-</ol>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="rule-card-now" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The rule card, as the user sees it.</figcaption></figure><ol class="gb-call"><li><b>Source</b><span>A verified rule: E-Commerce Rules 2020, Rule 4(4), read from the law.</span></li><li><b>Calculation</b><span>Done by code. The model is never given a day count, so it has nothing to miscalculate.</span></li><li><b>Result</b><span>3 Sep 2026, labelled Calculated: where it came from, not the AI’s opinion.</span></li></ol></div>
-<div class="col gb-kicker"><p class="cap"><b>The design move</b></p><p>It wasn’t about making the model smarter. It was about giving it less opportunity to be wrong.</p></div>
+</ol></div></div>
 </section>
+<section class="cx-sec " id="autonomy" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">03 · Autonomy</p><h2 class="cx-h">Not every action deserves the same autonomy.</h2><p class="cx-lead">As consequence and irreversibility increase, control shifts from the agent to the user.</p></div>
+<div class="cx-w cx-vis cx-matrix" role="group" aria-label="Autonomy by consequence and reversibility">
+<p class="cx-ax-y" aria-hidden="true"><span>Consequence</span><em>Low → High</em></p>
+<div class="cx-q-grid"><div class="cx-q hi rev"><p class="cx-q-tag"><span>High consequence</span><span>Can be undone</span></p><p class="cx-q-t">Show it. Let them correct it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-rule.webp" data-alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" aria-label="Enlarge: The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified"><img src="./assets/gb-quad2-rule.webp" width="1000" height="500" alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">The facts it read, the rule it picked, the deadline.</p></div><div class="cx-q hi irr"><p class="cx-q-tag"><span>High consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Your tap. Always.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-approve.webp" data-alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" aria-label="Enlarge: Nothing is sent until you approve it. Approve and send, Edit, Not now"><img src="./assets/gb-quad2-approve.webp" width="1000" height="329" alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Sending the complaint. Escalating to 1915.</p></div><div class="cx-q lo rev"><p class="cx-q-tag"><span>Low consequence</span><span>Can be undone</span></p><p class="cx-q-t">Do it. Show it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-trace.webp" data-alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" aria-label="Enlarge: The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline"><img src="./assets/gb-quad2-trace.webp" width="1000" height="387" alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Reading a message or screenshot. Drafting the letter.</p></div><div class="cx-q lo irr"><p class="cx-q-tag"><span>Low consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Do it. Tell them.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-otp.webp" data-alt="A message with its OTP removed, and the step Removed an OTP from your message" aria-label="Enlarge: A message with its OTP removed, and the step Removed an OTP from your message"><img src="./assets/gb-quad2-otp.webp" width="1000" height="266" alt="A message with its OTP removed, and the step Removed an OTP from your message" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Stripping an OTP before the model ever sees it.</p></div></div>
+<p class="cx-ax-x" aria-hidden="true"><span>Reversibility</span><em>Can be undone → Can’t be undone</em></p>
+</div>
 </section>
-<section class="gb-chapter" id="evidence">
-<div class="col"><p class="eyebrow">06 · Decision 02</p><h2 class="say">Don’t hide the work behind “High confidence”.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">A confidence label on its own just asks the user to trust the system. So every important claim carries a trail: where it came from, and how it was checked.</p>
-<ol class="col gb-claims" data-reveal="" aria-label="Every important claim carries a trail. ₹3,499 at stake: from the user’s own message, confirmed by them. E-Commerce Rules, Rule 4(4) applies: from the rule sheet, verified. Flipkart must reply by 3 Sep 2026: the complaint date plus 30 days, calculated. The letter says only what the user confirmed: checked against their facts before sending.">
-<li class="gb-claims-h" aria-hidden="true"><span>Claim</span><span>Where it came from</span><span>Check</span></li>
-<li class="a-her"><b>₹3,499 is at stake</b><div class="src"><p class="k">Their message</p><p class="msg">paid <mark>3499</mark> on 2 aug</p></div><p class="chk"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>User confirmed</p></li>
-<li class="a-rule"><b>Rule 4(4) applies</b><div class="src"><p class="k">Rule sheet</p><p class="mono">E-Commerce Rules 2020 · 4(4)</p></div><p class="chk"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Verified</p></li>
-<li class="a-code"><b>Flipkart must reply by 3 Sep 2026</b><div class="src"><p class="k">deadlines.ts</p><p class="mono">4 Aug + 30 days <em>= 3 Sep</em></p></div><p class="chk"><svg viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>Calculated</p></li>
-<li class="a-code"><b>The letter says only what the user confirmed</b><div class="src"><p class="k">Before it’s sent</p><p class="msg2">Every amount and date matched to confirmed facts</p></div><p class="chk"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Safety check</p></li>
-</ol>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="sourced-steps" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The trace for a real case: every step, and who did it.</figcaption></figure><ol class="gb-call"><li><b>Every step says who did it</b><span>AI, Rule sheet, Calculated or Safety check, so the user can tell a judgment from a sum.</span></li><li><b>Confidence comes with its reason</b><span>A plain label and why it holds, never a bare score. When it’s low, there’s no Approve button.</span></li><li><b>The rule cites its law</b><span>The user can check the work instead of taking it on trust.</span></li></ol></div>
-<div class="col gb-kicker"><p class="cap"><b>Why this matters</b></p><p>Transparency is part of the product itself, not an explanation added after the fact.</p></div>
+<section class="cx-sec " id="evidence" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">03 · Evidence</p><h2 class="cx-h">Confidence is useless without evidence.</h2><p class="cx-lead">A confidence label on its own asks the user to trust the system. Every claim that matters carries its source, the evidence, and how it was checked.</p></div>
+<div class="cx-w cx-vis"><ol class="cx-prov" aria-label="Every claim with its source, evidence and verification">
+<li class="cx-prov-h" aria-hidden="true"><span>Claim</span><span>Source</span><span>Evidence</span><span>Verification</span></li><li><b class="cx-pr-c">₹3,499 is at stake</b><p class="cx-pr-s"><span class="cx-own o-you"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>User message</span></p><p class="cx-pr-e">“Bought a mixer grinder for <mark>3499</mark> on 2 Aug”</p><p class="cx-pr-v"><span class="cx-stamp o-you"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>User confirmed</span></p></li><li><b class="cx-pr-c">The first complaint was on 4 Aug</b><p class="cx-pr-s"><span class="cx-own o-you"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>User message</span></p><p class="cx-pr-e">“Asked replacement on <mark>4 Aug</mark>”</p><p class="cx-pr-v"><span class="cx-stamp o-you"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>User confirmed</span></p></li><li><b class="cx-pr-c">Rule 4(4) applies</b><p class="cx-pr-s"><span class="cx-own o-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg>Rule sheet</span></p><p class="cx-pr-e">“…redress the complaint within one month.” Applies because Flipkart is an e-commerce platform and there is a complaint date.</p><p class="cx-pr-v"><span class="cx-stamp o-rule"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Verified</span></p></li><li><b class="cx-pr-c">Flipkart must reply by 3 Sep 2026</b><p class="cx-pr-s"><span class="cx-own o-code"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>deadlines.ts</span></p><p class="cx-pr-e">4 Aug + 30 days <em>= 3 Sep 2026</em></p><p class="cx-pr-v"><span class="cx-stamp o-code"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Calculated</span></p></li></ol></div>
+<p class="cx-w cx-note">Confidence comes last: a plain label with its reason. When it’s low, there is no Approve button.</p>
 </section>
+<section class="cx-sec " id="approve" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">03 · Approval</p><h2 class="cx-h">The agent can act. It can’t speak for you.</h2><p class="cx-lead">Anything that goes out in the user’s name waits for their approval, however much they come to trust the agent.</p></div>
+<div class="cx-w cx-vis cx-ann">
+<ol class="cx-ann-l"><li><p class="cx-meta-l">What will happen</p><p>The complaint is sent to Flipkart’s grievance officer.</p></li><li><p class="cx-meta-l">What will be shared</p><p>The user’s name and contact, the order reference if known, and the letter. Nothing else.</p></li><li><p class="cx-meta-l">Who receives it</p><p>The grievance channel the rule sheet names for this company.</p></li><li><p class="cx-meta-l">Undo is recovery, not permission</p><p>Undo only appears after Approve &amp; send, for a slipped tap.</p></li></ol>
+<figure class="gb-ex cx-embed" data-embed="approve" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The live review screen. Press Approve &amp; send to see the undo window.</figcaption></figure>
+</div>
+<div class="cx-w"><ol class="cx-order" aria-label="The safety order"><li>Review</li><li>Approve</li><li>Send</li><li>Undo</li></ol></div>
 </section>
-<section class="gb-chapter" id="approve">
-<div class="col"><p class="eyebrow">07 · Decision 03</p><h2 class="say">The agent can act. It can’t speak for you.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<div class="col gb-band" data-reveal=""><p class="gb-band-k">The rule</p><p class="gb-band-t">Automation stops where consequences become irreversible.</p><p class="gb-band-s">A wrong or rude letter lands on the user, not on the AI. Anything that goes out in their name waits for their approval, permanently, however much they come to trust it.</p></div>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="approve" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The review before sending. Press Approve &amp; send to see the undo window.</figcaption></figure><ol class="gb-call"><li><b>Why it looks like an email</b><span>A familiar action. The novelty belongs to the agent, not to the send.</span></li><li><b>Why the identity shows</b><span>The complaint goes out in the user’s name, so their name is on the review. Getbaq only drafts it.</span></li><li><b>Why the amount and deadline show</b><span>₹3,499 and the reply-by date are visible before approval, so the consequence is too.</span></li><li><b>Undo is recovery, not permission</b><span>Nothing is sent until they tap Approve &amp; send. Undo only appears after, for a slipped tap.</span></li></ol></div>
-</section>
-</section>
-<section class="gb-chapter" id="wrong">
-<div class="col"><p class="eyebrow">08 · Failure</p><h2 class="say">The real product starts when the AI is wrong.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">An agent has to know when it doesn’t know. Each failure is designed as a product state, not an error message, and each one ends in a next step, not a dead end.</p>
-<div class="col gb-fails" data-reveal="" aria-label="Six failure states, each shown with what the app actually says and the next step it offers.">
+<section class="cx-sec cx-band cx-band-2" id="failure" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">04 · Failure</p><h2 class="cx-h">The real product starts when the AI is wrong.</h2><p class="cx-lead">Each failure is a designed product state with a next step, not an error message.</p></div>
+<div class="cx-w cx-vis"><div class="gb-fails" data-reveal="" aria-label="Six failure states, each shown with what the app actually says and the next step it offers.">
 <div class="t-ask"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Not sure</p><p class="gb-fl-when">No rule fits well enough to trust.</p><div class="gb-fl-ui"><p class="ey">Low confidence</p><p class="hd">I think this is an ecommerce case, but I am not sure. Is that right?</p><p class="btns"><span>Yes, that’s right</span><span>No, it’s not</span></p></div><p class="gb-fl-out">No Approve button</p></div>
 <div class="t-ask"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17h.01"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"/></svg>Missing</p><p class="gb-fl-when">A fact the case needs is absent.</p><div class="gb-fl-ui"><p class="hd">2 quick questions</p><p class="tabs"><span class="on"><i>1</i>Company</span><span><i>2</i>Complained</span></p><p class="sub">Which company or app was this with?</p></div><p class="gb-fl-out">Ask only for the missing facts</p></div>
 <div class="t-stop"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>Blocked</p><p class="gb-fl-when">No grievance address it can trust.</p><div class="gb-fl-ui"><p class="hd">This one needs you to send it</p><p class="sub">Mirraw doesn’t publish a grievance email I can check, and I won’t guess one.</p><p class="btns"><span class="dark">Copy complaint<svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></p></div><p class="gb-fl-out">Don’t guess the recipient</p></div>
 <div class="t-away"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>Out of scope</p><p class="gb-fl-when">It isn’t a refund complaint.</p><div class="gb-fl-ui"><p class="ey">Outside what I can do</p><p class="hd">This isn’t a refund complaint I can write</p><p class="chips"><span>e-Jagriti</span><span>A lawyer</span><span>Cyber Crime (1930)</span></p></div><p class="gb-fl-out">Point elsewhere; don’t force a case</p></div>
 <div class="t-wait"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ignored</p><p class="gb-fl-when">The company goes quiet.</p><div class="gb-fl-ui"><p class="ey">No reply</p><p class="hd">Flipkart went quiet</p><p class="sub">I’ve already written it. You check it, then send.</p><p class="btns"><span class="dark">Review the 1915 complaint<svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></p></div><p class="gb-fl-out">Prepare the escalation</p></div>
 <div class="t-sys"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>System failure</p><p class="gb-fl-when">The AI can’t be reached.</p><div class="gb-fl-ui"><p class="step"><i>!</i><span><b>Read your message with a simpler reader</b>The AI reader couldn’t be reached, so check what I found</span><em>Calculated</em></p></div><p class="gb-fl-out">Fall back instead of stopping the case</p></div>
-</div>
-<figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure>
+</div></div>
+<details class="cx-w cx-more"><summary>Explore every state in the live app</summary><figure class="gb-ex" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure></details>
 </section>
+<section class="cx-sec cx-band cx-band-2" id="real" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">04 · Real model</p><h2 class="cx-h">I didn’t design against a perfect AI.<br>I designed against its mistakes.</h2><p class="cx-lead">Five failure modes surfaced while testing against a real model. <b>One came from the model. Four came from the rules and code around it.</b> Reliability is a system problem.</p></div>
+<ol class="cx-w cx-vis cx-fails"><li><p class="cx-f-h"><span class="cx-f-n">Failure 01</span><b>Wrong deadline</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>Every failed payment got 5 days.</dd></div><div><dt>Actual</dt><dd>RBI gives UPI one working day (T+1).</dd></div><div><dt>Risk</dt><dd>UPI users would have waited four days they didn’t have.</dd></div><div class="resp"><dt>Design response</dt><dd>A separate UPI rule, checked against the RBI circular. The date is computed by code.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 02</span><b>Merged rules</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>Airline refunds shared one clock.</dd></div><div><dt>Actual</dt><dd>Card refunds: 7 days. Travel-site bookings: 14 working days.</dd></div><div><dt>Risk</dt><dd>Cases flagged late a week early.</dd></div><div class="resp"><dt>Design response</dt><dd>Separate rules, each with its own source.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 03</span><b>Timezone</b><i class="src-code">Code</i></p><dl><div><dt>System output</dt><dd>Dates were read in the wrong timezone.</dd></div><div><dt>Actual</dt><dd>The deadline hadn’t passed.</dd></div><div><dt>Risk</dt><dd>Near midnight, a deadline showed as missed.</dd></div><div class="resp"><dt>Design response</dt><dd>One fixed timezone for every date.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 04</span><b>Invented year</b><i class="src-ai">Model</i></p><dl><div><dt>Model output</dt><dd>Asked to copy “2 Aug”, the model added 2023 and 2021.</dd></div><div><dt>Actual</dt><dd>The user never wrote a year.</dd></div><div><dt>Risk</dt><dd>A wrong year makes a wrong deadline.</dd></div><div class="resp"><dt>Design response</dt><dd>A year is kept only if the user wrote one.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 05</span><b>Wrong recipient</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>The UPI letter was addressed to the shop.</dd></div><div><dt>Actual</dt><dd>The RBI rule applies to the user’s bank.</dd></div><div><dt>Risk</dt><dd>The complaint goes somewhere that can’t act on it.</dd></div><div class="resp"><dt>Design response</dt><dd>It asks for the bank and addresses the letter there.</dd></div></dl></li></ol>
+<p class="cx-w cx-say">None of this appears in a static mock-up.</p>
 </section>
-<section class="gb-chapter" id="case">
-<div class="col"><p class="eyebrow">09 · The case model</p><h2 class="say">A conversation starts the case. The case carries it.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">A conversation can answer a question. A case has to remember what happened and what happens next: the facts, the rule, the deadline, the status and the next action.</p>
-<div class="col gb-conv" data-reveal="" role="img" aria-label="A messy chat turns into the app’s real case file: Flipkart, ₹3,499, a deadline of 3 Sep 2026 with 20 days left, and the facts the user gave.">
-<div class="gb-conv-chat" aria-hidden="true">
-<p class="k">Conversation</p>
+<section class="cx-sec cx-peak" id="case" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">05 · The case</p><h2 class="cx-h">A conversation starts the case.<br>The case carries it.</h2></div>
+<div class="cx-w cx-vis cx-casecmp">
+<div class="cx-cc-chat"><div class="gb-conv-chat" aria-hidden="true">
+<p class="cx-meta-l">Conversation</p><p class="cx-tags"><span>Messy</span><span>Temporary</span><span>Ambiguous</span></p>
 <p class="m">flipkart rejected my replacement 🙄 jar has rust</p>
 <p class="m">called 3 times, they keep saying 5-7 working days</p>
 <p class="m">paid 3499 on 2 aug</p>
-<p class="f">Messy, and it scrolls away.</p>
+
+</div></div>
+<div class="cx-cc-arrow" aria-hidden="true">→</div>
+<div class="cx-cc-case"><p class="cx-meta-l">Case</p><p class="cx-tags"><span>Structured</span><span>Persistent</span><span>Actionable</span></p>
+<div class="cx-cc-body"><figure class="cx-pv cx-pv-case"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-casefile-full.webp" data-alt="The Getbaq case file" aria-label="Enlarge: the Getbaq case file"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The Getbaq case file for Flipkart, ₹3,499: the deadline 3 Sep 2026 with 20 days left, what I know, the rule and its source, and where the case is at" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button><span class="cx-mark" style="top:10.5%"><i>1</i></span><span class="cx-mark" style="top:32.5%"><i>2</i></span><span class="cx-mark" style="top:54%"><i>3</i></span><span class="cx-mark" style="top:71%"><i>4</i></span></div></figure>
+<ol class="cx-cc-notes"><li><i>1</i><div><p class="cx-meta-l">Deadline</p><p>Calculated by code from the verified rule, with days left.</p></div></li><li><i>2</i><div><p class="cx-meta-l">Facts</p><p>What the user confirmed: company, amount, dates.</p></div></li><li><i>3</i><div><p class="cx-meta-l">Rule</p><p>The one rule that applies, with its source.</p></div></li><li><i>4</i><div><p class="cx-meta-l">Status</p><p>Where the case is, and what happens next.</p></div></li></ol></div></div>
 </div>
-<div class="gb-conv-arrow" aria-hidden="true"><svg viewBox="0 0 40 16"><path d="M2 8h34M30 3l6 5-6 5"/></svg></div>
-<div class="gb-conv-case" aria-hidden="true">
-<img src="./assets/gb-casefile.webp" width="800" height="1001" alt="" loading="lazy" decoding="async">
+<p class="cx-w cx-say">The conversation handles ambiguity. The case carries the state.</p>
+<div class="cx-w cx-vis"><figure class="cx-pv cx-pv-wide"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/getbaq-desktop-mbp-1512.webp" data-alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" aria-label="Enlarge: The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right"><img src="./assets/getbaq-desktop-mbp-1512.webp" width="1512" height="982" alt="The Getbaq workspace: cases on the left, the thread with the review before sending in the middle, and the case file on the right" loading="lazy" decoding="async" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:760px) 92vw, 834px"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div><figcaption>The whole workspace: the case list, the thread, and the case file beside it.</figcaption></figure></div>
+</section>
+<section class="cx-sec " id="proof" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">06 · Proof</p><h2 class="cx-h">What’s tested, and what isn’t proven yet.</h2><p class="cx-lead">Everything with one right answer is tested deterministically. The model’s judgment needs a scored evaluation, and that hasn’t completed a clean run yet.</p></div>
+<div class="cx-w cx-vis cx-proof">
+<div class="cx-pf o-code"><p class="cx-pf-k"><span class="cx-own o-code"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Deterministic system</span></p><p class="cx-num"><b>214</b><span>deterministic tests, all passing</span></p><p class="cx-tags"><span>Dates</span><span>Money</span><span>States</span><span>Safety</span></p><p class="gb-term" aria-label="Test run: 20 test files, 214 tests, all passing."><span><i>✓</i>lib/deadlines.test.ts <em>(35 tests)</em></span><span><i>✓</i>lib/requiredFacts.test.ts <em>(28 tests)</em></span><span><i>✓</i>lib/state.test.ts <em>(24 tests)</em></span><span><i>✓</i>lib/validate.test.ts <em>(12 tests)</em></span><span><i>✓</i>lib/otp.test.ts <em>(8 tests)</em></span><span><i>✓</i>lib/tone.test.ts <em>(5 tests)</em></span><span class="more">…and 14 more files</span><span class="sum"><b>Test Files</b> <i>20 passed</i> (20)</span><span class="sum"><b>Tests</b> <i>214 passed</i> (214)</span></p></div>
+<div class="cx-pf o-ai"><p class="cx-pf-k"><span class="cx-own o-ai"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>Model evaluation</span></p><p class="cx-pf-state">Not yet completed</p><p class="cx-num cx-num-2"><b>30</b><span>sourced test cases, from real public complaints</span></p><p class="cx-small">8 verified rules · 6 no-rule traps · 3 runs per case, planned</p><div class="gb-evcase"><p class="h"><span>Case C03</span><em>Trap</em></p><p class="q">“Flipkart order from 2019 still shows pending, cash on delivery, never came.”</p><p class="x">Expected rule: <code>null</code>. No money was paid, so there’s no refund to chase.</p></div></div>
 </div>
-</div>
-<div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped"><div class="gb-ex-panel"><div class="gb-ex-inner"><img src="./assets/getbaq-desktop-mbp-1512.webp" srcset="./assets/getbaq-desktop-mbp-1000.webp 1000w, ./assets/getbaq-desktop-mbp-1512.webp 1512w" sizes="(max-width:760px) 90vw, 440px" width="1512" height="982" alt="The Getbaq desktop layout: the case list on the left, the conversation in the middle, and the case file on the right holding the deadline, the facts and the rule" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;border-radius:8px"></div></div><figcaption>On a wide screen the case file sits beside the thread; on a phone it opens as a sheet.</figcaption></figure><ol class="gb-call"><li><b>The thread</b><span>Where the user pastes, asks and reads. Finished steps fold into receipts.</span></li><li><b>The case file</b><span>The deadline, the facts, the rule and where the case is at. It doesn’t scroll away, and it outlives the conversation.</span></li><li><b>The status</b><span>Fifteen states behind the scenes; the user sees four: needs your input, getting ready, waiting for their reply, resolved.</span></li></ol></div>
-<div class="col gb-kicker"><p class="cap"><b>The difference</b></p><p>The conversation handles ambiguity. The case carries responsibility.</p></div>
+<dl class="cx-w cx-status cx-status-l"><div class="s-built"><dt>Built</dt><dd>Working prototype on a real model. Reads words and screenshots, finds the rule, drafts the letter, checked by code. Rule and evidence UI, approval with undo, every failure state, Google sign-in.</dd></div><div class="s-sim"><dt>Simulated or planned</dt><dd>Sending is simulated. Sending from the user’s own Gmail, and follow-ups while the app is closed, are planned.</dd></div><div class="s-open"><dt>Not yet proven</dt><dd>Model accuracy, real refunds recovered, real-user trust, willingness to pay.</dd></div></dl>
 </section>
-</section>
-<section class="gb-chapter" id="flow">
-<div class="col"><p class="eyebrow">10 · Agent flow</p><h2 class="say">From messy input to resolution.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<div class="gb-sys">
-<ol class="gb-trk" aria-label="What happens to a case inside Getbaq, in four phases">
-<li><div class="gb-trk-m"><p class="gb-trk-ph">Understand</p><p class="gb-trk-sub">Messy input becomes facts</p><ol class="gb-trk-steps"><li><i class="t-user">User</i><span>Shares a screenshot, a chat or typed words</span></li><li><i class="t-ai">AI</i><span>Extracts the facts: Flipkart, ₹3,499, 2 Aug</span></li></ol></div><figure class="gb-trk-shot"><img src="./assets/gbf-understand.webp" width="900" height="438" loading="lazy" decoding="async" alt="The case file, What I know: Flipkart, ₹3,499, 2 Aug 2026, first complaint 4 Aug 2026."></figure></li>
-<li><div class="gb-trk-m"><p class="gb-trk-ph">Verify</p><p class="gb-trk-sub">A rule, then a date</p><ol class="gb-trk-steps"><li><i class="t-rule">Rule sheet</i><span>Finds the applicable rule: E-Commerce Rules 2020 · 4(4)</span></li><li><i class="t-code">Code</i><span>Calculates the deadline: 3 Sep 2026</span></li></ol></div><figure class="gb-trk-shot"><img src="./assets/gbf-calculate.webp" width="900" height="435" loading="lazy" decoding="async" alt="The deadline card: Flipkart must fix this by 3 Sep 2026, 20 days left."></figure></li>
-<li><div class="gb-trk-m"><p class="gb-trk-ph">Act</p><p class="gb-trk-sub">A draft, checked, then approved</p><ol class="gb-trk-steps"><li><i class="t-ai">AI</i><span>Drafts a short, factual complaint</span></li><li><i class="t-safe">Safety check</i><span>Facts, rule and recipient checked</span></li><li><i class="t-user">User</i><span>Reviews it, then Approve &amp; send</span></li></ol></div><figure class="gb-trk-shot"><img src="./assets/gbf-act.webp" width="900" height="709" loading="lazy" decoding="async" alt="Review before sending: To Flipkart’s grievance officer, the subject, and the AI-drafted letter."></figure></li>
-<li><div class="gb-trk-m"><p class="gb-trk-ph">Persist</p><p class="gb-trk-sub">The case outlives the chat</p><ol class="gb-trk-steps"><li><i class="t-case">Case</i><span>Waiting for their reply · 20 days left</span></li><li><i class="t-case">Case</i><span>Where the case can go next: the 1915 complaint, if they go quiet. Still the user’s tap.</span></li></ol><p class="gb-trk-note">Background follow-ups while the app is closed aren’t built yet; the case state, deadline and next action persist.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-track.webp" width="900" height="296" loading="lazy" decoding="async" alt="20 days left, waiting for Flipkart to reply by 3 Sep 2026."></figure></li>
-</ol></div>
-<p class="col body"><b>The agent’s job isn’t to keep the conversation going. It’s to move the case forward.</b></p>
-</section>
-</section>
-<section class="gb-chapter" id="real">
-<div class="col"><p class="eyebrow">11 · Working product, not a mock-up</p><h2 class="say">I designed against a real model, not a perfect mock-up.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">I built it and tested it against a real model, because the question that matters isn’t “what should the chatbot say?” but “what should the system do when something is wrong?”. <b>Five failure modes surfaced across the model, the rules and the code. One came from the model. Four came from the system around it.</b> The worst:</p>
-<div class="col gb-herobug" data-reveal="">
-<p class="gb-herobug-tag"><span>Wrong deadline</span><i>Rule sheet</i></p>
-<div class="gb-herobug-row">
-<div><p class="cap">The rule sheet said</p><p class="gb-herobug-big">5 days</p></div>
-<div class="gb-herobug-arrow" aria-hidden="true">→</div>
-<div><p class="cap">RBI says, for UPI</p><p class="gb-herobug-big">T+1</p></div>
-</div>
-<p class="gb-herobug-risk">Every UPI user would have waited four days they didn’t have.</p>
-<p class="gb-herobug-fix"><b>Response:</b> UPI got its own rule, checked against the RBI circular, <b>and every date is computed by code and labelled Calculated.</b></p>
-</div>
-<ul class="col gb-fm" data-reveal="">
-<li><p class="h"><b>Merged rules</b><i class="src-rule">Rule sheet</i></p><p><span>Risk</span>card and travel-site refunds collapsed into one clock.</p><p><span>Fix</span>separate rules, each sourced.</p></li>
-<li><p class="h"><b>Timezone</b><i class="src-code">Code</i></p><p><span>Risk</span>near midnight, a deadline could flip to missed.</p><p><span>Fix</span>one fixed timezone for every date.</p></li>
-<li><p class="h"><b>Invented year</b><i class="src-model">Model</i></p><p><span>Risk</span>asked to copy “2 Aug”, the model added a year.</p><p><span>Fix</span>a year is kept only if the user wrote one.</p></li>
-<li><p class="h"><b>Wrong recipient</b><i class="src-rule">Rule sheet</i></p><p><span>Risk</span>the UPI letter went to the shop, not the bank.</p><p><span>Fix</span>it asks for the bank and sends it there.</p></li>
-</ul>
-<div class="col gb-kicker"><p class="cap"><b>The strongest proof</b></p><p>None of this appears in a static mock-up. AI product reliability is a system problem, not just a model problem, which is why every one of these had to be tested, not assumed.</p></div>
-</section>
-</section>
-<section class="gb-chapter" id="rejected">
-<div class="col"><p class="eyebrow">12 · Product decisions</p><h2 class="say">Some ideas made it look smarter. They didn’t make it safer.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<ol class="col gb-dc" data-reveal="">
-<li><div class="gb-dc-txt"><p class="r-t">Pure chat</p><p class="why">Decisions disappear into the conversation.</p><p class="c-t"><span aria-hidden="true">→</span>Conversation, plus action cards, plus a persistent case</p></div>
+<section class="cx-sec " id="rejected" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">06 · Decisions</p><h2 class="cx-h">Some ideas made it look smarter. They didn’t make it safer.</h2></div>
+<div class="cx-w cx-vis"><ol class="gb-dc" data-reveal="">
+<li><div class="gb-dc-txt"><p class="r-t">Pure chat</p><p class="why">Decisions disappear into the conversation.</p><p class="c-t"><span aria-hidden="true">→</span>Conversation, plus action cards, plus a persistent case</p><p class="cx-cwhy">The conversation keeps the ambiguity; decisions live on cards and in the case.</p></div>
 <div class="gb-dc-vis"><div class="gb-dc-p rej"><p class="lab"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Rejected</p><div class="ui"><p class="more">42 messages earlier</p><p class="b me">flipkart rejected my replacement</p><p class="b ai">I can help! What was the order date?</p><p class="b me">2 aug i think</p></div></div><div class="gb-dc-p cho"><p class="lab"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Chosen</p><div class="ui"><p class="cs-h">Flipkart <span>₹3,499</span></p><p class="cs-d">Reply by <b>3 Sep 2026</b></p><p class="btn">Send it</p></div></div></div></li>
-<li><div class="gb-dc-txt"><p class="r-t">Making the user sort the evidence</p><p class="why">They’d still be doing the organising.</p><p class="c-t"><span aria-hidden="true">→</span>One box for anything; the agent structures it</p></div>
+<li><div class="gb-dc-txt"><p class="r-t">Making the user sort the evidence</p><p class="why">They’d still be doing the organising.</p><p class="c-t"><span aria-hidden="true">→</span>One box for anything; the agent structures it</p><p class="cx-cwhy">Sorting evidence is the agent’s job, not the user’s.</p></div>
 <div class="gb-dc-vis"><div class="gb-dc-p rej"><p class="lab"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Rejected</p><div class="ui"><p class="fl">Company</p><p class="in"></p><p class="fl">Amount</p><p class="in"></p><p class="up">Upload a screenshot</p></div></div><div class="gb-dc-p cho"><p class="lab"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Chosen</p><div class="ui"><p class="wh">What happened?</p><p class="box">flipkart rejected my replacement, jar has rust…</p><p class="hint">Paste, forward or type</p></div></div></div></li>
-<li><div class="gb-dc-txt"><p class="r-t">An autonomy dial</p><p class="why">Trust shouldn’t decide who bears the consequence.</p><p class="c-t"><span aria-hidden="true">→</span>Permission follows the consequence</p></div>
+<li><div class="gb-dc-txt"><p class="r-t">An autonomy dial</p><p class="why">Trust shouldn’t decide who bears the consequence.</p><p class="c-t"><span aria-hidden="true">→</span>Permission follows the consequence</p><p class="cx-cwhy">Anything that can’t be undone always waits for the user.</p></div>
 <div class="gb-dc-vis"><div class="gb-dc-p rej"><p class="lab"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Rejected</p><div class="ui"><p class="dl">Autonomy</p><p class="track"><i></i></p><p class="ends"><span>Ask me</span><span>Do it all</span></p></div></div><div class="gb-dc-p cho"><p class="lab"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Chosen</p><div class="ui"><p class="pr"><span>Can be undone</span><b>Just do it</b></p><p class="pr"><span>Can’t be undone</span><b class="tap">User’s tap</b></p></div></div></div></li>
-</ol>
-<p class="col body">Early iterations asked users to structure their evidence. I removed that work and let the agent classify screenshots, conversations and text itself.</p>
+</ol></div>
+<p class="cx-w cx-note">The one-box input took three versions to get right. That exploration, with the research, ideation and prompts, is in the <a href="./getbaq-full.html">deep dive</a>.</p>
 </section>
+<section class="cx-sec" id="close" data-reveal="">
+<div class="cx-w cx-head "><p class="cx-label">Looking back</p><h2 class="cx-h">Three things changed how I think about AI products.</h2></div>
+<ol class="cx-w cx-lessons"><li><span>01</span><b>Failure is product material.</b><p>AI products need designed responses for uncertainty and failure, not just the happy path.</p></li><li><span>02</span><b>Model boundaries are interface decisions.</b><p>Deciding what the AI, code and the user each control changes the product itself.</p></li><li><span>03</span><b>An agent earns its name by completing work.</b><p>The goal isn’t a better answer. It’s moving the case closer to resolution.</p></li></ol>
 </section>
-<section class="gb-chapter" id="status">
-<div class="col"><p class="eyebrow">13 · Status</p><h2 class="say">What exists, and what isn’t proven yet.</h2></div>
-<section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">Everything with one right answer is tested deterministically: <b>214 of 214 tests pass</b> on dates, money, states and safety. The model’s judgment needs a scored evaluation instead. The harness is built, but it hasn’t completed a clean run yet.</p>
-<div class="col gb-proof" data-reveal="">
-<div class="gb-proof-c a-code"><p class="gb-proof-k"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Tested by code</p><p class="gb-proof-t">Deterministic tests: <b>214 / 214 passed</b></p>
-<p class="gb-term" aria-label="Test run: 20 test files, 214 tests, all passing."><span><i>✓</i>lib/deadlines.test.ts <em>(35 tests)</em></span><span><i>✓</i>lib/requiredFacts.test.ts <em>(28 tests)</em></span><span><i>✓</i>lib/state.test.ts <em>(24 tests)</em></span><span><i>✓</i>lib/validate.test.ts <em>(12 tests)</em></span><span><i>✓</i>lib/otp.test.ts <em>(8 tests)</em></span><span><i>✓</i>lib/tone.test.ts <em>(5 tests)</em></span><span class="more">…and 14 more files</span><span class="sum"><b>Test Files</b> <i>20 passed</i> (20)</span><span class="sum"><b>Tests</b> <i>214 passed</i> (214)</span></p></div>
-<div class="gb-proof-c a-ai"><p class="gb-proof-k"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>Scored by evaluation</p><p class="gb-proof-t">Model evaluation: <b>not yet completed</b></p>
-<div class="gb-evcase"><p class="h"><span>Case C03</span><em>Trap</em></p><p class="q">“Flipkart order from 2019 still shows pending, cash on delivery, never came.”</p><p class="x">Expected rule: <code>null</code>. No money was paid, so there’s no refund to chase.</p></div>
-<dl class="gb-proof-n"><div><dt>8</dt><dd>rules, each verified</dd></div><div><dt>30</dt><dd>test cases from real public complaints</dd></div><div><dt>6</dt><dd>“no rule” traps</dd></div><div><dt>3×</dt><dd>runs, all must pass</dd></div></dl></div>
-</div>
-<div class="col gb-ledger" data-reveal="">
-<div class="l-built"><p class="h"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Built</p><ul><li>Working prototype on a real model</li><li>Reads words and screenshots</li><li>Finds the rule, drafts the letter, checked by code</li><li>Rule and evidence UI, approval with undo</li><li>Every failure state, Google sign-in</li></ul></div>
-<div class="l-sim"><p class="h"><svg viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"/><path d="M6.453 15h11.094"/><path d="M8.5 2h7"/></svg>Simulated or planned</p><ul><li>Sending, simulated for now</li><li>Sending from the user’s own Gmail</li><li>Follow-ups while the app is closed</li></ul></div>
-<div class="l-open"><p class="h"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Not yet proven</p><ul><li>Model accuracy: the 30-case evaluation</li><li>Real refunds recovered</li><li>Real-user trust</li><li>Willingness to pay</li></ul></div>
-</div>
+<section class="cx-sec cx-final" data-reveal="" aria-label="Closing">
+<p class="cx-w cx-final-t">Cases, not conversations.<br>Evidence, not prompts.<br>Actions, not answers.<br>Resolution, not response generation.</p>
+<p class="cx-w cx-final-s">Getbaq isn’t shipped. The next proof is whether real people trust it with real money.</p>
+<p class="cx-w cx-final-l"><a data-proto="/" href="#" rel="noopener" target="_blank">Try the prototype <span aria-hidden="true">↗</span></a><a href="./getbaq-full.html">Read the deep dive <span aria-hidden="true">→</span></a></p>
 </section>
-</section>
-<section class="gb-chapter" id="close">
-<div class="col"><p class="eyebrow">Looking back</p><h2 class="say">Three things changed how I think about AI products.</h2></div>
-<section class="gb-sec" data-reveal="" id="learned">
-<ol class="col gb-lessons"><li><span>01</span><b>Failure is product material.</b><p>AI products need designed responses for uncertainty, conflict and failure, not just the happy path.</p></li><li><span>02</span><b>Model boundaries are interface decisions.</b><p>Deciding what the AI, code and the human each control changes the product itself.</p></li><li><span>03</span><b>An agent earns its name by completing work.</b><p>The goal isn’t a better answer. It’s moving the case closer to resolution.</p></li></ol>
-</section>
-<div class="col gb-sec" data-reveal="">
-<div class="hinge gb-close gb-finale">
-<p class="gb-finale-t">Cases, not conversations.<br>Evidence, not prompts.<br>Actions, not answers.<br><span>Resolution, not response generation.</span></p>
-<p class="gb-close-sub">Getbaq isn’t shipped. The next proof is whether real people trust it with real money.</p>
-<a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-</div>
-</div>
-</section>
+<dialog class="cx-lb" aria-label="Enlarged screen"><button type="button" class="cx-lb-x" aria-label="Close">×</button><img alt=""></dialog>
 <section id="next" data-reveal>
     <a class="nextlink" href="./app-merge.html">
       <span class="nextlbl">Next case study</span>
@@ -1905,21 +1537,37 @@ addEventListener("pagereveal",function(e){
     btn.addEventListener('click',function(){ copyText('hi.lokeshux@gmail.com'); });
   });
 
-  // TOC scroll-spy: active link darkens as its section comes into view
-  var tocLinks=[].slice.call(document.querySelectorAll('.toc a'));
-  var sections=tocLinks.map(function(a){return document.querySelector(a.getAttribute('href'));});
-  if('IntersectionObserver' in window && tocLinks.length){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        var i=sections.indexOf(en.target);
-        if(i<0) return;
-        if(en.isIntersecting){
-          tocLinks.forEach(function(l){l.classList.remove('active');});
-          tocLinks[i].classList.add('active');
-        }
-      });
-    },{rootMargin:'-45% 0px -50% 0px'});
-    sections.forEach(function(s){ if(s) io.observe(s); });
+  // Progress rail: the chapter in view is active; the rail and the thin
+  // mobile bar fill with progress through the story (hero to close).
+  var tocLinks=[].slice.call(document.querySelectorAll('.cx-rail a'));
+  var chapters=tocLinks.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  var railBar=document.querySelector('.cx-rail-bar'), mprog=document.querySelector('.cx-mprog');
+  var storyStart=document.getElementById('problem'), storyEnd=document.getElementById('close');
+  function onRail(){
+    var y=window.scrollY+window.innerHeight*0.4, act=-1;
+    chapters.forEach(function(c,i){ if(c && c.getBoundingClientRect().top+window.scrollY<=y) act=i; });
+    tocLinks.forEach(function(l,i){ l.classList.toggle('active',i===act); if(i===act) l.setAttribute('aria-current','step'); else l.removeAttribute('aria-current'); });
+    if(storyStart&&storyEnd){
+      var a=storyStart.offsetTop-window.innerHeight*0.5, b=storyEnd.offsetTop+storyEnd.offsetHeight-window.innerHeight;
+      var p=Math.min(1,Math.max(0,(window.scrollY-a)/Math.max(1,b-a)));
+      if(railBar) railBar.style.setProperty('--p',p); if(mprog) mprog.style.setProperty('--p',p);
+    }
+  }
+  var railTick=false;
+  window.addEventListener('scroll',function(){ if(railTick) return; railTick=true; requestAnimationFrame(function(){ onRail(); railTick=false; }); },{passive:true});
+  window.addEventListener('resize',onRail); onRail();
+
+  // Lightbox for product screens: native <dialog> gives Esc-to-close and
+  // focus handling; clicking the backdrop or the close button closes it.
+  var lb=document.querySelector('.cx-lb');
+  if(lb && lb.showModal){
+    var lbImg=lb.querySelector('img'), lbFrom=null;
+    document.querySelectorAll('.cx-zoom').forEach(function(btn){
+      btn.addEventListener('click',function(){ lbFrom=btn; lbImg.src=btn.getAttribute('data-zoom'); lbImg.alt=btn.getAttribute('data-alt')||''; lb.showModal(); });
+    });
+    lb.querySelector('.cx-lb-x').addEventListener('click',function(){ lb.close(); });
+    lb.addEventListener('click',function(e){ if(e.target===lb) lb.close(); });
+    lb.addEventListener('close',function(){ if(lbFrom) lbFrom.focus(); });
   }
 })();
 
