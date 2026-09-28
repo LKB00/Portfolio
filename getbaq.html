@@ -998,7 +998,9 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
 .gb .gb-states-t{display:flex;align-items:center;gap:8px}
-.gb .gb-states-t:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--tone)}
+.gb .gb-states-t:before{display:none}
+.gb .gb-states-lic{width:18px;height:18px;flex:none;fill:none;stroke:var(--tone);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.gb .gb-states-t{gap:10px}
 /* 09 chat: no tilted bubbles */
 .gb .gb-conv-chat .m{transform:none!important;margin-left:0!important}
 /* 10 step cards: no coloured top edge */
@@ -1429,12 +1431,12 @@ addEventListener("pagereveal",function(e){
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">An agent has to know when it doesn’t know. Each failure is designed as a product state, not an error message, and each one ends in a next step, not a dead end.</p>
 <div class="col gb-states" data-reveal="">
-<div class="t-ask"><p class="gb-states-t">Not sure</p><p>No rule fits well enough to trust.</p><p class="gb-states-next">No Approve button. It asks instead.</p></div>
-<div class="t-ask"><p class="gb-states-t">Missing</p><p>A fact she needs is absent.</p><p class="gb-states-next">One card asks for every gap at once.</p></div>
-<div class="t-stop"><p class="gb-states-t">Blocked</p><p>No grievance address it can trust.</p><p class="gb-states-next">Won’t guess. She gets the letter to send herself.</p></div>
-<div class="t-away"><p class="gb-states-t">Out of scope</p><p>It isn’t a refund complaint.</p><p class="gb-states-next">Points her to e-Jagriti, a lawyer, or the bank.</p></div>
-<div class="t-wait"><p class="gb-states-t">Ignored</p><p>The company goes quiet.</p><p class="gb-states-next">The 1915 complaint is already prepared. Still her tap.</p></div>
-<div class="t-sys"><p class="gb-states-t">System failure</p><p>The AI can’t be reached.</p><p class="gb-states-next">A simpler reader or fixed template steps in, and says so.</p></div>
+<div class="t-ask"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Not sure</p><p>No rule fits well enough to trust.</p><p class="gb-states-next">No Approve button. It asks instead.</p></div>
+<div class="t-ask"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17h.01"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"/></svg>Missing</p><p>A fact she needs is absent.</p><p class="gb-states-next">One card asks for every gap at once.</p></div>
+<div class="t-stop"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>Blocked</p><p>No grievance address it can trust.</p><p class="gb-states-next">Won’t guess. She gets the letter to send herself.</p></div>
+<div class="t-away"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>Out of scope</p><p>It isn’t a refund complaint.</p><p class="gb-states-next">Points her to e-Jagriti, a lawyer, or the bank.</p></div>
+<div class="t-wait"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ignored</p><p>The company goes quiet.</p><p class="gb-states-next">The 1915 complaint is already prepared. Still her tap.</p></div>
+<div class="t-sys"><p class="gb-states-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>System failure</p><p>The AI can’t be reached.</p><p class="gb-states-next">A simpler reader or fixed template steps in, and says so.</p></div>
 </div>
 <figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>Every state is the real screen. Try them.</figcaption></figure>
 </section>
