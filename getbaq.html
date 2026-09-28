@@ -848,6 +848,16 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
  .gb-cov-bar.r1{grid-row:5!important}.gb-cov-bar.r2{grid-row:2/8!important}
  .gb-cov-bar{transform:scaleY(0);transform-origin:top;justify-content:center}
  .gb-cov-bar span{display:none}}
+/* step cards as sticky notes */
+.gb-cov-s{--note:#FCEB9C;--note2:#F7DF7A;background:linear-gradient(180deg,color-mix(in srgb,var(--note2) 70%,var(--note)) 0 14px,var(--note) 14px);border-radius:2px;box-shadow:0 1px 1px rgba(80,60,0,.08),0 10px 14px -10px rgba(80,60,0,.35);transform:rotate(var(--r,0deg));color:#2B2610}
+.gb-cov-s b{color:#2B2610!important}
+.gb-cov-s svg{stroke:#6B5B1E!important}
+.gb-cov-s.w{box-shadow:0 1px 1px rgba(80,60,0,.08),0 10px 14px -10px rgba(80,60,0,.35)}
+.gb-cov-s[style*="--c:2"]{--r:-1.6deg}.gb-cov-s[style*="--c:3"]{--r:1.1deg}.gb-cov-s[style*="--c:4"]{--r:-.7deg}
+.gb-cov-s[style*="--c:5"]{--r:1.5deg}.gb-cov-s[style*="--c:6"]{--r:-1.2deg}.gb-cov-s[style*="--c:7"]{--r:.8deg}
+:root[data-theme="dark"] .gb-cov-s{--note:#E4D27E;--note2:#D6C26A;filter:brightness(.92)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb-cov-s{--note:#E4D27E;--note2:#D6C26A;filter:brightness(.92)}}
+@media(max-width:640px){.gb-cov-s{transform:rotate(calc(var(--r,0deg)*.4))}}
 .gb-chain{margin-top:var(--s3);padding:22px 20px 18px;border-radius:12px;background:var(--surface)}
 .gb-chain-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
 .gb-chain-steps li{display:flex;flex-direction:column;gap:6px;padding:12px 10px;border-radius:8px;background:var(--bg);min-height:78px}
