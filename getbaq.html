@@ -1053,6 +1053,21 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-fl-ui .step em{grid-column:2;font:500 9.5px/1 var(--sans);font-style:normal;color:var(--faint);margin-top:4px}
 @media(max-width:860px){.gb-fails{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.gb-fails{grid-template-columns:1fr}}
+/* agent flow: one line, each step with its real screen */
+.gb-trk{list-style:none;margin:0;padding:0 0 0 30px;position:relative;display:grid;gap:36px}
+.gb-trk:before{content:"";position:absolute;left:5px;top:12px;bottom:12px;width:1.5px;background:color-mix(in srgb,var(--ink) 12%,transparent)}
+.gb-trk .w-her{--a:var(--her);--ab:var(--her-bg)}.gb-trk .w-ai{--a:var(--ai);--ab:var(--ai-bg)}.gb-trk .w-code{--a:var(--code);--ab:var(--code-bg)}
+.gb-trk li{position:relative;display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:28px;align-items:start}
+.gb-trk li:before{content:"";position:absolute;left:-30px;top:6px;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--bg);border:2px solid var(--a)}
+.gb-trk li.key:before{background:var(--a)}
+.gb-trk-m{padding-top:2px}
+.gb-trk-who{display:inline-flex;align-items:center;gap:5px;margin:0;padding:4px 9px 4px 7px;border-radius:99px;background:var(--ab);color:var(--a);font:500 11px/1 var(--sans)}
+.gb-trk-who svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.gb-trk-m b{display:block;margin-top:12px;font:400 22px/1.15 var(--serif);letter-spacing:-.015em;color:var(--ink)}
+.gb-trk-m p:last-child{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--muted)}
+.gb-trk-shot{margin:0;padding:10px;border-radius:12px;background:var(--surface)}
+.gb-trk-shot img{display:block;width:100%;height:auto;border-radius:8px}
+@media(max-width:640px){.gb-trk{gap:30px;padding-left:24px}.gb-trk:before{left:4px}.gb-trk li{grid-template-columns:1fr;gap:14px}.gb-trk li:before{left:-24px}}
 /* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
@@ -1509,34 +1524,16 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">10 · Agent flow</p><h2 class="say">From messy input to resolution.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <div class="gb-sys">
-<ol class="gb-sys-steps" aria-label="What happens to a case inside Getbaq">
-<li class="s1 w-her"><div class="gb-sys-h"><span class="gb-sys-n">01</span><b>Input</b><p>A screenshot, a forwarded chat, or typed words.</p></div>
-<p class="gb-sys-who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Her</p>
-<figure class="gb-shot"><img src="./assets/gbs-input.webp" width="640" height="345" loading="lazy" alt="Getbaq’s start screen: What happened? Paste a screenshot, forward the chat, or just type it."></figure></li>
-<li class="s2 w-ai"><div class="gb-sys-h"><span class="gb-sys-n">02</span><b>Understand</b><p>Facts extracted: company, amount, dates, issue.</p></div>
-<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</p>
-<figure class="gb-shot"><img src="./assets/gbs-understand.webp" width="298" height="135" loading="lazy" alt="Getbaq’s case file, What I know: Flipkart, ₹3,499, 2 Aug 2026, first complaint 4 Aug 2026."></figure></li>
-<li class="s3 w-ai"><div class="gb-sys-h"><span class="gb-sys-n">03</span><b>Verify</b><p>Find the one rule that applies, with its source and confidence.</p></div>
-<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg>AI + rule sheet</p>
-<figure class="gb-shot"><img src="./assets/gbs-verify.webp" width="298" height="98" loading="lazy" alt="Getbaq’s case file, The rule: the platform must redress the complaint within one month (30 days) of receiving it. Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)."></figure></li>
-<li class="s4 w-code"><div class="gb-sys-h"><span class="gb-sys-n">04</span><b>Calculate</b><p>The deadline and what’s owed, worked out by code, never by the model.</p></div>
-<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p>
-<figure class="gb-shot"><img src="./assets/gbs-calculate.webp" width="298" height="124" loading="lazy" alt="Getbaq’s case file, Deadline: Flipkart must fix this by 3 Sep 2026, 20 days left."></figure></li>
-<li class="s5 w-ai"><div class="gb-sys-h"><span class="gb-sys-n">05</span><b>Draft</b><p>A short, factual complaint.</p></div>
-<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI · checked by code</p>
-<figure class="gb-shot fade"><img src="./assets/gbs-draft.webp" width="390" height="132" loading="lazy" alt="The start of her letter in Getbaq: I bought a mixer grinder from Flipkart on 2 Aug for ₹3,499…"></figure></li>
-<li class="s6 w-her"><div class="gb-sys-h"><span class="gb-sys-n">06</span><b>Approve</b><p>She signs and sends in her own name, edits, or says no.</p></div>
-<p class="gb-sys-who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Her</p>
-<figure class="gb-shot"><img src="./assets/gbs-approve.webp" width="552" height="300" loading="lazy" alt="Getbaq’s send block: Sign the letter, then Send it, with Edit and Not now beside it."></figure></li>
-<li class="s7 w-code"><div class="gb-sys-h"><span class="gb-sys-n">07</span><b>Track</b><p>The deadline and the company’s reply.</p></div>
-<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p>
-<figure class="gb-shot"><img src="./assets/gbs-track.webp" width="298" height="192" loading="lazy" alt="Getbaq’s case file, Where it’s at: you told me, facts checked, rule found, complaint sent now; their reply and resolved still to come."></figure></li>
-<li class="s8 w-her"><div class="gb-sys-h"><span class="gb-sys-n">08</span><b>Escalate</b><p>The 1915 complaint, prepared by the agent. Still her tap.</p></div>
-<p class="gb-sys-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI + her</p>
-<div class="gb-ios" role="img" aria-label="An iPhone notification from Getbaq: Flipkart hasn’t replied by 3 Sep. Your 1915 complaint is ready. Tap to review and send."><img src="./assets/gbs-icon.webp" width="54" height="54" alt=""><div><p class="gb-ios-top"><b>Flipkart hasn’t replied</b><span>now</span></p><p>Your 1915 complaint is ready. Tap to review and send.</p></div></div></li>
-</ol>
-<p class="gb-sys-swipe" aria-hidden="true">Swipe through the eight steps →</p>
-</div>
+<ol class="gb-trk" aria-label="What happens to a case inside Getbaq">
+<li class="w-her"><div class="gb-trk-m"><p class="gb-trk-who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Her</p><b>Input</b><p>A screenshot, a forwarded chat, or typed words.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-input.webp" width="900" height="695" loading="lazy" decoding="async" alt="Getbaq’s start screen: What happened? Paste a screenshot, forward the chat, or just type it."></figure></li>
+<li class="w-ai"><div class="gb-trk-m"><p class="gb-trk-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</p><b>Understand</b><p>The facts come out of the mess: company, amount, dates.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-understand.webp" width="900" height="438" loading="lazy" decoding="async" alt="The case file, What I know: Flipkart, ₹3,499, 2 Aug 2026, first complaint 4 Aug 2026."></figure></li>
+<li class="w-ai"><div class="gb-trk-m"><p class="gb-trk-who"><svg viewBox="0 0 16 16"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3M6 8h4M6 10.5h4"/></svg>AI + rule sheet</p><b>Verify</b><p>The one rule that applies, with its source.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-verify.webp" width="900" height="341" loading="lazy" decoding="async" alt="The case file, The rule: the platform must redress the complaint within one month (30 days). E-Commerce Rules 2020, Rule 4(4)."></figure></li>
+<li class="w-code"><div class="gb-trk-m"><p class="gb-trk-who"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p><b>Calculate</b><p>The deadline, worked out by code, never by the model.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-calculate.webp" width="900" height="435" loading="lazy" decoding="async" alt="The deadline: Flipkart must fix this by 3 Sep 2026, 20 days left."></figure></li>
+<li class="w-ai"><div class="gb-trk-m"><p class="gb-trk-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI · checked by code</p><b>Draft</b><p>A short, factual complaint from the facts she confirmed.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-draft.webp" width="900" height="621" loading="lazy" decoding="async" alt="The drafted complaint to Flipkart’s grievance officer."></figure></li>
+<li class="w-her key"><div class="gb-trk-m"><p class="gb-trk-who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>Her</p><b>Approve</b><p>She sends it in her own name, edits it, or says no.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-approve.webp" width="900" height="297" loading="lazy" decoding="async" alt="You’ll have 6 seconds to undo. Nothing goes out without your tap. Send it, Edit, Not now."></figure></li>
+<li class="w-code"><div class="gb-trk-m"><p class="gb-trk-who"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p><b>Track</b><p>The deadline and the company’s reply, so she can stop checking.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-track.webp" width="900" height="296" loading="lazy" decoding="async" alt="20 days left, waiting for Flipkart to reply by 3 Sep 2026."></figure></li>
+<li class="w-her key"><div class="gb-trk-m"><p class="gb-trk-who"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI + her</p><b>Escalate</b><p>If they go quiet, the 1915 complaint is ready. Still her tap.</p></div><figure class="gb-trk-shot"><img src="./assets/gbf-escalate.webp" width="900" height="777" loading="lazy" decoding="async" alt="Where this goes next: Flipkart’s grievance officer, then the National Consumer Helpline (1915), then e-Jagriti. Review the 1915 complaint."></figure></li>
+</ol></div>
 <p class="col body"><b>The agent’s job isn’t to keep the conversation going. It’s to move the case forward.</b></p>
 </section>
 </section>
