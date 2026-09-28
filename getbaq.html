@@ -1103,6 +1103,52 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-ledger li:first-child{border-top:0}
 @media(max-width:700px){.gb-proof,.gb-ledger{grid-template-columns:1fr}}
 
+/* decisions: rejected vs chosen, each shown as a small picture */
+.gb-dc{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:grid;gap:8px}
+.gb-dc > li{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:20px;align-items:center;padding:18px;border-radius:12px;background:var(--surface)}
+.gb-dc-txt p{margin:0}
+.gb-dc .k{font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.gb-dc .k.r{color:var(--clay)}.gb-dc .k.c{margin-top:14px;color:var(--her)}
+.gb-dc .r-t{margin-top:0;font:400 17px/1.25 var(--serif);color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--clay) 60%,transparent);text-decoration-thickness:1px}
+.gb-dc .c-t span{color:var(--her)}
+.gb-dc .why{margin-top:4px;font-size:13px;line-height:1.45;color:var(--muted)}
+.gb-dc .c-t{margin-top:12px;display:flex;gap:6px;font:500 15px/1.35 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-dc-vis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gb-dc-p .lab{display:flex;align-items:center;gap:5px;margin:0 0 6px;font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.gb-dc-p .lab svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.gb-dc-p.rej .lab{color:var(--clay)}.gb-dc-p.cho .lab{color:var(--her)}
+.gb-dc-p .ui{height:128px;box-sizing:border-box;padding:10px;border-radius:8px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;gap:5px;overflow:hidden;font-family:var(--sans)}
+.gb-dc-p.rej .ui{opacity:.6;filter:grayscale(1)}
+.gb-dc-p .ui p{margin:0}
+.gb-dc .more{font-size:9.5px;color:var(--faint);text-align:center}
+.gb-dc .b{max-width:88%;padding:5px 8px;border-radius:9px;font-size:10.5px;line-height:1.3}
+.gb-dc .b.me{align-self:flex-end;background:var(--surface);color:var(--ink)}
+.gb-dc .b.ai{align-self:flex-start;background:var(--ai-bg);color:var(--ink)}
+.gb-dc .cs-h{display:flex;justify-content:space-between;font:600 12.5px/1.2 var(--sans);color:var(--ink)}
+.gb-dc .cs-h span{font:500 11.5px/1.2 var(--mono)}
+.gb-dc .cs-d{font-size:10.5px;color:var(--muted)}.gb-dc .cs-d b{font:600 11px/1 var(--mono);color:var(--ink)}
+.gb-dc .btn{margin-top:4px!important;padding:6px 0;border-radius:99px;background:var(--ink);color:var(--bg);font-size:10.5px;text-align:center}
+.gb-dc .fl{font-size:9.5px;color:var(--muted)}
+.gb-dc .in{height:14px;border-radius:4px;box-shadow:inset 0 0 0 1px var(--line)}
+.gb-dc .up{margin-top:3px!important;padding:7px 0;border-radius:5px;border:1px dashed color-mix(in srgb,var(--ink) 25%,transparent);font-size:9.5px;color:var(--muted);text-align:center}
+.gb-dc .wh{font:400 15px/1.1 var(--serif);color:var(--ink);text-align:center}
+.gb-dc .box{padding:8px 9px;border-radius:9px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent);font-size:10.5px;line-height:1.35;color:var(--ink)}
+.gb-dc .hint{font-size:9.5px;color:var(--faint);text-align:center}
+.gb-dc .dl{font-size:10px;color:var(--muted)}
+.gb-dc .track{position:relative;height:4px;border-radius:99px;background:var(--surface);margin:6px 0 2px!important}
+.gb-dc .track i{position:absolute;left:0;top:0;bottom:0;width:70%;border-radius:99px;background:var(--ink)}
+.gb-dc .track i:after{content:"";position:absolute;right:-7px;top:-5px;width:14px;height:14px;border-radius:50%;background:var(--bg);box-shadow:0 0 0 1.5px var(--ink)}
+.gb-dc .ends{display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint)}
+.gb-dc .pr{display:flex;flex-wrap:wrap;gap:4px;justify-content:space-between;align-items:center;padding:7px 8px;border-radius:6px;background:var(--surface);font-size:10.5px;color:var(--muted)}
+.gb-dc .pr b{font-weight:500;color:var(--ink)}
+.gb-dc .pr b.tap{padding:3px 8px;border-radius:99px;background:var(--ink);color:var(--bg)}
+.gb-vers{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;counter-reset:none}
+.gb-vers figure{margin:0;padding:10px;border-radius:12px;background:var(--surface);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;box-sizing:border-box}
+.gb-vers img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:6px}
+.gb-vers p{margin:8px 0 0;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.gb-vers b{display:block;margin-bottom:2px;font:500 10.5px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--clay)}
+.gb-vers .live b{color:var(--her)}
+@media(max-width:700px){.gb-dc > li{grid-template-columns:1fr;gap:14px}.gb-vers{grid-template-columns:1fr}.gb-vers figure{aspect-ratio:auto}}
 /* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
@@ -1597,13 +1643,20 @@ addEventListener("pagereveal",function(e){
 <section class="gb-chapter" id="rejected">
 <div class="col"><p class="eyebrow">12 · Product decisions</p><h2 class="say">Some ideas made it look smarter. They didn’t make it safer.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
-<div class="col gb-rej" data-reveal=""><div><p class="x"><span>Rejected</span><s>Pure chat</s></p><p class="why">Decisions disappear into the conversation.</p><p class="ok"><span>Chosen</span>Conversation, plus action cards, plus a persistent case</p></div><div><p class="x"><span>Rejected</span><s>Making her sort the evidence</s></p><p class="why">She’d still be doing the organising.</p><p class="ok"><span>Chosen</span>One box for anything; the agent structures it</p></div><div><p class="x"><span>Rejected</span><s>An autonomy dial</s></p><p class="why">Trust shouldn’t decide who bears the consequence.</p><p class="ok"><span>Chosen</span>Permission follows the consequence</p></div></div>
+<ol class="col gb-dc" data-reveal="">
+<li><div class="gb-dc-txt"><p class="r-t">Pure chat</p><p class="why">Decisions disappear into the conversation.</p><p class="c-t"><span aria-hidden="true">→</span>Conversation, plus action cards, plus a persistent case</p></div>
+<div class="gb-dc-vis"><div class="gb-dc-p rej"><p class="lab"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Rejected</p><div class="ui"><p class="more">42 messages earlier</p><p class="b me">flipkart rejected my replacement</p><p class="b ai">I can help! What was the order date?</p><p class="b me">2 aug i think</p></div></div><div class="gb-dc-p cho"><p class="lab"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Chosen</p><div class="ui"><p class="cs-h">Flipkart <span>₹3,499</span></p><p class="cs-d">Reply by <b>3 Sep 2026</b></p><p class="btn">Send it</p></div></div></div></li>
+<li><div class="gb-dc-txt"><p class="r-t">Making her sort the evidence</p><p class="why">She’d still be doing the organising.</p><p class="c-t"><span aria-hidden="true">→</span>One box for anything; the agent structures it</p></div>
+<div class="gb-dc-vis"><div class="gb-dc-p rej"><p class="lab"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Rejected</p><div class="ui"><p class="fl">Company</p><p class="in"></p><p class="fl">Amount</p><p class="in"></p><p class="up">Upload a screenshot</p></div></div><div class="gb-dc-p cho"><p class="lab"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Chosen</p><div class="ui"><p class="wh">What happened?</p><p class="box">flipkart rejected my replacement, jar has rust…</p><p class="hint">Paste, forward or type</p></div></div></div></li>
+<li><div class="gb-dc-txt"><p class="r-t">An autonomy dial</p><p class="why">Trust shouldn’t decide who bears the consequence.</p><p class="c-t"><span aria-hidden="true">→</span>Permission follows the consequence</p></div>
+<div class="gb-dc-vis"><div class="gb-dc-p rej"><p class="lab"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Rejected</p><div class="ui"><p class="dl">Autonomy</p><p class="track"><i></i></p><p class="ends"><span>Ask me</span><span>Do it all</span></p></div></div><div class="gb-dc-p cho"><p class="lab"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Chosen</p><div class="ui"><p class="pr"><span>Can be undone</span><b>Just do it</b></p><p class="pr"><span>Can’t be undone</span><b class="tap">Her tap</b></p></div></div></div></li>
+</ol>
 <p class="col body">The evidence decision took three versions. The first two made her sort her own input; the third made it the agent’s job.</p>
-<div class="col gb-sketches s3">
-<figure class="gb-sketch gb-ex" data-embed="sketch-v1"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v1 · rejected. </b>A labelled box, plus chips that inserted a sentence. Still real effort.</figcaption></figure>
-<figure class="gb-sketch gb-ex" data-embed="sketch-v2"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v2 · rejected. </b>Screenshot first, typing as a small link. She still sorted her own input.</figcaption></figure>
-<figure class="gb-sketch gb-ex" data-embed="intake-now"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption><b>v3 · live. </b>One box. Sorting it is the agent’s job.</figcaption></figure>
-</div>
+<ol class="col gb-vers" aria-label="Three versions of the input screen">
+<li class="rej"><figure><img src="./assets/gbv-1.webp" width="800" height="301" loading="lazy" decoding="async" alt="v1: a labelled box, Describe your problem, with chips that insert a sentence."></figure><p><b>v1 · rejected</b>A labelled box, plus chips that inserted a sentence. Still real effort.</p></li>
+<li class="rej"><figure><img src="./assets/gbv-2.webp" width="800" height="293" loading="lazy" decoding="async" alt="v2: Upload a screenshot, with typing as a small link."></figure><p><b>v2 · rejected</b>Screenshot first, typing as a small link. She still sorted her own input.</p></li>
+<li class="live"><figure><img src="./assets/gbv-3.webp" width="800" height="618" loading="lazy" decoding="async" alt="v3: What happened? One box for a screenshot, a forwarded chat or typed words."></figure><p><b>v3 · live</b>One box. Sorting it is the agent’s job.</p></li>
+</ol>
 </section>
 </section>
 <section class="gb-chapter" id="status">
