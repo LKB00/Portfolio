@@ -888,14 +888,6 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 @media(max-width:600px){.gb-trio{grid-template-columns:1fr}}
 
 /* 05 pipeline */
-.gb-pipe{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;position:relative}
-.gb-pipe li{position:relative;padding:14px 16px;border-radius:10px;background:var(--ab);display:flex;flex-direction:column;gap:4px}
-.gb-pipe li + li:before{content:"→";position:absolute;left:-17px;top:50%;transform:translateY(-50%);color:var(--faint)}
-.gb-pipe span{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--a)}
-.gb-pipe b{font:500 15px/1.3 var(--sans);color:var(--ink)}
-.gb-pipe em{font-style:normal;font:400 12.5px/1.3 var(--mono);color:var(--muted)}
-.gb-pipe li.a-ui{box-shadow:inset 0 0 0 1.5px var(--ink)}
-@media(max-width:600px){.gb-pipe{grid-template-columns:1fr;gap:14px}.gb-pipe li + li:before{content:"↓";left:18px;top:-14px;transform:none}}
 
 /* 06 trail checks */
 .gb-trail i[class]{background:var(--ab);color:var(--a)}
@@ -987,6 +979,30 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb .gb-quad-grid .q.hi.irr li{color:rgba(237,237,237,.62)}
 .gb .gb-quad-grid .q-shot{margin-bottom:12px}
 @media(max-width:600px){.gb-quad-cols{display:none}.gb .gb-quad-grid .q-badge{display:inline-block}}
+.gb-pipe{list-style:none;margin-top:var(--s3);margin-bottom:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;position:relative}
+.gb-pipe li{position:relative;padding:16px;border-radius:12px;background:var(--ab);display:flex;flex-direction:column}
+.gb-pipe li + li:before{content:"→";position:absolute;left:-22px;top:50%;width:18px;height:18px;display:grid;place-items:center;transform:translateY(-50%);font-size:13px;color:var(--faint)}
+.gb-pipe-h{display:flex;align-items:center;gap:6px;margin:0;color:var(--a)}
+.gb-pipe-h svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.gb-pipe-h span{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.gb-pipe b{margin:8px 0 12px;font:500 15px/1.3 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-pipe-art{margin-top:auto;padding:12px;border-radius:8px;background:var(--bg);min-height:104px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center}
+.gb-pipe-art p{margin:0}
+.gb-pipe-art .gb-pl{font:500 10.5px/1.35 var(--mono);color:var(--muted);letter-spacing:.02em}
+.gb-pipe-art .gb-pq{margin-top:6px;font:400 13.5px/1.45 var(--serif);color:var(--ink)}
+.gb-pipe-art mark{background:color-mix(in srgb,var(--ai) 16%,transparent);color:inherit;padding:0 2px;border-radius:3px}
+.gb-pipe-art.code p{font:400 12px/1.6 var(--mono);color:var(--ink);white-space:nowrap}
+.gb-pipe-art.code i{font-style:normal;color:var(--code)}
+.gb-pipe-art.code .in{padding-left:14px;color:var(--muted)}
+.gb-pipe-art.code .out{margin-top:4px;color:var(--code);font-weight:500}
+.gb-pipe li.a-ui{--a:var(--ink);background:var(--surface)}
+.gb-pipe-art.ui .lab{font-size:12px;color:var(--muted)}
+.gb-pipe-art.ui .date{margin-top:4px;font:600 22px/1.1 var(--mono);letter-spacing:-.02em;color:var(--ink)}
+.gb-pipe-art.ui .tag{align-self:flex-start;margin-top:8px;padding:3px 8px;border-radius:99px;font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;background:var(--code-bg);color:var(--code)}
+.gb-pipe[data-reveal] li{opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
+.gb-pipe[data-reveal] li:nth-child(2){transition-delay:.15s}.gb-pipe[data-reveal] li:nth-child(3){transition-delay:.3s}
+.gb-pipe.shown li{opacity:1;transform:none}
+@media(max-width:600px){.gb-pipe{grid-template-columns:1fr;gap:22px}.gb-pipe li + li:before{content:"↓";left:50%;top:-20px;transform:translateX(-50%)}}
 /* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
@@ -1372,10 +1388,10 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">05 · Decision 01</p><h2 class="say">Don’t ask the model to calculate what can be calculated.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
 <p class="col body">A language model can produce a convincing answer and still get a deadline wrong, and a confidently wrong deadline is worse than no agent: she’d wait for a date that has already passed. So calculation lives outside the model.</p>
-<ol class="col gb-pipe" data-reveal="" aria-label="AI finds the rule, code calculates the deadline, the UI labels it Calculated.">
-<li class="a-ai"><span>AI</span><b>Finds the rule</b><em>Rule 4(4)</em></li>
-<li class="a-code"><span>Code</span><b>Calculates the deadline</b><em>4 Aug + 30 days</em></li>
-<li class="a-ui"><span>UI</span><b>Shows where it came from</b><em>3 Sep 2026 · Calculated</em></li>
+<ol class="col gb-pipe" data-reveal="" aria-label="AI finds the rule, Rule 4(4): within one month. Code calculates the deadline: 4 Aug 2026 plus 30 days is 3 Sep 2026. The UI shows 3 Sep 2026, labelled Calculated.">
+<li class="a-ai"><p class="gb-pipe-h"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg><span>AI</span></p><b>Finds the rule</b><div class="gb-pipe-art"><p class="gb-pl">E-Commerce Rules · 4(4)</p><p class="gb-pq">“…redress the complaint within <mark>one month</mark> of receiving it.”</p></div></li>
+<li class="a-code"><p class="gb-pipe-h"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg><span>Code</span></p><b>Calculates the deadline</b><div class="gb-pipe-art code"><p><i>computeDeadline</i>(</p><p class="in">"2026-08-04",</p><p class="in">{ days: 30 }</p><p>)</p><p class="out">→ "2026-09-03"</p></div></li>
+<li class="a-ui"><p class="gb-pipe-h"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 6.5h.01M10 6.5h.01"/></svg><span>What she sees</span></p><b>Shows where it came from</b><div class="gb-pipe-art ui"><p class="lab">Flipkart must fix this by</p><p class="date">3 Sep 2026</p><p class="tag">Calculated</p></div></li>
 </ol>
 <div class="gb-vis" data-reveal=""><figure class="gb-ex gb-capped" data-embed="rule-card-now" data-note="Live"><div class="gb-ex-panel"><div class="gb-ex-inner"></div></div><figcaption>The rule card, as she sees it.</figcaption></figure><ol class="gb-call"><li><b>AI finds the rule</b><span>It reads her case and picks the one rule that applies.</span></li><li><b>Code calculates the deadline</b><span>The model is never given a day count, so it has nothing to miscalculate.</span></li><li><b>The UI says Calculated</b><span>The date is labelled with where it came from, not presented as the AI’s opinion.</span></li></ol></div>
 <div class="col gb-kicker"><p class="cap"><b>The design move</b></p><p>It wasn’t about making the model smarter. It was about giving it less opportunity to be wrong.</p></div>
