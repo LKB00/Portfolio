@@ -958,6 +958,767 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 
 .gbh-demo{position:relative;overflow:hidden;aspect-ratio:16/9;background:#F2F2F2;border-radius:8px}
 @media(max-width:600px){.gbh-demo{aspect-ratio:4/4.3}}
+
+/* ===== shared with the short read ===== */
+.gb{--her:#3E6A12;--her-bg:#EAF2D9;--ai:#5A48C6;--ai-bg:#EEEBFB;--code:#12708A;--code-bg:#E1F0F4;--clay:#B0521F;--clay-bg:#FBEBDF;--char:#1E2226;--lime:#C2EF72}
+:root[data-theme="dark"] .gb{--her:#A8D66A;--her-bg:rgba(168,214,106,.12);--ai:#B3A6F4;--ai-bg:rgba(179,166,244,.13);--code:#6CC3DA;--code-bg:rgba(108,195,218,.12);--clay:#F0A070;--clay-bg:rgba(240,160,112,.12);--char:#16191C}
+.gb-fails{margin-top:var(--s3);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gb-fails > div{--tone:var(--ai);display:flex;flex-direction:column;padding:16px;border-radius:12px;background:var(--surface)}
+.gb-fails .t-stop,.gb-fails .t-sys{--tone:var(--clay)}.gb-fails .t-away{--tone:var(--code)}.gb-fails .t-wait{--tone:var(--her)}
+.gb-fl-t{display:flex;align-items:center;gap:8px;margin:0;font:500 15px/1.2 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-fl-t svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--tone);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.gb-fl-when{margin:6px 0 14px;font-size:13px;line-height:1.45;color:var(--muted)}
+.gb-fl-ui{margin-top:auto;padding:12px;border-radius:8px;background:var(--bg);font-family:var(--sans)}
+.gb-fl-ui p{margin:0}
+.gb-fl-ui .ey{display:flex;align-items:center;gap:6px;margin-bottom:6px;font:500 9.5px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.gb-fl-ui .ey:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--clay)}
+.gb-fl-ui .hd{font:600 13.5px/1.35 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-fl-ui .sub{margin-top:5px;font-size:12px;line-height:1.45;color:var(--muted)}
+.gb-fl-ui .btns{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.gb-fl-ui .btns span{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:99px;font-size:10.5px;white-space:nowrap;line-height:1.2;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.gb-fl-ui .btns .dark{background:var(--ink);color:var(--bg);box-shadow:none}
+.gb-fl-ui .btns svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gb-fl-ui .tabs{display:flex;gap:10px;margin:8px 0 2px;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--faint)}
+.gb-fl-ui .tabs span{display:inline-flex;align-items:center;gap:5px}
+.gb-fl-ui .tabs .on{color:var(--ink)}
+.gb-fl-ui .tabs i{display:grid;place-items:center;width:14px;height:14px;border-radius:50%;font:500 9px/1 var(--sans);font-style:normal;background:var(--surface);color:var(--muted)}
+.gb-fl-ui .tabs .on i{background:var(--ink);color:var(--bg)}
+.gb-fl-ui .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
+.gb-fl-ui .chips span{padding:4px 8px;border-radius:6px;background:var(--surface);font-size:11px;color:var(--ink)}
+.gb-fl-ui .step{display:grid;grid-template-columns:16px 1fr;gap:8px;font-size:12px;line-height:1.4}
+.gb-fl-ui .step i{display:grid;place-items:center;width:16px;height:16px;margin-top:1px;border-radius:50%;font:600 10px/1 var(--sans);font-style:normal;background:var(--clay-bg);color:var(--clay)}
+.gb-fl-ui .step b{display:block;font-weight:500;color:var(--ink)}
+.gb-fl-ui .step span{color:var(--clay)}
+.gb-fl-ui .step em{grid-column:2;font:500 9.5px/1 var(--sans);font-style:normal;color:var(--faint);margin-top:4px}
+@media(max-width:860px){.gb-fails{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.gb-fails{grid-template-columns:1fr}}
+.gb-fl-out{margin:10px 0 0;font:500 13px/1.35 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-fl-out:before{content:"→ ";color:var(--tone)}
+.gb .gb-states-lic{width:18px;height:18px;flex:none;fill:none;stroke:var(--tone);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+/* =====================================================================
+   CASE-STUDY SYSTEM (cx-). One set of tokens, one layout grid and one
+   set of section patterns for the whole short read. Section markup
+   only combines these; nothing below is styled per section by hand.
+   ===================================================================== */
+.gb{
+  /* colour */
+  --c-bg:var(--bg); --c-surface:var(--surface); --c-card:#FFFFFF; --c-ink:var(--ink); --c-ink-2:#666262; --c-ink-3:#77726F; --c-faint:var(--faint);
+  --c-line:var(--line); --c-line-2:rgba(36,32,32,.06);
+  --c-ok:var(--her); --c-ok-bg:var(--her-bg); --c-warn:var(--clay); --c-warn-bg:var(--clay-bg); --c-err:#B42318; --c-accent:var(--ink);
+  --c-band:#F4F3F0; --c-band-2:#EDECE8;
+  /* type */
+  --fs-display:clamp(38px,5.4vw,60px); --fs-h2:clamp(28px,3.6vw,40px); --fs-h3:clamp(21px,2.4vw,26px); --fs-h4:17px;
+  --fs-body:17px; --fs-small:15px; --fs-caption:13px; --fs-meta:11.5px;
+  /* space */
+  --sp-8:8px; --sp-12:12px; --sp-16:16px; --sp-24:24px; --sp-32:32px; --sp-48:48px; --sp-64:64px; --sp-80:80px; --sp-96:96px; --sp-128:128px; --sp-160:160px;
+  /* radius, shadow */
+  --r-s:6px; --r-m:10px; --r-l:14px; --sh-1:0 1px 2px rgba(0,0,0,.06);
+  /* layout: the content area right of the progress rail is the 12-column field */
+  --w-content:834px; --w-text:640px; --gap:24px; --rail:250px;
+}
+:root[data-theme="dark"] .gb{--c-ink-2:#B3ACAC; --c-ink-3:#A39C9C; --c-card:#1B1B1B; --c-line-2:rgba(255,255,255,.06); --c-band:#131313; --c-band-2:#171717; --c-err:#F97066}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb{--c-card:#1B1B1B; --c-line-2:rgba(255,255,255,.06); --c-band:#131313; --c-band-2:#171717; --c-err:#F97066}}
+
+/* ---------- layout primitives ---------- */
+.cx-w{max-width:var(--w-content);margin-left:auto;margin-right:auto}
+@media(min-width:981px){.cx-w{margin-left:var(--rail);margin-right:0}}
+.cx-g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap)}
+.cx-sec{padding-top:var(--sp-128)}
+.cx-band{position:relative;margin-top:var(--sp-128);padding-top:var(--sp-96);padding-bottom:var(--sp-96);background:var(--c-band);box-shadow:0 0 0 100vmax var(--c-band);clip-path:inset(0 -100vmax)}
+.cx-band-2{background:var(--c-band-2);box-shadow:0 0 0 100vmax var(--c-band-2)}
+.cx-band + .cx-band{margin-top:0;padding-top:var(--sp-32)}
+.cx-band + .cx-sec:not(.cx-band){padding-top:var(--sp-128)}
+@media(max-width:760px){.cx-sec{padding-top:var(--sp-80)}.cx-band{margin-top:var(--sp-80);padding-top:var(--sp-64);padding-bottom:var(--sp-64)}.cx-band + .cx-sec:not(.cx-band){padding-top:var(--sp-80)}}
+
+/* ---------- type ---------- */
+.cx-head p{margin:0}
+.cx-label,.cx-meta-l{font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-meta-l{color:var(--c-ink-2)}
+.cx-h{margin:var(--sp-16) 0 0;max-width:var(--w-text);font:400 var(--fs-h2)/1.1 var(--serif);letter-spacing:-.022em;color:var(--c-ink);text-wrap:balance}
+.gb h1.cx-display{margin:var(--sp-16) 0 0;max-width:760px;font:400 var(--fs-display)/1.04 var(--serif);letter-spacing:-.028em;color:var(--c-ink);text-wrap:balance}
+.cx-display em{font-style:italic}
+.cx-h3{margin:0;max-width:var(--w-text);font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.018em;color:var(--c-ink);text-wrap:balance}
+.cx-lead{margin-top:var(--sp-16)!important;max-width:var(--w-text);font-size:18px;line-height:1.55;color:var(--c-ink-2)}
+.cx-lead b{font-weight:500;color:var(--c-ink)}
+.cx-body{margin-top:var(--sp-24);max-width:var(--w-text)}
+.cx-body,.cx-note{font-size:var(--fs-body);line-height:1.6;color:var(--c-ink-2)}
+.cx-note{margin-top:var(--sp-24);max-width:var(--w-text);font-size:var(--fs-small)}
+.cx-note a{color:var(--c-ink)}
+.cx-say{margin-top:var(--sp-48);max-width:var(--w-text);font:400 var(--fs-h3)/1.25 var(--serif);letter-spacing:-.018em;color:var(--c-ink);text-wrap:balance}
+.cx-vis{margin-top:var(--sp-48)}
+.cx-vis > *{margin-top:0!important}
+.cx-small{font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-tags{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.cx-tags span{padding:3px 8px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--c-line);font:500 11px/1.3 var(--sans);color:var(--c-ink-2)}
+
+/* ---------- owners (AI / Rule / Code / You / Case): text + icon, never colour alone ---------- */
+.cx-own,.cx-stamp{display:inline-flex;align-items:center;gap:5px;padding:4px 8px 4px 7px;border-radius:99px;font:500 10.5px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.cx-own svg,.cx-stamp svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.o-ai{--a:var(--ai);--ab:var(--ai-bg)}.o-code{--a:var(--code);--ab:var(--code-bg)}.o-you{--a:var(--her);--ab:var(--her-bg)}
+.o-rule{--a:var(--c-ink);--ab:var(--c-surface)}.o-case{--a:var(--c-bg);--ab:var(--c-ink)}
+.cx-own,.cx-stamp{background:var(--ab);color:var(--a)}
+
+/* ---------- ProductVisual: one treatment for every static screen ---------- */
+.cx-pv{margin:0}
+.cx-pv-f{position:relative;padding:var(--sp-12);border-radius:var(--r-l);background:var(--c-surface)}
+.cx-pv img{display:block;width:100%;height:auto;border-radius:var(--r-m)}
+.cx-pv figcaption{margin-top:var(--sp-12);font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-pv-sm .cx-pv-f{padding:6px;border-radius:var(--r-m)}
+.cx-pv-sm img{border-radius:var(--r-s)}
+.cx-zoom{position:relative;display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;border-radius:var(--r-m)}
+.cx-zoom-i{position:absolute;right:8px;top:8px;display:grid;place-items:center;width:28px;height:28px;border-radius:99px;background:rgba(20,20,20,.72);color:#fff;opacity:0;transition:opacity .2s var(--ease)}
+.cx-zoom-i svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cx-zoom:hover .cx-zoom-i,.cx-zoom:focus-visible .cx-zoom-i{opacity:1}
+@media(hover:none){.cx-zoom-i{opacity:.9}}
+.gb a:focus-visible,.gb button:focus-visible,.gb summary:focus-visible{outline:2px solid var(--c-ink);outline-offset:3px;border-radius:4px}
+.cx-lb{width:fit-content;max-width:94vw;max-height:92vh;padding:0;border:0;border-radius:var(--r-l);background:var(--c-bg);overflow:auto}
+.cx-lb::backdrop{background:rgba(10,10,10,.76)}
+.cx-lb img{display:block;width:auto;max-width:100%;max-height:88vh;height:auto;margin:auto}
+.cx-lb-x{position:sticky;top:10px;float:right;margin:10px 10px -50px 0;z-index:2;width:40px;height:40px;border:0;border-radius:99px;background:rgba(20,20,20,.8);color:#fff;font:400 24px/1 var(--sans);cursor:pointer}
+
+/* ---------- progress rail ---------- */
+.cx-mprog{display:none}
+@media(max-width:980px){.cx-mprog{display:block;position:fixed;left:0;right:0;top:0;height:2px;z-index:60;background:transparent}.cx-mprog i{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--c-ink)}}
+
+/* ---------- hero ---------- */
+.cx-hero{padding-top:0}
+.cx-hero-h{margin-top:var(--sp-48)}
+.cx-dek{margin-top:var(--sp-24)!important;font:400 var(--fs-h3)/1.3 var(--serif);letter-spacing:-.015em;color:var(--c-ink-2)}
+.cx-hero-v{margin-top:var(--sp-48)}
+.cx-hero-v figure.gb-ex{margin:0}
+.cx-flow3{list-style:none;margin-top:var(--sp-24);padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.cx-flow3 li{position:relative;padding-top:var(--sp-12);border-top:1.5px solid var(--c-ink)}
+.cx-flow3 li + li:before{content:"→";position:absolute;left:-19px;top:10px;color:var(--c-faint)}
+.cx-flow3 b{display:block;font:500 var(--fs-h4)/1.3 var(--sans);letter-spacing:-.01em;color:var(--c-ink)}
+.cx-flow3 span{display:block;margin-top:4px;font-size:var(--fs-caption);line-height:1.45;color:var(--c-ink-2)}
+.cx-meta,.cx-status{margin-top:0;margin-bottom:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.cx-meta dt,.cx-status dt{font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-meta dd,.cx-status dd{margin:6px 0 0;font-size:var(--fs-small);line-height:1.5;color:var(--c-ink)}
+.cx-status{margin-top:var(--sp-24);padding-top:var(--sp-24);border-top:1px solid var(--c-line)}
+.cx-status dt{display:flex;align-items:center;gap:7px;color:var(--c-ink-2)}
+.cx-status dt:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c-ok)}
+.cx-status .s-sim dt:before{background:var(--c-warn)}
+.cx-status .s-open dt:before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c-ink-3)}
+.cx-status dd{color:var(--c-ink-2)}
+.cx-hero-links{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-16) var(--sp-32);margin-top:var(--sp-32)}
+.cx-hero-links .gb-proto{margin:0}
+.cx-deep{font:500 var(--fs-small)/1 var(--sans);color:var(--c-ink);text-decoration:none;border-bottom:1px solid var(--c-line);padding-bottom:3px}
+.cx-deep:hover{border-color:var(--c-ink)}
+
+/* ---------- problem ---------- */
+.cx-rep{margin-top:var(--sp-32);padding-left:var(--sp-16);border-left:1.5px solid var(--c-ink)}
+.cx-rep p{margin:0}
+.cx-rep-t{margin-top:6px!important;font:500 18px/1.35 var(--mono);letter-spacing:-.01em;color:var(--c-ink)}
+.cx-rep-d{margin-top:6px!important;max-width:var(--w-text);font-size:var(--fs-small);line-height:1.55;color:var(--c-ink-2)}
+.cx-mini{margin:var(--sp-32) 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap)}
+.cx-mini dt{font:400 28px/1 var(--serif);color:var(--c-ink)}
+.cx-mini dd{margin:6px 0 0;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-mini a{color:var(--c-ink-3)}
+
+/* ---------- comparison (why an agent) ---------- */
+.cx-cmp{display:grid;gap:0}
+.cx-cmp-row{padding:var(--sp-24) 0;border-top:1px solid var(--c-line)}
+.cx-cmp-row:last-child{border-bottom:1px solid var(--c-line)}
+.cx-cmp-row .cx-meta-l{margin:0 0 var(--sp-12)}
+.cx-steps{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 0}
+.cx-steps li{font-size:var(--fs-small);color:var(--c-ink-2)}
+.cx-steps li + li:before{content:"→";margin:0 10px;color:var(--c-faint)}
+.cx-cmp .gb-agentline{margin:0!important}
+
+/* ---------- agent trace ---------- */
+.cx-trace{list-style:none;margin:0;padding:var(--sp-24) 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);position:relative}
+.cx-trace:before{content:"";position:absolute;left:0;right:0;top:5px;height:1.5px;background:var(--c-line)}
+.cx-tr-ph{position:relative;display:flex;flex-direction:column}
+.cx-tr-ph:before{content:"";position:absolute;left:0;top:-24px;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--c-bg);border:2px solid var(--c-ink)}
+.cx-band .cx-tr-ph:before{background:var(--c-band)}
+.cx-tr-n{margin:0;font:500 var(--fs-h4)/1.25 var(--sans);letter-spacing:-.01em;color:var(--c-ink)}
+.cx-tr-s{margin:4px 0 var(--sp-16)!important;font-size:var(--fs-caption);line-height:1.45;color:var(--c-ink-2)}
+.cx-tr-steps{list-style:none;margin:0 0 var(--sp-16);padding:0;display:grid;gap:var(--sp-12)}
+.cx-tr-steps li{display:grid;gap:4px}
+.cx-tr-steps .cx-own{justify-self:start}
+.cx-tr-steps b{font:500 14px/1.3 var(--sans);color:var(--c-ink)}
+.cx-tr-steps span:not(.cx-own){font-size:var(--fs-caption);line-height:1.45;color:var(--c-ink-2)}
+.cx-tr-ph .cx-pv{margin-top:auto}
+.cx-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:var(--sp-32) 0 0}
+.cx-legend > span:first-child{margin-right:6px;font-size:var(--fs-caption);color:var(--c-ink-2)}
+@media(max-width:860px){
+  .cx-trace{grid-template-columns:1fr;gap:var(--sp-32);padding:0 0 0 var(--sp-24)}
+  .cx-trace:before{left:5px;right:auto;top:6px;bottom:6px;width:1.5px;height:auto}
+  .cx-tr-ph:before{left:-24px;top:3px}
+  .cx-tr-ph .cx-pv{max-width:420px}
+}
+
+/* ---------- architecture ---------- */
+.cx-arch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-12)}
+.cx-arch-c{padding:var(--sp-24);border-radius:var(--r-l);background:var(--ab)}
+.cx-arch-r{display:flex;align-items:center;gap:6px;margin:0;font:500 var(--fs-meta)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--a)}
+.cx-arch-r svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.cx-arch-t{margin:var(--sp-16) 0 var(--sp-24)!important;font:400 clamp(30px,3.8vw,42px)/1.02 var(--serif);letter-spacing:-.025em;color:var(--c-ink)}
+.cx-arch ul{list-style:none;margin:0;padding:0}
+.cx-arch li{padding:8px 0;border-top:1px solid color-mix(in srgb,var(--a) 20%,transparent);font-size:var(--fs-small);color:color-mix(in srgb,var(--a) 70%,var(--c-ink))}
+.cx-sub{margin-top:var(--sp-96)}
+.cx-dr{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:var(--sp-16);align-items:start;margin-top:var(--sp-24)}
+.cx-dr > span{padding-top:18px;color:var(--c-faint)}
+.cx-dr p{margin:0}
+.cx-dr p + p{margin-top:6px}
+.cx-dr p:not(.cx-meta-l){font-size:var(--fs-small);line-height:1.55;color:var(--c-ink)}
+.cx-vis-s{margin-top:var(--sp-32)}
+.cx-vis-s > *{margin-top:0!important}
+
+/* ---------- autonomy matrix ---------- */
+.cx-matrix{display:grid;grid-template-columns:28px minmax(0,1fr);grid-template-rows:auto auto;gap:var(--sp-12)}
+.cx-ax-y{grid-row:1;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;gap:10px;align-items:center;justify-content:center;margin:0}
+.cx-ax-x{grid-column:2;display:flex;gap:10px;justify-content:center;margin:0}
+.cx-ax-y span,.cx-ax-x span{font:500 var(--fs-meta)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-2)}
+.cx-ax-y em,.cx-ax-x em{font:400 var(--fs-caption)/1 var(--sans);font-style:normal;color:var(--c-ink-3)}
+.cx-q-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-8)}
+.cx-q{display:flex;flex-direction:column;gap:var(--sp-12);padding:var(--sp-24);border-radius:var(--r-l);background:var(--c-surface)}
+.cx-q.hi.irr{background:var(--char);color:#EDEDED}
+.cx-q-tag{display:none;flex-wrap:wrap;gap:6px;margin:0}
+.cx-q-tag span{font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--c-line);color:var(--c-ink-2)}
+.cx-q.hi.irr .cx-q-tag span{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);color:rgba(237,237,237,.75)}
+.cx-q-t{margin:0;font:400 22px/1.2 var(--serif);letter-spacing:-.015em;color:var(--c-ink)}
+.cx-q.hi.irr .cx-q-t{color:#fff}
+.cx-q .cx-pv-f{padding:0;background:none}
+.cx-q-x{margin:0;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-q.hi.irr .cx-q-x{color:rgba(237,237,237,.7)}
+@media(max-width:700px){.cx-matrix{grid-template-columns:1fr}.cx-ax-y,.cx-ax-x{display:none}.cx-q-grid{grid-template-columns:1fr}.cx-q-tag{display:flex}
+  .cx-q.hi.irr{order:-1}}
+
+
+/* ---------- annotation layout (approval) ---------- */
+.cx-ann{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--sp-32);align-items:start}
+.cx-ann-l{list-style:none;margin:0;padding:0}
+.cx-ann-l li{padding:var(--sp-16) 0;border-top:1px solid var(--c-line)}
+.cx-ann-l li:first-child{border-top:0;padding-top:0}
+.cx-ann-l p{margin:0}
+.cx-ann-l p + p{margin-top:6px;font-size:var(--fs-small);line-height:1.5;color:var(--c-ink)}
+.cx-ann .cx-embed{margin:0}
+.cx-order{list-style:none;margin:var(--sp-32) 0 0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px 0}
+.cx-order li{font:500 var(--fs-small)/1 var(--sans);color:var(--c-ink)}
+.cx-order li + li:before{content:"→";margin:0 12px;color:var(--c-faint)}
+.cx-order li:last-child{color:var(--c-ink-2);font-weight:400}
+@media(max-width:860px){.cx-ann{grid-template-columns:1fr}.cx-ann .cx-embed{order:-1}}
+
+/* ---------- failure states & more ---------- */
+.cx-band-2 .gb-fails > div{background:var(--c-card)}
+.cx-band-2 .gb-fl-ui{background:var(--c-surface)}
+.cx-more{margin-top:var(--sp-32)}
+.cx-more summary{display:inline-flex;align-items:center;gap:8px;cursor:pointer;list-style:none;font:500 var(--fs-small)/1 var(--sans);color:var(--c-ink);border-bottom:1px solid var(--c-line);padding-bottom:4px}
+.cx-more summary::-webkit-details-marker{display:none}
+.cx-more summary:after{content:"↓";color:var(--c-faint);transition:transform .2s var(--ease)}
+.cx-more[open] summary:after{transform:rotate(180deg)}
+.cx-more figure.gb-ex{margin-top:var(--sp-24)}
+
+/* ---------- five failures ---------- */
+.cx-fails{list-style:none;padding:0;margin-bottom:0}
+.cx-fails > li{padding:var(--sp-24) 0;border-top:1px solid var(--c-line)}
+.cx-fails > li:last-child{border-bottom:1px solid var(--c-line)}
+.cx-f-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 var(--sp-16)}
+.cx-f-n{font:500 var(--fs-meta)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-f-h b{font:500 var(--fs-h4)/1.25 var(--sans);letter-spacing:-.01em;color:var(--c-ink)}
+.cx-f-h i{margin-left:auto;font:500 10px/1 var(--mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:99px}
+.cx-f-h .src-rule{background:var(--c-card);color:var(--c-ink)}.cx-f-h .src-code{background:var(--code-bg);color:var(--code)}.cx-f-h .src-ai{background:var(--ai-bg);color:var(--ai)}
+.cx-fails dl{margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+.cx-fails dt{font:500 10.5px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c-ink-3)}
+.cx-fails dd{margin:6px 0 0;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+.cx-fails .resp dd{color:var(--c-ink);font-weight:500}
+@media(max-width:760px){.cx-fails dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-16)}}
+@media(max-width:420px){.cx-fails dl{grid-template-columns:1fr}}
+
+/* ---------- case model ---------- */
+.cx-casecmp{display:grid;grid-template-columns:minmax(0,5fr) auto minmax(0,7fr);gap:var(--sp-16);align-items:center}
+.cx-cc-chat .gb-conv-chat{padding:var(--sp-24);border-radius:var(--r-l);background:var(--c-surface)}
+.cx-cc-chat .cx-tags,.cx-cc-case .cx-tags{margin:8px 0 var(--sp-16)}
+.cx-cc-arrow{font-size:20px;color:var(--c-faint)}
+.cx-cc-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--sp-16);align-items:start}
+.cx-pv-case .cx-pv-f{padding:var(--sp-12)}
+.cx-mark{position:absolute;right:2px}
+.cx-mark i,.cx-cc-notes i{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--c-ink);color:var(--c-bg);font:500 10px/1 var(--mono);font-style:normal}
+.cx-mark i{box-shadow:0 0 0 3px var(--c-bg)}
+.cx-cc-notes{list-style:none;margin:0;padding:var(--sp-12) 0 0;display:grid;gap:var(--sp-24)}
+.cx-cc-notes li{display:grid;grid-template-columns:18px 1fr;gap:10px}
+.cx-cc-notes p{margin:0}
+.cx-cc-notes p + p{margin-top:4px;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink)}
+@media(max-width:860px){.cx-casecmp{grid-template-columns:1fr}.cx-cc-arrow{transform:rotate(90deg);justify-self:center}}
+@media(max-width:520px){.cx-cc-body{grid-template-columns:1fr}.cx-pv-case{max-width:340px}}
+
+/* ---------- proof ---------- */
+.cx-proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-8)}
+.cx-pf{display:flex;flex-direction:column;gap:var(--sp-16);padding:var(--sp-24);border-radius:var(--r-l);background:var(--c-surface)}
+.cx-pf p{margin:0}
+.cx-num{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.cx-num b{font:400 64px/.95 var(--serif);letter-spacing:-.03em;color:var(--c-ink)}
+.cx-num span{max-width:220px;font-size:var(--fs-small);line-height:1.4;color:var(--c-ink-2)}
+.cx-num-2 b{font-size:44px}
+.cx-pf-state{align-self:flex-start;padding:5px 10px;border-radius:99px;background:var(--c-warn-bg);color:var(--c-warn);font:500 12px/1 var(--sans)}
+.cx-pf .gb-term{margin-top:auto}
+.cx-pf .gb-evcase{margin-top:auto}
+.cx-status-l{margin-top:var(--sp-48);padding-top:0;border-top:0}
+.cx-status-l > div{padding-top:var(--sp-16);border-top:1px solid var(--c-line)}
+@media(max-width:760px){.cx-proof{grid-template-columns:1fr}.cx-meta,.cx-status{grid-template-columns:1fr;gap:var(--sp-16)}}
+
+/* ---------- decisions ---------- */
+.cx-cwhy{margin:4px 0 0 18px!important;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink-2)}
+
+/* ---------- close ---------- */
+.cx-lessons{list-style:none;margin-top:var(--sp-48);margin-bottom:0;padding:0}
+.cx-lessons li{display:grid;grid-template-columns:48px 1fr;column-gap:var(--sp-12);padding:var(--sp-24) 0;border-top:1px solid var(--c-line)}
+.cx-lessons li:first-child{border-top:0;padding-top:0}
+.cx-lessons span{grid-row:span 2;padding-top:10px;font:500 var(--fs-meta)/1 var(--mono);color:var(--c-ink-3)}
+.cx-lessons b{font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.018em;color:var(--c-ink)}
+.cx-lessons p{margin:6px 0 0;font-size:var(--fs-small);line-height:1.55;color:var(--c-ink-2)}
+.cx-final{padding-top:var(--sp-160);padding-bottom:var(--sp-96)}
+.cx-final-s{margin-top:var(--sp-48);max-width:var(--w-text);font:400 var(--fs-h3)/1.3 var(--serif);letter-spacing:-.015em;color:var(--c-ink-2)}
+.cx-final-l{display:flex;flex-wrap:wrap;gap:var(--sp-24);margin-top:var(--sp-32)}
+.cx-final-l a{font:500 var(--fs-small)/1 var(--sans);color:var(--c-ink);text-decoration:none;border-bottom:1px solid var(--c-line);padding-bottom:4px}
+.cx-final-l a:hover{border-color:var(--c-ink)}
+@media(max-width:760px){.cx-final{padding-top:var(--sp-96);padding-bottom:var(--sp-64)}.cx-flow3{grid-template-columns:1fr;gap:var(--sp-16)}.cx-flow3 li + li:before{content:none}}
+
+/* reused blocks lose their old outer margins inside the new layout */
+.cx-w .gb-agentline,.cx-w .gb-pipe,.cx-w .gb-fails,.cx-w .gb-dc{margin-top:0}
+
+/* hero device sits on a flat surface, no gradient */
+.gb .cx-hero-v .gbh{background:var(--c-surface)!important}
+@media(max-width:700px){.cx-arch{grid-template-columns:1fr}.cx-arch-t{margin:var(--sp-12) 0 var(--sp-16)!important}.cx-dr{grid-template-columns:1fr}.cx-dr > span{display:none}}
+
+/* =====================================================================
+   ART DIRECTION. Weight goes to five moments: the hero product, the
+   AI / Code / You boundary, the five failure modes, the case model and
+   the whole workspace. Everything between them is quieter: fewer
+   filled boxes, lines instead of cards, one screen height per row.
+   ===================================================================== */
+/* peaks get more air than ordinary sections */
+.cx-peak{padding-top:var(--sp-160)}
+.cx-peak > .cx-vis,.cx-peak .cx-casecmp{margin-top:var(--sp-64)}
+.cx-band.cx-peak{padding-top:var(--sp-128);padding-bottom:var(--sp-128)}
+.cx-band + .cx-band.cx-peak{padding-top:var(--sp-128)}
+@media(max-width:760px){.cx-peak{padding-top:var(--sp-96)}.cx-band.cx-peak,.cx-band + .cx-band.cx-peak{padding-top:var(--sp-80);padding-bottom:var(--sp-80)}}
+
+/* the two product showcases may reach into the gutter beside the rail */
+@media(min-width:1280px){.cx-bleed{margin-left:calc(var(--rail) - 128px);max-width:calc(var(--w-content) + 128px)}}
+.cx-stage{margin-top:var(--sp-96)}
+.cx-stage .cx-pv-f{padding:var(--sp-16)}
+.cx-stage figcaption{margin-top:var(--sp-16)}
+
+/* walkthrough: every thumbnail the same height, cropped from the top */
+.cx-tr-ph .cx-zoom img{height:132px;object-fit:contain;object-position:center top}
+
+/* boundary: the pipeline is the proof under the peak, so it drops its tints */
+.cx-sub .gb-pipe li{padding:0;background:none;border-radius:0}
+.cx-sub .gb-pipe-art{background:var(--c-card);min-height:120px}
+.cx-sub .gb-pipe b{margin:var(--sp-8) 0 var(--sp-12)}
+
+/* autonomy: quadrant titles on the type scale; the y-axis sits in the gutter so the grid keeps the column edge */
+.cx-q-t{font-size:var(--fs-h3)}
+@media(min-width:981px){.cx-matrix{display:block;position:relative}.cx-ax-y{position:absolute;left:-44px;top:0;bottom:44px}.cx-ax-x{margin-top:var(--sp-16)}}
+
+/* failure states: a little more room per state */
+.cx-w .gb-fails{gap:var(--sp-12)}
+.cx-w .gb-fails > div{padding:var(--sp-24) var(--sp-16) var(--sp-16)}
+
+/* the five failure modes: an editorial list, name on the left, the evidence on the right */
+.cx-peak .cx-fails > li{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--gap);padding:var(--sp-32) 0}
+.cx-peak .cx-f-h{flex-direction:column;align-items:flex-start;gap:var(--sp-8);margin:0}
+.cx-peak .cx-f-h b{font:400 var(--fs-h3)/1.15 var(--serif);letter-spacing:-.018em}
+.cx-peak .cx-f-h i{margin-left:0}
+.cx-peak .cx-fails dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-16) var(--gap)}
+.cx-peak .cx-fails dd{font-size:var(--fs-small)}
+@media(max-width:760px){.cx-peak .cx-fails > li{grid-template-columns:1fr}}
+
+/* case model: the case file is the hero of this section, so it gets the width */
+.cx-cc-body{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:var(--sp-24)}
+@media(min-width:1100px){.cx-casecmp{grid-template-columns:minmax(0,4fr) auto minmax(0,8fr)}}
+@media(max-width:1099px){.cx-casecmp{grid-template-columns:1fr}.cx-cc-arrow{transform:rotate(90deg);justify-self:center}.cx-cc-chat{max-width:420px}}
+
+/* decisions: rows on lines, not boxes; the small screens are the only filled shapes */
+.cx-w .gb-dc{gap:0}
+.cx-w .gb-dc > li{padding:var(--sp-32) 0;border-radius:0;background:none;border-top:1px solid var(--c-line)}
+.cx-w .gb-dc > li:last-child{border-bottom:1px solid var(--c-line)}
+.cx-w .gb-dc-p .ui{background:var(--c-surface)}
+.cx-w .gb-dc .b.me,.cx-w .gb-dc .pr,.cx-w .gb-dc .track{background:var(--c-card)}
+
+/* proof: the two panels breathe; the ledger sits clearly below */
+.cx-proof{gap:var(--sp-12)}
+.cx-pf{padding:var(--sp-32)}
+
+/* the ending: every line stays whole */
+@media(max-width:520px){.cx-cc-body{grid-template-columns:1fr}.cx-pv-case{max-width:320px}}
+
+/* =====================================================================
+   MOBILE. Below 768px the page is laid out for a phone, not shrunk:
+   flows become vertical timelines, the matrix becomes two groups,
+   side notes sit inline, and the two product showcases go edge to edge.
+   ===================================================================== */
+.cx-q-g,.cx-cc-m{display:none}
+
+/* walkthrough as a vertical timeline: each screen at its own height, larger */
+@media(max-width:860px){.cx-tr-ph .cx-zoom img{height:auto}}
+
+@media(max-width:760px){
+  /* rhythm: one step down the spacing scale */
+  .cx-vis{margin-top:var(--sp-32)}
+  .cx-peak > .cx-vis,.cx-peak .cx-casecmp{margin-top:var(--sp-48)}
+  .cx-say{margin-top:var(--sp-48)}
+  .cx-sub,.cx-stage{margin-top:var(--sp-64)}
+  .cx-hero-h{margin-top:var(--sp-32)}
+
+  /* hero flow: a vertical timeline, the same dots as the walkthrough */
+  .cx-flow3{position:relative;gap:var(--sp-24);padding-left:var(--sp-24)}
+  .cx-flow3:before{content:"";position:absolute;left:5px;top:10px;bottom:10px;width:1.5px;background:var(--c-line)}
+  .cx-flow3 li{padding-top:0;border-top:0}
+  .cx-flow3 li:after{content:"";position:absolute;left:-24px;top:4px;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--c-bg);border:2px solid var(--c-ink)}
+
+  /* larger tap areas for the text links, without moving their underlines */
+  .cx-deep,.cx-final-l a,.cx-more summary{position:relative}
+  .cx-deep:before,.cx-final-l a:before,.cx-more summary:before{content:"";position:absolute;inset:-13px -8px}
+  .gb-versions a:before{content:"";position:absolute;inset:-6px -2px}
+
+  /* reveals travel less on a small screen */
+  [data-reveal]{transform:translateY(10px);transition-duration:.5s}
+
+  /* proof panels give the terminal its width back */
+  .cx-pf{padding:var(--sp-24) var(--sp-16)}
+  .cx-num b{font-size:56px}
+
+  /* lessons: the number sits above its line instead of taking a column */
+  .cx-lessons li{grid-template-columns:1fr}
+  .cx-lessons span{grid-row:auto;padding:0 0 var(--sp-12)}
+}
+
+@media(max-width:700px){
+  /* autonomy: two groups by consequence, the reversibility on each card */
+  .cx-q-g{display:flex;align-items:center;gap:var(--sp-12);margin:var(--sp-24) 0 var(--sp-4,4px);font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-2)}
+  .cx-q-g:after{content:"";flex:1;height:1px;background:var(--c-line)}
+  .cx-q-g-hi{order:1;margin-top:0}
+  .cx-q.hi.irr{order:2}.cx-q.hi.rev{order:3}.cx-q-g-lo{order:4}.cx-q.lo.rev{order:5}.cx-q.lo.irr{order:6}
+  .cx-q-tag span:first-child{display:none}
+  .cx-q{padding:var(--sp-24) var(--sp-16) var(--sp-16)}
+  .cx-q-g{grid-column:1/-1}
+
+  /* boundary: each owner's jobs in two short columns */
+  .cx-arch-c{padding:var(--sp-24) var(--sp-16)}
+  .cx-arch ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--sp-16)}
+}
+/* a large phone or small tablet has room for each group's two cards side by side */
+@media(min-width:561px) and (max-width:700px){.cx-q-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+@media(max-width:600px){
+  /* why an agent: the two ways side by side, step against step */
+  .cx-cmp{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-rows:auto repeat(7,auto);gap:var(--sp-8) var(--sp-12);padding:var(--sp-24) 0;border-top:1px solid var(--c-line);border-bottom:1px solid var(--c-line)}
+  .cx-cmp-row,.cx-cmp-row:last-child{display:grid;grid-row:1/-1;grid-template-rows:subgrid;padding:0;border:0}
+  .cx-cmp-row .cx-meta-l{align-self:end;margin:0 0 var(--sp-8)}
+  .cx-steps,.cx-cmp .gb-agentline{display:grid;grid-row:2/-1;grid-template-rows:subgrid;gap:inherit}
+  .cx-steps li{display:flex;align-items:center;font-size:14px;line-height:1.3}
+  .cx-steps li + li:before,.cx-cmp .gb-agentline li + li:before{content:none}
+  .cx-cmp .gb-agentline li{justify-self:start;align-self:center;padding:8px 10px;font-size:12.5px;white-space:nowrap}
+
+  /* the five failures: output against actual, then risk and response in full */
+  .cx-peak .cx-fails dl > div:nth-child(n+3){grid-column:1/-1}
+  .cx-peak .cx-fails > li{gap:var(--sp-16);padding:var(--sp-24) 0}
+
+  /* case file: read top to bottom, each part followed by its note */
+  .cx-cc-body{display:none}
+  .cx-cc-m{display:grid;list-style:none;margin:0;padding:var(--sp-12);border-radius:var(--r-l);background:var(--c-surface)}
+  .cx-cc-m > li{container-type:inline-size}
+  .cx-sl{height:calc((var(--b) - var(--a)) * 100cqw / 800);overflow:hidden;border-radius:var(--r-m);background:#fff}
+  .cx-sl img{display:block;width:100cqw;max-width:none;height:auto;margin-top:calc(var(--a) * -100cqw / 800)}
+  .cx-sl-n{display:grid;grid-template-columns:18px 1fr;gap:10px;padding:var(--sp-12) 4px var(--sp-16)}
+  .cx-cc-m > li:last-child .cx-sl-n{padding-bottom:4px}
+  .cx-sl-n i{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--c-ink);color:var(--c-bg);font:500 10px/1 var(--mono);font-style:normal}
+  .cx-sl-n p{margin:0}
+  .cx-sl-n p + p{margin-top:4px;font-size:var(--fs-caption);line-height:1.5;color:var(--c-ink)}
+  .cx-cc-chat{max-width:none}
+
+  /* the two product showcases go edge to edge */
+  .cx-hero-v,.cx-stage{margin-left:calc(-1 * clamp(18px,3.4vw,48px));margin-right:calc(-1 * clamp(18px,3.4vw,48px))}
+  .cx-hero-v .gbh,.cx-hero-v .gb-ex-panel{border-radius:0}
+  .cx-stage .cx-pv-f{padding:var(--sp-16) 0;border-radius:0}
+  .cx-stage .cx-pv img,.cx-stage .cx-zoom{border-radius:0}
+  .cx-stage figcaption{padding:0 clamp(18px,3.4vw,48px)}
+}
+
+/* lightbox on a phone: full screen; a wide screen opens readable and pans sideways */
+@media(max-width:700px){
+  .cx-lb{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0;background:#0E0E0E;overscroll-behavior:contain}
+  .cx-lb[open]{display:flex}
+  .cx-lb img{flex:none;width:100%;max-width:none;max-height:none;margin:auto}
+  .cx-lb.is-wide img{width:1100px}
+  .cx-lb-x{position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;float:none;margin:0;width:44px;height:44px;background:rgba(255,255,255,.16)}
+}
+
+/* the AI twin bar would sit on the product screens, so here it waits for the ending */
+
+/* hero, one title block: the pitch, the two actions, one line of facts; then the product,
+   with the three steps as its caption strip so picture and caption read as one piece */
+.cx-hero-h .cx-hero-links{margin-top:var(--sp-32)}
+.cx-hero-h .cx-meta{display:flex;flex-wrap:wrap;gap:var(--sp-8) 28px;margin-top:var(--sp-24);padding-top:var(--sp-16);border-top:1px solid var(--c-line)}
+.cx-hero-h .cx-meta div{display:flex;align-items:baseline;gap:6px}
+.cx-hero-h .cx-meta dd{margin:0}
+.cx-hero-v .gbh{border-radius:8px 8px 0 0!important;box-shadow:none!important}
+.cx-flow3.cx-foot{margin-top:0;padding:0 var(--sp-32) var(--sp-32);gap:0;background:var(--c-surface);border-radius:0 0 8px 8px}
+.cx-foot li{padding:var(--sp-16) var(--sp-24) 0 0;border-top:0}
+.cx-foot li + li{padding-left:var(--sp-24);box-shadow:inset 1px 0 0 var(--c-line)}
+.cx-foot li + li:before{content:none}
+.cx-foot span{color:var(--c-ink-3)}
+@media(max-width:760px){
+  .cx-flow3.cx-foot{padding:var(--sp-24) var(--sp-24) var(--sp-24) 48px;gap:var(--sp-16)}
+  .cx-flow3.cx-foot:before{left:29px;top:34px;bottom:34px}
+  .cx-foot li,.cx-foot li + li{padding:0;box-shadow:none}
+  .cx-foot li:after{background:var(--c-surface)}
+}
+@media(max-width:600px){
+  .cx-hero .cx-foot{margin-left:calc(-1 * clamp(18px,3.4vw,48px));margin-right:calc(-1 * clamp(18px,3.4vw,48px));border-radius:0}
+  .cx-flow3.cx-foot{padding-left:calc(clamp(18px,3.4vw,48px) + 24px)}
+  .cx-flow3.cx-foot:before{left:calc(clamp(18px,3.4vw,48px) + 5px)}
+}
+
+/* hero: the product leads, straight under the version switch; the title block follows it */
+.cx-hero .cx-hero-v{margin-top:var(--sp-32)}
+.cx-hero .cx-foot + .cx-hero-h{margin-top:var(--sp-64)}
+
+/* the page starts where App Merge does: no extra section gap above the hero */
+.cx-hero{margin-top:0}
+
+/* the section list stays above the tinted bands, which are positioned and would paint over it */
+.cx-rail{z-index:5}
+
+/* walkthrough: one row per phase on wide screens — the phase and who owns each
+   step on the left, its real screen at a readable size on the right */
+@media(min-width:861px){
+  .cx-trace{grid-template-columns:1fr;gap:0;padding:0 0 0 var(--sp-24)}
+  .cx-trace:before{left:5px;right:auto;top:10px;bottom:10px;width:1.5px;height:auto}
+  .cx-tr-ph{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-rows:auto auto auto 1fr;column-gap:var(--sp-48);padding-bottom:var(--sp-64)}
+  .cx-tr-ph:last-child{padding-bottom:0}
+  .cx-tr-ph:before{left:-24px;top:5px}
+  .cx-tr-n,.cx-tr-s,.cx-tr-steps{grid-column:1}
+  .cx-tr-n{font-size:20px}
+  .cx-tr-steps{margin:0}
+  .cx-tr-ph .cx-pv{grid-column:2;grid-row:1/span 4;margin:0;align-self:start;max-width:none}
+  .cx-tr-ph .cx-zoom img{height:auto}
+  .cx-vis > .cx-legend{margin-top:var(--sp-48)!important}
+}
+.cx-tr-steps li{grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-content:start;column-gap:10px;row-gap:2px}
+.cx-tr-steps .cx-own{grid-column:1;grid-row:1/span 2;align-self:start}
+.cx-tr-steps b,.cx-tr-steps span:not(.cx-own){grid-column:2}
+
+/* hero: the home page's Getbaq card animation, in the product panel */
+.gbh-demo{position:relative;overflow:hidden;aspect-ratio:16/9;background:#F2F2F2;border-radius:8px 8px 0 0}
+@media(max-width:600px){.gbh-demo{aspect-ratio:4/4.3;border-radius:0}}
+
+/* case file notes: one open at a time, level with its number; hover or focus a
+   number to open its note, otherwise they take turns */
+.cx-mark{padding:0;border:0;background:none;cursor:pointer}
+.cx-mark i{background:var(--c-card);color:var(--c-ink-3);box-shadow:0 0 0 3px var(--c-bg),inset 0 0 0 1px var(--c-line);transition:background .25s var(--ease),color .25s var(--ease)}
+.cx-mark.on i{background:var(--c-ink);color:var(--c-bg);box-shadow:0 0 0 3px var(--c-bg)}
+@media(min-width:601px){
+  .cx-cc-body{align-items:stretch}
+  .cx-cc-notes{position:relative;padding:0}
+  .cx-cc-notes li{position:absolute;left:0;right:0;top:var(--t);margin-top:-2px;opacity:0;transform:translateY(4px);transition:opacity .35s var(--ease),transform .35s var(--ease);pointer-events:none}
+  .cx-cc-notes li.on{opacity:1;transform:none;pointer-events:auto}
+}
+
+/* ===== feedback round ===== */
+/* problem: the whole job, of which the complaint is one step */
+.cx-journey{list-style:none;padding:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-12) 0;font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.015em;color:var(--c-ink-3)}
+.cx-journey li + li:before{content:"→";margin:0 14px;font-family:var(--sans);font-size:.7em;color:var(--c-faint)}
+.cx-journey li.w{color:var(--c-ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.cx-journey + .cx-say{margin-top:var(--sp-32)}
+@media(max-width:600px){
+  .cx-journey{flex-direction:column;align-items:flex-start;gap:var(--sp-8);position:relative;padding-left:var(--sp-24)}
+  .cx-journey:before{content:"";position:absolute;left:5px;top:12px;bottom:12px;width:1.5px;background:var(--c-line)}
+  .cx-journey li{position:relative}
+  .cx-journey li + li:before{content:none}
+  .cx-journey li:after{content:"";position:absolute;left:-24px;top:.45em;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--c-bg);border:2px solid var(--c-line)}
+  .cx-journey li.w:after{border-color:var(--c-ink)}
+}
+/* AI / Code / You: one thin line of what each hands on */
+.cx-archline{list-style:none;padding:0;margin-top:var(--sp-16);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-12)}
+.cx-archline li{position:relative;padding-top:var(--sp-12);border-top:1px solid var(--c-line);font:500 var(--fs-meta)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-2)}
+.cx-archline li + li:before{content:"→";position:absolute;left:-12px;top:-9px;width:12px;text-align:center;background:var(--c-band);font-family:var(--sans);color:var(--c-faint);letter-spacing:0}
+@media(max-width:700px){.cx-archline{display:flex;flex-wrap:wrap;gap:0}.cx-archline li{border-top:0;padding:0}.cx-archline li + li:before{position:static;content:"→";margin:0 10px;background:none}}
+/* pipeline: the date the user sees carries the weight; the code is the quiet proof */
+.cx-sub .gb-pipe{grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,1.3fr)}
+.cx-sub .gb-pipe-art.code p{font-size:11px;color:var(--c-ink-3)}
+.cx-sub .gb-pipe-art.code .out{color:var(--code)}
+.cx-sub .gb-pipe-art.ui{padding:var(--sp-24) var(--sp-16)}
+.cx-sub .gb-pipe-art.ui .date{font-size:30px}
+@media(max-width:600px){.cx-sub .gb-pipe{grid-template-columns:1fr}}
+/* autonomy: the hard limit sits apart from the matrix */
+.cx-limits{margin-top:var(--sp-32);padding-top:var(--sp-24);border-top:1px solid var(--c-line);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--gap);align-items:center}
+.cx-limits p{margin:0}
+.cx-lim-t{margin-top:var(--sp-8)!important;font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.015em;color:var(--c-ink)}
+.cx-lim-x{margin-top:var(--sp-8)!important;font-size:var(--fs-small);line-height:1.55;color:var(--c-ink-2)}
+@media(max-width:700px){.cx-limits{grid-template-columns:1fr}}
+/* failure states: one featured state, then the rest of the system */
+@media(min-width:761px){
+  .cx-w .gb-fails > div:first-child{grid-column:1/3;grid-row:1/3;padding:var(--sp-32)}
+  .cx-w .gb-fails > div:first-child .gb-fl-t{font:400 var(--fs-h3)/1.2 var(--serif);letter-spacing:-.015em}
+  .cx-w .gb-fails > div:first-child .gb-fl-t svg{width:22px;height:22px}
+  .cx-w .gb-fails > div:first-child .gb-fl-when{font-size:var(--fs-small);margin-bottom:var(--sp-24)}
+  .cx-w .gb-fails > div:first-child .gb-fl-ui{padding:var(--sp-24)}
+  .cx-w .gb-fails > div:first-child .gb-fl-ui .ey{font-size:11px}
+  .cx-w .gb-fails > div:first-child .gb-fl-ui .hd{font-size:18px;line-height:1.4}
+  .cx-w .gb-fails > div:first-child .gb-fl-ui .btns span{padding:8px 14px;font-size:13px}
+  .cx-w .gb-fails > div:first-child .gb-fl-out{font-size:var(--fs-small)}
+}
+/* the five mistakes: each one a chain, what it said → what's true → the risk → the fix */
+.cx-peak .cx-fails > li{grid-template-columns:1fr;gap:var(--sp-16)}
+.cx-peak .cx-f-h{flex-direction:row;align-items:baseline;flex-wrap:wrap;gap:var(--sp-8) var(--sp-12)}
+.cx-peak .cx-fails dl{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-32)}
+.cx-peak .cx-fails dl > div{position:relative}
+.cx-peak .cx-fails dl > div + div:before{content:"→";position:absolute;left:-22px;top:0;color:var(--c-faint)}
+.cx-peak .cx-fails .resp{padding-left:var(--sp-12);box-shadow:inset 1.5px 0 0 var(--c-ink)}
+.cx-peak .cx-fails .resp:before{left:-34px!important}
+@media(max-width:760px){
+  .cx-peak .cx-fails dl{grid-template-columns:1fr;gap:var(--sp-24)}
+  .cx-peak .cx-fails dl > div:nth-child(n+3){grid-column:auto}
+  .cx-peak .cx-fails dl > div + div:before{content:"↓";left:0;top:-20px;font-size:13px}
+  .cx-peak .cx-fails .resp:before{left:0!important}
+}
+/* conversation → case: the transformation, named once */
+.cx-cc-line{display:none}
+@media(min-width:1100px){
+  .cx-cc-line{grid-column:1/-1;display:flex;align-items:center;gap:var(--sp-12);margin:0 0 var(--sp-24);font:500 var(--fs-meta)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-2)}
+  .cx-cc-line i{position:relative;flex:1;height:1px;background:var(--c-line)}
+  .cx-cc-line i:after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid var(--c-ink-3);border-right:1px solid var(--c-ink-3);transform:rotate(45deg)}
+}
+/* the ending */
+.cx-final-t{font:400 clamp(30px,4.2vw,46px)/1.12 var(--serif);letter-spacing:-.028em;color:var(--c-ink)}
+
+.cx-final-t span{display:block;padding-left:.55em;text-indent:-.55em}
+.cx-journey li + li:before{display:inline-block;text-decoration:none}
+@media(min-width:761px){
+  .cx-w .gb-fails > div:first-child .gb-fl-ui{margin-top:0}
+  .cx-w .gb-fails > div:first-child .gb-fl-out{margin-top:auto;padding-top:var(--sp-24)}
+  .cx-w .gb-fails > div:first-child .gb-fl-when{margin-bottom:var(--sp-32)}
+}
+
+/* one background: every section sits on the page's white. The former bands
+   drop their tint and take the same rhythm as every other section */
+.gb .cx-band,.gb .cx-band-2{background:none;box-shadow:none;clip-path:none;margin-top:var(--s5);padding-top:var(--sp-128);padding-bottom:0}
+.gb .cx-band.cx-peak{padding-top:var(--sp-160)}
+.gb .cx-band + .cx-band,.gb .cx-band + .cx-band.cx-peak{padding-top:var(--sp-128)}
+.gb .cx-band + .cx-sec:not(.cx-band){padding-top:var(--sp-128)}
+@media(max-width:760px){
+  .gb .cx-band,.gb .cx-band-2,.gb .cx-band + .cx-band,.gb .cx-band + .cx-band.cx-peak,.gb .cx-band + .cx-sec:not(.cx-band){padding-top:var(--sp-80)}
+  .gb .cx-band.cx-peak{padding-top:var(--sp-96)}
+}
+/* surfaces that were drawn for the tinted bands, redrawn for white */
+.gb .cx-band .cx-tr-ph:before{background:var(--c-bg)}
+.gb .cx-band-2 .gb-fails > div{background:var(--c-surface)}
+.gb .cx-band-2 .gb-fl-ui{background:var(--c-card)}
+.gb .cx-sub .gb-pipe-art{background:var(--c-surface)}
+.gb .cx-archline li + li:before{background:var(--c-bg)}
+.gb .cx-f-h .src-rule{background:var(--c-surface)}
+
+/* =====================================================================
+   MATCH APP MERGE. Same column (684px beside the section list), same
+   type scale (36 / 24 / 19 / 16, serif at 500), same 11px mono labels,
+   same 96px section rhythm, same 8px image frames with 32px padding.
+   ===================================================================== */
+.gb{--w-content:684px;--w-text:684px;--r-l:8px;--r-m:6px;
+  --fs-display:clamp(26px,3.6vw,36px);--fs-h2:clamp(20px,2.6vw,24px);--fs-h3:clamp(17px,2vw,19px);--fs-body:16px;
+  --c-ink-2:var(--muted)}
+/* one column: nothing reaches into the gutter */
+@media(min-width:1280px){.gb .cx-bleed{margin-left:var(--rail);max-width:var(--w-content)}}
+/* type */
+.gb h1.cx-display{margin-top:var(--s4);font-weight:500;line-height:1.3;letter-spacing:-.02em;max-width:none}
+.gb .cx-h{margin-top:0;font-weight:500;line-height:1.3;letter-spacing:-.018em;max-width:var(--w-content)}
+.gb .cx-h3,.gb .cx-say,.gb .cx-q-t,.gb .cx-lessons b,.gb .cx-peak .cx-f-h b,.gb .cx-lim-t,.gb .cx-journey,.gb .cx-final-s{font-weight:500;line-height:1.3;letter-spacing:-.012em}
+.gb .cx-dek{margin-top:var(--s3)!important;font:500 var(--fs-h3)/1.35 var(--serif);letter-spacing:-.012em;color:var(--ink)}
+.gb .cx-lead,.gb .cx-body{font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted);max-width:var(--w-content)}
+.gb .cx-lead{margin-top:var(--s2)!important}
+.gb .cx-note{max-width:var(--w-content)}
+.gb .cx-label{margin:0 0 12px;font:500 11px/1.6 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.gb .cx-pv figcaption,.gb .cx-small{font-size:13px;line-height:1.55;letter-spacing:-.01em;color:var(--muted)}
+.gb .cx-arch-t{font-size:28px;font-weight:500;line-height:1.1}
+.gb .cx-final-t{font-size:var(--fs-h2);font-weight:500;line-height:1.35;letter-spacing:-.018em}
+.gb .cx-num b{font-size:48px}
+/* hero: the product, then the title block, then the three facts as App Merge sets them */
+.gb .cx-hero-h > .cx-label{display:none}
+.gb .cx-hero .cx-foot + .cx-hero-h{margin-top:0}
+.gb .cx-hero-h .cx-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--line)}
+.gb .cx-hero-h .cx-meta div{display:block}
+.gb .cx-hero-h .cx-meta dt{margin-bottom:6px;font:500 11px/1.6 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.gb .cx-hero-h .cx-meta dd{margin:0;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--ink)}
+@media(max-width:576px){.gb .cx-hero-h .cx-meta{grid-template-columns:1fr;gap:var(--s2)}}
+/* rhythm: every section 96px apart, no peaks */
+.gb .cx-sec,.gb .cx-peak,.gb .cx-band,.gb .cx-band-2,.gb .cx-band.cx-peak,.gb .cx-band + .cx-band,.gb .cx-band + .cx-band.cx-peak,.gb .cx-band + .cx-sec:not(.cx-band){padding-top:0}
+.gb .cx-final{padding-top:0;padding-bottom:var(--s5)}
+.gb .cx-vis,.gb .cx-peak > .cx-vis,.gb .cx-peak .cx-casecmp{margin-top:var(--s3)}
+.gb .cx-say{margin-top:var(--s3)}
+.gb .cx-sub,.gb .cx-stage{margin-top:var(--s4)}
+/* images: App Merge's frame */
+.gb .cx-pv-f,.gb .cx-stage .cx-pv-f{padding:clamp(20px,3vw,32px);border-radius:8px}
+.gb .cx-pv img,.gb .cx-zoom{border-radius:6px}
+.gb .cx-pv-sm .cx-pv-f{padding:16px}
+.gb .cx-q .cx-pv-f{padding:0}
+.gb .gbh-demo{border-radius:8px 8px 0 0}
+/* at one column the conversation and the case stack, the line naming the change above them */
+.gb .cx-casecmp{grid-template-columns:1fr}
+.gb .cx-cc-arrow{transform:rotate(90deg);justify-self:center}
+.gb .cx-cc-chat{max-width:420px}
+@media(min-width:601px){.gb .cx-cc-line{grid-column:1/-1;display:flex;align-items:center;gap:var(--sp-12);margin:0 0 var(--sp-24);font:500 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+  .gb .cx-cc-line i{position:relative;flex:1;height:1px;background:var(--c-line)}
+  .gb .cx-cc-line i:after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid var(--faint);border-right:1px solid var(--faint);transform:rotate(45deg)}}
+/* the five mistakes: four short steps fit the narrower column */
+.gb .cx-peak .cx-fails dl{gap:var(--sp-24)}
+.gb .cx-peak .cx-fails dl > div + div:before{left:-18px}
+.gb .cx-peak .cx-fails .resp:before{left:-30px!important}
+.gb .cx-peak .cx-fails dd{font-size:14px}
+@media(max-width:760px){.gb .cx-peak .cx-fails dl > div + div:before{left:0}.gb .cx-peak .cx-fails .resp:before{left:0!important}}
+.gb .cx-pv-case .cx-pv-f{padding:12px}
+.gb .cx-cc-body{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+
+/* approval: App Merge's side-by-side — the screen on the left with its caption,
+   the notes on the right as quiet points (mono label, grey body, no dividers) */
+@media(min-width:861px){
+  .gb .cx-ann{grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:var(--s4)}
+  .gb .cx-ann .cx-embed{order:-1}
+}
+.gb .cx-ann-l li,.gb .cx-ann-l li:first-child{padding:0;border-top:0}
+.gb .cx-ann-l li + li{margin-top:var(--s4)}
+.gb .cx-ann-l .cx-meta-l{margin-bottom:6px;font:500 11px/1.6 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.gb .cx-ann-l p + p{margin-top:0;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted)}
+@media(max-width:860px){.gb .cx-ann-l li + li{margin-top:var(--s3)}}
+
+/* why an agent: App Merge's before / after cards — the user's whole to-do list
+   on grey, the agent's version on green with each step's owner */
+.gb #agent .cx-cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;gap:16px;padding:0;border:0}
+.gb #agent .cx-cmp-row,.gb #agent .cx-cmp-row:last-child{display:block;grid-row:auto;padding:24px 24px 28px;border:0;border-radius:8px;background:var(--surface)}
+.gb #agent .cx-cmp-row.is-new{background:var(--her-bg)}
+.gb #agent .cx-cmp-row .cx-meta-l{margin:0 0 16px;font:500 11px/1.6 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.gb #agent .cx-cmp-row.is-new .cx-meta-l{color:color-mix(in srgb,var(--her) 70%,transparent)}
+.gb #agent .cx-steps,.gb #agent .gb-agentline{display:grid;grid-row:auto;grid-template-rows:none;gap:12px;margin:0}
+.gb #agent .cx-steps li,.gb #agent .gb-agentline li{display:flex;align-items:center;gap:10px;padding:0;background:none;box-shadow:none;border-radius:0;font:400 15px/1.35 var(--sans);letter-spacing:-.01em;white-space:normal;justify-self:stretch}
+.gb #agent .cx-steps li{color:var(--muted)}
+.gb #agent .cx-steps li:before,.gb #agent .cx-steps li + li:before{content:"";flex:none;width:5px;height:5px;margin:0 6px 0 2px;border-radius:50%;background:var(--faint)}
+.gb #agent .gb-agentline li + li:before{content:none}
+.gb #agent .gb-agentline li{color:var(--ink)}
+.gb #agent .gb-agentline li svg{flex:none;width:18px;height:18px;padding:3px;box-sizing:border-box;border-radius:50%;background:var(--bg);color:var(--a)}
+.gb #agent .gb-agentline li.a-her{font-weight:500}
+@media(max-width:600px){.gb #agent .cx-cmp{grid-template-columns:1fr;gap:12px}}
+
+/* ===== deep dive: the short read's components, fitted to this page ===== */
+.gb-ex-hero + .cx-foot{margin-top:0}
+.gb .gbh-demo{border-radius:8px 8px 0 0}
+.cx-never{grid-template-columns:1fr}
+.cx-never ul{list-style:none;margin:var(--sp-12) 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cx-never li{padding:6px 12px;border-radius:99px;background:var(--clay-bg);color:var(--clay);font-size:14px;line-height:1.3}
+.gb .cx-arch li{line-height:1.4}
+@media(min-width:861px){
+  .gb #s4-3 .gb-stack{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:var(--s4);align-items:start}
+  .gb #s4-3 .gb-stack > figure{margin:0}
+}
+.gb #s4-3 .gb-decisions{list-style:none;margin:0;padding:0}
+.gb #s4-3 .gb-decisions li{display:block;padding:0;border:0;background:none}
+.gb #s4-3 .gb-decisions li + li{margin-top:var(--s3)}
+.gb #s4-3 .gb-decisions i{display:block;margin:0 0 6px;font:500 11px/1.6 var(--mono);font-style:normal;letter-spacing:.09em;color:var(--faint);background:none;width:auto;height:auto}
+.gb #s4-3 .gb-decisions p{margin:0;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted)}
+.gb #s4-3 .gb-decisions b{display:block;font-weight:500;color:var(--ink)}
+.gb #s4-3 .gb-decisions span{color:var(--muted)}
+@media(max-width:860px){.gb #s4-3 .gb-decisions{margin-top:var(--s3)}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1059,7 +1820,8 @@ addEventListener("pagereveal",function(e){
                 <span class="gbd-tap"></span>
               </div>
             </div></div>
-</figure><div class="col beat gb-hero" data-reveal="">
+</figure>
+<ol class="cx-w cx-flow3 cx-foot cx-bleed" data-reveal="" aria-label="What the product does"><li><b>Messy input</b><span>Screenshots, chats, typed words</span></li><li><b>Verified case</b><span>Facts confirmed, rule sourced, deadline calculated</span></li><li><b>Approved action</b><span>Nothing is sent until the user approves</span></li></ol><div class="col beat gb-hero" data-reveal="">
 <h1>Designing an AI agent that fights for your <em>refund</em></h1>
 <p class="dek">A customer has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed an AI agent that finds the rule, counts the deadline and writes their complaint, and never sends a word without them.</p>
 <a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
@@ -1281,11 +2043,10 @@ addEventListener("pagereveal",function(e){
 <section class="gb-sec" data-reveal="" id="s2-5">
 <div class="col"><p class="eyebrow">The capability map</p><h3 class="say sub">AI for judgment, code for anything exact, and a list it never touches</h3></div>
 <p class="col body">An agent that’s confidently wrong about a deadline is worse than no agent: the user would wait for a date that has already passed. So the first design decision here wasn’t a screen. It was deciding which parts of the job the AI is allowed to do at all.</p>
-<p class="col body">Deadlines and money must be exact, so they’re tested code. The AI is only needed for judgment on messy text: their message, a screenshot, a company’s reply. The “never” column came straight from the trust research.</p>
-<figure class="gb-ex col" data-embed="capability-map" data-note="Diagram">
-<div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-<figcaption>The capability map: what the AI judges, what code computes, and what the AI is never allowed to do.</figcaption>
-</figure>
+<p class="col body">Deadlines and money must be exact, so they’re tested code. The AI is only needed for judgment on messy text: their message, a screenshot, a company’s reply. The “never” list came straight from the trust research.</p>
+<div class="cx-w cx-vis cx-arch"><div class="cx-arch-c o-ai"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</p><p class="cx-arch-t">AI reads.</p><ul><li>Works out what kind of evidence a screenshot is</li><li>Picks the one rule that applies</li><li>Drafts a short, factual complaint</li><li>Judges whether a reply actually resolves it</li><li>Says how sure it is, and why</li></ul></div><div class="cx-arch-c o-code"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</p><p class="cx-arch-t">Code counts.</p><ul><li>Deadline maths: 48 hours, 30 days, ₹100 a day</li><li>Which facts are required, and asking for them</li><li>The escalation ladder and its timers</li><li>Case status and the evidence record</li><li>Routing: company, 1915 or bank</li></ul></div><div class="cx-arch-c o-you"><p class="cx-arch-r"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</p><p class="cx-arch-t">You decide.</p><ul><li>Confirms the facts it read</li><li>Edits the draft, or says no</li><li>Signs and sends, in their own name</li><li>Approves every escalation</li><li>Closes the case if it resolved another way</li></ul></div></div>
+<ol class="cx-w cx-archline" aria-label="Interpretation, then verification, then action"><li>Interpretation</li><li>Verification</li><li>Action</li></ol>
+<div class="cx-w cx-limits cx-never"><div><p class="cx-meta-l">AI never does</p><ul><li>Sends anything without their tap</li><li>Gives legal advice or predicts an outcome</li><li>Asks for an OTP, card or bank details</li><li>Invents a rule or a fact</li><li>Writes in an angry tone</li></ul></div></div>
 <p class="col body">And the user can see the split: every step is labelled with who did it, and the deadline says <b>Calculated</b>, not AI. Every rule card cites the law it rests on, the way Perplexity puts its sources first, so they can check it instead of taking it on trust.</p>
 <figure class="gb-ex col" data-embed="sourced-steps" data-inner="520" data-note="Live">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
@@ -1313,7 +2074,8 @@ addEventListener("pagereveal",function(e){
 <section class="gb-sec" data-reveal="" id="s3-7">
 <div class="col"><p class="eyebrow">Bugs I caught</p><h3 class="say sub">Five mistakes that would have cost people money, caught at the source, and one known gap</h3></div>
 <p class="col body">Testing the rules, the dates and the letters, before anyone used the product, turned up five mistakes. Each would have cost someone money or days they didn’t have, and none of them would have shown up in a mock-up:</p>
-<div class="pair col gb-grid"><div><p class="cap"><b>01</b></p><h4>The UPI deadline was wrong</h4><p class="body">I gave every failed payment 5 days. RBI gives UPI one working day (T+1); 5 days is for cards. UPI users would have waited 4 days they didn’t have.</p></div><div><p class="cap"><b>02</b></p><h4>Two airline clocks were one rule</h4><p class="body">Card refunds: 7 days. Travel-site bookings: 14 working days. Those would have been flagged late a week early.</p></div><div><p class="cap"><b>03</b></p><h4>Deadlines moved with the timezone</h4><p class="body">Dates were read in the wrong timezone, so near midnight a deadline could wrongly show as missed. All dates now use one fixed timezone.</p></div><div><p class="cap"><b>04</b></p><h4>The model invented years</h4><p class="body">Asked to copy “2 Aug”, Gemini added the years 2023 and 2021. Now a year is kept only if they wrote one.</p></div><div><p class="cap"><b>05</b></p><h4>The UPI letter went to the wrong party</h4><p class="body">It was addressed to the shop, but the RBI rule applies to their bank. Now the app asks for their bank, and the letter goes there.</p></div><div><p class="cap"><b>06</b></p><h4>A known gap, documented</h4><p class="body">“14 working days” is counted as 14 calendar days for now, and the rule sheet says so.</p></div></div>
+<div class="cx-peak"><ol class="cx-w cx-vis cx-fails"><li><p class="cx-f-h"><span class="cx-f-n">Failure 01</span><b>Wrong deadline</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>Every failed payment got 5 days.</dd></div><div><dt>Actual</dt><dd>RBI gives UPI one working day (T+1).</dd></div><div><dt>Risk</dt><dd>UPI users would have waited four days they didn’t have.</dd></div><div class="resp"><dt>Fix</dt><dd>A separate UPI rule, checked against the RBI circular. The date is computed by code.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 02</span><b>Merged rules</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>Airline refunds shared one clock.</dd></div><div><dt>Actual</dt><dd>Card refunds: 7 days. Travel-site bookings: 14 working days.</dd></div><div><dt>Risk</dt><dd>Cases flagged late a week early.</dd></div><div class="resp"><dt>Fix</dt><dd>Separate rules, each with its own source.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 03</span><b>Timezone</b><i class="src-code">Code</i></p><dl><div><dt>System output</dt><dd>Dates were read in the wrong timezone.</dd></div><div><dt>Actual</dt><dd>The deadline hadn’t passed.</dd></div><div><dt>Risk</dt><dd>Near midnight, a deadline showed as missed.</dd></div><div class="resp"><dt>Fix</dt><dd>One fixed timezone for every date.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 04</span><b>Invented year</b><i class="src-ai">Model</i></p><dl><div><dt>Model output</dt><dd>Asked to copy “2 Aug”, the model added 2023 and 2021.</dd></div><div><dt>Actual</dt><dd>The user never wrote a year.</dd></div><div><dt>Risk</dt><dd>A wrong year makes a wrong deadline.</dd></div><div class="resp"><dt>Fix</dt><dd>A year is kept only if the user wrote one.</dd></div></dl></li><li><p class="cx-f-h"><span class="cx-f-n">Failure 05</span><b>Wrong recipient</b><i class="src-rule">Rule sheet</i></p><dl><div><dt>System output</dt><dd>The UPI letter was addressed to the shop.</dd></div><div><dt>Actual</dt><dd>The RBI rule applies to the user’s bank.</dd></div><div><dt>Risk</dt><dd>The complaint goes somewhere that can’t act on it.</dd></div><div class="resp"><dt>Fix</dt><dd>It asks for the bank and addresses the letter there.</dd></div></dl></li></ol></div>
+<p class="col body"><b>A known gap, documented.</b> “14 working days” is counted as 14 calendar days for now, and the rule sheet says so.</p>
 <figure class="gb-ex col" data-embed="rule-fix" data-inner="460" data-note="Live">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
 <figcaption>The screens those two rule fixes protect. Each rule card names the distinction a person could easily get wrong.</figcaption>
@@ -1397,10 +2159,12 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">Agentic decisions</p><h3 class="say sub">No autonomy dial, on purpose</h3></div>
 <p class="col body">A common pattern is to hand over more control as trust grows: approve the first few, then let it run. I chose not to. Here a wrong or rude message damages them, not the AI, so growing trust never removes the need to approve. In the language of the Knight Institute’s autonomy levels, <b>The user is an approver</b>: the agent does the work, and nothing leaves without them.</p>
 <p class="col body">Not every action needs the same gate, though. I placed each one by how much is at stake and whether it can be undone, following Victor Yocco’s transparency framework, and the treatment follows from where it lands. Only what’s both high-stakes and irreversible waits for their tap:</p>
-<div class="col gb-quad" role="img" aria-label="Every action Getbaq takes, placed by how much is at stake and whether it can be undone. Higher stakes · can be undone: Show it, and let them correct it, for The facts it read; The rule it picked; The deadline. Higher stakes · can't be undone: Always their tap, for Sending the complaint; Escalating to 1915. Lower stakes · can be undone: Just do it, and show it, for Reading their message or screenshot; Drafting the letter. Lower stakes · can't be undone: Do it, and tell them, for Stripping an OTP they pasted.">
-<p class="gb-quad-y" aria-hidden="true">Stakes ↑</p><p class="gb-quad-x" aria-hidden="true">Can be undone ← → Can’t be undone</p>
-<div class="gb-quad-grid" aria-hidden="true"><div class="q hi rev"><p class="q-where">Higher stakes · can be undone</p><p class="q-t">Show it, and let them correct it</p><ul><li><b>The facts it read</b><span>restated first: “You confirmed · Flipkart · ₹3,499 · 2 Aug”</span></li><li><b>The rule it picked</b><span>cited, with a confidence label and a reason</span></li><li><b>The deadline</b><span>calculated by code, and labelled Calculated</span></li></ul></div><div class="q hi irr"><p class="q-where">Higher stakes · can’t be undone</p><p class="q-t">Always their tap</p><ul><li><b>Sending the complaint</b><span>the Approve card, their signature, six seconds to undo</span></li><li><b>Escalating to 1915</b><span>prepared for them, and still their tap</span></li></ul></div><div class="q lo rev"><p class="q-where">Lower stakes · can be undone</p><p class="q-t">Just do it, and show it</p><ul><li><b>Reading their message or screenshot</b><span>a live trace of the real steps</span></li><li><b>Drafting the letter</b><span>labelled AI-drafted, and they can edit it</span></li></ul></div><div class="q lo irr"><p class="q-where">Lower stakes · can’t be undone</p><p class="q-t">Do it, and tell them</p><ul><li><b>Stripping an OTP they pasted</b><span>removed before the model sees it, and they’re told</span></li></ul></div></div>
+<div class="cx-w cx-vis cx-matrix" role="group" aria-label="Autonomy by consequence and reversibility">
+<p class="cx-ax-y" aria-hidden="true"><span>Consequence</span><em>Low → High</em></p>
+<div class="cx-q-grid"><p class="cx-q-g cx-q-g-hi">High consequence</p><p class="cx-q-g cx-q-g-lo">Low consequence</p><div class="cx-q hi rev"><p class="cx-q-tag"><span>High consequence</span><span>Can be undone</span></p><p class="cx-q-t">Show it. Let them correct it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-rule.webp" data-alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" aria-label="Enlarge: The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified"><img src="./assets/gb-quad2-rule.webp" width="1000" height="500" alt="The rule card: Flipkart must fix this by 3 Sep 2026, with the rule and its source, verified" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">The facts it read, the rule it picked, the deadline.</p></div><div class="cx-q hi irr"><p class="cx-q-tag"><span>High consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Your tap. Always.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-approve.webp" data-alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" aria-label="Enlarge: Nothing is sent until you approve it. Approve and send, Edit, Not now"><img src="./assets/gb-quad2-approve.webp" width="1000" height="329" alt="Nothing is sent until you approve it. Approve and send, Edit, Not now" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Sending the complaint. Escalating to 1915.</p></div><div class="cx-q lo rev"><p class="cx-q-tag"><span>Low consequence</span><span>Can be undone</span></p><p class="cx-q-t">Do it. Show it.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-trace.webp" data-alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" aria-label="Enlarge: The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline"><img src="./assets/gb-quad2-trace.webp" width="1000" height="387" alt="The agent’s trace: searched the rule sheet, matched the rule, checked it is verified, worked out the deadline" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Reading a message or screenshot. Drafting the letter.</p></div><div class="cx-q lo irr"><p class="cx-q-tag"><span>Low consequence</span><span>Can’t be undone</span></p><p class="cx-q-t">Do it. Tell them.</p><figure class="cx-pv cx-pv-q"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-quiet.webp" data-alt="Flipkart went quiet: their deadline was 3 Sep 2026 and they said nothing, so the case moves to its next step" aria-label="Enlarge: Flipkart went quiet: their deadline was 3 Sep 2026 and they said nothing, so the case moves to its next step"><img src="./assets/gb-quad2-quiet.webp" width="1000" height="345" alt="Flipkart went quiet: their deadline was 3 Sep 2026 and they said nothing, so the case moves to its next step" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure><p class="cx-q-x">Marking a missed deadline and moving the case to its next step.</p></div></div>
+<p class="cx-ax-x" aria-hidden="true"><span>Reversibility</span><em>Can be undone → Can’t be undone</em></p>
 </div>
+<div class="cx-w cx-limits"><div><p class="cx-meta-l">Hard limit · outside the matrix</p><p class="cx-lim-t">OTPs, PINs and passwords never reach the model.</p><p class="cx-lim-x">They’re stripped from the message before the model reads it, whatever the stakes. This is a rule, so it sits outside the matrix.</p></div><figure class="cx-pv cx-pv-sm"><div class="cx-pv-f"><button type="button" class="cx-zoom" data-zoom="./assets/gb-quad2-otp.webp" data-alt="A message with its OTP removed, and the step Removed an OTP from your message" aria-label="Enlarge: A message with its OTP removed, and the step Removed an OTP from your message"><img src="./assets/gb-quad2-otp.webp" width="1000" height="266" alt="A message with its OTP removed, and the step Removed an OTP from your message" loading="lazy" decoding="async"><span class="cx-zoom-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button></div></figure></div>
 <div class="col gb-rows">
 <ul>
 <li><p>Every send needs approval, forever</p><p>The agent acts in their name (the Intent Preview pattern)</p></li>
@@ -1414,8 +2178,8 @@ addEventListener("pagereveal",function(e){
 <p class="col body">The Approve card is the moment the whole product exists for: they’re about to put their name to something. Nothing on it is decoration.</p>
 <div class="col gb-stack"><figure class="gb-ex" data-embed="approve" data-note="Interactive">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-<figcaption>Press Send it to see the undo window.</figcaption>
-</figure><ul class="keys one gb-decisions"><li><i>1</i><p><b>It looks like an email.</b> <span>Familiar on purpose, so the novelty goes on the agent, not the letter. From shows their own name.</span></p></li><li><i>2</i><p><b>The letter is visible.</b> <span>Nobody should send what they haven’t seen.</span></p></li><li><i>3</i><p><b>The amount and deadline come first.</b> <span>The rule and how sure it is sit below, as backing.</span></p></li><li><i>4</i><p><b>One strong button.</b> <span>The only irreversible action looks unlike anything else.</span></p></li><li><i>5</i><p><b>Edit and Not now, equally quiet.</b> <span>Saying no is as easy as editing.</span></p></li><li><i>6</i><p><b>Signed by them, never by Getbaq.</b> <span>Send waits for their name.</span></p></li><li><i>7</i><p><b>Reassurance right where they tap.</b> <span>“6 seconds to undo” sits just above the button.</span></p></li><li class="warn"><i>8</i><p><b>When it’s unsure, this card never appears.</b> <span>They never approve what the AI doubts.</span></p></li></ul></div>
+<figcaption>Press Approve &amp; send to see the undo window.</figcaption>
+</figure><ul class="keys one gb-decisions"><li><i>1</i><p><b>It looks like an email.</b> <span>Familiar on purpose, so the novelty goes on the agent, not the letter. From shows their own name.</span></p></li><li><i>2</i><p><b>The letter is visible.</b> <span>Nobody should send what they haven’t seen.</span></p></li><li><i>3</i><p><b>The amount and deadline come first.</b> <span>The rule and how sure it is sit below, as backing.</span></p></li><li><i>4</i><p><b>One strong button.</b> <span>The only irreversible action looks unlike anything else.</span></p></li><li><i>5</i><p><b>Edit and Not now, equally quiet.</b> <span>Saying no is as easy as editing.</span></p></li><li><i>6</i><p><b>Signed by them, never by Getbaq.</b> <span>Send waits for their name.</span></p></li><li><i>7</i><p><b>Reassurance right where they tap.</b> <span>“Nothing is sent until you approve it.” sits just above the button.</span></p></li><li class="warn"><i>8</i><p><b>When it’s unsure, this card never appears.</b> <span>They never approve what the AI doubts.</span></p></li></ul></div>
 </section>
 <section class="gb-sec" data-reveal="" id="s3-16">
 <div class="col"><p class="eyebrow">What I got wrong first</p><h3 class="say sub">The letter had no name on it</h3></div>
@@ -1478,7 +2242,16 @@ addEventListener("pagereveal",function(e){
 <div class="col"><p class="eyebrow">States</p><h3 class="say sub">Every way it can go wrong got the same care as the happy path</h3></div>
 <p class="col body">An AI agent will be wrong, unsure, ignored or stuck some of the time. What the user sees in those moments decides whether they trust it the next time, so they’re where trust is won or lost. Pick any state to see the real screen, and try them: they all work.</p>
 <p class="col body">Each failure is sorted by kind, using Google PAIR’s error categories, and each ends in a next step rather than a dead end:</p>
-<div class="col"><div class="gb-table"><table style="min-width:560px">
+<div class="cx-w cx-vis"><div class="gb-fails" data-reveal="" aria-label="Six failure states, each shown with what the app actually says and the next step it offers.">
+<div class="t-ask"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Not sure</p><p class="gb-fl-when">No rule fits well enough to trust.</p><div class="gb-fl-ui"><p class="ey">Low confidence</p><p class="hd">I think this is an ecommerce case, but I am not sure. Is that right?</p><p class="btns"><span>Yes, that’s right</span><span>No, it’s not</span></p></div><p class="gb-fl-out">No Approve button</p></div>
+<div class="t-ask"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17h.01"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"/></svg>Missing</p><p class="gb-fl-when">A fact the case needs is absent.</p><div class="gb-fl-ui"><p class="hd">2 quick questions</p><p class="tabs"><span class="on"><i>1</i>Company</span><span><i>2</i>Complained</span></p><p class="sub">Which company or app was this with?</p></div><p class="gb-fl-out">Ask only for the missing facts</p></div>
+<div class="t-stop"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>Blocked</p><p class="gb-fl-when">No grievance address it can trust.</p><div class="gb-fl-ui"><p class="hd">This one needs you to send it</p><p class="sub">Mirraw doesn’t publish a grievance email I can check, and I won’t guess one.</p><p class="btns"><span class="dark">Copy complaint<svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></p></div><p class="gb-fl-out">Don’t guess the recipient</p></div>
+<div class="t-away"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>Out of scope</p><p class="gb-fl-when">It isn’t a refund complaint.</p><div class="gb-fl-ui"><p class="ey">Outside what I can do</p><p class="hd">This isn’t a refund complaint I can write</p><p class="chips"><span>e-Jagriti</span><span>A lawyer</span><span>Cyber Crime (1930)</span></p></div><p class="gb-fl-out">Point elsewhere; don’t force a case</p></div>
+<div class="t-wait"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ignored</p><p class="gb-fl-when">The company goes quiet.</p><div class="gb-fl-ui"><p class="ey">No reply</p><p class="hd">Flipkart went quiet</p><p class="sub">I’ve already written it. You check it, then send.</p><p class="btns"><span class="dark">Review the 1915 complaint<svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></p></div><p class="gb-fl-out">Prepare the escalation</p></div>
+<div class="t-sys"><p class="gb-fl-t"><svg class="gb-states-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>System failure</p><p class="gb-fl-when">The AI can’t be reached.</p><div class="gb-fl-ui"><p class="step"><i>!</i><span><b>Read your message with a simpler reader</b>The AI reader couldn’t be reached, so check what I found</span><em>Calculated</em></p></div><p class="gb-fl-out">Fall back instead of stopping the case</p></div>
+</div></div>
+<div class="col gb-fold-list"><details class="gb-fold"><summary><span class="gb-fold-t"><b>Every failure, by kind</b><span>Seven cases, sorted with Google PAIR’s error categories.</span></span><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" viewbox="0 0 24 24" width="16"><path d="M12 5v14M5 12h14"></path></svg></summary>
+<div class="gb-fold-body"><div class="col"><div class="gb-table"><table style="min-width:560px">
 <thead><tr><th>What goes wrong</th><th>Kind</th><th>What they see</th><th>What happens next</th></tr></thead>
 <tbody>
 <tr><td>A screenshot with no money in it</td><td>Input</td><td>“I read that screenshot, but I don’t see an order, a payment or a refund in it.”</td><td>No case is started from it</td></tr>
@@ -1489,10 +2262,10 @@ addEventListener("pagereveal",function(e){
 <tr><td>The company goes quiet</td><td>Background</td><td>Ignored: the 1915 complaint is already prepared</td><td>One tap escalates, and it’s still their tap</td></tr>
 <tr><td>The AI can’t be reached, or fails code’s checks</td><td>System</td><td>The step says a simpler reader or a fixed template did it</td><td>The case carries on; they check what it found</td></tr>
 </tbody>
-</table></div></div>
+</table></div></div></div></details></div>
 <figure class="gb-ex col" data-embed="state-gallery" data-note="Interactive">
 <div class="gb-ex-panel"><div class="gb-ex-inner"></div></div>
-<figcaption>Eleven states, each the real screen from the app. Fill in the questions, open the letter, press Send it and then Undo.</figcaption>
+<figcaption>Eleven states, each the real screen from the app. Fill in the questions, open the letter, press Approve &amp; send and then Undo.</figcaption>
 </figure>
 </section>
 <section class="gb-sec" data-reveal="" id="s3-11">
@@ -2201,6 +2974,25 @@ addEventListener("pagereveal",function(e){
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(es){ seen=es[0].isIntersecting },{threshold:.35}).observe(root);
   } else seen=true;
+})();
+</script>
+<dialog class="cx-lb" aria-label="Enlarged screen"><button type="button" class="cx-lb-x" aria-label="Close">×</button><img alt=""></dialog>
+<script>
+(function(){
+  // Lightbox for product screens: native <dialog> gives Esc-to-close and
+  // focus handling; clicking the backdrop or the close button closes it.
+  var lb=document.querySelector('.cx-lb');
+  if(lb && lb.showModal){
+    var lbImg=lb.querySelector('img'), lbFrom=null;
+    // on a phone, a wide screen opens at a readable size and pans sideways
+    lbImg.addEventListener('load',function(){ lb.classList.toggle('is-wide', lbImg.naturalWidth>=1200 && lbImg.naturalWidth>lbImg.naturalHeight*1.3); if(lb.open) lb.scrollLeft=0; });
+    document.querySelectorAll('.cx-zoom').forEach(function(btn){
+      btn.addEventListener('click',function(){ lbFrom=btn; lbImg.src=btn.getAttribute('data-zoom'); lbImg.alt=btn.getAttribute('data-alt')||''; lb.showModal(); });
+    });
+    lb.querySelector('.cx-lb-x').addEventListener('click',function(){ lb.close(); });
+    lb.addEventListener('click',function(e){ if(e.target===lb) lb.close(); });
+    lb.addEventListener('close',function(){ if(lbFrom) lbFrom.focus(); });
+  }
 })();
 </script>
 </body></html>
