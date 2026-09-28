@@ -1589,6 +1589,18 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 @media(max-width:760px){.gb .cx-peak .cx-fails dl > div + div:before{left:0}.gb .cx-peak .cx-fails .resp:before{left:0!important}}
 .gb .cx-pv-case .cx-pv-f{padding:12px}
 .gb .cx-cc-body{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+
+/* approval: App Merge's side-by-side — the screen on the left with its caption,
+   the notes on the right as quiet points (mono label, grey body, no dividers) */
+@media(min-width:861px){
+  .gb .cx-ann{grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:var(--s4)}
+  .gb .cx-ann .cx-embed{order:-1}
+}
+.gb .cx-ann-l li,.gb .cx-ann-l li:first-child{padding:0;border-top:0}
+.gb .cx-ann-l li + li{margin-top:var(--s4)}
+.gb .cx-ann-l .cx-meta-l{margin-bottom:6px;font:500 11px/1.6 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.gb .cx-ann-l p + p{margin-top:0;font-size:16px;line-height:1.6;letter-spacing:-.01em;color:var(--muted)}
+@media(max-width:860px){.gb .cx-ann-l li + li{margin-top:var(--s3)}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
