@@ -472,6 +472,15 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
 
 /* live prototype frames (./rupeezy/, embed mode): the real app in place of a screenshot */
 .shot iframe.rz-embed{display:block;width:100%;border:0;border-radius:6px;background:#fff}
+
+/* a reset for every live frame: puts the screen back the way it opened */
+.rz-reset{position:absolute;top:6px;right:6px;z-index:2;display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px 0 7px;border:0;border-radius:99px;
+  background:rgba(255,255,255,.88);box-shadow:0 1px 2px rgba(0,0,0,.08),inset 0 0 0 1px rgba(0,0,0,.06);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  font:500 11.5px/1 var(--sans);letter-spacing:-.005em;color:var(--ink);cursor:pointer;line-height:1;transition:background .2s,transform .2s}
+.rz-reset:hover{background:#fff}
+.rz-reset:active{transform:scale(.96)}
+.rz-reset svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rz-reset:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -884,6 +893,14 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
 /* live prototype frames report their height; each frame is sized to fit it */
 (function(){
   var frames=document.querySelectorAll('iframe.rz-embed'); if(!frames.length) return;
+  // a Reset on each live frame: reloads it to the state it opened in
+  var ICON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
+  [].forEach.call(frames,function(f){
+    var b=document.createElement('button'); b.type='button'; b.className='rz-reset';
+    b.setAttribute('aria-label','Reset this screen'); b.innerHTML=ICON+'Reset';
+    b.addEventListener('click',function(){ f.src=f.src; });
+    f.parentNode.appendChild(b);
+  });
   window.addEventListener('message',function(e){
     var d=e.data; if(!d||d.type!=='rupeezy-embed'||typeof d.height!=='number') return;
     for(var i=0;i<frames.length;i++) if(frames[i].contentWindow===e.source){ frames[i].style.aspectRatio='auto'; frames[i].style.height=d.height+'px'; }
