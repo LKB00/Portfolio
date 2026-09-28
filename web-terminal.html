@@ -469,6 +469,20 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
   .totop{left:calc(50% + var(--navpill-w,216px) / 2 - 18px);transform:scale(.86)}
   .totop.show{transform:scale(1)}
 }
+
+/* live prototype frames (./rupeezy/, embed mode): the real app in place of a screenshot */
+.shot iframe.rz-embed{display:block;width:100%;border:0;border-radius:6px;background:#fff}
+
+/* restart on every live frame, Figma prototype style: an icon-only dark button,
+   shown when the pointer is over the screen (always shown where there's no hover) */
+.rz-reset{position:absolute;top:6px;right:6px;z-index:2;display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:6px;
+  background:rgba(30,30,30,.86);color:#fff;cursor:pointer;opacity:0;transform:translateY(-2px);transition:opacity .18s ease,transform .18s ease,background .15s}
+.shot:hover > .rz-reset,.rz-reset:focus-visible{opacity:1;transform:none}
+.rz-reset:hover{background:#1e1e1e}
+.rz-reset:active{transform:scale(.94)}
+.rz-reset svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rz-reset:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+@media (hover:none){.rz-reset{opacity:.9;transform:none}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -525,7 +539,7 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
 
   <div class="wide beat" data-reveal>
     <div class="shot card c-sky hero-shot">
-      <img src="./assets/wt-hero-dashboard.webp" alt="The Rupeezy web terminal shell, with the index ticker, watchlist and top nav fixed in place around a changing main panel" loading="eager" decoding="async">
+      <iframe class="rz-embed" src="./rupeezy/index.html?embed=home" title="The Rupeezy web terminal shell, with the index ticker, watchlist and top nav fixed in place around a changing main panel. Live prototype, you can use it." loading="eager" style="aspect-ratio:1440/900"></iframe>
     </div>
     <p class="cap">The shell that never changes: ticker, watchlist, nav.</p>
   </div>
@@ -554,13 +568,13 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
     <div class="imgpair beat">
       <div>
         <div class="shot card c-sky">
-          <img src="./assets/wt-stockdetail-shell.webp" alt="The Rupeezy web terminal shell, with the index ticker, watchlist and top nav fixed in place around the chart view" loading="lazy" decoding="async">
+          <iframe class="rz-embed" src="./rupeezy/index.html?embed=stock" title="The Rupeezy web terminal shell, with the index ticker, watchlist and top nav fixed in place around the chart view. Live prototype, you can use it." loading="lazy" style="aspect-ratio:1440/900"></iframe>
         </div>
         <p class="cap">Different screen, same frame.</p>
       </div>
       <div>
         <div class="shot card c-sky">
-          <img src="./assets/wt-positions-shell.webp" alt="The same terminal shell showing the Positions screen in the center panel, with the index ticker, watchlist and top nav unchanged" loading="lazy" decoding="async">
+          <iframe class="rz-embed" src="./rupeezy/index.html?embed=positions" title="The same terminal shell showing the Positions screen in the center panel, with the index ticker, watchlist and top nav unchanged. Live prototype, you can use it." loading="lazy" style="aspect-ratio:1440/900"></iframe>
         </div>
         <p class="cap">Different screen, same frame. The ticker and watchlist never move.</p>
       </div>
@@ -575,7 +589,7 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
     <p class="body">Green is buy, red is sell, everywhere, badge, button, P&amp;L, candle, and nowhere else in the product. The moment a color is allowed to mean two things, it stops being something a trader can read in a glance. So it only ever means one.</p>
     <div class="beat">
       <div class="shot card c-mint">
-        <img src="./assets/wt-color-consistency.webp" alt="A crop of the Positions table showing a green Buy row above the start of a red Sell row, the same color carried through the badge, the change figure and the profit and loss" loading="lazy" decoding="async">
+        <iframe class="rz-embed" src="./rupeezy/index.html?embed=colors" title="A crop of the Positions table showing a green Buy row above the start of a red Sell row, the same color carried through the badge, the change figure and the profit and loss. Live prototype, you can use it." loading="lazy" style="aspect-ratio:684/217"></iframe>
       </div>
       <p class="cap">Same color, three places, one glance.</p>
     </div>
@@ -583,7 +597,7 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
     <p class="body">I built a badge instead. Intraday 1.0x, MTF 5.0x, Weekly MTF 4.8x, Delivery 4.8x sit fixed next to the product. The multiplication happens in the interface, before the trader ever has to do it themselves, with money already on the line.</p>
     <div class="beat">
       <div class="shot card c-lav">
-        <img src="./assets/wt-margin-badges.webp" alt="A tight crop of the Order Window isolating the four product tabs: Intraday 1.0x, MTF 5.0x, Weekly MTF 4.8x, Delivery 4.8x" loading="lazy" decoding="async">
+        <iframe class="rz-embed" src="./rupeezy/index.html?embed=margin-tabs" title="A tight crop of the Order Window isolating the four product tabs: Intraday 1.0x, MTF 5.0x, Weekly MTF 4.8x, Delivery 4.8x. Live prototype, you can use it." loading="lazy" style="aspect-ratio:684/76"></iframe>
       </div>
       <p class="cap">The multiplier is a badge, not a calculation.</p>
     </div>
@@ -596,13 +610,13 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
     <div class="smallpair beat">
       <div>
         <div class="shot card c-sand">
-          <img src="./assets/wt-empty-watchlist.webp" alt="An empty watchlist, with an illustration and a prompt to add a stock" loading="lazy" decoding="async">
+          <iframe class="rz-embed" src="./rupeezy/index.html?embed=empty-watchlist" title="An empty watchlist, with an illustration and a prompt to add a stock. Live prototype, you can use it." loading="lazy" style="aspect-ratio:684/666"></iframe>
         </div>
         <p class="cap">Empty watchlist.</p>
       </div>
       <div>
         <div class="shot card c-sand">
-          <img src="./assets/wt-empty-search.webp" alt="A zero-result search, using the same illustration and copy pattern as the empty watchlist" loading="lazy" decoding="async">
+          <iframe class="rz-embed" src="./rupeezy/index.html?embed=empty-search" title="A zero-result search, using the same illustration and copy pattern as the empty watchlist. Live prototype, you can use it." loading="lazy" style="aspect-ratio:684/759"></iframe>
         </div>
         <p class="cap">No search results. Same illustration, same copy.</p>
       </div>
@@ -617,19 +631,19 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
     <p class="body">Twenty-eight states came out of that one decision. Buy and sell. Four product types, each with its own margin rule. Three order types, each with its own set of fields. Three interruptions, a disclaimer, an insufficient-funds warning, a confirmation, that can land mid-flow without warning. Same spacing, same button weight, same way of explaining why a field is even there, whichever of the twenty-eight you land on.</p>
     <div class="beat">
       <div class="shot card c-lav">
-        <img src="./assets/wt-order-buy.webp" alt="The Order Window showing a routine limit order" loading="lazy" decoding="async">
+        <iframe class="rz-embed" src="./rupeezy/index.html?embed=order" title="The Order Window showing a routine limit order. Live prototype, you can use it." loading="lazy" style="aspect-ratio:1440/900"></iframe>
       </div>
       <p class="cap">A routine limit order.</p>
     </div>
     <div class="beat">
       <div class="shot card c-peach">
-        <img src="./assets/wt-order-disclaimer.webp" alt="The Order Window with the SEBI surveillance disclaimer stacked above the order flow, blocking Buy" loading="lazy" decoding="async">
+        <iframe class="rz-embed" src="./rupeezy/index.html?embed=disclaimer" title="The Order Window with the SEBI surveillance disclaimer stacked above the order flow, blocking Buy. Live prototype, you can use it." loading="lazy" style="aspect-ratio:1440/900"></iframe>
       </div>
       <p class="cap">A flagged security stops you here first.</p>
     </div>
     <div class="beat">
       <div class="shot card c-mint">
-        <img src="./assets/wt-positions-shell.webp" alt="The Positions table, tight rows with inline actions" loading="lazy" decoding="async">
+        <iframe class="rz-embed" src="./rupeezy/index.html?embed=positions" title="The Positions table, tight rows with inline actions. Live prototype, you can use it." loading="lazy" style="aspect-ratio:1440/900"></iframe>
       </div>
       <p class="cap">Positions: tight rows, inline actions.</p>
     </div>
@@ -877,4 +891,22 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
 })();
 </script>
 <script src="./aitwin.js?v=6" defer></script>
+<script>
+/* live prototype frames report their height; each frame is sized to fit it */
+(function(){
+  var frames=document.querySelectorAll('iframe.rz-embed'); if(!frames.length) return;
+  // a Reset on each live frame: reloads it to the state it opened in
+  var ICON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
+  [].forEach.call(frames,function(f){
+    var b=document.createElement('button'); b.type='button'; b.className='rz-reset';
+    b.setAttribute('aria-label','Restart this screen'); b.title='Restart'; b.innerHTML=ICON;
+    b.addEventListener('click',function(){ f.src=f.src; });
+    f.parentNode.appendChild(b);
+  });
+  window.addEventListener('message',function(e){
+    var d=e.data; if(!d||d.type!=='rupeezy-embed'||typeof d.height!=='number') return;
+    for(var i=0;i<frames.length;i++) if(frames[i].contentWindow===e.source){ frames[i].style.aspectRatio='auto'; frames[i].style.height=d.height+'px'; }
+  });
+})();
+</script>
 </body></html>
