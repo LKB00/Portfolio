@@ -1068,6 +1068,41 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-trk-shot{margin:0;padding:10px;border-radius:12px;background:var(--surface)}
 .gb-trk-shot img{display:block;width:100%;height:auto;border-radius:8px}
 @media(max-width:640px){.gb-trk{gap:30px;padding-left:24px}.gb-trk:before{left:4px}.gb-trk li{grid-template-columns:1fr;gap:14px}.gb-trk li:before{left:-24px}}
+/* status: the real evidence, then an honest ledger */
+.gb-proof{margin-top:var(--s3);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.gb-proof-c{display:flex;flex-direction:column;padding:16px;border-radius:12px;background:var(--surface)}
+.gb-proof-k{display:inline-flex;align-self:flex-start;align-items:center;gap:5px;margin:0;padding:4px 9px 4px 7px;border-radius:99px;background:var(--ab);color:var(--a);font:500 11px/1 var(--sans)}
+.gb-proof-k svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.gb-proof-t{margin:10px 0 12px;font:400 20px/1.2 var(--serif);letter-spacing:-.015em;color:var(--ink)}
+.gb-term{margin:0;flex:1;justify-content:center;padding:14px;border-radius:8px;background:#1E2226;color:#C9CDD2;font:400 11.5px/1.75 var(--mono);display:flex;flex-direction:column;overflow:hidden}
+.gb-term span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gb-term i{font-style:normal;color:#8BD17C;margin-right:8px}
+.gb-term em{font-style:normal;color:#7D848C}
+.gb-term .more{color:#7D848C;margin-bottom:8px}
+.gb-term .sum b{display:inline-block;width:78px;font-weight:400;color:#7D848C}
+.gb-term .sum i{margin:0;font-weight:500}
+.gb-evcase{padding:12px;border-radius:8px;background:var(--bg)}
+.gb-evcase p{margin:0}
+.gb-evcase .h{display:flex;align-items:center;justify-content:space-between;font:500 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.gb-evcase .h em{font-style:normal;padding:3px 7px;border-radius:99px;background:var(--clay-bg);color:var(--clay)}
+.gb-evcase .q{margin-top:8px;font:400 14px/1.45 var(--serif);color:var(--ink)}
+.gb-evcase .x{margin-top:8px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.gb-evcase code{font:500 12px/1 var(--mono);color:var(--code)}
+.gb-proof-n{margin:8px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.gb-proof-n div{padding:10px;border-radius:8px;background:var(--bg)}
+.gb-proof-n dt{font:400 22px/1 var(--serif);color:var(--ink)}
+.gb-proof-n div{display:flex;align-items:baseline;gap:8px}
+.gb-proof-n dd{margin:0;font-size:11.5px;line-height:1.35;color:var(--muted)}
+.gb-ledger{margin-top:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gb-ledger > div{--c:var(--her);padding:16px;border-radius:12px;background:var(--surface)}
+.gb-ledger .l-sim{--c:var(--clay)}.gb-ledger .l-open{--c:var(--muted)}
+.gb-ledger .h{display:flex;align-items:center;gap:8px;margin:0 0 10px;font:500 15px/1.2 var(--sans);color:var(--ink);letter-spacing:-.01em}
+.gb-ledger .h svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--c);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.gb-ledger ul{list-style:none;margin:0;padding:0}
+.gb-ledger li{padding:7px 0;border-top:1px solid var(--line);font-size:13.5px;line-height:1.45;color:var(--muted)}
+.gb-ledger li:first-child{border-top:0}
+@media(max-width:700px){.gb-proof,.gb-ledger{grid-template-columns:1fr}}
+
 /* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
@@ -1574,12 +1609,18 @@ addEventListener("pagereveal",function(e){
 <section class="gb-chapter" id="status">
 <div class="col"><p class="eyebrow">13 · Status</p><h2 class="say">What exists, and what isn’t proven yet.</h2></div>
 <section class="gb-sec gb-flow" data-reveal="">
-<p class="col body">Everything with one right answer is tested by code: <b>210 automated tests</b> on dates, money, states and safety. The model’s judgment gets a scored evaluation instead. It’s built and ready, but not yet run:</p>
-<div class="col"><div class="figrow" style="--cols:4"><div><p class="fnum">8</p><p class="fnote">legal rules, each read from the source and marked verified</p></div><div><p class="fnum">30</p><p class="fnote">real, sourced cases in the evaluation set</p></div><div><p class="fnum">6</p><p class="fnote">traps where the right answer is “no rule covers this”</p></div><div><p class="fnum">3×</p><p class="fnote">runs per case; it passes only if all three pass</p></div></div></div>
-<div class="col gb-three gb-status" data-reveal="">
-<div class="st-built"><p class="cap"><b>Built</b></p><p>Working prototype. Gemini reads words and screenshots, finds the rule and drafts the letter, checked by code. Rule and evidence UI, approval with undo, every failure state, Google sign-in.</p></div>
-<div class="st-sim"><p class="cap"><b>Simulated or planned</b></p><p>Sending, which is simulated. Sending from her own Gmail, and follow-ups while the app is closed.</p></div>
-<div class="st-open"><p class="cap"><b>Not yet proven</b></p><p>Model accuracy, as the 30-case evaluation hasn’t run. Real refunds recovered, real-user trust, and willingness to pay.</p></div>
+<p class="col body">Everything with one right answer is tested by code: <b>214 automated tests</b> on dates, money, states and safety. The model’s judgment gets a scored evaluation instead. It’s built and ready, but not yet run:</p>
+<div class="col gb-proof" data-reveal="">
+<div class="gb-proof-c a-code"><p class="gb-proof-k"><svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Tested by code</p><p class="gb-proof-t">Dates, money, states and safety</p>
+<p class="gb-term" aria-label="Test run: 20 test files, 214 tests, all passing."><span><i>✓</i>lib/deadlines.test.ts <em>(35 tests)</em></span><span><i>✓</i>lib/requiredFacts.test.ts <em>(28 tests)</em></span><span><i>✓</i>lib/state.test.ts <em>(24 tests)</em></span><span><i>✓</i>lib/validate.test.ts <em>(12 tests)</em></span><span><i>✓</i>lib/otp.test.ts <em>(8 tests)</em></span><span><i>✓</i>lib/tone.test.ts <em>(5 tests)</em></span><span class="more">…and 14 more files</span><span class="sum"><b>Test Files</b> <i>20 passed</i> (20)</span><span class="sum"><b>Tests</b> <i>214 passed</i> (214)</span></p></div>
+<div class="gb-proof-c a-ai"><p class="gb-proof-k"><svg viewBox="0 0 16 16"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>Scored by evaluation</p><p class="gb-proof-t">The model’s judgment</p>
+<div class="gb-evcase"><p class="h"><span>Case C03</span><em>Trap</em></p><p class="q">“Flipkart order from 2019 still shows pending, cash on delivery, never came.”</p><p class="x">Expected rule: <code>null</code>. No money was paid, so there’s no refund to chase.</p></div>
+<dl class="gb-proof-n"><div><dt>8</dt><dd>rules, each verified</dd></div><div><dt>30</dt><dd>real, sourced cases</dd></div><div><dt>6</dt><dd>“no rule” traps</dd></div><div><dt>3×</dt><dd>runs, all must pass</dd></div></dl></div>
+</div>
+<div class="col gb-ledger" data-reveal="">
+<div class="l-built"><p class="h"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Built</p><ul><li>Working prototype on a real model</li><li>Reads words and screenshots</li><li>Finds the rule, drafts the letter, checked by code</li><li>Rule and evidence UI, approval with undo</li><li>Every failure state, Google sign-in</li></ul></div>
+<div class="l-sim"><p class="h"><svg viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"/><path d="M6.453 15h11.094"/><path d="M8.5 2h7"/></svg>Simulated or planned</p><ul><li>Sending, simulated for now</li><li>Sending from her own Gmail</li><li>Follow-ups while the app is closed</li></ul></div>
+<div class="l-open"><p class="h"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Not yet proven</p><ul><li>Model accuracy: the 30-case evaluation</li><li>Real refunds recovered</li><li>Real-user trust</li><li>Willingness to pay</li></ul></div>
 </div>
 </section>
 </section>
