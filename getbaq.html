@@ -980,56 +980,14 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-finale:before{content:"";position:absolute;left:-80px;bottom:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lime) 22%,transparent),transparent 70%)}
 .gb-finale-t{position:relative;margin:0;font:400 clamp(26px,3.6vw,36px)/1.2 var(--serif)!important;letter-spacing:-.02em;color:#fff!important}
 .gb-finale-t span{color:var(--lime)}
-.gb-finale 
-/* ============ calmer pass: colour only as text or a small dot ============ */
-/* 01 chain: one quiet bar each */
-.gb .gb-chain{background:var(--surface);border-radius:8px}
-.gb .gb-chain-bars .gb i{background:var(--ink);box-shadow:none}
-.gb .gb-chain-steps li.w{box-shadow:inset 0 0 0 1px var(--ink)}
-/* 02 agent line: plain steps, a dot for who acts, her step in ink */
-/* 03 quad: neutral cards, only her tap in charcoal */
-.gb .gb-quad-grid .q.lo.irr{background:var(--surface)}
-.gb .gb-quad-grid .q.lo.irr .q-badge,.gb .gb-quad-grid .q.hi.rev .q-badge,.gb .gb-quad-grid .q.lo.rev .q-badge{color:var(--muted)}
-.gb .gb-quad-foot{background:var(--surface);color:var(--ink)}
-.gb .gb-quad-foot:before{background:var(--ink)}
-/* 04 trio: neutral cards, a coloured dot says who */
-/* 05 pipeline: neutral steps, the actor named in its colour */
-.gb .gb-pipe li{background:var(--surface);box-shadow:none}
-.gb .gb-pipe li.a-ui{box-shadow:inset 0 0 0 1px var(--line)}
-.gb .gb-pipe li.a-ui span{color:var(--ink)}
-/* 06 checks: text colour only */
-.gb .gb-trail i[class]{background:transparent;padding:0;color:var(--a)}
-.gb .gb-kicker{border-left:0;background:none;padding:0}
-.gb .gb-kicker p:not(.cap){font-size:clamp(19px,2.2vw,22px)}
-/* 07, finale: flat charcoal, no glow */
-.gb .gb-band:after,.gb .gb-finale:before{display:none}
-/* 08 states: no top borders or icon tiles; the next step in ink */
+/* failure states: no top borders or tiles */
 .gb .gb-states > div{border-top:0}
 .gb .gb-states-next{color:var(--ink)!important}
 .gb .gb-states-t{display:flex;align-items:center;gap:8px}
 .gb .gb-states-t:before{display:none}
 .gb .gb-states-lic{width:18px;height:18px;flex:none;fill:none;stroke:var(--tone);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 .gb .gb-states-t{gap:10px}
-/* 09 chat: no tilted bubbles */
-.gb .gb-conv-chat .m{transform:none!important;margin-left:0!important}
-/* 10 step cards: no coloured top edge */
-.gb .gb-sys-steps > li{box-shadow:none}
-/* 11 bugs: no side borders; the wrong number just muted */
-.gb .gb-fixgrid > div{border-left:0;border-radius:8px}
-.gb .gb-fixgrid p:not(.cap) i,.gb .gb-fixgrid p:not(.cap) i:nth-of-type(2){color:var(--ink)}
-.gb .gb-herobug-row > div:first-child .gb-herobug-big{text-decoration:none;color:rgba(237,237,237,.38)}
-.gb .gb-herobug-risk{color:rgba(237,237,237,.72)}
-/* 12 rejected: no strikethrough or green block */
-.gb .gb-rej s{text-decoration:none;color:var(--ink)}
-.gb .gb-rej .x span{color:var(--muted)}
-.gb .gb-rej .ok{background:transparent;border-top:1px solid var(--line);color:var(--ink);font-weight:400}
-.gb .gb-rej .ok span{color:var(--her)}
-/* 13 status: no borders; a dot before each heading */
-.gb .gb-status > div{border-top:0;box-shadow:none;background:var(--surface)}
-.gb .gb-status .cap b{color:var(--ink);display:inline-flex;align-items:center;gap:7px}
-.gb .gb-status .cap b:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--st)}
-.gb .gb-status .st-open .cap b:before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--faint)}
-.gb-close-sub{position:relative;color:rgba(237,237,237,.7)!important}
+.gb-finale .gb-close-sub{position:relative;color:rgba(237,237,237,.7)!important}
 .gb-finale .gb-proto{position:relative;background:rgba(255,255,255,.06)}
 .gb-finale .gb-proto-text b{color:#fff}.gb-finale .gb-proto-text span{color:rgba(237,237,237,.6)}
 .gb-finale .gb-proto-go{background:var(--lime);color:#1E2226}
@@ -1459,7 +1417,7 @@ addEventListener("pagereveal",function(e){
 <div class="col gb-conv" data-reveal="" role="img" aria-label="A messy chat turns into a structured case: Flipkart, ₹3,499, the rule verified, a deadline of 3 Sep 2026, waiting for their reply, next step 1915.">
 <div class="gb-conv-chat" aria-hidden="true">
 <p class="k">Conversation</p>
-<p class="m">flipkart rejected my replacement, jar has rust</p>
+<p class="m">flipkart rejected my replacement 🙄 jar has rust</p>
 <p class="m">called 3 times, they keep saying 5-7 working days</p>
 <p class="m">paid 3499 on 2 aug</p>
 <p class="f">Messy, and it scrolls away.</p>
