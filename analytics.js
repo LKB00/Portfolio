@@ -91,6 +91,7 @@
     var range = scrollable();
     if (range < 200) return;                   // handled by shortPageCheck
     var pct = (window.scrollY / range) * 100;
+    if (pct >= 99) bottomSweep();
 
     for (var i = 0; i < marks.length; i++) {
       var m = marks[i];
@@ -155,7 +156,26 @@
     }, { threshold: 0, rootMargin: "-45% 0px -45% 0px" });
 
     nodes.forEach(function (n) { io.observe(n); });
+
+    // A short last section can end below the midline even at full scroll
+    // (the home page's Notes board, since Experience was removed after it),
+    // so it could never be reported and no one ever "finished" the page.
+    // At the bottom, anything on screen that has not crossed the midline
+    // has been seen, so it counts.
+    bottomSweep = function () {
+      nodes.forEach(function (el) {
+        var name = el.getAttribute("data-section") || el.id;
+        if (!name || seen[name]) return;
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          seen[name] = true;
+          track("section-reached", { page: page, section: name });
+          io.unobserve(el);
+        }
+      });
+    };
   }
+  var bottomSweep = function () {};
 
   // ---- 4. clicks ----------------------------------------------------------
   // Two sets fire from one listener.
@@ -169,6 +189,10 @@
     // case study cards
     if (href.indexOf("app-merge") > -1)   return track("card-click", { card: "app-merge", from: page });
     if (href.indexOf("rise-portal") > -1) return track("card-click", { card: "rise-portal", from: page });
+    // the two cards added later; matched on the page file so the live
+    // prototype link (getbaq.vercel.app) is not mistaken for a card
+    if (/(^|\/)getbaq\.html/.test(href))       return track("card-click", { card: "getbaq", from: page });
+    if (/(^|\/)web-terminal\.html/.test(href)) return track("card-click", { card: "web-terminal", from: page });
     if (href.indexOf("about") > -1)       return track("nav-about", { from: page });
 
     // card 03 sends people off-site — measured separately on purpose

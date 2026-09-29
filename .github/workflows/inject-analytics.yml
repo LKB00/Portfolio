@@ -166,6 +166,7 @@ jobs:
           files = [f for f in sorted(pathlib.Path(".").rglob("*.html"))
                    if ".github" not in f.parts and "node_modules" not in f.parts
                    and "assets" not in f.parts
+                   and "rupeezy" not in f.parts
                    and f.name != "dashboard.html"]
 
           wrong, tagged, untagged = [], [], []
@@ -231,6 +232,9 @@ jobs:
           files = [f for f in sorted(root.rglob("*.html"))
                    if ".github" not in f.parts and "node_modules" not in f.parts
                    and "assets" not in f.parts
+                   # the embedded prototype is loaded inside iframes on other
+                   # pages; tagging it counted every frame as a pageview
+                   and "rupeezy" not in f.parts
                    and f.name != "dashboard.html"]
 
           if not files:

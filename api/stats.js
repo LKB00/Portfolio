@@ -44,7 +44,16 @@ const REQ_TIMEOUT_MS = 8000;
 // Every page with a labelled funnel. The home page earns its place: it
 // takes the most traffic, and hero -> work -> experience -> notes is a
 // drop-off curve like any other.
-const TRACKED_PAGES = ["/", "/app-merge.html", "/rise-portal.html"];
+const TRACKED_PAGES = [
+  "/", "/getbaq.html", "/getbaq-full.html", "/app-merge.html",
+  "/rise-portal.html", "/web-terminal.html",
+];
+
+// The embedded prototype (rupeezy/index.html inside iframes on the home page
+// and the web terminal case study) is not a page anyone chose to read. It
+// once carried an injected tracker, so its loads were counted as pageviews;
+// they are left out of the page list and the pageview total.
+const EMBED_PATH = /^\/rupeezy\//;
 
 // The section labels each case study carries, in the order a reader meets
 // them. This is the authored order from the markup, not a guess.
@@ -58,16 +67,32 @@ const TRACKED_PAGES = ["/", "/app-merge.html", "/rise-portal.html"];
 // count; a drop-off curve has to be in document order, or the shape is
 // meaningless. Reading the map in order gives that for free.
 const PAGE_SECTIONS = {
-  "/": ["Notes board", "Selected work", "Experience"],
+  "/": ["Selected work", "What people said", "Notes board"],
+  "/getbaq.html": [
+    "Refund agent", "A follow-through problem", "Why an agent",
+    "Input to resolution", "AI reads, code counts", "Autonomy by stakes",
+    "It can't speak for you", "When the AI is wrong", "One mistake, four fixes",
+    "The case carries it", "What's tested", "Three ideas dropped",
+    "Cases, not conversations",
+  ],
+  "/getbaq-full.html": [
+    "Deep dive", "Choosing the problem", "Where AI stops",
+    "The user's control", "Being wrong", "The craft", "Looking back",
+  ],
   "/app-merge.html": [
-    "Two apps, one customer", "Who was in the room", "Revenue at risk",
-    "Not a merge", "Fast version first", "Three constraints",
-    "Ten slots to five", "What shipped",
+    "Neither showed the whole picture", "A rule took the revenue",
+    "Everyone else had one app", "A switch in six weeks", "Two directions",
+    "Built, not explained", "Ten slots became five", "Home breaks the pattern",
+    "Moved over a month", "The model is live",
   ],
   "/rise-portal.html": [
     "Revenue they couldn't see", "Who I was working with",
     "Refer more, earn less", "Two questions", "Show the calculation",
     "The eligibility rule", "The call sheet", "What changed",
+  ],
+  "/web-terminal.html": [
+    "The rule that had to hold", "System rules", "Two components",
+    "Handoff", "What I'd still add",
   ],
 };
 
@@ -338,7 +363,10 @@ export default async function handler(req, res) {
       (evMap["social-click"] || 0);
 
     const visitors = num(stats?.visitors);
-    const pageviews = num(stats?.pageviews);
+    const embedViews = (rows(urls) || [])
+      .filter((u) => EMBED_PATH.test(String(u.x || "")))
+      .reduce((a, u) => a + (Number(u.y) || 0), 0);
+    const pageviews = Math.max(0, num(stats?.pageviews) - embedViews);
 
     // contactRate and heroPassRate are kept in the response because things
     // already read them, but they are no longer computed. They divided event
@@ -617,9 +645,10 @@ export default async function handler(req, res) {
         .sort((a, b) => b.count - a.count)
         .slice(0, 6),
       pages: (rows(urls) || [])
+        .filter((u) => !EMBED_PATH.test(String(u.x || "")))
         .map((u) => ({ path: u.x, views: Number(u.y) || 0 }))
         .sort((a, b) => b.views - a.views)
-        .slice(0, 8),
+        .slice(0, 10),
       events: (rows(events) || [])
         .map((e) => ({ name: e.x, count: Number(e.y) || 0 }))
         .sort((a, b) => b.count - a.count),
