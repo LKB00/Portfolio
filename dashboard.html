@@ -438,6 +438,70 @@ body.demo{padding-top:34px}
   .locside{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:var(--s-5)}
 }
 
+/* =====================================================================
+   SHADCN LAYER. shadcn/ui's dashboard grammar on the portfolio's own
+   tokens: the page is the site's #FAFAFA ground, panels are white with a
+   1px neutral border, a 14px radius and a hairline shadow; labels are
+   sentence case in grey, numbers large; changes are small outlined badges
+   with a trend arrow; tabs are a grey track with a raised white tab; tables
+   have quiet sentence-case headers. Geist throughout, as both use.
+   ===================================================================== */
+:root{--canvas:#FAFAFA;--panel:#FFFFFF;--bar:#FAFAFA;--border:#E8E8E8;--muted-bg:#F4F4F4;
+  --shadow-card:0 1px 2px rgba(16,16,24,.05);--r-card:14px;--r-float:10px}
+:root[data-theme="dark"]{--canvas:#0F0F0F;--panel:#161616;--bar:#0F0F0F;--border:rgba(255,255,255,.09);--muted-bg:#1F1F1F;
+  --shadow-card:0 1px 2px rgba(0,0,0,.4)}
+header{box-shadow:inset 0 -1px 0 var(--border)}
+.card,.fig{border:1px solid var(--border);box-shadow:var(--shadow-card)}
+.card{padding:22px 24px}
+.card.invert{border-color:transparent}
+.head{margin-bottom:18px}
+.head h2{font-size:15px;font-weight:500;letter-spacing:-.012em}
+/* labels: sentence case in grey, not mono capitals */
+.fig .lab,.scope,.legend .cap,th{font-family:var(--display);text-transform:none;letter-spacing:-.01em}
+.scope{font-size:13px;font-weight:400;color:var(--muted)}
+.legend .cap{font-size:12px;font-weight:500;color:var(--muted)}
+/* figures: shadcn's stat card */
+.figs{gap:14px}
+.fig{position:relative;padding:18px 20px 20px}
+.fig .lab{font-size:13.5px;font-weight:400;color:var(--muted)}
+.fig .row{margin-top:10px;flex-wrap:wrap;row-gap:4px}
+.fig .val{font-size:30px;letter-spacing:-.03em}
+.fig .dlt{font-family:var(--display);font-size:12.5px;letter-spacing:-.01em;color:var(--faint)}
+.fig .dlt.up,.fig .dlt.down,.fig .dlt.thin{position:absolute;top:16px;right:16px;display:inline-flex;align-items:center;gap:4px;
+  height:22px;padding:0 8px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--border);
+  font-size:12px;font-weight:500;line-height:1;color:var(--ink)}
+.fig .dlt.up:before,.fig .dlt.down:before{content:"";width:12px;height:12px;background:currentColor;
+  -webkit-mask:var(--trend) center/contain no-repeat;mask:var(--trend) center/contain no-repeat}
+.fig .dlt.up:before{color:var(--gain);--trend:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 7h6v6'/%3E%3Cpath d='m22 7-8.5 8.5-5-5L2 17'/%3E%3C/svg%3E")}
+.fig .dlt.down:before{color:var(--neg);--trend:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 17h6v-6'/%3E%3Cpath d='m22 17-8.5-8.5-5 5L2 7'/%3E%3C/svg%3E")}
+.fig .dlt.thin{color:var(--muted);font-weight:400}
+/* tabs and toggles: a grey track, the chosen one raised */
+.seg{padding:3px;gap:2px;border-radius:10px;background:var(--muted-bg)}
+.seg button{height:26px;padding:0 11px;border-radius:7px;font-size:13px}
+.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--panel);
+  box-shadow:0 0 0 1px var(--border),0 1px 2px rgba(16,16,24,.06)}
+.seg.sm button{height:24px;padding:0 9px;font-size:12px}
+.card.invert .seg{background:color-mix(in srgb,var(--onDeep) 10%,transparent)}
+/* nested panels and chips */
+.mult .cell{border-radius:10px}
+.chip{height:26px;font-size:12.5px}
+.chip.ghost{box-shadow:inset 0 0 0 1px var(--border)}
+.drop{border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:-.01em}
+/* tables: quiet sentence-case header on a muted strip */
+th{font-size:12.5px;font-weight:500;color:var(--muted);padding:9px 0;border-bottom:1px solid var(--border);background:var(--muted-bg)}
+th:first-child{border-radius:8px 0 0 8px} th:last-child{border-radius:0 8px 8px 0;padding-right:12px}
+td{font-size:13.5px;border-bottom:1px solid var(--border);padding:11px 0}
+td:last-child{padding-right:12px}
+.locside{border-left-color:var(--border)} .legend{border-top-color:var(--border)}
+.i{box-shadow:inset 0 0 0 1px var(--border);font-family:var(--display);font-size:10px;font-weight:500}
+.i:hover::after,#tip{border-radius:8px}
+/* numbers and chart labels in Geist with tabular figures, as shadcn sets them */
+.asof,.mult .nm,.mult .cnt,.xlab,.dvrow .vv,.crow .vv,td.r,.payrow .pc,.payaxis .ax,.ticks,.chip .x{font-family:var(--display);letter-spacing:-.005em}
+.mult .nm{font-size:13.5px;font-weight:500}
+.mult svg .ytick{font-family:var(--display)}
+.dvrow .vv small{font-size:11.5px}
+@media(max-width:700px){.fig .val{font-size:24px}.fig .dlt.up,.fig .dlt.down,.fig .dlt.thin{position:static;margin-top:6px}}
+
 /* utilities last, so they win over component colour declarations */
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
