@@ -69,7 +69,7 @@
     '/': 'Home',
     '/getbaq.html': 'Refund agent',
     '/getbaq-full.html': 'Refund agent, deep dive',
-    '/app-merge.html': 'Two apps into one',
+    '/app-merge.html': 'Investing in one app',
     '/web-terminal.html': 'Web terminal',
     '/rise-portal.html': 'Rise Portal',
     '/about.html': 'About',
