@@ -53,7 +53,16 @@ const TRACKED_PAGES = [
 // and the web terminal case study) is not a page anyone chose to read. It
 // once carried an injected tracker, so its loads were counted as pageviews;
 // they are left out of the page list and the pageview total.
-const EMBED_PATH = /^\/rupeezy\//;
+//
+// Only the site's own pages are listed. Hits recorded before the tracker was
+// limited to the live domain include local copies of the site (file paths
+// like /Users/.../index.html) and drafts that were never published; they are
+// left out of the page list and the pageview total, like the embed.
+const PUBLIC_PAGES = new Set([
+  ...TRACKED_PAGES, "/index.html", "/about.html", "/resume.html",
+  "/dashboard.html", "/404.html",
+]);
+const isSitePage = (x) => PUBLIC_PAGES.has(String(x || ""));
 
 // The section labels each case study carries, in the order a reader meets
 // them. This is the authored order from the markup, not a guess.
@@ -363,7 +372,7 @@ export default async function handler(req, res) {
 
     const visitors = num(stats?.visitors);
     const embedViews = (rows(urls) || [])
-      .filter((u) => EMBED_PATH.test(String(u.x || "")))
+      .filter((u) => !isSitePage(u.x))
       .reduce((a, u) => a + (Number(u.y) || 0), 0);
     const pageviews = Math.max(0, num(stats?.pageviews) - embedViews);
 
@@ -644,7 +653,7 @@ export default async function handler(req, res) {
         .sort((a, b) => b.count - a.count)
         .slice(0, 6),
       pages: (rows(urls) || [])
-        .filter((u) => !EMBED_PATH.test(String(u.x || "")))
+        .filter((u) => isSitePage(u.x))
         .map((u) => ({ path: u.x, views: Number(u.y) || 0 }))
         .sort((a, b) => b.views - a.views)
         .slice(0, 10),
