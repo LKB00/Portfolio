@@ -1970,6 +1970,10 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb .cx-cc-case .rc-cf-map{width:88px}
 @media(min-width:1000px){.gb .cx-casecmp{grid-template-columns:minmax(0,1fr) auto 350px;column-gap:20px}}
 @media(max-width:999px){.gb .cx-cc-case{max-width:420px;box-sizing:border-box}}
+/* the arrow between conversation and case, drawn by hand like the storyboard's notes */
+.gb .cx-cc-arrow{display:grid;place-items:center;font-size:0;color:var(--sk-ind)}
+.gb .cx-cc-arrow svg{width:56px;height:auto;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:999px){.gb .cx-cc-arrow{transform:none}.gb .cx-cc-arrow svg{transform:rotate(90deg) scaleY(-1);width:48px}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -2208,7 +2212,7 @@ addEventListener("pagereveal",function(e){
 <p class="m">paid 3499 on 2 aug</p>
 
 </div></div>
-<div class="cx-cc-arrow" aria-hidden="true">→</div>
+<div class="cx-cc-arrow" aria-hidden="true"><svg viewBox="0 0 64 44" filter="url(#sk-w)"><path d="M5,33 C12,12 36,4 55,24"/><path d="M55,24 L44.5,22.5 M55,24 L54,13.5"/></svg></div>
 <div class="cx-cc-case"><p class="cx-meta-l">Case</p><p class="cx-tags"><span>Structured</span><span>Persistent</span><span>Actionable</span></p>
 <figure class="rc-cf"><button type="button" class="cx-zoom" data-zoom="./assets/gb-casefile-full.webp" data-alt="The Getbaq case file" aria-label="Enlarge: the Getbaq case file"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The Getbaq case file for Flipkart, &#8377;3,499: the deadline, what I know, the rule and where the case is at" loading="lazy" decoding="async"></button><ol class="rc-cf-map" aria-hidden="true"><li style="--t:10%;--h:21%">Deadline</li><li style="--t:31%;--h:21.8%">Facts</li><li style="--t:52.8%;--h:17%">Rule</li><li style="--t:69.8%;--h:30.2%">Status</li></ol></figure></div>
 </div>
