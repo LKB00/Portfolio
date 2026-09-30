@@ -2,13 +2,13 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The full Getbaq case study: designing an AI agent that fights for your refund</title>
+<title>Designing an AI agent that fights for your refund, Getbaq deep dive</title>
 <script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
 <meta name="description" content="Getbaq: an AI agent that finds the rule, drafts the complaint, tracks the deadline and escalates when a company keeps your refund. Research, agentic UX, trust design and evaluation.">
 <link rel="canonical" href="https://www.lokeshbhatia.com/getbaq-full.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
-<meta property="og:title" content="The full Getbaq case study: designing an AI agent that fights for your refund">
+<meta property="og:title" content="Designing an AI agent that fights for your refund, Getbaq deep dive">
 <meta property="og:description" content="Getbaq: an AI agent that finds the rule, drafts the complaint, tracks the deadline and escalates when a company keeps your refund. Research, agentic UX, trust design and evaluation.">
 <meta property="og:url" content="https://www.lokeshbhatia.com/getbaq-full.html">
 <meta property="og:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
@@ -16,7 +16,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
-<meta name="twitter:title" content="The full Getbaq case study: designing an AI agent that fights for your refund">
+<meta name="twitter:title" content="Designing an AI agent that fights for your refund, Getbaq deep dive">
 <meta name="twitter:description" content="Getbaq: an AI agent that finds the rule, drafts the complaint, tracks the deadline and escalates when a company keeps your refund. Research, agentic UX, trust design and evaluation.">
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
@@ -1846,7 +1846,7 @@ addEventListener("pagereveal",function(e){
 <a href="#close">Looking back</a>
 </nav>
 <!-- ================= OVERVIEW ================= -->
-<section id="overview" style="margin-top:0">
+<section id="overview" data-section="Deep dive" style="margin-top:0">
 <div class="col" data-reveal=""><p class="gb-versions" data-on="full"><span class="gb-pill" aria-hidden="true"></span><a href="./getbaq.html">Short read · 8 min</a><span aria-current="page">Deep dive · 40 min</span></p></div>
 <figure class="gb-ex gb-ex-hero col" data-reveal="">
 <div class="gb-ex-panel gbh-demo"><div class="gbdemo" role="img" aria-label="Getbaq in use: someone types that Flipkart rejected the replacement for a rusted mixer grinder, sends it, and the agent reads the message, finds the company, the amount, the rule that fits and Flipkart's deadline">
@@ -1942,7 +1942,7 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <!-- ================= 01 THE PROBLEM ================= -->
-<section class="gb-chapter" id="problem">
+<section class="gb-chapter" id="problem" data-section="Choosing the problem">
 <div class="col"><p class="eyebrow">The problem</p><h2 class="say">Choose a problem where AI is the product, not a feature</h2><p class="dek">Which problem is worth an AI agent, who has it, and when is the moment to step in?</p></div>
 <section class="gb-sec" data-reveal="" id="s1-1">
 <div class="col"><p class="eyebrow">The starting question</p><h3 class="say sub">I didn’t start with refunds. I started with a question.</h3></div>
@@ -2206,7 +2206,7 @@ addEventListener("pagereveal",function(e){
 </section>
 </section>
 <!-- ================= 02 WHERE AI STOPS ================= -->
-<section class="gb-chapter" id="ai-line">
+<section class="gb-chapter" id="ai-line" data-section="Where AI stops">
 <div class="col"><p class="eyebrow">Where AI stops</p><h2 class="say">The model reads and writes. Code counts.</h2><p class="dek">Which parts need AI judgment, which need exact calculation, and how would I know the AI is right?</p></div>
 <section class="gb-sec" data-reveal="" id="s2-5">
 <div class="col"><p class="eyebrow">The capability map</p><h3 class="say sub">AI for judgment, code for anything exact, and a list it never touches</h3></div>
@@ -2312,7 +2312,7 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <!-- ================= 03 HER CONTROL ================= -->
-<section class="gb-chapter" id="control">
+<section class="gb-chapter" id="control" data-section="The user's control">
 <div class="col"><p class="eyebrow">The user’s control</p><h2 class="say">The user approves everything, in their own name</h2><p class="dek">How much should an agent do on its own when it’s their money and their name?</p></div>
 <section class="gb-sec" data-reveal="" id="s3-1">
 <div class="col"><p class="eyebrow">The lifecycle</p><h3 class="say sub">It proposes, they approve, it acts, it reports back</h3></div>
@@ -2404,7 +2404,7 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <!-- ================= 04 BEING WRONG ================= -->
-<section class="gb-chapter" id="wrong">
+<section class="gb-chapter" id="wrong" data-section="Being wrong">
 <div class="col"><p class="eyebrow">Being wrong</p><h2 class="say">Design for being wrong: the AI’s, and my own</h2><p class="dek">What does the user see when it’s unsure, ignored or blocked, and what did I get wrong?</p></div>
 <section class="gb-sec" data-reveal="" id="s3-3">
 <div class="col"><p class="eyebrow">States</p><h3 class="say sub">Every way it can go wrong got the same care as the happy path</h3></div>
@@ -2529,7 +2529,7 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <!-- ================= 05 THE CRAFT ================= -->
-<section class="gb-chapter" id="craft">
+<section class="gb-chapter" id="craft" data-section="The craft">
 <div class="col"><p class="eyebrow">The craft</p><h2 class="say">Smaller decisions that make it feel like one product</h2><p class="dek">The two changes that mattered most, then the smaller ones, each with the reason it changed.</p></div>
 <section class="gb-sec" data-reveal="" id="s3-10">
 <div class="col"><p class="eyebrow">Iteration</p><h3 class="say sub">From pages to one thread</h3></div>
@@ -2662,7 +2662,7 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <!-- ================= LOOKING BACK ================= -->
-<section class="gb-chapter" id="close">
+<section class="gb-chapter" id="close" data-section="Looking back">
 <div class="col"><h2 class="say">Looking back</h2></div>
 <section class="gb-sec" data-reveal="" id="learned">
 <div class="col"><p class="eyebrow">What I learned</p><h3 class="say sub">Three things this taught me about designing AI products</h3></div>

@@ -67,7 +67,10 @@
      than one silently labelled "Unknown". */
   var PAGE_NAME = {
     '/': 'Home',
-    '/app-merge.html': 'Two apps into one',
+    '/getbaq.html': 'Refund agent',
+    '/getbaq-full.html': 'Refund agent, deep dive',
+    '/app-merge.html': 'Investing in one app',
+    '/web-terminal.html': 'Web terminal',
     '/rise-portal.html': 'Rise Portal',
     '/about.html': 'About',
     '/resume.html': 'Resume',
