@@ -1957,6 +1957,14 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb .rc-cf-map li{border:0}
 .gb .rc-part-m img{box-shadow:none;border:1px solid var(--rc-line)}
 @media(max-width:760px){.gb .rc-cf{margin:0}}
+
+/* conversation and case side by side: the messy input on the left, the arrow, the case it becomes */
+@media(min-width:1000px){
+  .gb .cx-casecmp{grid-template-columns:minmax(0,1fr) auto 310px;align-items:center;column-gap:24px}
+  .gb .cx-cc-chat{max-width:none}
+  .gb .cx-cc-arrow{transform:none;justify-self:center}
+  .gb .cx-cc-case .rc-cf{margin:0}
+}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
