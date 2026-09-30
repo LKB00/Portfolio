@@ -2940,9 +2940,13 @@ addEventListener("pagereveal",function(e){
   var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function load(v){ if(v.dataset.ok) return; var s=v.querySelector('source'); s.src=s.getAttribute('data-src'); v.load(); v.dataset.ok=1; }
   if(still||!('IntersectionObserver' in window)) return;
+  var onscreen=new Set();
+  function go(v){ if(document.visibilityState!=='visible') return; var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ var v=e.target;
-    if(e.isIntersecting){ load(v); var p=v.play(); if(p&&p.catch) p.catch(function(){}); } else v.pause(); }); },{threshold:.35});
-  vids.forEach(function(v){ io.observe(v); });
+    if(e.isIntersecting){ onscreen.add(v); load(v); go(v); } else { onscreen.delete(v); v.pause(); } }); },{threshold:.35});
+  vids.forEach(function(v){ io.observe(v); v.addEventListener('canplay',function(){ if(onscreen.has(v)&&v.paused) go(v); }); });
+  // a page opened in the background can't autoplay: try again once it is visible
+  document.addEventListener('visibilitychange',function(){ onscreen.forEach(function(v){ if(v.paused) go(v); }); });
 })();
 </script>
 </body></html>
