@@ -69,10 +69,9 @@ const EMBED_PATH = /^\/rupeezy\//;
 const PAGE_SECTIONS = {
   "/": ["Selected work", "What people said", "Notes board"],
   "/getbaq.html": [
-    "Refund agent", "A follow-through problem", "Why an agent",
-    "Input to resolution", "AI reads, code counts", "Autonomy by stakes",
-    "It can't speak for you", "When the AI is wrong", "One mistake, four fixes",
-    "The case carries it", "What's tested", "Three ideas dropped",
+    "Refund agent", "A follow-through problem", "Why an agent", "Solution",
+    "Core flows", "Research", "Three ideas dropped", "Prototyping and testing",
+    "Design decisions", "Designing for failure", "What's tested",
     "Cases, not conversations",
   ],
   "/getbaq-full.html": [
