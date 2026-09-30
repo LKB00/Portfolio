@@ -2344,6 +2344,13 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 /* Pixel 10 (1205x2535; screen 1080x2424 at 59,55, corners ~87px): the screen fills the opening exactly */
 .gb .al-px .px-dev{aspect-ratio:1205/2535}
 .gb .al-px .px-scr{left:4.896%;top:2.170%;width:89.627%;height:95.621%;border-radius:8.06%/3.59%}
+/* the PHC dashboard on the Pixel Tablet (2798x1837; screen 2560x1600 at 119,117) */
+.gb .tab-dev{position:relative;width:100%;aspect-ratio:2798/1837;filter:drop-shadow(0 20px 26px rgba(20,20,20,.16))}
+.gb .tab-scr{position:absolute;left:4.253%;top:6.369%;width:91.494%;height:87.098%;overflow:hidden;border-radius:1.2%/1.9%;background:#fff}
+.gb .tab-scr img,.gb .tab-scr video{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.gb .tab-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none}
+.gb .al-macpanel .tab-dev{max-width:620px;margin:0 auto}
+.gb .al-trio-phc{flex:0 1 420px}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -2412,7 +2419,7 @@ addEventListener("pagereveal",function(e){
 <section id="overview" data-section="Arogya Line" class="cx-hero">
 <div class="cx-w cx-hero-v"><figure class="al-trio" data-reveal="">
 <figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1616" poster="./assets/arogya2/v-al-today.webp" aria-label="The ASHA app's Today screen: who needs her next"><source data-src="./assets/arogya2/v-al-today.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel10-dark.png" width="1205" height="2535" alt="" aria-hidden="true" decoding="async"></div></figure>
-<div class="al-trio-phc"><div class="rc-mac-d al-mac"><img src="./assets/arogya2/al-phc.webp" width="1512" height="982" alt="The PHC dashboard with the day's bookings" loading="lazy" decoding="async"><img class="rc-mac-f" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></div>
+<div class="al-trio-phc"><div class="tab-dev"><div class="tab-scr"><img src="./assets/arogya2/al-phc.webp" width="2880" height="1800" alt="The PHC dashboard with the day's bookings" loading="lazy" decoding="async"></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></div>
 <figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1616" poster="./assets/arogya2/v-al-advice.webp" aria-label="The voice line reading the doctor's advice to the family"><source data-src="./assets/arogya2/v-al-advice.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel10-dark.png" width="1205" height="2535" alt="" aria-hidden="true" decoding="async"></div></figure>
 </figure></div>
 <div class="cx-w rc-title" data-reveal=""><p class="rc-kicker">Arogya Line · Service design · Concept</p><h1 class="cx-display">One care journey. Three people. One connected system.</h1></div>
@@ -2541,7 +2548,7 @@ addEventListener("pagereveal",function(e){
 
 <section class="cx-sec" id="phc" data-section="PHC dashboard" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">PHC dashboard</p><h2 class="cx-h">The doctor doesn&rsquo;t need another dashboard. They need to know what requires attention now.</h2></div>
-<figure class="cx-w rc-mac al-macpanel" data-kicker="PHC Achrol · Dr. Meena"><div class="rc-mac-d al-mac"><img src="./assets/arogya2/al-phc.webp" width="1512" height="982" alt="The PHC dashboard: today's workload, then the day's bookings in time order, urgent ones marked, each with its action" loading="lazy" decoding="async"><img class="rc-mac-f" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure>
+<figure class="cx-w rc-mac al-macpanel" data-kicker="PHC Achrol · Dr. Meena"><div class="tab-dev"><div class="tab-scr"><img src="./assets/arogya2/al-phc.webp" width="2880" height="1800" alt="The PHC dashboard: today's workload, then the day's bookings in time order, urgent ones marked, each with its action" loading="lazy" decoding="async"></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure>
 <ul class="cx-w al-notes al-notes-2">
 <li><b>Patient.</b> Who, and how they came: the ASHA, the voice line, or a walk-in.</li>
 <li><b>Appointment time.</b> The order patients walk in. Urgency marks a row; it doesn&rsquo;t reorder the day.</li>
@@ -2550,7 +2557,7 @@ addEventListener("pagereveal",function(e){
 <li><b>Next action.</b> Consults remaining and follow-ups due, captioned apart from the day on screen.</li>
 </ul>
 <div class="cx-w rc-sub"><h3 class="cx-h3">One workflow, in the order it is done.</h3><p class="cx-body">The consultation keeps the history, the doctor&rsquo;s decision, the family-facing advice and the follow-up in one workflow.</p></div>
-<figure class="cx-w rc-mac al-macpanel" data-kicker="Consult · Khushi, 5"><div class="rc-mac-d al-mac"><video class="rc-vid" muted loop playsinline preload="none" width="1512" height="982" poster="./assets/arogya2/v-al-phc.webp" aria-label="The consult for Khushi: what was found, the advice for the family, and the follow-up call"><source data-src="./assets/arogya2/v-al-phc.mp4" type="video/mp4"></video><img class="rc-mac-f" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure>
+<figure class="cx-w rc-mac al-macpanel" data-kicker="Consult · Khushi, 5"><div class="tab-dev"><div class="tab-scr"><video class="rc-vid" muted loop playsinline preload="none" width="2880" height="1800" poster="./assets/arogya2/v-al-phc.webp" aria-label="The consult for Khushi: what was found, the advice for the family, and the follow-up call"><source data-src="./assets/arogya2/v-al-phc.mp4" type="video/mp4"></video></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure>
 <ul class="cx-w al-notes al-notes-2">
 <li><b>What was found.</b> What the ASHA or the family found, before the patient sits down.</li>
 <li><b>Advice.</b> In the words the family will hear on the line.</li>
@@ -2604,7 +2611,7 @@ addEventListener("pagereveal",function(e){
 <div class="rc-row"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1616" poster="./assets/arogya2/v-al-check.webp" aria-label="The ASHA app"><source data-src="./assets/arogya2/v-al-check.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel10-dark.png" width="1205" height="2535" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><div class="rc-cap"><h3>ASHA mobile</h3><p>Today, families, the one-question-at-a-time check, results, booking, and a simulated offline queue that sends when the signal returns.</p></div></div>
 <div class="rc-row"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1616" poster="./assets/arogya2/v-al-advice.webp" aria-label="The voice line: the doctor's advice, heard on the call"><source data-src="./assets/arogya2/v-al-advice.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel10-dark.png" width="1205" height="2535" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><div class="rc-cap"><h3>Voice simulator</h3><p>A call written as live captions: family ID, person by name, the same screening, a read-back before booking, advice by person, and 0 for a person.</p></div></div>
 </div>
-<figure class="cx-w rc-mac al-macpanel al-wide-cap" data-kicker="PHC dashboard"><div class="rc-mac-d al-mac"><img src="./assets/arogya2/al-phc-consult.webp" width="1512" height="982" alt="The PHC dashboard with the consult sheet open beside the day's list" loading="lazy" decoding="async"><img class="rc-mac-f" src="./assets/macbook-pro-mockup.webp" width="1930" height="1270" alt="" aria-hidden="true" loading="lazy" decoding="async"></div><figcaption>The day in time order, the consult sheet beside the list, and follow-ups grouped by who acts next.</figcaption></figure>
+<figure class="cx-w rc-mac al-macpanel al-wide-cap" data-kicker="PHC dashboard"><div class="tab-dev"><div class="tab-scr"><img src="./assets/arogya2/al-phc-consult.webp" width="2880" height="1800" alt="The PHC dashboard with the consult sheet open beside the day's list" loading="lazy" decoding="async"></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div><figcaption>The day in time order, the consult sheet beside the list, and follow-ups grouped by who acts next.</figcaption></figure>
 <div class="cx-w rc-sub"><h3 class="cx-h3">A quiet visual system for a high-stakes workflow.</h3></div>
 <ul class="cx-w al-notes">
 <li><b>Typography.</b> Figtree, one family, chosen so a matching Kannada face can follow. Screen title 30, card headline 24, section title 20, row title 17, body 15, meta 13.</li>
