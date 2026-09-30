@@ -2004,6 +2004,11 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 /* the three pipeline steps are cards on the hero grey (the site surface, which darkens in dark mode); the artefact inside sits on white */
 .gb .gb-pipe > li{padding:20px;border-radius:8px;background:var(--surface)}
 .gb .gb-pipe > li .gb-pipe-art{background:var(--bg)}
+
+/* the arrows between the pipeline steps, hand-drawn in the storyboard's ink like the conversation-to-case arrow */
+.gb .gb-pipe{column-gap:40px}
+.gb .gb-pipe li + li::before{content:"";left:-37px;width:34px;height:26px;font-size:0;background:var(--sk-ind);-webkit-mask:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 26' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3,19.5 C8.5,7 21.5,3.5 30,13.2'/%3E%3Cpath d='M30,13.2 L23.8,12.6 M30,13.2 L29.6,6.9'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 26' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3,19.5 C8.5,7 21.5,3.5 30,13.2'/%3E%3Cpath d='M30,13.2 L23.8,12.6 M30,13.2 L29.6,6.9'/%3E%3C/svg%3E") center/contain no-repeat}
+@media(max-width:600px){.gb .gb-pipe li + li::before{content:"";left:50%;top:-26px;transform:translateX(-50%) rotate(90deg)}.gb .gb-pipe{row-gap:34px}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
