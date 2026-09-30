@@ -2244,6 +2244,69 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 
 .gb .cx-sec > .al-notes{margin-top:24px}
 .gb .cx-sec > .cx-w.al-wide + .al-notes{margin-top:24px!important}
+
+/* ===== three components kept from the first design, on the portfolio's grey, fonts and spacing ===== */
+.gb{--al-ind:#34449A;--al-ind-soft:#E7E9F8;--al-ind-ink:#1E2A6B;--al-line:color-mix(in srgb,var(--ink) 16%,transparent)}
+:root[data-theme="dark"] .gb{--al-ind:#A9B4F5;--al-ind-soft:rgba(169,180,245,.14);--al-ind-ink:#C9D0FA}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb{--al-ind:#A9B4F5;--al-ind-soft:rgba(169,180,245,.14);--al-ind-ink:#C9D0FA}}
+/* the three users: icon, who, where, what they ask, what they hold */
+.gb .al-users2{display:grid;gap:16px}
+.gb .al-user{display:flex;flex-direction:column;padding:32px;border-radius:8px;background:var(--surface)}
+.gb .al-user .ico{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--al-ind-soft);color:var(--al-ind)}
+.gb .al-user .ico svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.gb .al-user .al-uh{margin:28px 0 0;font:600 24px/1.25 var(--sans);letter-spacing:-.02em;color:var(--ink)}
+.gb .al-user .ctx{margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--muted)}
+.gb .al-user ul{list-style:none;margin:32px 0 0;padding:28px 0 0;display:grid;gap:14px;border-top:1px solid var(--line)}
+.gb .al-user li{margin:0;font-size:19px;font-weight:500;line-height:1.3;letter-spacing:-.015em;color:var(--ink)}
+.gb .al-user .dev{margin:auto 0 0;padding-top:32px;display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted)}
+.gb .al-user .dev svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* one record, six steps: the stepper that walks while it's on screen */
+.gb .al-stepper{padding:64px 24px 40px}
+.gb .al-stepper ol{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.gb .al-stepper ol:before{content:"";position:absolute;left:calc(100%/12);right:calc(100%/12);top:23px;height:1.5px;background:var(--al-line)}
+.gb .al-stepper li{position:relative;margin:0;display:grid;justify-items:center;gap:10px;text-align:center}
+.gb .al-stepper .dot{position:relative;z-index:1;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--surface);box-shadow:0 0 0 1.5px var(--al-line);font-size:13px;font-weight:600;color:var(--muted);transition:all .5s cubic-bezier(.16,1,.3,1)}
+.gb .al-stepper .st{margin-top:8px;font-size:18px;font-weight:600;letter-spacing:-.015em;color:var(--muted);transition:color .5s}
+.gb .al-stepper .ow{font-size:13.5px;color:var(--faint);transition:color .5s}
+.gb .al-stepper li.on .dot{background:var(--al-ind);box-shadow:0 0 0 6px var(--al-ind-soft);color:var(--bg)}
+.gb .al-stepper li.on .st{color:var(--ink)}
+.gb .al-stepper li.on .ow{color:var(--al-ind)}
+.gb .al-stepper li.done .dot{box-shadow:0 0 0 1.5px var(--al-ind);color:var(--al-ind)}
+.gb .al-stepper li.done .st{color:var(--ink)}
+.gb .al-stepper .mv{position:absolute;top:23px;left:calc(100%/12);height:1.5px;width:0;background:var(--al-ind);transition:width .9s cubic-bezier(.16,1,.3,1)}
+/* the journey: day and place, a line with a dot per step, the step, who owns it */
+.gb .al-timeline ol{position:relative;list-style:none;margin:0;padding:0}
+.gb .al-timeline ol:before{content:"";position:absolute;left:147px;top:12px;bottom:12px;width:1.5px;background:var(--al-line)}
+.gb .al-timeline li{position:relative;margin:0;display:grid;grid-template-columns:124px 48px minmax(0,1fr) auto;align-items:start;padding:0 0 40px}
+.gb .al-timeline li:last-child{padding-bottom:0}
+.gb .al-timeline .when{margin:0;padding-top:3px;font-size:13.5px;line-height:1.35;color:var(--muted);font-variant-numeric:tabular-nums}
+.gb .al-timeline .when b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+.gb .al-timeline .dot{position:relative;z-index:1;width:13px;height:13px;margin:5px 0 0 17px;border-radius:50%;background:var(--bg);box-shadow:0 0 0 1.5px var(--al-ind)}
+.gb .al-timeline li.key .dot{background:var(--al-ind);box-shadow:0 0 0 5px var(--al-ind-soft)}
+.gb .al-timeline .what h3{margin:0;font:600 20px/1.3 var(--sans);letter-spacing:-.02em;color:var(--ink)}
+.gb .al-timeline .what p{margin:6px 0 0;max-width:460px;font-size:15.5px;line-height:1.55;color:var(--muted)}
+.gb .al-timeline .what .shows{margin-top:10px;font-size:13.5px}
+.gb .al-timeline .own{margin-left:24px;padding:6px 11px;border-radius:99px;box-shadow:0 0 0 1px var(--al-line);font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap}
+.gb .al-timeline .own.phc{background:var(--al-ind-soft);box-shadow:none;color:var(--al-ind-ink)}
+@media(max-width:760px){
+  .gb .al-user{padding:24px}
+  .gb .al-user li{font-size:17px}
+  .gb .al-stepper{padding:56px 16px 16px}
+  .gb .al-stepper ol{grid-template-columns:1fr;gap:0}
+  .gb .al-stepper ol:before{left:23px;right:auto;top:24px;bottom:24px;width:1.5px;height:auto}
+  .gb .al-stepper .mv{display:none}
+  .gb .al-stepper li{grid-template-columns:48px 1fr;justify-items:start;text-align:left;column-gap:18px;row-gap:2px;padding-bottom:22px}
+  .gb .al-stepper .dot{grid-row:1/3}
+  .gb .al-stepper .st{margin-top:4px;font-size:17px}
+  .gb .al-timeline ol:before{left:6px}
+  .gb .al-timeline li{grid-template-columns:30px 1fr;row-gap:6px;padding-bottom:32px}
+  .gb .al-timeline .dot{grid-row:1/4;margin:4px 0 0 0}
+  .gb .al-timeline .when{grid-column:2;display:flex;gap:8px;align-items:baseline}
+  .gb .al-timeline .when b{display:inline}
+  .gb .al-timeline .what{grid-column:2}
+  .gb .al-timeline .own{grid-column:2;justify-self:start;margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){.gb .al-stepper .dot,.gb .al-stepper .mv{transition:none}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -2342,25 +2405,41 @@ addEventListener("pagereveal",function(e){
 </figure>
 <div class="cx-w al-reframe"><p class="al-was">How might I digitize rural healthcare?</p><p class="al-is">How might I keep one patient&rsquo;s care journey coherent as it moves between the family, the ASHA worker, and the PHC?</p></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">Three users. Three contexts. One problem.</h3></div>
-<div class="cx-w al-users">
-<div class="cx-arch-c o-her"><p class="cx-arch-r">A smartphone</p><p class="cx-arch-t">The ASHA</p><p class="al-ctx">A community health worker, on foot, from house to house, often without signal.</p><ul><li>Who needs me next?</li><li>What do I need to do?</li><li>What happens when I&rsquo;m offline?</li></ul></div>
-<div class="cx-arch-c o-code"><p class="cx-arch-r">A desktop</p><p class="cx-arch-t">The PHC doctor</p><p class="al-ctx">At the primary health centre, seeing the day&rsquo;s patients one after another.</p><ul><li>Who is coming?</li><li>Why are they here?</li><li>What happened before they arrived?</li></ul></div>
-<div class="cx-arch-c o-ai"><p class="cx-arch-r">Any phone, even a basic one</p><p class="cx-arch-t">The family</p><p class="al-ctx">At home, often sharing one basic phone, caring for someone who is unwell.</p><ul><li>What should I do now?</li><li>What did the doctor say?</li><li>When should I seek help again?</li></ul></div>
+<div class="cx-w al-users2">
+<article class="al-user">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></svg></span>
+        <h3 class="al-uh">The ASHA</h3>
+        <p class="ctx">A community health worker, on foot, from house to house, often without signal.</p>
+        <ul><li>Who needs me next?</li><li>What do I need to do?</li><li>What happens when I’m offline?</li></ul>
+        <p class="dev"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>A smartphone</p>
+      </article>
+<article class="al-user">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg></span>
+        <h3 class="al-uh">The PHC doctor</h3>
+        <p class="ctx">At the primary health centre, seeing the day’s patients one after another.</p>
+        <ul><li>Who is coming?</li><li>Why are they here?</li><li>What happened before they arrived?</li></ul>
+        <p class="dev"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>A desktop</p>
+      </article>
+<article class="al-user">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+        <h3 class="al-uh">The family</h3>
+        <p class="ctx">At home, often sharing one basic phone, caring for someone who is unwell.</p>
+        <ul><li>What should I do now?</li><li>What did the doctor say?</li><li>When should I seek help again?</li></ul>
+        <p class="dev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Any phone, even a basic one</p>
+      </article>
 </div>
 </section>
 
 <section class="cx-sec" id="system" data-section="System" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">System</p><h2 class="cx-h">The product isn&rsquo;t three interfaces. It&rsquo;s one care record moving between three people.</h2><p class="cx-lead">All three surfaces read and write the same record. A booking the ASHA saves offline appears on the doctor&rsquo;s list the moment it syncs, and the advice the doctor saves is what the family hears on the line.</p></div>
-<figure class="cx-w al-steps" data-kicker="One record, six steps">
-<ol>
-<li><b>Concern</b><em>Family</em></li>
-<li><b>Screen</b><em>ASHA</em></li>
-<li><b>Book</b><em>ASHA</em></li>
-<li><b>PHC</b><em>PHC</em></li>
-<li><b>Advice</b><em>PHC</em></li>
-<li><b>Follow-up</b><em>ASHA / Family</em></li>
-</ol>
-</figure>
+<figure class="cx-w al-stepper" data-kicker="One record, six steps"><ol id="alFlow"><span class="mv" aria-hidden="true"></span>
+<li><span class="dot">1</span><span class="st">Concern</span><span class="ow">Family</span></li>
+<li><span class="dot">2</span><span class="st">Screen</span><span class="ow">ASHA</span></li>
+<li><span class="dot">3</span><span class="st">Book</span><span class="ow">ASHA</span></li>
+<li><span class="dot">4</span><span class="st">PHC</span><span class="ow">PHC</span></li>
+<li><span class="dot">5</span><span class="st">Advice</span><span class="ow">PHC</span></li>
+<li><span class="dot">6</span><span class="st">Follow-up</span><span class="ow">ASHA / Family</span></li>
+</ol></figure>
 <div class="cx-w rc-sub"><h3 class="cx-h3">Four constraints shaped the system before any screen.</h3></div>
 <div class="cx-w al-grid4">
 <div><h3>Interrupted connectivity</h3><p>The ASHA&rsquo;s work can&rsquo;t wait for signal, so saving never depends on it.</p></div>
@@ -2438,15 +2517,15 @@ addEventListener("pagereveal",function(e){
 <li><b>Follow-up.</b> The follow-up call: none, next day, in 3 days, in a week.</li>
 </ul>
 <div class="cx-w rc-sub"><h3 class="cx-h3">The doctor shouldn&rsquo;t have to reconstruct the story.</h3><p class="cx-body">Arjun&rsquo;s record, as it moves through one run of the prototype. Each step is saved once, by the person who did it, and read by the next.</p></div>
-<ol class="cx-w al-journey">
-<li><p class="al-day">Day 1 · At home</p><div><h3>Concern reported</h3><p>Lakshmi tells Savitri, the ASHA, that Arjun has had a fever since Tuesday.</p></div><em>Family</em></li>
-<li><p class="al-day">Day 1 · At home, offline</p><div><h3>Screened</h3><p>Four questions, one at a time. Screening result: needs a visit, with what was found and what was ruled out.</p></div><em>ASHA</em></li>
-<li><p class="al-day">Day 1 · Offline, then synced</p><div><h3>Visit booked</h3><p>A slot at PHC Tumkur for the next day. Saved on her phone as &ldquo;1 visit to send&rdquo;, sent when the signal returns. Appears on the PHC list the moment it syncs.</p></div><em>ASHA</em></li>
-<li><p class="al-day">Day 2 · Booked slot</p><div><h3>Arrived</h3><p>Until he arrives, the doctor can view the booking but not record a consult.</p></div><em>PHC</em></li>
-<li><p class="al-day">Day 2 · In the room</p><div><h3>Consulted</h3><p>Dr. Ramesh opens the sheet on what Savitri found, not a blank page.</p></div><em>PHC</em></li>
-<li><p class="al-day">Day 2 · After the consult</p><div><h3>Advice given</h3><p>Saved once. The family hears it on the line by pressing 3: &ldquo;Dr. Ramesh has a message for Arjun.&rdquo;</p></div><em>PHC → Family</em></li>
-<li><p class="al-day">Day 5 · If chosen</p><div><h3>Follow-up</h3><p>A call in three days. If it is missed, the doctor decides: call again today, or ask the ASHA to follow up.</p></div><em>ASHA / Family</em></li>
-</ol>
+<div class="cx-w al-timeline"><ol>
+        <li><p class="when"><b>Day 1</b>At home</p><span class="dot"></span><div class="what"><h3>Concern reported</h3><p>Lakshmi tells Savitri, the ASHA, that Arjun has had a fever since Tuesday.</p></div><span class="own">Family</span></li>
+        <li><p class="when"><b>Day 1</b>At home, offline</p><span class="dot"></span><div class="what"><h3>Screened</h3><p>Four questions, one at a time. Screening result: needs a visit, with what was found and what was ruled out.</p></div><span class="own">ASHA</span></li>
+        <li class="key"><p class="when"><b>Day 1</b>Offline, then synced</p><span class="dot"></span><div class="what"><h3>Visit booked</h3><p>A slot at PHC Tumkur for the next day. Saved on her phone as “1 visit to send”, sent when the signal returns.</p><p class="shows">Appears on the PHC list the moment it syncs.</p></div><span class="own">ASHA</span></li>
+        <li><p class="when"><b>Day 2</b>Booked slot</p><span class="dot"></span><div class="what"><h3>Arrived</h3><p>Until he arrives, the doctor can view the booking but not record a consult.</p></div><span class="own phc">PHC</span></li>
+        <li class="key"><p class="when"><b>Day 2</b>In the room</p><span class="dot"></span><div class="what"><h3>Consulted</h3><p>Dr. Ramesh opens the sheet on what Savitri found, not a blank page.</p></div><span class="own phc">PHC</span></li>
+        <li><p class="when"><b>Day 2</b>After the consult</p><span class="dot"></span><div class="what"><h3>Advice given</h3><p>Saved once. The family hears it on the line by pressing 3: “Dr. Ramesh has a message for Arjun.”</p></div><span class="own phc">PHC → Family</span></li>
+        <li><p class="when"><b>Day 5</b>If chosen</p><span class="dot"></span><div class="what"><h3>Follow-up</h3><p>A call in three days. If it is missed, the doctor decides: call again today, or ask the ASHA to follow up.</p></div><span class="own">ASHA / Family</span></li>
+      </ol></div>
 </section>
 
 <section class="cx-sec" id="handoffs" data-section="Handoffs" data-reveal="">
@@ -2973,6 +3052,20 @@ addEventListener("pagereveal",function(e){
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ var v=e.target;
     if(e.isIntersecting){ load(v); var p=v.play(); if(p&&p.catch) p.catch(function(){}); } else v.pause(); }); },{threshold:.35});
   vids.forEach(function(v){ io.observe(v); });
+})();
+</script>
+<script>
+(function(){
+  var flow=document.getElementById('alFlow'); if(!flow) return;
+  var steps=[].slice.call(flow.querySelectorAll('li')), mv=flow.querySelector('.mv'), k=0, timer=null;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function paint(){ steps.forEach(function(s,i){ s.classList.toggle('on',i===k); s.classList.toggle('done',i<k); });
+    if(mv) mv.style.width='calc((100% - 100%/6) * '+(k/(steps.length-1))+')'; }
+  if(reduce||!('IntersectionObserver' in window)){ k=steps.length-1; paint(); return; }
+  paint();
+  new IntersectionObserver(function(es){ es.forEach(function(en){
+    if(en.isIntersecting&&!timer){ timer=setInterval(function(){ k=(k+1)%steps.length; paint(); },1500); }
+    else if(!en.isIntersecting&&timer){ clearInterval(timer); timer=null; } }); },{threshold:.4}).observe(flow);
 })();
 </script>
 </body></html>
