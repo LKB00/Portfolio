@@ -2354,6 +2354,19 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 /* the prototype's own Pixel 8 (1187x2513; screen 1080x2400 at 49,55) */
 .gb .al-px .px-dev{aspect-ratio:1187/2513}
 .gb .al-px .px-scr{left:4.128%;top:2.189%;width:90.986%;height:95.503%;border-radius:8%/3.6%}
+/* the three users side by side: same card, sized for a third of the column */
+@media(min-width:761px){
+  .gb .al-users2{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+  .gb .al-user{padding:22px 20px 20px}
+  .gb .al-user .ico{width:44px;height:44px}
+  .gb .al-user .ico svg{width:21px;height:21px}
+  .gb .al-user .al-uh{margin-top:20px;font-size:19px;letter-spacing:-.015em}
+  .gb .al-user .ctx{margin-top:6px;font-size:13.5px;line-height:1.5}
+  .gb .al-user ul{margin-top:20px;padding-top:18px;gap:10px}
+  .gb .al-user li{font-size:15px;line-height:1.35;letter-spacing:-.01em;text-wrap:pretty}
+  .gb .al-user .dev{padding-top:22px;font-size:12.5px;gap:6px}
+  .gb .al-user .dev svg{width:14px;height:14px}
+}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
