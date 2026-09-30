@@ -72,7 +72,8 @@ h1{margin:0;font-weight:500;font-size:clamp(46px,6vw,80px);line-height:1;letter-
 .film .phone{width:26%;margin-bottom:-9%}
 .film .phone{background:none;padding:0;border-radius:0;box-shadow:none;margin-bottom:-16%}
 .film .phone video{border-radius:28px 28px 0 0;box-shadow:0 40px 80px -30px rgba(10,10,40,.5)}
-.film .laptop{width:66%;margin-bottom:5%}
+.film .flat{width:66%;margin-bottom:-2%}
+.film .flat video{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;border-radius:18px 18px 0 0;box-shadow:0 40px 80px -30px rgba(10,10,40,.5);background:#fff}
 .film .actor{position:absolute;width:13%;bottom:12%}
 .film .ctl{position:absolute;right:30px;bottom:26px;display:flex;gap:10px;z-index:3}
 .chip{height:34px;padding:0 14px;border:0;border-radius:999px;background:rgba(13,13,13,.5);color:#fff;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:8px;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -389,7 +390,7 @@ svg.ch{display:block;overflow:visible}
 @media (max-width:600px){
   .film{border-radius:32px;aspect-ratio:4/5}
   .film .phone{width:52%;margin-bottom:-24%}
-  .film .laptop{width:120%;margin-bottom:22%}
+  .film .flat{width:92%;margin-bottom:-2%}
   .film .actor{width:24%}
   .card{border-radius:34px;aspect-ratio:4/3.4}
   .col{left:12%;width:76%}
@@ -493,7 +494,7 @@ svg.ch{display:block;overflow:visible}
   <div class="film" id="film" data-rv style="--i:3" aria-label="A short film of the three surfaces">
     <div class="scene s1 on"><div class="set"><div class="phone"><video muted playsinline preload="auto" src="./assets/arogya2/v-al-today.mp4" poster="./assets/arogya2/v-al-today.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="left:14%"><use href="#sunita"/></svg></div>
     <div class="scene s2"><div class="set"><div class="phone"><video muted playsinline preload="none" src="./assets/arogya2/v-al-book.mp4" poster="./assets/arogya2/v-al-book.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:14%;--bd:1s"><use href="#arjun"/></svg></div>
-    <div class="scene s3"><div class="set"><div class="laptop"><div class="scr"><video muted playsinline preload="none" src="./assets/arogya2/v-al-phc.mp4" poster="./assets/arogya2/v-al-phc.webp"></video></div><div class="base"></div></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:5%;bottom:40%;--bd:.5s"><use href="#meena"/></svg></div>
+    <div class="scene s3"><div class="set"><div class="flat"><video muted playsinline preload="none" src="./assets/arogya2/v-al-phc.mp4" poster="./assets/arogya2/v-al-phc.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:5%;bottom:40%;--bd:.5s"><use href="#meena"/></svg></div>
     <div class="scene s4"><div class="set"><div class="phone"><video muted playsinline preload="none" src="./assets/arogya2/v-al-voice.mp4" poster="./assets/arogya2/v-al-voice.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="left:15%;--bd:2s"><use href="#pooja"/></svg></div>
     <div class="ctl"><button class="chip" id="play" type="button" aria-pressed="false"><span>Pause</span><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx="1" fill="currentColor"/><rect x="6.1" y="1" width="2.4" height="8" rx="1" fill="currentColor"/></svg></button><button class="chip round" type="button" aria-label="Sound is off; these recordings have no sound" disabled><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg></button></div>
   </div>
