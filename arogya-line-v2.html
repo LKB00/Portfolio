@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arogya Line</title>
+<meta name="description" content="Arogya Line, a care-coordination concept for families, ASHA workers and primary health centres, laid out like the ChatGPT Dots page.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://lokeshbhatia.com/arogya-line">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Measured from the Dots page at a 1508 px viewport: 964 px column, 670 px cards,
+   80 / 64 / 40 / 24 px headings, 42 px pill buttons, #f8f8f8 page. */
+:root{
+  --page:#fafafa; --ink:#0d0d0d; --text:#3d3d3d; --grey:#8a8a8a; --grey2:#5d5d5d; --hair:#f0f0f0;
+  --panel:#f5f5f5; --surface:#fff; --bubble:#f0f0f0; --barbg:rgba(250,250,250,.92);
+  --line:color-mix(in oklab,#0d0d0d 8%,transparent); --line2:color-mix(in oklab,#0d0d0d 14%,transparent);
+  --indigo:#34449A;
+  --tri-pink:#b42b5e;--tri-pink-soft:#fce4ec;--tri-pink-ink:#5a1030;
+  --tri-yellow:#f2b705;--tri-yellow-soft:#fff2c7;--tri-yellow-ink:#4d3800;
+  --tri-green:#2f7d4f;--tri-green-soft:#ddf1e3;--tri-green-ink:#0f3b22;
+  --brand:#fcd12a;
+  --ease:cubic-bezier(.4,0,.2,1); --out:cubic-bezier(.22,1,.36,1); --spring:cubic-bezier(.32,.72,0,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--ink:#fff;--text:#d0d0d0;--grey:#9a9a9a;--grey2:#afafaf;--hair:#262626;--panel:#181818;--surface:#1c1c1c;--bubble:#262626;--barbg:rgba(30,30,30,.88);--line:color-mix(in oklab,#fff 12%,transparent);--line2:color-mix(in oklab,#fff 20%,transparent);color-scheme:dark}}
+:root[data-theme="dark"]{--page:#0d0d0d;--ink:#fff;--text:#d0d0d0;--grey:#9a9a9a;--grey2:#afafaf;--hair:#262626;--panel:#181818;--surface:#1c1c1c;--bubble:#262626;--barbg:rgba(30,30,30,.88);--line:color-mix(in oklab,#fff 12%,transparent);--line2:color-mix(in oklab,#fff 20%,transparent);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:90px;overflow-x:clip}
+body{margin:0;background:var(--page);color:var(--text);font:400 16px/1.5 Figtree,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,video{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.wrap{width:min(1080px,100% - 40px);margin-inline:auto}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:8px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;font-size:15px;font-weight:600;letter-spacing:-.01em;text-decoration:none;white-space:nowrap;border:1px solid transparent;cursor:pointer;transition:background .15s var(--ease),transform .15s var(--ease)}
+.btn:active{transform:scale(.98)}
+.btn-dark{background:var(--ink);color:var(--page)}
+.btn-dark:hover{background:color-mix(in oklab,var(--ink) 80%,var(--page))}
+.btn-line{border-color:var(--line2);color:var(--ink);background:transparent}
+.btn-line:hover{background:color-mix(in oklab,var(--ink) 4%,transparent)}
+.btn-sm{height:36px;padding:0 14px;font-size:14px}
+
+/* ── Top bar, as the ChatGPT bar: logo, centred links, dark pill ── */
+.top{height:64px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 34px 0 28px}
+.logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-weight:600;font-size:20px;letter-spacing:-.03em}
+.mark{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle,transparent 0 30%,var(--ink) 31% 100%)}
+.top nav{display:flex;gap:36px;font-size:15px}
+.top nav a{text-decoration:none;color:var(--text)}
+.top nav a:hover{color:var(--ink)}
+.top .btn{justify-self:end}
+
+/* ── Hero ── */
+.hero{text-align:center;padding-top:100px;padding-bottom:60px}
+.hero .who{width:125px;height:125px;margin:0 auto 42px;display:block}
+h1{margin:0;font-weight:600;font-size:clamp(48px,6.5vw,84px);line-height:1;letter-spacing:-.035em;color:var(--ink)}
+.hero .sub{margin:28px auto 0;max-width:600px;font-size:clamp(22px,2.4vw,36px);line-height:1.27;letter-spacing:-.025em;color:var(--grey)}
+.cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:40px}
+
+/* The film: one scene at a time, crossfading, like the Dots hero video */
+.film{position:relative;margin-top:130px;aspect-ratio:16/9;border-radius:60px;overflow:hidden;background:#1b1f3a;isolation:isolate}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity .9s var(--ease)}
+.scene.on{opacity:1}
+.scene .set{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center}
+.s1{background:radial-gradient(70% 90% at 30% 20%,#ffe9c2 0%,#f7b98a 45%,#c9738c 100%)}
+.s2{background:radial-gradient(70% 90% at 70% 20%,#f4ffd0 0%,#bfe86a 45%,#5f9e3a 100%)}
+.s3{background:radial-gradient(80% 100% at 50% 0%,#dff4ff 0%,#7fc8f5 45%,#2d6fc2 100%)}
+.s4{background:radial-gradient(70% 90% at 40% 20%,#ffe0fb 0%,#e86ed8 50%,#7d1f8a 100%)}
+.film .phone{width:26%;margin-bottom:-9%}
+.film .phone{background:none;padding:0;border-radius:0;box-shadow:none;margin-bottom:-16%}
+.film .phone video{border-radius:28px 28px 0 0;box-shadow:0 40px 80px -30px rgba(10,10,40,.5)}
+.film .flat{width:66%;margin-bottom:-2%}
+.film .flat video{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;border-radius:18px 18px 0 0;box-shadow:0 40px 80px -30px rgba(10,10,40,.5);background:#fff}
+.film .actor{position:absolute;width:13%;bottom:12%}
+.film .ctl{position:absolute;right:30px;bottom:26px;display:flex;gap:10px;z-index:3}
+.chip{height:34px;padding:0 14px;border:0;border-radius:999px;background:rgba(13,13,13,.5);color:#fff;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:8px;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.chip.round{width:34px;padding:0;justify-content:center}
+.chip:hover{background:rgba(13,13,13,.66)}
+
+/* Devices */
+.phone{position:relative;background:#121212;border-radius:15% / 7%;padding:3%;box-shadow:0 40px 80px -30px rgba(10,10,40,.55)}
+.phone video,.phone img{width:100%;aspect-ratio:9/20;object-fit:cover;object-position:top;border-radius:12% / 5.5%;background:#fff}
+.laptop .scr{background:#121212;border-radius:16px 16px 4px 4px;padding:1.5%;box-shadow:0 40px 80px -30px rgba(10,10,40,.55)}
+.laptop .scr video,.laptop .scr img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;border-radius:6px;background:#fff}
+.laptop .base{height:12px;margin:0 -7%;background:linear-gradient(#e3e5ea,#a9adb8);border-radius:0 0 14px 14px}
+
+/* ── Section bar: sticky, 722 × 56 ── */
+.bar{position:sticky;top:10px;z-index:40;width:min(800px,100% - 40px);height:56px;margin:0 auto;padding:0 7px 0 14px;border-radius:999px;background:var(--barbg);backdrop-filter:saturate(1.6) blur(20px);-webkit-backdrop-filter:saturate(1.6) blur(20px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.bar .me{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.bar .me .mark{width:24px;height:24px}
+.bar nav{display:flex;gap:24px;font-size:15px}
+.bar nav a{text-decoration:none;color:var(--text);transition:color .15s}
+.bar nav a:hover,.bar nav a[aria-current="true"]{color:var(--ink)}
+.bar .btn{justify-self:end}
+.barslot{height:56px;margin-top:240px;margin-bottom:-56px}
+
+/* ── Headings ── */
+h2{margin:0;font-weight:500;font-size:clamp(38px,4.6vw,64px);line-height:1.1;letter-spacing:-.035em;color:var(--ink)}
+.center{text-align:center}
+.lede{margin:24px auto 0;max-width:770px;font-size:clamp(18px,1.7vw,24px);line-height:1.3;letter-spacing:-.02em;color:var(--grey)}
+
+/* ── How it works: 670 × 377 cards, 34 px apart ── */
+#how{padding-top:104px}
+.rows{display:grid;gap:34px;margin-top:62px}
+.row{display:grid;grid-template-columns:670fr 294fr;align-items:center}
+.row .txt{padding-left:40px;max-width:265px}
+.row.r{grid-template-columns:294fr 670fr}
+.row.r .txt{order:-1;padding:0 20px 0 24px;max-width:none}
+.row h3{margin:0;font-weight:400;font-size:24px;line-height:1.3;letter-spacing:-.025em;color:var(--ink)}
+.row p{margin:16px 0 0;font-size:15.5px;line-height:1.32;color:var(--text);max-width:228px}
+.row .btn{margin-top:26px}
+.card{position:relative;aspect-ratio:670/377;border-radius:60px;overflow:hidden;isolation:isolate}
+.y{background:radial-gradient(60% 90% at 88% 20%,#f5bd3c 0%,rgba(248,206,90,.6) 40%,rgba(252,240,180,0) 75%),linear-gradient(170deg,#fcef96 0%,#fcf1c0 55%,#fbf3d2 100%)}
+.c{background:radial-gradient(70% 90% at 100% 40%,#e95d53 0%,rgba(236,102,93,.8) 45%,rgba(245,137,124,0) 90%),linear-gradient(90deg,#f6907f,#f07669)}
+.b{background:radial-gradient(70% 100% at 0% 100%,#0d9de4 0%,rgba(33,172,236,.7) 40%,rgba(120,220,245,0) 85%),linear-gradient(120deg,#6ecfee,#88dff2 55%,#5fd7fb)}
+.m{background:radial-gradient(80% 110% at 100% 100%,#b10fbb 0%,rgba(205,72,207,.85) 45%,rgba(245,190,240,0) 95%),linear-gradient(210deg,#f6d6f3 0%,#e676df 50%,#d24dd0 100%)}
+.l{background:radial-gradient(80% 110% at 100% 60%,#a3e519 0%,rgba(190,240,70,.8) 40%,rgba(240,250,220,0) 90%),linear-gradient(160deg,#fbfdf4,#eef9d6)}
+.p{background:radial-gradient(80% 110% at 0% 0%,#ff4fa6 0%,rgba(255,120,190,.8) 45%,rgba(255,210,235,0) 95%),linear-gradient(200deg,#ffd9ec,#ff8fc9)}
+.v{background:radial-gradient(80% 110% at 0% 0%,#a9b4f5 0%,rgba(190,200,250,.8) 45%,rgba(236,238,255,0) 95%),linear-gradient(200deg,#f1f2ff,#c4cbf7)}
+
+/* card 1: a tall column of items, one picked up at a time */
+.col{position:absolute;left:29.8%;width:39.9%;top:12.2%;bottom:-10%;border-radius:42px;background:rgba(255,255,255,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+.col::before{content:"";position:absolute;inset:8px;border-radius:34px;background:rgba(255,255,255,.22)}
+.col .list{position:absolute;left:20px;right:20px;top:50px;display:grid;gap:10px}
+.it{position:relative;display:flex;align-items:center;gap:12px;height:60px;padding:0 12px;border-radius:14px;background:rgba(255,255,255,.9);color:#111;transition:transform .7s var(--spring),opacity .4s var(--ease),box-shadow .4s var(--ease)}
+.it .tile{flex:none;width:34px;height:34px;border-radius:9px;background:#fff;box-shadow:0 0 0 1px #ececec;display:grid;place-items:center}
+.it .tile svg{width:18px;height:18px}
+.it b{display:block;font-weight:500;font-size:14.5px;line-height:1.2;letter-spacing:-.01em}
+.it small{display:block;font-size:11.5px;line-height:1.35;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it span{min-width:0}
+.col.pick .it{opacity:.55}
+.col.pick .it.on{opacity:1;transform:translateX(-22px);box-shadow:0 14px 30px -14px rgba(90,60,0,.35)}
+.col .it:last-child{opacity:.6}
+.agent{position:absolute;left:0;top:0;width:70px;height:70px;z-index:4;transition:transform 1s var(--spring);pointer-events:none}
+.agent svg.ch{width:100%;height:100%}
+.agent .ptr{position:absolute;width:26px;height:26px;right:-18px;top:6px}
+.agent.left .ptr{right:auto;left:-16px;transform:scaleX(-1)}
+
+/* card 2: grouped list, an item dragged from one group to the other */
+.tray{position:absolute;left:24.2%;width:51.8%;top:2.9%;bottom:2.6%;border-radius:22px;background:rgba(255,242,240,.93);padding:14px 10px;color:#111}
+.tray h5{margin:6px 8px 6px;font-size:14px;font-weight:500;color:#7b7b7b;letter-spacing:-.01em}
+.tray h5 + .grp{margin-bottom:10px}
+.row2{position:relative;display:flex;align-items:center;gap:13px;height:53px;padding:0 8px;border-radius:12px;transition:background .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
+.row2 .tile{flex:none;width:40px;height:40px;border-radius:10px;background:#f3eaea;display:grid;place-items:center}
+.row2 .tile svg{width:22px;height:22px}
+.row2 b{display:block;font-weight:500;font-size:15px;line-height:1.2;letter-spacing:-.015em}
+.row2 small{display:block;font-size:12.5px;color:#7b7b7b;margin-top:2px}
+.row2 .grip{margin-left:auto;opacity:0;color:#999;font-size:15px;letter-spacing:-2px;transition:opacity .2s}
+.row2.held{background:rgba(0,0,0,.055)}
+.row2.lift{background:#fff;box-shadow:0 16px 34px -16px rgba(120,20,20,.35);z-index:3}
+.row2.held .grip,.row2.lift .grip{opacity:1}
+
+/* card 3: phone chat */
+.hand{position:absolute;left:28.6%;width:42.6%;top:12.4%;bottom:-8%;border-radius:48px;background:rgba(255,255,255,.3);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);padding:9px 9px 0}
+.hand .in{height:100%;background:#fff;border-radius:40px 40px 0 0;padding:16px 12px 0;color:#111;overflow:hidden}
+.hd{display:flex;justify-content:space-between;align-items:flex-start}
+.hb{width:30px;height:30px;border-radius:50%;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.1);display:grid;place-items:center}
+.hb svg{width:15px;height:15px}
+.hn{display:flex;flex-direction:column;align-items:center;margin-top:-4px}
+.hn svg.ch{width:44px;height:44px}
+.hn span{margin-top:-5px;font-size:11.5px;font-weight:700;background:#fff;padding:2px 8px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.msgs{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.bub{max-width:78%;padding:8px 11px;border-radius:14px;font-size:11.5px;line-height:1.33;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .3s var(--ease),transform .55s var(--out)}
+.bub.in{opacity:1;transform:none}
+.bub.l{background:#efefef;align-self:flex-start;transform-origin:0 100%}
+.bub.r{background:#3d6cf5;color:#fff;align-self:flex-end;transform-origin:100% 100%}
+.bub.k{letter-spacing:.2em;font-weight:600}
+.dots3{align-self:flex-start;background:#efefef;border-radius:14px;padding:9px 11px;gap:3px;display:none}
+.dots3.in{display:flex}
+.dots3 i{width:5px;height:5px;border-radius:50%;background:#9b9b9b;animation:dt 1s infinite}
+.dots3 i:nth-child(2){animation-delay:.15s}.dots3 i:nth-child(3){animation-delay:.3s}
+@keyframes dt{0%,60%,100%{opacity:.35;transform:none}30%{opacity:1;transform:translateY(-2px)}}
+.att{align-self:flex-start;display:flex;align-items:center;gap:8px;padding:7px 10px 7px 7px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px #ececec;font-size:11px;opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .55s var(--out)}
+.att.in{opacity:1;transform:none}
+.att i{width:24px;height:24px;border-radius:6px;background:#e0344d;display:grid;place-items:center}
+.att b{display:block;font-weight:600}
+.att small{display:block;color:#888;font-size:10px}
+
+/* card 4: a channel panel */
+.chan{position:absolute;left:0;width:73%;top:17.5%;bottom:0;border-radius:0 30px 0 0;background:rgba(253,240,252,.94);padding:22px 30px 0 15%;color:#111}
+.chan header{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.chan header b{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.chan header .ic{margin-left:auto;display:flex;gap:14px;color:#222}
+.chan header svg{width:18px;height:18px}
+.post{display:grid;grid-template-columns:30px 1fr;gap:10px;margin-bottom:14px}
+.post .av{width:30px;height:30px;border-radius:7px;background:#fff;display:grid;place-items:center;overflow:hidden}
+.post .av svg{width:30px;height:30px}
+.post b{font-size:15px;font-weight:700;letter-spacing:-.015em}
+.post .tg{font-size:10.5px;font-weight:600;color:#666;background:#ececec;padding:1px 5px;border-radius:4px;margin-left:6px;letter-spacing:.02em}
+.post time{font-size:11px;color:#9a9a9a;margin-left:6px}
+.post p{margin:2px 0 0;font-size:14.5px;line-height:1.3}
+.embed{margin:4px 0 0 40px;width:62%;height:120px;border-radius:12px;background:#e8e6ea;overflow:hidden;position:relative}
+.embed img{position:absolute;left:8%;top:12px;width:84%;border-radius:8px 8px 0 0;box-shadow:0 0 0 1px rgba(0,0,0,.05)}
+
+/* ── Edge cases: carousel ── */
+#cases{padding-top:200px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.two h2{font-size:clamp(32px,3.2vw,40px);line-height:1.2;letter-spacing:-.03em}
+.two p{margin:0;max-width:340px;font-size:clamp(19px,1.9vw,24px);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
+.explore{display:flex;align-items:center;justify-content:space-between;margin:70px 16px 26px}
+.explore span{font-size:20px;color:var(--text);letter-spacing:-.02em}
+.nav2{display:flex;gap:9px}
+.arw{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--page);display:grid;place-items:center;cursor:pointer;transition:opacity .2s,background .15s}
+.arw:hover:not(:disabled){background:var(--surface)}
+.arw:disabled{opacity:.45;cursor:default}
+.arw svg{width:18px;height:18px}
+.rail{display:flex;gap:16px;transition:transform .75s var(--out);touch-action:pan-y}
+.sl{flex:0 0 min(670px,100%);transition:opacity .55s var(--ease)}
+.sl:not(.on){opacity:.3}
+.sl:not(.on) .card{cursor:pointer}
+.sl h3{margin:32px 24px 14px;font-weight:400;font-size:24px;line-height:1.3;letter-spacing:-.025em;color:var(--ink)}
+.sl p{margin:0 24px;font-size:18px;line-height:1.55;color:var(--text)}
+.sl .shot{position:absolute;right:6%;top:9%;width:33%;border-radius:18px;overflow:hidden;box-shadow:0 20px 40px -18px rgba(0,0,0,.35);background:#fff}
+.sl .shot img{width:100%;aspect-ratio:9/12.4;object-fit:cover;object-position:top}
+.mini{position:absolute;left:7%;top:6%;bottom:-6%;width:50%;background:#fff;border-radius:22px 22px 0 0;padding:14px 16px 0;color:#111;box-shadow:0 18px 40px -22px rgba(0,0,0,.3);overflow:hidden}
+.mini .hn{margin-bottom:6px}
+.mini .hn svg.ch{width:38px;height:38px}
+.mini .bub{opacity:1;transform:none;font-size:11.5px}
+.mini .meta{font-size:9.5px;color:#9a9a9a;text-align:center;margin:6px 0 2px}
+.mini .pill{align-self:flex-start;margin-top:2px;font-size:11px;font-weight:500;color:#34449A;background:#eceffb;border-radius:999px;padding:5px 10px}
+.mini .comp{position:absolute;left:12px;right:12px;bottom:12px;height:32px;border-radius:999px;box-shadow:0 0 0 1px #e8e8e8;display:flex;align-items:center;padding:0 6px 0 12px;font-size:11px;color:#9a9a9a}
+.mini .comp i{margin-left:auto;width:22px;height:22px;border-radius:50%;background:#111}
+
+/* ── Rules ── */
+#rules{padding-top:200px}
+.shield{width:36px;height:40px;margin:0 auto 26px;display:block}
+#rules .lede{color:var(--text);font-size:20px;max-width:560px;margin-top:22px}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:765px;margin:66px auto 0;text-align:left}
+.k3{background:var(--panel);border-radius:22px;padding:22px 20px 26px;min-height:270px}
+.k3 svg{width:20px;height:20px;color:var(--ink)}
+.k3 h4{margin:16px 0 8px;font-size:16px;font-weight:500;color:var(--ink);letter-spacing:-.015em}
+.k3 p{margin:0;font-size:13.5px;line-height:1.5;color:var(--text)}
+
+/* ── A day: the scrubber ── */
+#day{padding-top:220px}
+#day .lede{font-size:20px;max-width:760px}
+.stage{position:relative;max-width:848px;height:420px;margin:0 auto}
+.char{position:absolute;bottom:92px;width:0;transition:left .8s var(--spring)}
+.char svg{position:absolute;bottom:0;left:-54px;width:108px;height:108px}
+.say{position:absolute;bottom:220px;width:280px;padding:19px 22px;border-radius:22px;background:var(--bubble);color:var(--ink);font-size:15px;line-height:1.53;text-align:left;transition:left .8s var(--spring),opacity .22s var(--ease)}
+.say .re{position:absolute;right:20px;bottom:-12px;width:26px;height:26px;border-radius:50%;background:var(--page);display:grid;place-items:center;font-size:12px;box-shadow:0 0 0 3px var(--page)}
+.say.swap{opacity:0}
+.time{position:absolute;bottom:52px;transform:translateX(-50%);height:34px;display:flex;align-items:center;gap:6px;padding:0 8px;border-radius:10px;background:var(--brand);color:#161616;font-size:15px;font-weight:500;white-space:nowrap;transition:left .8s var(--spring);z-index:2;cursor:grab;touch-action:none}
+.time::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:24px;background:var(--brand);transform:translateX(-50%)}
+.time button{border:0;background:none;padding:0;width:18px;height:24px;display:grid;place-items:center;cursor:pointer}
+.time button:disabled{opacity:.3;cursor:default}
+.time svg{width:14px;height:14px}
+.track{position:absolute;left:0;right:0;bottom:16px;height:26px;cursor:grab;touch-action:none}
+.ticks{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.ticks i{width:1.5px;height:13px;border-radius:1px;background:#cdcdcd}
+.ticks i.d{width:16px;height:16px;border-radius:50%;background:#b8b8b8}
+.dayc{text-align:center;margin-top:44px;min-height:140px}
+.dayc .wh{font-size:14px;color:var(--grey2)}
+.dayc h3{margin:18px 0 12px;font-weight:500;font-size:clamp(28px,2.7vw,38px);line-height:1.15;letter-spacing:-.03em;color:var(--ink)}
+.dayc p{margin:0 auto;max-width:520px;font-size:14.5px;line-height:1.6;color:var(--grey2)}
+.dayc > *{transition:opacity .22s var(--ease),transform .4s var(--out)}
+.dayc.swap > *{opacity:0;transform:translateY(5px)}
+
+/* ── Surfaces ── */
+#surfaces{padding-top:200px}
+#surfaces .lede{font-size:16px;line-height:1.5;color:var(--text);max-width:500px;margin-top:24px;letter-spacing:-.01em}
+.note{margin:26px 0 0;font-size:12.5px;color:var(--grey)}
+.tabs{display:flex;justify-content:center;gap:6px;margin-top:40px}
+.tab{height:38px;padding:0 18px;white-space:nowrap;border:0;border-radius:999px;background:transparent;font-size:15px;font-weight:400;color:var(--ink);cursor:pointer;transition:background .2s,box-shadow .2s}
+.tab[aria-selected="true"]{background:var(--surface);box-shadow:0 0 0 1px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.06)}
+.dev{position:relative;height:480px;margin-top:66px;display:grid;justify-items:center}
+.dev > .fr{grid-area:1/1;transition:opacity .4s var(--ease),transform .6s var(--out)}
+.dev > .fr.off{opacity:0;transform:translateY(16px);pointer-events:none}
+.lt{width:342px;height:440px;border-radius:44px 44px 0 0;background:#fff;box-shadow:0 0 0 1px #e7e7e7;overflow:hidden;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent);color:#111}
+.lt .sb{display:flex;justify-content:space-between;align-items:center;padding:20px 28px 6px 42px;font-size:16px;font-weight:600}
+.lt .sb span{display:flex;gap:6px}
+.lt img{width:100%}
+.win{width:min(640px,100%);height:440px;border-radius:34px 34px 0 0;padding:12px 12px 0;background:#fff;box-shadow:0 0 0 1px #e7e7e7;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.win img{border-radius:22px 22px 0 0;box-shadow:0 0 0 1px #eee}
+.fc{padding:14px 26px 0;text-align:left}
+.fc .brand{display:flex;align-items:center;gap:8px;color:var(--indigo);font-weight:600;font-size:15px}
+.fc small{display:block;font-size:11.5px;font-weight:600;color:#333;margin-top:16px}
+.fc .num{font-size:30px;font-weight:700;letter-spacing:-.01em;margin-top:2px}
+.fc .ids{display:flex;gap:7px;margin-top:6px}
+.fc .ids span{width:42px;height:50px;border:2px solid #111;border-radius:9px;display:grid;place-items:center;font-size:24px;font-weight:700}
+.fc .fam{font-size:13.5px;color:#555;margin-top:8px;padding-bottom:12px;border-bottom:1px solid #eee}
+.fc ol{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:10px;font-size:14.5px}
+.fc li{display:flex;align-items:center;gap:12px}
+.fc li b{width:28px;height:28px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:13px}
+.buddy{position:absolute;width:108px;height:108px;top:-26px;transition:left .7s var(--spring),top .7s var(--spring)}
+.capt{text-align:center;min-height:86px;margin-top:6px}
+.capt h4{margin:0 0 8px;font-size:18px;font-weight:500;color:var(--ink);letter-spacing:-.015em}
+.capt p{margin:0 auto;max-width:370px;font-size:15px;line-height:1.55;color:var(--text)}
+
+/* ── Scope card ── */
+#scope{padding-top:180px}
+.scope{max-width:768px;margin:0 auto;border-radius:40px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--hair);text-align:center;padding:48px clamp(20px,8vw,110px) 50px}
+.scope .rg{width:56px;height:56px;margin:0 auto 22px;border-radius:50%;background:radial-gradient(circle,transparent 0 30%,#b9bfd5 31%)}
+.scope h2{font-size:clamp(30px,3vw,38px);line-height:1.2}
+.scope p{margin:22px 0 30px;font-size:17px;line-height:1.46;color:var(--text)}
+
+/* ── Close ── */
+#close{padding-top:230px;text-align:center}
+#close h2{font-size:clamp(40px,4.6vw,64px)}
+.cast{position:relative;height:200px;margin-top:40px;clip-path:inset(-600px -100vw 0 -100vw)}
+.cast svg.ch{position:absolute;bottom:-38px;width:178px;height:178px;will-change:transform}
+footer{border-top:1px solid var(--line)}
+.ft{display:grid;grid-template-columns:1fr 240px 240px 170px;padding:34px 28px 56px}
+.ft .mark{width:32px;height:32px}
+.ft h6{margin:0 0 20px;font-size:13.5px;font-weight:400;color:var(--grey)}
+.ft ul{list-style:none;margin:0;padding:0;display:grid;gap:15px;font-size:14px;color:var(--ink)}
+.ft a{text-decoration:none}.ft a:hover{text-decoration:underline}
+.legal{display:flex;justify-content:space-between;align-items:center;padding:0 28px 22px;font-size:13px;color:var(--ink)}
+.legal .soc{display:flex;gap:18px;align-items:center}
+.legal .soc svg{width:17px;height:17px}
+
+/* ── Characters: felt, lit from the top left ── */
+svg.ch{display:block;overflow:visible}
+.ch .eyes{transform-box:fill-box;transform-origin:center;animation:blink 5.3s infinite;animation-delay:var(--bd,0s)}
+.ch .look{transform:translate(var(--lx,0px),var(--ly,0px));transition:transform .25s var(--ease)}
+.bob{animation:bob 3.6s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-7px) rotate(2deg)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}94.5%{transform:scaleY(.08)}}
+
+
+/* ── The shared check ── */
+#check{padding-top:200px}
+#check .tabs{margin-top:40px}
+.tri{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-top:40px;text-align:left;align-items:stretch}
+.card.qcard{aspect-ratio:auto;min-height:420px}
+.qin{position:absolute;left:22%;right:9%;top:9%;bottom:-2%;background:#fff;border-radius:34px 34px 0 0;padding:22px 24px 0;color:#131316;box-shadow:0 20px 50px -30px rgba(80,60,0,.35)}
+.qtop{display:flex;justify-content:space-between;font-size:13px;color:#6b6b73}
+.qtop span:first-child{font-weight:600;color:#131316}
+.qbar{height:4px;border-radius:2px;background:#f0f0f3;margin:12px 0 20px;overflow:hidden}
+.qbar i{display:block;height:100%;width:25%;background:#131316;border-radius:2px;transition:width .5s var(--out)}
+.qask{transition:opacity .2s var(--ease),transform .35s var(--out)}
+.qask.swap{opacity:0;transform:translateX(12px)}
+.qpic{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:#fef6d6}
+.qpic svg{width:28px;height:28px}
+.qask p{margin:14px 0 18px;font-size:22px;line-height:1.25;font-weight:500;letter-spacing:-.02em}
+.qyn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yn{height:48px;border-radius:14px;border:1px solid #d3d3da;background:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s,transform .15s}
+.yn:hover{background:#f5f5f7}.yn:active{transform:scale(.98)}
+.qsofar{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.qsofar li{font-size:12px;padding:4px 9px;border-radius:999px;background:#f3f3f5;color:#33333a}
+.qdone .qask{display:none}
+.qdone .qbar i{width:100%}
+.outs{display:grid;gap:14px;align-content:start}
+.out{background:var(--panel);border-radius:28px;padding:20px 22px}
+.out small{display:block;font-size:13px;color:var(--grey2);margin-bottom:12px}
+.res{background:#fff;border-radius:18px;padding:16px 18px;color:#131316;transition:background .4s var(--ease)}
+.chipu{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:#f3f3f5;color:#6b6b73}
+.res b{display:block;margin:10px 0 6px;font-size:22px;line-height:1.2;font-weight:600;letter-spacing:-.02em}
+.res ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14px}
+.res li{display:flex;justify-content:space-between;gap:10px}
+.res li em{font-style:normal;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.res.red{background:var(--tri-pink-soft);color:var(--tri-pink-ink)}.res.red .chipu{background:#fff;color:var(--tri-pink)}
+.res.amber{background:var(--tri-yellow-soft);color:var(--tri-yellow-ink)}.res.amber .chipu{background:#fff;color:#6b4e00}
+.res.green{background:var(--tri-green-soft);color:var(--tri-green-ink)}.res.green .chipu{background:#fff;color:var(--tri-green)}
+.f{background:var(--tri-yellow-soft);color:#6b4e00}.x{background:var(--tri-green-soft);color:var(--tri-green)}.d{background:#fff;color:var(--tri-pink)}
+.said{display:flex;gap:12px;align-items:flex-start;background:#1c1c1f;color:#fff;border-radius:18px;padding:16px 18px}
+.said p{margin:0;font-size:15px;line-height:1.45}
+.ring3{flex:none;width:28px;height:28px;border-radius:50%;background:#34449A;box-shadow:inset 0 0 0 8px #34449A,inset 0 0 0 14px #fff}
+#qreset{justify-self:start}
+.chipu i,.k3 .imn i{width:12px;height:12px;display:inline-block}
+.imn{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.imn span{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
+.steps{list-style:none;margin:6px 0 30px;padding:0;display:grid;gap:10px;text-align:left}
+.steps li{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;background:var(--surface);border-radius:16px;padding:12px 14px;font-size:14.5px;line-height:1.4;color:var(--text)}
+.steps li b{width:28px;height:28px;border-radius:50%;background:var(--brand);color:#161616;display:grid;place-items:center;font-size:13px}
+.steps li a{font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap}
+@media (max-width:900px){.tri{grid-template-columns:1fr}.steps li{grid-template-columns:28px 1fr}.steps li a{grid-column:2}}
+@media (max-width:600px){.qin{left:6%;right:6%}.card.qcard{min-height:440px;aspect-ratio:auto}.qcard .agent{display:none}}
+
+[data-rv]{opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .9s var(--out);transition-delay:calc(var(--i,0) * 150ms)}
+[data-rv].in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .top{grid-template-columns:1fr auto;padding:0 16px}
+  .top nav,.bar nav{display:none}
+  .bar{grid-template-columns:1fr auto}
+  .row,.row.r{grid-template-columns:1fr;gap:24px}
+  .row .txt,.row.r .txt{order:0;padding:0 8px;max-width:520px}
+  .row p{max-width:none}
+  .two{grid-template-columns:1fr}
+  .cards3{grid-template-columns:1fr;max-width:420px}
+  .k3{min-height:0}
+  .ft{grid-template-columns:1fr 1fr;gap:34px}
+  .ft > :first-child{grid-column:1/-1}
+  .legal{flex-direction:column;gap:12px;align-items:flex-start}
+}
+@media (max-width:600px){
+  .film{border-radius:32px;aspect-ratio:4/5}
+  .film .phone{width:52%;margin-bottom:-24%}
+  .film .flat{width:92%;margin-bottom:-2%}
+  .film .actor{width:24%}
+  .card{border-radius:34px;aspect-ratio:4/3.4}
+  .col{left:12%;width:76%}
+  .tray{left:6%;width:88%}
+  .hand{left:14%;width:72%}
+  .chan{width:100%;padding-left:6%;border-radius:30px 30px 0 0}
+  .embed{display:none}
+  .sl .shot{width:40%;right:4%}
+  .mini{width:58%;left:4%}
+  .sl h3{margin-inline:8px}.sl p{margin-inline:8px;font-size:16px}
+  .stage{width:calc(100% - 130px);height:380px}
+  .char svg{width:84px;height:84px;left:-42px}
+  .say{width:220px;bottom:190px;font-size:14px;padding:14px 16px}
+  .lt{width:300px}
+  .win{height:auto;-webkit-mask-image:none;mask-image:none;border-radius:24px;padding-bottom:12px}
+  .win img{border-radius:14px}
+  .dev{height:auto;min-height:300px}
+  .buddy{width:80px;height:80px}
+  .tab{padding:0 12px;font-size:14px}
+  .cast svg.ch{width:104px;height:104px;bottom:-22px}
+  .cast{height:140px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  [data-rv]{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="felt" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="2.1" numOctaves="2" seed="4" result="w"/>
+    <feDisplacementMap in="SourceGraphic" in2="w" scale="5.5" xChannelSelector="R" yChannelSelector="G" result="s"/>
+    <feTurbulence type="fractalNoise" baseFrequency="1.5" numOctaves="3" seed="11" result="f"/>
+    <feColorMatrix in="f" type="matrix" values=".33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1" result="fg"/>
+    <feComposite in="fg" in2="s" operator="in" result="fi"/>
+    <feBlend in="fi" in2="s" mode="soft-light"/>
+  </filter>
+  <radialGradient id="shade" cx="30%" cy="24%" r="85%"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient>
+  <radialGradient id="shine" cx="34%" cy="26%" r="36%"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gy" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ffe45a"/><stop offset=".6" stop-color="#f6c416"/><stop offset="1" stop-color="#dc9a00"/></radialGradient>
+  <radialGradient id="gb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#6fd0ff"/><stop offset=".6" stop-color="#2394f2"/><stop offset="1" stop-color="#0e58c8"/></radialGradient>
+  <radialGradient id="gm" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ff8cf0"/><stop offset=".6" stop-color="#e02fcc"/><stop offset="1" stop-color="#9c0c96"/></radialGradient>
+  <radialGradient id="gl" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#eeff7e"/><stop offset=".6" stop-color="#b4ec1c"/><stop offset="1" stop-color="#6fae00"/></radialGradient>
+  <!-- Sunita, the ASHA -->
+  <symbol id="sunita" viewBox="0 0 120 120"><g filter="url(#felt)">
+    <path id="p-sun" fill="url(#gy)" d="M60 12C72 12 106 70 106 89C106 105 88 110 60 110C32 110 14 105 14 89C14 70 48 12 60 12Z"/>
+    <path fill="url(#shade)" d="M60 12C72 12 106 70 106 89C106 105 88 110 60 110C32 110 14 105 14 89C14 70 48 12 60 12Z"/>
+    <path fill="url(#shine)" d="M60 12C72 12 106 70 106 89C106 105 88 110 60 110C32 110 14 105 14 89C14 70 48 12 60 12Z"/></g>
+    <g class="eyes"><g class="look"><ellipse cx="47" cy="66" rx="5.4" ry="7" fill="#111"/><ellipse cx="73" cy="66" rx="5.4" ry="7" fill="#111"/><circle cx="48.8" cy="63.6" r="1.7" fill="#fff"/><circle cx="74.8" cy="63.6" r="1.7" fill="#fff"/></g></g>
+    <path d="M41 83Q60 100 79 83" stroke="#141414" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <rect x="51.5" y="92" width="17" height="13" rx="2.6" fill="#fff" stroke="#141414" stroke-width="2"/><rect x="55" y="96.2" width="10" height="2.2" rx="1.1" fill="#34449A"/><rect x="55" y="100" width="6.5" height="1.8" rx=".9" fill="#a9b0cf"/>
+  </symbol>
+  <!-- Dr. Meena -->
+  <symbol id="meena" viewBox="0 0 120 120"><g filter="url(#felt)">
+    <path fill="url(#gb)" d="M60 14C86 12 107 34 106 60C107 88 86 108 60 106C32 108 12 88 14 60C12 33 34 16 60 14Z"/>
+    <path fill="url(#shade)" d="M60 14C86 12 107 34 106 60C107 88 86 108 60 106C32 108 12 88 14 60C12 33 34 16 60 14Z"/>
+    <path fill="url(#shine)" d="M60 14C86 12 107 34 106 60C107 88 86 108 60 106C32 108 12 88 14 60C12 33 34 16 60 14Z"/></g>
+    <g class="eyes"><g class="look"><circle cx="47" cy="54" r="4.8" fill="#111"/><circle cx="73" cy="54" r="4.8" fill="#111"/></g></g>
+    <g fill="none" stroke="#111" stroke-width="3.2"><circle cx="47" cy="54" r="11.5"/><circle cx="73" cy="54" r="11.5"/><path d="M58.5 54h3"/></g>
+    <path d="M36 77Q40 97 60 97Q80 97 84 77" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round"/>
+    <circle cx="60" cy="99" r="5.4" fill="#dcdfe7" stroke="#141414" stroke-width="2.2"/>
+  </symbol>
+  <!-- Pooja -->
+  <symbol id="pooja" viewBox="0 0 120 120"><g filter="url(#felt)">
+    <path fill="url(#gm)" d="M60 107C38 92 12 76 12 49C12 32 25 20 40 20C49 20 56 25 60 32C64 25 71 20 80 20C95 20 108 32 108 49C108 76 82 92 60 107Z"/>
+    <path fill="url(#shade)" d="M60 107C38 92 12 76 12 49C12 32 25 20 40 20C49 20 56 25 60 32C64 25 71 20 80 20C95 20 108 32 108 49C108 76 82 92 60 107Z"/>
+    <path fill="url(#shine)" d="M60 107C38 92 12 76 12 49C12 32 25 20 40 20C49 20 56 25 60 32C64 25 71 20 80 20C95 20 108 32 108 49C108 76 82 92 60 107Z"/></g>
+    <g class="eyes"><g class="look"><ellipse cx="45" cy="53" rx="5.2" ry="6.6" fill="#111"/><ellipse cx="75" cy="53" rx="5.2" ry="6.6" fill="#111"/><circle cx="46.6" cy="50.8" r="1.6" fill="#fff"/><circle cx="76.6" cy="50.8" r="1.6" fill="#fff"/></g></g>
+    <ellipse cx="36" cy="66" rx="6.5" ry="3.6" fill="#ffa6dd" opacity=".75"/><ellipse cx="84" cy="66" rx="6.5" ry="3.6" fill="#ffa6dd" opacity=".75"/>
+    <path d="M51 69Q60 76 69 69" fill="none" stroke="#111" stroke-width="2.6" stroke-linecap="round"/>
+  </symbol>
+  <!-- Arjun, 3 -->
+  <symbol id="arjun" viewBox="0 0 120 120"><g filter="url(#felt)">
+    <path fill="url(#gl)" d="M60 24C86 22 106 42 105 67C106 92 86 108 60 106C34 108 14 92 15 67C14 42 34 26 60 24Z"/>
+    <path fill="url(#shade)" d="M60 24C86 22 106 42 105 67C106 92 86 108 60 106C34 108 14 92 15 67C14 42 34 26 60 24Z"/>
+    <path fill="url(#shine)" d="M60 24C86 22 106 42 105 67C106 92 86 108 60 106C34 108 14 92 15 67C14 42 34 26 60 24Z"/></g>
+    <circle cx="43" cy="44" r="14" fill="#fff"/><circle cx="77" cy="44" r="14" fill="#fff"/>
+    <g class="eyes"><g class="look"><circle cx="44" cy="45" r="6.8" fill="#111"/><circle cx="78" cy="45" r="6.8" fill="#111"/></g></g>
+    <path d="M52 76Q60 82 68 76" fill="none" stroke="#111" stroke-width="2.6" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="ptr" viewBox="0 0 24 24"><path d="M21 3 3 10.5l7.4 2.1L12.5 20z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<header class="top">
+  <a class="logo" href="./index.html"><span class="mark" aria-hidden="true"></span>Lokesh Bhatia</a>
+  <nav aria-label="Site"><a href="./index.html">Work</a><a href="./about.html">About</a><a href="./getbaq.html">Getbaq</a><a href="./resume.html">Resume</a></nav>
+  <a class="btn btn-dark" href="mailto:hi.lokeshux@gmail.com">Get in touch</a>
+</header>
+
+<main>
+<section class="hero wrap" id="top">
+  <svg class="ch who bob" viewBox="0 0 120 120" role="img" aria-label="Sunita, the ASHA worker"><use href="#sunita"/></svg>
+  <h1 data-rv>Introducing Arogya Line</h1>
+  <p class="sub" data-rv style="--i:1">One care record for families, ASHA workers and the village clinic—reachable from any phone.</p>
+  <div class="cta" data-rv style="--i:2">
+    <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Try the prototype</a>
+    <a class="btn btn-line" href="https://github.com/LKB00/arogya-line" target="_blank" rel="noopener">View the repository</a>
+  </div>
+
+  <div class="film" id="film" data-rv style="--i:3" aria-label="A short film of the three surfaces">
+    <div class="scene s1 on"><div class="set"><div class="phone"><video muted playsinline preload="auto" src="./assets/arogya2/v-al-today.mp4" poster="./assets/arogya2/v-al-today.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="left:14%"><use href="#sunita"/></svg></div>
+    <div class="scene s2"><div class="set"><div class="phone"><video muted playsinline preload="none" src="./assets/arogya2/v-al-book.mp4" poster="./assets/arogya2/v-al-book.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:14%;--bd:1s"><use href="#arjun"/></svg></div>
+    <div class="scene s3"><div class="set"><div class="flat"><video muted playsinline preload="none" src="./assets/arogya2/v-al-phc.mp4" poster="./assets/arogya2/v-al-phc.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:5%;bottom:40%;--bd:.5s"><use href="#meena"/></svg></div>
+    <div class="scene s4"><div class="set"><div class="phone"><video muted playsinline preload="none" src="./assets/arogya2/v-al-voice.mp4" poster="./assets/arogya2/v-al-voice.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="left:15%;--bd:2s"><use href="#pooja"/></svg></div>
+    <div class="ctl"><button class="chip" id="play" type="button" aria-pressed="false"><span>Pause</span><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx="1" fill="currentColor"/><rect x="6.1" y="1" width="2.4" height="8" rx="1" fill="currentColor"/></svg></button><button class="chip round" type="button" aria-label="Sound is off; these recordings have no sound" disabled><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg></button></div>
+  </div>
+</section>
+
+<div class="barslot" aria-hidden="true"></div>
+<div class="bar" id="bar">
+  <a class="me" href="#top"><span class="mark" aria-hidden="true"></span>Arogya Line</a>
+  <nav aria-label="On this page"><a href="#how">How it works</a><a href="#check">Try a check</a><a href="#cases">Edge cases</a><a href="#scope">Prototype</a></nav>
+  <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Try the prototype</a>
+</div>
+
+<section class="wrap center" id="how">
+  <h2 data-rv>One record, three people</h2>
+  <p class="lede" data-rv style="--i:1">In villages near Jaipur, a concern starts at home, is screened by the ASHA worker, and is seen at the primary health centre. Arogya Line keeps it one record the whole way, so nobody starts again.</p>
+</section>
+
+<div class="wrap rows">
+  <div class="row" data-rv>
+    <div class="card y" id="k1" aria-hidden="true">
+      <div class="col" id="col"><div class="list">
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#34449A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg></span><span><b>Today</b><small>4 people need you today</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#c7801a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.4"/><path d="M3 20c.6-3.6 3-5.6 6-5.6s5.4 2 6 5.6M16 4.2a3.4 3.4 0 0 1 0 6.6M21 20c-.4-2.8-1.8-4.6-3.8-5.3"/></svg></span><span><b>Families</b><small>Kukas and Naila, by village</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#b72e5e" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4H5a1 1 0 0 0-1 1v4a5 5 0 0 0 10 0V5a1 1 0 0 0-1-1h-1"/><path d="M9 14v1a5 5 0 0 0 10 0v-2"/><circle cx="19" cy="11" r="2"/></svg></span><span><b>Check someone</b><small>One question at a time</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#138a4b" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l8-4 8 4v14M9 21v-5h6v5M12 8v4M10 10h4"/></svg></span><span><b>Book a visit</b><small>PHC Achrol, Dr. Meena</small></span></div>
+      </div></div>
+      <div class="agent" id="a1"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><svg class="ptr" viewBox="0 0 24 24"><use href="#ptr"/></svg></div>
+    </div>
+    <div class="txt"><h3>Her day starts with who needs her</h3><p>The ASHA’s phone is a work queue, not a dashboard. It starts from the families she already knows, ranks people by what is due, and puts the next action in words.</p></div>
+  </div>
+
+  <div class="row r" data-rv>
+    <div class="card c" id="k2" aria-hidden="true">
+      <div class="tray" id="tray">
+        <h5>Sent to PHC Achrol</h5>
+        <div class="grp" id="gSent">
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#c92a5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2.4 17.6A2 2 0 0 0 4.1 20.6h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span><b>Khushi, 5</b><small>Today, 9–10 am · Urgent</small></span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#34449A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span><b>Kamla, 62</b><small>Booked on the voice line</small></span></div>
+        </div>
+        <h5>Waiting to send</h5>
+        <div class="grp" id="gWait">
+          <div class="row2" id="mv"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#b07a00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg></span><span><b>Arjun, 3</b><small id="mvs">Offline · 1 visit to send</small></span><span class="grip">⋮⋮</span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span><b>Rekha, 24</b><small>Follow-up call · Naila</small></span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#138a4b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7M6 10v10h12V10"/></svg></span><span><b>Mohanlal, 45</b><small>Follow up at home · Kukas</small></span></div>
+        </div>
+      </div>
+      <div class="agent" id="a2" style="transform:translate(540px,190px)"><svg class="ch" viewBox="0 0 120 120" style="--bd:1.3s"><use href="#meena"/></svg><svg class="ptr" viewBox="0 0 24 24"><use href="#ptr"/></svg></div>
+    </div>
+    <div class="txt"><h3>Booked offline, sent when the signal returns</h3><p>Saving never waits for signal. The visit sits on her phone as “1 visit to send”, and joins the doctor’s list the moment it syncs. Offline is a calm state, not an error.</p></div>
+  </div>
+
+  <div class="row" data-rv>
+    <div class="card b" id="k3" aria-hidden="true">
+      <div class="hand"><div class="in">
+        <div class="hd"><span class="hb"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round"><path d="M5 9h14M5 15h9"/></svg></span><span class="hn"><svg class="ch" viewBox="0 0 120 120" style="--bd:.7s"><use href="#pooja"/></svg><span>Arogya Line</span></span><span class="hb"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span></div>
+        <div class="msgs" id="call">
+          <div class="bub l">Welcome to Arogya Line. Please enter your 4-digit family ID.</div>
+          <div class="bub r k">4471</div>
+          <div class="bub l">Thank you. We have found your family card.</div>
+          <div class="bub r k">3</div>
+          <div class="dots3"><i></i><i></i><i></i></div>
+          <div class="bub l">Dr. Meena has a message for Arjun.</div>
+          <div class="att"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg></i><span><b>Advice for Arjun</b><small>From Dr. Meena</small></span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="txt"><h3>The family hears it on any phone</h3><p>No app to install. They call the number on their card, key in the family ID, and hear the doctor’s advice by name. 9 repeats. 0 reaches a person.</p></div>
+  </div>
+
+  <div class="row r" data-rv>
+    <div class="card m" id="k4" aria-hidden="true">
+      <div class="chan">
+        <header><b>PHC Achrol · Tomorrow</b><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></header>
+        <div class="post"><span class="av"><svg viewBox="0 0 120 120"><use href="#sunita"/></svg></span><div><b>Sunita</b><span class="tg">ASHA</span><time>09:31</time><p>Booked Arjun, 3 for Thu, 10–11 am. Fever more than 2 days, vomiting. No fast breathing.</p></div></div>
+        <div class="post"><span class="av" style="background:#e9f3ff"><svg viewBox="0 0 120 120"><use href="#meena"/></svg></span><div><b>Dr. Meena</b><span class="tg">PHC</span><time>Just now</time><p>Seen. I’ll start from what you found, and leave advice the family can hear on the line.</p></div></div>
+        <div class="embed"><img src="./assets/arogya3/phc-today.webp" alt="" loading="lazy"></div>
+      </div>
+    </div>
+    <div class="txt"><h3>The doctor starts from what was found</h3><p>The day in time order. Urgency marks a row but never reorders it, and the consult opens on what the ASHA found, not a blank page.</p><a class="btn btn-line" href="https://arogya-line.vercel.app/phc" target="_blank" rel="noopener">Open the dashboard</a></div>
+  </div>
+</div>
+
+<section class="wrap center" id="check">
+  <h2 data-rv>Four questions, one answer</h2>
+  <p class="lede" data-rv style="--i:1">The ASHA app and the voice line ask the same questions and reach the same result, because they share one piece of logic. Answer them yourself.</p>
+  <div class="tabs" role="tablist" aria-label="Who is being checked" id="ctabs"><button class="tab" role="tab" aria-selected="true" data-set="child">Child</button><button class="tab" role="tab" aria-selected="false" data-set="adult">Adult</button><button class="tab" role="tab" aria-selected="false" data-set="pregnant">Pregnant</button></div>
+  <div class="tri" data-rv>
+    <div class="qcard card y" id="qcard">
+      <div class="qin">
+        <div class="qtop"><span id="qwho">Checking Arjun, 3</span><span id="qn">1 of 4</span></div>
+        <div class="qbar"><i id="qbar"></i></div>
+        <div class="qask" id="qask">
+          <span class="qpic" id="qpic"></span>
+          <p id="qtext">Fever for more than 2 days?</p>
+          <div class="qyn"><button type="button" class="yn" data-a="yes">Yes</button><button type="button" class="yn" data-a="no">No</button></div>
+        </div>
+        <ul class="qsofar" id="qsofar" aria-label="Answers so far"></ul>
+      </div>
+      <div class="agent" style="transform:translate(34px,250px)"><svg class="ch bob" viewBox="0 0 120 120"><use id="qch" href="#arjun"/></svg></div>
+    </div>
+    <div class="outs">
+      <div class="out app" id="oApp">
+        <small>In the ASHA app</small>
+        <div class="res" id="res"><span class="chipu" id="rchip">Waiting for answers</span><b id="rhead">Answer the four questions</b><ul id="rlist"></ul></div>
+      </div>
+      <div class="out line" id="oLine">
+        <small>On the voice line</small>
+        <div class="said"><span class="ring3" aria-hidden="true"></span><p id="rsaid">“Press 1 for yes, 2 for no, or 9 to hear the question again.”</p></div>
+      </div>
+      <button type="button" class="btn btn-line btn-sm" id="qreset">Start again</button>
+    </div>
+  </div>
+  <p class="note">Illustrative questions, not clinical guidance. A danger sign answered yes stops the check at once. Two other yeses mean a visit.</p>
+</section>
+
+<section class="wrap" id="cases">
+  <div class="two"><h2 data-rv>Built for the unhappy path</h2><p data-rv style="--i:1">Healthcare rarely follows the happy path. Explore what the record does when it could have guessed.</p></div>
+  <div class="explore"><span>Explore</span><div class="nav2"><button class="arw" id="prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="arw" id="next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+  <div class="rail" id="rail">
+    <article class="sl on">
+      <div class="card y">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><span>Sunita</span></div><div class="msgs" style="margin-top:6px"><div class="meta">Today 9:24 AM</div><div class="bub r">Book Arjun at PHC Achrol, 10–11 am.</div><div class="bub l">10–11 am was just taken. Nothing was booked.</div><div class="pill">Choose another time</div></div><div class="comp">Message Sunita<i></i></div></div>
+        <div class="shot"><img src="./assets/arogya3/booking-picked.webp" alt="Booking a PHC visit for Arjun" loading="lazy"></div>
+      </div>
+      <h3>Never guess a slot</h3><p>A booking syncing from another phone can take the slot she picked. One rule on every surface: nothing is booked, and she is told so.</p>
+    </article>
+    <article class="sl">
+      <div class="card p">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><span>Today</span></div><div class="msgs" style="margin-top:6px"><div class="meta">Kukas · Card 3120</div><div class="bub l"><b>Khushi, 5</b> · PHC visit today, 9–10 am</div><div class="pill" style="color:#b8184f;background:#fde3ec">+1 other person in this family</div><div class="bub l"><b>Mahendra, 34</b> · Nothing open</div></div></div>
+        <div class="shot"><img src="./assets/arogya3/family.webp" alt="Pooja's family: who is unwell?" loading="lazy"></div>
+      </div>
+      <h3>A family is context. A person is the work.</h3><p>One row per family hid the second person who needed her. Now there is one row per person, and it says when someone else in the house needs her too.</p>
+    </article>
+    <article class="sl">
+      <div class="card c">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><span>Sync</span></div><div class="msgs" style="margin-top:6px"><div class="meta">No signal</div><div class="bub l">Offline · 1 visit to send</div><div class="bub l">Sending 1 visit…</div><div class="bub l">Sent to PHC Achrol.</div></div></div>
+        <div class="shot"><img src="./assets/arogya3/booked-offline.webp" alt="Visit booked while offline" loading="lazy"></div>
+      </div>
+      <h3>Offline, made explicit</h3><p>Without signal she couldn’t tell if her work was saved. “Waiting to send” now sits on the record itself, and clears quietly once it is sent.</p>
+    </article>
+    <article class="sl">
+      <div class="card v">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#arjun"/></svg><span>Arjun, 3</span></div><div class="msgs" style="margin-top:6px"><div class="meta">Opened from a link</div><div class="bub r">No answers yet</div><div class="bub l">An unfinished check is never a result. Back to question 1 of 4.</div><div class="pill">Fever for more than 2 days?</div></div></div>
+        <div class="shot"><img src="./assets/arogya3/q4.webp" alt="One screening question at a time" loading="lazy"></div>
+      </div>
+      <h3>Never guess a clinical state</h3><p>Opened with no answers, the result once said home care: false reassurance about a sick child. It now goes back to the next unanswered question.</p>
+    </article>
+    <article class="sl">
+      <div class="card l">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#pooja"/></svg><span>Voice line</span></div><div class="msgs" style="margin-top:6px"><div class="meta">On call · 4471</div><div class="bub r k">0</div><div class="bub l">Connecting you to a person. Nothing has been booked.</div><div class="pill">Who is this call about? Press 1 for Arjun.</div></div></div>
+        <div class="shot"><img src="./assets/arogya3/v-id.webp" alt="The voice line, written as live captions" loading="lazy"></div>
+      </div>
+      <h3>Never guess a patient</h3><p>Pressing 0 once booked a visit for a patient nobody had chosen. Now 0 reaches a person, the person is chosen by name, and every booking is read back first.</p>
+    </article>
+  </div>
+</section>
+
+<section class="wrap center" id="rules">
+  <svg class="shield" viewBox="0 0 36 40" aria-hidden="true"><defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b7cf7"/><stop offset="1" stop-color="#2a45c9"/></linearGradient></defs><path d="M18 1.5 33 6.6v12.2c0 10-6.6 16.6-15 19.7C9.6 35.4 3 28.8 3 18.8V6.6z" fill="url(#sg)"/><path d="M18 1.5 33 6.6v12.2c0 10-6.6 16.6-15 19.7z" fill="#fff" opacity=".13"/></svg>
+  <h2 data-rv>On the family’s side,<br>decided by people</h2>
+  <p class="lede" data-rv style="--i:1">The system screens and suggests. A person decides, and a person is always one key away.</p>
+  <div class="cta" data-rv style="--i:2;margin-top:34px"><a class="btn btn-line btn-sm" href="https://github.com/LKB00/arogya-line/blob/master/docs/design-rationale.md" target="_blank" rel="noopener">Read the design rationale</a></div>
+  <div class="cards3">
+    <div class="k3" data-rv><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg><h4>Her chart, her colours</h4><p>Pink, yellow and green from the IMNCI chart the ASHA trained on. Each one always travels with a word or an icon.</p><div class="imn"><span style="background:var(--tri-pink-soft);color:var(--tri-pink)">▲ Urgent</span><span style="background:var(--tri-yellow-soft);color:#6b4e00">● Needs a visit</span><span style="background:var(--tri-green-soft);color:var(--tri-green)">✓ Home care</span></div></div>
+    <div class="k3" data-rv style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg><h4>A shared decision</h4><p>Every result shows what was found and what was ruled out. It is a screening result, never a diagnosis, and a person decides what happens next.</p></div>
+    <div class="k3" data-rv style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M10 17h4"/></svg><h4>0 reaches a person</h4><p>From anywhere in the call, without booking anything. No name is read aloud on a card number alone.</p></div>
+  </div>
+</section>
+
+<section class="wrap center" id="day">
+  <h2 data-rv>A day in Arjun’s care</h2>
+  <p class="lede" data-rv style="--i:1">From a fever at home to a follow-up call, find out how one record moves between three people.</p>
+  <div class="stage" id="stage">
+    <div class="say" id="say"><span id="sayT"></span><span class="re" aria-hidden="true">💗</span></div>
+    <div class="char" id="char"><svg class="ch bob" viewBox="0 0 120 120"><use id="charU" href="#pooja"/></svg></div>
+    <div class="time" id="time"><button type="button" id="tp" aria-label="Earlier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><span id="tt"></span><button type="button" id="tn" aria-label="Later"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="track" id="track" role="slider" tabindex="0" aria-label="Moment in Arjun's care" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="ticks" id="ticks"></div></div>
+  </div>
+  <div class="dayc" id="dayc" aria-live="polite"><div class="wh" id="dw"></div><h3 id="dh"></h3><p id="db"></p></div>
+</section>
+
+<section class="wrap center" id="surfaces">
+  <h2 data-rv>Right where each person is</h2>
+  <p class="lede" data-rv style="--i:1">A smartphone for the ASHA, any phone for the family, a desktop at the clinic. Each one reads and writes the same record, so work carries on wherever it is picked up.</p>
+  <p class="note" data-rv style="--i:2">On a real call the line speaks Hindi. Here, English captions stand in for it.</p>
+  <div class="tabs" role="tablist" aria-label="Surfaces"><button class="tab" role="tab" aria-selected="true">ASHA app</button><button class="tab" role="tab" aria-selected="false">Voice line</button><button class="tab" role="tab" aria-selected="false">PHC dashboard</button></div>
+  <div class="dev" id="dev">
+    <div class="fr lt"><div class="sb">9:30<span><svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="9" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#111"/></svg><svg width="24" height="12" viewBox="0 0 24 12"><rect x=".5" y=".5" width="20" height="11" rx="3" fill="none" stroke="#111"/><rect x="2" y="2" width="16" height="8" rx="1.6" fill="#111"/><rect x="21.5" y="4" width="1.8" height="4" rx=".9" fill="#111"/></svg></span></div><img src="./assets/arogya3/today.webp" alt="The ASHA's Today list" loading="lazy"></div>
+    <div class="fr lt off"><div class="sb">9:30<span><svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="9" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#111"/></svg></span></div>
+      <div class="fc"><div class="brand"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l8-4 8 4v14M9 21v-5h6v5M12 8v4M10 10h4"/></svg>Arogya Line</div><small>Call free, from any phone</small><div class="num">1800 4471 108</div><small>Your family ID</small><div class="ids"><span>4</span><span>4</span><span>7</span><span>1</span></div><div class="fam">Pooja · Kukas · PHC Achrol</div><ol><li><b>1</b>Someone is unwell</li><li><b>2</b>Book a visit</li><li><b>3</b>Hear your advice</li><li><b>0</b>Talk to a person</li></ol></div></div>
+    <div class="fr win off"><img src="./assets/arogya3/phc-today.webp" alt="The PHC dashboard: today's bookings in time order" loading="lazy"></div>
+    <svg class="ch buddy bob" id="buddy" viewBox="0 0 120 120" aria-hidden="true"><use href="#sunita"/></svg>
+  </div>
+  <div class="capt" id="capt"><h4>ASHA app</h4><p>Who needs her next and what to do, ranked by what is due. It works the same with no signal.</p></div>
+</section>
+
+<section class="wrap" id="scope">
+  <div class="scope" data-rv>
+    <div class="rg" aria-hidden="true"></div>
+    <h2>How to try Arogya Line</h2>
+    <p>The prototype runs in any browser, with no sign-in and no real data. The guided walkthrough follows one patient, Arjun, through all three surfaces.</p>
+    <ol class="steps">
+      <li><b>1</b><span>In the ASHA app, with no signal, check Arjun in family 4471 and book a visit. It waits as “1 visit to send”.</span><a href="https://arogya-line.vercel.app/asha" target="_blank" rel="noopener">ASHA app ↗</a></li>
+      <li><b>2</b><span>Turn the signal on and watch the booking sync.</span><a href="https://arogya-line.vercel.app/asha" target="_blank" rel="noopener">Sync ↗</a></li>
+      <li><b>3</b><span>On the PHC dashboard, open tomorrow, mark Arjun arrived, and leave advice and a follow-up.</span><a href="https://arogya-line.vercel.app/phc" target="_blank" rel="noopener">Dashboard ↗</a></li>
+      <li><b>4</b><span>Call the voice line, enter 4471, press 3, and hear Dr. Meena’s message for Arjun.</span><a href="https://arogya-line.vercel.app/voice" target="_blank" rel="noopener">Voice line ↗</a></li>
+    </ol>
+    <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Start the walkthrough</a>
+  </div>
+</section>
+
+<section class="wrap" id="close">
+  <h2 data-rv>Take it from here, Arogya</h2>
+  <div class="cta" data-rv style="--i:1"><a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Try the prototype</a><a class="btn btn-line" href="https://github.com/LKB00/arogya-line" target="_blank" rel="noopener">View the repository</a></div>
+  <div class="cast" id="cast" aria-hidden="true">
+    <svg class="ch" viewBox="0 0 120 120" data-x="-560" data-y="-260" data-at="-150" style="--bd:.4s"><use href="#meena"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="-120" data-y="220" data-at="-50" style="--bd:2s"><use href="#sunita"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="120" data-y="220" data-at="50" style="--bd:3.1s"><use href="#pooja"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="560" data-y="-260" data-at="150" style="--bd:1s"><use href="#arjun"/></svg>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="ft">
+    <div><a href="./index.html" aria-label="Lokesh Bhatia, home"><span class="mark" style="display:block"></span></a></div>
+    <div><h6>Case studies</h6><ul><li><a href="./getbaq.html">Getbaq</a></li><li><a href="./index.html">Rupeezy</a></li><li><a href="./arogya-line.html">Arogya Line</a></li></ul></div>
+    <div><h6>Arogya Line</h6><ul><li><a href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Prototype</a></li><li><a href="https://github.com/LKB00/arogya-line" target="_blank" rel="noopener">Repository</a></li><li><a href="https://github.com/LKB00/arogya-line/blob/master/SPEC.md" target="_blank" rel="noopener">Spec</a></li><li><a href="https://github.com/LKB00/arogya-line/blob/master/docs/design-rationale.md" target="_blank" rel="noopener">Design rationale</a></li></ul></div>
+    <div><h6>Lokesh</h6><ul><li><a href="./about.html">About</a></li><li><a href="./resume.html">Resume</a></li><li><a href="mailto:hi.lokeshux@gmail.com">Email</a></li></ul></div>
+  </div>
+  <div class="legal"><span>Lokesh Bhatia © 2026 · Designed and built with an AI that argued back</span><span class="soc"><a href="https://github.com/LKB00" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a><a href="mailto:hi.lokeshux@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a><span>English · India</span></span></div>
+</footer>
+<script>
+(() => {
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const io = (el, fn, o) => { const x = new IntersectionObserver(es => es.forEach(e => fn(e, x)), o); x.observe(el); return x; };
+
+/* Reveal: 10 px lift, 150 ms stagger */
+$$('[data-rv]').forEach(el => io(el, (e, x) => { if (e.isIntersecting) { el.classList.add('in'); x.disconnect(); } }, { rootMargin: '0px 0px -8% 0px' }));
+
+/* Eyes follow the pointer */
+let px = innerWidth / 2, py = innerHeight / 3, rq = 0;
+addEventListener('pointermove', e => { px = e.clientX; py = e.clientY; rq ||= requestAnimationFrame(look); }, { passive: true });
+function look() { rq = 0; $$('svg.ch').forEach(s => { const b = s.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return; const dx = px - b.left - b.width / 2, dy = py - b.top - b.height / 2, d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 280) * 3.2; s.style.setProperty('--lx', (dx / d * k).toFixed(2) + 'px'); s.style.setProperty('--ly', (dy / d * k).toFixed(2) + 'px'); }); }
+
+/* Loops that run only while their card is on screen */
+function loop(el, fn) { let on = false, g = 0; io(el, e => { if (e.isIntersecting && !on) { on = true; const my = ++g; fn(() => on && my === g); } else if (!e.isIntersecting) on = false; }, { threshold: .35 }); }
+
+/* ── Film ── */
+const film = $('#film'), scenes = $$('.scene', film), playBtn = $('#play');
+let si = 0, paused = RM, filmVis = false, tmr = 0;
+function playScene(i) {
+  scenes.forEach((s, j) => { s.classList.toggle('on', j === i); const v = $('video', s); if (j === i) { v.preload = 'auto'; v.currentTime = 0; if (!paused && filmVis) v.play().catch(() => {}); } else v.pause(); });
+  const nx = $('video', scenes[(i + 1) % scenes.length]); if (nx) nx.preload = 'auto';
+}
+function tick() { clearTimeout(tmr); if (paused || !filmVis) return; tmr = setTimeout(() => { si = (si + 1) % scenes.length; playScene(si); tick(); }, 6500); }
+io(film, e => { filmVis = e.isIntersecting; const v = $('video', scenes[si]); if (filmVis && !paused) { v.play().catch(() => {}); tick(); } else { v.pause(); clearTimeout(tmr); } }, { threshold: .25 });
+playBtn.addEventListener('click', () => { paused = !paused; playBtn.setAttribute('aria-pressed', paused); $('span', playBtn).textContent = paused ? 'Play' : 'Pause'; const v = $('video', scenes[si]); if (paused) { v.pause(); clearTimeout(tmr); } else { v.play().catch(() => {}); tick(); } });
+if (RM) $('span', playBtn).textContent = 'Play';
+playScene(0);
+
+/* ── Card 1: Sunita picks each item up in turn ── */
+loop($('#k1'), async alive => {
+  const card = $('#k1'), col = $('#col'), a = $('#a1'), items = $$('.it', col).slice(0, 3);
+  while (alive()) {
+    for (const it of items) {
+      if (!alive()) return;
+      const c = card.getBoundingClientRect(), b = it.getBoundingClientRect();
+      a.style.transform = `translate(${b.left - c.left - 86}px, ${b.top - c.top - 8}px)`;
+      await wait(RM ? 0 : 800);
+      col.classList.add('pick'); items.forEach(x => x.classList.toggle('on', x === it));
+      await wait(1900);
+    }
+    col.classList.remove('pick'); items.forEach(x => x.classList.remove('on'));
+    await wait(900);
+  }
+});
+
+/* ── Card 2: Dr. Meena drags Arjun's visit from Waiting to Sent ── */
+loop($('#k2'), async alive => {
+  const card = $('#k2'), a = $('#a2'), mv = $('#mv'), sub = $('#mvs'), gW = $('#gWait'), gS = $('#gSent');
+  const put = (el, host, first) => { const r0 = el.getBoundingClientRect(); first ? host.prepend(el) : host.append(el); const r1 = el.getBoundingClientRect(); if (!RM) el.animate([{ transform: `translate(${r0.left - r1.left}px, ${r0.top - r1.top}px)` }, { transform: 'none' }], { duration: 750, easing: 'cubic-bezier(.32,.72,0,1)' }); };
+  const aim = el => { const c = card.getBoundingClientRect(), b = el.getBoundingClientRect(); a.style.transform = `translate(${b.right - c.left + 6}px, ${b.top - c.top + b.height / 2 - 30}px)`; };
+  while (alive()) {
+    put(mv, gW, true); mv.classList.remove('lift', 'held'); sub.textContent = 'Offline · 1 visit to send';
+    await wait(900); if (!alive()) return;
+    aim(mv); await wait(900); mv.classList.add('held'); await wait(700); if (!alive()) return;
+    mv.classList.remove('held'); mv.classList.add('lift'); sub.textContent = 'Sending 1 visit…';
+    await wait(500); put(mv, gS, false); await wait(60); aim(mv);
+    await wait(900); mv.classList.remove('lift'); sub.textContent = 'Thu 1 Oct, 10–11 am · On the PHC list';
+    await wait(2600);
+  }
+});
+
+/* ── Card 3: the call, line by line ── */
+loop($('#k3'), async alive => {
+  const kids = [...$('#call').children];
+  while (alive()) {
+    kids.forEach(k => k.classList.remove('in')); await wait(600);
+    for (const k of kids) { if (!alive()) return; k.classList.add('in'); if (k.classList.contains('dots3')) { await wait(1400); k.classList.remove('in'); continue; } await wait(k.classList.contains('r') ? 850 : 1400); }
+    await wait(3000);
+  }
+});
+
+
+/* ── The shared check: questions, labels and rules from src/app/triage.ts ── */
+const I = {
+  temp: '<path d="M10 13.5V5a2 2 0 1 1 4 0v8.5a4 4 0 1 1-4 0z"/><path d="M10 9h4"/>',
+  sick: '<circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M9 16c1.5-1.5 4.5-1.5 6 0"/>',
+  bottle: '<path d="M10 3h4M9 6h6M9 6v2a3 3 0 0 0-1 2.2V19a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-8.8A3 3 0 0 0 15 8V6"/><path d="M8 13h8"/>',
+  lungs: '<path d="M12 4v7M12 11l-3 2M12 11l3 2"/><path d="M8.5 7C6 7 4 11 4 16c0 2 1 3 2.5 3 2 0 3.5-1.5 3.5-4V9"/><path d="M15.5 7C18 7 20 11 20 16c0 2-1 3-2.5 3-2 0-3.5-1.5-3.5-4V9"/>',
+  bone: '<path d="M7 4a2 2 0 0 0-2 3.4L16.6 19A2 2 0 1 0 20 17a2 2 0 1 0-3-3L10 7a2 2 0 1 0-3-3z"/>',
+  bed: '<path d="M3 7v11M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="2"/>',
+  heart: '<path d="M19.5 12.6 12 20l-7.5-7.4A5 5 0 1 1 12 6a5 5 0 1 1 7.5 6.6z"/><path d="M5 12h3l2-3 3 6 2-3h4"/>',
+  eye: '<circle cx="12" cy="12" r="2.5"/><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/>',
+  hand: '<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 5.5v-1a1.5 1.5 0 0 1 3 0V12M14 5.5a1.5 1.5 0 0 1 3 0V12M17 7.5a1.5 1.5 0 0 1 3 0V16a6 6 0 0 1-6 6h-2a7 7 0 0 1-5.6-2.8L4 16a1.6 1.6 0 0 1 2.4-2L8 15.5"/>',
+  baby: '<circle cx="12" cy="7" r="3.5"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/><path d="M10.5 6.5h.01M13.5 6.5h.01"/>',
+  drop: '<path d="M12 3.5s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>'
+};
+const SHORT = { child: ['Fever', 'Vomiting', 'Feeding', 'Breathing'], adult: ['Fever', 'Pain', 'Weakness', 'Chest'], pregnant: ['Headache', 'Swelling', 'Baby moving', 'Bleeding'] };
+const SETS = {
+  child: { who: 'Arjun, 3', name: 'Arjun', ch: 'arjun', q: [
+    ['Fever for more than 2 days?', 'Fever more than 2 days', 1, 0, 'temp'],
+    ['Vomiting more than 3 times today?', 'Vomiting more than 3 times today', 1, 0, 'sick'],
+    ['Drinking or feeding less than usual?', 'Drinking or feeding less than usual', 1, 0, 'bottle'],
+    ['Breathing fast, or difficulty breathing?', 'Breathing fast or difficulty breathing', 0, 1, 'lungs', 'No fast breathing']] },
+  adult: { who: 'Kamla, 62', name: 'Kamla', ch: 'meena', q: [
+    ['Fever for more than 2 days?', 'Fever more than 2 days', 1, 0, 'temp'],
+    ['Body pain or headache for more than 2 days?', 'Body pain for more than 2 days', 1, 0, 'bone'],
+    ['Too weak to do daily work?', 'Too weak for daily work', 1, 0, 'bed'],
+    ['Chest pain, or breathless while resting?', 'Chest pain or breathlessness at rest', 0, 1, 'heart', 'No chest pain or breathlessness']] },
+  pregnant: { who: 'Rekha, 24', name: 'Rekha', ch: 'pooja', q: [
+    ['Severe headache or blurred vision?', 'Severe headache or blurred vision', 1, 0, 'eye'],
+    ['Swelling of the face or hands?', 'Swelling of face or hands', 1, 0, 'hand'],
+    ['Is the baby moving less than usual?', 'Baby moving less than usual', 1, 0, 'baby'],
+    ['Any bleeding, or waters broken before 9 months?', 'Bleeding or waters broken early', 0, 1, 'drop', 'No bleeding']] }
+};
+const HEAD = { green: n => `No urgent signs found for ${n}`, amber: n => `${n} should see the doctor`, red: n => `${n} needs the PHC now` };
+const SAID = { green: n => `Thank you. From your answers, there are no urgent signs for ${n}.`, amber: n => `Thank you. From your answers, ${n} should see the doctor.`, red: n => `From your answers, ${n} needs the PHC now.` };
+const HOMECARE = { child: 'At home, give small sips of fluid often, keep the child cool and lightly dressed, and keep feeding as usual.', adult: 'At home, rest, drink plenty of water, and take paracetamol if the fever is high.', pregnant: 'At home, rest lying on your left side, drink plenty of water, and keep taking your iron tablets.' };
+const CHIP = { green: '✓ Home care', amber: '● Needs a visit', red: '▲ Urgent' };
+let set = 'child', ans = [];
+const qcard = $('#qcard'), ctabs = $$('#ctabs .tab');
+function evaluate() {
+  const S = SETS[set], found = [], ruled = []; let amber = 0;
+  for (let i = 0; i < ans.length; i++) { const [, label, w, danger, , nf] = S.q[i];
+    if (ans[i] === 'yes') { found.push(label); if (danger) return { u: 'red', found, ruled }; amber += w; }
+    else if (danger && nf) ruled.push(nf); }
+  return { u: amber >= 2 ? 'amber' : 'green', found, ruled };
+}
+function renderCheck(anim) {
+  const S = SETS[set], done = ans.length === 4 || (ans.length && ans[ans.length - 1] === 'yes' && S.q[ans.length - 1][3]);
+  $('#qwho').textContent = 'Checking ' + S.who; $('#qch').setAttribute('href', '#' + S.ch);
+  $('#qn').textContent = done ? 'Done' : `${ans.length + 1} of 4`; $('#qbar').style.width = (done ? 100 : (ans.length + 1) * 25) + '%';
+  qcard.classList.toggle('qdone', !!done);
+  $('#qsofar').innerHTML = ans.map((a, i) => `<li>${SHORT[set][i]} · ${a === 'yes' ? 'Yes' : 'No'}</li>`).join('');
+  if (!done) { const q = S.q[ans.length]; const put = () => { $('#qtext').textContent = q[0]; $('#qpic').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#131316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[q[4]]}</svg>`; $('#qask').classList.remove('swap'); };
+    if (anim && !RM) { $('#qask').classList.add('swap'); setTimeout(put, 180); } else put(); }
+  const res = $('#res');
+  res.className = 'res';
+  if (!done) { $('#rchip').textContent = 'An unfinished check is never a result'; $('#rhead').textContent = `${4 - ans.length} question${ans.length === 3 ? '' : 's'} to go`; $('#rlist').innerHTML = ''; $('#rsaid').textContent = ans.length ? '“Press 1 for yes, 2 for no, or 9 to hear the question again.”' : `“${S.q[0][0]} Press 1 for yes, 2 for no.”`; return; }
+  const r = evaluate(); res.classList.add(r.u);
+  $('#rchip').textContent = CHIP[r.u]; $('#rhead').textContent = HEAD[r.u](S.name);
+  $('#rlist').innerHTML = r.found.map((f, i) => `<li>${f}<em class="${r.u === 'red' && i === r.found.length - 1 ? 'd' : 'f'}">${r.u === 'red' && i === r.found.length - 1 ? 'Danger sign' : 'Found'}</em></li>`).join('') + r.ruled.map(f => `<li>${f}<em class="x">Ruled out</em></li>`).join('') || '<li>You did not report any of the signs asked about.</li>';
+  $('#rsaid').textContent = '“' + SAID[r.u](S.name) + (r.u === 'amber' ? ' Press 1 to book a visit.”' : r.u === 'red' ? ' Connecting you to the health worker on duty now.”' : ' ' + HOMECARE[set] + '”');
+}
+$$('.yn').forEach(b => b.addEventListener('click', () => { if (ans.length < 4) { ans.push(b.dataset.a); renderCheck(true); } }));
+$('#qreset').onclick = () => { ans = []; renderCheck(true); };
+ctabs.forEach((b, i) => { b.onclick = () => { set = b.dataset.set; ans = []; ctabs.forEach(x => { x.setAttribute('aria-selected', x === b); x.tabIndex = x === b ? 0 : -1; }); renderCheck(true); }; });
+renderCheck(false);
+
+/* ── Carousel ── */
+const rail = $('#rail'), sls = $$('.sl', rail); let ci = 0;
+function go(n) {
+  ci = Math.max(0, Math.min(sls.length - 1, n));
+  const o = s => s.offsetLeft - sls[0].offsetLeft, last = sls[sls.length - 1];
+  const x = Math.min(o(sls[ci]), Math.max(0, o(last) + last.offsetWidth - rail.clientWidth));
+  rail.style.transform = `translateX(${-x}px)`;
+  sls.forEach((s, i) => { s.classList.toggle('on', i === ci); s.inert = i !== ci; });
+  $('#prev').disabled = ci === 0; $('#next').disabled = ci === sls.length - 1;
+}
+$('#prev').onclick = () => go(ci - 1); $('#next').onclick = () => go(ci + 1);
+sls.forEach((s, i) => s.addEventListener('click', () => i !== ci && go(i)));
+let sx = null; rail.addEventListener('pointerdown', e => sx = e.clientX);
+addEventListener('pointerup', e => { if (sx == null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) go(ci + (d < 0 ? 1 : -1)); });
+addEventListener('resize', () => go(ci)); go(0);
+
+/* ── A day in Arjun's care ── */
+const D = [
+  { t: 'Day 1 · 9:00 AM', w: 'At home in Kukas', c: 'pooja', s: 'Arjun has had a fever since Tuesday. Can you come and see him?', h: 'A concern, said once', b: 'Pooja tells Sunita, the ASHA, what is wrong. It is written down once, on the record, and never asked again.' },
+  { t: 'Day 1 · 9:30 AM', w: 'Kukas, no signal', c: 'sunita', s: 'From your answers, Arjun should see the doctor. I’ve booked tomorrow, 10–11 am.', h: 'Screened and booked, without signal', b: 'Four questions, one at a time. The visit is saved on her phone and joins the PHC list the moment it syncs.' },
+  { t: 'Day 2 · 10:15 AM', w: 'PHC Achrol', c: 'meena', s: 'Sunita found fever for more than 2 days and vomiting. I’ll start from there.', h: 'Consulted, not reconstructed', b: 'Dr. Meena opens the sheet on what Sunita found, not a blank page, and writes advice in words the family will hear.' },
+  { t: 'Day 2 · 6:30 PM', w: 'Back home', c: 'pooja', s: 'I pressed 3 and heard it: “Dr. Meena has a message for Arjun.”', h: 'Advice, heard on any phone', b: 'Saved once by the doctor, read out on the line by name. 9 repeats it. 0 reaches a person.' },
+  { t: 'Day 5 · 10:00 AM', w: 'Follow-up', c: 'arjun', s: 'Feeling better! Amma told the line when it called back.', h: 'Followed up by a named person', b: 'A call in three days. If it is missed, the doctor decides: call again today, or ask the ASHA to follow up.' }
+];
+const stage = $('#stage'), chr = $('#char'), say = $('#say'), tm = $('#time'), trk = $('#track'), dayc = $('#dayc');
+$('#ticks').innerHTML = Array.from({ length: (D.length - 1) * 8 + 1 }, (_, i) => `<i class="${i % 8 ? '' : 'd'}"></i>`).join('');
+let di = -1;
+const pct = i => i / (D.length - 1) * 100;
+function place(p, now) {
+  [chr, tm, say].forEach(el => el.style.transition = now ? 'none' : '');
+  chr.style.left = p + '%';
+  const W = stage.clientWidth, x = p / 100 * W, tw = tm.offsetWidth, bw = say.offsetWidth, room = (stage.parentElement.clientWidth - W) / 2;
+  tm.style.left = Math.max(tw / 2 - room, Math.min(W - tw / 2 + room, x)) + 'px';
+  let l = x - bw + 40; if (l < -room) l = x - 40; say.style.left = Math.max(-room, Math.min(W - bw + room, l)) + 'px';
+}
+async function setDay(i, now) {
+  i = Math.max(0, Math.min(D.length - 1, i)); const changed = i !== di; di = i; const d = D[i];
+  place(pct(i), now); $('#tt').textContent = d.t; $('#tp').disabled = i === 0; $('#tn').disabled = i === D.length - 1;
+  trk.setAttribute('aria-valuenow', i + 1); trk.setAttribute('aria-valuetext', `${d.t}, ${d.h}`);
+  if (!changed) return;
+  say.classList.add('swap'); dayc.classList.add('swap'); await wait(RM ? 0 : 200); if (di !== i) return;
+  $('#charU').setAttribute('href', '#' + d.c); $('#sayT').textContent = d.s; $('#dw').textContent = d.w; $('#dh').textContent = d.h; $('#db').textContent = d.b;
+  place(pct(i), true); say.classList.remove('swap'); dayc.classList.remove('swap');
+}
+$('#tp').onclick = () => setDay(di - 1); $('#tn').onclick = () => setDay(di + 1);
+trk.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { setDay(di + (e.key === 'ArrowRight' ? 1 : -1)); e.preventDefault(); } });
+let drag = false;
+const fx = x => { const r = trk.getBoundingClientRect(); return Math.max(0, Math.min(1, (x - r.left) / r.width)); };
+const down = e => { if (e.target.closest('button')) return; drag = true; e.currentTarget.setPointerCapture(e.pointerId); mvp(e); };
+const mvp = e => { if (!drag) return; const f = fx(e.clientX); place(f * 100, true); const n = Math.round(f * (D.length - 1)); if (n !== di) setDay(n, true); };
+const up = () => { if (drag) { drag = false; place(pct(di)); } };
+[trk, tm].forEach(el => { el.addEventListener('pointerdown', down); el.addEventListener('pointermove', mvp); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); });
+addEventListener('resize', () => place(pct(di), true));
+setDay(0, true);
+
+/* ── Surfaces ── */
+const tabs = $$('#surfaces .tab'), frs = $$('#dev > .fr'), buddy = $('#buddy');
+const T = [
+  { h: 'ASHA app', p: 'Who needs her next and what to do, ranked by what is due. It works the same with no signal.', c: 'sunita', x: () => -171 - 84 },
+  { h: 'Voice line', p: 'Any phone, even a basic one. The number and the family ID are printed on the family card.', c: 'pooja', x: () => 171 - 30 },
+  { h: 'PHC dashboard', p: 'The day in time order, and three measures: visits booked ahead, trips avoided, and follow-ups answered.', c: 'meena', x: () => Math.min(320, $('#dev').clientWidth / 2) - 70 }
+];
+function bx(i) { const devW = $('#dev').clientWidth, fw = frs[i].offsetWidth || 342, bw = buddy.offsetWidth; const x = T[i].x(); return Math.max(-devW / 2, Math.min(devW / 2 - bw, devW < 560 ? fw / 2 - bw * .75 : x)); }
+function tab(i) {
+  tabs.forEach((b, j) => { b.setAttribute('aria-selected', i === j); b.tabIndex = i === j ? 0 : -1; });
+  frs.forEach((f, j) => f.classList.toggle('off', i !== j));
+  $('use', buddy).setAttribute('href', '#' + T[i].c); buddy.style.left = `calc(50% + ${bx(i)}px)`;
+  $('#capt h4').textContent = T[i].h; $('#capt p').textContent = T[i].p;
+}
+tabs.forEach((b, i) => { b.onclick = () => tab(i); b.onkeydown = e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = (i + (e.key === 'ArrowRight' ? 1 : 2)) % 3; tab(n); tabs[n].focus(); } }; });
+addEventListener('resize', () => tab(tabs.findIndex(b => b.getAttribute('aria-selected') === 'true')));
+tab(0);
+
+/* ── The cast walks in from the sides and lines up on the footer rule ── */
+const cast = $('#cast'), cs = $$('svg.ch', cast);
+function castPos() {
+  const r = cast.getBoundingClientRect(), vh = innerHeight;
+  let p = RM ? 1 : Math.max(0, Math.min(1, (vh - r.top) / (vh * .75)));
+  p = 1 - Math.pow(1 - p, 3);
+  const w = cs[0].getBoundingClientRect().width || 178, sc = Math.min(1, cast.clientWidth / 900);
+  cs.forEach(s => {
+    const at = +s.dataset.at / 100 * w * .8, sx = +s.dataset.x * sc, sy = +s.dataset.y;
+    const x = at + sx * (1 - p), y = sy * (1 - p);
+    s.style.left = `calc(50% - ${w / 2}px)`; s.style.transform = `translate(${x}px, ${y}px)`; s.style.opacity = Math.min(1, p * 1.6);
+  });
+}
+addEventListener('scroll', () => requestAnimationFrame(castPos), { passive: true }); addEventListener('resize', castPos); castPos();
+
+/* ── Section bar: current section ── */
+const links = $$('.bar nav a');
+['how', 'check', 'cases', 'scope'].forEach(id => io(document.getElementById(id), e => { if (e.isIntersecting) links.forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + id)); }, { rootMargin: '-40% 0px -55% 0px' }));
+})();
+</script>
+</body>
+</html>
