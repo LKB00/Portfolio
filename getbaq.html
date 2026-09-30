@@ -1946,6 +1946,17 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 /* the demo on top sits on the homepage card's soft grey, in both themes: it is product UI
    with its own dark ink, so it stays a light surface in dark mode, like the card */
 .gb .gbh-demo,.gb .gb-ex-hero .gb-ex-panel{background:#F2F2F2}
+
+/* the case file and its four parts read as one: each part is bracketed on the file with the
+   tile's name; the cropped parts sit flat on their tiles */
+.gb .rc-cf{position:relative;overflow:visible;border:0;background:none;box-shadow:none}
+.gb .rc-cf .cx-zoom{border-radius:10px;overflow:hidden;border:1px solid var(--rc-line);background:#fff;box-shadow:0 12px 28px rgba(20,20,20,.08)}
+.gb .rc-cf-map{position:absolute;top:1px;bottom:1px;left:calc(100% + 14px);width:96px;margin:0;padding:0;list-style:none;pointer-events:none}
+.gb .rc-cf-map li{position:absolute;left:0;right:0;top:calc(var(--t) + 3px);height:calc(var(--h) - 6px);display:flex;align-items:center;padding-left:12px;border:1px solid var(--rc-line);border-left:0;border-right:0;font:500 11px/1.2 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--rc-cap)}
+.gb .rc-cf-map li:before{content:"";position:absolute;left:0;top:-1px;bottom:-1px;width:6px;border:1px solid var(--rc-cap);opacity:.55;border-left:0;border-radius:0 3px 3px 0}
+.gb .rc-cf-map li{border:0}
+.gb .rc-part-m img{box-shadow:none;border:1px solid var(--rc-line)}
+@media(max-width:760px){.gb .rc-cf{margin:0}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -2186,7 +2197,7 @@ addEventListener("pagereveal",function(e){
 </div></div>
 <div class="cx-cc-arrow" aria-hidden="true">→</div>
 <div class="cx-cc-case"><p class="cx-meta-l">Case</p><p class="cx-tags"><span>Structured</span><span>Persistent</span><span>Actionable</span></p>
-<figure class="rc-cf"><button type="button" class="cx-zoom" data-zoom="./assets/gb-casefile-full.webp" data-alt="The Getbaq case file" aria-label="Enlarge: the Getbaq case file"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The Getbaq case file for Flipkart, &#8377;3,499: the deadline, what I know, the rule and where the case is at" loading="lazy" decoding="async"></button></figure></div>
+<figure class="rc-cf"><button type="button" class="cx-zoom" data-zoom="./assets/gb-casefile-full.webp" data-alt="The Getbaq case file" aria-label="Enlarge: the Getbaq case file"><img src="./assets/gb-casefile-full.webp" width="800" height="1906" alt="The Getbaq case file for Flipkart, &#8377;3,499: the deadline, what I know, the rule and where the case is at" loading="lazy" decoding="async"></button><ol class="rc-cf-map" aria-hidden="true"><li style="--t:10%;--h:21%">Deadline</li><li style="--t:31%;--h:21.8%">Facts</li><li style="--t:52.8%;--h:17%">Rule</li><li style="--t:69.8%;--h:30.2%">Status</li></ol></figure></div>
 </div>
 <div class="cx-w rc-parts"><figure class="rc-part"><div class="rc-part-m"><img src="./assets/gbrc/cf-deadline.webp" width="800" height="399" alt="Flipkart must fix this by 3 Sep 2026, 20 days left" loading="lazy" decoding="async"></div><figcaption><h3>Deadline</h3><p>Calculated by code from the verified rule, with days left.</p></figcaption></figure><figure class="rc-part"><div class="rc-part-m"><img src="./assets/gbrc/cf-facts.webp" width="800" height="415" alt="What I know: Flipkart, &#8377;3,499, 2 Aug 2026, first complaint 4 Aug 2026" loading="lazy" decoding="async"></div><figcaption><h3>Facts</h3><p>What the user confirmed: company, amount, dates.</p></figcaption></figure><figure class="rc-part"><div class="rc-part-m"><img src="./assets/gbrc/cf-rule.webp" width="800" height="323" alt="The rule: the platform must redress the complaint within one month, Consumer Protection (E-Commerce) Rules 2020, Rule 4(4)" loading="lazy" decoding="async"></div><figcaption><h3>Rule</h3><p>The one rule that applies, with its source.</p></figcaption></figure><figure class="rc-part"><div class="rc-part-m"><img src="./assets/gbrc/cf-status.webp" width="800" height="574" alt="Where it's at: told, facts checked, rule found, complaint sent now; their reply and resolved to come" loading="lazy" decoding="async"></div><figcaption><h3>Status</h3><p>Where the case is, and what happens next.</p></figcaption></figure></div>
 </section>
