@@ -2013,7 +2013,9 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb .cx-pf-k{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .gb .cx-pf-k .cx-pf-state{margin:0;display:inline-flex}
 .gb .cx-pf-k .cx-pf-state{margin:-3px 0}
-.gb .cx-pf .gb-term,.gb .cx-pf .gb-evcase{margin-top:auto}
+/* the terminal and the case example start on the same line and fill the same height */
+.gb .cx-pf .gb-term,.gb .cx-pf .gb-evcase{margin-top:20px;flex:1 1 auto;box-sizing:border-box}
+.gb .cx-pf .gb-evcase{display:flex;flex-direction:column;justify-content:center;padding:16px}
 /* proof numbers: figure and description side by side, the description centred on the figure,
    so one line or two sit the same way in both cards */
 .gb .cx-pf .cx-num{flex-direction:row;flex-wrap:nowrap;align-items:center;gap:14px}
