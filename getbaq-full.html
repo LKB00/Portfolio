@@ -1775,6 +1775,12 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 .gb #s1-6 .figrow > div:nth-child(4) .fnum:before{background:var(--sk-yel);opacity:.8;border-radius:40% 60% 50% 50% / 55% 40% 60% 45%;transform:rotate(3deg)}
 .gb #s1-6 .figrow .fnote{margin-top:14px}
 /* /sk:css */
+
+/* case-study rail, the Getbaq design: BACK in mono capitals, then quiet section names, the current one in ink */
+.toc{left:24px;top:112px;gap:6px}
+.toc a{font-size:14.5px;line-height:20px}
+.toc .cx-rail-back{margin-bottom:34px;font:500 11px/20px var(--mono);letter-spacing:.09em;text-transform:uppercase}
+.toc .cx-rail-back:before{content:"\2190";margin-right:8px;font-family:var(--sans)}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1836,7 +1842,7 @@ addEventListener("pagereveal",function(e){
 <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Copied to clipboard</span></div>
 
 <div class="shell gb">
-<nav aria-label="Sections" class="toc">
+<nav aria-label="Sections" class="toc"><a class="cx-rail-back" href="./index.html#work">Back</a>
 <a href="#overview">Overview</a>
 <a href="#problem">The problem</a>
 <a href="#ai-line">Where AI stops</a>
@@ -2923,7 +2929,7 @@ addEventListener("pagereveal",function(e){
   });
 
   // TOC scroll-spy: active link darkens as its section comes into view
-  var tocLinks=[].slice.call(document.querySelectorAll('.toc a'));
+  var tocLinks=[].slice.call(document.querySelectorAll('.toc a:not(.cx-rail-back)'));
   var sections=tocLinks.map(function(a){return document.querySelector(a.getAttribute('href'));});
   if('IntersectionObserver' in window && tocLinks.length){
     var io=new IntersectionObserver(function(entries){
