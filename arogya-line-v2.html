@@ -4,764 +4,801 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Arogya Line v2</title>
-<meta name="description" content="Arogya Line, a care-coordination concept connecting families, ASHA workers and primary health centres. Experiment in a Dots-style layout.">
+<meta name="description" content="Arogya Line, a care-coordination concept for families, ASHA workers and primary health centres, laid out like the ChatGPT Dots page.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Measured from the Dots page at a 1508 px viewport: 964 px column, 670 px cards,
+   80 / 64 / 40 / 24 px headings, 42 px pill buttons, #f8f8f8 page. */
 :root{
-  --page:#f8f8f8; --ink:#0d0d0d; --text:#303030; --text2:#5d5d5d; --text3:#8f8f8f; --muted:#8a8a8a;
-  --panel:#f1f1f1; --panel-line:#e6e6e6; --line:color-mix(in oklab,#0d0d0d 10%,transparent); --line2:color-mix(in oklab,#0d0d0d 16%,transparent);
-  --surface:#fff; --bubble:#eaeaea; --pillbar:rgba(241,241,241,.86);
-  --pink:#e5487a; --pink-bg:#fde3ec; --yel:#c98a00; --yel-bg:#fff3cc; --grn:#138a4b; --grn-bg:#dcf5e6;
+  --page:#f8f8f8; --ink:#0d0d0d; --text:#3d3d3d; --grey:#8a8a8a; --grey2:#5d5d5d; --hair:#e6e6e6;
+  --panel:#f1f1f1; --surface:#fff; --bubble:#ececec; --barbg:rgba(240,240,240,.88);
+  --line:color-mix(in oklab,#0d0d0d 10%,transparent); --line2:color-mix(in oklab,#0d0d0d 16%,transparent);
+  --indigo:#34449A;
   --ease:cubic-bezier(.4,0,.2,1); --out:cubic-bezier(.22,1,.36,1); --spring:cubic-bezier(.32,.72,0,1);
-  --wrap:964px; --gut:16px;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--ink:#fff;--text:#dcdcdc;--text2:#afafaf;--text3:#8f8f8f;--muted:#9a9a9a;--panel:#181818;--panel-line:#262626;--line:color-mix(in oklab,#fff 12%,transparent);--line2:color-mix(in oklab,#fff 20%,transparent);--surface:#1c1c1c;--bubble:#2a2a2a;--pillbar:rgba(28,28,28,.86);color-scheme:dark}}
-:root[data-theme="dark"]{--page:#0d0d0d;--ink:#fff;--text:#dcdcdc;--text2:#afafaf;--text3:#8f8f8f;--muted:#9a9a9a;--panel:#181818;--panel-line:#262626;--line:color-mix(in oklab,#fff 12%,transparent);--line2:color-mix(in oklab,#fff 20%,transparent);--surface:#1c1c1c;--bubble:#2a2a2a;--pillbar:rgba(28,28,28,.86);color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--ink:#fff;--text:#d0d0d0;--grey:#9a9a9a;--grey2:#afafaf;--hair:#262626;--panel:#181818;--surface:#1c1c1c;--bubble:#262626;--barbg:rgba(30,30,30,.88);--line:color-mix(in oklab,#fff 12%,transparent);--line2:color-mix(in oklab,#fff 20%,transparent);color-scheme:dark}}
+:root[data-theme="dark"]{--page:#0d0d0d;--ink:#fff;--text:#d0d0d0;--grey:#9a9a9a;--grey2:#afafaf;--hair:#262626;--panel:#181818;--surface:#1c1c1c;--bubble:#262626;--barbg:rgba(30,30,30,.88);--line:color-mix(in oklab,#fff 12%,transparent);--line2:color-mix(in oklab,#fff 20%,transparent);color-scheme:dark}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:88px}
+html{scroll-padding-top:90px}
 body{margin:0;background:var(--page);color:var(--text);font:400 16px/1.5 Figtree,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;overflow-x:clip}
 img,video{display:block;max-width:100%;height:auto}
 a{color:inherit}
 button{font:inherit;color:inherit}
-.wrap{width:min(var(--wrap),100% - 2*var(--gut));margin-inline:auto}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.wrap{width:min(964px,100% - 32px);margin-inline:auto}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:8px}
 
-/* buttons: 42px pills, as on the reference */
-.btn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 17px;border-radius:999px;font-size:15px;font-weight:500;text-decoration:none;white-space:nowrap;transition:background .15s var(--ease),border-color .15s var(--ease),transform .15s var(--ease);cursor:pointer;border:1px solid transparent}
-.btn-dark{background:var(--ink);color:var(--page)}
-.btn-dark:hover{background:color-mix(in oklab,var(--ink) 82%,var(--page))}
-.btn-line{border-color:var(--line2);background:transparent;color:var(--ink)}
-.btn-line:hover{background:color-mix(in oklab,var(--ink) 4%,transparent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 16px;border-radius:999px;font-size:15px;font-weight:500;letter-spacing:-.01em;text-decoration:none;white-space:nowrap;border:1px solid transparent;cursor:pointer;transition:background .15s var(--ease),transform .15s var(--ease)}
 .btn:active{transform:scale(.98)}
-.btn:focus-visible,.tab:focus-visible,.arrow:focus-visible,.pillbar a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.btn-dark{background:var(--ink);color:var(--page)}
+.btn-dark:hover{background:color-mix(in oklab,var(--ink) 80%,var(--page))}
+.btn-line{border-color:var(--line2);color:var(--ink);background:transparent}
+.btn-line:hover{background:color-mix(in oklab,var(--ink) 4%,transparent)}
+.btn-sm{height:36px;padding:0 14px;font-size:14px}
 
-/* site bar: scrolls away, like the ChatGPT bar */
-.site{display:flex;align-items:center;justify-content:space-between;height:72px;padding:0 28px;max-width:1600px;margin:0 auto}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:19px;color:var(--ink);letter-spacing:-.02em}
-.brand i{width:26px;height:26px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--page);font:600 11px/1 Figtree;font-style:normal;letter-spacing:0}
-.site nav{display:flex;gap:36px;font-size:15px}
-.site nav a{text-decoration:none;color:var(--text)}
-.site nav a:hover{color:var(--ink)}
+/* ── Top bar, as the ChatGPT bar: logo, centred links, dark pill ── */
+.top{height:64px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 34px 0 28px}
+.logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-weight:600;font-size:20px;letter-spacing:-.03em}
+.mark{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle,transparent 0 30%,var(--ink) 31% 100%)}
+.top nav{display:flex;gap:36px;font-size:15px}
+.top nav a{text-decoration:none;color:var(--text)}
+.top nav a:hover{color:var(--ink)}
+.top .btn{justify-self:end}
 
-/* hero */
-.hero{text-align:center;padding:92px 0 0}
-.hero .ch{width:132px;height:132px;margin:0 auto 26px}
-h1{font-weight:500;font-size:clamp(46px,6.2vw,80px);line-height:1.04;letter-spacing:-.03em;color:var(--ink);margin:0}
-.hero .sub{font-size:clamp(22px,2.4vw,34px);line-height:1.28;color:var(--muted);max-width:560px;margin:24px auto 0;letter-spacing:-.02em}
-.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-.reel{margin-top:128px;position:relative;border-radius:48px;overflow:hidden;aspect-ratio:964/560;background:radial-gradient(120% 90% at 18% 10%,#dfe4ff 0%,#b9c3f5 38%,#7f8fe0 72%,#4c5bbd 100%)}
-.reel .stage{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;gap:4%;padding:0 5%}
-.reel .phone{width:21%;margin-bottom:-6%}
-.reel .laptop{width:47%;margin-bottom:6%}
-.reel .ctrl{position:absolute;right:22px;bottom:20px;display:flex;gap:8px}
-.chip{height:32px;padding:0 12px;border-radius:999px;border:0;background:rgba(13,13,13,.42);color:#fff;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer}
-.chip:hover{background:rgba(13,13,13,.6)}
+/* ── Hero ── */
+.hero{text-align:center;padding-top:90px}
+.hero .who{width:125px;height:125px;margin:0 auto 42px;display:block}
+h1{margin:0;font-weight:500;font-size:clamp(46px,6vw,80px);line-height:1;letter-spacing:-.035em;color:var(--ink)}
+.hero .sub{margin:26px auto 0;max-width:540px;font-size:clamp(22px,2.3vw,34px);line-height:1.27;letter-spacing:-.025em;color:var(--grey)}
+.cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:40px}
 
-/* devices */
-.phone{position:relative;border-radius:14% / 6.4%;background:#111;padding:2.6%;box-shadow:0 30px 60px -20px rgba(13,13,40,.45)}
-.phone video,.phone img{width:100%;aspect-ratio:540/1200;object-fit:cover;border-radius:11.5% / 5.2%;background:#fff}
-.laptop .scr{background:#111;border-radius:14px 14px 4px 4px;padding:1.6%;box-shadow:0 30px 60px -24px rgba(13,13,40,.45)}
-.laptop .scr img,.laptop .scr video{width:100%;aspect-ratio:1280/800;object-fit:cover;border-radius:6px;background:#fff}
-.laptop .base{height:10px;margin:0 -6%;background:linear-gradient(#d9dbe2,#aeb2bf);border-radius:0 0 12px 12px}
+/* The film: one scene at a time, crossfading, like the Dots hero video */
+.film{position:relative;margin-top:130px;aspect-ratio:16/9;border-radius:60px;overflow:hidden;background:#1b1f3a;isolation:isolate}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity .9s var(--ease)}
+.scene.on{opacity:1}
+.scene .set{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;transform:scale(1.07);transition:transform 6.5s linear}
+.scene.on .set{transform:scale(1)}
+.s1{background:radial-gradient(70% 90% at 30% 20%,#ffe9c2 0%,#f7b98a 45%,#c9738c 100%)}
+.s2{background:radial-gradient(70% 90% at 70% 20%,#f4ffd0 0%,#bfe86a 45%,#5f9e3a 100%)}
+.s3{background:radial-gradient(80% 100% at 50% 0%,#dff4ff 0%,#7fc8f5 45%,#2d6fc2 100%)}
+.s4{background:radial-gradient(70% 90% at 40% 20%,#ffe0fb 0%,#e86ed8 50%,#7d1f8a 100%)}
+.film .phone{width:26%;margin-bottom:-9%}
+.film .laptop{width:66%;margin-bottom:5%}
+.film .actor{position:absolute;width:13%;bottom:12%}
+.film .mk{position:absolute;left:50%;top:9.5%;transform:translateX(-50%);width:56px;height:56px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.18);z-index:3}
+.film .mk i{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#fff 0 30%,#0d0d0d 31%)}
+.film .ctl{position:absolute;right:30px;bottom:26px;display:flex;gap:10px;z-index:3}
+.chip{height:34px;padding:0 14px;border:0;border-radius:999px;background:rgba(13,13,13,.5);color:#fff;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:8px;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.chip.round{width:34px;padding:0;justify-content:center}
+.chip:hover{background:rgba(13,13,13,.66)}
 
-/* section pill: sticks after the hero */
-.pillbar{position:sticky;top:12px;z-index:50;width:min(722px,100% - 2*var(--gut));margin:28px auto 0;height:56px;padding:0 8px 0 16px;border-radius:999px;background:var(--pillbar);backdrop-filter:saturate(1.4) blur(18px);-webkit-backdrop-filter:saturate(1.4) blur(18px);display:flex;align-items:center;gap:8px}
-.pillbar .me{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;color:var(--ink);text-decoration:none;margin-right:auto;letter-spacing:-.02em}
-.ring{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,transparent 0 31%,var(--ink) 32%)}
-.pillbar nav{display:flex;gap:22px;font-size:15px;margin-right:auto}
-.pillbar nav a{text-decoration:none;color:var(--text2);transition:color .15s var(--ease)}
-.pillbar nav a:hover,.pillbar nav a[aria-current="true"]{color:var(--ink)}
+/* Devices */
+.phone{position:relative;background:#121212;border-radius:15% / 7%;padding:3%;box-shadow:0 40px 80px -30px rgba(10,10,40,.55)}
+.phone video,.phone img{width:100%;aspect-ratio:9/20;object-fit:cover;object-position:top;border-radius:12% / 5.5%;background:#fff}
+.laptop .scr{background:#121212;border-radius:16px 16px 4px 4px;padding:1.5%;box-shadow:0 40px 80px -30px rgba(10,10,40,.55)}
+.laptop .scr video,.laptop .scr img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;border-radius:6px;background:#fff}
+.laptop .base{height:12px;margin:0 -7%;background:linear-gradient(#e3e5ea,#a9adb8);border-radius:0 0 14px 14px}
 
-/* section headings */
-.sec{padding-top:176px}
+/* ── Section bar: sticky, 722 × 56 ── */
+.bar{position:sticky;top:10px;z-index:40;width:min(722px,100% - 32px);height:56px;margin:0 auto;padding:0 7px 0 14px;border-radius:999px;background:var(--barbg);backdrop-filter:saturate(1.6) blur(20px);-webkit-backdrop-filter:saturate(1.6) blur(20px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.bar .me{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.bar .me .mark{width:24px;height:24px}
+.bar nav{display:flex;gap:24px;font-size:15px}
+.bar nav a{text-decoration:none;color:var(--text);transition:color .15s}
+.bar nav a:hover,.bar nav a[aria-current="true"]{color:var(--ink)}
+.bar .btn{justify-self:end}
+.barslot{height:56px;margin-top:240px;margin-bottom:-56px}
+
+/* ── Headings ── */
+h2{margin:0;font-weight:500;font-size:clamp(38px,4.6vw,64px);line-height:1.1;letter-spacing:-.035em;color:var(--ink)}
 .center{text-align:center}
-h2{font-weight:500;font-size:clamp(38px,4.6vw,64px);line-height:1.06;letter-spacing:-.03em;color:var(--ink);margin:0}
-.lede{font-size:clamp(18px,1.6vw,21px);line-height:1.45;color:var(--text2);max-width:640px;margin:18px auto 0}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
-.split h2{font-size:clamp(32px,3vw,40px);line-height:1.15}
-.split .lede{margin:0;font-size:clamp(20px,1.9vw,24px);line-height:1.34;color:var(--text);max-width:340px}
+.lede{margin:24px auto 0;max-width:770px;font-size:clamp(18px,1.7vw,24px);line-height:1.3;letter-spacing:-.02em;color:var(--grey)}
 
-/* feature rows: 670px gradient card + 220px text, alternating */
-.rows{display:grid;gap:32px;margin-top:64px}
-.row{display:grid;grid-template-columns:670fr 294fr;gap:40px;align-items:center}
-.row.flip{grid-template-columns:294fr 670fr}
-.row.flip .card{order:2}
-.row .copy{padding-left:0;max-width:228px}
-.row.flip .copy{justify-self:end;max-width:222px;margin-right:0}
-.row h3{font-weight:400;font-size:24px;line-height:1.3;letter-spacing:-.02em;color:var(--ink);margin:0 0 14px}
-.row p{margin:0;font-size:15.5px;line-height:1.36;color:var(--text)}
-.row .btn{margin-top:22px;height:38px;font-size:14px}
-.card{position:relative;border-radius:48px;aspect-ratio:670/377;overflow:hidden;isolation:isolate}
-.g-yel{background:radial-gradient(90% 120% at 100% 0%,#f7c548 0%,#fbe07c 40%,rgba(252,240,160,0) 75%),linear-gradient(160deg,#fdf0a6 0%,#fcf3c9 60%,#faf1cf 100%)}
-.g-coral{background:radial-gradient(90% 120% at 100% 30%,#e9584f 0%,#f06c60 35%,rgba(245,137,124,0) 80%),linear-gradient(180deg,#f58c7f,#f07d71)}
-.g-blue{background:radial-gradient(80% 110% at 0% 100%,#0f9fe6 0%,#2fb6ee 40%,rgba(100,217,250,0) 85%),linear-gradient(135deg,#79d6f0,#8fe2f2 50%,#6ad8f8)}
-.g-mag{background:radial-gradient(90% 120% at 100% 100%,#b412bb 0%,#d24fd2 45%,rgba(240,181,237,0) 90%),linear-gradient(200deg,#f7c8f2 0%,#e068dc 55%,#cf3ccc 100%)}
-.g-lime{background:radial-gradient(90% 120% at 100% 50%,#a6e81a 0%,#c8f25a 45%,rgba(230,250,200,0) 90%),linear-gradient(160deg,#f6fbe9,#eef9d4)}
-.g-pink{background:radial-gradient(90% 120% at 0% 0%,#ff5fae 0%,#ff8cc6 45%,rgba(255,200,228,0) 90%),linear-gradient(200deg,#ffd6ea,#ff9ccd)}
-.g-lilac{background:radial-gradient(90% 120% at 0% 0%,#b9c3f5 0%,#d6dcfb 50%,rgba(230,234,255,0) 90%),linear-gradient(200deg,#eef0ff,#c9d0f7)}
+/* ── How it works: 670 × 377 cards, 34 px apart ── */
+#how{padding-top:104px}
+.rows{display:grid;gap:34px;margin-top:62px}
+.row{display:grid;grid-template-columns:670fr 294fr;align-items:center}
+.row .txt{padding-left:40px;max-width:265px}
+.row.r{grid-template-columns:294fr 670fr}
+.row.r .txt{order:-1;padding:0 20px 0 24px;max-width:none}
+.row h3{margin:0;font-weight:400;font-size:24px;line-height:1.3;letter-spacing:-.025em;color:var(--ink)}
+.row p{margin:16px 0 0;font-size:15.5px;line-height:1.32;color:var(--text);max-width:228px}
+.row .btn{margin-top:26px}
+.card{position:relative;aspect-ratio:670/377;border-radius:60px;overflow:hidden;isolation:isolate}
+.y{background:radial-gradient(60% 90% at 88% 20%,#f5bd3c 0%,rgba(248,206,90,.6) 40%,rgba(252,240,180,0) 75%),linear-gradient(170deg,#fcef96 0%,#fcf1c0 55%,#fbf3d2 100%)}
+.c{background:radial-gradient(70% 90% at 100% 40%,#e95d53 0%,rgba(236,102,93,.8) 45%,rgba(245,137,124,0) 90%),linear-gradient(90deg,#f6907f,#f07669)}
+.b{background:radial-gradient(70% 100% at 0% 100%,#0d9de4 0%,rgba(33,172,236,.7) 40%,rgba(120,220,245,0) 85%),linear-gradient(120deg,#6ecfee,#88dff2 55%,#5fd7fb)}
+.m{background:radial-gradient(80% 110% at 100% 100%,#b10fbb 0%,rgba(205,72,207,.85) 45%,rgba(245,190,240,0) 95%),linear-gradient(210deg,#f6d6f3 0%,#e676df 50%,#d24dd0 100%)}
+.l{background:radial-gradient(80% 110% at 100% 60%,#a3e519 0%,rgba(190,240,70,.8) 40%,rgba(240,250,220,0) 90%),linear-gradient(160deg,#fbfdf4,#eef9d6)}
+.p{background:radial-gradient(80% 110% at 0% 0%,#ff4fa6 0%,rgba(255,120,190,.8) 45%,rgba(255,210,235,0) 95%),linear-gradient(200deg,#ffd9ec,#ff8fc9)}
+.v{background:radial-gradient(80% 110% at 0% 0%,#a9b4f5 0%,rgba(190,200,250,.8) 45%,rgba(236,238,255,0) 95%),linear-gradient(200deg,#f1f2ff,#c4cbf7)}
 
-/* native UI inside cards */
-.stack{position:absolute;top:11%;bottom:-2%;left:28%;width:42%;border-radius:36px 36px 0 0;background:rgba(255,255,255,.34);padding:12px 10px;display:flex;flex-direction:column;gap:9px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
-.item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.62);transition:background .35s var(--ease),box-shadow .35s var(--ease),transform .35s var(--out),opacity .35s var(--ease);color:#171717}
-.item.on{background:#fff;box-shadow:0 10px 24px -10px rgba(80,60,0,.28);transform:translateX(-10px) scale(1.02)}
-.item.dim{opacity:.55}
-.av{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font:600 12px/1 Figtree;color:#fff}
-.item b{display:block;font-weight:500;font-size:13px;line-height:1.25;letter-spacing:-.01em}
-.item small{display:block;font-size:11px;line-height:1.3;color:#6b6b6b}
-.tag{margin-left:auto;flex:none;font-size:10.5px;font-weight:600;padding:3px 7px;border-radius:999px;letter-spacing:0}
-.t-urgent{background:var(--pink-bg);color:#b8184f}
-.t-visit{background:var(--yel-bg);color:#8a5d00}
-.t-home{background:var(--grn-bg);color:#0d6b39}
-.t-wait{background:#eceff8;color:#34449A}
-.rider{position:absolute;width:64px;height:64px;left:0;top:0;transition:transform .9s var(--spring);will-change:transform;z-index:3;pointer-events:none}
-.rider .ch{width:100%;height:100%}
-.rider .cursor{position:absolute;right:-12px;top:30px;width:22px;height:22px}
+/* card 1: a tall column of items, one picked up at a time */
+.col{position:absolute;left:29.8%;width:39.9%;top:12.2%;bottom:-10%;border-radius:42px;background:rgba(255,255,255,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+.col::before{content:"";position:absolute;inset:8px;border-radius:34px;background:rgba(255,255,255,.22)}
+.col .list{position:absolute;left:20px;right:20px;top:50px;display:grid;gap:10px}
+.it{position:relative;display:flex;align-items:center;gap:12px;height:60px;padding:0 12px;border-radius:14px;background:rgba(255,255,255,.9);color:#111;transition:transform .7s var(--spring),opacity .4s var(--ease),box-shadow .4s var(--ease)}
+.it .tile{flex:none;width:34px;height:34px;border-radius:9px;background:#fff;box-shadow:0 0 0 1px #ececec;display:grid;place-items:center}
+.it .tile svg{width:18px;height:18px}
+.it b{display:block;font-weight:500;font-size:14.5px;line-height:1.2;letter-spacing:-.01em}
+.it small{display:block;font-size:11.5px;line-height:1.35;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it span{min-width:0}
+.col.pick .it{opacity:.55}
+.col.pick .it.on{opacity:1;transform:translateX(-22px);box-shadow:0 14px 30px -14px rgba(90,60,0,.35)}
+.col .it:last-child{opacity:.6}
+.agent{position:absolute;left:0;top:0;width:70px;height:70px;z-index:4;transition:transform 1s var(--spring);pointer-events:none}
+.agent svg.ch{width:100%;height:100%}
+.agent .ptr{position:absolute;width:26px;height:26px;right:-18px;top:6px}
+.agent.left .ptr{right:auto;left:-16px;transform:scaleX(-1)}
 
-.panel{position:absolute;left:37%;width:44%;top:3%;bottom:-3%;border-radius:22px 22px 0 0;background:rgba(255,255,255,.84);padding:16px 12px;color:#171717}
-.panel h5{margin:4px 6px 8px;font-size:12px;font-weight:500;color:#7a7a7a;letter-spacing:0}
-.panel .item{background:transparent;padding:8px 8px}
-.panel .item.on{background:rgba(0,0,0,.05);box-shadow:none;transform:none}
-.ico{flex:none;width:32px;height:32px;border-radius:10px;background:#f1f1f1;display:grid;place-items:center}
-.ico svg{width:18px;height:18px}
-.status{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#34449A;font-weight:500}
-.status i{width:6px;height:6px;border-radius:50%;background:currentColor}
-.status.sending i{animation:pulse 1s var(--ease) infinite}
-@keyframes pulse{50%{opacity:.3}}
+/* card 2: grouped list, an item dragged from one group to the other */
+.tray{position:absolute;left:24.2%;width:51.8%;top:2.9%;bottom:2.6%;border-radius:22px;background:rgba(255,242,240,.93);padding:14px 10px;color:#111}
+.tray h5{margin:6px 8px 6px;font-size:14px;font-weight:500;color:#7b7b7b;letter-spacing:-.01em}
+.tray h5 + .grp{margin-bottom:10px}
+.row2{position:relative;display:flex;align-items:center;gap:13px;height:53px;padding:0 8px;border-radius:12px;transition:background .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
+.row2 .tile{flex:none;width:40px;height:40px;border-radius:10px;background:#f3eaea;display:grid;place-items:center}
+.row2 .tile svg{width:22px;height:22px}
+.row2 b{display:block;font-weight:500;font-size:15px;line-height:1.2;letter-spacing:-.015em}
+.row2 small{display:block;font-size:12.5px;color:#7b7b7b;margin-top:2px}
+.row2 .grip{margin-left:auto;opacity:0;color:#999;font-size:15px;letter-spacing:-2px;transition:opacity .2s}
+.row2.held{background:rgba(0,0,0,.055)}
+.row2.lift{background:#fff;box-shadow:0 16px 34px -16px rgba(120,20,20,.35);z-index:3}
+.row2.held .grip,.row2.lift .grip{opacity:1}
 
-.handset{position:absolute;left:30%;width:40%;top:10%;bottom:-6%;background:#fff;border-radius:34px 34px 0 0;padding:14px 12px;color:#171717;display:flex;flex-direction:column}
-.handset .top{display:flex;justify-content:space-between;align-items:flex-start}
-.hb{width:30px;height:30px;border-radius:50%;box-shadow:0 3px 12px rgba(0,0,0,.09);display:grid;place-items:center;font-size:12px;color:#333}
-.who{display:flex;flex-direction:column;align-items:center}
-.who .ch{width:42px;height:42px}
-.who span{font-size:11px;font-weight:600;margin-top:-2px;background:#fff;padding:1px 7px;border-radius:9px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+/* card 3: phone chat */
+.hand{position:absolute;left:28.6%;width:42.6%;top:12.4%;bottom:-8%;border-radius:48px;background:rgba(255,255,255,.3);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);padding:9px 9px 0}
+.hand .in{height:100%;background:#fff;border-radius:40px 40px 0 0;padding:16px 12px 0;color:#111;overflow:hidden}
+.hd{display:flex;justify-content:space-between;align-items:flex-start}
+.hb{width:30px;height:30px;border-radius:50%;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.1);display:grid;place-items:center}
+.hb svg{width:15px;height:15px}
+.hn{display:flex;flex-direction:column;align-items:center;margin-top:-4px}
+.hn svg.ch{width:44px;height:44px}
+.hn span{margin-top:-5px;font-size:11.5px;font-weight:700;background:#fff;padding:2px 8px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
 .msgs{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.bub{max-width:82%;padding:8px 11px;border-radius:14px;font-size:11.5px;line-height:1.35;opacity:0;transform:translateY(6px) scale(.97);transform-origin:left bottom;transition:opacity .35s var(--ease),transform .5s var(--out)}
+.bub{max-width:78%;padding:8px 11px;border-radius:14px;font-size:11.5px;line-height:1.33;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .3s var(--ease),transform .55s var(--out)}
 .bub.in{opacity:1;transform:none}
-.bub.l{background:#f1f1f1;align-self:flex-start}
-.bub.r{background:#3d6cf0;color:#fff;align-self:flex-end;transform-origin:right bottom}
-.bub.keys{font-variant-numeric:tabular-nums;letter-spacing:.06em}
-.typing{align-self:flex-start;background:#f1f1f1;border-radius:14px;padding:9px 11px;display:none;gap:3px}
-.typing.in{display:flex}
-.typing i{width:5px;height:5px;border-radius:50%;background:#9a9a9a;animation:dotty 1s infinite}
-.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
-@keyframes dotty{0%,60%,100%{opacity:.35;transform:none}30%{opacity:1;transform:translateY(-2px)}}
+.bub.l{background:#efefef;align-self:flex-start;transform-origin:0 100%}
+.bub.r{background:#3d6cf5;color:#fff;align-self:flex-end;transform-origin:100% 100%}
+.bub.k{letter-spacing:.2em;font-weight:600}
+.dots3{align-self:flex-start;background:#efefef;border-radius:14px;padding:9px 11px;gap:3px;display:none}
+.dots3.in{display:flex}
+.dots3 i{width:5px;height:5px;border-radius:50%;background:#9b9b9b;animation:dt 1s infinite}
+.dots3 i:nth-child(2){animation-delay:.15s}.dots3 i:nth-child(3){animation-delay:.3s}
+@keyframes dt{0%,60%,100%{opacity:.35;transform:none}30%{opacity:1;transform:translateY(-2px)}}
+.att{align-self:flex-start;display:flex;align-items:center;gap:8px;padding:7px 10px 7px 7px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px #ececec;font-size:11px;opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .55s var(--out)}
+.att.in{opacity:1;transform:none}
+.att i{width:24px;height:24px;border-radius:6px;background:#e0344d;display:grid;place-items:center}
+.att b{display:block;font-weight:600}
+.att small{display:block;color:#888;font-size:10px}
 
-.sheet{position:absolute;left:16%;right:12%;top:12%;bottom:-4%;background:rgba(255,255,255,.93);border-radius:22px 22px 0 0;padding:18px 20px;color:#171717}
-.sheet header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.sheet header b{font-size:17px;font-weight:600;letter-spacing:-.02em}
-.sheet header span{margin-left:auto;display:flex;gap:10px;color:#555;font-size:13px}
-.slot{display:grid;grid-template-columns:44px 24px 1fr auto;gap:8px;align-items:center;padding:7px 4px;border-radius:12px;transition:background .3s var(--ease)}
-.slot.on{background:rgba(0,0,0,.045)}
-.slot time{font-size:12px;font-weight:600;color:#555;font-variant-numeric:tabular-nums}
-.slot time.u{color:#b8184f}
-.slot .ch{width:24px;height:24px}
-.slot b{font-size:12.5px;font-weight:600;display:block}
-.slot small{font-size:11px;color:#666;display:block}
-.slot .act{font-size:11px;font-weight:500;border:1px solid #ddd;border-radius:999px;padding:4px 9px;white-space:nowrap}
-.slot .act.go{background:#0d0d0d;color:#fff;border-color:#0d0d0d}
-.shot{margin:10px auto 0;width:74%;border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+/* card 4: a channel panel */
+.chan{position:absolute;left:0;width:73%;top:17.5%;bottom:0;border-radius:0 30px 0 0;background:rgba(253,240,252,.94);padding:22px 30px 0 15%;color:#111}
+.chan header{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.chan header b{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.chan header .ic{margin-left:auto;display:flex;gap:14px;color:#222}
+.chan header svg{width:18px;height:18px}
+.post{display:grid;grid-template-columns:30px 1fr;gap:10px;margin-bottom:14px}
+.post .av{width:30px;height:30px;border-radius:7px;background:#fff;display:grid;place-items:center;overflow:hidden}
+.post .av svg{width:30px;height:30px}
+.post b{font-size:15px;font-weight:700;letter-spacing:-.015em}
+.post .tg{font-size:10.5px;font-weight:600;color:#666;background:#ececec;padding:1px 5px;border-radius:4px;margin-left:6px;letter-spacing:.02em}
+.post time{font-size:11px;color:#9a9a9a;margin-left:6px}
+.post p{margin:2px 0 0;font-size:14.5px;line-height:1.3}
+.embed{margin:4px 0 0 40px;width:62%;height:120px;border-radius:12px;background:#e8e6ea;overflow:hidden;position:relative}
+.embed img{position:absolute;left:8%;top:12px;width:84%;border-radius:8px 8px 0 0;box-shadow:0 0 0 1px rgba(0,0,0,.05)}
 
-/* carousel */
-.explore{display:flex;align-items:center;justify-content:space-between;margin:72px 16px 26px}
-.explore span{font-size:20px;color:var(--text)}
-.arrows{display:flex;gap:8px}
-.arrow{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;transition:opacity .2s,background .15s}
-.arrow:disabled{opacity:.4;cursor:default}
-.arrow svg{width:18px;height:18px}
-.track{display:flex;gap:16px;transition:transform .7s var(--out);will-change:transform;touch-action:pan-y}
-.slide{flex:0 0 min(670px,100%);transition:opacity .5s var(--ease)}
-.slide:not(.cur){opacity:.32}
-.slide .card{cursor:pointer}
-.slide h3{font-weight:400;font-size:24px;line-height:1.3;letter-spacing:-.02em;color:var(--ink);margin:30px 24px 12px}
-.slide p{margin:0 24px;font-size:18px;line-height:1.55;color:var(--text2)}
-.slide p b{font-weight:500;color:var(--ink)}
-.slide .card .phone{position:absolute;left:9%;top:9%;width:25%}
-.note{position:absolute;right:7%;top:50%;transform:translateY(-50%);width:50%;background:#fff;border-radius:18px;padding:16px 18px;color:#171717;box-shadow:0 18px 40px -18px rgba(0,0,0,.28)}
-.note small{display:block;font-size:11px;font-weight:600;color:#8a8a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.note q{quotes:none;display:block;font-size:15px;line-height:1.4;font-weight:500;letter-spacing:-.01em}
-.note .was{display:block;font-size:12.5px;color:#8a8a8a;text-decoration:line-through;margin-top:10px}
+/* ── Edge cases: carousel ── */
+#cases{padding-top:200px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.two h2{font-size:clamp(32px,3.2vw,40px);line-height:1.2;letter-spacing:-.03em}
+.two p{margin:0;max-width:340px;font-size:clamp(19px,1.9vw,24px);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
+.explore{display:flex;align-items:center;justify-content:space-between;margin:70px 16px 26px}
+.explore span{font-size:20px;color:var(--text);letter-spacing:-.02em}
+.nav2{display:flex;gap:9px}
+.arw{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--page);display:grid;place-items:center;cursor:pointer;transition:opacity .2s,background .15s}
+.arw:hover:not(:disabled){background:var(--surface)}
+.arw:disabled{opacity:.45;cursor:default}
+.arw svg{width:18px;height:18px}
+.rail{display:flex;gap:16px;transition:transform .75s var(--out);touch-action:pan-y}
+.sl{flex:0 0 min(670px,100%);transition:opacity .55s var(--ease)}
+.sl:not(.on){opacity:.3}
+.sl:not(.on) .card{cursor:pointer}
+.sl h3{margin:32px 24px 14px;font-weight:400;font-size:24px;line-height:1.3;letter-spacing:-.025em;color:var(--ink)}
+.sl p{margin:0 24px;font-size:18px;line-height:1.55;color:var(--text)}
+.sl .shot{position:absolute;right:6%;top:9%;width:33%;border-radius:18px;overflow:hidden;box-shadow:0 20px 40px -18px rgba(0,0,0,.35);background:#fff}
+.sl .shot img{width:100%;aspect-ratio:9/12.4;object-fit:cover;object-position:top}
+.mini{position:absolute;left:7%;top:6%;bottom:-6%;width:50%;background:#fff;border-radius:22px 22px 0 0;padding:14px 16px 0;color:#111;box-shadow:0 18px 40px -22px rgba(0,0,0,.3);overflow:hidden}
+.mini .hn{margin-bottom:6px}
+.mini .hn svg.ch{width:38px;height:38px}
+.mini .bub{opacity:1;transform:none;font-size:11.5px}
+.mini .meta{font-size:9.5px;color:#9a9a9a;text-align:center;margin:6px 0 2px}
+.mini .pill{align-self:flex-start;margin-top:2px;font-size:11px;font-weight:500;color:#34449A;background:#eceffb;border-radius:999px;padding:5px 10px}
+.mini .comp{position:absolute;left:12px;right:12px;bottom:12px;height:32px;border-radius:999px;box-shadow:0 0 0 1px #e8e8e8;display:flex;align-items:center;padding:0 6px 0 12px;font-size:11px;color:#9a9a9a}
+.mini .comp i{margin-left:auto;width:22px;height:22px;border-radius:50%;background:#111}
 
-/* safety */
-.shield{width:44px;height:48px;margin:0 auto 22px}
-.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:488px;margin:56px auto 0}
-.rule{background:var(--panel);border-radius:22px;padding:18px 14px 20px;text-align:left}
-.rule svg{width:18px;height:18px;color:var(--ink)}
-.rule h4{margin:12px 0 6px;font-size:15px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
-.rule p{margin:0;font-size:12.5px;line-height:1.42;color:var(--text2)}
+/* ── Rules ── */
+#rules{padding-top:200px}
+.shield{width:36px;height:40px;margin:0 auto 26px;display:block}
+#rules .lede{color:var(--text);font-size:20px;max-width:560px;margin-top:22px}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:765px;margin:66px auto 0;text-align:left}
+.k3{background:var(--panel);border-radius:22px;padding:22px 20px 26px;min-height:270px}
+.k3 svg{width:20px;height:20px;color:var(--ink)}
+.k3 h4{margin:16px 0 8px;font-size:16px;font-weight:500;color:var(--ink);letter-spacing:-.015em}
+.k3 p{margin:0;font-size:13.5px;line-height:1.5;color:var(--text)}
 
-/* a day: timeline scrubber */
-.day{position:relative;margin:48px auto 0;max-width:900px;height:360px}
-.rider2{position:absolute;bottom:92px;left:0;width:0;transition:left .8s var(--spring);will-change:left}
-.rider2 .ch{position:absolute;bottom:0;left:-52px;width:104px;height:104px}
-.say{position:absolute;bottom:206px;text-align:left;width:270px;padding:18px 20px;border-radius:22px;background:var(--bubble);color:var(--ink);font-size:15px;line-height:1.52;transition:left .8s var(--spring),opacity .25s var(--ease)}
-.say .heart{position:absolute;right:18px;bottom:-11px;width:24px;height:24px;border-radius:50%;background:var(--page);display:grid;place-items:center;box-shadow:0 0 0 3px var(--page);font-size:12px}
+/* ── A day: the scrubber ── */
+#day{padding-top:220px}
+#day .lede{font-size:20px;max-width:760px}
+.stage{position:relative;max-width:848px;height:420px;margin:0 auto}
+.char{position:absolute;bottom:92px;width:0;transition:left .8s var(--spring)}
+.char svg{position:absolute;bottom:0;left:-54px;width:108px;height:108px}
+.say{position:absolute;bottom:220px;width:280px;padding:19px 22px;border-radius:22px;background:var(--bubble);color:var(--ink);font-size:15px;line-height:1.53;text-align:left;transition:left .8s var(--spring),opacity .22s var(--ease)}
+.say .re{position:absolute;right:20px;bottom:-12px;width:26px;height:26px;border-radius:50%;background:var(--page);display:grid;place-items:center;font-size:12px;box-shadow:0 0 0 3px var(--page)}
 .say.swap{opacity:0}
-.rail{position:absolute;left:0;right:0;bottom:22px;height:24px;cursor:grab;touch-action:none}
-.rail:active{cursor:grabbing}
-.rail .ticks{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-.rail .ticks i{width:1.5px;height:12px;background:var(--line2);border-radius:1px}
-.rail .ticks i.big{width:16px;height:16px;border-radius:50%;background:#b5b5b5}
-.when{position:absolute;bottom:52px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;height:34px;padding:0 8px;border-radius:10px;background:#f5cf2e;color:#171717;font-size:14.5px;font-weight:500;white-space:nowrap;transition:left .8s var(--spring);z-index:2}
-.when::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:22px;background:#f5cf2e;transform:translateX(-50%)}
-.when button{border:0;background:none;padding:0;width:18px;height:22px;display:grid;place-items:center;cursor:pointer;color:#171717}
-.when button:disabled{opacity:.35;cursor:default}
-.when svg{width:14px;height:14px}
-.dayc{text-align:center;margin-top:34px;min-height:120px}
-.dayc .where{font-size:14px;color:var(--text2)}
-.dayc h3{margin:12px 0 10px;font-weight:500;font-size:clamp(26px,2.6vw,34px);letter-spacing:-.025em;color:var(--ink);line-height:1.15}
-.dayc p{margin:0 auto;max-width:520px;font-size:14.5px;line-height:1.55;color:var(--text2)}
-.dayc > *{transition:opacity .25s var(--ease),transform .35s var(--out)}
-.dayc.swap > *{opacity:0;transform:translateY(4px)}
+.time{position:absolute;bottom:52px;transform:translateX(-50%);height:34px;display:flex;align-items:center;gap:6px;padding:0 8px;border-radius:10px;background:#f2cf2d;color:#161616;font-size:15px;font-weight:500;white-space:nowrap;transition:left .8s var(--spring);z-index:2;cursor:grab;touch-action:none}
+.time::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:24px;background:#f2cf2d;transform:translateX(-50%)}
+.time button{border:0;background:none;padding:0;width:18px;height:24px;display:grid;place-items:center;cursor:pointer}
+.time button:disabled{opacity:.3;cursor:default}
+.time svg{width:14px;height:14px}
+.track{position:absolute;left:0;right:0;bottom:16px;height:26px;cursor:grab;touch-action:none}
+.ticks{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.ticks i{width:1.5px;height:13px;border-radius:1px;background:#cdcdcd}
+.ticks i.d{width:16px;height:16px;border-radius:50%;background:#b8b8b8}
+.dayc{text-align:center;margin-top:44px;min-height:140px}
+.dayc .wh{font-size:14px;color:var(--grey2)}
+.dayc h3{margin:18px 0 12px;font-weight:500;font-size:clamp(28px,2.7vw,38px);line-height:1.15;letter-spacing:-.03em;color:var(--ink)}
+.dayc p{margin:0 auto;max-width:520px;font-size:14.5px;line-height:1.6;color:var(--grey2)}
+.dayc > *{transition:opacity .22s var(--ease),transform .4s var(--out)}
+.dayc.swap > *{opacity:0;transform:translateY(5px)}
 
-/* surfaces */
-.tabs{display:flex;justify-content:center;gap:4px;margin-top:40px}
-.tab{height:36px;padding:0 16px;border-radius:999px;border:0;background:transparent;font-size:14.5px;font-weight:500;color:var(--text);cursor:pointer;transition:background .2s var(--ease),box-shadow .2s var(--ease)}
-.tab[aria-selected="true"]{background:var(--surface);box-shadow:0 0 0 1px var(--line),0 2px 8px rgba(0,0,0,.05);color:var(--ink)}
-.device{position:relative;display:grid;place-items:end center;height:540px;margin-top:40px}
-.device .phone{width:238px;transition:opacity .35s var(--ease),transform .5s var(--out)}
-.device .laptop{width:min(620px,100%);transition:opacity .35s var(--ease),transform .5s var(--out)}
-.device > *{grid-area:1/1}
-.device .off{opacity:0;transform:translateY(14px) scale(.98);pointer-events:none}
-.device .buddy{position:absolute;width:96px;height:96px;left:calc(50% + 120px);top:6px;transition:left .6s var(--spring),top .6s var(--spring)}
-.device .buddy.wide{left:calc(50% + 250px);top:40px}
-.cap{text-align:center;margin-top:34px;min-height:78px}
-.cap h4{margin:0 0 6px;font-size:18px;font-weight:500;color:var(--ink);letter-spacing:-.015em}
-.cap p{margin:0 auto;max-width:360px;font-size:14px;line-height:1.5;color:var(--text2)}
+/* ── Surfaces ── */
+#surfaces{padding-top:200px}
+#surfaces .lede{font-size:16px;line-height:1.5;color:var(--text);max-width:500px;margin-top:24px;letter-spacing:-.01em}
+.note{margin:26px 0 0;font-size:12.5px;color:var(--grey)}
+.tabs{display:flex;justify-content:center;gap:6px;margin-top:40px}
+.tab{height:38px;padding:0 18px;white-space:nowrap;border:0;border-radius:999px;background:transparent;font-size:15px;font-weight:400;color:var(--ink);cursor:pointer;transition:background .2s,box-shadow .2s}
+.tab[aria-selected="true"]{background:var(--surface);box-shadow:0 0 0 1px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.06)}
+.dev{position:relative;height:480px;margin-top:66px;display:grid;justify-items:center}
+.dev > .fr{grid-area:1/1;transition:opacity .4s var(--ease),transform .6s var(--out)}
+.dev > .fr.off{opacity:0;transform:translateY(16px);pointer-events:none}
+.lt{width:342px;height:440px;border-radius:44px 44px 0 0;background:#fff;box-shadow:0 0 0 1px #e7e7e7;overflow:hidden;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent);color:#111}
+.lt .sb{display:flex;justify-content:space-between;align-items:center;padding:20px 28px 6px 42px;font-size:16px;font-weight:600}
+.lt .sb span{display:flex;gap:6px}
+.lt img{width:100%}
+.win{width:min(640px,100%);height:440px;border-radius:34px 34px 0 0;padding:12px 12px 0;background:#fff;box-shadow:0 0 0 1px #e7e7e7;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.win img{border-radius:22px 22px 0 0;box-shadow:0 0 0 1px #eee}
+.fc{padding:14px 26px 0;text-align:left}
+.fc .brand{display:flex;align-items:center;gap:8px;color:var(--indigo);font-weight:600;font-size:15px}
+.fc small{display:block;font-size:11.5px;font-weight:600;color:#333;margin-top:16px}
+.fc .num{font-size:30px;font-weight:700;letter-spacing:-.01em;margin-top:2px}
+.fc .ids{display:flex;gap:7px;margin-top:6px}
+.fc .ids span{width:42px;height:50px;border:2px solid #111;border-radius:9px;display:grid;place-items:center;font-size:24px;font-weight:700}
+.fc .fam{font-size:13.5px;color:#555;margin-top:8px;padding-bottom:12px;border-bottom:1px solid #eee}
+.fc ol{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:10px;font-size:14.5px}
+.fc li{display:flex;align-items:center;gap:12px}
+.fc li b{width:28px;height:28px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:13px}
+.buddy{position:absolute;width:108px;height:108px;top:-26px;transition:left .7s var(--spring),top .7s var(--spring)}
+.capt{text-align:center;min-height:86px;margin-top:6px}
+.capt h4{margin:0 0 8px;font-size:18px;font-weight:500;color:var(--ink);letter-spacing:-.015em}
+.capt p{margin:0 auto;max-width:370px;font-size:15px;line-height:1.55;color:var(--text)}
 
-/* isn't / is */
-.avail{max-width:768px;margin:0 auto;border-radius:40px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--panel-line);text-align:center;padding:48px clamp(20px,6vw,110px) 50px}
-.avail .ring2{width:56px;height:56px;margin:0 auto 22px;border-radius:50%;background:radial-gradient(circle,transparent 0 29%,#b9bfd6 30%)}
-.avail h2{font-size:clamp(30px,3vw,38px)}
-.avail p{font-size:17px;line-height:1.5;color:var(--text);margin:22px 0 28px}
+/* ── Scope card ── */
+#scope{padding-top:180px}
+.scope{max-width:768px;margin:0 auto;border-radius:40px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--hair);text-align:center;padding:48px clamp(20px,8vw,110px) 50px}
+.scope .rg{width:56px;height:56px;margin:0 auto 22px;border-radius:50%;background:radial-gradient(circle,transparent 0 30%,#b9bfd5 31%)}
+.scope h2{font-size:clamp(30px,3vw,38px);line-height:1.2}
+.scope p{margin:22px 0 30px;font-size:17px;line-height:1.46;color:var(--text)}
 
-/* finale: the cast sits on the footer rule */
-.final{padding-top:210px;text-align:center}
-.final h2{font-size:clamp(40px,4.8vw,64px)}
-.cast{display:flex;justify-content:center;align-items:flex-end;height:170px;margin-top:92px;overflow:hidden}
-.cast .ch{width:150px;height:150px;margin:0 -24px;margin-bottom:-26px;transform:translateY(110%);transition:transform .9s var(--spring)}
-.cast.in .ch{transform:none}
-.cast.in .ch:nth-child(2){transition-delay:.08s}.cast.in .ch:nth-child(3){transition-delay:.16s}.cast.in .ch:nth-child(4){transition-delay:.24s}
-.cast .ch:hover{transform:translateY(-8px)}
+/* ── Close ── */
+#close{padding-top:230px;text-align:center}
+#close h2{font-size:clamp(40px,4.6vw,64px)}
+.cast{position:relative;height:200px;margin-top:40px;clip-path:inset(-600px -100vw 0 -100vw)}
+.cast svg.ch{position:absolute;bottom:-38px;width:178px;height:178px;will-change:transform}
 footer{border-top:1px solid var(--line)}
-.foot{display:grid;grid-template-columns:1fr auto auto;gap:96px;padding:30px 8px 64px;max-width:1600px;margin:0 auto}
-.foot .brand i{width:30px;height:30px}
-.foot h6{margin:0 0 16px;font-size:13px;font-weight:400;color:var(--text3)}
-.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:12px;font-size:14px}
-.foot a{text-decoration:none}
-.foot a:hover{text-decoration:underline}
-.legal{display:flex;justify-content:space-between;padding:0 8px 18px;font-size:13px;color:var(--text);max-width:1600px;margin:0 auto}
+.ft{display:grid;grid-template-columns:1fr 300px 190px;padding:34px 28px 56px}
+.ft .mark{width:32px;height:32px}
+.ft h6{margin:0 0 20px;font-size:13.5px;font-weight:400;color:var(--grey)}
+.ft ul{list-style:none;margin:0;padding:0;display:grid;gap:15px;font-size:14px;color:var(--ink)}
+.ft a{text-decoration:none}.ft a:hover{text-decoration:underline}
+.legal{display:flex;justify-content:space-between;align-items:center;padding:0 28px 22px;font-size:13px;color:var(--ink)}
+.legal .soc{display:flex;gap:18px;align-items:center}
+.legal .soc svg{width:17px;height:17px}
 
-/* characters */
-.ch{display:block;overflow:visible}
-.ch .eyes{transform-box:fill-box;transform-origin:center;animation:blink 5.2s infinite;animation-delay:var(--bd,0s)}
+/* ── Characters: felt, lit from the top left ── */
+svg.ch{display:block;overflow:visible}
+.ch .eyes{transform-box:fill-box;transform-origin:center;animation:blink 5.3s infinite;animation-delay:var(--bd,0s)}
 .ch .look{transform:translate(var(--lx,0px),var(--ly,0px));transition:transform .25s var(--ease)}
-.bob{animation:bob 3.4s ease-in-out infinite alternate}
-@keyframes bob{from{transform:translateY(0) rotate(-1.5deg)}to{transform:translateY(-6px) rotate(1.5deg)}}
-@keyframes blink{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.08)}}
+.bob{animation:bob 3.6s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-7px) rotate(2deg)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}94.5%{transform:scaleY(.08)}}
 
-/* reveal: 10px lift, 150 ms stagger */
-[data-rv]{opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .8s var(--out);transition-delay:calc(var(--i,0) * 150ms)}
+[data-rv]{opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .9s var(--out);transition-delay:calc(var(--i,0) * 150ms)}
 [data-rv].in{opacity:1;transform:none}
 
 @media (max-width:900px){
-  .site nav{display:none}
-  .pillbar nav{display:none}
-  .row,.row.flip{grid-template-columns:1fr;gap:22px}
-  .row.flip .card{order:0}
-  .row .copy,.row.flip .copy{max-width:520px;justify-self:start;padding:0 8px}
-  .split{grid-template-columns:1fr}
-  .rules{grid-template-columns:1fr;max-width:420px}
-  .foot{grid-template-columns:1fr 1fr;gap:40px}
-  .foot > :first-child{grid-column:1/-1}
-  .say{width:220px;font-size:14px}
-  .device{height:470px}
-  .device .phone{width:200px}
-  .device .buddy,.device .buddy.wide{left:calc(50% + 70px);top:0;width:72px;height:72px}
+  .top{grid-template-columns:1fr auto;padding:0 16px}
+  .top nav,.bar nav{display:none}
+  .bar{grid-template-columns:1fr auto}
+  .row,.row.r{grid-template-columns:1fr;gap:24px}
+  .row .txt,.row.r .txt{order:0;padding:0 8px;max-width:520px}
+  .row p{max-width:none}
+  .two{grid-template-columns:1fr}
+  .cards3{grid-template-columns:1fr;max-width:420px}
+  .k3{min-height:0}
+  .ft{grid-template-columns:1fr 1fr;gap:34px}
+  .ft > :first-child{grid-column:1/-1}
+  .legal{flex-direction:column;gap:12px;align-items:flex-start}
 }
-@media (max-width:560px){
-  .reel{border-radius:28px;aspect-ratio:4/5}
-  .reel .laptop{display:none}
-  .reel .phone{width:40%;margin-bottom:-14%}
-  .card{border-radius:30px;aspect-ratio:4/3.3}
-  .stack{left:22%;width:62%}
-  .panel{left:14%;width:74%}
-  .handset{left:16%;width:68%}
-  .sheet{left:6%;right:6%}
-  .note{width:58%;right:5%}
-  .note q{font-size:13px}
-  .slide h3{margin-inline:8px}.slide p{margin-inline:8px;font-size:16px}
-  .rider2 .ch{width:80px;height:80px;left:-40px}
-  .day{width:calc(100% - 132px);height:330px}
-  .say{width:210px;padding:14px 16px;bottom:180px}
-  .slot{grid-template-columns:40px 1fr auto}
-  .slot .ch{display:none}
-  .shot{display:none}
-  .when{font-size:13px}
-  .legal{flex-direction:column;gap:8px}
-  .cast .ch{width:96px;height:96px;margin:0 -10px -16px}
-  .cast{height:110px}
-  .site{padding:0 16px}
-  .pillbar .btn{padding:0 14px}
+@media (max-width:600px){
+  .film{border-radius:32px;aspect-ratio:4/5}
+  .film .phone{width:52%;margin-bottom:-24%}
+  .film .laptop{width:120%;margin-bottom:22%}
+  .film .actor{width:24%}
+  .card{border-radius:34px;aspect-ratio:4/3.4}
+  .col{left:12%;width:76%}
+  .tray{left:6%;width:88%}
+  .hand{left:14%;width:72%}
+  .chan{width:100%;padding-left:6%;border-radius:30px 30px 0 0}
+  .embed{display:none}
+  .sl .shot{width:40%;right:4%}
+  .mini{width:58%;left:4%}
+  .sl h3{margin-inline:8px}.sl p{margin-inline:8px;font-size:16px}
+  .stage{width:calc(100% - 130px);height:380px}
+  .char svg{width:84px;height:84px;left:-42px}
+  .say{width:220px;bottom:190px;font-size:14px;padding:14px 16px}
+  .lt{width:300px}
+  .win{height:auto;-webkit-mask-image:none;mask-image:none;border-radius:24px;padding-bottom:12px}
+  .win img{border-radius:14px}
+  .dev{height:auto;min-height:300px}
+  .buddy{width:80px;height:80px}
+  .tab{padding:0 12px;font-size:14px}
+  .cast svg.ch{width:104px;height:104px;bottom:-22px}
+  .cast{height:140px}
 }
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
   [data-rv]{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
-<!-- Felt characters: one shape each, a warped edge and a fine grain, lit from the top left -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <filter id="felt" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="1.9" numOctaves="2" seed="4" result="warp"/>
-      <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="shape"/>
-      <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="3" seed="11" result="fur"/>
-      <feColorMatrix in="fur" type="matrix" values=".33 .33 .33 0 0  .33 .33 .33 0 0  .33 .33 .33 0 0  0 0 0 0 1" result="furGrey"/>
-      <feComposite in="furGrey" in2="shape" operator="in" result="furIn"/>
-      <feBlend in="furIn" in2="shape" mode="soft-light"/>
-    </filter>
-    <radialGradient id="g-sun" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#ffe86a"/><stop offset=".55" stop-color="#f7c51c"/><stop offset="1" stop-color="#d69300"/></radialGradient>
-    <radialGradient id="g-doc" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#7fd0ff"/><stop offset=".55" stop-color="#2b93f2"/><stop offset="1" stop-color="#1257c4"/></radialGradient>
-    <radialGradient id="g-poo" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#ff8ff0"/><stop offset=".55" stop-color="#e234cc"/><stop offset="1" stop-color="#9f0f99"/></radialGradient>
-    <radialGradient id="g-arj" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#ecff86"/><stop offset=".55" stop-color="#b8ee20"/><stop offset="1" stop-color="#76b800"/></radialGradient>
-    <!-- Sunita, the ASHA: a rounded peak with her ID badge on a lanyard -->
-    <symbol id="ch-sunita" viewBox="0 0 120 120">
-      <path filter="url(#felt)" fill="url(#g-sun)" d="M60 13C71 13 105 72 105 90C105 105 88 109 60 109C32 109 15 105 15 90C15 72 49 13 60 13Z"/>
-      <g class="eyes"><g class="look"><ellipse cx="48" cy="67" rx="5.2" ry="6.8" fill="#141414"/><ellipse cx="72" cy="67" rx="5.2" ry="6.8" fill="#141414"/><circle cx="49.6" cy="64.8" r="1.6" fill="#fff"/><circle cx="73.6" cy="64.8" r="1.6" fill="#fff"/></g></g>
-      <path d="M43 84Q60 99 77 84" stroke="#1b1b1b" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-      <rect x="52.5" y="92" width="15" height="12" rx="2.5" fill="#fff" stroke="#1b1b1b" stroke-width="1.8"/>
-      <rect x="55.5" y="96" width="9" height="2" rx="1" fill="#34449A"/><rect x="55.5" y="99.5" width="6" height="1.6" rx=".8" fill="#9aa3c7"/>
-    </symbol>
-    <!-- Dr. Meena: a round blob with round glasses and a stethoscope -->
-    <symbol id="ch-meena" viewBox="0 0 120 120">
-      <path filter="url(#felt)" fill="url(#g-doc)" d="M60 15C85 13 106 34 105 60C106 87 86 107 60 105C33 107 13 87 15 60C13 33 35 17 60 15Z"/>
-      <g class="eyes"><g class="look"><circle cx="48" cy="55" r="4.6" fill="#141414"/><circle cx="72" cy="55" r="4.6" fill="#141414"/></g></g>
-      <g fill="none" stroke="#141414" stroke-width="3"><circle cx="48" cy="55" r="11"/><circle cx="72" cy="55" r="11"/><path d="M59 55h2"/></g>
-      <path d="M38 76Q42 96 60 96Q78 96 82 76" fill="none" stroke="#1b1b1b" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="60" cy="98" r="5" fill="#d6d9e2" stroke="#1b1b1b" stroke-width="2"/>
-    </symbol>
-    <!-- Pooja, Arjun's mother: a heart that calls the voice line -->
-    <symbol id="ch-pooja" viewBox="0 0 120 120">
-      <path filter="url(#felt)" fill="url(#g-poo)" d="M60 106C39 91 13 75 13 49C13 33 25 21 40 21C49 21 56 26 60 33C64 26 71 21 80 21C95 21 107 33 107 49C107 75 81 91 60 106Z"/>
-      <g class="eyes"><g class="look"><ellipse cx="46" cy="54" rx="5" ry="6.4" fill="#141414"/><ellipse cx="74" cy="54" rx="5" ry="6.4" fill="#141414"/><circle cx="47.5" cy="52" r="1.5" fill="#fff"/><circle cx="75.5" cy="52" r="1.5" fill="#fff"/></g></g>
-      <ellipse cx="38" cy="67" rx="6" ry="3.4" fill="#ff9ad8" opacity=".7"/><ellipse cx="82" cy="67" rx="6" ry="3.4" fill="#ff9ad8" opacity=".7"/>
-      <path d="M52 70Q60 76 68 70" fill="none" stroke="#141414" stroke-width="2.4" stroke-linecap="round"/>
-    </symbol>
-    <!-- Arjun, 3: small, with big round eyes -->
-    <symbol id="ch-arjun" viewBox="0 0 120 120">
-      <path filter="url(#felt)" fill="url(#g-arj)" d="M60 26C84 24 104 42 103 66C104 90 84 106 60 104C36 106 16 90 17 66C16 42 36 28 60 26Z"/>
-      <circle cx="44" cy="44" r="13" fill="#fff"/><circle cx="76" cy="44" r="13" fill="#fff"/>
-      <g class="eyes"><g class="look"><circle cx="45" cy="45" r="6.2" fill="#141414"/><circle cx="77" cy="45" r="6.2" fill="#141414"/></g></g>
-      <path d="M53 74Q60 79 67 74" fill="none" stroke="#141414" stroke-width="2.4" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="cursor" viewBox="0 0 24 24"><path d="M4 2l16 9-7.2 1.6L9.6 20z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></symbol>
-  </defs>
-</svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="felt" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="2.1" numOctaves="2" seed="4" result="w"/>
+    <feDisplacementMap in="SourceGraphic" in2="w" scale="5.5" xChannelSelector="R" yChannelSelector="G" result="s"/>
+    <feTurbulence type="fractalNoise" baseFrequency="1.5" numOctaves="3" seed="11" result="f"/>
+    <feColorMatrix in="f" type="matrix" values=".33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1" result="fg"/>
+    <feComposite in="fg" in2="s" operator="in" result="fi"/>
+    <feBlend in="fi" in2="s" mode="soft-light"/>
+  </filter>
+  <radialGradient id="shade" cx="30%" cy="24%" r="85%"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient>
+  <radialGradient id="shine" cx="34%" cy="26%" r="36%"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gy" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ffe45a"/><stop offset=".6" stop-color="#f6c416"/><stop offset="1" stop-color="#dc9a00"/></radialGradient>
+  <radialGradient id="gb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#6fd0ff"/><stop offset=".6" stop-color="#2394f2"/><stop offset="1" stop-color="#0e58c8"/></radialGradient>
+  <radialGradient id="gm" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ff8cf0"/><stop offset=".6" stop-color="#e02fcc"/><stop offset="1" stop-color="#9c0c96"/></radialGradient>
+  <radialGradient id="gl" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#eeff7e"/><stop offset=".6" stop-color="#b4ec1c"/><stop offset="1" stop-color="#6fae00"/></radialGradient>
+  <!-- Sunita, the ASHA -->
+  <symbol id="sunita" viewBox="0 0 120 120"><g filter="url(#felt)">
+    <path id="p-sun" fill="url(#gy)" d="M60 12C72 12 106 70 106 89C106 105 88 110 60 110C32 110 14 105 14 89C14 70 48 12 60 12Z"/>
+    <path fill="url(#shade)" d="M60 12C72 12 106 70 106 89C106 105 88 110 60 110C32 110 14 105 14 89C14 70 48 12 60 12Z"/>
+    <path fill="url(#shine)" d="M60 12C72 12 106 70 106 89C106 105 88 110 60 110C32 110 14 105 14 89C14 70 48 12 60 12Z"/></g>
+    <g class="eyes"><g class="look"><ellipse cx="47" cy="66" rx="5.4" ry="7" fill="#111"/><ellipse cx="73" cy="66" rx="5.4" ry="7" fill="#111"/><circle cx="48.8" cy="63.6" r="1.7" fill="#fff"/><circle cx="74.8" cy="63.6" r="1.7" fill="#fff"/></g></g>
+    <path d="M41 83Q60 100 79 83" stroke="#141414" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <rect x="51.5" y="92" width="17" height="13" rx="2.6" fill="#fff" stroke="#141414" stroke-width="2"/><rect x="55" y="96.2" width="10" height="2.2" rx="1.1" fill="#34449A"/><rect x="55" y="100" width="6.5" height="1.8" rx=".9" fill="#a9b0cf"/>
+  </symbol>
+  <!-- Dr. Meena -->
+  <symbol id="meena" viewBox="0 0 120 120"><g filter="url(#felt)">
+    <path fill="url(#gb)" d="M60 14C86 12 107 34 106 60C107 88 86 108 60 106C32 108 12 88 14 60C12 33 34 16 60 14Z"/>
+    <path fill="url(#shade)" d="M60 14C86 12 107 34 106 60C107 88 86 108 60 106C32 108 12 88 14 60C12 33 34 16 60 14Z"/>
+    <path fill="url(#shine)" d="M60 14C86 12 107 34 106 60C107 88 86 108 60 106C32 108 12 88 14 60C12 33 34 16 60 14Z"/></g>
+    <g class="eyes"><g class="look"><circle cx="47" cy="54" r="4.8" fill="#111"/><circle cx="73" cy="54" r="4.8" fill="#111"/></g></g>
+    <g fill="none" stroke="#111" stroke-width="3.2"><circle cx="47" cy="54" r="11.5"/><circle cx="73" cy="54" r="11.5"/><path d="M58.5 54h3"/></g>
+    <path d="M36 77Q40 97 60 97Q80 97 84 77" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round"/>
+    <circle cx="60" cy="99" r="5.4" fill="#dcdfe7" stroke="#141414" stroke-width="2.2"/>
+  </symbol>
+  <!-- Pooja -->
+  <symbol id="pooja" viewBox="0 0 120 120"><g filter="url(#felt)">
+    <path fill="url(#gm)" d="M60 107C38 92 12 76 12 49C12 32 25 20 40 20C49 20 56 25 60 32C64 25 71 20 80 20C95 20 108 32 108 49C108 76 82 92 60 107Z"/>
+    <path fill="url(#shade)" d="M60 107C38 92 12 76 12 49C12 32 25 20 40 20C49 20 56 25 60 32C64 25 71 20 80 20C95 20 108 32 108 49C108 76 82 92 60 107Z"/>
+    <path fill="url(#shine)" d="M60 107C38 92 12 76 12 49C12 32 25 20 40 20C49 20 56 25 60 32C64 25 71 20 80 20C95 20 108 32 108 49C108 76 82 92 60 107Z"/></g>
+    <g class="eyes"><g class="look"><ellipse cx="45" cy="53" rx="5.2" ry="6.6" fill="#111"/><ellipse cx="75" cy="53" rx="5.2" ry="6.6" fill="#111"/><circle cx="46.6" cy="50.8" r="1.6" fill="#fff"/><circle cx="76.6" cy="50.8" r="1.6" fill="#fff"/></g></g>
+    <ellipse cx="36" cy="66" rx="6.5" ry="3.6" fill="#ffa6dd" opacity=".75"/><ellipse cx="84" cy="66" rx="6.5" ry="3.6" fill="#ffa6dd" opacity=".75"/>
+    <path d="M51 69Q60 76 69 69" fill="none" stroke="#111" stroke-width="2.6" stroke-linecap="round"/>
+  </symbol>
+  <!-- Arjun, 3 -->
+  <symbol id="arjun" viewBox="0 0 120 120"><g filter="url(#felt)">
+    <path fill="url(#gl)" d="M60 24C86 22 106 42 105 67C106 92 86 108 60 106C34 108 14 92 15 67C14 42 34 26 60 24Z"/>
+    <path fill="url(#shade)" d="M60 24C86 22 106 42 105 67C106 92 86 108 60 106C34 108 14 92 15 67C14 42 34 26 60 24Z"/>
+    <path fill="url(#shine)" d="M60 24C86 22 106 42 105 67C106 92 86 108 60 106C34 108 14 92 15 67C14 42 34 26 60 24Z"/></g>
+    <circle cx="43" cy="44" r="14" fill="#fff"/><circle cx="77" cy="44" r="14" fill="#fff"/>
+    <g class="eyes"><g class="look"><circle cx="44" cy="45" r="6.8" fill="#111"/><circle cx="78" cy="45" r="6.8" fill="#111"/></g></g>
+    <path d="M52 76Q60 82 68 76" fill="none" stroke="#111" stroke-width="2.6" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="ptr" viewBox="0 0 24 24"><path d="M21 3 3 10.5l7.4 2.1L12.5 20z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+</defs></svg>
 
-<header class="site">
-  <a class="brand" href="./index.html"><i>LB</i>Lokesh Bhatia</a>
-  <nav aria-label="Site"><a href="./index.html#work">Work</a><a href="./about.html">About</a><a href="./resume.html">Resume</a><a href="./getbaq.html">Next case study</a></nav>
+<header class="top">
+  <a class="logo" href="./index.html"><span class="mark" aria-hidden="true"></span>Lokesh Bhatia</a>
+  <nav aria-label="Site"><a href="./index.html">Work</a><a href="./about.html">About</a><a href="./getbaq.html">Getbaq</a><a href="./resume.html">Resume</a></nav>
   <a class="btn btn-dark" href="mailto:hi.lokeshux@gmail.com">Get in touch</a>
 </header>
 
 <main>
 <section class="hero wrap" id="top">
-  <svg class="ch bob" viewBox="0 0 120 120" role="img" aria-label="Sunita, the ASHA worker"><use href="#ch-sunita"/></svg>
+  <svg class="ch who bob" viewBox="0 0 120 120" role="img" aria-label="Sunita, the ASHA worker"><use href="#sunita"/></svg>
   <h1 data-rv>Introducing Arogya Line</h1>
-  <p class="sub" data-rv style="--i:1">One care journey, three people and one connected system, reachable from any phone.</p>
+  <p class="sub" data-rv style="--i:1">One care journey for families, ASHA workers and clinics—reachable from any phone.</p>
   <div class="cta" data-rv style="--i:2">
-    <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Explore the prototype</a>
-    <a class="btn btn-line" href="#how">Read the case study</a>
+    <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Try the prototype</a>
+    <a class="btn btn-line" href="https://github.com/LKB00/arogya-line" target="_blank" rel="noopener">View the repository</a>
   </div>
-  <div class="reel" data-rv style="--i:3">
-    <div class="stage">
-      <div class="phone"><video src="./assets/arogya2/v-al-today.mp4" poster="./assets/arogya2/v-al-today.webp" muted loop playsinline preload="metadata" aria-label="The ASHA app: today's list"></video></div>
-      <div class="laptop"><div class="scr"><img src="./assets/arogya2/al-phc.webp" alt="The PHC dashboard with the day's bookings" loading="lazy"></div><div class="base"></div></div>
-      <div class="phone"><video src="./assets/arogya2/v-al-voice.mp4" poster="./assets/arogya2/v-al-voice.webp" muted loop playsinline preload="metadata" aria-label="The voice line, written as live captions"></video></div>
-    </div>
-    <div class="ctrl"><button class="chip" id="reelBtn" type="button" aria-pressed="false">Pause <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="1" y="1" width="3" height="8" rx="1" fill="currentColor"/><rect x="6" y="1" width="3" height="8" rx="1" fill="currentColor"/></svg></button></div>
+
+  <div class="film" id="film" data-rv style="--i:3" aria-label="A short film of the three surfaces">
+    <div class="mk" aria-hidden="true"><i></i></div>
+    <div class="scene s1 on"><div class="set"><div class="phone"><video muted playsinline preload="auto" src="./assets/arogya2/v-al-today.mp4" poster="./assets/arogya2/v-al-today.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="left:14%"><use href="#sunita"/></svg></div>
+    <div class="scene s2"><div class="set"><div class="phone"><video muted playsinline preload="none" src="./assets/arogya2/v-al-book.mp4" poster="./assets/arogya2/v-al-book.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:14%;--bd:1s"><use href="#arjun"/></svg></div>
+    <div class="scene s3"><div class="set"><div class="laptop"><div class="scr"><video muted playsinline preload="none" src="./assets/arogya2/v-al-phc.mp4" poster="./assets/arogya2/v-al-phc.webp"></video></div><div class="base"></div></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:5%;bottom:40%;--bd:.5s"><use href="#meena"/></svg></div>
+    <div class="scene s4"><div class="set"><div class="phone"><video muted playsinline preload="none" src="./assets/arogya2/v-al-voice.mp4" poster="./assets/arogya2/v-al-voice.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="left:15%;--bd:2s"><use href="#pooja"/></svg></div>
+    <div class="ctl"><button class="chip" id="play" type="button" aria-pressed="false"><span>Pause</span><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx="1" fill="currentColor"/><rect x="6.1" y="1" width="2.4" height="8" rx="1" fill="currentColor"/></svg></button><button class="chip round" type="button" aria-label="Sound is off; these recordings have no sound" disabled><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg></button></div>
   </div>
 </section>
 
-<div class="pillbar" id="pill">
-  <a class="me" href="#top"><span class="ring" aria-hidden="true"></span>Arogya Line</a>
-  <nav aria-label="Case study"><a href="#how">How it works</a><a href="#moments">Edge cases</a><a href="#day">A day</a><a href="#surfaces">Surfaces</a></nav>
-  <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Explore the prototype</a>
+<div class="barslot" aria-hidden="true"></div>
+<div class="bar" id="bar">
+  <a class="me" href="#top"><span class="mark" aria-hidden="true"></span>Arogya Line</a>
+  <nav aria-label="On this page"><a href="#how">How it works</a><a href="#cases">Edge cases</a><a href="#scope">Prototype</a></nav>
+  <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Try the prototype</a>
 </div>
 
-<section class="sec wrap center" id="how" style="padding-top:150px">
+<section class="wrap center" id="how">
   <h2 data-rv>One record, three people</h2>
-  <p class="lede" data-rv style="--i:1">A concern starts at home, is screened by an ASHA worker, and is seen at a primary health centre. Each person does their part. The record used to break in the gaps between them.</p>
+  <p class="lede" data-rv style="--i:1">A concern starts at home, is screened by an ASHA worker, and is seen at the clinic. Arogya Line keeps it one record the whole way, so nobody starts again.</p>
 </section>
 
 <div class="wrap rows">
-  <!-- 1 · ASHA: who needs her next -->
   <div class="row" data-rv>
-    <div class="card g-yel" id="c-today" aria-hidden="true">
-      <div class="stack">
-        <div class="item"><span class="av" style="background:#e5487a">K</span><span><b>Khushi, 5</b><small>PHC visit today, 9–10 am</small></span><span class="tag t-urgent">Urgent</span></div>
-        <div class="item"><span class="av" style="background:#d69a00">A</span><span><b>Arjun, 3</b><small>Fever since Tuesday</small></span><span class="tag t-visit">Visit</span></div>
-        <div class="item"><span class="av" style="background:#34449A">R</span><span><b>Ravi, 61</b><small>Called the voice line</small></span><span class="tag t-wait">Follow up</span></div>
-        <div class="item dim"><span class="av" style="background:#138a4b">M</span><span><b>Meera, 24</b><small>+1 other person in this family</small></span><span class="tag t-home">Home</span></div>
-      </div>
-      <div class="rider" data-rider><svg class="ch" viewBox="0 0 120 120"><use href="#ch-sunita"/></svg><svg class="cursor" viewBox="0 0 24 24"><use href="#cursor"/></svg></div>
+    <div class="card y" id="k1" aria-hidden="true">
+      <div class="col" id="col"><div class="list">
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#34449A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg></span><span><b>Today</b><small>4 people need you today</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#c7801a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.4"/><path d="M3 20c.6-3.6 3-5.6 6-5.6s5.4 2 6 5.6M16 4.2a3.4 3.4 0 0 1 0 6.6M21 20c-.4-2.8-1.8-4.6-3.8-5.3"/></svg></span><span><b>Families</b><small>Kukas and Naila, by village</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#b72e5e" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4H5a1 1 0 0 0-1 1v4a5 5 0 0 0 10 0V5a1 1 0 0 0-1-1h-1"/><path d="M9 14v1a5 5 0 0 0 10 0v-2"/><circle cx="19" cy="11" r="2"/></svg></span><span><b>Check someone</b><small>One question at a time</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#138a4b" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l8-4 8 4v14M9 21v-5h6v5M12 8v4M10 10h4"/></svg></span><span><b>Book a visit</b><small>PHC Achrol, Dr. Meena</small></span></div>
+      </div></div>
+      <div class="agent" id="a1"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><svg class="ptr" viewBox="0 0 24 24"><use href="#ptr"/></svg></div>
     </div>
-    <div class="copy">
-      <h3>She sees who needs her first</h3>
-      <p>The ASHA’s home screen is a work queue, not a dashboard. One row per person, with the next action in words and the IMNCI colour always beside a label, ranked by what is due.</p>
-    </div>
+    <div class="txt"><h3>Her day starts with who needs her</h3><p>The ASHA’s phone is a work queue, not a dashboard. It starts from the families she already knows, ranks people by what is due, and puts the next action in words.</p></div>
   </div>
 
-  <!-- 2 · Offline booking -->
-  <div class="row flip" data-rv>
-    <div class="card g-coral" id="c-sync" aria-hidden="true">
-      <div class="panel">
+  <div class="row r" data-rv>
+    <div class="card c" id="k2" aria-hidden="true">
+      <div class="tray" id="tray">
+        <h5>Sent to PHC Achrol</h5>
+        <div class="grp" id="gSent">
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#c92a5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2.4 17.6A2 2 0 0 0 4.1 20.6h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span><b>Khushi, 5</b><small>Today, 9–10 am · Urgent</small></span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#34449A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span><b>Kamla, 62</b><small>Booked on the voice line</small></span></div>
+        </div>
         <h5>Waiting to send</h5>
-        <div id="waitList"></div>
-        <h5 style="margin-top:12px">Sent to PHC Achrol</h5>
-        <div id="sentList">
-          <div class="item"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#138a4b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span><span><b>Khushi, 5</b><small>Today, 9–10 am · Urgent</small></span></div>
-          <div class="item" id="arjunItem"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#34449A" stroke-width="2" stroke-linecap="round"><path d="M4 9a12 12 0 0 1 16 0M7 12.5a7.5 7.5 0 0 1 10 0M10 16a3 3 0 0 1 4 0"/><circle cx="12" cy="19" r="1" fill="#34449A"/></svg></span><span><b>Arjun, 3</b><small>Tomorrow, 10–11 am</small><span class="status" id="syncStatus"><i></i><em style="font-style:normal">Offline · 1 visit to send</em></span></span></div>
+        <div class="grp" id="gWait">
+          <div class="row2" id="mv"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#b07a00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg></span><span><b>Arjun, 3</b><small id="mvs">Offline · 1 visit to send</small></span><span class="grip">⋮⋮</span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span><b>Rekha, 24</b><small>Follow-up call · Naila</small></span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#138a4b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7M6 10v10h12V10"/></svg></span><span><b>Mohanlal, 45</b><small>Follow up at home · Kukas</small></span></div>
         </div>
       </div>
-      <div class="rider" data-rider2 style="transform:translate(560px,150px)"><svg class="ch" viewBox="0 0 120 120" style="--bd:1.4s"><use href="#ch-meena"/></svg></div>
+      <div class="agent" id="a2" style="transform:translate(540px,190px)"><svg class="ch" viewBox="0 0 120 120" style="--bd:1.3s"><use href="#meena"/></svg><svg class="ptr" viewBox="0 0 24 24"><use href="#ptr"/></svg></div>
     </div>
-    <div class="copy">
-      <h3>Booked offline, sent when the signal returns</h3>
-      <p>Saving never waits for signal. The visit sits on her phone as “1 visit to send”, and appears on the doctor’s list the moment it syncs. Offline is a calm state, not an error.</p>
-    </div>
+    <div class="txt"><h3>Booked offline, sent when the signal returns</h3><p>Saving never waits for signal. The visit sits on her phone as “1 visit to send”, and joins the doctor’s list the moment it syncs. Offline is a calm state, not an error.</p></div>
   </div>
 
-  <!-- 3 · Voice line -->
   <div class="row" data-rv>
-    <div class="card g-blue" id="c-voice" aria-hidden="true">
-      <div class="handset">
-        <div class="top"><span class="hb">☰</span><span class="who"><svg class="ch" viewBox="0 0 120 120" style="--bd:.8s"><use href="#ch-pooja"/></svg><span>Voice line</span></span><span class="hb">☏</span></div>
-        <div class="msgs" id="voiceMsgs">
-          <div class="bub l">Who is this call about? Press 1 for Arjun.</div>
-          <div class="bub r keys">1</div>
-          <div class="bub l">Thank you. From your answers, Arjun should see the doctor.</div>
-          <div class="typing"><i></i><i></i><i></i></div>
-          <div class="bub l">Press 1 to book a visit. Press 0 to talk to a person.</div>
+    <div class="card b" id="k3" aria-hidden="true">
+      <div class="hand"><div class="in">
+        <div class="hd"><span class="hb"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round"><path d="M5 9h14M5 15h9"/></svg></span><span class="hn"><svg class="ch" viewBox="0 0 120 120" style="--bd:.7s"><use href="#pooja"/></svg><span>Arogya Line</span></span><span class="hb"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span></div>
+        <div class="msgs" id="call">
+          <div class="bub l">Welcome to Arogya Line. Please enter your 4-digit family ID.</div>
+          <div class="bub r k">4471</div>
+          <div class="bub l">Thank you. We have found your family card.</div>
+          <div class="bub r k">3</div>
+          <div class="dots3"><i></i><i></i><i></i></div>
+          <div class="bub l">Dr. Meena has a message for Arjun.</div>
+          <div class="att"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg></i><span><b>Advice for Arjun</b><small>From Dr. Meena</small></span></div>
         </div>
-      </div>
+      </div></div>
     </div>
-    <div class="copy">
-      <h3>The family hears it on any phone</h3>
-      <p>No app to install. The family calls the number on their card, picks the person by name, and hears the result as sentences. 9 repeats. 0 always reaches a person.</p>
-    </div>
+    <div class="txt"><h3>The family hears it on any phone</h3><p>No app to install. They call the number on their card, key in the family ID, and hear the doctor’s advice by name. 9 repeats. 0 reaches a person.</p></div>
   </div>
 
-  <!-- 4 · PHC -->
-  <div class="row flip" data-rv>
-    <div class="card g-mag" id="c-phc" aria-hidden="true">
-      <div class="sheet">
-        <header><b>PHC Achrol · Today</b><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><span>3 consults remaining</span></header>
-        <div class="slot"><time class="u">9:00</time><svg class="ch" viewBox="0 0 120 120"><use href="#ch-sunita"/></svg><span><b>Khushi, 5 · Urgent</b><small>Via the ASHA · danger sign reported</small></span><span class="act go">Start consult</span></div>
-        <div class="slot"><time>10:00</time><svg class="ch" viewBox="0 0 120 120"><use href="#ch-arjun"/></svg><span><b>Arjun, 3</b><small>Fever since Tuesday, vomiting</small></span><span class="act">View booking</span></div>
-        <div class="slot"><time>11:00</time><svg class="ch" viewBox="0 0 120 120"><use href="#ch-pooja"/></svg><span><b>Ravi, 61</b><small>Via the voice line</small></span><span class="act">Not arrived yet</span></div>
-        <div class="shot"><img src="./assets/arogya2/al-phc-consult.webp" alt="" loading="lazy"></div>
+  <div class="row r" data-rv>
+    <div class="card m" id="k4" aria-hidden="true">
+      <div class="chan">
+        <header><b>PHC Achrol · Tomorrow</b><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></header>
+        <div class="post"><span class="av"><svg viewBox="0 0 120 120"><use href="#sunita"/></svg></span><div><b>Sunita</b><span class="tg">ASHA</span><time>09:31</time><p>Booked Arjun, 3 for Thu, 10–11 am. Fever more than 2 days, vomiting. No fast breathing.</p></div></div>
+        <div class="post"><span class="av" style="background:#e9f3ff"><svg viewBox="0 0 120 120"><use href="#meena"/></svg></span><div><b>Dr. Meena</b><span class="tg">PHC</span><time>Just now</time><p>Seen. I’ll start from what you found, and leave advice the family can hear on the line.</p></div></div>
+        <div class="embed"><img src="./assets/arogya3/phc-today.webp" alt="" loading="lazy"></div>
       </div>
     </div>
-    <div class="copy">
-      <h3>The doctor starts from what was found</h3>
-      <p>The day in time order. Urgency marks a row but never reorders it. Each row offers only what is possible now, and the consult opens on what the ASHA found, not a blank page.</p>
-      <a class="btn btn-line" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Open the dashboard</a>
-    </div>
+    <div class="txt"><h3>The doctor starts from what was found</h3><p>The day in time order. Urgency marks a row but never reorders it, and the consult opens on what the ASHA found, not a blank page.</p><a class="btn btn-line" href="https://arogya-line.vercel.app/phc" target="_blank" rel="noopener">Open the dashboard</a></div>
   </div>
 </div>
 
-<section class="sec wrap" id="moments">
-  <div class="split">
-    <h2 data-rv>Built for the unhappy path</h2>
-    <p class="lede" data-rv style="--i:1">Healthcare rarely follows the happy path. Six moments where the record could have guessed, and what it does instead.</p>
-  </div>
-  <div class="explore"><span>Explore</span><div class="arrows"><button class="arrow" id="prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="arrow" id="next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
-  <div class="track" id="track">
-    <article class="slide cur"><div class="card g-yel"><div class="phone"><img src="./assets/arogya2/al-booking.webp" alt="Booking a visit for Arjun at PHC Achrol" loading="lazy"></div><div class="note"><small>Slot fills while booking</small><q>10–11 am was just taken. Nothing was booked.</q></div></div>
-      <h3>Never guess a slot</h3><p>A booking syncing from another phone can take the slot she picked. <b>One rule on every surface:</b> nothing is booked, and she is told so.</p></article>
-    <article class="slide"><div class="card g-mag"><div class="phone"><img src="./assets/arogya2/al-khushi-family.webp" alt="Mahendra's family card, with Khushi marked urgent" loading="lazy"></div><div class="note"><small>Family has multiple people</small><q>+1 other person in this family</q><span class="was">One row per family</span></div></div>
-      <h3>A family is context. A person is the work.</h3><p>One row per family hid the second person who needed her. <b>Now one row per person,</b> and the row says when someone else in the house needs her too.</p></article>
-    <article class="slide"><div class="card g-coral"><div class="phone"><img src="./assets/arogya2/al-booked-offline.webp" alt="Visit booked while offline" loading="lazy"></div><div class="note"><small>Connectivity disappears</small><q>Offline · 1 visit to send</q><span class="status sending" style="margin-top:10px"><i></i>Sending 1 visit…</span></div></div>
-      <h3>Offline, made explicit</h3><p>Without signal she couldn’t tell if her work was saved. <b>“Waiting to send” sits on the record itself,</b> then clears quietly once it is sent.</p></article>
-    <article class="slide"><div class="card g-lilac"><div class="phone"><img src="./assets/arogya2/al-question.webp" alt="One screening question at a time" loading="lazy"></div><div class="note"><small>Screening is incomplete</small><q>An unfinished check is never a result.</q><span class="was">Home care</span></div></div>
-      <h3>Never guess a clinical state</h3><p>Opened with no answers, the result once said home care: false reassurance about a sick child. <b>It now goes back to the next unanswered question.</b></p></article>
-    <article class="slide"><div class="card g-blue"><div class="phone"><img src="./assets/arogya2/al-today.webp" alt="The ASHA's Today list" loading="lazy"></div><div class="note"><small>Follow-up is missed</small><q>Needs attention now: call again, or ask the ASHA.</q></div></div>
-      <h3>Never guess responsibility</h3><p>A missed call quietly became a home visit nobody had agreed to. <b>It now waits until the doctor decides</b> who acts next.</p></article>
-    <article class="slide"><div class="card g-lime"><div class="phone"><img src="./assets/arogya2/al-voice-menu.webp" alt="The voice line menu" loading="lazy"></div><div class="note"><small>Voice line</small><q>0 reaches a person, and books nothing.</q><span class="was">0 booked a visit for the family head</span></div></div>
-      <h3>Never guess a patient</h3><p>Pressing 0 once booked a visit for a patient nobody had chosen. <b>The person is now chosen by name,</b> and the booking is read back before anything is written.</p></article>
+<section class="wrap" id="cases">
+  <div class="two"><h2 data-rv>Built for the unhappy path</h2><p data-rv style="--i:1">Healthcare rarely follows the happy path. Explore what the record does when it could have guessed.</p></div>
+  <div class="explore"><span>Explore</span><div class="nav2"><button class="arw" id="prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="arw" id="next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+  <div class="rail" id="rail">
+    <article class="sl on">
+      <div class="card y">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><span>Sunita</span></div><div class="msgs" style="margin-top:6px"><div class="meta">Today 9:24 AM</div><div class="bub r">Book Arjun at PHC Achrol, 10–11 am.</div><div class="bub l">10–11 am was just taken. Nothing was booked.</div><div class="pill">Choose another time</div></div><div class="comp">Message Sunita<i></i></div></div>
+        <div class="shot"><img src="./assets/arogya3/booking-picked.webp" alt="Booking a PHC visit for Arjun" loading="lazy"></div>
+      </div>
+      <h3>Never guess a slot</h3><p>A booking syncing from another phone can take the slot she picked. One rule on every surface: nothing is booked, and she is told so.</p>
+    </article>
+    <article class="sl">
+      <div class="card p">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><span>Today</span></div><div class="msgs" style="margin-top:6px"><div class="meta">Kukas · Card 3120</div><div class="bub l"><b>Khushi, 5</b> · PHC visit today, 9–10 am</div><div class="pill" style="color:#b8184f;background:#fde3ec">+1 other person in this family</div><div class="bub l"><b>Mahendra, 34</b> · Nothing open</div></div></div>
+        <div class="shot"><img src="./assets/arogya3/family.webp" alt="Pooja's family: who is unwell?" loading="lazy"></div>
+      </div>
+      <h3>A family is context. A person is the work.</h3><p>One row per family hid the second person who needed her. Now there is one row per person, and it says when someone else in the house needs her too.</p>
+    </article>
+    <article class="sl">
+      <div class="card c">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><span>Sync</span></div><div class="msgs" style="margin-top:6px"><div class="meta">No signal</div><div class="bub l">Offline · 1 visit to send</div><div class="bub l">Sending 1 visit…</div><div class="bub l">Sent to PHC Achrol.</div></div></div>
+        <div class="shot"><img src="./assets/arogya3/booked-offline.webp" alt="Visit booked while offline" loading="lazy"></div>
+      </div>
+      <h3>Offline, made explicit</h3><p>Without signal she couldn’t tell if her work was saved. “Waiting to send” now sits on the record itself, and clears quietly once it is sent.</p>
+    </article>
+    <article class="sl">
+      <div class="card v">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#arjun"/></svg><span>Arjun, 3</span></div><div class="msgs" style="margin-top:6px"><div class="meta">Opened from a link</div><div class="bub r">No answers yet</div><div class="bub l">An unfinished check is never a result. Back to question 1 of 4.</div><div class="pill">Fever for more than 2 days?</div></div></div>
+        <div class="shot"><img src="./assets/arogya3/q4.webp" alt="One screening question at a time" loading="lazy"></div>
+      </div>
+      <h3>Never guess a clinical state</h3><p>Opened with no answers, the result once said home care: false reassurance about a sick child. It now goes back to the next unanswered question.</p>
+    </article>
+    <article class="sl">
+      <div class="card l">
+        <div class="mini"><div class="hn"><svg class="ch" viewBox="0 0 120 120"><use href="#pooja"/></svg><span>Voice line</span></div><div class="msgs" style="margin-top:6px"><div class="meta">On call · 4471</div><div class="bub r k">0</div><div class="bub l">Connecting you to a person. Nothing has been booked.</div><div class="pill">Who is this call about? Press 1 for Arjun.</div></div></div>
+        <div class="shot"><img src="./assets/arogya3/v-id.webp" alt="The voice line, written as live captions" loading="lazy"></div>
+      </div>
+      <h3>Never guess a patient</h3><p>Pressing 0 once booked a visit for a patient nobody had chosen. Now 0 reaches a person, the person is chosen by name, and every booking is read back first.</p>
+    </article>
   </div>
 </section>
 
-<section class="sec wrap center" id="rules">
-  <svg class="shield" viewBox="0 0 44 48" aria-hidden="true"><defs><linearGradient id="sh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d7cf0"/><stop offset="1" stop-color="#34449A"/></linearGradient></defs><path d="M22 2l18 6v14c0 12-8 20-18 24C12 42 4 34 4 22V8z" fill="url(#sh)"/><path d="M22 2l18 6v14c0 12-8 20-18 24z" fill="#fff" opacity=".14"/></svg>
+<section class="wrap center" id="rules">
+  <svg class="shield" viewBox="0 0 36 40" aria-hidden="true"><defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b7cf7"/><stop offset="1" stop-color="#2a45c9"/></linearGradient></defs><path d="M18 1.5 33 6.6v12.2c0 10-6.6 16.6-15 19.7C9.6 35.4 3 28.8 3 18.8V6.6z" fill="url(#sg)"/><path d="M18 1.5 33 6.6v12.2c0 10-6.6 16.6-15 19.7z" fill="#fff" opacity=".13"/></svg>
   <h2 data-rv>On the family’s side,<br>decided by people</h2>
   <p class="lede" data-rv style="--i:1">The system screens and suggests. A person decides, and a person is always one key away.</p>
-  <div class="cta" data-rv style="--i:2"><a class="btn btn-line" href="#moments">See the edge cases</a></div>
-  <div class="rules">
-    <div class="rule" data-rv style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><h4>Never colour alone</h4><p>Pink, yellow and green come from the IMNCI chart the ASHA trained on, and always travel with a word.</p></div>
-    <div class="rule" data-rv style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg><h4>A person decides</h4><p>Nothing is handed over without someone deciding it. A booking goes to the doctor, advice to the family.</p></div>
-    <div class="rule" data-rv style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><h4>0 reaches a person</h4><p>From anywhere in the call, without creating a booking. 9 repeats what was said.</p></div>
+  <div class="cta" data-rv style="--i:2;margin-top:34px"><a class="btn btn-line btn-sm" href="https://github.com/LKB00/arogya-line/blob/master/SPEC.md" target="_blank" rel="noopener">Read the spec</a></div>
+  <div class="cards3">
+    <div class="k3" data-rv><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg><h4>Never colour alone</h4><p>Pink, yellow and green come from the IMNCI chart the ASHA trained on, and always travel with a word or an icon.</p></div>
+    <div class="k3" data-rv style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg><h4>A person decides</h4><p>The system screens and suggests. Nothing is handed over without someone deciding it: a booking to the doctor, advice to the family.</p></div>
+    <div class="k3" data-rv style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M10 17h4"/></svg><h4>0 reaches a person</h4><p>From anywhere in the call, without creating a booking. 9 repeats what was said, so nothing depends on hearing it once.</p></div>
   </div>
 </section>
 
-<section class="sec wrap center" id="day">
+<section class="wrap center" id="day">
   <h2 data-rv>A day in Arjun’s care</h2>
   <p class="lede" data-rv style="--i:1">From a fever at home to a follow-up call, find out how one record moves between three people.</p>
-  <div class="day" id="dayStage">
-    <div class="say" id="say"><span id="sayText"></span><span class="heart" aria-hidden="true">💗</span></div>
-    <div class="rider2" id="rider2"><svg class="ch bob" viewBox="0 0 120 120" id="dayCh"><use href="#ch-pooja"/></svg></div>
-    <div class="when" id="when"><button type="button" id="dPrev" aria-label="Earlier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><span id="whenText">Day 1 · 9:00 AM</span><button type="button" id="dNext" aria-label="Later"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
-    <div class="rail" id="rail" role="slider" tabindex="0" aria-label="Moment in Arjun's care" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1"><div class="ticks" id="ticks"></div></div>
+  <div class="stage" id="stage">
+    <div class="say" id="say"><span id="sayT"></span><span class="re" aria-hidden="true">💗</span></div>
+    <div class="char" id="char"><svg class="ch bob" viewBox="0 0 120 120"><use id="charU" href="#pooja"/></svg></div>
+    <div class="time" id="time"><button type="button" id="tp" aria-label="Earlier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><span id="tt"></span><button type="button" id="tn" aria-label="Later"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="track" id="track" role="slider" tabindex="0" aria-label="Moment in Arjun's care" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="ticks" id="ticks"></div></div>
   </div>
-  <div class="dayc" id="dayc" aria-live="polite"><div class="where" id="dWhere"></div><h3 id="dTitle"></h3><p id="dBody"></p></div>
+  <div class="dayc" id="dayc" aria-live="polite"><div class="wh" id="dw"></div><h3 id="dh"></h3><p id="db"></p></div>
 </section>
 
-<section class="sec wrap center" id="surfaces">
+<section class="wrap center" id="surfaces">
   <h2 data-rv>Right where each person is</h2>
-  <p class="lede" data-rv style="--i:1">A smartphone for the ASHA, any phone for the family, a desktop at the PHC. All three read and write the same record.</p>
-  <p data-rv style="--i:2;font-size:12.5px;color:var(--text3);margin:18px 0 0">A matching Kannada voice flow is what I would build next.</p>
-  <div class="tabs" role="tablist" aria-label="Surfaces">
-    <button class="tab" role="tab" aria-selected="true" data-t="0">ASHA app</button>
-    <button class="tab" role="tab" aria-selected="false" data-t="1">Voice line</button>
-    <button class="tab" role="tab" aria-selected="false" data-t="2">PHC dashboard</button>
+  <p class="lede" data-rv style="--i:1">A smartphone for the ASHA, any phone for the family, a desktop at the clinic. Each one reads and writes the same record, so work carries on wherever it is picked up.</p>
+  <p class="note" data-rv style="--i:2">A Kannada voice flow is what I would build next.</p>
+  <div class="tabs" role="tablist" aria-label="Surfaces"><button class="tab" role="tab" aria-selected="true">ASHA app</button><button class="tab" role="tab" aria-selected="false">Voice line</button><button class="tab" role="tab" aria-selected="false">PHC dashboard</button></div>
+  <div class="dev" id="dev">
+    <div class="fr lt"><div class="sb">9:30<span><svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="9" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#111"/></svg><svg width="24" height="12" viewBox="0 0 24 12"><rect x=".5" y=".5" width="20" height="11" rx="3" fill="none" stroke="#111"/><rect x="2" y="2" width="16" height="8" rx="1.6" fill="#111"/><rect x="21.5" y="4" width="1.8" height="4" rx=".9" fill="#111"/></svg></span></div><img src="./assets/arogya3/today.webp" alt="The ASHA's Today list" loading="lazy"></div>
+    <div class="fr lt off"><div class="sb">9:30<span><svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="9" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#111"/></svg></span></div>
+      <div class="fc"><div class="brand"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l8-4 8 4v14M9 21v-5h6v5M12 8v4M10 10h4"/></svg>Arogya Line</div><small>Call free, from any phone</small><div class="num">1800 4471 108</div><small>Your family ID</small><div class="ids"><span>4</span><span>4</span><span>7</span><span>1</span></div><div class="fam">Pooja · Kukas · PHC Achrol</div><ol><li><b>1</b>Someone is unwell</li><li><b>2</b>Book a visit</li><li><b>3</b>Hear your advice</li><li><b>0</b>Talk to a person</li></ol></div></div>
+    <div class="fr win off"><img src="./assets/arogya3/phc-today.webp" alt="The PHC dashboard: today's bookings in time order" loading="lazy"></div>
+    <svg class="ch buddy bob" id="buddy" viewBox="0 0 120 120" aria-hidden="true"><use href="#sunita"/></svg>
   </div>
-  <div class="device" id="device">
-    <div class="phone" data-d="0"><video src="./assets/arogya2/v-al-check.mp4" poster="./assets/arogya2/v-al-check.webp" muted loop playsinline preload="none" aria-label="The ASHA app: the whole check"></video></div>
-    <div class="phone off" data-d="1"><video src="./assets/arogya2/v-al-advice.mp4" poster="./assets/arogya2/v-al-advice.webp" muted loop playsinline preload="none" aria-label="The voice line: advice by person"></video></div>
-    <div class="laptop off" data-d="2"><div class="scr"><video src="./assets/arogya2/v-al-phc.mp4" poster="./assets/arogya2/v-al-phc.webp" muted loop playsinline preload="none" aria-label="The PHC dashboard: one consult"></video></div><div class="base"></div></div>
-    <svg class="ch buddy bob" id="buddy" viewBox="0 0 120 120" aria-hidden="true"><use href="#ch-sunita"/></svg>
-  </div>
-  <div class="cap" id="cap"><h4>ASHA app</h4><p>Which family, who is unwell, one question at a time, then the result with what was found and what was ruled out.</p></div>
+  <div class="capt" id="capt"><h4>ASHA app</h4><p>Who needs her next and what to do, ranked by what is due. It works the same with no signal.</p></div>
 </section>
 
-<section class="sec wrap" id="scope">
-  <div class="avail" data-rv>
-    <div class="ring2" aria-hidden="true"></div>
-    <h2>What this is, and isn’t</h2>
-    <p>A working prototype, not a production healthcare system. All three surfaces share one record in the browser. Clinical rules are illustrative, and every name, family and number is invented. Production would need clinical validation, secure identity, real telephony and persistent offline storage.</p>
-    <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Explore the prototype</a>
+<section class="wrap" id="scope">
+  <div class="scope" data-rv>
+    <div class="rg" aria-hidden="true"></div>
+    <h2>How to try Arogya Line</h2>
+    <p>The prototype runs in any browser. A guided walkthrough takes you through one patient: an offline booking, the doctor’s consult, and the advice heard on the line. It is a concept, not a production healthcare system, and every name and number is <a href="https://github.com/LKB00/arogya-line#readme" target="_blank" rel="noopener">invented</a>.</p>
+    <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Try the prototype</a>
   </div>
 </section>
 
-<section class="final wrap" id="close">
-  <h2 data-rv>One concern, one record</h2>
-  <div class="cta" data-rv style="--i:1">
-    <a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Explore the prototype</a>
-    <a class="btn btn-line" href="https://github.com/LKB00/arogya-line" target="_blank" rel="noopener">View the repository</a>
-  </div>
+<section class="wrap" id="close">
+  <h2 data-rv>Take it from here, Arogya</h2>
+  <div class="cta" data-rv style="--i:1"><a class="btn btn-dark" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Try the prototype</a><a class="btn btn-line" href="https://github.com/LKB00/arogya-line" target="_blank" rel="noopener">View the repository</a></div>
   <div class="cast" id="cast" aria-hidden="true">
-    <svg class="ch" viewBox="0 0 120 120" style="--bd:.3s"><use href="#ch-meena"/></svg>
-    <svg class="ch" viewBox="0 0 120 120" style="--bd:1.9s"><use href="#ch-sunita"/></svg>
-    <svg class="ch" viewBox="0 0 120 120" style="--bd:3.1s"><use href="#ch-pooja"/></svg>
-    <svg class="ch" viewBox="0 0 120 120" style="--bd:.9s"><use href="#ch-arjun"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="-560" data-y="-260" data-at="-150" style="--bd:.4s"><use href="#meena"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="-120" data-y="220" data-at="-50" style="--bd:2s"><use href="#sunita"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="120" data-y="220" data-at="50" style="--bd:3.1s"><use href="#pooja"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="560" data-y="-260" data-at="150" style="--bd:1s"><use href="#arjun"/></svg>
   </div>
 </section>
 </main>
 
 <footer>
-  <div class="foot">
-    <div><a class="brand" href="./index.html" aria-label="Lokesh Bhatia, home"><i>LB</i></a></div>
-    <div><h6>Case studies</h6><ul><li><a href="./getbaq.html">Getbaq</a></li><li><a href="./index.html#work">Rupeezy</a></li><li><a href="./arogya-line.html">Arogya Line</a></li></ul></div>
+  <div class="ft">
+    <div><a href="./index.html" aria-label="Lokesh Bhatia, home"><span class="mark" style="display:block"></span></a></div>
+    <div><h6>Case studies</h6><ul><li><a href="./getbaq.html">Getbaq</a></li><li><a href="./index.html">Rupeezy</a></li><li><a href="./arogya-line.html">Arogya Line</a></li></ul></div>
     <div><h6>Lokesh</h6><ul><li><a href="./about.html">About</a></li><li><a href="./resume.html">Resume</a></li><li><a href="mailto:hi.lokeshux@gmail.com">Email</a></li></ul></div>
   </div>
-  <div class="legal"><span>Lokesh Bhatia © 2026</span><span>Designed and built by me, with an AI that argued back.</span></div>
+  <div class="legal"><span>Lokesh Bhatia © 2026 · Designed and built with an AI that argued back</span><span class="soc"><a href="https://github.com/LKB00" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a><a href="mailto:hi.lokeshux@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a><span>English · India</span></span></div>
 </footer>
 <script>
 (() => {
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const wait = ms => new Promise(r => setTimeout(r, ms));
+const io = (el, fn, o) => { const x = new IntersectionObserver(es => es.forEach(e => fn(e, x)), o); x.observe(el); return x; };
 
-/* reveal on enter */
-const rv = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rv.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-$$('[data-rv]').forEach(el => rv.observe(el));
+/* Reveal: 10 px lift, 150 ms stagger */
+$$('[data-rv]').forEach(el => io(el, (e, x) => { if (e.isIntersecting) { el.classList.add('in'); x.disconnect(); } }, { rootMargin: '0px 0px -8% 0px' }));
 
-/* eyes follow the pointer */
-let raf = 0, px = innerWidth / 2, py = innerHeight / 3;
-addEventListener('pointermove', e => { px = e.clientX; py = e.clientY; if (!raf) raf = requestAnimationFrame(look); }, { passive: true });
-function look() {
-  raf = 0;
-  $$('svg.ch').forEach(s => {
-    const b = s.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return;
-    const dx = px - (b.left + b.width / 2), dy = py - (b.top + b.height / 2), d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 300) * 3;
-    s.style.setProperty('--lx', (dx / d * k).toFixed(2) + 'px'); s.style.setProperty('--ly', (dy / d * k).toFixed(2) + 'px');
-  });
+/* Eyes follow the pointer */
+let px = innerWidth / 2, py = innerHeight / 3, rq = 0;
+addEventListener('pointermove', e => { px = e.clientX; py = e.clientY; rq ||= requestAnimationFrame(look); }, { passive: true });
+function look() { rq = 0; $$('svg.ch').forEach(s => { const b = s.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return; const dx = px - b.left - b.width / 2, dy = py - b.top - b.height / 2, d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 280) * 3.2; s.style.setProperty('--lx', (dx / d * k).toFixed(2) + 'px'); s.style.setProperty('--ly', (dy / d * k).toFixed(2) + 'px'); }); }
+
+/* Loops that run only while their card is on screen */
+function loop(el, fn) { let on = false, g = 0; io(el, e => { if (e.isIntersecting && !on) { on = true; const my = ++g; fn(() => on && my === g); } else if (!e.isIntersecting) on = false; }, { threshold: .35 }); }
+
+/* ── Film ── */
+const film = $('#film'), scenes = $$('.scene', film), playBtn = $('#play');
+let si = 0, paused = RM, filmVis = false, tmr = 0;
+function playScene(i) {
+  scenes.forEach((s, j) => { s.classList.toggle('on', j === i); const v = $('video', s); if (j === i) { v.preload = 'auto'; v.currentTime = 0; if (!paused && filmVis) v.play().catch(() => {}); } else v.pause(); });
+  const nx = $('video', scenes[(i + 1) % scenes.length]); if (nx) nx.preload = 'auto';
 }
+function tick() { clearTimeout(tmr); if (paused || !filmVis) return; tmr = setTimeout(() => { si = (si + 1) % scenes.length; playScene(si); tick(); }, 6500); }
+io(film, e => { filmVis = e.isIntersecting; const v = $('video', scenes[si]); if (filmVis && !paused) { v.play().catch(() => {}); tick(); } else { v.pause(); clearTimeout(tmr); } }, { threshold: .25 });
+playBtn.addEventListener('click', () => { paused = !paused; playBtn.setAttribute('aria-pressed', paused); $('span', playBtn).textContent = paused ? 'Play' : 'Pause'; const v = $('video', scenes[si]); if (paused) { v.pause(); clearTimeout(tmr); } else { v.play().catch(() => {}); tick(); } });
+if (RM) $('span', playBtn).textContent = 'Play';
+playScene(0);
 
-/* run a card's loop only while it is on screen */
-function whenVisible(el, fn) {
-  let on = false, gen = 0;
-  new IntersectionObserver(([e]) => {
-    if (e.isIntersecting && !on) { on = true; const g = ++gen; fn(() => on && g === gen); }
-    else if (!e.isIntersecting) on = false;
-  }, { threshold: .35 }).observe(el);
-}
-
-/* hero reel */
-const reelVids = $$('.reel video'); let reelPaused = false;
-const reelBtn = $('#reelBtn');
-new IntersectionObserver(([e]) => reelVids.forEach(v => (e.isIntersecting && !reelPaused && !RM) ? v.play().catch(() => {}) : v.pause()), { threshold: .2 }).observe($('.reel'));
-reelBtn.addEventListener('click', () => {
-  reelPaused = !reelPaused; reelBtn.setAttribute('aria-pressed', reelPaused);
-  reelBtn.firstChild.textContent = reelPaused ? 'Play ' : 'Pause ';
-  reelVids.forEach(v => reelPaused ? v.pause() : v.play().catch(() => {}));
-});
-if (RM) { reelPaused = true; reelBtn.firstChild.textContent = 'Play '; }
-
-/* 1 · the ASHA points at each row in turn */
-whenVisible($('#c-today'), async alive => {
-  const card = $('#c-today'), rider = $('[data-rider]', card), items = $$('.item', card);
+/* ── Card 1: Sunita picks each item up in turn ── */
+loop($('#k1'), async alive => {
+  const card = $('#k1'), col = $('#col'), a = $('#a1'), items = $$('.it', col).slice(0, 3);
   while (alive()) {
-    for (let i = 0; i < 3 && alive(); i++) {
-      const c = card.getBoundingClientRect(), b = items[i].getBoundingClientRect();
-      rider.style.transform = `translate(${b.left - c.left - 74}px, ${b.top - c.top + b.height / 2 - 40}px)`;
-      await wait(RM ? 0 : 650);
-      items.forEach((it, j) => it.classList.toggle('on', j === i));
-      await wait(1700);
-    }
-    items.forEach(it => it.classList.remove('on'));
-    await wait(700);
-  }
-});
-
-/* 2 · offline booking syncs, then settles into Sent */
-whenVisible($('#c-sync'), async alive => {
-  const wl = $('#waitList'), sl = $('#sentList'), it = $('#arjunItem'), st = $('#syncStatus'), txt = $('em', st), ico = $('.ico', it);
-  const wifi = ico.innerHTML, tick = '<svg viewBox="0 0 24 24" fill="none" stroke="#138a4b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>';
-  const flip = (el, to) => {
-    const a = el.getBoundingClientRect(); to.appendChild(el); const b = el.getBoundingClientRect();
-    if (RM) return; el.animate([{ transform: `translate(${a.left - b.left}px, ${a.top - b.top}px)` }, { transform: 'none' }], { duration: 700, easing: 'cubic-bezier(.32,.72,0,1)' });
-  };
-  while (alive()) {
-    flip(it, wl); it.classList.add('on'); ico.innerHTML = wifi; st.style.display = ''; st.classList.remove('sending'); txt.textContent = 'Offline · 1 visit to send';
-    await wait(2200); if (!alive()) break;
-    st.classList.add('sending'); txt.textContent = 'Sending 1 visit…';
-    await wait(1500); if (!alive()) break;
-    it.classList.remove('on'); ico.innerHTML = tick; st.style.display = 'none'; $('small', it).textContent = 'Tomorrow, 10–11 am · Visit'; flip(it, sl);
-    await wait(2600);
-    $('small', it).textContent = 'Tomorrow, 10–11 am';
-  }
-});
-
-/* 3 · the call, line by line */
-whenVisible($('#c-voice'), async alive => {
-  const kids = [...$('#voiceMsgs').children];
-  while (alive()) {
-    kids.forEach(k => k.classList.remove('in'));
-    await wait(500);
-    for (const k of kids) {
+    for (const it of items) {
       if (!alive()) return;
-      k.classList.add('in');
-      if (k.classList.contains('typing')) { await wait(1300); k.classList.remove('in'); continue; }
-      await wait(k.classList.contains('r') ? 900 : 1500);
+      const c = card.getBoundingClientRect(), b = it.getBoundingClientRect();
+      a.style.transform = `translate(${b.left - c.left - 86}px, ${b.top - c.top - 8}px)`;
+      await wait(RM ? 0 : 800);
+      col.classList.add('pick'); items.forEach(x => x.classList.toggle('on', x === it));
+      await wait(1900);
     }
+    col.classList.remove('pick'); items.forEach(x => x.classList.remove('on'));
+    await wait(900);
+  }
+});
+
+/* ── Card 2: Dr. Meena drags Arjun's visit from Waiting to Sent ── */
+loop($('#k2'), async alive => {
+  const card = $('#k2'), a = $('#a2'), mv = $('#mv'), sub = $('#mvs'), gW = $('#gWait'), gS = $('#gSent');
+  const put = (el, host, first) => { const r0 = el.getBoundingClientRect(); first ? host.prepend(el) : host.append(el); const r1 = el.getBoundingClientRect(); if (!RM) el.animate([{ transform: `translate(${r0.left - r1.left}px, ${r0.top - r1.top}px)` }, { transform: 'none' }], { duration: 750, easing: 'cubic-bezier(.32,.72,0,1)' }); };
+  const aim = el => { const c = card.getBoundingClientRect(), b = el.getBoundingClientRect(); a.style.transform = `translate(${b.right - c.left + 6}px, ${b.top - c.top + b.height / 2 - 30}px)`; };
+  while (alive()) {
+    put(mv, gW, true); mv.classList.remove('lift', 'held'); sub.textContent = 'Offline · 1 visit to send';
+    await wait(900); if (!alive()) return;
+    aim(mv); await wait(900); mv.classList.add('held'); await wait(700); if (!alive()) return;
+    mv.classList.remove('held'); mv.classList.add('lift'); sub.textContent = 'Sending 1 visit…';
+    await wait(500); put(mv, gS, false); await wait(60); aim(mv);
+    await wait(900); mv.classList.remove('lift'); sub.textContent = 'Thu 1 Oct, 10–11 am · On the PHC list';
     await wait(2600);
   }
 });
 
-/* 4 · the day list, one row at a time */
-whenVisible($('#c-phc'), async alive => {
-  const slots = $$('#c-phc .slot');
-  let i = 0;
-  while (alive()) { slots.forEach((s, j) => s.classList.toggle('on', j === i)); i = (i + 1) % slots.length; await wait(1800); }
+/* ── Card 3: the call, line by line ── */
+loop($('#k3'), async alive => {
+  const kids = [...$('#call').children];
+  while (alive()) {
+    kids.forEach(k => k.classList.remove('in')); await wait(600);
+    for (const k of kids) { if (!alive()) return; k.classList.add('in'); if (k.classList.contains('dots3')) { await wait(1400); k.classList.remove('in'); continue; } await wait(k.classList.contains('r') ? 850 : 1400); }
+    await wait(3000);
+  }
 });
 
-/* carousel */
-const track = $('#track'), slides = $$('.slide', track); let cur = 0;
+/* ── Carousel ── */
+const rail = $('#rail'), sls = $$('.sl', rail); let ci = 0;
 function go(n) {
-  cur = Math.max(0, Math.min(slides.length - 1, n));
-  track.style.transform = `translateX(${-slides[cur].offsetLeft}px)`;
-  slides.forEach((s, i) => { s.classList.toggle('cur', i === cur); s.setAttribute('aria-hidden', i !== cur); });
-  $('#prev').disabled = cur === 0; $('#next').disabled = cur === slides.length - 1;
+  ci = Math.max(0, Math.min(sls.length - 1, n));
+  const o = s => s.offsetLeft - sls[0].offsetLeft, last = sls[sls.length - 1];
+  const x = Math.min(o(sls[ci]), Math.max(0, o(last) + last.offsetWidth - rail.clientWidth));
+  rail.style.transform = `translateX(${-x}px)`;
+  sls.forEach((s, i) => { s.classList.toggle('on', i === ci); s.inert = i !== ci; });
+  $('#prev').disabled = ci === 0; $('#next').disabled = ci === sls.length - 1;
 }
-$('#prev').onclick = () => go(cur - 1); $('#next').onclick = () => go(cur + 1);
-slides.forEach((s, i) => $('.card', s).addEventListener('click', () => i !== cur && go(i)));
-let sx = null;
-track.addEventListener('pointerdown', e => { sx = e.clientX; });
-addEventListener('pointerup', e => { if (sx === null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) go(cur + (d < 0 ? 1 : -1)); });
-addEventListener('resize', () => go(cur)); go(0);
+$('#prev').onclick = () => go(ci - 1); $('#next').onclick = () => go(ci + 1);
+sls.forEach((s, i) => s.addEventListener('click', () => i !== ci && go(i)));
+let sx = null; rail.addEventListener('pointerdown', e => sx = e.clientX);
+addEventListener('pointerup', e => { if (sx == null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) go(ci + (d < 0 ? 1 : -1)); });
+addEventListener('resize', () => go(ci)); go(0);
 
-/* a day in Arjun's care */
+/* ── A day in Arjun's care ── */
 const D = [
-  { t: 'Day 1 · 9:00 AM', w: 'At home', ch: 'pooja', say: 'Arjun has had a fever since Tuesday. Can you come and see him?', h: 'A concern, said once', b: 'Pooja tells Sunita, the ASHA, what is wrong. It is written down once, on the record, and never asked again.' },
-  { t: 'Day 1 · 9:20 AM', w: 'At home, offline', ch: 'sunita', say: 'From your answers, Arjun should see the doctor. Let me book a visit.', h: 'Screened, one question at a time', b: 'Four questions, each with a picture. The result says what was found and what was ruled out.' },
-  { t: 'Day 1 · 9:30 AM', w: 'Offline, then synced', ch: 'sunita', say: 'Offline · 1 visit to send. It goes to PHC Achrol when the signal returns.', h: 'Booked without signal', b: 'Saved on her phone first, sent when the signal returns, then on the doctor’s list the moment it syncs.' },
-  { t: 'Day 2 · 10:00 AM', w: 'At the PHC', ch: 'meena', say: 'Arjun is on my list at 10. Not arrived yet, so I can only view the booking.', h: 'Arrived', b: 'Until he is in the room, the record refuses a consult. Only what is possible now is offered.' },
-  { t: 'Day 2 · 10:15 AM', w: 'In the room', ch: 'meena', say: 'Sunita found fever for more than 2 days and vomiting. Starting from there.', h: 'Consulted, not reconstructed', b: 'Dr. Meena opens the sheet on what Sunita found, not a blank page.' },
-  { t: 'Day 2 · 10:30 AM', w: 'After the consult', ch: 'pooja', say: 'I pressed 3 and heard it: “Dr. Meena has a message for Arjun.”', h: 'Advice, heard by phone', b: 'Saved once, in the words the family will hear. They reach it from any phone by pressing 3.' },
-  { t: 'Day 5', w: 'Follow-up', ch: 'arjun', say: 'Feeling better. Amma told the line when it called back.', h: 'Followed up, by a named person', b: 'A call in three days. If it is missed, the doctor decides: call again today, or ask the ASHA to follow up.' }
+  { t: 'Day 1 · 9:00 AM', w: 'At home', c: 'pooja', s: 'Arjun has had a fever since Tuesday. Can you come and see him?', h: 'A concern, said once', b: 'Pooja tells Sunita, the ASHA, what is wrong. It is written down once, on the record, and never asked again.' },
+  { t: 'Day 1 · 9:30 AM', w: 'At home, offline', c: 'sunita', s: 'From your answers, Arjun should see the doctor. I’ve booked tomorrow, 10–11 am.', h: 'Screened and booked, without signal', b: 'Four questions, one at a time. The visit is saved on her phone and joins the PHC list the moment it syncs.' },
+  { t: 'Day 2 · 10:15 AM', w: 'In the room', c: 'meena', s: 'Sunita found fever for more than 2 days and vomiting. I’ll start from there.', h: 'Consulted, not reconstructed', b: 'Dr. Meena opens the sheet on what Sunita found, not a blank page, and writes advice in words the family will hear.' },
+  { t: 'Day 2 · 6:30 PM', w: 'Back home', c: 'pooja', s: 'I pressed 3 and heard it: “Dr. Meena has a message for Arjun.”', h: 'Advice, heard on any phone', b: 'Saved once by the doctor, read out on the line by name. 9 repeats it. 0 reaches a person.' },
+  { t: 'Day 5 · 10:00 AM', w: 'Follow-up', c: 'arjun', s: 'Feeling better! Amma told the line when it called back.', h: 'Followed up by a named person', b: 'A call in three days. If it is missed, the doctor decides: call again today, or ask the ASHA to follow up.' }
 ];
-const stage = $('#dayStage'), rider = $('#rider2'), say = $('#say'), sayT = $('#sayText'), when = $('#when'), rail = $('#rail'), dayc = $('#dayc'), dayCh = $('#dayCh use');
-const TICKS = 6 * 5; $('#ticks').innerHTML = Array.from({ length: TICKS + 1 }, (_, i) => `<i class="${i % 5 ? '' : 'big'}"></i>`).join('');
-let di = 0, first = true;
-function pct(i) { return i / (D.length - 1) * 100; }
-function place(p, instant) {
-  [rider, when].forEach(el => { el.style.transition = instant ? 'none' : ''; el.style.left = p + '%'; });
-  const W = stage.clientWidth, bw = say.offsetWidth, x = p / 100 * W;
-  const pad = W < 500 ? 60 : 0; let left = x - bw + 34; if (left < -pad) left = x - 34; left = Math.max(-pad, Math.min(left, W - bw + pad));
-  say.style.transition = instant ? 'none' : ''; say.style.left = left + 'px';
+const stage = $('#stage'), chr = $('#char'), say = $('#say'), tm = $('#time'), trk = $('#track'), dayc = $('#dayc');
+$('#ticks').innerHTML = Array.from({ length: (D.length - 1) * 8 + 1 }, (_, i) => `<i class="${i % 8 ? '' : 'd'}"></i>`).join('');
+let di = -1;
+const pct = i => i / (D.length - 1) * 100;
+function place(p, now) {
+  [chr, tm, say].forEach(el => el.style.transition = now ? 'none' : '');
+  chr.style.left = p + '%';
+  const W = stage.clientWidth, x = p / 100 * W, tw = tm.offsetWidth, bw = say.offsetWidth, room = (stage.parentElement.clientWidth - W) / 2;
+  tm.style.left = Math.max(tw / 2 - room, Math.min(W - tw / 2 + room, x)) + 'px';
+  let l = x - bw + 40; if (l < -room) l = x - 40; say.style.left = Math.max(-room, Math.min(W - bw + room, l)) + 'px';
 }
-async function setDay(i, instant) {
-  i = Math.max(0, Math.min(D.length - 1, i)); const changed = i !== di || first; di = i; first = false;
-  const d = D[i];
-  place(pct(i), instant);
-  $('#whenText').textContent = d.t; $('#dPrev').disabled = i === 0; $('#dNext').disabled = i === D.length - 1;
-  rail.setAttribute('aria-valuenow', i + 1); rail.setAttribute('aria-valuetext', d.t + ', ' + d.h);
+async function setDay(i, now) {
+  i = Math.max(0, Math.min(D.length - 1, i)); const changed = i !== di; di = i; const d = D[i];
+  place(pct(i), now); $('#tt').textContent = d.t; $('#tp').disabled = i === 0; $('#tn').disabled = i === D.length - 1;
+  trk.setAttribute('aria-valuenow', i + 1); trk.setAttribute('aria-valuetext', `${d.t}, ${d.h}`);
   if (!changed) return;
-  say.classList.add('swap'); dayc.classList.add('swap');
-  await wait(RM ? 0 : 220);
-  if (di !== i) return;
-  dayCh.setAttribute('href', '#ch-' + d.ch); sayT.textContent = d.say;
-  $('#dWhere').textContent = d.w; $('#dTitle').textContent = d.h; $('#dBody').textContent = d.b;
-  place(pct(i), true);
-  say.classList.remove('swap'); dayc.classList.remove('swap');
+  say.classList.add('swap'); dayc.classList.add('swap'); await wait(RM ? 0 : 200); if (di !== i) return;
+  $('#charU').setAttribute('href', '#' + d.c); $('#sayT').textContent = d.s; $('#dw').textContent = d.w; $('#dh').textContent = d.h; $('#db').textContent = d.b;
+  place(pct(i), true); say.classList.remove('swap'); dayc.classList.remove('swap');
 }
-$('#dPrev').onclick = () => setDay(di - 1); $('#dNext').onclick = () => setDay(di + 1);
-rail.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { setDay(di + 1); e.preventDefault(); } if (e.key === 'ArrowLeft') { setDay(di - 1); e.preventDefault(); } });
-let dragging = false;
-function fromX(x) { const r = rail.getBoundingClientRect(); return Math.max(0, Math.min(1, (x - r.left) / r.width)); }
-function startDrag(e) { if (e.target.closest('button')) return; dragging = true; rail.setPointerCapture?.(e.pointerId); move(e); }
-function move(e) { if (!dragging) return; const f = fromX(e.clientX); place(f * 100, true); const n = Math.round(f * (D.length - 1)); if (n !== di) setDay(n, true); }
-rail.addEventListener('pointerdown', startDrag); when.addEventListener('pointerdown', e => { if (!e.target.closest('button')) { dragging = true; when.setPointerCapture(e.pointerId); } });
-when.addEventListener('pointermove', move); rail.addEventListener('pointermove', move);
-const end = () => { if (dragging) { dragging = false; place(pct(di)); } };
-rail.addEventListener('pointerup', end); when.addEventListener('pointerup', end); addEventListener('pointercancel', end);
+$('#tp').onclick = () => setDay(di - 1); $('#tn').onclick = () => setDay(di + 1);
+trk.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { setDay(di + (e.key === 'ArrowRight' ? 1 : -1)); e.preventDefault(); } });
+let drag = false;
+const fx = x => { const r = trk.getBoundingClientRect(); return Math.max(0, Math.min(1, (x - r.left) / r.width)); };
+const down = e => { if (e.target.closest('button')) return; drag = true; e.currentTarget.setPointerCapture(e.pointerId); mvp(e); };
+const mvp = e => { if (!drag) return; const f = fx(e.clientX); place(f * 100, true); const n = Math.round(f * (D.length - 1)); if (n !== di) setDay(n, true); };
+const up = () => { if (drag) { drag = false; place(pct(di)); } };
+[trk, tm].forEach(el => { el.addEventListener('pointerdown', down); el.addEventListener('pointermove', mvp); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); });
 addEventListener('resize', () => place(pct(di), true));
 setDay(0, true);
 
-/* surfaces */
-const caps = [
-  ['ASHA app', 'Which family, who is unwell, one question at a time, then the result with what was found and what was ruled out.', 'sunita'],
-  ['Voice line', 'A call written as live captions: family ID, person by name, the same screening, and advice by person.', 'pooja'],
-  ['PHC dashboard', 'The day in time order, the consult sheet beside the list, and follow-ups grouped by who acts next.', 'meena']
+/* ── Surfaces ── */
+const tabs = $$('.tab'), frs = $$('#dev > .fr'), buddy = $('#buddy');
+const T = [
+  { h: 'ASHA app', p: 'Who needs her next and what to do, ranked by what is due. It works the same with no signal.', c: 'sunita', x: () => -171 - 84 },
+  { h: 'Voice line', p: 'Any phone, even a basic one. The number and the family ID are printed on the family card.', c: 'pooja', x: () => 171 - 30 },
+  { h: 'PHC dashboard', p: 'The day in time order, the consult sheet beside the list, and follow-ups grouped by who acts next.', c: 'meena', x: () => Math.min(320, $('#dev').clientWidth / 2) - 70 }
 ];
-const tabs = $$('.tab'), devs = $$('#device > [data-d]'), buddy = $('#buddy'), cap = $('#cap');
-let surfVis = false;
-function showT(t) {
-  tabs.forEach((b, i) => { b.setAttribute('aria-selected', i === t); b.tabIndex = i === t ? 0 : -1; });
-  devs.forEach((d, i) => { d.classList.toggle('off', i !== t); const v = $('video', d); if (!v) return; if (i === t && surfVis && !RM) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause(); });
-  $('use', buddy).setAttribute('href', '#ch-' + caps[t][2]); buddy.classList.toggle('wide', t === 2);
-  $('h4', cap).textContent = caps[t][0]; $('p', cap).textContent = caps[t][1];
+function bx(i) { const devW = $('#dev').clientWidth, fw = frs[i].offsetWidth || 342, bw = buddy.offsetWidth; const x = T[i].x(); return Math.max(-devW / 2, Math.min(devW / 2 - bw, devW < 560 ? fw / 2 - bw * .75 : x)); }
+function tab(i) {
+  tabs.forEach((b, j) => { b.setAttribute('aria-selected', i === j); b.tabIndex = i === j ? 0 : -1; });
+  frs.forEach((f, j) => f.classList.toggle('off', i !== j));
+  $('use', buddy).setAttribute('href', '#' + T[i].c); buddy.style.left = `calc(50% + ${bx(i)}px)`;
+  $('#capt h4').textContent = T[i].h; $('#capt p').textContent = T[i].p;
 }
-tabs.forEach((b, i) => { b.onclick = () => showT(i); b.onkeydown = e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = (i + (e.key === 'ArrowRight' ? 1 : 2)) % 3; showT(n); tabs[n].focus(); } }; });
-new IntersectionObserver(([e]) => { surfVis = e.isIntersecting; showT(tabs.findIndex(b => b.getAttribute('aria-selected') === 'true')); }, { threshold: .3 }).observe($('#device'));
+tabs.forEach((b, i) => { b.onclick = () => tab(i); b.onkeydown = e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = (i + (e.key === 'ArrowRight' ? 1 : 2)) % 3; tab(n); tabs[n].focus(); } }; });
+addEventListener('resize', () => tab(tabs.findIndex(b => b.getAttribute('aria-selected') === 'true')));
+tab(0);
 
-/* the cast rises onto the footer rule */
-new IntersectionObserver(([e]) => { if (e.isIntersecting) $('#cast').classList.add('in'); }, { threshold: .3 }).observe($('#cast'));
+/* ── The cast walks in from the sides and lines up on the footer rule ── */
+const cast = $('#cast'), cs = $$('svg.ch', cast);
+function castPos() {
+  const r = cast.getBoundingClientRect(), vh = innerHeight;
+  let p = RM ? 1 : Math.max(0, Math.min(1, (vh - r.top) / (vh * .75)));
+  p = 1 - Math.pow(1 - p, 3);
+  const w = cs[0].getBoundingClientRect().width || 178, sc = Math.min(1, cast.clientWidth / 900);
+  cs.forEach(s => {
+    const at = +s.dataset.at / 100 * w * .8, sx = +s.dataset.x * sc, sy = +s.dataset.y;
+    const x = at + sx * (1 - p), y = sy * (1 - p);
+    s.style.left = `calc(50% - ${w / 2}px)`; s.style.transform = `translate(${x}px, ${y}px)`; s.style.opacity = Math.min(1, p * 1.6);
+  });
+}
+addEventListener('scroll', () => requestAnimationFrame(castPos), { passive: true }); addEventListener('resize', castPos); castPos();
 
-/* current section in the pill */
-const links = $$('.pillbar nav a');
-['how', 'moments', 'day', 'surfaces'].forEach(id => {
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + id)); }), { rootMargin: '-45% 0px -50% 0px' });
-  io.observe(document.getElementById(id));
-});
+/* ── Section bar: current section ── */
+const links = $$('.bar nav a');
+['how', 'cases', 'scope'].forEach(id => io(document.getElementById(id), e => { if (e.isIntersecting) links.forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + id)); }, { rootMargin: '-40% 0px -55% 0px' }));
 })();
 </script>
 </body>
