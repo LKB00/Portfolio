@@ -2066,6 +2066,35 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb .sk-versions{padding:28px 56px 56px}
 .gb .sk-versions > svg{max-width:540px;margin:0 auto}
 @media(max-width:760px){.gb .sk-versions{padding:56px 20px 28px}}
+
+/* ===== ONE SPACING SYSTEM =====
+   containers: 8px corners, no border; boxes inside cards 6px; every card 24px of padding;
+   labelled panels 52px on top (room for the label), 24px elsewhere; sketch panels keep their air.
+   rhythm: 40px heading to content, 80px before a sub-block, 56px before a pull quote, 24px before a note. */
+.gb [data-kicker],.gb .rc-shot,.gb .rc-part-m,.gb .rc-mac,.gb .gb-ex-panel,.gb .cx-pv-f{border-radius:8px;border:0}
+.gb .gb-evcase,.gb .gb-term,.gb .gb-pipe > li .gb-pipe-art{border-radius:6px}
+.gb .gb-conv-chat,.gb .cx-cc-case,.gb .gb-pipe > li,.gb .cx-pf,.gb .cx-arch-c,.gb #directions .gb-dc > li,.gb .gb-ex-panel{padding:24px}
+.gb .cx-cmp,.gb .rc-evidence,.gb .cx-arch{padding:52px 24px 24px}
+.gb .cx-matrix{padding:52px 24px 24px 56px}
+.gb .rc-mac{padding:40px 32px}
+.gb #directions .gb-dc{gap:16px}
+
+.gb .cx-sec > .cx-head + *{margin-top:40px!important}
+.gb .cx-sec > :is(.rc-sub,.cx-sub,.rc-landed,.rc-insights,.cx-limits,.rc-consider,.rc-cont){margin-top:80px!important}
+.gb .cx-sec > :is(.rc-sub,.rc-landed,.rc-consider,.rc-cont) + *{margin-top:40px!important}
+.gb .cx-sec > .cx-say{margin-top:56px!important;margin-bottom:0!important}
+.gb .cx-sec > :is(.cx-note,.cx-more,.cx-body){margin-top:24px!important}
+.gb #proof .cx-status-l{margin-top:40px!important}
+@media(max-width:760px){
+  .gb .cx-sec > .cx-head + *{margin-top:32px!important}
+  .gb .cx-sec > :is(.rc-sub,.cx-sub,.rc-landed,.rc-insights,.cx-limits,.rc-consider,.rc-cont){margin-top:64px!important}
+  .gb .cx-sec > :is(.rc-sub,.rc-landed,.rc-consider,.rc-cont) + *{margin-top:32px!important}
+  .gb .gb-conv-chat,.gb .cx-cc-case,.gb .gb-pipe > li,.gb .cx-pf,.gb .cx-arch-c,.gb #directions .gb-dc > li,.gb .gb-ex-panel{padding:20px}
+  .gb .cx-cmp,.gb .rc-evidence,.gb .cx-arch,.gb .cx-matrix{padding:48px 16px 16px}
+}
+.gb #agent .cx-cmp[data-kicker]{padding:52px 24px 24px;border:0;border-radius:8px}
+.gb .gbh-demo,.gb .gb-ex-hero .gb-ex-panel{border-radius:8px}
+@media(max-width:760px){.gb #agent .cx-cmp[data-kicker]{padding:48px 16px 16px}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
