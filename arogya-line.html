@@ -2375,6 +2375,17 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb .al-user .dev{font:500 11px/1.3 var(--mono)!important;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .gb .al-user .dev svg{width:13px!important;height:13px!important}
 .gb .al-user .dev{font-size:10.5px!important;letter-spacing:.05em;white-space:nowrap}
+
+/* edge cases: the real screen for each, paired by size so the rows line up */
+.gb .al-edges{gap:32px 16px}
+.gb .al-edges li{padding:0;background:none;border-radius:0;display:flex;flex-direction:column}
+.gb .al-edges .al-ec-f{margin:0 0 20px;display:flex;align-items:center;justify-content:center;background:var(--rc-panel,var(--surface));border-radius:8px;padding:24px 16px}
+.gb .al-edges .al-ec-f img{display:block;max-width:100%;height:auto;border-radius:8px}
+.gb .al-edges li:nth-child(-n+2) .al-ec-f{height:460px}
+.gb .al-edges li:nth-child(n+3):nth-child(-n+4) .al-ec-f{height:400px}
+.gb .al-edges li:nth-child(n+5) .al-ec-f{height:200px}
+.gb .al-edges li:nth-child(n+5) .al-ec-f img,.gb .al-edges li:nth-child(2) .al-ec-f img{border-radius:16px}
+@media(max-width:760px){.gb .al-edges li .al-ec-f{height:auto!important}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -2608,12 +2619,12 @@ addEventListener("pagereveal",function(e){
 <section class="cx-sec" id="edge" data-section="Edge cases" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">Edge cases</p><h2 class="cx-h">Healthcare doesn&rsquo;t happen in the happy path.</h2></div>
 <ol class="cx-w al-edges">
-<li><h3>Slot fills while booking</h3><p><b>Problem.</b> A booking syncing from another phone takes the slot she picked.</p><p><b>Design response.</b> One rule for every surface. Nothing is booked, and she is told: &ldquo;10&ndash;11 am was just taken. Nothing was booked.&rdquo;</p></li>
-<li><h3>Patient hasn&rsquo;t arrived</h3><p><b>Problem.</b> Tomorrow&rsquo;s booking offered &ldquo;Start consult&rdquo;, before the patient was in the room.</p><p><b>Design response.</b> &ldquo;View booking&rdquo; and &ldquo;Not arrived yet&rdquo;. The record refuses advice before arrival.</p></li>
-<li><h3>Follow-up is missed</h3><p><b>Problem.</b> A missed call quietly became a home visit nobody had agreed to.</p><p><b>Design response.</b> It waits under &ldquo;Needs attention now&rdquo; until the doctor decides: call again, or ask the ASHA.</p></li>
-<li><h3>Family has multiple people</h3><p><b>Problem.</b> One row per family hid the second person who needed her.</p><p><b>Design response.</b> One row per person, with &ldquo;+1 other person in this family&rdquo; on it.</p></li>
-<li><h3>Connectivity disappears</h3><p><b>Problem.</b> Without signal she can&rsquo;t tell if her work was saved.</p><p><b>Design response.</b> &ldquo;Offline · 1 visit to send&rdquo;, then &ldquo;Sending 1 visit&hellip;&rdquo;, then nothing. &ldquo;Waiting to send&rdquo; sits on the record itself.</p></li>
-<li><h3>Screening is incomplete</h3><p><b>Problem.</b> Opened from a link with no answers, the result said home care: false reassurance about a sick child.</p><p><b>Design response.</b> An unfinished check is never a result. It goes back to the next unanswered question.</p></li>
+<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-slot.webp" width="357" height="412" alt="The booking screen: 10–11 am struck through as Full, and a notice that nothing was booked" loading="lazy" decoding="async"></figure><h3>Slot fills while booking</h3><p><b>Problem.</b> A booking syncing from another phone takes the slot she picked.</p><p><b>Design response.</b> One rule for every surface. Nothing is booked, and she is told: &ldquo;10&ndash;11 am was just taken. Nothing was booked.&rdquo;</p></li>
+<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-family.webp" width="328" height="328" alt="The Up next card for Khushi, with “+1 other person in this family”" loading="lazy" decoding="async"></figure><h3>Family has multiple people</h3><p><b>Problem.</b> One row per family hid the second person who needed her.</p><p><b>Design response.</b> One row per person, with &ldquo;+1 other person in this family&rdquo; on it.</p></li>
+<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-offline.webp" width="328" height="268" alt="The booked visit, marked Saved on this phone, sends when there’s signal" loading="lazy" decoding="async"></figure><h3>Connectivity disappears</h3><p><b>Problem.</b> Without signal she can&rsquo;t tell if her work was saved.</p><p><b>Design response.</b> &ldquo;Offline · 1 visit to send&rdquo;, then &ldquo;Sending 1 visit&hellip;&rdquo;, then nothing. &ldquo;Waiting to send&rdquo; sits on the record itself.</p></li>
+<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-question.webp" width="357" height="360" alt="The check going back to its first unanswered question, 1 of 4" loading="lazy" decoding="async"></figure><h3>Screening is incomplete</h3><p><b>Problem.</b> Opened from a link with no answers, the result said home care: false reassurance about a sick child.</p><p><b>Design response.</b> An unfinished check is never a result. It goes back to the next unanswered question.</p></li>
+<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-arrive.webp" width="254" height="122" alt="The PHC metric: Consults remaining 0, Not arrived yet" loading="lazy" decoding="async"></figure><h3>Patient hasn&rsquo;t arrived</h3><p><b>Problem.</b> Tomorrow&rsquo;s booking offered &ldquo;Start consult&rdquo;, before the patient was in the room.</p><p><b>Design response.</b> &ldquo;View booking&rdquo; and &ldquo;Not arrived yet&rdquo;. The record refuses advice before arrival.</p></li>
+<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-missed.webp" width="265" height="122" alt="The PHC metric: Follow-ups due 1, one missed, needs a decision" loading="lazy" decoding="async"></figure><h3>Follow-up is missed</h3><p><b>Problem.</b> A missed call quietly became a home visit nobody had agreed to.</p><p><b>Design response.</b> It waits under &ldquo;Needs attention now&rdquo; until the doctor decides: call again, or ask the ASHA.</p></li>
 </ol>
 <div class="cx-w rc-sub"><h3 class="cx-h3">The bar for the record: never guess a patient, result, slot, or next action.</h3></div>
 <p class="cx-w cx-tags al-never"><span>Never infer a person</span><span>Never infer availability</span><span>Never infer responsibility</span><span>Never infer a clinical state</span><span>Never destroy history</span></p>
