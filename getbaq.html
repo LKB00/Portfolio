@@ -38,7 +38,7 @@
   --t-body:16px;
 
   --bg:#FAFAFA; --ink:#242020;  --muted:#7A7676;  --faint:#B0ACAC;
-  --line:rgba(36,32,32,.10); --surface:#F2F2F2;
+  --line:rgba(36,32,32,.10); --surface:#F2F3F5;
   --accent:#171717; --neg:#C64B3D; --live:#177A3C;
 
   --serif:'STIX Two Text','STIX Two Math',Georgia,serif;
@@ -512,10 +512,10 @@ ul.keys.col{margin-left:auto;margin-right:auto}
 /* the live exhibits, framed like the other case studies' image panels */
 figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-stack figure.gb-ex,.gb-sketches figure.gb-ex,.col > figure.gb-ex{margin-left:0;margin-right:0}
-.gb-ex-panel{position:relative;background:#F2F2F2;border-radius:8px;padding:clamp(16px,3vw,28px)}
+.gb-ex-panel{position:relative;background:#F2F3F5;border-radius:8px;padding:clamp(16px,3vw,28px)}
 
 .gb-ex-inner{margin:0 auto}
-.gb-ex iframe{display:block;width:100%;height:320px;border:0;background:#F2F2F2;color-scheme:light;transition:height .25s var(--ease)}
+.gb-ex iframe{display:block;width:100%;height:320px;border:0;background:#F2F3F5;color-scheme:light;transition:height .25s var(--ease)}
 .gb-ex-hero{margin-top:0}
 .gb-fold{border-bottom:1px solid var(--line);scroll-margin-top:80px}
 .gb-fold > summary{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:18px 0;cursor:pointer;list-style:none}
@@ -720,7 +720,7 @@ figure.gb-ex{margin-top:var(--s3);margin-bottom:0}
 .gb-capped .gb-ex-inner{max-height:var(--vis-h,540px);overflow-y:auto;scrollbar-width:none}
 .gb-capped .gb-ex-inner::-webkit-scrollbar{display:none}
 .gb-capped .gb-ex-panel:after{content:"";position:absolute;left:0;right:0;bottom:0;height:88px;border-radius:0 0 8px 8px;pointer-events:none;
-  background:linear-gradient(rgba(242,242,242,0),#F2F2F2 78%);transition:opacity .3s ease}
+  background:linear-gradient(rgba(242,242,242,0),#F2F3F5 78%);transition:opacity .3s ease}
 .gb-capped.at-end .gb-ex-panel:after{opacity:0}
 @media(max-width:760px){.gb-capped .gb-ex-inner{max-height:540px}}
 /* phones: the nav pill and back-to-top sit at the bottom of the screen,
@@ -1333,7 +1333,7 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
    two. Its frame is the same grey the others share, edge to edge.
    On a phone the frame gets taller and centres on the money-back
    screen, the one that says what the product is for. */
-.cardframe.gbframe{aspect-ratio:var(--card-ar);background:#F2F2F2!important}
+.cardframe.gbframe{aspect-ratio:var(--card-ar);background:#F2F3F5!important}
 
 /* The Getbaq card plays the product instead of showing a still: a cursor
    clicks the composer, the view zooms in, a real case is typed and sent,
@@ -1423,7 +1423,7 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 
 
 /* hero: the home page's Getbaq card animation, in the product panel */
-.gbh-demo{position:relative;overflow:hidden;aspect-ratio:16/9;background:#F2F2F2;border-radius:8px 8px 0 0}
+.gbh-demo{position:relative;overflow:hidden;aspect-ratio:16/9;background:#F2F3F5;border-radius:8px 8px 0 0}
 @media(max-width:600px){.gbh-demo{aspect-ratio:4/4.3;border-radius:0}}
 
 /* case file notes: one open at a time, level with its number; hover or focus a
@@ -2058,7 +2058,7 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 
 /* one grey for every panel on the page: the cool panel grey. The site surface token follows it here
    (it has its own dark value); the live embeds keep a light panel in both themes, like the demo on top */
-.gb{--surface:var(--rc-panel);--c-surface:var(--rc-panel)}
+.gb{--rc-panel:var(--surface)}
 .gb .gb-ex-panel{background:#F2F3F5}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
