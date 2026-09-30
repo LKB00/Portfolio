@@ -1979,11 +1979,10 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 
 /* directions: each dropped idea is its own card on a pastel, like the portfolio's frames */
 .gb #directions .gb-dc{gap:12px}
-.gb #directions .gb-dc > li{padding:28px;border:0;border-radius:8px;background:var(--pf-lav)}
-.gb #directions .gb-dc > li:nth-child(2){background:#E8F3CC}
-html[data-theme="dark"] .gb #directions .gb-dc > li:nth-child(2){background:#1F2716}
-@media(prefers-color-scheme:dark){html:not([data-theme="light"]) .gb #directions .gb-dc > li:nth-child(2){background:#1F2716}}
-.gb #directions .gb-dc > li:nth-child(3){background:var(--pf-blue)}
+/* the same three tints as the who-does-what cards: AI lavender, the user's green, code blue */
+.gb #directions .gb-dc > li{padding:28px;border:0;border-radius:8px;background:var(--ai-bg)}
+.gb #directions .gb-dc > li:nth-child(2){background:var(--her-bg)}
+.gb #directions .gb-dc > li:nth-child(3){background:var(--code-bg)}
 .gb #directions .gb-dc-p .ui{background:color-mix(in srgb,var(--bg) 72%,transparent)}
 @media(max-width:760px){.gb #directions .gb-dc > li{padding:20px}}
 /* the two mock-ups hang a little off true, as if pinned at the top; each card leans its own way */
