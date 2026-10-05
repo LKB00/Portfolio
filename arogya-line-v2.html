@@ -10,7 +10,8 @@
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
 <style>
 /* Measured from the Dots page at a 1508 px viewport: 964 px column, 670 px cards,
    80 / 64 / 40 / 24 px headings, 42 px pill buttons, #f8f8f8 page. */
@@ -44,15 +45,6 @@ button{font:inherit;color:inherit}
 .btn-line{border-color:var(--line2);color:var(--ink);background:transparent}
 .btn-line:hover{background:color-mix(in oklab,var(--ink) 4%,transparent)}
 .btn-sm{height:36px;padding:0 14px;font-size:14px}
-
-/* ── Top bar, as the ChatGPT bar: logo, centred links, dark pill ── */
-.top{height:64px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 34px 0 28px}
-.logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-weight:600;font-size:20px;letter-spacing:-.03em}
-.mark{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle,transparent 0 30%,var(--ink) 31% 100%)}
-.top nav{display:flex;gap:36px;font-size:15px}
-.top nav a{text-decoration:none;color:var(--text)}
-.top nav a:hover{color:var(--ink)}
-.top .btn{justify-self:end}
 
 /* ── Hero ── */
 .hero{text-align:center;padding-top:100px;padding-bottom:60px}
@@ -303,15 +295,6 @@ h2{margin:0;font-weight:500;font-size:clamp(38px,4.6vw,64px);line-height:1.1;let
 #close h2{font-size:clamp(40px,4.6vw,64px)}
 .cast{position:relative;height:200px;margin-top:40px;clip-path:inset(-600px -100vw 0 -100vw)}
 .cast svg.ch{position:absolute;bottom:-38px;width:178px;height:178px;will-change:transform}
-footer{border-top:1px solid var(--line)}
-.ft{display:grid;grid-template-columns:1fr 240px 240px 170px;padding:34px 28px 56px}
-.ft .mark{width:32px;height:32px}
-.ft h6{margin:0 0 20px;font-size:13.5px;font-weight:400;color:var(--grey)}
-.ft ul{list-style:none;margin:0;padding:0;display:grid;gap:15px;font-size:14px;color:var(--ink)}
-.ft a{text-decoration:none}.ft a:hover{text-decoration:underline}
-.legal{display:flex;justify-content:space-between;align-items:center;padding:0 28px 22px;font-size:13px;color:var(--ink)}
-.legal .soc{display:flex;gap:18px;align-items:center}
-.legal .soc svg{width:17px;height:17px}
 
 /* ── Characters: felt, lit from the top left ── */
 svg.ch{display:block;overflow:visible}
@@ -376,7 +359,7 @@ svg.ch{display:block;overflow:visible}
 
 @media (max-width:900px){
   .top{grid-template-columns:1fr auto;padding:0 16px}
-  .top nav,.bar nav{display:none}
+  .bar nav{display:none}
   .bar{grid-template-columns:1fr auto}
   .row,.row.r{grid-template-columns:1fr;gap:24px}
   .row .txt,.row.r .txt{order:0;padding:0 8px;max-width:520px}
@@ -384,9 +367,6 @@ svg.ch{display:block;overflow:visible}
   .two{grid-template-columns:1fr}
   .cards3{grid-template-columns:1fr;max-width:420px}
   .k3{min-height:0}
-  .ft{grid-template-columns:1fr 1fr;gap:34px}
-  .ft > :first-child{grid-column:1/-1}
-  .legal{flex-direction:column;gap:12px;align-items:flex-start}
 }
 @media (max-width:600px){
   .film{border-radius:32px;aspect-ratio:4/5}
@@ -418,6 +398,285 @@ svg.ch{display:block;overflow:visible}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
   [data-rv]{opacity:1;transform:none}
 }
+
+
+/* ── Portfolio chrome (header pill, menu, back-to-top, next-case-study, footer), ported from the Getbaq page
+   so this case study drops into the portfolio unchanged. Its tokens are scoped here so the page's own palette is untouched. ── */
+#siteHeader,.mobilenav,.totop,.toast,#next,#contact{--bg:var(--page);--ink:#242020;--muted:#7A7676;--faint:#B0ACAC;--line:rgba(36,32,32,.10);--surface:#F2F3F5;--accent:#171717;
+  --s4:56px;--s5:96px;--sans:'Geist','Inter',system-ui,sans-serif;--serif:'STIX Two Text','STIX Two Math',Georgia,serif;--mono:'Geist Mono',ui-monospace,monospace}
+:root[data-theme="dark"] :is(#siteHeader,.mobilenav,.totop,.toast,#next,#contact){--ink:#F3EEEE;--muted:#A69E9E;--faint:#6E6666;--line:rgba(255,255,255,.10);--surface:#1A1A1A;--accent:#EDEDED}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(#siteHeader,.mobilenav,.totop,.toast,#next,#contact){--ink:#F3EEEE;--muted:#A69E9E;--faint:#6E6666;--line:rgba(255,255,255,.10);--surface:#1A1A1A;--accent:#EDEDED}}
+/* ══ NAV ════════════════════════════════════════════════════════════ */
+#siteHeader,#siteHeader.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-width:none;margin:0;padding:0;z-index:50;pointer-events:none}
+/* On a phone the pill sits over the top status bar / notch and is a
+   long thumb-reach from where the hand actually holds the device.
+   Anchoring it to the bottom instead — same one-handed-reach logic as
+   iOS/Android's own bottom tab bars — fixes both. env() keeps it clear
+   of the home-indicator gesture area on notched phones. */
+@media (max-width:576px){
+  #siteHeader,#siteHeader.scrolled{top:auto;bottom:calc(16px + env(safe-area-inset-bottom))}
+}
+.navpill{pointer-events:auto;position:relative;width:max-content;margin:0 auto;display:flex;align-items:center;gap:2px;
+  padding:4px 5px;border:0;border-radius:999px;box-shadow:none;
+  background:color-mix(in srgb,var(--surface) 85%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4);
+  transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+#siteHeader.scrolled .navpill{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;
+  box-shadow:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08)}
+nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:500}
+.navlink{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;
+  font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:background .2s var(--ease),color .2s var(--ease)}
+.navlink:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.navlink[aria-current="page"]{color:var(--ink)}
+.themebtn{width:28px;height:28px;margin-left:2px;padding:0;border:0;border-radius:999px;
+  background:transparent;color:var(--muted);display:inline-grid;place-items:center;cursor:pointer}
+.themebtn:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.icon-sun,.icon-moon{line-height:0}
+html:not([data-theme="dark"]) .icon-moon{display:none}
+html[data-theme="dark"] .icon-sun{display:none}
+.burger{position:relative;display:grid;place-items:center;width:34px;height:34px;border:0;
+  border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
+.burger span.bars{display:flex;flex-direction:column;gap:4px}
+.burger span.bars span{display:block;width:18px;height:2px;border-radius:2px;background:currentColor}
+.burger .bicon-bars,.burger .bicon-x{grid-area:1/1;display:grid;place-items:center;transition:opacity .22s ease,transform .22s ease}
+.burger .bicon-x{opacity:0;transform:rotate(-45deg)}
+.burger[aria-expanded="true"] .bicon-bars{opacity:0;transform:rotate(45deg)}
+.burger[aria-expanded="true"] .bicon-x{opacity:1;transform:rotate(0)}
+@media (min-width:641px){#siteHeader .burger{display:none}}
+@media (max-width:576px){nav.navlinks a{display:none}}
+
+/* ══ MOBILE MENU ════════════════════════════════════════════════════ */
+body.menu-open{overflow:hidden;position:fixed;width:100%}
+body.menu-open #siteHeader{z-index:70}
+.mobilenav{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;min-height:100dvh;
+  overflow-y:auto;overscroll-behavior:contain;padding-top:calc(59px + env(safe-area-inset-top));
+  background:var(--bg);visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease,visibility .28s}
+.mobilenav.open{visibility:visible;opacity:1;pointer-events:auto}
+.mobilenav a:focus:not(:focus-visible),.mobilenav button:focus:not(:focus-visible){outline:none}
+/* ══ MOBILE MENU — the work leads, the wayfinding follows ═══════════════
+   Home/About is upkeep, not content -- you're already on one of them
+   once this sheet is open. The work is the actual reason a stranger
+   opens this menu, so it's promoted and given the page's own voice
+   back: a serif title, a small sans index number standing in for the
+   screenshot there's no room for here. Wayfinding drops to one quiet
+   line each. */
+.mlinks{display:flex;flex-direction:column;flex:0 0 auto;margin-top:2px;padding:0 18px}
+.mrow{display:flex;align-items:center;gap:13px;min-height:48px;padding:12px 0;
+  color:var(--ink);border-bottom:1px solid var(--line);text-decoration:none}
+.mrow:last-child{border-bottom:0}
+.mrow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px}
+.mrow .mlabel{flex:1;font-family:var(--sans);font-size:16px;font-weight:400;line-height:1.2;
+  letter-spacing:-.01em;color:var(--faint)}
+.mrow.current .mlabel{color:var(--ink);font-weight:500}
+.mcases{display:flex;flex-direction:column;flex:0 0 auto;margin-top:clamp(30px,5.5vh,42px);padding:0 18px}
+.mgroup{margin:0 0 14px;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--faint)}
+.mcase{display:flex;align-items:flex-start;gap:14px;padding:16px 0;color:var(--ink);border-bottom:1px solid var(--line);text-decoration:none}
+.mcase:last-child{border-bottom:0}
+.mcase-num{flex:0 0 auto;padding-top:4px;font-family:var(--sans);font-size:11px;font-weight:500;
+  letter-spacing:.03em;color:var(--faint)}
+.mcase-x{flex:1;min-width:0}
+.mcase-t{display:block;font-family:var(--serif);font-size:19px;font-weight:400;line-height:1.32;
+  letter-spacing:-.008em;color:var(--ink)}
+.mcase-m{display:block;margin-top:6px;font-family:var(--sans);font-size:10.5px;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.mcase[aria-current="page"] .mcase-num,
+.mcase[aria-current="page"] .mcase-t{color:var(--accent)}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding:21px 18px clamp(22px,4vh,30px)}
+/* The header stays elevated above this full-screen menu so its own
+   close (X) button stays reachable -- but with the header now at the
+   bottom on phones, that puts it right on top of these buttons unless
+   the sheet leaves room for it. */
+@media (max-width:576px){
+  .mfoot{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+}
+/* ══ BOTTOM SHEET ═══════════════════════════════════════════════════
+   The header pill already lives at the bottom of the screen on phones
+   -- that's where the burger/close control sits -- so a full-screen
+   takeover panel opening from there reads backwards. A sheet that
+   rises from the same edge as its own trigger, leaves the rest of the
+   screen dimmed but glanceable, and can be dismissed with a downward
+   swipe or a tap outside is the pattern a thumb already expects. */
+@media (max-width:576px){
+  .mobilenav{justify-content:flex-end;padding-top:0;background:rgba(20,18,16,.42);overflow-y:hidden}
+  html[data-theme="dark"] .mobilenav{background:rgba(0,0,0,.6)}
+  .msheet{width:100%;max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    background:var(--bg);border-radius:20px 20px 0 0;
+    box-shadow:0 -14px 34px -18px rgba(0,0,0,.32);
+    padding-bottom:env(safe-area-inset-bottom);
+    transform:translateY(100%);transition:transform .34s cubic-bezier(.32,.72,0,1)}
+  .mobilenav.open .msheet{transform:translateY(0)}
+  .mhandle-zone{display:flex;justify-content:center;align-items:center;
+    padding:10px 0 6px;touch-action:none;cursor:grab}
+  .mhandle{width:36px;height:4px;border-radius:2px;background:var(--line)}
+  .mlinks{margin-top:2px}
+}
+@media (prefers-reduced-motion:reduce){
+  .msheet{transition:none}
+}
+.mailbtn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:52px;padding:0;border:0;
+  border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);background:transparent;
+  font-size:15px;font-weight:500;color:var(--ink);cursor:pointer}
+.mailbtn:hover{box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent)}
+.mresume{display:flex;align-items:center;justify-content:center;gap:7px;min-height:52px;
+  border-radius:999px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:500;text-decoration:none}
+.mresume:hover{background:var(--accent);color:var(--ink)}
+
+/* ══ OVERLAYS ═══════════════════════════════════════════════════════ */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:none;align-items:center;
+  gap:10px;padding:11px 16px;border-radius:16px;background:var(--surface);color:var(--ink);
+  box-shadow:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);white-space:nowrap}
+.toast.show{display:inline-flex}
+.totop{position:fixed;right:clamp(14px,2vw,24px);bottom:80px;z-index:44;padding:0;border:0;border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:none;opacity:0;visibility:hidden;transform:scale(.86);pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.3,.8,.3,1),visibility 0s linear .2s}
+.totop.show{opacity:1;visibility:visible;transform:scale(1);pointer-events:auto;transition-delay:0s,0s,0s}
+.totop-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none}
+.totop-ring circle{fill:none;}
+.totop-track{stroke:var(--line)}
+.totop-prog{stroke-linecap:round;stroke-dasharray:157.08;stroke-dashoffset:157.08;}
+
+@media (max-width:576px){.totop{right:auto}.totop svg:not(.totop-ring){width:14px;height:14px}}
+/* Mobile back-to-top used to stack directly above the nav pill. Now
+   they share one row, pill on the left, button on the right: the pill
+   sits centred on its own until there's something to scroll back to,
+   then steps aside to make room. Both sides use each element's own
+   -50%/+50% (not a guessed pixel width) so this holds regardless of
+   how wide the pill ends up. #siteHeader.totop-on mirrors #totop's own
+   .show condition (same scrollY>400 check, toggled together in JS) so
+   the CSS never has to guess the button's visibility from outside it. */
+@media (max-width:576px){
+  .totop{bottom:calc(16px + env(safe-area-inset-bottom));
+
+    transition:opacity .2s ease,transform .5s cubic-bezier(.34,1.56,.64,1),visibility 0s linear .2s}
+
+  .navpill{transition:background .2s var(--ease),box-shadow .2s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
+
+}
+#next{margin-top:var(--s5);padding:0;max-width:684px;margin-left:auto;margin-right:auto}
+@media(min-width:981px){#next{margin-left:250px;margin-right:0}}
+.nextlink{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:18px 32px;padding:clamp(28px,4.6vw,48px);border-radius:16px;background-color:var(--ink);color:var(--bg);text-decoration:none;
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 18px 36px -20px rgba(0,0,0,.3);
+  background-image:linear-gradient(155deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 50%)}
+.nextlink .nextlbl{grid-column:1;font-family:var(--sans);font-size:14px;color:color-mix(in srgb,var(--bg) 60%,transparent)}
+.nextlink .nexttitle{grid-column:1;max-width:22ch;font-family:var(--serif);font-size:clamp(22px,3vw,28px);line-height:1.15;letter-spacing:-.02em;color:var(--bg);margin-top:8px}
+.nextlink svg{grid-column:2;grid-row:1 / 3;align-self:end;box-sizing:border-box;width:clamp(44px,5vw,56px);height:clamp(44px,5vw,56px);padding:14px;border-radius:50%;background:var(--bg);color:var(--ink);transition:transform .35s var(--ease)}
+@media (hover:hover){.nextlink:hover svg{transform:translateX(6px) rotate(-45deg)}}
+
+/* ══ FOOTER ═════════════════════════════════════════════════════════ */
+#contact{margin-top:var(--s4);max-width:684px;margin-left:auto;margin-right:auto}
+@media(min-width:981px){#contact{margin-left:250px;margin-right:0}}
+#contact footer{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;width:auto;margin:0;padding:24px 0 36px;background:transparent;text-align:center}
+#contact .footcredit{margin:6px 0 0;font-family:var(--sans);
+  color:var(--faint);text-align:center;white-space:nowrap}
+
+.fmark{display:inline-grid;place-items:center;
+  width:20px;height:20px;flex:0 0 auto;
+  border-radius:50%;overflow:hidden;margin:0 2px;
+  vertical-align:middle}
+.fme img{width:20px!important;height:20px!important;
+  object-fit:cover;display:block;border-radius:50%}
+.fai{background:color-mix(in srgb,var(--accent) 12%,transparent);
+  color:var(--accent);font-size:11px;line-height:1}
+.fbub{position:relative;display:inline-block;vertical-align:middle;line-height:0}
+.fbub::before,.fbub::after{opacity:0;pointer-events:none;
+  transition:opacity .16s var(--ease),transform .22s var(--ease)}
+.fbub::after{content:attr(data-bub);position:absolute;left:50%;bottom:calc(100% + 9px);
+  transform:translateX(-50%) translateY(3px);
+  white-space:nowrap;border-radius:6px;padding:5px 9px;
+  background:var(--ink);color:var(--bg);
+  font-family:var(--sans);font-size:11px;font-weight:500;
+  letter-spacing:-.005em;line-height:1.2;box-shadow:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08);z-index:6}
+.fbub::before{content:"";position:absolute;left:50%;bottom:calc(100% + 5px);
+  width:7px;height:7px;background:var(--ink);
+  transform:translateX(-50%) translateY(3px) rotate(45deg);z-index:5}
+@media (hover:hover){
+  .fbub:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
+  .fbub:hover::before{opacity:1;transform:translateX(-50%) translateY(0) rotate(45deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .fbub::before,.fbub::after{transition:opacity .16s linear}
+  .fbub:hover::after{transform:translateX(-50%)}
+  .fbub:hover::before{transform:translateX(-50%) rotate(45deg)}
+}
+.fmark{transition:transform .34s var(--ease),background .34s var(--ease)}
+@media (hover:hover){
+  .fmark{cursor:default}
+  .fme:hover{transform:scale(1.35) rotate(-8deg)}
+  .fai:hover{transform:scale(1.35) rotate(180deg);
+    background:color-mix(in srgb,var(--accent) 26%,transparent)}
+}
+@media (prefers-reduced-motion:reduce){
+  .fmark{transition:none}
+  .fme:hover,.fai:hover{transform:none}
+}
+.fsr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
+  white-space:nowrap;border:0}
+.nextlink .nexttitle{font-weight:500}
+.eyebrow,.nextlink .nextlbl{
+  font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase}
+#contact .footcredit{font-size:13px;line-height:1.55;letter-spacing:-.01em}
+@media (max-width:400px){#contact .footcredit{font-size:12px}}
+@media (max-width:340px){#contact .footcredit{font-size:12px;white-space:normal}}
+
+/* ===== BACK TO TOP, READ AS PROGRESS =====
+   A blue arc sweeping round a grey circle is the loading spinner
+   everyone knows, so the ring read as "something is loading", not
+   "this is how far you are". Now it is a gauge: the whole track is
+   drawn, and the part you have read fills in ink. At the end of the
+   page the ring closes and the arrow lifts once: you are done here,
+   this takes you back up. */
+.totop-track{stroke:color-mix(in srgb,var(--ink) 12%,transparent)}
+.totop-prog{stroke:var(--ink);transition:stroke-dashoffset .1s linear,opacity .3s ease}
+.totop > svg:not(.totop-ring){transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.totop.is-done > svg:not(.totop-ring){animation:totopLift .9s cubic-bezier(.22,1,.36,1) .15s 1}
+@keyframes totopLift{0%{transform:none}40%{transform:translateY(-3px)}100%{transform:none}}
+/* 44px everywhere: at 56 it outweighed the nav pill (37) and the
+   AI twin pill (46). The ring's stroke grows to stay ~2px on screen. */
+.totop{width:44px;height:44px}
+.totop-ring circle{stroke-width:2.5}
+.totop > svg:not(.totop-ring){width:15px;height:15px}
+/* same baseline as the "Ask my AI twin" pill: its centre sits 41px
+   up (18px + 46/2), so this 44px button's bottom is 19px */
+@media (min-width:577px){ .totop{bottom:calc(19px + env(safe-area-inset-bottom))} }
+@media (hover:hover){ .totop:hover > svg:not(.totop-ring){transform:translateY(-2px)} }
+@media (prefers-reduced-motion:reduce){
+  .totop.is-done > svg:not(.totop-ring){animation:none}
+  .totop:hover > svg:not(.totop-ring){transform:none}
+}
+@media (max-width:576px){#contact footer{padding-bottom:calc(88px + env(safe-area-inset-bottom))}}
+/* phones: Home, About and Resume sit in the nav pill as icons, beside the
+   AI twin's hand; the menu keeps only the case studies and the email */
+.navico,.navsep{display:none}
+@media (max-width:576px){
+  nav.navlinks{gap:4px}
+  nav.navlinks a.navlink{display:inline-grid;place-items:center;width:30px;height:30px;padding:0;margin:0;border-radius:1000px;background:transparent;color:var(--muted)}
+  nav.navlinks a.navlink[aria-current="page"]{color:var(--ink)}
+  nav.navlinks a.navlink .navtext{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  nav.navlinks a.navlink .navico{display:block;width:17px;height:17px}
+  /* pill and back-to-top share one height; the AI twin leads, a hairline
+     sets it apart from the pages and the theme */
+  .navpill{height:44px;box-sizing:border-box}
+  nav.navlinks .navsep{display:block;width:1px;height:18px;margin:0 4px;background:currentColor;opacity:.25;flex:none}
+  .mobilenav .mlinks,.mobilenav .mresume{display:none}
+  #siteHeader .burger{display:none}
+  /* the wider pill and back-to-top now move as one centred row: the pill
+     steps left by half the button (+ gap), the button sits at its right
+     edge (--navpill-w is kept current by aitwin.js) */
+  #siteHeader.totop-on .navpill{transform:translateX(-26px)}
+  .totop{left:calc(50% + var(--navpill-w,216px) / 2 - 18px);transform:scale(.86)}
+  .totop.show{transform:scale(1)}
+}
+
+/* this page's own column: the footer blocks centre on the 1080 column instead of sitting beside a rail */
+#next,#contact{max-width:min(1080px,100% - 40px);margin-left:auto;margin-right:auto}
+#next{margin-top:96px}
+#contact{margin-top:56px}
+.nextlink{max-width:684px;margin:0 auto}
+/* the fixed pill now holds the top of the screen, so the section bar sits just under it */
+.bar{top:68px}
+@media (max-width:576px){.bar{top:10px}}
+
 </style>
 </head>
 <body>
@@ -476,11 +735,46 @@ svg.ch{display:block;overflow:visible}
   <symbol id="ptr" viewBox="0 0 24 24"><path d="M21 3 3 10.5l7.4 2.1L12.5 20z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></symbol>
 </defs></svg>
 
-<header class="top">
-  <a class="logo" href="./index.html"><span class="mark" aria-hidden="true"></span>Lokesh Bhatia</a>
-  <nav aria-label="Site"><a href="./index.html">Work</a><a href="./about.html">About</a><a href="./getbaq.html">Getbaq</a><a href="./resume.html">Resume</a></nav>
-  <a class="btn btn-dark" href="mailto:hi.lokeshux@gmail.com">Get in touch</a>
+<header id="siteHeader">
+  <div class="navpill">
+    <nav class="navlinks" aria-label="Main">
+      <a class="navlink" href="./index.html"><span class="navtext">Home</span><svg class="navico" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.2 7.2 8 2.4l5.8 4.8"/><path d="M3.8 6v7.1c0 .5.4.9.9.9h2.1v-3.6h2.4V14h2.1c.5 0 .9-.4.9-.9V6"/></svg></a>
+      <a class="navlink" href="./about.html"><span class="navtext">About</span><svg class="navico" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="5.4" r="2.9"/><path d="M2.6 14a5.4 5.4 0 0 1 10.8 0"/></svg></a>
+      <a class="navlink" href="./resume.html"><span class="navtext">Resume</span><svg class="navico" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.6 1.8H4.4c-.6 0-1.1.5-1.1 1.1v10.2c0 .6.5 1.1 1.1 1.1h7.2c.6 0 1.1-.5 1.1-1.1V4.9z"/><path d="M9.6 1.8v3.1h3.1"/><path d="M5.8 8.6h4.4M5.8 11.2h4.4"/></svg></a>
+      <button class="themebtn" id="themeToggle" type="button" aria-label="Toggle colour theme"><span class="icon-sun" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="icon-moon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.3 9.9A5.8 5.8 0 1 1 6.1 2.7a4.6 4.6 0 0 0 7.2 7.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span></button>
+      <button class="burger" id="burgerBtn" type="button" aria-label="Menu" aria-expanded="false"><span class="bicon-bars bicon" aria-hidden="true"><span class="bars"><span></span><span></span><span></span></span></span><span class="bicon-x bicon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></button>
+    </nav>
+  </div>
 </header>
+
+<div class="mobilenav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile menu">
+  <div class="msheet">
+    <div class="mhandle-zone" aria-hidden="true"><span class="mhandle"></span></div>
+    <nav class="mlinks" aria-label="Primary">
+    <a class="mrow" href="./index.html"><span class="mlabel">Home</span></a>
+    <a class="mrow" href="./about.html"><span class="mlabel">About</span></a>
+  </nav>
+    <div class="mcases">
+    <p class="mgroup">Case studies</p>
+    <a class="mcase" href="./getbaq.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Designing an AI agent that fights for your refund</span><span class="mcase-m">Getbaq &#183; AI agent</span></span></a>
+    <a class="mcase" href="./app-merge.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">Unifying the investing journey in one app</span><span class="mcase-m">Rupeezy &middot; Consumer app</span></span></a>
+    <a class="mcase" href="./rise-portal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&rsquo;s partners ever had</span><span class="mcase-m">Rupeezy &middot; B2B platform</span></span></a>
+    <a class="mcase" href="./web-terminal.html"><span class="mcase-num">04</span><span class="mcase-x"><span class="mcase-t">Designing the desktop trading experience</span><span class="mcase-m">Rupeezy &middot; Web trading terminal</span></span></a>
+    <a class="mcase" href="./arogya-line.html" aria-current="page"><span class="mcase-num">05</span><span class="mcase-x"><span class="mcase-t">One care journey, three people, one connected system</span><span class="mcase-m">Arogya Line &middot; Health system</span></span></a>
+  </div>
+    <div class="mfoot">
+    <button type="button" class="mailbtn copyEmailBtn" aria-label="Copy email address">hi.lokeshux@gmail.com</button>
+    <a class="mresume" href="./resume.html">Resume <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+  </div>
+</div>
+
+<button type="button" class="totop" id="totop" aria-label="Back to top">
+  <svg class="totop-ring" viewBox="0 0 56 56" aria-hidden="true"><circle class="totop-track" cx="28" cy="28" r="25"/><circle class="totop-prog" cx="28" cy="28" r="25"/></svg>
+  <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Copied to clipboard</span></div>
 
 <main>
 <section class="hero wrap" id="top">
@@ -719,15 +1013,19 @@ svg.ch{display:block;overflow:visible}
 </section>
 </main>
 
-<footer>
-  <div class="ft">
-    <div><a href="./index.html" aria-label="Lokesh Bhatia, home"><span class="mark" style="display:block"></span></a></div>
-    <div><h6>Case studies</h6><ul><li><a href="./getbaq.html">Getbaq</a></li><li><a href="./index.html">Rupeezy</a></li><li><a href="./arogya-line.html">Arogya Line</a></li></ul></div>
-    <div><h6>Arogya Line</h6><ul><li><a href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Prototype</a></li><li><a href="https://github.com/LKB00/arogya-line" target="_blank" rel="noopener">Repository</a></li><li><a href="https://github.com/LKB00/arogya-line/blob/master/SPEC.md" target="_blank" rel="noopener">Spec</a></li><li><a href="https://github.com/LKB00/arogya-line/blob/master/docs/design-rationale.md" target="_blank" rel="noopener">Design rationale</a></li></ul></div>
-    <div><h6>Lokesh</h6><ul><li><a href="./about.html">About</a></li><li><a href="./resume.html">Resume</a></li><li><a href="mailto:hi.lokeshux@gmail.com">Email</a></li></ul></div>
-  </div>
-  <div class="legal"><span>Lokesh Bhatia © 2026 · Designed and built with an AI that argued back</span><span class="soc"><a href="https://github.com/LKB00" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a><a href="mailto:hi.lokeshux@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a><span>English · India</span></span></div>
-</footer>
+<section id="next">
+  <a class="nextlink" href="./getbaq.html">
+    <span class="nextlbl">Next case study</span>
+    <span class="nexttitle">Designing an AI agent that fights for your refund</span>
+    <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</section>
+
+<section id="contact">
+  <footer>
+    <p class="footcredit">Designed and built by <span class="fbub" data-bub="The decision maker"><span class="fmark fme" aria-hidden="true"><img src="./assets/avatar-96.webp" width="96" height="96" alt="" loading="lazy" decoding="async"></span></span><span class="fsr">me</span>, with <span class="fbub" data-bub="The OG assistant"><span class="fmark fai" aria-hidden="true">&#10022;</span></span><span class="fsr">an AI</span> that argued back.</p>
+  </footer>
+</section>
 <script>
 (() => {
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -962,5 +1260,164 @@ const links = $$('.bar nav a');
 ['how', 'check', 'cases', 'scope'].forEach(id => io(document.getElementById(id), e => { if (e.isIntersecting) links.forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + id)); }, { rootMargin: '-40% 0px -55% 0px' }));
 })();
 </script>
+<script>
+(function(){
+  var doc=document.documentElement, tb=document.getElementById('themeToggle');
+  if(tb) tb.addEventListener('click',function(){
+    var t=doc.getAttribute('data-theme')==='dark'?'light':'dark';
+    doc.setAttribute('data-theme',t); doc.style.removeProperty('background-color');
+    try{localStorage.setItem('portfolio-theme',t)}catch(e){}
+  });
+
+  // fixed nav pill: solidify once the page has scrolled past the hero
+  var header=document.getElementById('siteHeader');
+  function onHeaderScroll(){ if(window.scrollY>70) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }
+  var headerTicking=false;
+  window.addEventListener('scroll',function(){
+    if(headerTicking) return;
+    headerTicking=true;
+    requestAnimationFrame(function(){ onHeaderScroll(); headerTicking=false; });
+  },{passive:true});
+  onHeaderScroll();
+
+  // back-to-top button with scroll-progress ring
+  var totop=document.getElementById('totop');
+  var navpill=document.querySelector('.navpill');
+  if(totop){
+    var totopRing=totop.querySelector('.totop-prog'), TOTOP_C=157.08;
+    /* Chromium sometimes leaves this pair's transform painted at its
+       pre-toggle spot even though layout is already correct by the time
+       the transition should have finished (proven by forcing a reflow
+       and watching it snap to the right place). A plain offsetHeight
+       read only flushes layout, not the compositor, so it doesn't fix
+       this -- toggling display does, but doing that on every scroll
+       tick would fight the transition and could flash the element, so
+       it only runs once, right after a real show/hide flip. */
+    var totopWasOn=false;
+    function fixTotopPaint(){
+      setTimeout(function(){
+        totop.style.display='none'; void totop.offsetHeight; totop.style.display='';
+        navpill.style.display='none'; void navpill.offsetHeight; navpill.style.display='';
+      },550);
+    }
+    function onTotopScroll(){
+      var totopOn=window.scrollY>400;
+      if(totopOn) totop.classList.add('show'); else totop.classList.remove('show');
+      header.classList.toggle('totop-on', totopOn);
+      if(totopOn!==totopWasOn){ totopWasOn=totopOn; fixTotopPaint(); }
+      var max=document.documentElement.scrollHeight-window.innerHeight;
+      var p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
+      totopRing.style.strokeDashoffset=(TOTOP_C*(1-p)).toFixed(2);
+    }
+    var totopTicking=false;
+    window.addEventListener('scroll',function(){
+      if(totopTicking) return;
+      totopTicking=true;
+      requestAnimationFrame(function(){ onTotopScroll(); totopTicking=false; });
+    },{passive:true});
+    onTotopScroll();
+    totop.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  }
+
+  // mobile nav drawer
+  var burger=document.getElementById('burgerBtn'), mobileNav=document.getElementById('mobileNav'), navScrollY=0;
+  function closeMenu(){
+    if(!mobileNav.classList.contains('open')) return;
+    mobileNav.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+    document.body.classList.remove('menu-open');
+    document.body.style.top='';
+    window.scrollTo(0,navScrollY);
+    burger.focus();
+  }
+  function openMenu(){
+    navScrollY=window.scrollY;
+    mobileNav.classList.add('open');
+    burger.setAttribute('aria-expanded','true');
+    document.body.classList.add('menu-open');
+    document.body.style.top=(-navScrollY)+'px';
+    var first=mobileNav.querySelector('a, button');
+    if(first) first.focus({preventScroll:true});
+  }
+  burger.addEventListener('click',function(){ mobileNav.classList.contains('open')?closeMenu():openMenu(); });
+  mobileNav.querySelectorAll('a').forEach(function(el){ el.addEventListener('click',closeMenu); });
+  document.addEventListener('keydown',function(e){
+    if(!mobileNav.classList.contains('open')) return;
+    if(e.key==='Escape'){ closeMenu(); return; }
+    if(e.key!=='Tab') return;
+    var f=mobileNav.querySelectorAll('a, button');
+    if(!f.length) return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  });
+  window.addEventListener('resize',function(){ if(window.innerWidth>640) closeMenu(); });
+
+  // bottom-sheet: tap the dimmed backdrop, or swipe the handle down, to dismiss
+  mobileNav.addEventListener('click', function(e){
+    if (e.target === mobileNav) closeMenu();
+  });
+  var msheet = mobileNav.querySelector('.msheet');
+  var mhandle = mobileNav.querySelector('.mhandle-zone');
+  if (msheet && mhandle){
+    var dragStartY = 0, dragY = 0, dragging = false;
+    mhandle.addEventListener('touchstart', function(e){
+      dragging = true; dragY = 0;
+      dragStartY = e.touches[0].clientY;
+      msheet.style.transition = 'none';
+    }, { passive: true });
+    mhandle.addEventListener('touchmove', function(e){
+      if (!dragging) return;
+      dragY = Math.max(0, e.touches[0].clientY - dragStartY);
+      msheet.style.transform = 'translateY(' + dragY + 'px)';
+    }, { passive: true });
+    function endSheetDrag(){
+      if (!dragging) return;
+      dragging = false;
+      msheet.style.transition = '';
+      msheet.style.transform = '';
+      if (dragY > 70) closeMenu();
+    }
+    mhandle.addEventListener('touchend', endSheetDrag);
+    mhandle.addEventListener('touchcancel', endSheetDrag);
+  }
+  var here=location.pathname.split('/').pop()||'index.html';
+  mobileNav.querySelectorAll('.mrow, .mcase').forEach(function(el){
+    var href=el.getAttribute('href');
+    var target=href.split('#')[0].split('/').pop()||'index.html';
+    if(target===here) el.classList.add('current');
+  });
+
+  // copy-to-clipboard toast (mobile nav email button)
+  var toast=document.getElementById('toast'), toastTimer;
+  function copyText(text){
+    function feedback(){
+      if(!toast) return;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(function(){ toast.classList.remove('show'); },2000);
+    }
+    function fallback(){
+      try{
+        var ta=document.createElement('textarea');
+        ta.value=text; ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+        document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,text.length);
+        document.execCommand('copy'); document.body.removeChild(ta);
+      }catch(e){}
+      feedback();
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(feedback,fallback);
+    else fallback();
+  }
+  document.querySelectorAll('.copyEmailBtn').forEach(function(btn){
+    btn.addEventListener('click',function(){ copyText('hi.lokeshux@gmail.com'); });
+  });
+})();
+</script>
+<script>
+(function(){var b=document.getElementById("totop"); if(!b) return; var t=false; function f(){ t=false; var max=document.documentElement.scrollHeight-window.innerHeight; b.classList.toggle("is-done", max>0 && window.scrollY>=max-24); } window.addEventListener("scroll",function(){ if(!t){ t=true; requestAnimationFrame(f); } },{passive:true}); f();})();
+</script>
+<script src="./aitwin.js?v=6" defer></script>
 </body>
 </html>
