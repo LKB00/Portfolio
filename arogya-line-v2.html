@@ -412,7 +412,11 @@ svg.ch{display:block;overflow:visible}
 .users{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:960px;margin:56px auto 0;text-align:left}
 .users h3{margin:80px auto 0;grid-column:1/-1;text-align:center;font-size:clamp(24px,2.4vw,32px);font-weight:500;letter-spacing:-.025em;color:var(--ink)}
 .user{background:var(--panel);border-radius:22px;padding:24px 22px 26px}
-.user svg{width:64px;height:64px;display:block;margin-bottom:14px}
+.umedia{height:236px;margin-bottom:20px;border-radius:16px;overflow:hidden;display:flex;justify-content:center;align-items:flex-end}
+.umedia img{display:block;height:auto;box-shadow:0 18px 40px -22px rgba(10,10,40,.5)}
+.umedia.ph{align-items:flex-start;padding-top:16px}
+.umedia.ph img{width:62%;border-radius:18px 18px 0 0}
+.umedia.wd img{width:90%;border-radius:10px 10px 0 0}
 .user h4{margin:0 0 6px;font-size:20px;font-weight:500;letter-spacing:-.02em;color:var(--ink)}
 .user .ctx{margin:0 0 16px;font-size:14px;line-height:1.5;color:var(--grey)}
 .user ul{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px;font-size:15px;line-height:1.35;color:var(--ink)}
@@ -859,9 +863,9 @@ body.menu-open #siteHeader{z-index:70}
   <p class="hmw" data-rv>How might I keep one patient’s care journey coherent as it moves between the family, the ASHA worker, and the PHC?</p>
   <div class="users">
     <h3 style="margin:0 0 4px;grid-column:1/-1;text-align:center;font-size:clamp(24px,2.4vw,32px);font-weight:500;letter-spacing:-.025em;color:var(--ink)" data-rv>Three users. Three contexts. One problem.</h3>
-    <div class="user" data-rv><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#sunita"/></svg><h4>The ASHA</h4><p class="ctx">A community health worker, on foot, from house to house, often without signal.</p><ul><li>Who needs me next?</li><li>What do I need to do?</li><li>What happens when I’m offline?</li></ul><span class="udev">A smartphone</span></div>
-    <div class="user" data-rv style="--i:1"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#meena"/></svg><h4>The PHC doctor</h4><p class="ctx">At the primary health centre, seeing the day’s patients one after another.</p><ul><li>Who is coming?</li><li>Why are they here?</li><li>What happened before they arrived?</li></ul><span class="udev">A desktop</span></div>
-    <div class="user" data-rv style="--i:2"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pooja"/></svg><h4>The family</h4><p class="ctx">At home, often sharing one basic phone, caring for someone who is unwell.</p><ul><li>What should I do now?</li><li>What did the doctor say?</li><li>When should I seek help again?</li></ul><span class="udev">Any phone, even a basic one</span></div>
+    <div class="user" data-rv><div class="umedia ph" style="background:#fff2c7"><img src="./assets/arogya3/today.webp" alt="The ASHA’s Today screen: who needs her next" loading="lazy" decoding="async"></div><h4>The ASHA</h4><p class="ctx">A community health worker, on foot, from house to house, often without signal.</p><ul><li>Who needs me next?</li><li>What do I need to do?</li><li>What happens when I’m offline?</li></ul><span class="udev">A smartphone</span></div>
+    <div class="user" data-rv style="--i:1"><div class="umedia wd" style="background:#e4efff"><img src="./assets/arogya3/phc-today.webp" alt="The PHC dashboard: the day’s bookings in time order" loading="lazy" decoding="async"></div><h4>The PHC doctor</h4><p class="ctx">At the primary health centre, seeing the day’s patients one after another.</p><ul><li>Who is coming?</li><li>Why are they here?</li><li>What happened before they arrived?</li></ul><span class="udev">A desktop</span></div>
+    <div class="user" data-rv style="--i:2"><div class="umedia ph" style="background:#fce4ec"><img src="./assets/arogya3/v-id.webp" alt="The voice line, written as live captions" loading="lazy" decoding="async"></div><h4>The family</h4><p class="ctx">At home, often sharing one basic phone, caring for someone who is unwell.</p><ul><li>What should I do now?</li><li>What did the doctor say?</li><li>When should I seek help again?</li></ul><span class="udev">Any phone, even a basic one</span></div>
   </div>
 </section>
 
