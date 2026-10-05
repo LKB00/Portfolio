@@ -2386,6 +2386,311 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb .al-edges li:nth-child(n+5) .al-ec-f{height:200px}
 .gb .al-edges li:nth-child(n+5) .al-ec-f img,.gb .al-edges li:nth-child(2) .al-ec-f img{border-radius:16px}
 @media(max-width:760px){.gb .al-edges li .al-ec-f{height:auto!important}}
+
+/* ===== V2 components (film, how-it-works cards, the shared check, edge carousel, Arjun's day, the cast),
+   scoped under .v2 and set in the portfolio's type and greys ===== */
+.v2{--page:var(--bg);--text:#4b4747;--grey:var(--muted);--grey2:#6b6767;--hair:#ececec;--panel:#F2F3F5;--surface:#fff;--bubble:#f0f0f0;
+  --line2:color-mix(in oklab,var(--ink) 16%,transparent);--indigo:#34449A;
+  --tri-pink:#b42b5e;--tri-pink-soft:#fce4ec;--tri-pink-ink:#5a1030;--tri-yellow:#f2b705;--tri-yellow-soft:#fff2c7;--tri-yellow-ink:#4d3800;
+  --tri-green:#2f7d4f;--tri-green-soft:#ddf1e3;--tri-green-ink:#0f3b22;--brand:#fcd12a;
+  --out:cubic-bezier(.22,1,.36,1);--spring:cubic-bezier(.32,.72,0,1);font-family:var(--sans);color:var(--text)}
+:root[data-theme="dark"] .v2{--text:#cfc9c9;--grey2:#aaa3a3;--hair:#262626;--panel:#1a1a1a;--surface:#161616;--bubble:#262626}
+.v2 img,.v2 video{display:block;max-width:100%;height:auto}
+.v2 button{font:inherit;color:inherit}
+.v2 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;font-size:15px;font-weight:600;letter-spacing:-.01em;text-decoration:none;white-space:nowrap;border:1px solid transparent;cursor:pointer;transition:background .15s var(--ease),transform .15s var(--ease)}
+.v2 .btn:active{transform:scale(.98)}
+.v2 .btn-dark{background:var(--ink);color:var(--page)}
+.v2 .btn-dark:hover{background:color-mix(in oklab,var(--ink) 80%,var(--page))}
+.v2 .btn-line{border-color:var(--line2);color:var(--ink);background:transparent}
+.v2 .btn-line:hover{background:color-mix(in oklab,var(--ink) 4%,transparent)}
+.v2 .film{position:relative;margin-top:130px;aspect-ratio:16/9;border-radius:60px;overflow:hidden;background:#1b1f3a;isolation:isolate}
+.v2 .scene{position:absolute;inset:0;opacity:0;transition:opacity .9s var(--ease)}
+.v2 .scene.on{opacity:1}
+.v2 .scene .set{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center}
+.v2 .s1{background:radial-gradient(70% 90% at 30% 20%,#ffe9c2 0%,#f7b98a 45%,#c9738c 100%)}
+.v2 .s2{background:radial-gradient(70% 90% at 70% 20%,#f4ffd0 0%,#bfe86a 45%,#5f9e3a 100%)}
+.v2 .s3{background:radial-gradient(80% 100% at 50% 0%,#dff4ff 0%,#7fc8f5 45%,#2d6fc2 100%)}
+.v2 .s4{background:radial-gradient(70% 90% at 40% 20%,#ffe0fb 0%,#e86ed8 50%,#7d1f8a 100%)}
+.v2 .film .phone{width:26%;margin-bottom:-9%}
+.v2 .film .phone{background:none;padding:0;border-radius:0;box-shadow:none;margin-bottom:-16%}
+.v2 .film .phone video{border-radius:28px 28px 0 0;box-shadow:0 40px 80px -30px rgba(10,10,40,.5)}
+.v2 .film .flat{width:66%;margin-bottom:-2%}
+.v2 .film .flat video{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;border-radius:18px 18px 0 0;box-shadow:0 40px 80px -30px rgba(10,10,40,.5);background:#fff}
+.v2 .film .actor{position:absolute;width:13%;bottom:12%}
+.v2 .film .ctl{position:absolute;right:30px;bottom:26px;display:flex;gap:10px;z-index:3}
+.v2 .chip{height:34px;padding:0 14px;border:0;border-radius:999px;background:rgba(13,13,13,.5);color:#fff;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:8px;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.v2 .chip.round{width:34px;padding:0;justify-content:center}
+.v2 .chip:hover{background:rgba(13,13,13,.66)}
+.v2 .phone{position:relative;background:#121212;border-radius:15% / 7%;padding:3%;box-shadow:0 40px 80px -30px rgba(10,10,40,.55)}
+.v2 .phone video,.v2 .phone img{width:100%;aspect-ratio:9/20;object-fit:cover;object-position:top;border-radius:12% / 5.5%;background:#fff}
+.v2 .laptop .scr{background:#121212;border-radius:16px 16px 4px 4px;padding:1.5%;box-shadow:0 40px 80px -30px rgba(10,10,40,.55)}
+.v2 .laptop .scr video,.v2 .laptop .scr img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;border-radius:6px;background:#fff}
+.v2 .laptop .base{height:12px;margin:0 -7%;background:linear-gradient(#e3e5ea,#a9adb8);border-radius:0 0 14px 14px}
+.v2 .rows{display:grid;gap:34px;margin-top:62px}
+.v2 .row{display:grid;grid-template-columns:670fr 294fr;align-items:center}
+.v2 .row .txt{padding-left:40px;max-width:265px}
+.v2 .row.r{grid-template-columns:294fr 670fr}
+.v2 .row.r .txt{order:-1;padding:0 20px 0 24px;max-width:none}
+.v2 .row h3{margin:0;font-weight:400;font-size:24px;line-height:1.3;letter-spacing:-.025em;color:var(--ink)}
+.v2 .row p{margin:16px 0 0;font-size:15.5px;line-height:1.32;color:var(--text);max-width:228px}
+.v2 .row .btn{margin-top:26px}
+.v2 .card{position:relative;aspect-ratio:670/377;border-radius:60px;overflow:hidden;isolation:isolate}
+.v2 .y{background:radial-gradient(60% 90% at 88% 20%,#f5bd3c 0%,rgba(248,206,90,.6) 40%,rgba(252,240,180,0) 75%),linear-gradient(170deg,#fcef96 0%,#fcf1c0 55%,#fbf3d2 100%)}
+.v2 .c{background:radial-gradient(70% 90% at 100% 40%,#e95d53 0%,rgba(236,102,93,.8) 45%,rgba(245,137,124,0) 90%),linear-gradient(90deg,#f6907f,#f07669)}
+.v2 .b{background:radial-gradient(70% 100% at 0% 100%,#0d9de4 0%,rgba(33,172,236,.7) 40%,rgba(120,220,245,0) 85%),linear-gradient(120deg,#6ecfee,#88dff2 55%,#5fd7fb)}
+.v2 .m{background:radial-gradient(80% 110% at 100% 100%,#b10fbb 0%,rgba(205,72,207,.85) 45%,rgba(245,190,240,0) 95%),linear-gradient(210deg,#f6d6f3 0%,#e676df 50%,#d24dd0 100%)}
+.v2 .l{background:radial-gradient(80% 110% at 100% 60%,#a3e519 0%,rgba(190,240,70,.8) 40%,rgba(240,250,220,0) 90%),linear-gradient(160deg,#fbfdf4,#eef9d6)}
+.v2 .p{background:radial-gradient(80% 110% at 0% 0%,#ff4fa6 0%,rgba(255,120,190,.8) 45%,rgba(255,210,235,0) 95%),linear-gradient(200deg,#ffd9ec,#ff8fc9)}
+.v2 .v{background:radial-gradient(80% 110% at 0% 0%,#a9b4f5 0%,rgba(190,200,250,.8) 45%,rgba(236,238,255,0) 95%),linear-gradient(200deg,#f1f2ff,#c4cbf7)}
+.v2 .col{position:absolute;left:29.8%;width:39.9%;top:12.2%;bottom:-10%;border-radius:42px;background:rgba(255,255,255,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+.v2 .col::before{content:"";position:absolute;inset:8px;border-radius:34px;background:rgba(255,255,255,.22)}
+.v2 .col .list{position:absolute;left:20px;right:20px;top:50px;display:grid;gap:10px}
+.v2 .it{position:relative;display:flex;align-items:center;gap:12px;height:60px;padding:0 12px;border-radius:14px;background:rgba(255,255,255,.9);color:#111;transition:transform .7s var(--spring),opacity .4s var(--ease),box-shadow .4s var(--ease)}
+.v2 .it .tile{flex:none;width:34px;height:34px;border-radius:9px;background:#fff;box-shadow:0 0 0 1px #ececec;display:grid;place-items:center}
+.v2 .it .tile svg{width:18px;height:18px}
+.v2 .it b{display:block;font-weight:500;font-size:14.5px;line-height:1.2;letter-spacing:-.01em}
+.v2 .it small{display:block;font-size:11.5px;line-height:1.35;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v2 .it span{min-width:0}
+.v2 .col.pick .it{opacity:.55}
+.v2 .col.pick .it.on{opacity:1;transform:translateX(-22px);box-shadow:0 14px 30px -14px rgba(90,60,0,.35)}
+.v2 .col .it:last-child{opacity:.6}
+.v2 .agent{position:absolute;left:0;top:0;width:70px;height:70px;z-index:4;transition:transform 1s var(--spring);pointer-events:none}
+.v2 .agent svg.ch{width:100%;height:100%}
+.v2 .agent .ptr{position:absolute;width:26px;height:26px;right:-18px;top:6px}
+.v2 .agent.left .ptr{right:auto;left:-16px;transform:scaleX(-1)}
+.v2 .tray{position:absolute;left:24.2%;width:51.8%;top:2.9%;bottom:2.6%;border-radius:22px;background:rgba(255,242,240,.93);padding:14px 10px;color:#111}
+.v2 .tray h5{margin:6px 8px 6px;font-size:14px;font-weight:500;color:#7b7b7b;letter-spacing:-.01em}
+.v2 .tray h5 + .grp{margin-bottom:10px}
+.v2 .row2{position:relative;display:flex;align-items:center;gap:13px;height:53px;padding:0 8px;border-radius:12px;transition:background .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
+.v2 .row2 .tile{flex:none;width:40px;height:40px;border-radius:10px;background:#f3eaea;display:grid;place-items:center}
+.v2 .row2 .tile svg{width:22px;height:22px}
+.v2 .row2 b{display:block;font-weight:500;font-size:15px;line-height:1.2;letter-spacing:-.015em}
+.v2 .row2 small{display:block;font-size:12.5px;color:#7b7b7b;margin-top:2px}
+.v2 .row2 .grip{margin-left:auto;opacity:0;color:#999;font-size:15px;letter-spacing:-2px;transition:opacity .2s}
+.v2 .row2.held{background:rgba(0,0,0,.055)}
+.v2 .row2.lift{background:#fff;box-shadow:0 16px 34px -16px rgba(120,20,20,.35);z-index:3}
+.v2 .row2.held .grip,.v2 .row2.lift .grip{opacity:1}
+.v2 .hand{position:absolute;left:28.6%;width:42.6%;top:12.4%;bottom:-8%;border-radius:48px;background:rgba(255,255,255,.3);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);padding:9px 9px 0}
+.v2 .hand .in{height:100%;background:#fff;border-radius:40px 40px 0 0;padding:16px 12px 0;color:#111;overflow:hidden}
+.v2 .hd{display:flex;justify-content:space-between;align-items:flex-start}
+.v2 .hb{width:30px;height:30px;border-radius:50%;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.1);display:grid;place-items:center}
+.v2 .hb svg{width:15px;height:15px}
+.v2 .hn{display:flex;flex-direction:column;align-items:center;margin-top:-4px}
+.v2 .hn svg.ch{width:44px;height:44px}
+.v2 .hn span{margin-top:-5px;font-size:11.5px;font-weight:700;background:#fff;padding:2px 8px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.v2 .msgs{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.v2 .bub{max-width:78%;padding:8px 11px;border-radius:14px;font-size:11.5px;line-height:1.33;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .3s var(--ease),transform .55s var(--out)}
+.v2 .bub.in{opacity:1;transform:none}
+.v2 .bub.l{background:#efefef;align-self:flex-start;transform-origin:0 100%}
+.v2 .bub.r{background:#3d6cf5;color:#fff;align-self:flex-end;transform-origin:100% 100%}
+.v2 .bub.k{letter-spacing:.2em;font-weight:600}
+.v2 .dots3{align-self:flex-start;background:#efefef;border-radius:14px;padding:9px 11px;gap:3px;display:none}
+.v2 .dots3.in{display:flex}
+.v2 .dots3 i{width:5px;height:5px;border-radius:50%;background:#9b9b9b;animation:v2dt 1s infinite}
+.v2 .dots3 i:nth-child(2){animation-delay:.15s}
+.v2 .dots3 i:nth-child(3){animation-delay:.3s}
+@keyframes v2dt{0%,60%,100%{opacity:.35;transform:none}30%{opacity:1;transform:translateY(-2px)}}
+.v2 .att{align-self:flex-start;display:flex;align-items:center;gap:8px;padding:7px 10px 7px 7px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px #ececec;font-size:11px;opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .55s var(--out)}
+.v2 .att.in{opacity:1;transform:none}
+.v2 .att i{width:24px;height:24px;border-radius:6px;background:#e0344d;display:grid;place-items:center}
+.v2 .att b{display:block;font-weight:600}
+.v2 .att small{display:block;color:#888;font-size:10px}
+.v2 .chan{position:absolute;left:0;width:73%;top:17.5%;bottom:0;border-radius:0 30px 0 0;background:rgba(253,240,252,.94);padding:22px 30px 0 15%;color:#111}
+.v2 .chan header{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.v2 .chan header b{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.v2 .chan header .ic{margin-left:auto;display:flex;gap:14px;color:#222}
+.v2 .chan header svg{width:18px;height:18px}
+.v2 .post{display:grid;grid-template-columns:30px 1fr;gap:10px;margin-bottom:14px}
+.v2 .post .av{width:30px;height:30px;border-radius:7px;background:#fff;display:grid;place-items:center;overflow:hidden}
+.v2 .post .av svg{width:30px;height:30px}
+.v2 .post b{font-size:15px;font-weight:700;letter-spacing:-.015em}
+.v2 .post .tg{font-size:10.5px;font-weight:600;color:#666;background:#ececec;padding:1px 5px;border-radius:4px;margin-left:6px;letter-spacing:.02em}
+.v2 .post time{font-size:11px;color:#9a9a9a;margin-left:6px}
+.v2 .post p{margin:2px 0 0;font-size:14.5px;line-height:1.3}
+.v2 .embed{margin:4px 0 0 40px;width:62%;height:120px;border-radius:12px;background:#e8e6ea;overflow:hidden;position:relative}
+.v2 .embed img{position:absolute;left:8%;top:12px;width:84%;border-radius:8px 8px 0 0;box-shadow:0 0 0 1px rgba(0,0,0,.05)}
+.v2 .two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.v2 .two h2{font-size:clamp(32px,3.2vw,40px);line-height:1.2;letter-spacing:-.03em}
+.v2 .two p{margin:0;max-width:340px;font-size:clamp(19px,1.9vw,24px);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
+.v2 .explore{display:flex;align-items:center;justify-content:space-between;margin:70px 16px 26px}
+.v2 .explore span{font-size:20px;color:var(--text);letter-spacing:-.02em}
+.v2 .nav2{display:flex;gap:9px}
+.v2 .arw{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--page);display:grid;place-items:center;cursor:pointer;transition:opacity .2s,background .15s}
+.v2 .arw:hover:not(:disabled){background:var(--surface)}
+.v2 .arw:disabled{opacity:.45;cursor:default}
+.v2 .arw svg{width:18px;height:18px}
+.v2 .rail{display:flex;gap:16px;transition:transform .75s var(--out);touch-action:pan-y}
+.v2 .sl{flex:0 0 min(670px,100%);transition:opacity .55s var(--ease)}
+.v2 .sl:not(.on){opacity:.3}
+.v2 .sl:not(.on) .card{cursor:pointer}
+.v2 .sl h3{margin:32px 24px 14px;font-weight:400;font-size:24px;line-height:1.3;letter-spacing:-.025em;color:var(--ink)}
+.v2 .sl p{margin:0 24px;font-size:18px;line-height:1.55;color:var(--text)}
+.v2 .sl .shot{position:absolute;right:6%;top:9%;width:33%;border-radius:18px;overflow:hidden;box-shadow:0 20px 40px -18px rgba(0,0,0,.35);background:#fff}
+.v2 .sl .shot img{width:100%;aspect-ratio:9/12.4;object-fit:cover;object-position:top}
+.v2 .mini{position:absolute;left:7%;top:6%;bottom:-6%;width:50%;background:#fff;border-radius:22px 22px 0 0;padding:14px 16px 0;color:#111;box-shadow:0 18px 40px -22px rgba(0,0,0,.3);overflow:hidden}
+.v2 .mini .hn{margin-bottom:6px}
+.v2 .mini .hn svg.ch{width:38px;height:38px}
+.v2 .mini .bub{opacity:1;transform:none;font-size:11.5px}
+.v2 .mini .meta{font-size:9.5px;color:#9a9a9a;text-align:center;margin:6px 0 2px}
+.v2 .mini .pill{align-self:flex-start;margin-top:2px;font-size:11px;font-weight:500;color:#34449A;background:#eceffb;border-radius:999px;padding:5px 10px}
+.v2 .mini .comp{position:absolute;left:12px;right:12px;bottom:12px;height:32px;border-radius:999px;box-shadow:0 0 0 1px #e8e8e8;display:flex;align-items:center;padding:0 6px 0 12px;font-size:11px;color:#9a9a9a}
+.v2 .mini .comp i{margin-left:auto;width:22px;height:22px;border-radius:50%;background:#111}
+.v2 .stage{position:relative;max-width:848px;height:420px;margin:0 auto}
+.v2 .char{position:absolute;bottom:92px;width:0;transition:left .8s var(--spring)}
+.v2 .char svg{position:absolute;bottom:0;left:-54px;width:108px;height:108px}
+.v2 .say{position:absolute;bottom:220px;width:280px;padding:19px 22px;border-radius:22px;background:var(--bubble);color:var(--ink);font-size:15px;line-height:1.53;text-align:left;transition:left .8s var(--spring),opacity .22s var(--ease)}
+.v2 .say .re{position:absolute;right:20px;bottom:-12px;width:26px;height:26px;border-radius:50%;background:var(--page);display:grid;place-items:center;font-size:12px;box-shadow:0 0 0 3px var(--page)}
+.v2 .say.swap{opacity:0}
+.v2 .time{position:absolute;bottom:52px;transform:translateX(-50%);height:34px;display:flex;align-items:center;gap:6px;padding:0 8px;border-radius:10px;background:var(--brand);color:#161616;font-size:15px;font-weight:500;white-space:nowrap;transition:left .8s var(--spring);z-index:2;cursor:grab;touch-action:none}
+.v2 .time::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:24px;background:var(--brand);transform:translateX(-50%)}
+.v2 .time button{border:0;background:none;padding:0;width:18px;height:24px;display:grid;place-items:center;cursor:pointer}
+.v2 .time button:disabled{opacity:.3;cursor:default}
+.v2 .time svg{width:14px;height:14px}
+.v2 .track{position:absolute;left:0;right:0;bottom:16px;height:26px;cursor:grab;touch-action:none}
+.v2 .ticks{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.v2 .ticks i{width:1.5px;height:13px;border-radius:1px;background:#cdcdcd}
+.v2 .ticks i.d{width:16px;height:16px;border-radius:50%;background:#b8b8b8}
+.v2 .dayc{text-align:center;margin-top:44px;min-height:140px}
+.v2 .dayc .wh{font-size:14px;color:var(--grey2)}
+.v2 .dayc h3{margin:18px 0 12px;font-weight:500;font-size:clamp(28px,2.7vw,38px);line-height:1.15;letter-spacing:-.03em;color:var(--ink)}
+.v2 .dayc p{margin:0 auto;max-width:520px;font-size:14.5px;line-height:1.6;color:var(--grey2)}
+.v2 .dayc > *{transition:opacity .22s var(--ease),transform .4s var(--out)}
+.v2 .dayc.swap > *{opacity:0;transform:translateY(5px)}
+.v2 .tabs{display:flex;justify-content:center;gap:6px;margin-top:40px}
+.v2 .tab{height:38px;padding:0 18px;white-space:nowrap;border:0;border-radius:999px;background:transparent;font-size:15px;font-weight:400;color:var(--ink);cursor:pointer;transition:background .2s,box-shadow .2s}
+.v2 .tab[aria-selected="true"]{background:var(--surface);box-shadow:0 0 0 1px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.06)}
+.v2 .cast{position:relative;height:220px;margin-top:40px;clip-path:inset(-600px -100vw 0 -100vw)}
+.v2 .cast svg.ch{position:absolute;bottom:0;width:178px;height:178px;will-change:transform}
+.v2 svg.ch{display:block;overflow:visible}
+.v2 .ch .eyes{transform-box:fill-box;transform-origin:center;animation:v2blink 5.3s infinite;animation-delay:var(--bd,0s)}
+.v2 .ch .look{transform:translate(var(--lx,0px),var(--ly,0px));transition:transform .25s var(--ease)}
+.v2 .bob{animation:v2bob 3.6s ease-in-out infinite alternate}
+@keyframes v2bob{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-7px) rotate(2deg)}}
+@keyframes v2blink{0%,92%,100%{transform:scaleY(1)}94.5%{transform:scaleY(.08)}}
+.v2 #check{padding-top:200px}
+.v2 #check .tabs{margin-top:40px}
+.v2 .tri{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-top:40px;text-align:left;align-items:stretch}
+.v2 .card.qcard{aspect-ratio:auto;min-height:420px}
+.v2 .qin{position:absolute;left:22%;right:9%;top:9%;bottom:-2%;background:#fff;border-radius:34px 34px 0 0;padding:22px 24px 0;color:#131316;box-shadow:0 20px 50px -30px rgba(80,60,0,.35)}
+.v2 .qtop{display:flex;justify-content:space-between;font-size:13px;color:#6b6b73}
+.v2 .qtop span:first-child{font-weight:600;color:#131316}
+.v2 .qbar{height:4px;border-radius:2px;background:#f0f0f3;margin:12px 0 20px;overflow:hidden}
+.v2 .qbar i{display:block;height:100%;width:25%;background:#131316;border-radius:2px;transition:width .5s var(--out)}
+.v2 .qask{transition:opacity .2s var(--ease),transform .35s var(--out)}
+.v2 .qask.swap{opacity:0;transform:translateX(12px)}
+.v2 .qpic{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:#fef6d6}
+.v2 .qpic svg{width:28px;height:28px}
+.v2 .qask p{margin:14px 0 18px;font-size:22px;line-height:1.25;font-weight:500;letter-spacing:-.02em}
+.v2 .qyn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v2 .yn{height:48px;border-radius:14px;border:1px solid #d3d3da;background:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s,transform .15s}
+.v2 .yn:hover{background:#f5f5f7}
+.v2 .yn:active{transform:scale(.98)}
+.v2 .qsofar{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.v2 .qsofar li{font-size:12px;padding:4px 9px;border-radius:999px;background:#f3f3f5;color:#33333a}
+.v2 .qdone .qask{display:none}
+.v2 .qdone .qbar i{width:100%}
+.v2 .outs{display:grid;gap:14px;align-content:start}
+.v2 .out{background:var(--panel);border-radius:28px;padding:20px 22px}
+.v2 .out small{display:block;font-size:13px;color:var(--grey2);margin-bottom:12px}
+.v2 .res{background:#fff;border-radius:18px;padding:16px 18px;color:#131316;transition:background .4s var(--ease)}
+.v2 .chipu{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:#f3f3f5;color:#6b6b73}
+.v2 .res b{display:block;margin:10px 0 6px;font-size:22px;line-height:1.2;font-weight:600;letter-spacing:-.02em}
+.v2 .res ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14px}
+.v2 .res li{display:flex;justify-content:space-between;gap:10px}
+.v2 .res li em{font-style:normal;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.v2 .res.red{background:var(--tri-pink-soft);color:var(--tri-pink-ink)}
+.v2 .res.red .chipu{background:#fff;color:var(--tri-pink)}
+.v2 .res.amber{background:var(--tri-yellow-soft);color:var(--tri-yellow-ink)}
+.v2 .res.amber .chipu{background:#fff;color:#6b4e00}
+.v2 .res.green{background:var(--tri-green-soft);color:var(--tri-green-ink)}
+.v2 .res.green .chipu{background:#fff;color:var(--tri-green)}
+.v2 .f{background:var(--tri-yellow-soft);color:#6b4e00}
+.v2 .x{background:var(--tri-green-soft);color:var(--tri-green)}
+.v2 .d{background:#fff;color:var(--tri-pink)}
+.v2 .said{display:flex;gap:12px;align-items:flex-start;background:#1c1c1f;color:#fff;border-radius:18px;padding:16px 18px}
+.v2 .said p{margin:0;font-size:15px;line-height:1.45}
+.v2 .ring3{flex:none;width:28px;height:28px;border-radius:50%;background:#34449A;box-shadow:inset 0 0 0 8px #34449A,inset 0 0 0 14px #fff}
+.v2 #qreset{justify-self:start}
+.v2 .chipu i,.v2 .k3 .imn i{width:12px;height:12px;display:inline-block}
+.v2 .imn{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.v2 .imn span{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
+.v2 .steps{list-style:none;margin:6px 0 30px;padding:0;display:grid;gap:10px;text-align:left}
+.v2 .steps li{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;background:var(--surface);border-radius:16px;padding:12px 14px;font-size:14.5px;line-height:1.4;color:var(--text)}
+.v2 .steps li b{width:28px;height:28px;border-radius:50%;background:var(--brand);color:#161616;display:grid;place-items:center;font-size:13px}
+.v2 .steps li a{font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap}
+@media (max-width:900px){.v2 .tri{grid-template-columns:1fr}
+.v2 .steps li{grid-template-columns:28px 1fr}
+.v2 .steps li a{grid-column:2}}
+@media (max-width:600px){.v2 .qin{left:6%;right:6%}
+.v2 .card.qcard{min-height:440px;aspect-ratio:auto}
+.v2 .qcard .agent{display:none}}
+.v2 [data-rv]{opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .9s var(--out);transition-delay:calc(var(--i,0) * 150ms)}
+.v2 [data-rv].in{opacity:1;transform:none}
+@media (max-width:900px){.v2 .row,.v2 .row.r{grid-template-columns:1fr;gap:24px}
+.v2 .row .txt,.v2 .row.r .txt{order:0;padding:0 8px;max-width:520px}
+.v2 .row p{max-width:none}
+.v2 .two{grid-template-columns:1fr}
+.v2 .cards3{grid-template-columns:1fr;max-width:420px}
+.v2 .k3{min-height:0}}
+@media (max-width:600px){.v2 .film{border-radius:32px;aspect-ratio:4/5}
+.v2 .film .phone{width:52%;margin-bottom:-24%}
+.v2 .film .flat{width:92%;margin-bottom:-2%}
+.v2 .film .actor{width:24%}
+.v2 .card{border-radius:34px;aspect-ratio:4/3.4}
+.v2 .col{left:12%;width:76%}
+.v2 .tray{left:6%;width:88%}
+.v2 .hand{left:14%;width:72%}
+.v2 .chan{width:100%;padding-left:6%;border-radius:30px 30px 0 0}
+.v2 .embed{display:none}
+.v2 .sl .shot{width:40%;right:4%}
+.v2 .mini{width:58%;left:4%}
+.v2 .sl h3{margin-inline:8px}
+.v2 .sl p{margin-inline:8px;font-size:16px}
+.v2 .stage{width:calc(100% - 130px);height:380px}
+.v2 .char svg{width:84px;height:84px;left:-42px}
+.v2 .say{width:220px;bottom:190px;font-size:14px;padding:14px 16px}
+.v2 .lt{width:300px}
+.v2 .win{height:auto;-webkit-mask-image:none;mask-image:none;border-radius:24px;padding-bottom:12px}
+.v2 .win img{border-radius:14px}
+.v2 .dev{height:auto;min-height:300px}
+.v2 .buddy{width:80px;height:80px}
+.v2 .tab{padding:0 12px;font-size:14px}
+.v2 .cast svg.ch{width:104px;height:104px;bottom:-22px}
+.v2 .cast{height:140px}}
+@media (prefers-reduced-motion:reduce){.v2 *::before,.v2 *::after{animation:none!important;transition-duration:.01ms!important}
+.v2 [data-rv]{opacity:1;transform:none}}
+/* adapted to the case study: the portfolio's radii and type, one column */
+.v2wrap{margin-top:var(--s4,56px)}
+.v2 .col{margin:0;max-width:none}
+#edge,.cx-final,#overview{overflow-x:clip}
+.v2 .note{margin:16px 0 0;font-size:13px;line-height:1.55;color:var(--muted)}
+.v2 .chan header{position:static;top:auto;bottom:auto;left:auto;right:auto;width:auto;max-width:none;margin:0 0 18px;padding:0;z-index:auto;pointer-events:auto}
+.v2 .film{margin-top:0;border-radius:24px}
+.v2 .card{border-radius:24px}
+.v2 .rows{margin-top:0;gap:56px}
+.v2 .row,.v2 .row.r{grid-template-columns:1fr;gap:20px}
+.v2 .row .txt,.v2 .row.r .txt{order:0;padding:0;max-width:600px}
+.v2 .row h3,.v2 .sl h3{margin:0;font-family:var(--serif);font-weight:400;font-size:20px;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.v2 .row p,.v2 .sl p{margin:8px 0 0;max-width:600px;font-size:15px;line-height:1.55;color:var(--muted)}
+.v2 .row .btn{margin-top:16px}
+.v2 .btn{height:38px;font-size:14px}
+.v2 .tabs{justify-content:flex-start;margin-top:0}
+.v2 .tri{margin-top:20px;grid-template-columns:1fr 1fr}
+.v2 .explore{margin:0 0 20px}
+.v2 .explore span{font-size:15px;color:var(--muted)}
+.v2 .sl h3{margin:20px 0 0}
+.v2 .sl p{margin-left:0;margin-right:0}
+.v2 .sl p b{font-weight:500;color:var(--ink)}
+.v2 .ecimg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:22px}
+.v2 .ecimg img{max-height:100%;max-width:78%;width:auto;border-radius:14px;box-shadow:0 22px 44px -22px rgba(10,10,40,.45);background:#fff}
+.v2 .ecimg.wide img{max-width:64%}
+.v2 .stage{height:380px}
+.v2 .dayc{margin-top:28px}
+.v2 .dayc h3{font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.4vw,28px);letter-spacing:-.015em}
+.v2 .dayc p{font-size:15px;color:var(--muted)}
+.v2 .cast{margin-top:48px}
+@media (max-width:900px){.v2 .tri{grid-template-columns:1fr}}
+
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -2402,7 +2707,32 @@ addEventListener("pagereveal",function(e){
 </script>
 <script type="speculationrules">{"prerender":[{"source":"list","urls":["/getbaq-full.html"],"eagerness":"moderate"}]}</script>
 </head>
-<body><!--sk:defs--><svg class="sk-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="felt" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="2.1" numOctaves="2" seed="4" result="w"/>
+    <feDisplacementMap in="SourceGraphic" in2="w" scale="5.5" xChannelSelector="R" yChannelSelector="G" result="s"/>
+    <feTurbulence type="fractalNoise" baseFrequency="1.5" numOctaves="3" seed="11" result="f"/>
+    <feColorMatrix in="f" type="matrix" values=".33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1" result="fg"/>
+    <feComposite in="fg" in2="s" operator="in" result="fi"/>
+    <feBlend in="fi" in2="s" mode="soft-light"/>
+  </filter>
+  <radialGradient id="shade" cx="30%" cy="24%" r="85%"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient>
+  <radialGradient id="shine" cx="34%" cy="26%" r="36%"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gy" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ffe45a"/><stop offset=".6" stop-color="#f6c416"/><stop offset="1" stop-color="#dc9a00"/></radialGradient>
+  <radialGradient id="gb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#6fd0ff"/><stop offset=".6" stop-color="#2394f2"/><stop offset="1" stop-color="#0e58c8"/></radialGradient>
+  <radialGradient id="gm" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ff8cf0"/><stop offset=".6" stop-color="#e02fcc"/><stop offset="1" stop-color="#9c0c96"/></radialGradient>
+  <radialGradient id="gl" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#eeff7e"/><stop offset=".6" stop-color="#b4ec1c"/><stop offset="1" stop-color="#6fae00"/></radialGradient>
+  <!-- Sunita, the ASHA: her phone, with one visit waiting to send -->
+  <symbol id="sunita" viewBox="0 0 120 120"><image href="./assets/arogya-chars/sunita.webp" x="0" y="0" width="120" height="120"/></symbol>
+  <!-- Dr. Meena: the stethoscope, face on the chest piece -->
+  <symbol id="meena" viewBox="0 0 120 120"><image href="./assets/arogya-chars/meena.webp" x="0" y="0" width="120" height="120"/></symbol>
+  <!-- Pooja, the family: the basic phone the voice line reaches -->
+  <symbol id="pooja" viewBox="0 0 120 120"><image href="./assets/arogya-chars/pooja.webp" x="0" y="0" width="120" height="120"/></symbol>
+  <!-- Arjun, 3: the thermometer, running a fever -->
+  <symbol id="arjun" viewBox="0 0 120 120"><image href="./assets/arogya-chars/arjun.webp" x="0" y="0" width="120" height="120"/></symbol>
+  <symbol id="ptr" viewBox="0 0 24 24"><path d="M21 3 3 10.5l7.4 2.1L12.5 20z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+</defs></svg><!--sk:defs--><svg class="sk-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
 <filter id="sk-w" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
 </defs></svg><!--/sk:defs-->
 
@@ -2452,11 +2782,13 @@ addEventListener("pagereveal",function(e){
 <div class="cx-mprog" aria-hidden="true"><i></i></div>
 
 <section id="overview" data-section="Arogya Line" class="cx-hero">
-<div class="cx-w cx-hero-v"><figure class="al-trio" data-reveal="">
-<figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1600" poster="./assets/arogya2/v-al-today.webp" aria-label="The ASHA app's Today screen: who needs her next"><source data-src="./assets/arogya2/v-al-today.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" decoding="async"></div></figure>
-<div class="al-trio-phc"><div class="tab-dev"><div class="tab-scr"><img src="./assets/arogya2/al-phc.webp" width="2880" height="1800" alt="The PHC dashboard with the day's bookings" loading="lazy" decoding="async"></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></div>
-<figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1600" poster="./assets/arogya2/v-al-advice.webp" aria-label="The voice line reading the doctor's advice to the family"><source data-src="./assets/arogya2/v-al-advice.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" decoding="async"></div></figure>
-</figure></div>
+<div class="cx-w cx-hero-v v2"><div class="film" id="film" data-rv style="--i:3" aria-label="A short film of the three surfaces">
+    <div class="scene s1 on"><div class="set"><div class="phone"><video muted playsinline preload="auto" src="./assets/arogya2/v-al-today.mp4" poster="./assets/arogya2/v-al-today.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="left:14%"><use href="#sunita"/></svg></div>
+    <div class="scene s2"><div class="set"><div class="phone"><video muted playsinline preload="none" src="./assets/arogya2/v-al-book.mp4" poster="./assets/arogya2/v-al-book.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:14%;--bd:1s"><use href="#arjun"/></svg></div>
+    <div class="scene s3"><div class="set"><div class="flat"><video muted playsinline preload="none" src="./assets/arogya2/v-al-phc.mp4" poster="./assets/arogya2/v-al-phc.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="right:5%;bottom:40%;--bd:.5s"><use href="#meena"/></svg></div>
+    <div class="scene s4"><div class="set"><div class="phone"><video muted playsinline preload="none" src="./assets/arogya2/v-al-voice.mp4" poster="./assets/arogya2/v-al-voice.webp"></video></div></div><svg class="ch actor bob" viewBox="0 0 120 120" style="left:15%;--bd:2s"><use href="#pooja"/></svg></div>
+    <div class="ctl"><button class="chip" id="play" type="button" aria-pressed="false"><span>Pause</span><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx="1" fill="currentColor"/><rect x="6.1" y="1" width="2.4" height="8" rx="1" fill="currentColor"/></svg></button><button class="chip round" type="button" aria-label="Sound is off; these recordings have no sound" disabled><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg></button></div>
+  </div></div>
 <div class="cx-w rc-title" data-reveal=""><p class="rc-kicker">Arogya Line · Service design · Concept</p><h1 class="cx-display">One care journey. Three people. One connected system.</h1></div>
 <dl class="cx-w rc-meta" data-reveal="">
 <div><dt>Role</dt><dd>Product designer</dd></div>
@@ -2533,6 +2865,71 @@ addEventListener("pagereveal",function(e){
 <div><h3>Never use colour as the message.</h3><p>Pink, yellow and green come from the IMNCI chart the ASHA trained on, and always travel with a word or an icon.</p></div>
 <div><h3>Every action creates the next action.</h3><p>Each step hands something to a named person: a booking to the doctor, advice to the family, a follow-up call to the ASHA. Nothing is handed over without someone deciding it.</p></div>
 </div>
+<div class="cx-w rc-sub"><h3 class="cx-h3">The record, moving.</h3><p class="cx-body">Four moments from one run of the prototype: who needs her, a visit sent when the signal returns, advice heard on any phone, and a doctor who starts from what was found.</p></div>
+<div class="cx-w v2 v2wrap"><div class="rows">
+  <div class="row" data-rv>
+    <div class="card y" id="k1" aria-hidden="true">
+      <div class="col" id="col"><div class="list">
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#34449A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg></span><span><b>Today</b><small>4 people need you today</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#c7801a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.4"/><path d="M3 20c.6-3.6 3-5.6 6-5.6s5.4 2 6 5.6M16 4.2a3.4 3.4 0 0 1 0 6.6M21 20c-.4-2.8-1.8-4.6-3.8-5.3"/></svg></span><span><b>Families</b><small>Kukas and Naila, by village</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#b72e5e" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4H5a1 1 0 0 0-1 1v4a5 5 0 0 0 10 0V5a1 1 0 0 0-1-1h-1"/><path d="M9 14v1a5 5 0 0 0 10 0v-2"/><circle cx="19" cy="11" r="2"/></svg></span><span><b>Check someone</b><small>One question at a time</small></span></div>
+        <div class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#138a4b" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l8-4 8 4v14M9 21v-5h6v5M12 8v4M10 10h4"/></svg></span><span><b>Book a visit</b><small>PHC Achrol, Dr. Meena</small></span></div>
+      </div></div>
+      <div class="agent" id="a1"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><svg class="ptr" viewBox="0 0 24 24"><use href="#ptr"/></svg></div>
+    </div>
+    <div class="txt"><h3>Her day starts with who needs her</h3><p>The ASHA’s phone is a work queue, not a dashboard. It starts from the families she already knows, ranks people by what is due, and puts the next action in words.</p></div>
+  </div>
+
+  <div class="row r" data-rv>
+    <div class="card c" id="k2" aria-hidden="true">
+      <div class="tray" id="tray">
+        <h5>Sent to PHC Achrol</h5>
+        <div class="grp" id="gSent">
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#c92a5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2.4 17.6A2 2 0 0 0 4.1 20.6h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span><b>Khushi, 5</b><small>Today, 9–10 am · Urgent</small></span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#34449A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span><b>Kamla, 62</b><small>Booked on the voice line</small></span></div>
+        </div>
+        <h5>Waiting to send</h5>
+        <div class="grp" id="gWait">
+          <div class="row2" id="mv"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#b07a00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg></span><span><b>Arjun, 3</b><small id="mvs">Offline · 1 visit to send</small></span><span class="grip">⋮⋮</span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span><b>Rekha, 24</b><small>Follow-up call · Naila</small></span></div>
+          <div class="row2"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#138a4b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7M6 10v10h12V10"/></svg></span><span><b>Mohanlal, 45</b><small>Follow up at home · Kukas</small></span></div>
+        </div>
+      </div>
+      <div class="agent" id="a2" style="transform:translate(540px,190px)"><svg class="ch" viewBox="0 0 120 120" style="--bd:1.3s"><use href="#meena"/></svg><svg class="ptr" viewBox="0 0 24 24"><use href="#ptr"/></svg></div>
+    </div>
+    <div class="txt"><h3>Booked offline, sent when the signal returns</h3><p>Saving never waits for signal. The visit sits on her phone as “1 visit to send”, and joins the doctor’s list the moment it syncs. Offline is a calm state, not an error.</p></div>
+  </div>
+
+  <div class="row" data-rv>
+    <div class="card b" id="k3" aria-hidden="true">
+      <div class="hand"><div class="in">
+        <div class="hd"><span class="hb"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round"><path d="M5 9h14M5 15h9"/></svg></span><span class="hn"><svg class="ch" viewBox="0 0 120 120" style="--bd:.7s"><use href="#pooja"/></svg><span>Arogya Line</span></span><span class="hb"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span></div>
+        <div class="msgs" id="call">
+          <div class="bub l">Welcome to Arogya Line. Please enter your 4-digit family ID.</div>
+          <div class="bub r k">4471</div>
+          <div class="bub l">Thank you. We have found your family card.</div>
+          <div class="bub r k">3</div>
+          <div class="dots3"><i></i><i></i><i></i></div>
+          <div class="bub l">Dr. Meena has a message for Arjun.</div>
+          <div class="att"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg></i><span><b>Advice for Arjun</b><small>From Dr. Meena</small></span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="txt"><h3>The family hears it on any phone</h3><p>No app to install. They call the number on their card, key in the family ID, and hear the doctor’s advice by name. 9 repeats. 0 reaches a person.</p></div>
+  </div>
+
+  <div class="row r" data-rv>
+    <div class="card m" id="k4" aria-hidden="true">
+      <div class="chan">
+        <header><b>PHC Achrol · Tomorrow</b><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></header>
+        <div class="post"><span class="av"><svg viewBox="0 0 120 120"><use href="#sunita"/></svg></span><div><b>Sunita</b><span class="tg">ASHA</span><time>09:31</time><p>Booked Arjun, 3 for Thu, 10–11 am. Fever more than 2 days, vomiting. No fast breathing.</p></div></div>
+        <div class="post"><span class="av" style="background:#e9f3ff"><svg viewBox="0 0 120 120"><use href="#meena"/></svg></span><div><b>Dr. Meena</b><span class="tg">PHC</span><time>Just now</time><p>Seen. I’ll start from what you found, and leave advice the family can hear on the line.</p></div></div>
+        <div class="embed"><img src="./assets/arogya3/phc-today.webp" alt="" loading="lazy"></div>
+      </div>
+    </div>
+    <div class="txt"><h3>The doctor starts from what was found</h3><p>The day in time order. Urgency marks a row but never reorders it, and the consult opens on what the ASHA found, not a blank page.</p><a class="btn btn-line" href="https://arogya-line.vercel.app/phc" target="_blank" rel="noopener">Open the dashboard</a></div>
+  </div>
+</div></div>
 </section>
 
 <section class="cx-sec" id="asha" data-section="ASHA app" data-reveal="">
@@ -2551,6 +2948,35 @@ addEventListener("pagereveal",function(e){
 <div><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><img src="./assets/arogya2/al-result.webp" width="720" height="1600" alt="The screening result for Arjun: needs a visit, with what was found and what was ruled out" loading="lazy" decoding="async"></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><p>Result</p></div>
 <div><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><img src="./assets/arogya2/al-booking.webp" width="720" height="1600" alt="Book a visit for Arjun at PHC Achrol: a day and a time slot, read back beside the button" loading="lazy" decoding="async"></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><p>Action</p></div>
 </figure>
+<div class="cx-w rc-sub"><h3 class="cx-h3">Four questions, one answer. Try it.</h3><p class="cx-body">The ASHA app and the voice line ask the same questions and reach the same result, because they share one piece of logic.</p></div>
+<div class="cx-w v2 v2wrap"><div class="tabs" role="tablist" aria-label="Who is being checked" id="ctabs"><button class="tab" role="tab" aria-selected="true" data-set="child">Child</button><button class="tab" role="tab" aria-selected="false" data-set="adult">Adult</button><button class="tab" role="tab" aria-selected="false" data-set="pregnant">Pregnant</button></div>
+  <div class="tri" data-rv>
+    <div class="qcard card y" id="qcard">
+      <div class="qin">
+        <div class="qtop"><span id="qwho">Checking Arjun, 3</span><span id="qn">1 of 4</span></div>
+        <div class="qbar"><i id="qbar"></i></div>
+        <div class="qask" id="qask">
+          <span class="qpic" id="qpic"></span>
+          <p id="qtext">Fever for more than 2 days?</p>
+          <div class="qyn"><button type="button" class="yn" data-a="yes">Yes</button><button type="button" class="yn" data-a="no">No</button></div>
+        </div>
+        <ul class="qsofar" id="qsofar" aria-label="Answers so far"></ul>
+      </div>
+      <div class="agent" style="transform:translate(34px,250px)"><svg class="ch bob" viewBox="0 0 120 120"><use id="qch" href="#arjun"/></svg></div>
+    </div>
+    <div class="outs">
+      <div class="out app" id="oApp">
+        <small>In the ASHA app</small>
+        <div class="res" id="res"><span class="chipu" id="rchip">Waiting for answers</span><b id="rhead">Answer the four questions</b><ul id="rlist"></ul></div>
+      </div>
+      <div class="out line" id="oLine">
+        <small>On the voice line</small>
+        <div class="said"><span class="ring3" aria-hidden="true"></span><p id="rsaid">“Press 1 for yes, 2 for no, or 9 to hear the question again.”</p></div>
+      </div>
+      <button type="button" class="btn btn-line btn-sm" id="qreset">Start again</button>
+    </div>
+  </div>
+  <p class="note">Illustrative questions, not clinical guidance. A danger sign answered yes stops the check at once. Two other yeses mean a visit.</p></div>
 <div class="cx-w rc-flows al-flows">
 <div class="rc-row"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1600" poster="./assets/arogya2/v-al-check.webp" aria-label="The whole check for Arjun: which family, who is unwell, four questions, the result"><source data-src="./assets/arogya2/v-al-check.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><div class="rc-cap"><h3>The whole check</h3><p>Which family, who is unwell, one question at a time, then the result with what was found and what was ruled out.</p></div></div>
 <div class="rc-row"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1600" poster="./assets/arogya2/v-al-book.webp" aria-label="Booking a visit offline: saved on the phone as one visit to send, then sent when the signal returns"><source data-src="./assets/arogya2/v-al-book.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><div class="rc-cap"><h3>Booked offline, sent when the signal returns</h3><p>&ldquo;Offline · 1 visit to send&rdquo; while there is no signal, &ldquo;Sending 1 visit&hellip;&rdquo; when it returns, then sent to the PHC.</p></div></div>
@@ -2596,15 +3022,13 @@ addEventListener("pagereveal",function(e){
 <li><b>Follow-up.</b> The follow-up call: none, next day, in 3 days, in a week.</li>
 </ul>
 <div class="cx-w rc-sub"><h3 class="cx-h3">The doctor shouldn&rsquo;t have to reconstruct the story.</h3><p class="cx-body">Arjun&rsquo;s record, as it moves through one run of the prototype. Each step is saved once, by the person who did it, and read by the next.</p></div>
-<div class="cx-w al-timeline"><ol>
-        <li><p class="when"><b>Day 1</b>At home</p><span class="dot"></span><div class="what"><h3>Concern reported</h3><p>Pooja tells Sunita, the ASHA, that Arjun has had a fever since Tuesday.</p></div><span class="own">Family</span></li>
-        <li><p class="when"><b>Day 1</b>At home, offline</p><span class="dot"></span><div class="what"><h3>Screened</h3><p>Four questions, one at a time. Screening result: needs a visit, with what was found and what was ruled out.</p></div><span class="own">ASHA</span></li>
-        <li class="key"><p class="when"><b>Day 1</b>Offline, then synced</p><span class="dot"></span><div class="what"><h3>Visit booked</h3><p>A slot at PHC Achrol for the next day. Saved on her phone as “1 visit to send”, sent when the signal returns.</p><p class="shows">Appears on the PHC list the moment it syncs.</p></div><span class="own">ASHA</span></li>
-        <li><p class="when"><b>Day 2</b>Booked slot</p><span class="dot"></span><div class="what"><h3>Arrived</h3><p>Until he arrives, the doctor can view the booking but not record a consult.</p></div><span class="own phc">PHC</span></li>
-        <li class="key"><p class="when"><b>Day 2</b>In the room</p><span class="dot"></span><div class="what"><h3>Consulted</h3><p>Dr. Meena opens the sheet on what Sunita found, not a blank page.</p></div><span class="own phc">PHC</span></li>
-        <li><p class="when"><b>Day 2</b>After the consult</p><span class="dot"></span><div class="what"><h3>Advice given</h3><p>Saved once. The family hears it on the line by pressing 3: “Dr. Meena has a message for Arjun.”</p></div><span class="own phc">PHC → Family</span></li>
-        <li><p class="when"><b>Day 5</b>If chosen</p><span class="dot"></span><div class="what"><h3>Follow-up</h3><p>A call in three days. If it is missed, the doctor decides: call again today, or ask the ASHA to follow up.</p></div><span class="own">ASHA / Family</span></li>
-      </ol></div>
+<div class="cx-w v2 v2wrap"><div class="stage" id="stage">
+    <div class="say" id="say"><span id="sayT"></span><span class="re" aria-hidden="true">💗</span></div>
+    <div class="char" id="char"><svg class="ch bob" viewBox="0 0 120 120"><use id="charU" href="#pooja"/></svg></div>
+    <div class="time" id="time"><button type="button" id="tp" aria-label="Earlier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><span id="tt"></span><button type="button" id="tn" aria-label="Later"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="track" id="track" role="slider" tabindex="0" aria-label="Moment in Arjun's care" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div class="ticks" id="ticks"></div></div>
+  </div>
+  <div class="dayc" id="dayc" aria-live="polite"><div class="wh" id="dw"></div><h3 id="dh"></h3><p id="db"></p></div></div>
 </section>
 
 <section class="cx-sec" id="handoffs" data-section="Handoffs" data-reveal="">
@@ -2618,14 +3042,7 @@ addEventListener("pagereveal",function(e){
 
 <section class="cx-sec" id="edge" data-section="Edge cases" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">Edge cases</p><h2 class="cx-h">Healthcare doesn&rsquo;t happen in the happy path.</h2></div>
-<ol class="cx-w al-edges">
-<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-slot.webp" width="357" height="412" alt="The booking screen: 10–11 am struck through as Full, and a notice that nothing was booked" loading="lazy" decoding="async"></figure><h3>Slot fills while booking</h3><p><b>Problem.</b> A booking syncing from another phone takes the slot she picked.</p><p><b>Design response.</b> One rule for every surface. Nothing is booked, and she is told: &ldquo;10&ndash;11 am was just taken. Nothing was booked.&rdquo;</p></li>
-<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-family.webp" width="328" height="328" alt="The Up next card for Khushi, with “+1 other person in this family”" loading="lazy" decoding="async"></figure><h3>Family has multiple people</h3><p><b>Problem.</b> One row per family hid the second person who needed her.</p><p><b>Design response.</b> One row per person, with &ldquo;+1 other person in this family&rdquo; on it.</p></li>
-<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-offline.webp" width="328" height="268" alt="The booked visit, marked Saved on this phone, sends when there’s signal" loading="lazy" decoding="async"></figure><h3>Connectivity disappears</h3><p><b>Problem.</b> Without signal she can&rsquo;t tell if her work was saved.</p><p><b>Design response.</b> &ldquo;Offline · 1 visit to send&rdquo;, then &ldquo;Sending 1 visit&hellip;&rdquo;, then nothing. &ldquo;Waiting to send&rdquo; sits on the record itself.</p></li>
-<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-question.webp" width="357" height="360" alt="The check going back to its first unanswered question, 1 of 4" loading="lazy" decoding="async"></figure><h3>Screening is incomplete</h3><p><b>Problem.</b> Opened from a link with no answers, the result said home care: false reassurance about a sick child.</p><p><b>Design response.</b> An unfinished check is never a result. It goes back to the next unanswered question.</p></li>
-<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-arrive.webp" width="254" height="122" alt="The PHC metric: Consults remaining 0, Not arrived yet" loading="lazy" decoding="async"></figure><h3>Patient hasn&rsquo;t arrived</h3><p><b>Problem.</b> Tomorrow&rsquo;s booking offered &ldquo;Start consult&rdquo;, before the patient was in the room.</p><p><b>Design response.</b> &ldquo;View booking&rdquo; and &ldquo;Not arrived yet&rdquo;. The record refuses advice before arrival.</p></li>
-<li><figure class="al-ec-f"><img src="./assets/arogya2/edge/e-missed.webp" width="265" height="122" alt="The PHC metric: Follow-ups due 1, one missed, needs a decision" loading="lazy" decoding="async"></figure><h3>Follow-up is missed</h3><p><b>Problem.</b> A missed call quietly became a home visit nobody had agreed to.</p><p><b>Design response.</b> It waits under &ldquo;Needs attention now&rdquo; until the doctor decides: call again, or ask the ASHA.</p></li>
-</ol>
+<div class="cx-w v2 v2wrap"><div class="explore"><span>Explore the six</span><div class="nav2"><button class="arw" id="cprev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="arw" id="cnext" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div></div><div class="rail" id="rail"><article class="sl on"><div class="card y"><div class="ecimg"><img src="./assets/arogya2/edge/e-slot.webp" width="357" height="412" alt="The booking screen: 10–11 am struck through as Full, and a notice that nothing was booked" loading="lazy" decoding="async"></div></div><h3>Slot fills while booking</h3><p><b>Problem.</b> A booking syncing from another phone takes the slot she picked.</p><p><b>Design response.</b> One rule for every surface. Nothing is booked, and she is told: &ldquo;10&ndash;11 am was just taken. Nothing was booked.&rdquo;</p></article><article class="sl"><div class="card c"><div class="ecimg"><img src="./assets/arogya2/edge/e-family.webp" width="328" height="328" alt="The Up next card for Khushi, with “+1 other person in this family”" loading="lazy" decoding="async"></div></div><h3>Family has multiple people</h3><p><b>Problem.</b> One row per family hid the second person who needed her.</p><p><b>Design response.</b> One row per person, with &ldquo;+1 other person in this family&rdquo; on it.</p></article><article class="sl"><div class="card b"><div class="ecimg"><img src="./assets/arogya2/edge/e-offline.webp" width="328" height="268" alt="The booked visit, marked Saved on this phone, sends when there’s signal" loading="lazy" decoding="async"></div></div><h3>Connectivity disappears</h3><p><b>Problem.</b> Without signal she can&rsquo;t tell if her work was saved.</p><p><b>Design response.</b> &ldquo;Offline · 1 visit to send&rdquo;, then &ldquo;Sending 1 visit&hellip;&rdquo;, then nothing. &ldquo;Waiting to send&rdquo; sits on the record itself.</p></article><article class="sl"><div class="card m"><div class="ecimg"><img src="./assets/arogya2/edge/e-question.webp" width="357" height="360" alt="The check going back to its first unanswered question, 1 of 4" loading="lazy" decoding="async"></div></div><h3>Screening is incomplete</h3><p><b>Problem.</b> Opened from a link with no answers, the result said home care: false reassurance about a sick child.</p><p><b>Design response.</b> An unfinished check is never a result. It goes back to the next unanswered question.</p></article><article class="sl"><div class="card l"><div class="ecimg wide"><img src="./assets/arogya2/edge/e-arrive.webp" width="254" height="122" alt="The PHC metric: Consults remaining 0, Not arrived yet" loading="lazy" decoding="async"></div></div><h3>Patient hasn&rsquo;t arrived</h3><p><b>Problem.</b> Tomorrow&rsquo;s booking offered &ldquo;Start consult&rdquo;, before the patient was in the room.</p><p><b>Design response.</b> &ldquo;View booking&rdquo; and &ldquo;Not arrived yet&rdquo;. The record refuses advice before arrival.</p></article><article class="sl"><div class="card p"><div class="ecimg wide"><img src="./assets/arogya2/edge/e-missed.webp" width="265" height="122" alt="The PHC metric: Follow-ups due 1, one missed, needs a decision" loading="lazy" decoding="async"></div></div><h3>Follow-up is missed</h3><p><b>Problem.</b> A missed call quietly became a home visit nobody had agreed to.</p><p><b>Design response.</b> It waits under &ldquo;Needs attention now&rdquo; until the doctor decides: call again, or ask the ASHA.</p></article></div></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">The bar for the record: never guess a patient, result, slot, or next action.</h3></div>
 <p class="cx-w cx-tags al-never"><span>Never infer a person</span><span>Never infer availability</span><span>Never infer responsibility</span><span>Never infer a clinical state</span><span>Never destroy history</span></p>
 <p class="cx-w cx-say">This wasn&rsquo;t a UI problem. It was a product-model problem.</p>
@@ -2673,6 +3090,12 @@ addEventListener("pagereveal",function(e){
 <p class="cx-w cx-final-t">One concern should never become three disconnected records.</p>
 <p class="cx-w cx-final-s">Arogya Line explores what happens when care coordination is treated as a product problem, not just a collection of screens.</p>
 <p class="cx-w al-links"><a class="rc-live" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Explore the prototype&nbsp;<span class="rc-live-a">&#8599;</span></a><a class="rc-live" href="https://github.com/LKB00/arogya-line" target="_blank" rel="noopener">View the repository&nbsp;<span class="rc-live-a">&#8599;</span></a></p>
+<div class="cx-w v2"><div class="cast" id="cast" aria-hidden="true">
+    <svg class="ch" viewBox="0 0 120 120" data-x="-560" data-y="-260" data-at="-150" style="--bd:.4s"><use href="#meena"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="-120" data-y="220" data-at="-50" style="--bd:2s"><use href="#sunita"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="120" data-y="220" data-at="50" style="--bd:3.1s"><use href="#pooja"/></svg>
+    <svg class="ch" viewBox="0 0 120 120" data-x="560" data-y="-260" data-at="150" style="--bd:1s"><use href="#arjun"/></svg>
+  </div></div>
 </section>
 
 <dialog class="cx-lb" aria-label="Enlarged screen"><button type="button" class="cx-lb-x" aria-label="Close">×</button><img alt=""></dialog>
@@ -3149,6 +3572,219 @@ addEventListener("pagereveal",function(e){
   new IntersectionObserver(function(es){ es.forEach(function(en){
     if(en.isIntersecting&&!timer){ timer=setInterval(function(){ k=(k+1)%steps.length; paint(); },1500); }
     else if(!en.isIntersecting&&timer){ clearInterval(timer); timer=null; } }); },{threshold:.4}).observe(flow);
+})();
+</script>
+<script>
+(() => {
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const io = (el, fn, o) => { const x = new IntersectionObserver(es => es.forEach(e => fn(e, x)), o); x.observe(el); return x; };
+
+/* Reveal: 10 px lift, 150 ms stagger */
+$$('[data-rv]').forEach(el => io(el, (e, x) => { if (e.isIntersecting) { el.classList.add('in'); x.disconnect(); } }, { rootMargin: '0px 0px -8% 0px' }));
+
+/* Eyes follow the pointer */
+let px = innerWidth / 2, py = innerHeight / 3, rq = 0;
+addEventListener('pointermove', e => { px = e.clientX; py = e.clientY; rq ||= requestAnimationFrame(look); }, { passive: true });
+function look() { rq = 0; $$('svg.ch').forEach(s => { const b = s.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return; const dx = px - b.left - b.width / 2, dy = py - b.top - b.height / 2, d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 280) * 3.2; s.style.setProperty('--lx', (dx / d * k).toFixed(2) + 'px'); s.style.setProperty('--ly', (dy / d * k).toFixed(2) + 'px'); }); }
+
+/* Loops that run only while their card is on screen */
+function loop(el, fn) { let on = false, g = 0; io(el, e => { if (e.isIntersecting && !on) { on = true; const my = ++g; fn(() => on && my === g); } else if (!e.isIntersecting) on = false; }, { threshold: .35 }); }
+
+/* ── Film ── */
+const film = $('#film'), scenes = $$('.scene', film), playBtn = $('#play');
+let si = 0, paused = RM, filmVis = false, tmr = 0;
+function playScene(i) {
+  scenes.forEach((s, j) => { s.classList.toggle('on', j === i); const v = $('video', s); if (j === i) { v.preload = 'auto'; v.currentTime = 0; if (!paused && filmVis) v.play().catch(() => {}); } else v.pause(); });
+  const nx = $('video', scenes[(i + 1) % scenes.length]); if (nx) nx.preload = 'auto';
+}
+function tick() { clearTimeout(tmr); if (paused || !filmVis) return; tmr = setTimeout(() => { si = (si + 1) % scenes.length; playScene(si); tick(); }, 6500); }
+io(film, e => { filmVis = e.isIntersecting; const v = $('video', scenes[si]); if (filmVis && !paused) { v.play().catch(() => {}); tick(); } else { v.pause(); clearTimeout(tmr); } }, { threshold: .25 });
+playBtn.addEventListener('click', () => { paused = !paused; playBtn.setAttribute('aria-pressed', paused); $('span', playBtn).textContent = paused ? 'Play' : 'Pause'; const v = $('video', scenes[si]); if (paused) { v.pause(); clearTimeout(tmr); } else { v.play().catch(() => {}); tick(); } });
+if (RM) $('span', playBtn).textContent = 'Play';
+playScene(0);
+
+/* ── Card 1: Sunita picks each item up in turn ── */
+loop($('#k1'), async alive => {
+  const card = $('#k1'), col = $('#col'), a = $('#a1'), items = $$('.it', col).slice(0, 3);
+  while (alive()) {
+    for (const it of items) {
+      if (!alive()) return;
+      const c = card.getBoundingClientRect(), b = it.getBoundingClientRect();
+      a.style.transform = `translate(${b.left - c.left - 86}px, ${b.top - c.top - 8}px)`;
+      await wait(RM ? 0 : 800);
+      col.classList.add('pick'); items.forEach(x => x.classList.toggle('on', x === it));
+      await wait(1900);
+    }
+    col.classList.remove('pick'); items.forEach(x => x.classList.remove('on'));
+    await wait(900);
+  }
+});
+
+/* ── Card 2: Dr. Meena drags Arjun's visit from Waiting to Sent ── */
+loop($('#k2'), async alive => {
+  const card = $('#k2'), a = $('#a2'), mv = $('#mv'), sub = $('#mvs'), gW = $('#gWait'), gS = $('#gSent');
+  const put = (el, host, first) => { const r0 = el.getBoundingClientRect(); first ? host.prepend(el) : host.append(el); const r1 = el.getBoundingClientRect(); if (!RM) el.animate([{ transform: `translate(${r0.left - r1.left}px, ${r0.top - r1.top}px)` }, { transform: 'none' }], { duration: 750, easing: 'cubic-bezier(.32,.72,0,1)' }); };
+  const aim = el => { const c = card.getBoundingClientRect(), b = el.getBoundingClientRect(); a.style.transform = `translate(${b.right - c.left + 6}px, ${b.top - c.top + b.height / 2 - 30}px)`; };
+  while (alive()) {
+    put(mv, gW, true); mv.classList.remove('lift', 'held'); sub.textContent = 'Offline · 1 visit to send';
+    await wait(900); if (!alive()) return;
+    aim(mv); await wait(900); mv.classList.add('held'); await wait(700); if (!alive()) return;
+    mv.classList.remove('held'); mv.classList.add('lift'); sub.textContent = 'Sending 1 visit…';
+    await wait(500); put(mv, gS, false); await wait(60); aim(mv);
+    await wait(900); mv.classList.remove('lift'); sub.textContent = 'Thu 1 Oct, 10–11 am · On the PHC list';
+    await wait(2600);
+  }
+});
+
+/* ── Card 3: the call, line by line ── */
+loop($('#k3'), async alive => {
+  const kids = [...$('#call').children];
+  while (alive()) {
+    kids.forEach(k => k.classList.remove('in')); await wait(600);
+    for (const k of kids) { if (!alive()) return; k.classList.add('in'); if (k.classList.contains('dots3')) { await wait(1400); k.classList.remove('in'); continue; } await wait(k.classList.contains('r') ? 850 : 1400); }
+    await wait(3000);
+  }
+});
+
+
+/* ── The shared check: questions, labels and rules from src/app/triage.ts ── */
+const I = {
+  temp: '<path d="M10 13.5V5a2 2 0 1 1 4 0v8.5a4 4 0 1 1-4 0z"/><path d="M10 9h4"/>',
+  sick: '<circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M9 16c1.5-1.5 4.5-1.5 6 0"/>',
+  bottle: '<path d="M10 3h4M9 6h6M9 6v2a3 3 0 0 0-1 2.2V19a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-8.8A3 3 0 0 0 15 8V6"/><path d="M8 13h8"/>',
+  lungs: '<path d="M12 4v7M12 11l-3 2M12 11l3 2"/><path d="M8.5 7C6 7 4 11 4 16c0 2 1 3 2.5 3 2 0 3.5-1.5 3.5-4V9"/><path d="M15.5 7C18 7 20 11 20 16c0 2-1 3-2.5 3-2 0-3.5-1.5-3.5-4V9"/>',
+  bone: '<path d="M7 4a2 2 0 0 0-2 3.4L16.6 19A2 2 0 1 0 20 17a2 2 0 1 0-3-3L10 7a2 2 0 1 0-3-3z"/>',
+  bed: '<path d="M3 7v11M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="2"/>',
+  heart: '<path d="M19.5 12.6 12 20l-7.5-7.4A5 5 0 1 1 12 6a5 5 0 1 1 7.5 6.6z"/><path d="M5 12h3l2-3 3 6 2-3h4"/>',
+  eye: '<circle cx="12" cy="12" r="2.5"/><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/>',
+  hand: '<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 5.5v-1a1.5 1.5 0 0 1 3 0V12M14 5.5a1.5 1.5 0 0 1 3 0V12M17 7.5a1.5 1.5 0 0 1 3 0V16a6 6 0 0 1-6 6h-2a7 7 0 0 1-5.6-2.8L4 16a1.6 1.6 0 0 1 2.4-2L8 15.5"/>',
+  baby: '<circle cx="12" cy="7" r="3.5"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/><path d="M10.5 6.5h.01M13.5 6.5h.01"/>',
+  drop: '<path d="M12 3.5s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>'
+};
+const SHORT = { child: ['Fever', 'Vomiting', 'Feeding', 'Breathing'], adult: ['Fever', 'Pain', 'Weakness', 'Chest'], pregnant: ['Headache', 'Swelling', 'Baby moving', 'Bleeding'] };
+const SETS = {
+  child: { who: 'Arjun, 3', name: 'Arjun', ch: 'arjun', q: [
+    ['Fever for more than 2 days?', 'Fever more than 2 days', 1, 0, 'temp'],
+    ['Vomiting more than 3 times today?', 'Vomiting more than 3 times today', 1, 0, 'sick'],
+    ['Drinking or feeding less than usual?', 'Drinking or feeding less than usual', 1, 0, 'bottle'],
+    ['Breathing fast, or difficulty breathing?', 'Breathing fast or difficulty breathing', 0, 1, 'lungs', 'No fast breathing']] },
+  adult: { who: 'Kamla, 62', name: 'Kamla', ch: 'meena', q: [
+    ['Fever for more than 2 days?', 'Fever more than 2 days', 1, 0, 'temp'],
+    ['Body pain or headache for more than 2 days?', 'Body pain for more than 2 days', 1, 0, 'bone'],
+    ['Too weak to do daily work?', 'Too weak for daily work', 1, 0, 'bed'],
+    ['Chest pain, or breathless while resting?', 'Chest pain or breathlessness at rest', 0, 1, 'heart', 'No chest pain or breathlessness']] },
+  pregnant: { who: 'Rekha, 24', name: 'Rekha', ch: 'pooja', q: [
+    ['Severe headache or blurred vision?', 'Severe headache or blurred vision', 1, 0, 'eye'],
+    ['Swelling of the face or hands?', 'Swelling of face or hands', 1, 0, 'hand'],
+    ['Is the baby moving less than usual?', 'Baby moving less than usual', 1, 0, 'baby'],
+    ['Any bleeding, or waters broken before 9 months?', 'Bleeding or waters broken early', 0, 1, 'drop', 'No bleeding']] }
+};
+const HEAD = { green: n => `No urgent signs found for ${n}`, amber: n => `${n} should see the doctor`, red: n => `${n} needs the PHC now` };
+const SAID = { green: n => `Thank you. From your answers, there are no urgent signs for ${n}.`, amber: n => `Thank you. From your answers, ${n} should see the doctor.`, red: n => `From your answers, ${n} needs the PHC now.` };
+const HOMECARE = { child: 'At home, give small sips of fluid often, keep the child cool and lightly dressed, and keep feeding as usual.', adult: 'At home, rest, drink plenty of water, and take paracetamol if the fever is high.', pregnant: 'At home, rest lying on your left side, drink plenty of water, and keep taking your iron tablets.' };
+const CHIP = { green: '✓ Home care', amber: '● Needs a visit', red: '▲ Urgent' };
+let set = 'child', ans = [];
+const qcard = $('#qcard'), ctabs = $$('#ctabs .tab');
+function evaluate() {
+  const S = SETS[set], found = [], ruled = []; let amber = 0;
+  for (let i = 0; i < ans.length; i++) { const [, label, w, danger, , nf] = S.q[i];
+    if (ans[i] === 'yes') { found.push(label); if (danger) return { u: 'red', found, ruled }; amber += w; }
+    else if (danger && nf) ruled.push(nf); }
+  return { u: amber >= 2 ? 'amber' : 'green', found, ruled };
+}
+function renderCheck(anim) {
+  const S = SETS[set], done = ans.length === 4 || (ans.length && ans[ans.length - 1] === 'yes' && S.q[ans.length - 1][3]);
+  $('#qwho').textContent = 'Checking ' + S.who; $('#qch').setAttribute('href', '#' + S.ch);
+  $('#qn').textContent = done ? 'Done' : `${ans.length + 1} of 4`; $('#qbar').style.width = (done ? 100 : (ans.length + 1) * 25) + '%';
+  qcard.classList.toggle('qdone', !!done);
+  $('#qsofar').innerHTML = ans.map((a, i) => `<li>${SHORT[set][i]} · ${a === 'yes' ? 'Yes' : 'No'}</li>`).join('');
+  if (!done) { const q = S.q[ans.length]; const put = () => { $('#qtext').textContent = q[0]; $('#qpic').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#131316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[q[4]]}</svg>`; $('#qask').classList.remove('swap'); };
+    if (anim && !RM) { $('#qask').classList.add('swap'); setTimeout(put, 180); } else put(); }
+  const res = $('#res');
+  res.className = 'res';
+  if (!done) { $('#rchip').textContent = 'An unfinished check is never a result'; $('#rhead').textContent = `${4 - ans.length} question${ans.length === 3 ? '' : 's'} to go`; $('#rlist').innerHTML = ''; $('#rsaid').textContent = ans.length ? '“Press 1 for yes, 2 for no, or 9 to hear the question again.”' : `“${S.q[0][0]} Press 1 for yes, 2 for no.”`; return; }
+  const r = evaluate(); res.classList.add(r.u);
+  $('#rchip').textContent = CHIP[r.u]; $('#rhead').textContent = HEAD[r.u](S.name);
+  $('#rlist').innerHTML = r.found.map((f, i) => `<li>${f}<em class="${r.u === 'red' && i === r.found.length - 1 ? 'd' : 'f'}">${r.u === 'red' && i === r.found.length - 1 ? 'Danger sign' : 'Found'}</em></li>`).join('') + r.ruled.map(f => `<li>${f}<em class="x">Ruled out</em></li>`).join('') || '<li>You did not report any of the signs asked about.</li>';
+  $('#rsaid').textContent = '“' + SAID[r.u](S.name) + (r.u === 'amber' ? ' Press 1 to book a visit.”' : r.u === 'red' ? ' Connecting you to the health worker on duty now.”' : ' ' + HOMECARE[set] + '”');
+}
+$$('.yn').forEach(b => b.addEventListener('click', () => { if (ans.length < 4) { ans.push(b.dataset.a); renderCheck(true); } }));
+$('#qreset').onclick = () => { ans = []; renderCheck(true); };
+ctabs.forEach((b, i) => { b.onclick = () => { set = b.dataset.set; ans = []; ctabs.forEach(x => { x.setAttribute('aria-selected', x === b); x.tabIndex = x === b ? 0 : -1; }); renderCheck(true); }; });
+renderCheck(false);
+
+/* ── Carousel ── */
+const rail = $('#rail'), sls = $$('.sl', rail); let ci = 0;
+function go(n) {
+  ci = Math.max(0, Math.min(sls.length - 1, n));
+  const o = s => s.offsetLeft - sls[0].offsetLeft, last = sls[sls.length - 1];
+  const x = Math.min(o(sls[ci]), Math.max(0, o(last) + last.offsetWidth - rail.clientWidth));
+  rail.style.transform = `translateX(${-x}px)`;
+  sls.forEach((s, i) => { s.classList.toggle('on', i === ci); s.inert = i !== ci; });
+  $('#cprev').disabled = ci === 0; $('#cnext').disabled = ci === sls.length - 1;
+}
+$('#cprev').onclick = () => go(ci - 1); $('#cnext').onclick = () => go(ci + 1);
+sls.forEach((s, i) => s.addEventListener('click', () => i !== ci && go(i)));
+let sx = null; rail.addEventListener('pointerdown', e => sx = e.clientX);
+addEventListener('pointerup', e => { if (sx == null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) go(ci + (d < 0 ? 1 : -1)); });
+addEventListener('resize', () => go(ci)); go(0);
+
+/* ── A day in Arjun's care ── */
+const D = [
+  { t: 'Day 1 · 9:00 AM', w: 'At home in Kukas', c: 'pooja', s: 'Arjun has had a fever since Tuesday. Can you come and see him?', h: 'A concern, said once', b: 'Pooja tells Sunita, the ASHA, what is wrong. It is written down once, on the record, and never asked again.' },
+  { t: 'Day 1 · 9:30 AM', w: 'Kukas, no signal', c: 'sunita', s: 'From your answers, Arjun should see the doctor. I’ve booked tomorrow, 10–11 am.', h: 'Screened and booked, without signal', b: 'Four questions, one at a time. The visit is saved on her phone and joins the PHC list the moment it syncs.' },
+  { t: 'Day 2 · 10:15 AM', w: 'PHC Achrol', c: 'meena', s: 'Sunita found fever for more than 2 days and vomiting. I’ll start from there.', h: 'Consulted, not reconstructed', b: 'Dr. Meena opens the sheet on what Sunita found, not a blank page, and writes advice in words the family will hear.' },
+  { t: 'Day 2 · 6:30 PM', w: 'Back home', c: 'pooja', s: 'I pressed 3 and heard it: “Dr. Meena has a message for Arjun.”', h: 'Advice, heard on any phone', b: 'Saved once by the doctor, read out on the line by name. 9 repeats it. 0 reaches a person.' },
+  { t: 'Day 5 · 10:00 AM', w: 'Follow-up', c: 'arjun', s: 'Feeling better! Amma told the line when it called back.', h: 'Followed up by a named person', b: 'A call in three days. If it is missed, the doctor decides: call again today, or ask the ASHA to follow up.' }
+];
+const stage = $('#stage'), chr = $('#char'), say = $('#say'), tm = $('#time'), trk = $('#track'), dayc = $('#dayc');
+$('#ticks').innerHTML = Array.from({ length: (D.length - 1) * 8 + 1 }, (_, i) => `<i class="${i % 8 ? '' : 'd'}"></i>`).join('');
+let di = -1;
+const pct = i => i / (D.length - 1) * 100;
+function place(p, now) {
+  [chr, tm, say].forEach(el => el.style.transition = now ? 'none' : '');
+  chr.style.left = p + '%';
+  const W = stage.clientWidth, x = p / 100 * W, tw = tm.offsetWidth, bw = say.offsetWidth, room = (stage.parentElement.clientWidth - W) / 2;
+  tm.style.left = Math.max(tw / 2 - room, Math.min(W - tw / 2 + room, x)) + 'px';
+  let l = x - bw + 40; if (l < -room) l = x - 40; say.style.left = Math.max(-room, Math.min(W - bw + room, l)) + 'px';
+}
+async function setDay(i, now) {
+  i = Math.max(0, Math.min(D.length - 1, i)); const changed = i !== di; di = i; const d = D[i];
+  place(pct(i), now); $('#tt').textContent = d.t; $('#tp').disabled = i === 0; $('#tn').disabled = i === D.length - 1;
+  trk.setAttribute('aria-valuenow', i + 1); trk.setAttribute('aria-valuetext', `${d.t}, ${d.h}`);
+  if (!changed) return;
+  say.classList.add('swap'); dayc.classList.add('swap'); await wait(RM ? 0 : 200); if (di !== i) return;
+  $('#charU').setAttribute('href', '#' + d.c); $('#sayT').textContent = d.s; $('#dw').textContent = d.w; $('#dh').textContent = d.h; $('#db').textContent = d.b;
+  place(pct(i), true); say.classList.remove('swap'); dayc.classList.remove('swap');
+}
+$('#tp').onclick = () => setDay(di - 1); $('#tn').onclick = () => setDay(di + 1);
+trk.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { setDay(di + (e.key === 'ArrowRight' ? 1 : -1)); e.preventDefault(); } });
+let drag = false;
+const fx = x => { const r = trk.getBoundingClientRect(); return Math.max(0, Math.min(1, (x - r.left) / r.width)); };
+const down = e => { if (e.target.closest('button')) return; drag = true; e.currentTarget.setPointerCapture(e.pointerId); mvp(e); };
+const mvp = e => { if (!drag) return; const f = fx(e.clientX); place(f * 100, true); const n = Math.round(f * (D.length - 1)); if (n !== di) setDay(n, true); };
+const up = () => { if (drag) { drag = false; place(pct(di)); } };
+[trk, tm].forEach(el => { el.addEventListener('pointerdown', down); el.addEventListener('pointermove', mvp); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); });
+addEventListener('resize', () => place(pct(di), true));
+setDay(0, true);
+
+/* ── The cast walks in from the sides and lines up on the footer rule ── */
+const cast = $('#cast'), cs = $$('svg.ch', cast);
+function castPos() {
+  const r = cast.getBoundingClientRect(), vh = innerHeight;
+  let p = RM ? 1 : Math.max(0, Math.min(1, (vh - r.top) / (vh * .75)));
+  p = 1 - Math.pow(1 - p, 3);
+  const w = cs[0].getBoundingClientRect().width || 178, sc = Math.min(1, cast.clientWidth / 900);
+  cs.forEach(s => {
+    const at = +s.dataset.at / 100 * w * .8, sx = +s.dataset.x * sc, sy = +s.dataset.y;
+    const x = at + sx * (1 - p), y = sy * (1 - p);
+    s.style.left = `calc(50% - ${w / 2}px)`; s.style.transform = `translate(${x}px, ${y}px)`; s.style.opacity = Math.min(1, p * 1.6);
+  });
+}
+addEventListener('scroll', () => requestAnimationFrame(castPos), { passive: true }); addEventListener('resize', castPos); castPos();
+
 })();
 </script>
 </body></html>
