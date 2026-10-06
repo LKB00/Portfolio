@@ -25,7 +25,7 @@
 <link rel="manifest" href="./site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@400;500;600&family=Libre+Baskerville&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Lato:wght@400;700&family=Spline+Sans+Mono:wght@400;500;600&family=Libre+Baskerville&family=Caveat:wght@500;600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
    TOKENS — same reference system as app-merge-v2 and rise-portal:
@@ -2785,6 +2785,78 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
   .v2 .card .beat.seq span{opacity:0;animation:none!important}.v2 .card .beat.seq .ok{opacity:1}
   .gb .al-m-bar i{transition:none}
 }
+
+/* ===== Visual pass: show it, don't list it ===== */
+@keyframes alPin{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}70%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes alRing{0%{box-shadow:0 0 0 0 rgba(52,68,154,.45)}100%{box-shadow:0 0 0 10px rgba(52,68,154,0)}}
+.al-pin{position:absolute;z-index:3;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#34449A;color:#fff;font:600 11.5px/1 var(--sans);
+  transform:translate(-50%,-50%);box-shadow:0 0 0 2px #fff,0 4px 10px -2px rgba(20,20,60,.4);opacity:0}
+.shown .al-pin{animation:alPin .5s cubic-bezier(.3,1.5,.5,1) calc(.4s + var(--d,0s)) both,alRing 1.2s ease-out calc(.9s + var(--d,0s)) 1}
+.tab-scr .al-pin{width:24px;height:24px}
+.gb .al-legend{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.gb .al-legend li{margin:0;display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start}
+.gb .al-legend li > span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#34449A;color:#fff;font:600 11.5px/1 var(--sans)}
+.gb .al-legend p{margin:1px 0 0;font-size:15px;line-height:1.45;color:var(--muted)}
+.gb .al-legend b{display:block;font-weight:500;color:var(--ink)}
+.gb .cx-w > .al-legend{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:24px}
+
+.gb .al-surf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:32px}
+.gb .al-surf > div{padding:18px 18px 20px;border-radius:8px;background:var(--surface)}
+.gb .al-surf img{width:64px;height:64px;margin:-6px 0 8px -6px}
+.gb .al-surf h3{margin:0;font:400 19px/1.3 var(--serif);color:var(--ink)}
+.gb .al-surf p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+
+.gb .al-cons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
+.gb .al-cons > div{padding:18px;border-radius:8px;background:var(--surface)}
+.gb .al-ic{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--card,#fff);color:#34449A;margin-bottom:14px}
+.gb .al-ic svg{width:24px;height:24px}
+.gb .al-cons h3,.gb .al-rules h3{margin:0;font:400 17px/1.3 var(--serif);color:var(--ink)}
+.gb .al-cons p,.gb .al-rules > div > p{margin:4px 0 0;font-size:13.5px;line-height:1.45;color:var(--muted)}
+
+.gb .al-rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.gb .al-rules > div{padding:18px;border-radius:8px;background:var(--surface)}
+.al-ex{height:118px;margin-bottom:16px;padding:14px;border-radius:10px;background:var(--card,#fff);display:flex;flex-direction:column;justify-content:center;gap:8px;font-family:Figtree,var(--sans);color:#1b1b1f;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+:root[data-theme="dark"] .al-ex{color:#eee}
+.al-ex p{margin:0;font-size:13px}
+.al-ex-one p{font-weight:600;font-size:14px}
+.al-ex-btn{align-self:stretch;text-align:center;padding:9px;border-radius:99px;background:#34449A;color:#fff;font-size:13px;font-weight:600}
+.al-ex-ghost{align-self:center;font-size:12px;color:#34449A}
+.al-ex-mem p b{display:block;font-size:14px}
+.al-ex-chip,.al-spec-o span{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:99px;background:#1b1b1f;color:#fff;font:500 12px/1 Figtree,var(--sans)}
+.al-ex-col,.al-spec-c{flex-direction:column;align-items:flex-start}
+.al-ex-col span,.al-spec-c span{display:inline-flex;padding:5px 10px;border-radius:99px;font:600 12px/1 Figtree,var(--sans)}
+.al-ex-col .u,.al-spec-c .u{background:#fce4ec;color:#b42b5e}.al-ex-col .n,.al-spec-c .n{background:#fff2c7;color:#7a5800}.al-ex-col .h,.al-spec-c .h{background:#ddf1e3;color:#2f7d4f}
+.al-ex-next p{display:flex;gap:8px;align-items:center;font-size:13px}
+.al-ex-next i{font-style:normal;color:#34449A}
+.al-ex-next b{padding:2px 8px;border-radius:99px;background:#eef0fb;color:#34449A;font-weight:600}
+
+.gb .al-ears{display:grid;gap:10px;margin-top:14px}
+.gb .al-ears > div{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:8px;background:var(--surface)}
+.gb .al-ears p{margin:0;font-size:12.5px;color:var(--muted);text-align:right}
+.al-say{font:500 14px/1.35 var(--sans);color:var(--ink)}
+.al-say s{color:var(--muted)}
+.al-keys{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.al-keys i{font-style:normal;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#1b1b1f;color:#fff;font:600 13px/1 var(--sans)}
+.al-keys i + i,.al-keys i:nth-of-type(2){margin-left:8px}
+
+.gb .al-spec{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:20px}
+.gb .al-spec > div{padding:18px;border-radius:8px;background:var(--surface);display:flex;flex-direction:column;gap:8px}
+.gb .al-spec .cx-meta-l{margin:0 0 6px}
+.al-spec-t{grid-row:span 2}
+.al-spec-t p:not(.cx-meta-l):not(.al-spec-n){margin:0;font-family:Figtree,var(--sans);font-weight:600;line-height:1.15;color:var(--ink);letter-spacing:-.01em}
+.al-spec-t small{font:400 11px/1 var(--mono);color:var(--muted);margin-left:6px}
+.al-spec-n{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.al-spec-s p:not(.cx-meta-l){margin:0;display:flex;align-items:center;gap:10px;font:400 11px/1 var(--mono);color:var(--muted)}
+.al-spec-s i{display:block;height:8px;border-radius:2px;background:#a9b4f5}
+.al-spec-o .ok{background:#2f7d4f}
+.al-spec-o span:nth-child(3){background:#5b5b66}
+.al-spec-i > span{display:flex;gap:14px;color:#34449A}
+.al-spec-i svg{width:26px;height:26px}
+.gb .al-titles li{padding:6px 0;border-bottom:1px solid var(--line)}
+.gb .al-titles li:last-child{border-bottom:0}
+.gb .al-titles b{font-weight:500}
+@media(max-width:760px){.gb .al-surf,.gb .al-cons,.gb .al-rules,.gb .al-spec{grid-template-columns:1fr}.al-spec-t{grid-row:auto}.gb .al-cons{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){.al-pin{opacity:1;animation:none!important}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -2891,12 +2963,12 @@ addEventListener("pagereveal",function(e){
 <div><dt>Surfaces</dt><dd>ASHA app<br>Voice line<br>PHC dashboard</dd></div>
 <div><dt>Scope</dt><dd>End-to-end prototype</dd></div>
 </dl>
-<div class="cx-w rc-overview" data-reveal=""><p class="cx-label">Overview</p><h2 class="cx-h">A care-coordination concept that connects families, frontline health workers and primary health centres across one continuous care journey.</h2><p class="cx-lead">Set in villages near Jaipur. An ASHA worker can record and triage a concern, a PHC doctor can act on the same information, and the family can receive the doctor&rsquo;s advice through a phone call, without needing a smartphone. <a class="rc-live" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Explore the prototype&nbsp;<span class="rc-live-a">&#8599;</span></a></p>
-<div class="rc-triad"><div><h3>ASHA app</h3><p>Records and triages the concern, even offline</p></div><div><h3>Voice line</h3><p>The family hears the advice, from any phone</p></div><div><h3>PHC dashboard</h3><p>The doctor acts on the same record</p></div></div></div>
+<div class="cx-w rc-overview" data-reveal=""><p class="cx-label">Overview</p><h2 class="cx-h">A care-coordination concept that connects families, frontline health workers and primary health centres across one continuous care journey.</h2><p class="cx-lead">Set in villages near Jaipur: one record, shared by an ASHA app, a voice line any phone can call, and a PHC dashboard. <a class="rc-live" href="https://arogya-line.vercel.app/?guided=1" target="_blank" rel="noopener">Explore the prototype&nbsp;<span class="rc-live-a">&#8599;</span></a></p>
+<div class="al-surf"><div><img src="./assets/arogya-chars/sunita.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><h3>ASHA app</h3><p>Checks and books, even offline</p></div><div><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><h3>Voice line</h3><p>Advice by name, on any phone</p></div><div><img src="./assets/arogya-chars/meena.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><h3>PHC dashboard</h3><p>Starts from what was found</p></div></div></div>
 </section>
 
 <section class="cx-sec" id="problem" data-section="The problem" data-reveal="">
-<div class="cx-w cx-head"><p class="cx-label">The problem</p><h2 class="cx-h">The problem isn&rsquo;t one broken screen. It&rsquo;s the handoff.</h2><p class="cx-lead">Healthcare rarely happens in one place. A concern starts at home. An ASHA worker helps assess it. A patient may need to visit a PHC. A doctor adds advice. Then the family needs to understand what happens next. Each step involves a different person, a different context, and often a different way of accessing the system.</p></div>
+<div class="cx-w cx-head"><p class="cx-label">The problem</p><h2 class="cx-h">The problem isn&rsquo;t one broken screen. It&rsquo;s the handoff.</h2><p class="cx-lead">A concern starts at home, is checked by the ASHA and seen at the PHC: a different person, place and device at every step.</p></div>
 <figure class="cx-w al-chain" data-kicker="Where the record breaks">
 <ol>
 <li><b>Family</b><span>at home</span><em>Concern said once</em></li>
@@ -2937,7 +3009,7 @@ addEventListener("pagereveal",function(e){
 </section>
 
 <section class="cx-sec" id="system" data-section="System" data-reveal="">
-<div class="cx-w cx-head"><p class="cx-label">System</p><h2 class="cx-h">The product isn&rsquo;t three interfaces. It&rsquo;s one care record moving between three people.</h2><p class="cx-lead">All three surfaces read and write the same record. A booking the ASHA saves offline appears on the doctor&rsquo;s list the moment it syncs, and the advice the doctor saves is what the family hears on the line.</p></div>
+<div class="cx-w cx-head"><p class="cx-label">System</p><h2 class="cx-h">The product isn&rsquo;t three interfaces. It&rsquo;s one care record moving between three people.</h2><p class="cx-lead">All three surfaces read and write the same record: a booking saved offline reaches the doctor when it syncs, and the doctor&rsquo;s advice is what the family hears.</p></div>
 <figure class="cx-w al-stepper" data-kicker="One record, six steps"><ol id="alFlow"><span class="mv" aria-hidden="true"></span>
 <li><span class="dot">1</span><span class="st">Concern</span><span class="ow">Family</span></li>
 <li><span class="dot">2</span><span class="st">Screen</span><span class="ow">ASHA</span></li>
@@ -2947,20 +3019,15 @@ addEventListener("pagereveal",function(e){
 <li><span class="dot">6</span><span class="st">Follow-up</span><span class="ow">ASHA / Family</span></li>
 </ol></figure>
 <div class="cx-w rc-sub"><h3 class="cx-h3">Four constraints shaped the system before any screen.</h3></div>
-<div class="cx-w al-grid4">
-<div><h3>Interrupted connectivity</h3><p>The ASHA&rsquo;s work can&rsquo;t wait for signal, so saving never depends on it.</p></div>
-<div><h3>Different devices</h3><p>A smartphone for the ASHA, any phone for the family, a desktop at the PHC.</p></div>
-<div><h3>Different mental models</h3><p>The ASHA thinks in households, the doctor in appointments, the family in one person and tonight.</p></div>
-<div><h3>Safety over automation</h3><p>The system screens and suggests; a person decides, and a person is always one key away.</p></div>
-</div>
+<div class="cx-w al-cons"><div><span class="al-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.8a15 15 0 0 1 20 0M5 12.6a10 10 0 0 1 14 0M8.5 16.3a5 5 0 0 1 7 0M12 20h.01"/><path d="M3 3l18 18"/></svg></span><h3>No signal</h3><p>Saving never waits for it</p></div><div><span class="al-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="11" height="8" rx="1.5"/><path d="M5.5 15h4"/><rect x="15" y="3" width="7" height="13" rx="1.5"/><rect x="8" y="14" width="6" height="8" rx="1.2"/><path d="M10 17h2M10 19h2"/></svg></span><h3>Three devices</h3><p>Smartphone, any phone, desktop</p></div><div><span class="al-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 8 7l5 4v8H3z"/><rect x="14" y="8" width="7" height="7" rx="1"/><path d="M16 6v3M19 6v3"/><circle cx="17.5" cy="19.5" r="1.8"/></svg></span><h3>Three mental models</h3><p>Households, appointments, tonight</p></div><div><span class="al-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v6c0 4.4 3 7.4 7.5 9 4.5-1.6 7.5-4.6 7.5-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg></span><h3>A person decides</h3><p>The system only suggests</p></div></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">Four rules governed every screen.</h3></div>
-<div class="cx-w al-grid4">
-<div><h3>One screen. One decision.</h3><p>One primary action per screen, at the thumb. The ASHA never has to choose between two things that look equally important.</p></div>
-<div><h3>Never make the user remember the system.</h3><p>What was booked, what was said and what is waiting to send is shown where it matters, not recalled from an earlier screen.</p></div>
-<div><h3>Never use colour as the message.</h3><p>Pink, yellow and green come from the IMNCI chart the ASHA trained on, and always travel with a word or an icon.</p></div>
-<div><h3>Every action creates the next action.</h3><p>Each step hands something to a named person: a booking to the doctor, advice to the family, a follow-up call to the ASHA. Nothing is handed over without someone deciding it.</p></div>
+<div class="cx-w al-rules">
+<div><div class="al-ex al-ex-one"><p>Arjun should see the doctor</p><span class="al-ex-btn">Book PHC visit</span><span class="al-ex-ghost">Call the doctor line</span></div><h3>One screen. One decision.</h3><p>One primary action, at the thumb.</p></div>
+<div><div class="al-ex al-ex-mem"><p><b>Arjun, 3</b>Thu 1 Oct, 10&ndash;11 am</p><span class="al-ex-chip">Offline &middot; 1 visit to send</span></div><h3>Never make her remember.</h3><p>What&rsquo;s waiting sits on the record itself.</p></div>
+<div><div class="al-ex al-ex-col"><span class="u">&#9650; Urgent</span><span class="n">&#9679; Needs a visit</span><span class="h">&#10003; Home care</span></div><h3>Never colour alone.</h3><p>The IMNCI colours, always with a word.</p></div>
+<div><div class="al-ex al-ex-next"><p>Booking <i>&rarr;</i> <b>Doctor</b></p><p>Advice <i>&rarr;</i> <b>Family</b></p><p>Follow-up <i>&rarr;</i> <b>ASHA</b></p></div><h3>Every action creates the next.</h3><p>Always handed to a named person.</p></div>
 </div>
-<div class="cx-w rc-sub"><h3 class="cx-h3">The record, moving.</h3><p class="cx-body">Four moments from one run of the prototype: who needs her, a visit sent when the signal returns, advice heard on any phone, and a doctor who starts from what was found.</p></div>
+<div class="cx-w rc-sub"><h3 class="cx-h3">The record, moving.</h3></div>
 <div class="cx-w v2 v2wrap"><div class="rows">
   <div class="row" data-rv>
     <div class="card y" id="k1" aria-hidden="true">
@@ -2972,7 +3039,7 @@ addEventListener("pagereveal",function(e){
       </div></div>
       <div class="agent" id="a1"><svg class="ch" viewBox="0 0 120 120"><use href="#sunita"/></svg><svg class="ptr" viewBox="0 0 24 24"><use href="#ptr"/></svg></div>
     </div>
-    <div class="txt"><h3>Who needs her next</h3><p>The ASHA’s phone is a work queue, not a dashboard. It starts from the families she already knows, ranks people by what is due, and puts the next action in words.</p></div>
+    <div class="txt"><h3>Who needs her next</h3><p>A work queue, ranked by what is due, with the next action in words.</p></div>
   </div>
 
   <div class="row r" data-rv>
@@ -2992,7 +3059,7 @@ addEventListener("pagereveal",function(e){
       </div>
       <div class="agent" id="a2" style="transform:translate(540px,190px)"><svg class="ch" viewBox="0 0 120 120" style="--bd:1.3s"><use href="#meena"/></svg><svg class="ptr" viewBox="0 0 24 24"><use href="#ptr"/></svg></div>
     </div>
-    <div class="txt"><h3>Saved offline, sent on signal</h3><p>Saving never waits for signal. The visit sits on her phone as “1 visit to send”, and joins the doctor’s list the moment it syncs. Offline is a calm state, not an error.</p></div>
+    <div class="txt"><h3>Saved offline, sent on signal</h3><p>“1 visit to send” on her phone, on the doctor’s list the moment it syncs.</p></div>
   </div>
 
   <div class="row" data-rv>
@@ -3010,7 +3077,7 @@ addEventListener("pagereveal",function(e){
         </div>
       </div></div>
     </div>
-    <div class="txt"><h3>Heard on any phone</h3><p>No app to install. They call the number on their card, key in the family ID, and hear the doctor’s advice by name. 9 repeats. 0 reaches a person.</p></div>
+    <div class="txt"><h3>Heard on any phone</h3><p>No app. Call, key in the family ID, hear the advice by name.</p></div>
   </div>
 
   <div class="row r" data-rv>
@@ -3022,19 +3089,14 @@ addEventListener("pagereveal",function(e){
         <div class="embed"><img src="./assets/arogya3/phc-today.webp" alt="" loading="lazy"></div>
       </div>
     </div>
-    <div class="txt"><h3>Starts from what was found</h3><p>The day in time order. Urgency marks a row but never reorders it, and the consult opens on what the ASHA found, not a blank page.</p><a class="btn btn-line" href="https://arogya-line.vercel.app/phc" target="_blank" rel="noopener">Open the dashboard</a></div>
+    <div class="txt"><h3>Starts from what was found</h3><p>The day in time order; the consult opens on what the ASHA found.</p><a class="btn btn-line" href="https://arogya-line.vercel.app/phc" target="_blank" rel="noopener">Open the dashboard</a></div>
   </div>
 </div></div>
 </section>
 
 <section class="cx-sec" id="asha" data-section="ASHA app" data-reveal="">
-<div class="cx-w cx-head"><p class="cx-label">ASHA app</p><h2 class="cx-h">The ASHA needs to know who needs her attention first.</h2><p class="cx-lead">The ASHA&rsquo;s phone is not designed as a dashboard. It is a work queue, so the home screen starts with the question: &ldquo;Who needs me next?&rdquo; Instead of asking the worker to interpret a collection of statuses, the system surfaces the next meaningful action and keeps the patient, task, urgency and household context together.</p></div>
-<div class="cx-w rc-row al-anno"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1600" poster="./assets/arogya2/v-al-today.webp" aria-label="The ASHA app's Today screen: an Up next card for the person who needs her first, then the rest of the day's work"><source data-src="./assets/arogya2/v-al-today.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><ul class="al-notes">
-<li><b>Person.</b> The person, not the household head. The concern is about Khushi, so the row is Khushi&rsquo;s.</li>
-<li><b>Next action.</b> What to do and when, in words, as the heaviest line on the card.</li>
-<li><b>Urgency.</b> The IMNCI colour, always with a word. Ranked by what is due, not by colour alone.</li>
-<li><b>Household context.</b> The village and the family card, so she knows which house to walk to. When someone else in the house needs her too, the row says so.</li>
-</ul></div>
+<div class="cx-w cx-head"><p class="cx-label">ASHA app</p><h2 class="cx-h">The ASHA needs to know who needs her attention first.</h2><p class="cx-lead">Her phone is a work queue, not a dashboard. It answers one question: &ldquo;Who needs me next?&rdquo;</p></div>
+<div class="cx-w rc-row al-anno"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><img src="./assets/arogya2/al-today.webp" width="720" height="1600" alt="The ASHA app&rsquo;s Today screen: Up next, Khushi, 5, urgent, PHC visit today 9&ndash;10 am, in Kukas, card 3120" loading="lazy" decoding="async"><span class="al-pin" style="left:88%;top:34%;--d:0.00s">1</span><span class="al-pin" style="left:88%;top:39.5%;--d:0.18s">2</span><span class="al-pin" style="left:88%;top:44.9%;--d:0.36s">3</span><span class="al-pin" style="left:88%;top:55.8%;--d:0.54s">4</span></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><ol class="al-legend"><li><span>1</span><p><b>Urgency</b>The IMNCI colour, always with a word</p></li><li><span>2</span><p><b>Person</b>Khushi, not the household head</p></li><li><span>3</span><p><b>Next action</b>What to do and when, in words</p></li><li><span>4</span><p><b>Household</b>Which house, and who else needs her</p></li></ol></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">Check someone, in five steps.</h3><p class="cx-body">I kept the assessment linear because the ASHA should spend her attention on the person, not on navigating the interface.</p></div>
 <figure class="cx-w al-five">
 <div><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><img src="./assets/arogya2/al-picker.webp" width="720" height="1600" alt="Which family? Households grouped by village, each drawn as its people" loading="lazy" decoding="async"></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><p>Check someone</p></div>
@@ -3073,50 +3135,33 @@ addEventListener("pagereveal",function(e){
   </div>
   <p class="note">Illustrative questions, not clinical guidance. A danger sign answered yes stops the check at once. Two other yeses mean a visit.</p></div>
 <div class="cx-w rc-flows al-flows al-fam">
-<div class="rc-row"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><img src="./assets/arogya2/al-khushi-family.webp" width="720" height="1600" alt="Mahendra&rsquo;s family, card 3120, Kukas: Khushi, 5, marked Urgent with a PHC visit today at 9 to 10 am and what the family said, and Mahendra, 34, with nothing open" loading="lazy" decoding="async"></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><div class="rc-cap"><h3>A family is context. A person is the work.</h3><p>A household can contain several people and several active care needs. The interface preserves the household context without collapsing everyone into one work item. Today shows one row per person, and says when someone else in the same family also needs her. The family screen lists every open item for each person.</p></div></div>
+<div class="rc-row"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><img src="./assets/arogya2/al-khushi-family.webp" width="720" height="1600" alt="Mahendra&rsquo;s family, card 3120, Kukas: Khushi, 5, marked Urgent with a PHC visit today at 9 to 10 am and what the family said, and Mahendra, 34, with nothing open" loading="lazy" decoding="async"></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><div class="rc-cap"><h3>A family is context. A person is the work.</h3><p>One row per person on Today. The family screen lists every open item, for each person.</p></div></div>
 </div>
 </section>
 
 <section class="cx-sec" id="voice" data-section="Voice line" data-reveal="">
-<div class="cx-w cx-head"><p class="cx-label">Voice line</p><h2 class="cx-h">The family shouldn&rsquo;t need another app. They already have a phone.</h2><p class="cx-lead">A family calls the number on their printed card from any phone, keys in the family ID, and picks the person by name. They can run the same screening the ASHA runs, book a visit, or hear the advice the doctor left for that person. 0 always reaches a person.</p></div>
+<div class="cx-w cx-head"><p class="cx-label">Voice line</p><h2 class="cx-h">The family shouldn&rsquo;t need another app. They already have a phone.</h2><p class="cx-lead">Any phone, the family ID from their printed card, and the person picked by name.</p></div>
 <div class="cx-w rc-row al-anno"><figure class="rc-shot al-px"><div class="px-dev"><div class="px-scr"><video class="rc-vid" muted loop playsinline preload="none" width="720" height="1600" poster="./assets/arogya2/v-al-voice.webp" aria-label="A call on the voice line: family ID, pick the person, four questions, then the result read back as sentences"><source data-src="./assets/arogya2/v-al-voice.mp4" type="video/mp4"></video></div><img class="px-frame" src="./assets/arogya2/pixel8-back.webp" width="1187" height="2513" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure><div>
 <ol class="al-path"><li>Family ID</li><li>Person</li><li>Questions</li><li>Result</li><li>Booking, advice or a person</li></ol>
-<h3 class="al-h4">Designing for ears, not screens.</h3>
-<p class="al-p">There is no screen to check, so every sentence has to be heard once and understood.</p>
-<ul class="al-notes">
-<li><b>Short sentences.</b> One idea at a time, in the order the caller needs it.</li>
-<li><b>No clinical jargon.</b> What to do and why, in the words a person would use on the phone.</li>
-<li><b>Repeatable navigation.</b> 9 repeats, 0 reaches a person, from anywhere in the call.</li>
-</ul></div></div>
+<h3 class="al-h4">Designing for ears, not screens.</h3><div class="al-ears"><div><span class="al-say">&ldquo;Arjun should see the doctor.&rdquo;</span><p>One idea per sentence</p></div><div><span class="al-say"><s>Result: amber</s> &rarr; &ldquo;should see the doctor&rdquo;</span><p>No clinical words</p></div><div><span class="al-keys"><i>9</i>repeat<i>0</i>a person</span><p>From anywhere in the call</p></div></div></div></div>
 <div class="cx-w al-ba">
-<div class="al-ba-c"><p class="cx-meta-l">Before</p><p class="al-q">&ldquo;Result: amber.&rdquo;</p><p class="al-q">&ldquo;Noted: fever more than 2 days; no chest pain.&rdquo;</p><p class="al-x">A colour and a list, read out. Written for a screen, then spoken.</p></div>
-<div class="al-ba-c al-ba-new"><p class="cx-meta-l">After</p><p class="al-q">&ldquo;Thank you. From your answers, Arjun should see the doctor.&rdquo;</p><p class="al-q">&ldquo;You told us about fever more than 2 days and vomiting more than 3 times today. You did not report fast breathing.&rdquo;</p><p class="al-x">The person, the action, then what was heard, as sentences.</p></div>
+<div class="al-ba-c"><p class="cx-meta-l">Before</p><p class="al-q">&ldquo;Result: amber.&rdquo;</p><p class="al-q">&ldquo;Noted: fever more than 2 days; no chest pain.&rdquo;</p><p class="al-x">Written for a screen, then spoken.</p></div>
+<div class="al-ba-c al-ba-new"><p class="cx-meta-l">After</p><p class="al-q">&ldquo;Thank you. From your answers, Arjun should see the doctor.&rdquo;</p><p class="al-q">&ldquo;You told us about fever more than 2 days and vomiting more than 3 times today. You did not report fast breathing.&rdquo;</p><p class="al-x">The person, the action, then what was heard.</p></div>
 </div>
 </section>
 
 <section class="cx-sec" id="phc" data-section="PHC dashboard" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">PHC dashboard</p><h2 class="cx-h">The doctor doesn&rsquo;t need another dashboard. They need to know what requires attention now.</h2></div>
-<figure class="cx-w rc-mac al-macpanel" data-kicker="PHC Achrol · Dr. Meena"><div class="tab-dev"><div class="tab-scr"><img src="./assets/arogya2/al-phc.webp" width="2880" height="1800" alt="The PHC dashboard: today's workload, then the day's bookings in time order, urgent ones marked, each with its action" loading="lazy" decoding="async"></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure>
-<ul class="cx-w al-notes al-notes-2">
-<li><b>Patient.</b> Who, and how they came: the ASHA, the voice line, or a walk-in.</li>
-<li><b>Appointment time.</b> The order patients walk in. Urgency marks a row; it doesn&rsquo;t reorder the day.</li>
-<li><b>Urgency.</b> Pink time and edge for a danger sign, with the word beside it.</li>
-<li><b>Consultation state.</b> View booking, Start consult, Complete consult, Open consult: only what is possible now.</li>
-<li><b>Next action.</b> Consults remaining and follow-ups due, captioned apart from the day on screen.</li>
-</ul>
-<div class="cx-w rc-sub"><h3 class="cx-h3">One workflow, in the order it is done.</h3><p class="cx-body">The consultation keeps the history, the doctor&rsquo;s decision, the family-facing advice and the follow-up in one workflow.</p></div>
-<figure class="cx-w rc-mac al-macpanel" data-kicker="Consult · Khushi, 5"><div class="tab-dev"><div class="tab-scr"><img src="./assets/arogya2/al-phc-consult.webp" width="2880" height="1800" alt="The consult sheet for Khushi, 5: what was found, advice for the family, and the follow-up" loading="lazy" decoding="async"></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure>
-<ul class="cx-w al-notes al-notes-2">
-<li><b>What was found.</b> What the ASHA or the family found, before the patient sits down.</li>
-<li><b>Advice.</b> In the words the family will hear on the line.</li>
-<li><b>Could this have been handled without a visit?</b> Asked only after seeing the patient.</li>
-<li><b>Follow-up.</b> The follow-up call: none, next day, in 3 days, in a week.</li>
-</ul>
+<figure class="cx-w rc-mac al-macpanel" data-kicker="PHC Achrol · Dr. Meena"><div class="tab-dev"><div class="tab-scr"><img src="./assets/arogya2/al-phc.webp" width="2880" height="1800" alt="The PHC dashboard: today's workload, then the day's bookings in time order, urgent ones marked, each with its action" loading="lazy" decoding="async"><span class="al-pin" style="left:13.6%;top:39.6%;--d:0.00s">1</span><span class="al-pin" style="left:23.4%;top:39.6%;--d:0.18s">2</span><span class="al-pin" style="left:48.2%;top:39.6%;--d:0.36s">3</span><span class="al-pin" style="left:92.4%;top:39.6%;--d:0.54s">4</span><span class="al-pin" style="left:71%;top:23.5%;--d:0.72s">5</span></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure>
+<div class="cx-w"><ol class="al-legend"><li><span>1</span><p><b>Time</b>The order patients walk in</p></li><li><span>2</span><p><b>Patient</b>Who, and how they came</p></li><li><span>3</span><p><b>Urgency</b>Marks a row, never reorders the day</p></li><li><span>4</span><p><b>State</b>Only the action possible now</p></li><li><span>5</span><p><b>Next action</b>Consults left, follow-ups due</p></li></ol></div>
+<div class="cx-w rc-sub"><h3 class="cx-h3">One workflow, in the order it is done.</h3></div>
+<figure class="cx-w rc-mac al-macpanel" data-kicker="Consult · Khushi, 5"><div class="tab-dev"><div class="tab-scr"><img src="./assets/arogya2/al-phc-consult.webp" width="2880" height="1800" alt="The consult sheet for Khushi, 5: what was found, advice for the family, and the follow-up" loading="lazy" decoding="async"><span class="al-pin" style="left:84.6%;top:16.5%;--d:0.00s">1</span><span class="al-pin" style="left:87.2%;top:39%;--d:0.18s">2</span><span class="al-pin" style="left:97.2%;top:74%;--d:0.36s">3</span><span class="al-pin" style="left:82.6%;top:85.2%;--d:0.54s">4</span></div><img class="tab-frame" src="./assets/arogya2/ptab-dark.png" width="2798" height="1837" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></figure>
+<div class="cx-w"><ol class="al-legend"><li><span>1</span><p><b>What was found</b>Before the patient sits down</p></li><li><span>2</span><p><b>Advice</b>In the words the family will hear</p></li><li><span>3</span><p><b>Without a visit?</b>Asked only after seeing them</p></li><li><span>4</span><p><b>Follow-up</b>None, next day, 3 days, a week</p></li></ol></div>
 
 </section>
 
 <section class="cx-sec" id="handoffs" data-section="Handoffs" data-reveal="">
-<div class="cx-w cx-head"><p class="cx-label">Handoffs</p><h2 class="cx-h">Every handoff carries context.</h2><p class="cx-lead">A handoff that only says &ldquo;see this patient&rdquo; makes the next person start again. Each one travels with what the next person needs to act.</p></div>
+<div class="cx-w cx-head"><p class="cx-label">Handoffs</p><h2 class="cx-h">Every handoff carries context.</h2><p class="cx-lead">Each handoff travels with what the next person needs to act.</p></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">Arjun&rsquo;s record, from a fever at home to a follow-up call.</h3><p class="cx-body">Arjun&rsquo;s record, as it moves through one run of the prototype. Each step is saved once, by the person who did it, and read by the next.</p></div>
 <div class="cx-w v2 v2wrap"><div class="stage" id="stage">
     <div class="say" id="say"><span id="sayT"></span><span class="re" aria-hidden="true">💗</span></div>
@@ -3143,19 +3188,13 @@ addEventListener("pagereveal",function(e){
 <section class="cx-sec" id="built" data-section="Prototype" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">Prototype</p><h2 class="cx-h">Designed in code, not just on canvas.</h2><p class="cx-lead">I translated the system into a working prototype so the handoffs could be experienced, not just represented in static screens. All three surfaces read and write one shared record in the browser.</p></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">A quiet visual system for a high-stakes workflow.</h3></div>
-<ul class="cx-w al-notes">
-<li><b>Typography.</b> Figtree, one family, chosen so a matching Devanagari face can follow for Hindi. Screen title 30, card headline 24, section title 20, row title 17, body 15, meta 13.</li>
-<li><b>Spacing.</b> 4 · 8 · 12 · 16 · 24 · 32 · 48. No block off the 4 px grid.</li>
-<li><b>Icons.</b> Line icons that show what a thing is: a person as who they are, a symptom as the body part.</li>
-<li><b>Semantic colours.</b> The IMNCI chart&rsquo;s pink, yellow and green for urgent, needs a visit and home care. Never colour alone.</li>
-<li><b>States.</b> &ldquo;Offline · 1 visit to send&rdquo;, &ldquo;Sending 1 visit&hellip;&rdquo;, &ldquo;Waiting to send&rdquo;. Offline is a calm reassurance at the moment of saving, not an error.</li>
-</ul>
-<div class="cx-w rc-insights"><p class="cx-label">What the prototype demonstrates</p><div class="rc-triad rc-two">
-<div><h3>One journey, three interfaces.</h3><p>A single patient journey can span three interfaces without losing context.</p></div>
-<div><h3>Offline, made explicit.</h3><p>Offline states can be made explicit rather than hidden.</p></div>
-<div><h3>Voice extends access.</h3><p>Voice can extend access without requiring a smartphone.</p></div>
-<div><h3>Edge cases are core UX.</h3><p>Edge cases can be treated as core UX rather than exceptions.</p></div>
-</div></div>
+<div class="cx-w al-spec">
+<div class="al-spec-t"><p class="cx-meta-l">Type &middot; Figtree</p><p style="font-size:30px">Khushi, 5 <small>30</small></p><p style="font-size:24px">Khushi, 5 <small>24</small></p><p style="font-size:20px">Khushi, 5 <small>20</small></p><p style="font-size:17px">Khushi, 5 <small>17</small></p><p style="font-size:15px">Khushi, 5 <small>15</small></p><p style="font-size:13px">Khushi, 5 <small>13</small></p><p class="al-spec-n">One family, so a Devanagari face can follow for Hindi.</p></div>
+<div class="al-spec-s"><p class="cx-meta-l">Spacing &middot; 4 px grid</p><p><i style="width:8px"></i>4</p><p><i style="width:16px"></i>8</p><p><i style="width:24px"></i>12</p><p><i style="width:32px"></i>16</p><p><i style="width:48px"></i>24</p><p><i style="width:64px"></i>32</p><p><i style="width:96px"></i>48</p></div>
+<div class="al-spec-c"><p class="cx-meta-l">Colour &middot; the IMNCI chart</p><span class="u">&#9650; Urgent</span><span class="n">&#9679; Needs a visit</span><span class="h">&#10003; Home care</span><p class="al-spec-n">Never colour alone.</p></div>
+<div class="al-spec-o"><p class="cx-meta-l">States &middot; offline is calm</p><span>Offline &middot; 1 visit to send</span><span>Sending 1 visit&hellip;</span><span class="ok">&#10003; Sent to PHC Achrol</span></div>
+<div class="al-spec-i"><p class="cx-meta-l">Icons &middot; what a thing is</p><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13.5V5a2 2 0 1 1 4 0v8.5a4 4 0 1 1-4 0z"/><path d="M10 9h4"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v7M12 11l-3 2M12 11l3 2"/><path d="M8.5 7C6 7 4 11 4 16c0 2 1 3 2.5 3 2 0 3.5-1.5 3.5-4V9"/><path d="M15.5 7C18 7 20 11 20 16c0 2-1 3-2.5 3-2 0-3.5-1.5-3.5-4V9"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3.5"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.5"/><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/></svg></span><p class="al-spec-n">A symptom as the body part.</p></div>
+</div>
 <div class="cx-w rc-insights"><p class="cx-label">How we&rsquo;d know it works</p><div class="al-meas" id="alMeas">
 <div class="al-m"><h3>Visits booked ahead</h3><p class="al-m-n"><span data-to="75">0</span>%</p><span class="al-m-bar"><i style="--to:75%"></i></span><p class="al-m-c">3 of 4 visits came through the ASHA or the line, not a walk-in.</p></div>
 <div class="al-m"><h3>Trips avoided</h3><p class="al-m-n"><span data-to="1">0</span></p><span class="al-m-dots"><i class="hit"></i><i></i><i></i><i></i></span><p class="al-m-c">1 visit the doctor judged advice could have handled.</p></div>
@@ -3166,7 +3205,7 @@ addEventListener("pagereveal",function(e){
 
 <section class="cx-sec" id="lesson" data-section="Looking back" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">Looking back</p><h2 class="cx-h">This wasn&rsquo;t a UI problem. It was a product-model problem.</h2></div>
-<p class="cx-w cx-body">The system once had enough information to book, but not enough information to know who the booking was for. On the voice line, pressing 0 from the menu booked a visit for the family head, a patient nobody had chosen, and &ldquo;pregnant woman&rdquo; could start pregnancy questions for a man. The fix wasn&rsquo;t a better button. The person is now chosen by name, never by kind, the booking is read back before anything is written, and 0 reaches a person without creating a booking at all.</p>
+<p class="cx-w cx-body">Pressing 0 once booked a visit for the family head, a patient nobody had chosen. The fix wasn&rsquo;t a better button: the person is chosen by name, the booking is read back, and 0 reaches a person without booking anything.</p>
 <div class="cx-w al-ba">
 <div class="al-ba-c"><p class="cx-meta-l">Wrong</p><ol class="al-path"><li>Family card</li><li>Booking</li></ol></div>
 <div class="al-ba-c al-ba-new"><p class="cx-meta-l">Correct</p><ol class="al-path"><li>Family card</li><li>Select person</li><li>Confirm patient</li><li>Confirm slot</li><li>Booking</li></ol></div>
@@ -3176,9 +3215,9 @@ addEventListener("pagereveal",function(e){
 <section class="cx-sec" id="close" data-section="What's next" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">What&rsquo;s next</p><h2 class="cx-h">What I would solve next.</h2></div>
 <div class="cx-w al-next3">
-<div><p class="cx-meta-l">Production</p><ul class="al-notes"><li><b>Secure identity.</b> Verify the caller before anything is read out, on shared phones and found cards.</li><li><b>Persistent offline data.</b> Local storage, a sync queue with retries and conflict rules.</li><li><b>Real availability.</b> Clinic capacity, cancellations and rescheduling across all three surfaces.</li></ul></div>
-<div><p class="cx-meta-l">Access</p><ul class="al-notes"><li><b>Multilingual voice.</b> One real flow in Hindi, end to end on the line, before any other language.</li><li><b>Accessibility.</b> Questions and advice read aloud in the ASHA app.</li><li><b>Shared-device scenarios.</b> Medical details spoken aloud in a crowded room.</li></ul></div>
-<div><p class="cx-meta-l">Clinical</p><ul class="al-notes"><li><b>Validated protocols.</b> Questions and thresholds from an approved protocol with an owner and a review date.</li><li><b>Clinical governance.</b> A clinical note kept apart from the message the family hears.</li><li><b>Escalation policies.</b> What happens after &ldquo;come now&rdquo;: seen, admitted, referred or sent home.</li></ul></div>
+<div><p class="cx-meta-l">Production</p><ul class="al-notes al-titles"><li><b>Secure identity</b></li><li><b>Persistent offline data</b></li><li><b>Real availability</b></li></ul></div>
+<div><p class="cx-meta-l">Access</p><ul class="al-notes al-titles"><li><b>Multilingual voice</b></li><li><b>Accessibility</b></li><li><b>Shared-device scenarios</b></li></ul></div>
+<div><p class="cx-meta-l">Clinical</p><ul class="al-notes al-titles"><li><b>Validated protocols</b></li><li><b>Clinical governance</b></li><li><b>Escalation policies</b></li></ul></div>
 </div>
 </section>
 
