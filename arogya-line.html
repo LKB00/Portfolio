@@ -2697,6 +2697,94 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .gb .al-user .ico.al-char{width:72px;height:72px;margin:-6px 0 4px -6px;background:none;border-radius:0;box-shadow:none;padding:0}
 .gb .al-user .ico.al-char img{display:block;width:100%;height:100%}
 .gb .al-measure-n{margin-top:16px;font-size:14px;color:var(--muted)}
+
+/* ===== Motion: the record, moving through the story ===== */
+@keyframes alHit{0%,100%{transform:scale(1)}40%{transform:scale(1.35)}}
+@keyframes alAsk{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@keyframes alPop{0%{opacity:0;transform:translateY(6px) scale(.9)}100%{opacity:1;transform:none}}
+@keyframes alBeat{0%{opacity:0;transform:translateY(10px) scale(.92)}60%{opacity:1;transform:translateY(-2px) scale(1.02)}100%{opacity:1;transform:none}}
+@keyframes alSettle{0%{transform:scale(1.035)}100%{transform:none}}
+@keyframes alSeq{0%,30%{opacity:1}36%,100%{opacity:0}}
+@keyframes alSeq2{0%,33%{opacity:0}39%,63%{opacity:1}69%,100%{opacity:0}}
+@keyframes alSeq3{0%,66%{opacity:0}72%,100%{opacity:1}}
+@keyframes alDue{0%,100%{box-shadow:0 0 0 0 rgba(212,140,30,.45)}50%{box-shadow:0 0 0 6px rgba(212,140,30,0)}}
+
+/* 1. the problem: the record loses a piece at every gap */
+.gb .al-chain{position:relative}
+@media(min-width:761px){.gb .al-chain ol{margin-bottom:128px}}
+@media(max-width:760px){.gb .al-chain li:not(.al-lost){min-height:104px;padding-right:162px}.gb .al-chain .al-rec{width:148px;padding:8px 9px 9px}.gb .al-chain .al-rec b{font-size:12.5px;margin-bottom:5px}.gb .al-chain .al-rec-c i{font-size:10px;padding:2px 6px}}
+.al-rec{position:absolute;left:0;top:0;width:204px;padding:10px 12px 11px;border-radius:10px;background:var(--card,#fff);box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 24px -12px rgba(30,30,60,.3);
+  font-size:12px;line-height:1.3;color:var(--muted);transition:transform .95s cubic-bezier(.65,0,.35,1),opacity .4s;z-index:2;pointer-events:none}
+.al-rec b{display:block;margin-bottom:6px;font:500 13.5px/1.2 var(--sans);color:var(--ink)}
+.al-rec-c{display:flex;flex-wrap:wrap;gap:4px;min-height:20px}
+.al-rec-c i{font-style:normal;font-size:11px;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--ink);transition:transform .6s cubic-bezier(.5,0,.75,0),opacity .5s}
+.al-rec-c i.drop{transform:translateY(34px) rotate(-14deg);opacity:0}
+.al-rec .al-rec-q{display:none;font-style:normal;color:#B4533A}
+.al-rec.empty .al-rec-q{display:inline}
+.al-rec.empty .al-rec-c i{display:none}
+.gb .al-chain li.al-lost.hit{animation:alHit .6s cubic-bezier(.3,1.6,.5,1)}
+.gb .al-chain li.ask{animation:alAsk .6s}
+.al-replay{position:absolute;right:24px;bottom:18px;border:0;background:none;padding:4px 0;font:500 12px/1 var(--sans);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .3s;text-decoration:underline;text-underline-offset:3px}
+.al-replay.show{opacity:1}
+.al-replay:hover{color:var(--ink)}
+
+/* 2. the six steps: the record gains a part at each one */
+@media(min-width:761px){.gb .al-stepper ol{margin-bottom:96px}}
+@media(max-width:760px){.gb .al-stepper li{padding-right:150px}}
+.al-srec{position:absolute;left:0;top:0;width:184px;padding:9px 11px 10px;border-radius:10px;background:var(--card,#fff);box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 24px -12px rgba(30,30,60,.3);
+  transition:transform .8s cubic-bezier(.16,1,.3,1);pointer-events:none;z-index:2}
+.al-srec b{display:block;margin-bottom:6px;font:500 12.5px/1.2 var(--sans);color:var(--ink)}
+.al-srec span{display:flex;flex-wrap:wrap;gap:4px}
+.al-srec i{font-style:normal;font-size:10.5px;padding:2px 7px;border-radius:99px;background:var(--al-ind-soft);color:var(--al-ind)}
+.al-srec i.new{animation:alPop .45s cubic-bezier(.3,1.5,.5,1)}
+@media(max-width:760px){.al-srec{width:136px}}
+
+/* 3. handoffs: the context travels from one person to the next */
+.gb .al-hand-r .cx-tags span{opacity:0;transform:translateX(-56px);transition:transform .75s cubic-bezier(.16,1,.3,1) var(--d,0s),opacity .4s var(--d,0s)}
+.gb .al-hand-r > .cx-tags ~ .al-who{opacity:0;transform:scale(.94);transition:opacity .4s .7s,transform .5s cubic-bezier(.3,1.5,.5,1) .7s}
+.gb .al-hand-r > .al-next{opacity:0;transform:translateY(6px);transition:opacity .45s 1s,transform .45s 1s}
+.gb .al-hand-r.go .cx-tags span,.gb .al-hand-r.go > .cx-tags ~ .al-who,.gb .al-hand-r.go > .al-next{opacity:1;transform:none}
+
+/* 4. edge cases: each case plays its beat when it comes into view */
+.v2 .card .beat{position:absolute;left:0;right:0;margin:0 auto;width:max-content;bottom:16px;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:8px 13px 8px 9px;border-radius:999px;background:#fff;color:#1b1b1f;
+  font:500 13px/1.2 var(--sans);box-shadow:0 10px 26px -12px rgba(20,20,50,.45);opacity:0}
+.v2 .card .beat i{font-style:normal;display:grid;place-items:center;min-width:22px;height:22px;padding:0 4px;border-radius:99px;background:#eef0fb;color:#34449A;font-size:12px;font-weight:700}
+.v2 .card .beat.bad i{background:#fde4ea;color:#b42b5e}
+.v2 .card .beat.seq{display:grid;padding:9px 14px}
+.v2 .card .beat.seq span{grid-area:1/1;opacity:0}
+.v2 .card .beat.seq .ok{color:#2f7d4f}
+#edge .v2wrap{clip-path:inset(-40px -100vw -40px 0)}
+.v2 .rail.seen .sl.on .beat{animation:alBeat .6s cubic-bezier(.3,1.4,.5,1) .35s both}
+.v2 .rail.seen .sl.on .ecimg img{animation:alSettle .9s cubic-bezier(.16,1,.3,1)}
+.v2 .rail.seen .sl.on .beat.seq span:nth-child(1){animation:alSeq 4.2s .35s both}
+.v2 .rail.seen .sl.on .beat.seq span:nth-child(2){animation:alSeq2 4.2s .35s both}
+.v2 .rail.seen .sl.on .beat.seq span:nth-child(3){animation:alSeq3 4.2s .35s both}
+@media(max-width:600px){.v2 .card .beat{bottom:8px;font-size:11.5px}}
+
+/* 5. the measures, counted */
+.gb .al-meas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}
+.gb .al-m{padding:20px;border-radius:8px;background:var(--surface)}
+.gb .al-m h3{margin:0;font:500 13px/1.3 var(--sans);color:var(--muted)}
+.gb .al-m-n{margin:10px 0 12px;font:500 34px/1 var(--sans);letter-spacing:-.03em;color:var(--ink);font-variant-numeric:tabular-nums}
+.gb .al-m-n small{font-size:15px;color:var(--muted);letter-spacing:0}
+.gb .al-m-bar{display:block;height:6px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,transparent);overflow:hidden}
+.gb .al-m-bar i{display:block;height:100%;width:0;border-radius:inherit;background:var(--al-ind);transition:width 1.4s cubic-bezier(.16,1,.3,1) .2s}
+.gb .al-meas.go .al-m-bar i{width:var(--to)}
+.gb .al-m-dots{display:flex;gap:6px;height:6px;align-items:center}
+.gb .al-m-dots i{width:10px;height:10px;border-radius:50%;background:color-mix(in srgb,var(--ink) 10%,transparent);transition:background .4s 1s,transform .5s cubic-bezier(.3,1.6,.5,1) 1s}
+.gb .al-meas.go .al-m-dots i.hit{background:#2f7d4f;transform:scale(1.25)}
+.gb .al-m-dots.due i{background:none;box-shadow:inset 0 0 0 2px #d48c1e}
+.gb .al-meas.go .al-m-dots.due i{animation:alDue 2s ease-out .8s 2}
+.gb .al-m-c{margin:12px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+@media(max-width:760px){.gb .al-meas{grid-template-columns:1fr}}
+
+@media(prefers-reduced-motion:reduce){
+  .al-rec,.al-srec,.al-rec-c i{transition:none}
+  .gb .al-hand-r .cx-tags span,.gb .al-hand-r > .cx-tags ~ .al-who,.gb .al-hand-r > .al-next{opacity:1;transform:none;transition:none}
+  .v2 .card .beat{opacity:1;animation:none!important}
+  .v2 .card .beat.seq span{opacity:0;animation:none!important}.v2 .card .beat.seq .ok{opacity:1}
+  .gb .al-m-bar i{transition:none}
+}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -3047,7 +3135,7 @@ addEventListener("pagereveal",function(e){
 
 <section class="cx-sec" id="edge" data-section="Edge cases" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">Edge cases</p><h2 class="cx-h">Healthcare doesn&rsquo;t happen in the happy path.</h2></div>
-<div class="cx-w v2 v2wrap"><div class="explore"><span>Explore the six</span><div class="nav2"><button class="arw" id="cprev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="arw" id="cnext" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div></div><div class="rail" id="rail"><article class="sl on"><div class="card y"><div class="ecimg"><img src="./assets/arogya2/edge/e-slot.webp" width="357" height="412" alt="The booking screen: 10–11 am struck through as Full, and a notice that nothing was booked" loading="lazy" decoding="async"></div></div><h3>Slot fills while booking</h3><p><b>Problem.</b> A booking syncing from another phone takes the slot she picked.</p><p><b>Design response.</b> One rule for every surface. Nothing is booked, and she is told: &ldquo;10&ndash;11 am was just taken. Nothing was booked.&rdquo;</p></article><article class="sl"><div class="card c"><div class="ecimg"><img src="./assets/arogya2/edge/e-family.webp" width="328" height="328" alt="The Up next card for Khushi, with “+1 other person in this family”" loading="lazy" decoding="async"></div></div><h3>Family has multiple people</h3><p><b>Problem.</b> One row per family hid the second person who needed her.</p><p><b>Design response.</b> One row per person, with &ldquo;+1 other person in this family&rdquo; on it.</p></article><article class="sl"><div class="card b"><div class="ecimg"><img src="./assets/arogya2/edge/e-offline.webp" width="328" height="268" alt="The booked visit, marked Saved on this phone, sends when there’s signal" loading="lazy" decoding="async"></div></div><h3>Connectivity disappears</h3><p><b>Problem.</b> Without signal she can&rsquo;t tell if her work was saved.</p><p><b>Design response.</b> &ldquo;Offline · 1 visit to send&rdquo;, then &ldquo;Sending 1 visit&hellip;&rdquo;, then nothing. &ldquo;Waiting to send&rdquo; sits on the record itself.</p></article><article class="sl"><div class="card m"><div class="ecimg"><img src="./assets/arogya2/edge/e-question.webp" width="357" height="360" alt="The check going back to its first unanswered question, 1 of 4" loading="lazy" decoding="async"></div></div><h3>Screening is incomplete</h3><p><b>Problem.</b> Opened from a link with no answers, the result said home care: false reassurance about a sick child.</p><p><b>Design response.</b> An unfinished check is never a result. It goes back to the next unanswered question.</p></article><article class="sl"><div class="card l"><div class="ecimg wide"><img src="./assets/arogya2/edge/e-arrive.webp" width="254" height="122" alt="The PHC metric: Consults remaining 0, Not arrived yet" loading="lazy" decoding="async"></div></div><h3>Patient hasn&rsquo;t arrived</h3><p><b>Problem.</b> Tomorrow&rsquo;s booking offered &ldquo;Start consult&rdquo;, before the patient was in the room.</p><p><b>Design response.</b> &ldquo;View booking&rdquo; and &ldquo;Not arrived yet&rdquo;. The record refuses advice before arrival.</p></article><article class="sl"><div class="card p"><div class="ecimg wide"><img src="./assets/arogya2/edge/e-missed.webp" width="265" height="122" alt="The PHC metric: Follow-ups due 1, one missed, needs a decision" loading="lazy" decoding="async"></div></div><h3>Follow-up is missed</h3><p><b>Problem.</b> A missed call quietly became a home visit nobody had agreed to.</p><p><b>Design response.</b> It waits under &ldquo;Needs attention now&rdquo; until the doctor decides: call again, or ask the ASHA.</p></article></div></div>
+<div class="cx-w v2 v2wrap"><div class="explore"><span>Explore the six</span><div class="nav2"><button class="arw" id="cprev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button class="arw" id="cnext" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div></div><div class="rail" id="rail"><article class="sl on"><div class="card y"><div class="ecimg"><img src="./assets/arogya2/edge/e-slot.webp" width="357" height="412" alt="The booking screen: 10–11 am struck through as Full, and a notice that nothing was booked" loading="lazy" decoding="async"></div><span class="beat bad"><i>&#10005;</i>10&ndash;11 am &middot; Nothing was booked</span></div><h3>Slot fills while booking</h3><p><b>Problem.</b> A booking syncing from another phone takes the slot she picked.</p><p><b>Design response.</b> One rule for every surface. Nothing is booked, and she is told: &ldquo;10&ndash;11 am was just taken. Nothing was booked.&rdquo;</p></article><article class="sl"><div class="card c"><div class="ecimg"><img src="./assets/arogya2/edge/e-family.webp" width="328" height="328" alt="The Up next card for Khushi, with “+1 other person in this family”" loading="lazy" decoding="async"></div><span class="beat"><i>+1</i>other person in this family</span></div><h3>Family has multiple people</h3><p><b>Problem.</b> One row per family hid the second person who needed her.</p><p><b>Design response.</b> One row per person, with &ldquo;+1 other person in this family&rdquo; on it.</p></article><article class="sl"><div class="card b"><div class="ecimg"><img src="./assets/arogya2/edge/e-offline.webp" width="328" height="268" alt="The booked visit, marked Saved on this phone, sends when there’s signal" loading="lazy" decoding="async"></div><span class="beat seq"><span>Offline &middot; 1 visit to send</span><span>Sending 1 visit&hellip;</span><span class="ok">Sent to PHC Achrol &#10003;</span></span></div><h3>Connectivity disappears</h3><p><b>Problem.</b> Without signal she can&rsquo;t tell if her work was saved.</p><p><b>Design response.</b> &ldquo;Offline · 1 visit to send&rdquo;, then &ldquo;Sending 1 visit&hellip;&rdquo;, then nothing. &ldquo;Waiting to send&rdquo; sits on the record itself.</p></article><article class="sl"><div class="card m"><div class="ecimg"><img src="./assets/arogya2/edge/e-question.webp" width="357" height="360" alt="The check going back to its first unanswered question, 1 of 4" loading="lazy" decoding="async"></div><span class="beat"><i>&#8634;</i>Back to question 1 of 4</span></div><h3>Screening is incomplete</h3><p><b>Problem.</b> Opened from a link with no answers, the result said home care: false reassurance about a sick child.</p><p><b>Design response.</b> An unfinished check is never a result. It goes back to the next unanswered question.</p></article><article class="sl"><div class="card l"><div class="ecimg wide"><img src="./assets/arogya2/edge/e-arrive.webp" width="254" height="122" alt="The PHC metric: Consults remaining 0, Not arrived yet" loading="lazy" decoding="async"></div><span class="beat"><i>&#9203;</i>Not arrived yet &middot; advice waits</span></div><h3>Patient hasn&rsquo;t arrived</h3><p><b>Problem.</b> Tomorrow&rsquo;s booking offered &ldquo;Start consult&rdquo;, before the patient was in the room.</p><p><b>Design response.</b> &ldquo;View booking&rdquo; and &ldquo;Not arrived yet&rdquo;. The record refuses advice before arrival.</p></article><article class="sl"><div class="card p"><div class="ecimg wide"><img src="./assets/arogya2/edge/e-missed.webp" width="265" height="122" alt="The PHC metric: Follow-ups due 1, one missed, needs a decision" loading="lazy" decoding="async"></div><span class="beat bad"><i>!</i>Missed &middot; needs a decision</span></div><h3>Follow-up is missed</h3><p><b>Problem.</b> A missed call quietly became a home visit nobody had agreed to.</p><p><b>Design response.</b> It waits under &ldquo;Needs attention now&rdquo; until the doctor decides: call again, or ask the ASHA.</p></article></div></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">The bar for the record: never guess a patient, result, slot, or next action.</h3></div>
 <p class="cx-w cx-tags al-never"><span>Never infer a person</span><span>Never infer availability</span><span>Never infer responsibility</span><span>Never infer a clinical state</span><span>Never destroy history</span></p>
 </section>
@@ -3068,11 +3156,11 @@ addEventListener("pagereveal",function(e){
 <div><h3>Voice extends access.</h3><p>Voice can extend access without requiring a smartphone.</p></div>
 <div><h3>Edge cases are core UX.</h3><p>Edge cases can be treated as core UX rather than exceptions.</p></div>
 </div></div>
-<div class="cx-w rc-insights"><p class="cx-label">How we&rsquo;d know it works</p><div class="rc-triad">
-<div><h3>Visits booked ahead.</h3><p>How many visits came through the ASHA or the line, instead of a walk-in.</p></div>
-<div><h3>Trips avoided.</h3><p>Visits the doctor judged advice could have handled, without the journey.</p></div>
-<div><h3>Follow-ups answered.</h3><p>Follow-up calls that reached the family and got an answer.</p></div>
-</div><p class="cx-body al-measure-n">The prototype&rsquo;s PHC dashboard already counts all three. A pilot would watch them week by week.</p></div>
+<div class="cx-w rc-insights"><p class="cx-label">How we&rsquo;d know it works</p><div class="al-meas" id="alMeas">
+<div class="al-m"><h3>Visits booked ahead</h3><p class="al-m-n"><span data-to="75">0</span>%</p><span class="al-m-bar"><i style="--to:75%"></i></span><p class="al-m-c">3 of 4 visits came through the ASHA or the line, not a walk-in.</p></div>
+<div class="al-m"><h3>Trips avoided</h3><p class="al-m-n"><span data-to="1">0</span></p><span class="al-m-dots"><i class="hit"></i><i></i><i></i><i></i></span><p class="al-m-c">1 visit the doctor judged advice could have handled.</p></div>
+<div class="al-m"><h3>Follow-ups answered</h3><p class="al-m-n">0 <small>of 2</small></p><span class="al-m-dots due"><i></i><i></i></span><p class="al-m-c">Both calls are still due, so the doctor sees them under &ldquo;Needs attention now&rdquo;.</p></div>
+</div><p class="cx-body al-measure-n">The prototype&rsquo;s PHC dashboard counts all three; these are its demo numbers. A pilot would watch them week by week.</p></div>
 <p class="cx-w cx-note">This is a prototype, not a production healthcare system. Clinical rules are illustrative, and production would require clinical validation, secure identity, real telephony, persistent offline storage, and approved healthcare infrastructure. All names, families and data are invented.</p>
 </section>
 
@@ -3793,6 +3881,91 @@ function castPos() {
 }
 addEventListener('scroll', () => requestAnimationFrame(castPos), { passive: true }); addEventListener('resize', castPos); castPos();
 
+})();
+</script>
+<script>
+/* Motion for the case study: each piece plays once when it comes into view; reduced motion shows the end state. */
+(function(){
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var wait = function(ms){ return new Promise(function(r){ setTimeout(r, RM ? 0 : ms); }); };
+  function once(el, fn, th){ if(!el) return; if(!('IntersectionObserver' in window)){ fn(); return; }
+    var o = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ o.disconnect(); fn(); } }); }, { threshold: th || .45 }); o.observe(el); }
+  function at(box, node, rec, side){
+    var f = box.getBoundingClientRect(), b = node.getBoundingClientRect(), x, y;
+    if(side){ x = b.right - f.left - rec.offsetWidth - 10; y = b.top - f.top + (b.height - rec.offsetHeight) / 2; }
+    else { x = b.left - f.left + (b.width - rec.offsetWidth) / 2; x = Math.max(8, Math.min(box.clientWidth - rec.offsetWidth - 8, x)); y = b.bottom - f.top + 16; }
+    rec.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  }
+
+  /* 1. the problem: the record loses a piece at every gap */
+  var fig = document.querySelector('.al-chain');
+  if(fig){
+    var ol = fig.querySelector('ol'), items = [].slice.call(ol.children);
+    var nodes = items.filter(function(li){ return !li.classList.contains('al-lost'); }), gaps = items.filter(function(li){ return li.classList.contains('al-lost'); });
+    var rec = document.createElement('div'); rec.className = 'al-rec'; rec.setAttribute('aria-hidden', 'true');
+    rec.innerHTML = '<b>Arjun, 3</b><span class="al-rec-c"><i>Fever since Tuesday</i><i>Vomiting</i><i>No fast breathing</i><em class="al-rec-q">Nothing left to go on</em></span>';
+    fig.appendChild(rec);
+    var replay = document.createElement('button'); replay.type = 'button'; replay.className = 'al-replay'; replay.textContent = 'Replay';
+    fig.appendChild(replay);
+    var chips = [].slice.call(rec.querySelectorAll('i')), cur = 0, playing = false;
+    var side = function(){ return getComputedStyle(ol).flexDirection === 'column'; };
+    var put = function(i){ cur = i; at(fig, nodes[i], rec, side()); };
+    async function play(){
+      if(playing) return; playing = true; replay.classList.remove('show');
+      rec.classList.remove('empty'); chips.forEach(function(c){ c.classList.remove('drop'); }); nodes[nodes.length - 1].classList.remove('ask');
+      rec.style.transition = 'none'; put(0); rec.offsetWidth; rec.style.transition = '';
+      await wait(700);
+      for(var i = 0; i < gaps.length; i++){
+        put(i + 1); await wait(420);
+        gaps[i].classList.remove('hit'); gaps[i].offsetWidth; gaps[i].classList.add('hit'); chips[i].classList.add('drop');
+        await wait(1000);
+      }
+      rec.classList.add('empty'); nodes[nodes.length - 1].classList.add('ask');
+      playing = false; replay.classList.add('show');
+    }
+    put(0);
+    if(RM){ chips.forEach(function(c){ c.classList.add('drop'); }); rec.classList.add('empty'); put(nodes.length - 1); }
+    else once(fig, play, .5);
+    replay.addEventListener('click', play);
+    addEventListener('resize', function(){ rec.style.transition = 'none'; put(cur); rec.offsetWidth; rec.style.transition = ''; });
+  }
+
+  /* 2. the six steps: the record gains a part at each one (rides the stepper's own loop) */
+  var flow = document.getElementById('alFlow');
+  if(flow){
+    var sfig = flow.closest('figure'), steps = [].slice.call(flow.querySelectorAll('li'));
+    var PARTS = ['Concern', 'Answers', 'Booking', 'Seen at PHC', 'Advice', 'Follow-up'];
+    var srec = document.createElement('div'); srec.className = 'al-srec'; srec.setAttribute('aria-hidden', 'true');
+    srec.innerHTML = '<b>Arjun&rsquo;s record</b><span></span>'; sfig.style.position = 'relative'; sfig.appendChild(srec);
+    var sp = srec.querySelector('span'), last = -1;
+    var draw = function(k){
+      if(k !== last){ sp.innerHTML = PARTS.slice(0, k + 1).map(function(p, i){ return '<i' + (i === k && k > last ? ' class="new"' : '') + '>' + p + '</i>'; }).join(''); last = k; }
+      at(sfig, steps[k], srec, getComputedStyle(flow).gridTemplateColumns.split(' ').length < 2);
+    };
+    var watch = function(){ var k = steps.findIndex(function(s){ return s.classList.contains('on'); }); if(k < 0) k = steps.length - 1; draw(k); };
+    new MutationObserver(watch).observe(flow, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    watch(); addEventListener('resize', function(){ last = -2; watch(); });
+  }
+
+  /* 3. handoffs: the context travels from one person to the next */
+  [].forEach.call(document.querySelectorAll('.al-hand-r'), function(r){
+    [].forEach.call(r.querySelectorAll('.cx-tags span'), function(s, i){ s.style.setProperty('--d', (i * .09) + 's'); });
+    if(RM) r.classList.add('go'); else once(r, function(){ r.classList.add('go'); }, .6);
+  });
+
+  /* 4. edge cases: start the beats once the carousel is seen */
+  var rail = document.getElementById('rail');
+  if(rail) once(rail.parentElement, function(){ rail.classList.add('seen'); }, .35);
+
+  /* 5. the measures, counted */
+  var meas = document.getElementById('alMeas');
+  if(meas) once(meas, function(){
+    meas.classList.add('go');
+    [].forEach.call(meas.querySelectorAll('[data-to]'), function(el){
+      var to = +el.dataset.to, t0 = performance.now(), D = RM ? 1 : 1300;
+      (function f(t){ var p = Math.min(1, (t - t0) / D); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if(p < 1) requestAnimationFrame(f); })(t0);
+    });
+  }, .5);
 })();
 </script>
 </body></html>
