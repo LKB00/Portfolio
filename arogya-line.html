@@ -2861,75 +2861,53 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .al-pins{position:absolute;inset:0;z-index:3;pointer-events:none;transition:opacity .35s ease}
 .pins-off .al-pins{opacity:0}
 
-/* ===== Where the record breaks: a night stage, a thread that breaks at every handoff ===== */
-@keyframes alHop{0%,100%{transform:translateY(0)}40%{transform:translateY(-10px)}}
-@keyframes alShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-6deg)}40%{transform:rotate(5deg)}60%{transform:rotate(-3deg)}80%{transform:rotate(2deg)}}
-@keyframes alQ{0%{opacity:0;transform:translate(-50%,10px)}100%{opacity:1;transform:translate(-50%,0)}}
-@keyframes alX{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}70%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-@keyframes alTag{0%{opacity:0;transform:translateY(-14px)}100%{opacity:1;transform:none}}
-.gb .al-chain2{position:relative;margin-top:40px;padding:0;background:none;border:0;box-shadow:none}
-.gb figure.al-chain2[data-kicker]:before{content:attr(data-kicker);position:absolute;left:22px;top:20px;z-index:4;margin:0;font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
-.al-stage{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:150px 14px 186px;border-radius:20px;color:#fff;
-  background:radial-gradient(60% 55% at 50% 42%,rgba(126,108,255,.20) 0%,rgba(126,108,255,0) 70%),radial-gradient(90% 80% at 50% 0%,#2a2650 0%,#18172c 60%,#101019 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 34px 70px -34px rgba(24,20,60,.75)}
-.al-stage .st{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;z-index:2}
-.al-stage .ch{position:relative;display:block;width:104px;height:104px}
-.al-stage .ch:before{content:"";position:absolute;inset:-34px;border-radius:50%;background:radial-gradient(closest-side,rgba(170,160,255,.24),rgba(170,160,255,0));z-index:-1}
-.al-stage .ch:after{content:"";position:absolute;left:20%;right:20%;bottom:-6px;height:12px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.6),rgba(0,0,0,0));z-index:-1}
-.al-stage .ch img{display:block;width:100%;height:100%;transform-origin:50% 90%}
-.al-stage .st.here .ch img{animation:alHop .6s cubic-bezier(.3,1.4,.5,1)}
-.al-stage .st.ask .ch img{animation:alShake .7s ease-in-out}
-.al-stage .st b{margin-top:16px;font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.88)}
-.al-stage .st span{margin-top:7px;font-size:12px;color:rgba(255,255,255,.45)}
-.al-stage .bub{position:absolute;left:50%;bottom:calc(100% + 22px);width:min(164px,100%);margin:0;padding:0;background:none;box-shadow:none;
-  font:italic 400 15.5px/1.35 var(--serif);letter-spacing:-.005em;color:rgba(255,255,255,.92);text-align:center;opacity:0;transform:translate(-50%,10px)}
-.al-stage .bub:after{content:none}
-.al-stage .s3 .bub{color:#ffadc6;background:none}
-.al-stage .st.said .bub{animation:alQ .6s cubic-bezier(.16,1,.3,1) both}
-.al-stage .seg{position:absolute;z-index:1;height:2px;border-radius:2px;background:rgba(255,255,255,.10);overflow:visible}
-.al-stage .seg i{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,#9d93ff,#c9a6ff);transform:scaleX(0);transform-origin:0 50%;transition:transform 1s cubic-bezier(.65,0,.35,1)}
-.al-stage .seg.live i{transform:scaleX(1)}
-.al-stage .seg.broken i{background:repeating-linear-gradient(90deg,#ff7aa2 0 7px,transparent 7px 13px)}
-.al-stage .seg em{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#2a1830;box-shadow:0 0 0 1px #ff7aa2,0 0 18px rgba(255,90,140,.55);
-  font:600 11px/1 var(--sans);font-style:normal;color:#ff9dbb;opacity:0;transform:translate(-50%,-50%) scale(.3)}
-.al-stage .seg.broken em{animation:alX .45s cubic-bezier(.3,1.6,.5,1) both}
-.al-stage .paper{position:absolute;left:0;top:0;z-index:3;width:172px;padding:12px 14px 13px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 18px 40px -20px rgba(0,0,0,.7);transition:transform 1s cubic-bezier(.65,0,.35,1);color:#fff;font-size:12px}
-.al-stage .paper:before{content:none}
-.al-stage .paper b{display:flex;justify-content:space-between;margin-bottom:9px;font:600 13px/1.2 var(--sans);color:#fff}
-.al-stage .paper b:after{content:"Record";font:500 9.5px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
-.al-stage .paper span{display:grid;gap:5px}
-.al-stage .paper i{position:relative;display:block;padding-left:12px;font-style:normal;font-size:12px;line-height:1.3;color:rgba(255,255,255,.78);background:none;border-radius:0;transition:color .3s,opacity .4s}
-.al-stage .paper i:before{content:"";position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:#9d93ff}
-.al-stage .paper i.lose{color:#ff9dbb;text-decoration:line-through;text-decoration-color:rgba(255,157,187,.8)}
-.al-stage .paper i.lose:before{background:#ff7aa2}
-.al-stage .paper i.gone{display:none;visibility:visible;position:static}
-.al-stage .paper em{display:none;font-style:normal;font-size:12.5px;color:#ff9dbb}
-.al-stage .paper.empty em{display:block}
-.al-stage .frag{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:7px;padding:5px 10px 5px 6px;border-radius:99px;background:rgba(255,90,140,.10);border:1px solid rgba(255,122,162,.42);
-  color:#ffc2d4;font:500 11px/1.2 var(--sans);white-space:nowrap;box-shadow:none;transform:none;opacity:0}
-.al-stage .frag em{font-style:normal;font:600 8.5px/1 var(--mono);letter-spacing:.1em;color:#2a1830;background:#ff7aa2;padding:3px 5px;border-radius:99px;opacity:1;animation:none}
-.al-stage .frag.fallen{animation:alTag .55s cubic-bezier(.16,1,.3,1) both}
-.al-stage .frag.fallen em{animation:none}
-.gb .al-chain2 figcaption{margin:14px 0 0;font-size:14px;color:var(--muted)}
-.gb .al-chain2 .al-replay{right:4px;bottom:-2px}
+/* ===== Where the record breaks: the same record, emptying at every handoff ===== */
+@keyframes alC3In{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:none}}
+@keyframes alC3Strike{0%{background-size:0 1.5px}100%{background-size:100% 1.5px}}
+@keyframes alC3Tag{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:none}}
+.gb .al-chain3{position:relative;margin-top:40px;padding:28px 20px 22px;border-radius:12px;background:var(--surface)}
+.gb .al-c3-k{margin:0 0 22px;font:500 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.gb .al-c3{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.gb .al-c3-st{position:relative;margin:0;display:flex;flex-direction:column;align-items:center}
+.gb .al-c3-st > img{width:68px;height:68px;filter:drop-shadow(0 8px 10px rgba(30,30,60,.14))}
+.gb .al-c3-who{margin:8px 0 12px;font-size:12.5px;color:var(--muted);text-align:center}
+.gb .al-c3-who b{display:block;margin-bottom:2px;font-weight:500;font-size:14px;color:var(--ink)}
+.gb .al-c3-rec{position:relative;align-self:stretch;padding:12px 11px 13px;border-radius:10px;background:var(--card,#fff);box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 20px -14px rgba(30,30,60,.25)}
+.gb .al-c3-st:not(:last-child) .al-c3-rec:after{content:"";position:absolute;right:-19px;top:50%;width:16px;height:16px;transform:translateY(-50%);opacity:.5;
+  background:no-repeat center/16px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237A7676' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E")}
+.gb .al-c3-rh{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.gb .al-c3-rh b{font-weight:500;font-size:13px;color:var(--ink)}
+.gb .al-c3-rh span{font:500 11px/1 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.gb .al-c3-rh span.zero{color:#C64B6E}
+.gb .al-c3-rec ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.gb .al-c3-rec li{margin:0;display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:12px;line-height:1.3;color:var(--ink)}
+.gb .al-c3-rec li span{white-space:nowrap;background:linear-gradient(currentColor,currentColor) no-repeat 0 55%/0 1.5px}
+.gb .al-c3-rec li.lost{color:#C64B6E}
+.gb .al-c3-rec li.lost span{background-size:100% 1.5px;opacity:.75}
+.gb .al-c3-rec li em{font:500 9.5px/1 var(--mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:#C64B6E}
+.gb .al-c3-what{margin:10px 0 0;font:italic 400 15px/1.2 var(--serif);color:#C64B6E}
+.gb .al-chain3 figcaption{margin:20px 0 0;font-size:14px;color:var(--muted)}
+.gb .al-chain3 .al-replay{right:24px;bottom:20px}
+/* playing: each copy arrives in turn, and the line it lost is struck through as it lands */
+.gb .al-chain3.pre .al-c3-st{opacity:0}
+.gb .al-chain3.pre .al-c3-st.on{animation:alC3In .6s cubic-bezier(.16,1,.3,1) both}
+.gb .al-chain3.pre .al-c3-st li.lost{color:var(--ink)}
+.gb .al-chain3.pre .al-c3-st li.lost span{background-size:0 1.5px;opacity:1}
+.gb .al-chain3.pre .al-c3-st li.lost em{opacity:0}
+.gb .al-chain3.pre .al-c3-what{opacity:0}
+.gb .al-chain3.pre .al-c3-st.on li.lost{color:#C64B6E;transition:color .4s .5s}
+.gb .al-chain3.pre .al-c3-st.on li.lost span{opacity:.75;animation:alC3Strike .45s cubic-bezier(.65,0,.35,1) .5s both;transition:opacity .4s .5s}
+.gb .al-chain3.pre .al-c3-st.on li.lost em{animation:alC3Tag .35s cubic-bezier(.3,1.6,.5,1) .85s both}
+.gb .al-chain3.pre .al-c3-st.on .al-c3-what{opacity:1;transition:opacity .5s 1.1s}
 @media(max-width:760px){
-  .al-stage{grid-template-columns:1fr;gap:56px;padding:58px 16px 30px}
-  .al-stage .st{display:grid;grid-template-columns:72px 1fr;column-gap:14px;align-items:center;justify-items:start;text-align:left;padding-right:132px}
-  .al-stage .ch{grid-row:1/4;width:72px;height:72px}
-  .al-stage .ch:before{inset:-20px}
-  .al-stage .st b{margin-top:0}
-  .al-stage .st span{margin-top:4px}
-  .al-stage .bub{position:relative;left:auto;bottom:auto;grid-column:2;width:auto;margin-top:8px;text-align:left;font-size:14px;transform:none}
-  .al-stage .st.said .bub{animation:alPop .5s cubic-bezier(.16,1,.3,1) both}
-  .al-stage .seg i{transform:scaleY(0);transform-origin:50% 0}
-  .al-stage .seg.live i{transform:scaleY(1)}
-  .al-stage .seg.broken i{background:repeating-linear-gradient(180deg,#ff7aa2 0 7px,transparent 7px 13px)}
-  .al-stage .paper{width:124px;padding:9px 10px}
-  .al-stage .paper b:after{content:none}
-  .al-stage .paper i{font-size:10.5px}
+  .gb .al-chain3{padding:22px 16px 18px}
+  .gb .al-c3{grid-template-columns:1fr;gap:26px}
+  .gb .al-c3-st{display:grid;grid-template-columns:60px 1fr;column-gap:14px;align-items:start}
+  .gb .al-c3-st > img{width:56px;height:56px;grid-row:1/3}
+  .gb .al-c3-who{margin:4px 0 8px;text-align:left}
+  .gb .al-c3-st:not(:last-child) .al-c3-rec:after{right:auto;left:50%;top:auto;bottom:-22px;transform:translateX(-50%) rotate(90deg)}
 }
-@media(prefers-reduced-motion:reduce){.al-stage .paper,.al-stage .seg i{transition:none}.al-stage .ch img{animation:none!important}.al-stage .bub,.al-stage .frag,.al-stage .seg em{animation:none!important;opacity:1}.al-stage .bub{transform:translate(-50%,0)}}
+@media(prefers-reduced-motion:reduce){.gb .al-chain3.pre .al-c3-st{opacity:1;animation:none!important}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -3042,7 +3020,7 @@ addEventListener("pagereveal",function(e){
 
 <section class="cx-sec" id="problem" data-section="The problem" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">The problem</p><h2 class="cx-h">The problem isn&rsquo;t one broken screen. It&rsquo;s the handoff.</h2><p class="cx-lead">A concern starts at home, is checked by the ASHA and seen at the PHC: a different person, place and device at every step.</p></div>
-<figure class="cx-w al-chain2" data-kicker="Where the record breaks"><div class="al-stage" role="img" aria-label="Arjun&rsquo;s record passes from the family to the ASHA to the PHC and back to the family. At every handoff a piece of it is lost, so the family ends with nothing left to go on."><div class="st s0"><p class="bub">Arjun has had a fever since Tuesday.</p><span class="ch"><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"></span><b>Family</b><span>at home</span></div><div class="st s1"><p class="bub">Can you tell me again, from the start?</p><span class="ch"><img src="./assets/arogya-chars/sunita.webp" width="640" height="640" alt="" loading="lazy" decoding="async"></span><b>ASHA</b><span>on her phone</span></div><div class="st s2"><p class="bub">Why is he here today?</p><span class="ch"><img src="./assets/arogya-chars/meena.webp" width="640" height="640" alt="" loading="lazy" decoding="async"></span><b>PHC</b><span>Dr. Meena</span></div><div class="st s3"><p class="bub">What did the doctor say?</p><span class="ch"><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"></span><b>Family</b><span>back home</span></div><div class="paper" aria-hidden="true"><b>Arjun, 3</b><span><i>Fever since Tuesday</i><i>Vomiting</i><i>No fast breathing</i></span><em>Nothing left to go on</em></div></div><figcaption>Every person does their part. The record breaks at the gaps between them.</figcaption><button type="button" class="al-replay">Replay</button></figure>
+<figure class="cx-w al-chain3" aria-label="Arjun&rsquo;s record, as each person receives it: the family has all three details, the ASHA two, the PHC one, and back home the family has none."><p class="al-c3-k">Where the record breaks</p><ol class="al-c3"><li class="al-c3-st"><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><p class="al-c3-who"><b>Family</b>at home</p><div class="al-c3-rec"><p class="al-c3-rh"><b>Arjun, 3</b><span class="">3 of 3</span></p><ul><li class=""><span>Fever since Tuesday</span></li><li class=""><span>Vomiting</span></li><li class=""><span>No fast breathing</span></li></ul></div></li><li class="al-c3-st"><img src="./assets/arogya-chars/sunita.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><p class="al-c3-who"><b>ASHA</b>on her phone</p><div class="al-c3-rec"><p class="al-c3-rh"><b>Arjun, 3</b><span class="">2 of 3</span></p><ul><li class="lost"><span>Fever since Tuesday</span><em>lost</em></li><li class=""><span>Vomiting</span></li><li class=""><span>No fast breathing</span></li></ul></div></li><li class="al-c3-st"><img src="./assets/arogya-chars/meena.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><p class="al-c3-who"><b>PHC</b>Dr. Meena</p><div class="al-c3-rec"><p class="al-c3-rh"><b>Arjun, 3</b><span class="">1 of 3</span></p><ul><li class="lost"><span>Fever since Tuesday</span><em>lost</em></li><li class="lost"><span>Vomiting</span><em>lost</em></li><li class=""><span>No fast breathing</span></li></ul></div></li><li class="al-c3-st"><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><p class="al-c3-who"><b>Family</b>back home</p><div class="al-c3-rec"><p class="al-c3-rh"><b>Arjun, 3</b><span class="zero">0 of 3</span></p><ul><li class="lost"><span>Fever since Tuesday</span><em>lost</em></li><li class="lost"><span>Vomiting</span><em>lost</em></li><li class="lost"><span>No fast breathing</span><em>lost</em></li></ul><p class="al-c3-what">What now?</p></div></li></ol><figcaption>Every person does their part. The record breaks at the gaps between them.</figcaption><button type="button" class="al-replay">Replay</button></figure>
 <div class="cx-w al-reframe"><p class="al-was">How might I digitize rural healthcare?</p><p class="al-is">How might I keep one patient&rsquo;s care journey coherent as it moves between the family, the ASHA worker, and the PHC?</p></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">Three users. Three contexts. One problem.</h3></div>
 <div class="cx-w al-users2">
@@ -4093,66 +4071,21 @@ addEventListener('scroll', () => requestAnimationFrame(castPos), { passive: true
 })();
 </script>
 <script>
-/* Where the record breaks: a thread draws as the record is handed along, and breaks at every handoff, losing a detail each time. */
+/* Where the record breaks: each copy of the record arrives in turn, and the line it lost is struck through as it lands. */
 (function(){
-  var fig = document.querySelector('.al-chain2'); if(!fig) return;
-  var stage = fig.querySelector('.al-stage'), st = [].slice.call(stage.querySelectorAll('.st')), paper = stage.querySelector('.paper');
-  var items = [].slice.call(paper.querySelectorAll('i')), replay = fig.querySelector('.al-replay');
-  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var mob = function(){ return matchMedia('(max-width:760px)').matches; };
+  var fig = document.querySelector('.al-chain3'); if(!fig) return;
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cols = [].slice.call(fig.querySelectorAll('.al-c3-st')), replay = fig.querySelector('.al-replay'), run = 0;
   var wait = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
-  var cur = 0, playing = false, run = 0, segs = [], tags = [];
-  function rel(el){ var s = stage.getBoundingClientRect(), b = el.getBoundingClientRect(); return { x: b.left - s.left, y: b.top - s.top, w: b.width, h: b.height }; }
-  function ch(i){ return rel(st[i].querySelector('.ch')); }
-  function layoutSegs(){
-    segs.forEach(function(g){ g.remove(); }); segs = [];
-    for(var k = 0; k < 3; k++){
-      var a = ch(k), b = ch(k + 1), g = document.createElement('span'); g.className = 'seg'; g.innerHTML = '<i></i><em>&#10005;</em>';
-      if(mob()){ g.style.left = (a.x + a.w / 2 - 1) + 'px'; g.style.top = (a.y + a.h + 10) + 'px'; g.style.width = '2px'; g.style.height = (b.y - a.y - a.h - 20) + 'px'; }
-      else { g.style.left = (a.x + a.w + 14) + 'px'; g.style.top = (a.y + a.h / 2) + 'px'; g.style.width = (b.x - a.x - a.w - 28) + 'px'; }
-      stage.appendChild(g); segs.push(g);
-    }
-  }
-  function spot(i){
-    var s = rel(st[i]);
-    if(mob()){ var c = ch(i); return [stage.clientWidth - paper.offsetWidth - 14, c.y + (c.h - paper.offsetHeight) / 2]; }
-    var x = s.x + s.w / 2 - paper.offsetWidth / 2; x = Math.max(10, Math.min(stage.clientWidth - paper.offsetWidth - 10, x));
-    return [x, s.y + s.h + 58];
-  }
-  function put(i, now){ cur = i; var p = spot(i); if(now) paper.style.transition = 'none'; paper.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px)'; if(now){ paper.offsetWidth; paper.style.transition = ''; } }
-  function tag(k){
-    var f = document.createElement('span'); f.className = 'frag'; f.innerHTML = '<em>LOST</em>' + items[k].textContent; stage.appendChild(f);
-    if(mob()){ var a = ch(k), b = ch(k + 1); f.style.left = (a.x + a.w + 14) + 'px'; f.style.top = ((a.y + a.h + b.y) / 2 - f.offsetHeight / 2) + 'px'; }
-    else { var s = rel(st[k]), t = rel(st[k + 1]); f.style.left = ((s.x + s.w + t.x) / 2 - f.offsetWidth / 2) + 'px'; f.style.top = (s.y + s.h + 16) + 'px'; }
-    tags.push(f); return f;
-  }
-  function say(i){ st.forEach(function(s){ s.classList.remove('here'); }); st[i].offsetWidth; st[i].classList.add('here', 'said'); }
-  function reset(){
-    tags.forEach(function(f){ f.remove(); }); tags = []; layoutSegs();
-    items.forEach(function(c){ c.classList.remove('lose', 'gone'); }); paper.classList.remove('empty');
-    st.forEach(function(s){ s.classList.remove('here', 'said', 'ask'); }); put(0, true);
-  }
-  function end(){
-    reset(); segs.forEach(function(g){ g.classList.add('live', 'broken'); });
-    for(var k = 0; k < 3; k++){ items[k].classList.add('gone'); tag(k).classList.add('fallen'); }
-    st.forEach(function(s){ s.classList.add('said'); }); paper.classList.add('empty'); put(3, true); replay.classList.add('show'); playing = false;
-  }
   async function play(){
-    var me = ++run; playing = true; replay.classList.remove('show'); reset();
-    await wait(400); if(me !== run) return; say(0); await wait(1500);
-    for(var k = 0; k < 3; k++){
-      if(me !== run) return;
-      segs[k].classList.add('live'); put(k + 1); await wait(650); if(me !== run) return;
-      items[k].classList.add('lose'); segs[k].classList.add('broken'); await wait(450); if(me !== run) return;
-      items[k].classList.add('gone'); tag(k).classList.add('fallen'); await wait(350); say(k + 1); await wait(1250);
-    }
-    if(me !== run) return; paper.classList.add('empty'); st[3].classList.remove('here'); st[3].classList.add('ask'); playing = false; replay.classList.add('show');
+    var me = ++run; replay.classList.remove('show');
+    fig.classList.add('pre'); cols.forEach(function(c){ c.classList.remove('on'); }); fig.offsetWidth;
+    for(var i = 0; i < cols.length; i++){ await wait(i ? 1300 : 250); if(me !== run) return; cols[i].classList.add('on'); }
+    await wait(1600); if(me === run) replay.classList.add('show');
   }
-  if(RM){ end(); return; }
-  reset();
-  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ io.disconnect(); play(); } }); }, { threshold: .45 }); io.observe(stage);
+  fig.classList.add('pre');
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ io.disconnect(); play(); } }); }, { threshold: .4 }); io.observe(fig);
   replay.addEventListener('click', play);
-  var rt; addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ if(playing){ run++; } end(); }, 150); });
 })();
 </script>
 </body></html>
