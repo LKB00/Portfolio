@@ -2861,55 +2861,75 @@ html:not(.gb-end) .askdock.is-on{opacity:0!important;visibility:hidden!important
 .al-pins{position:absolute;inset:0;z-index:3;pointer-events:none;transition:opacity .35s ease}
 .pins-off .al-pins{opacity:0}
 
-/* ===== Where the record breaks: a scene, not a diagram ===== */
-@keyframes alHop{0%,100%{transform:translateY(0)}35%{transform:translateY(-12px) rotate(-3deg)}65%{transform:translateY(0) rotate(2deg)}}
-@keyframes alShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-7deg)}40%{transform:rotate(6deg)}60%{transform:rotate(-4deg)}80%{transform:rotate(3deg)}}
-@keyframes alBub{0%{opacity:0;transform:translate(-50%,8px) scale(.85)}70%{opacity:1;transform:translate(-50%,-2px) scale(1.03)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
-@keyframes alStamp{0%{opacity:0;transform:scale(1.8) rotate(-14deg)}100%{opacity:1;transform:scale(1) rotate(-8deg)}}
+/* ===== Where the record breaks: a night stage, a thread that breaks at every handoff ===== */
+@keyframes alHop{0%,100%{transform:translateY(0)}40%{transform:translateY(-10px)}}
+@keyframes alShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-6deg)}40%{transform:rotate(5deg)}60%{transform:rotate(-3deg)}80%{transform:rotate(2deg)}}
+@keyframes alQ{0%{opacity:0;transform:translate(-50%,10px)}100%{opacity:1;transform:translate(-50%,0)}}
+@keyframes alX{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}70%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes alTag{0%{opacity:0;transform:translateY(-14px)}100%{opacity:1;transform:none}}
 .gb .al-chain2{position:relative;margin-top:40px;padding:0;background:none;border:0;box-shadow:none}
-.gb figure.al-chain2[data-kicker]:before{content:attr(data-kicker);position:absolute;left:20px;top:18px;z-index:2;margin:0;font:500 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:rgba(80,40,40,.6)}
-.gb .al-chain2:before{content:attr(data-kicker);position:absolute;left:20px;top:16px;z-index:2;font:500 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:rgba(80,40,40,.55)}
-.al-stage{position:relative;overflow:hidden;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:128px 12px 150px;border-radius:16px;
-  background:radial-gradient(60% 80% at 15% 0%,#fff3dd 0%,rgba(255,243,221,0) 70%),radial-gradient(70% 90% at 100% 100%,#f3a3b6 0%,rgba(243,163,182,0) 70%),linear-gradient(160deg,#fde2c8 0%,#f8c6bb 55%,#f1b0bd 100%)}
-.al-stage:after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(transparent,rgba(120,40,60,.08))}
-.al-stage .st{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;z-index:1}
-.al-stage .st img{width:92px;height:92px;filter:drop-shadow(0 14px 14px rgba(120,40,60,.22));transform-origin:50% 90%}
-.al-stage .st b{margin-top:6px;padding:4px 11px;border-radius:99px;background:#fff;font:600 13px/1.2 var(--sans);color:#1b1b1f;box-shadow:0 4px 12px -6px rgba(120,40,60,.35)}
-.al-stage .st span{margin-top:5px;font-size:12px;color:rgba(70,30,40,.7)}
-.al-stage .st.here img{animation:alHop .7s cubic-bezier(.3,1.4,.5,1)}
-.al-stage .st.ask img{animation:alShake .7s ease-in-out}
-.al-stage .bub{position:absolute;left:50%;bottom:calc(100% + 10px);width:min(158px,100%);margin:0;padding:9px 12px;border-radius:14px;background:#fff;color:#1b1b1f;font:500 12.5px/1.35 var(--sans);text-align:left;
-  box-shadow:0 10px 24px -14px rgba(120,40,60,.55);opacity:0;transform:translate(-50%,8px)}
-.al-stage .bub:after{content:"";position:absolute;left:50%;bottom:-6px;width:12px;height:12px;background:#fff;transform:translateX(-50%) rotate(45deg);border-radius:2px}
-.al-stage .st.said .bub{animation:alBub .5s cubic-bezier(.3,1.4,.5,1) both}
-.al-stage .s3 .bub{background:#1b1b1f;color:#fff}.al-stage .s3 .bub:after{background:#1b1b1f}
-.al-stage .paper{position:absolute;left:0;top:0;z-index:3;width:150px;padding:10px 12px 11px;border-radius:6px;background:#fffdf8;box-shadow:0 1px 0 #efe6d6,0 14px 26px -12px rgba(90,40,40,.45);
-  transition:transform 1s cubic-bezier(.65,0,.35,1);font-size:12px;color:#5b5050;transform-origin:50% 50%}
-.al-stage .paper:before{content:"";position:absolute;left:12px;right:12px;top:30px;border-top:1px dashed #e7dccb}
-.al-stage .paper b{display:block;margin-bottom:10px;font:600 13px/1.2 var(--sans);color:#1b1b1f}
-.al-stage .paper span{display:flex;flex-wrap:wrap;gap:4px}
-.al-stage .paper i{font-style:normal;font-size:10.5px;padding:2px 7px;border-radius:99px;background:#f4ece0;color:#3a3030}
-.al-stage .paper i.gone{visibility:hidden;position:absolute}
-.al-stage .paper em{display:none;font-style:normal;color:#b42b5e;font-weight:500}
+.gb figure.al-chain2[data-kicker]:before{content:attr(data-kicker);position:absolute;left:22px;top:20px;z-index:4;margin:0;font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.al-stage{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:150px 14px 186px;border-radius:20px;color:#fff;
+  background:radial-gradient(60% 55% at 50% 42%,rgba(126,108,255,.20) 0%,rgba(126,108,255,0) 70%),radial-gradient(90% 80% at 50% 0%,#2a2650 0%,#18172c 60%,#101019 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 34px 70px -34px rgba(24,20,60,.75)}
+.al-stage .st{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;z-index:2}
+.al-stage .ch{position:relative;display:block;width:104px;height:104px}
+.al-stage .ch:before{content:"";position:absolute;inset:-34px;border-radius:50%;background:radial-gradient(closest-side,rgba(170,160,255,.24),rgba(170,160,255,0));z-index:-1}
+.al-stage .ch:after{content:"";position:absolute;left:20%;right:20%;bottom:-6px;height:12px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.6),rgba(0,0,0,0));z-index:-1}
+.al-stage .ch img{display:block;width:100%;height:100%;transform-origin:50% 90%}
+.al-stage .st.here .ch img{animation:alHop .6s cubic-bezier(.3,1.4,.5,1)}
+.al-stage .st.ask .ch img{animation:alShake .7s ease-in-out}
+.al-stage .st b{margin-top:16px;font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.88)}
+.al-stage .st span{margin-top:7px;font-size:12px;color:rgba(255,255,255,.45)}
+.al-stage .bub{position:absolute;left:50%;bottom:calc(100% + 22px);width:min(164px,100%);margin:0;padding:0;background:none;box-shadow:none;
+  font:italic 400 15.5px/1.35 var(--serif);letter-spacing:-.005em;color:rgba(255,255,255,.92);text-align:center;opacity:0;transform:translate(-50%,10px)}
+.al-stage .bub:after{content:none}
+.al-stage .s3 .bub{color:#ffadc6;background:none}
+.al-stage .st.said .bub{animation:alQ .6s cubic-bezier(.16,1,.3,1) both}
+.al-stage .seg{position:absolute;z-index:1;height:2px;border-radius:2px;background:rgba(255,255,255,.10);overflow:visible}
+.al-stage .seg i{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,#9d93ff,#c9a6ff);transform:scaleX(0);transform-origin:0 50%;transition:transform 1s cubic-bezier(.65,0,.35,1)}
+.al-stage .seg.live i{transform:scaleX(1)}
+.al-stage .seg.broken i{background:repeating-linear-gradient(90deg,#ff7aa2 0 7px,transparent 7px 13px)}
+.al-stage .seg em{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#2a1830;box-shadow:0 0 0 1px #ff7aa2,0 0 18px rgba(255,90,140,.55);
+  font:600 11px/1 var(--sans);font-style:normal;color:#ff9dbb;opacity:0;transform:translate(-50%,-50%) scale(.3)}
+.al-stage .seg.broken em{animation:alX .45s cubic-bezier(.3,1.6,.5,1) both}
+.al-stage .paper{position:absolute;left:0;top:0;z-index:3;width:172px;padding:12px 14px 13px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 18px 40px -20px rgba(0,0,0,.7);transition:transform 1s cubic-bezier(.65,0,.35,1);color:#fff;font-size:12px}
+.al-stage .paper:before{content:none}
+.al-stage .paper b{display:flex;justify-content:space-between;margin-bottom:9px;font:600 13px/1.2 var(--sans);color:#fff}
+.al-stage .paper b:after{content:"Record";font:500 9.5px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.al-stage .paper span{display:grid;gap:5px}
+.al-stage .paper i{position:relative;display:block;padding-left:12px;font-style:normal;font-size:12px;line-height:1.3;color:rgba(255,255,255,.78);background:none;border-radius:0;transition:color .3s,opacity .4s}
+.al-stage .paper i:before{content:"";position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:#9d93ff}
+.al-stage .paper i.lose{color:#ff9dbb;text-decoration:line-through;text-decoration-color:rgba(255,157,187,.8)}
+.al-stage .paper i.lose:before{background:#ff7aa2}
+.al-stage .paper i.gone{display:none;visibility:visible;position:static}
+.al-stage .paper em{display:none;font-style:normal;font-size:12.5px;color:#ff9dbb}
 .al-stage .paper.empty em{display:block}
-.al-stage .frag{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:99px;background:#fff;color:#3a3030;font:500 10.5px/1.2 var(--sans);white-space:nowrap;
-  box-shadow:0 6px 14px -8px rgba(90,40,40,.5);transition:transform .95s cubic-bezier(.5,0,.7,1.4),opacity .3s}
-.al-stage .frag em{font-style:normal;font:600 9px/1 var(--mono);letter-spacing:.08em;color:#fff;background:#b42b5e;padding:3px 5px;border-radius:3px;opacity:0}
-.al-stage .frag.fallen em{animation:alStamp .35s cubic-bezier(.3,1.6,.5,1) .9s both}
+.al-stage .frag{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:7px;padding:5px 10px 5px 6px;border-radius:99px;background:rgba(255,90,140,.10);border:1px solid rgba(255,122,162,.42);
+  color:#ffc2d4;font:500 11px/1.2 var(--sans);white-space:nowrap;box-shadow:none;transform:none;opacity:0}
+.al-stage .frag em{font-style:normal;font:600 8.5px/1 var(--mono);letter-spacing:.1em;color:#2a1830;background:#ff7aa2;padding:3px 5px;border-radius:99px;opacity:1;animation:none}
+.al-stage .frag.fallen{animation:alTag .55s cubic-bezier(.16,1,.3,1) both}
+.al-stage .frag.fallen em{animation:none}
 .gb .al-chain2 figcaption{margin:14px 0 0;font-size:14px;color:var(--muted)}
 .gb .al-chain2 .al-replay{right:4px;bottom:-2px}
 @media(max-width:760px){
-  .al-stage{grid-template-columns:1fr;gap:30px;padding:48px 16px 24px}
-  .al-stage .st{display:grid;grid-template-columns:64px 1fr;column-gap:12px;align-items:center;justify-items:start;text-align:left;padding-right:120px}
-  .al-stage .st img{grid-row:1/4;width:64px;height:64px}
+  .al-stage{grid-template-columns:1fr;gap:56px;padding:58px 16px 30px}
+  .al-stage .st{display:grid;grid-template-columns:72px 1fr;column-gap:14px;align-items:center;justify-items:start;text-align:left;padding-right:132px}
+  .al-stage .ch{grid-row:1/4;width:72px;height:72px}
+  .al-stage .ch:before{inset:-20px}
   .al-stage .st b{margin-top:0}
-  .al-stage .bub{position:relative;left:auto;bottom:auto;grid-column:2;width:auto;margin-top:6px;transform:none}
-  .al-stage .bub:after{display:none}
-  .al-stage .st.said .bub{animation:alPop .45s cubic-bezier(.3,1.5,.5,1) both}
-  .al-stage .paper{width:112px;padding:8px 9px}
-  .al-stage .paper b{font-size:12px}.al-stage .paper i{font-size:9.5px;padding:2px 5px}
+  .al-stage .st span{margin-top:4px}
+  .al-stage .bub{position:relative;left:auto;bottom:auto;grid-column:2;width:auto;margin-top:8px;text-align:left;font-size:14px;transform:none}
+  .al-stage .st.said .bub{animation:alPop .5s cubic-bezier(.16,1,.3,1) both}
+  .al-stage .seg i{transform:scaleY(0);transform-origin:50% 0}
+  .al-stage .seg.live i{transform:scaleY(1)}
+  .al-stage .seg.broken i{background:repeating-linear-gradient(180deg,#ff7aa2 0 7px,transparent 7px 13px)}
+  .al-stage .paper{width:124px;padding:9px 10px}
+  .al-stage .paper b:after{content:none}
+  .al-stage .paper i{font-size:10.5px}
 }
-@media(prefers-reduced-motion:reduce){.al-stage .paper,.al-stage .frag{transition:none}.al-stage .st img{animation:none!important}.al-stage .bub{opacity:1;animation:none!important;transform:translate(-50%,0)}}
+@media(prefers-reduced-motion:reduce){.al-stage .paper,.al-stage .seg i{transition:none}.al-stage .ch img{animation:none!important}.al-stage .bub,.al-stage .frag,.al-stage .seg em{animation:none!important;opacity:1}.al-stage .bub{transform:translate(-50%,0)}}
 </style><script defer src="./analytics.js?v=3"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -3022,7 +3042,7 @@ addEventListener("pagereveal",function(e){
 
 <section class="cx-sec" id="problem" data-section="The problem" data-reveal="">
 <div class="cx-w cx-head"><p class="cx-label">The problem</p><h2 class="cx-h">The problem isn&rsquo;t one broken screen. It&rsquo;s the handoff.</h2><p class="cx-lead">A concern starts at home, is checked by the ASHA and seen at the PHC: a different person, place and device at every step.</p></div>
-<figure class="cx-w al-chain2" data-kicker="Where the record breaks"><div class="al-stage" role="img" aria-label="Arjun&rsquo;s record passes from the family to the ASHA to the PHC and back to the family. At every handoff a piece of it is lost, so the family ends with nothing left to go on."><div class="st s0"><p class="bub">Arjun has had a fever since Tuesday.</p><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><b>Family</b><span>at home</span></div><div class="st s1"><p class="bub">Can you tell me again, from the start?</p><img src="./assets/arogya-chars/sunita.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><b>ASHA</b><span>on her phone</span></div><div class="st s2"><p class="bub">Why is he here today?</p><img src="./assets/arogya-chars/meena.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><b>PHC</b><span>Dr. Meena</span></div><div class="st s3"><p class="bub">What did the doctor say?</p><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"><b>Family</b><span>back home</span></div><div class="paper" aria-hidden="true"><b>Arjun, 3</b><span><i>Fever since Tuesday</i><i>Vomiting</i><i>No fast breathing</i></span><em>Nothing left to go on</em></div></div><figcaption>Every person does their part. The record breaks at the gaps between them.</figcaption><button type="button" class="al-replay">Replay</button></figure>
+<figure class="cx-w al-chain2" data-kicker="Where the record breaks"><div class="al-stage" role="img" aria-label="Arjun&rsquo;s record passes from the family to the ASHA to the PHC and back to the family. At every handoff a piece of it is lost, so the family ends with nothing left to go on."><div class="st s0"><p class="bub">Arjun has had a fever since Tuesday.</p><span class="ch"><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"></span><b>Family</b><span>at home</span></div><div class="st s1"><p class="bub">Can you tell me again, from the start?</p><span class="ch"><img src="./assets/arogya-chars/sunita.webp" width="640" height="640" alt="" loading="lazy" decoding="async"></span><b>ASHA</b><span>on her phone</span></div><div class="st s2"><p class="bub">Why is he here today?</p><span class="ch"><img src="./assets/arogya-chars/meena.webp" width="640" height="640" alt="" loading="lazy" decoding="async"></span><b>PHC</b><span>Dr. Meena</span></div><div class="st s3"><p class="bub">What did the doctor say?</p><span class="ch"><img src="./assets/arogya-chars/pooja.webp" width="640" height="640" alt="" loading="lazy" decoding="async"></span><b>Family</b><span>back home</span></div><div class="paper" aria-hidden="true"><b>Arjun, 3</b><span><i>Fever since Tuesday</i><i>Vomiting</i><i>No fast breathing</i></span><em>Nothing left to go on</em></div></div><figcaption>Every person does their part. The record breaks at the gaps between them.</figcaption><button type="button" class="al-replay">Replay</button></figure>
 <div class="cx-w al-reframe"><p class="al-was">How might I digitize rural healthcare?</p><p class="al-is">How might I keep one patient&rsquo;s care journey coherent as it moves between the family, the ASHA worker, and the PHC?</p></div>
 <div class="cx-w rc-sub"><h3 class="cx-h3">Three users. Three contexts. One problem.</h3></div>
 <div class="cx-w al-users2">
@@ -4073,59 +4093,66 @@ addEventListener('scroll', () => requestAnimationFrame(castPos), { passive: true
 })();
 </script>
 <script>
-/* Where the record breaks: the record is handed along and loses a piece at every gap. */
+/* Where the record breaks: a thread draws as the record is handed along, and breaks at every handoff, losing a detail each time. */
 (function(){
   var fig = document.querySelector('.al-chain2'); if(!fig) return;
   var stage = fig.querySelector('.al-stage'), st = [].slice.call(stage.querySelectorAll('.st')), paper = stage.querySelector('.paper');
-  var chips = [].slice.call(paper.querySelectorAll('i')), replay = fig.querySelector('.al-replay');
+  var items = [].slice.call(paper.querySelectorAll('i')), replay = fig.querySelector('.al-replay');
   var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mob = function(){ return matchMedia('(max-width:760px)').matches; };
   var wait = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
-  var cur = 0, playing = false, run = 0;
+  var cur = 0, playing = false, run = 0, segs = [], tags = [];
   function rel(el){ var s = stage.getBoundingClientRect(), b = el.getBoundingClientRect(); return { x: b.left - s.left, y: b.top - s.top, w: b.width, h: b.height }; }
+  function ch(i){ return rel(st[i].querySelector('.ch')); }
+  function layoutSegs(){
+    segs.forEach(function(g){ g.remove(); }); segs = [];
+    for(var k = 0; k < 3; k++){
+      var a = ch(k), b = ch(k + 1), g = document.createElement('span'); g.className = 'seg'; g.innerHTML = '<i></i><em>&#10005;</em>';
+      if(mob()){ g.style.left = (a.x + a.w / 2 - 1) + 'px'; g.style.top = (a.y + a.h + 10) + 'px'; g.style.width = '2px'; g.style.height = (b.y - a.y - a.h - 20) + 'px'; }
+      else { g.style.left = (a.x + a.w + 14) + 'px'; g.style.top = (a.y + a.h / 2) + 'px'; g.style.width = (b.x - a.x - a.w - 28) + 'px'; }
+      stage.appendChild(g); segs.push(g);
+    }
+  }
   function spot(i){
-    var s = rel(st[i]), im = rel(st[i].querySelector('img'));
-    if(mob()) return [stage.clientWidth - paper.offsetWidth - 14, im.y + (im.h - paper.offsetHeight) / 2];
-    var x = s.x + s.w / 2 - paper.offsetWidth / 2; x = Math.max(8, Math.min(stage.clientWidth - paper.offsetWidth - 8, x));
-    return [x, s.y + s.h + 14];
+    var s = rel(st[i]);
+    if(mob()){ var c = ch(i); return [stage.clientWidth - paper.offsetWidth - 14, c.y + (c.h - paper.offsetHeight) / 2]; }
+    var x = s.x + s.w / 2 - paper.offsetWidth / 2; x = Math.max(10, Math.min(stage.clientWidth - paper.offsetWidth - 10, x));
+    return [x, s.y + s.h + 58];
   }
-  function put(i, now){ cur = i; var p = spot(i); if(now) paper.style.transition = 'none'; paper.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px) rotate(' + [-2, 2, -1.5, 1][i] + 'deg)'; if(now){ paper.offsetWidth; paper.style.transition = ''; } }
-  function target(k, f){
-    var a = rel(st[k]), b = rel(st[k + 1]);
-    if(mob()) return [76, (a.y + a.h + b.y) / 2 - f.offsetHeight / 2];
-    return [(a.x + a.w + b.x) / 2 - f.offsetWidth / 2, stage.clientHeight - 40 - k % 2 * 14];
-  }
-  function drop(k, now){
-    var chip = chips[k], c = rel(chip), f = document.createElement('span');
-    f.className = 'frag'; f.innerHTML = chip.textContent + '<em>lost</em>'; f.style.left = c.x + 'px'; f.style.top = c.y + 'px';
-    stage.appendChild(f); chip.classList.add('gone');
-    var t = target(k, f), rot = [-9, 7, -5][k];
-    var go = function(){ f.style.transform = 'translate(' + (t[0] - c.x) + 'px,' + (t[1] - c.y) + 'px) rotate(' + rot + 'deg)'; f.classList.add('fallen'); };
-    if(now){ f.style.transition = 'none'; go(); } else requestAnimationFrame(function(){ requestAnimationFrame(go); });
+  function put(i, now){ cur = i; var p = spot(i); if(now) paper.style.transition = 'none'; paper.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px)'; if(now){ paper.offsetWidth; paper.style.transition = ''; } }
+  function tag(k){
+    var f = document.createElement('span'); f.className = 'frag'; f.innerHTML = '<em>LOST</em>' + items[k].textContent; stage.appendChild(f);
+    if(mob()){ var a = ch(k), b = ch(k + 1); f.style.left = (a.x + a.w + 14) + 'px'; f.style.top = ((a.y + a.h + b.y) / 2 - f.offsetHeight / 2) + 'px'; }
+    else { var s = rel(st[k]), t = rel(st[k + 1]); f.style.left = ((s.x + s.w + t.x) / 2 - f.offsetWidth / 2) + 'px'; f.style.top = (s.y + s.h + 16) + 'px'; }
+    tags.push(f); return f;
   }
   function say(i){ st.forEach(function(s){ s.classList.remove('here'); }); st[i].offsetWidth; st[i].classList.add('here', 'said'); }
   function reset(){
-    [].forEach.call(stage.querySelectorAll('.frag'), function(f){ f.remove(); });
-    chips.forEach(function(c){ c.classList.remove('gone'); }); paper.classList.remove('empty');
+    tags.forEach(function(f){ f.remove(); }); tags = []; layoutSegs();
+    items.forEach(function(c){ c.classList.remove('lose', 'gone'); }); paper.classList.remove('empty');
     st.forEach(function(s){ s.classList.remove('here', 'said', 'ask'); }); put(0, true);
   }
   function end(){
-    reset(); for(var k = 0; k < 3; k++){ put(k, true); drop(k, true); }
-    st.forEach(function(s){ s.classList.add('said'); }); paper.classList.add('empty'); put(3, true); replay.classList.add('show');
+    reset(); segs.forEach(function(g){ g.classList.add('live', 'broken'); });
+    for(var k = 0; k < 3; k++){ items[k].classList.add('gone'); tag(k).classList.add('fallen'); }
+    st.forEach(function(s){ s.classList.add('said'); }); paper.classList.add('empty'); put(3, true); replay.classList.add('show'); playing = false;
   }
   async function play(){
     var me = ++run; playing = true; replay.classList.remove('show'); reset();
-    await wait(500); if(me !== run) return; say(0); await wait(1500);
+    await wait(400); if(me !== run) return; say(0); await wait(1500);
     for(var k = 0; k < 3; k++){
-      if(me !== run) return; put(k + 1); await wait(480); drop(k); await wait(700); say(k + 1); await wait(1200);
+      if(me !== run) return;
+      segs[k].classList.add('live'); put(k + 1); await wait(650); if(me !== run) return;
+      items[k].classList.add('lose'); segs[k].classList.add('broken'); await wait(450); if(me !== run) return;
+      items[k].classList.add('gone'); tag(k).classList.add('fallen'); await wait(350); say(k + 1); await wait(1250);
     }
     if(me !== run) return; paper.classList.add('empty'); st[3].classList.remove('here'); st[3].classList.add('ask'); playing = false; replay.classList.add('show');
   }
   if(RM){ end(); return; }
-  put(0, true);
+  reset();
   var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ io.disconnect(); play(); } }); }, { threshold: .45 }); io.observe(stage);
   replay.addEventListener('click', play);
-  var rt; addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ if(!playing && replay.classList.contains('show')) end(); else put(cur, true); }, 150); });
+  var rt; addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ if(playing){ run++; } end(); }, 150); });
 })();
 </script>
 </body></html>
