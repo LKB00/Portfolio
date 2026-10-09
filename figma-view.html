@@ -102,8 +102,9 @@ svg{flex:none}
 .av + .av{margin-left:-6px}
 .av img{width:100%;height:100%;object-fit:cover}
 button.av{cursor:pointer}
-.av.me{box-shadow:0 0 0 2px var(--purple)}
-.av.me::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--purple);opacity:0;animation:ring 2.4s ease-out 1s 3}
+/* the purple ring is Figma's "you're following" cue: only while following */
+.av.me.on{box-shadow:0 0 0 2px var(--purple)}
+.av.me.on::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--purple);opacity:0;animation:ring 2.4s ease-out 0s 1}
 @keyframes ring{0%{opacity:.8;transform:scale(.85)}100%{opacity:0;transform:scale(1.35)}}
 .play{display:flex;align-items:center;gap:2px;height:28px;padding:0 4px 0 6px;border-radius:5px}
 .play:hover{background:var(--hover)}
@@ -1313,11 +1314,11 @@ function cursorEl(){
 function placeCursor(){ if(mc&&mc.w) mc.style.transform="translate("+(st.x+mc.w.x*st.zoom)+"px,"+(st.y+mc.w.y*st.zoom)+"px)" }
 function startFollow(){
   closeIntro(); closePop(); setTool("move");
-  following=true; step=0; cv.classList.add("follow"); $("#fbar").classList.add("on");
+  following=true; step=0; cv.classList.add("follow"); $("#fbar").classList.add("on"); $("#lkAv").classList.add("on");
   cursorEl().classList.add("on"); runStep();
 }
 function stopFollow(silent){
-  following=false; clearTimeout(stepT); cv.classList.remove("follow"); $("#fbar").classList.remove("on");
+  following=false; clearTimeout(stepT); cv.classList.remove("follow"); $("#fbar").classList.remove("on"); $("#lkAv").classList.remove("on");
   if(mc){ mc.classList.remove("on"); var m=$("#mcMsg"); if(m) m.textContent="" }
   if(!silent) toast("Stopped following Lokesh");
 }
