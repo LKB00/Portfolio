@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Portfolio · Figma view (beta)</title>
+<script>/* the file follows the portfolio's theme: light or dark, as the site is */
+(function(){var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light");
+addEventListener("storage",function(e){if(e.key==="portfolio-theme")document.documentElement.setAttribute("data-theme",e.newValue==="dark"?"dark":"light")})})();</script>
 <script defer src="./analytics.js?v=4"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <link rel="icon" href="./assets/lokesh-face.webp">
@@ -524,6 +527,12 @@ var TOUR=[
 
 var st={page:1,zoom:.5,x:0,y:0,tool:"move",dev:false,rtab:"design",frames:[],sel:null,ctx:null,hov:null,hidden:new WeakSet()};
 
+/* opened over the homepage (in its layer) rather than as its own page */
+var EMBED=false; try{ EMBED=window.top!==window.self&&!!parent.document.querySelector(".fvlay") }catch(e){}
+function home(){ if(EMBED) parent.postMessage({fvClose:1},location.origin); else location.href="./index.html" }
+function shareURL(){ try{ if(EMBED) return parent.location.href.split("#")[0]+"#figma" }catch(e){} return location.href.split("#")[0] }
+var toldReady=false;
+
 /* ═══ HELPERS ═══════════════════════════════════════════════════════ */
 function toast(msg){ toastEl.textContent=msg; toastEl.classList.add("on"); clearTimeout(toast.t); toast.t=setTimeout(function(){toastEl.classList.remove("on")},2400) }
 var c2d=document.createElement("canvas").getContext("2d");
@@ -881,7 +890,7 @@ function ready(f){
   size(); setTimeout(size,600); setTimeout(size,1800); setTimeout(size,4000);
   try{ new (win(doc.body).ResizeObserver)(function(){ size() }).observe(doc.body) }catch(e){}
   renderTree(); renderProps();
-  setTimeout(function(){ f.ready=true; f.el.classList.remove("loading"); placePins(); var w=f.waits; f.waits=[]; w.forEach(function(cb){ cb() }) },350);
+  setTimeout(function(){ f.ready=true; f.el.classList.remove("loading"); if(EMBED&&!toldReady){ toldReady=true; parent.postMessage({fvReady:1},location.origin) } placePins(); var w=f.waits; f.waits=[]; w.forEach(function(cb){ cb() }) },350);
 }
 
 /* ═══ VIEW: PAN AND ZOOM ════════════════════════════════════════════ */
@@ -1563,7 +1572,7 @@ $("#findQ").addEventListener("input",runFind);
 $("#findQ").addEventListener("keydown",function(e){ if(e.key==="Escape"){ e.stopPropagation(); closeFind() } if(e.key==="Enter"){ var b=$("#fres .fr"); if(b) b.click() } });
 $("#logoBtn").addEventListener("click",function(e){
   e.stopPropagation();
-  menu(this,[["Back to the website","",function(){ location.href="./index.html" }],["Actions…","⌘K",function(){ menu($("#actBtn"),ACTIONS,true,true) }],"-",
+  menu(this,[["Back to the website","",home],["Actions…","⌘K",function(){ menu($("#actBtn"),ACTIONS,true,true) }],"-",
     ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") }]]);
 });
 $("#fileBtn").addEventListener("click",function(e){
@@ -1572,7 +1581,7 @@ $("#fileBtn").addEventListener("click",function(e){
 });
 $("#presentBtn").addEventListener("click",function(){ present(true) });
 $("#zoomMini").addEventListener("click",zoomMenu);
-$("#shareBtn").addEventListener("click",function(){ copy(location.href.split("#")[0],"Link copied to clipboard") });
+$("#shareBtn").addEventListener("click",function(){ copy(shareURL(),"Link copied to clipboard") });
 function minUI(){ $("#app").classList.toggle("min"); setTimeout(function(){ draw(); placePins() },30) }
 $("#minBtn").addEventListener("click",minUI);
 

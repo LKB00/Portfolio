@@ -32,7 +32,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Libre+Baskerville&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&text=%20BFOaefghilmnoprstvw&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&text=%20BFOPaefghilmnoprstvw%E2%80%A6&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500&text=%E2%82%B90123456789%2C.&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
@@ -564,6 +564,20 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 @media (max-width:684px){.figpill{display:none}}
 /* inside the Figma view itself, the way in would point at itself */
 .in-frame .figpill{display:none}
+/* the Figma view opens over the page, not as a new one. While it loads,
+   Figma's own wait: its canvas grey and the logo's five shapes taking
+   their colour in turn. Going back replays the site's intro loader. */
+.fvlay{--fv-canvas:#F5F5F5;--fv-off:#E3E3E3;--fv-tx:#757575;position:fixed;inset:0;z-index:200;background:var(--fv-canvas);opacity:0;transition:opacity .2s ease}
+:root[data-theme="dark"] .fvlay{--fv-canvas:#1E1E1E;--fv-off:#383838;--fv-tx:#B3B3B3}
+.fvlay.on{opacity:1}
+.fvlay-load{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:18px;transition:opacity .3s ease}
+.fvlay-load path{fill:var(--fv-off);animation:fvShape 1.5s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes fvShape{0%,100%{fill:var(--fv-off)}25%,60%{fill:var(--c)}}
+.fvlay-load p{margin:0;font:500 11px/16px Inter,system-ui,-apple-system,sans-serif;color:var(--fv-tx)}
+.fvlay iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;transition:opacity .35s ease}
+.fvlay.ready iframe{opacity:1}.fvlay.ready .fvlay-load{opacity:0;pointer-events:none}
+html.fv-open,html.fv-open body{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.fvlay,.fvlay iframe,.fvlay-load{transition:none}.fvlay-load path{animation:none;fill:var(--c)}}
 
 /* 3. THE END OF THE PAGE. #contact carried nothing but a copyright: the
    one place a reader has finished the work and decided to act had no way
@@ -5069,6 +5083,62 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 })();
 </script>
 <script src="./aitwin.js?v=8"></script>
+<script>
+/* ═══ Figma view, opened in place ═══
+   The pill opens the file in a layer over the page, with Figma's loading
+   wait, and #figma in the address so Back closes it and the link can be
+   shared. Back to the website replays the site's own intro loader. */
+(function(){
+  var pill=document.querySelector(".figpill"); if(!pill) return;
+  var lay=null, pushed=false, opening=0;
+  var SHAPES='<path style="--c:#1ABCFE;animation-delay:0.36s" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path style="--c:#0ACF83;animation-delay:0.48s" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path style="--c:#FF7262;animation-delay:0.12s" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path style="--c:#F24E1E;animation-delay:0.00s" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path style="--c:#A259FF;animation-delay:0.24s" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/>';
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function open(push){
+    if(lay) return;
+    var my=++opening, t0=Date.now();
+    lay=document.createElement("div"); lay.className="fvlay"; lay.setAttribute("role","dialog"); lay.setAttribute("aria-label","Portfolio as a Figma file");
+    lay.innerHTML='<div class="fvlay-load" aria-hidden="true"><svg width="30" height="45" viewBox="0 0 38 57">'+SHAPES+'</svg><p>Opening Portfolio…</p></div>';
+    var f=document.createElement("iframe"); f.title="Portfolio as a Figma file"; f.src="./figma-view.html";
+    lay.appendChild(f); document.body.appendChild(lay);
+    document.documentElement.classList.add("fv-open");
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ lay&&lay.classList.add("on") }) });
+    if(push){ try{ history.pushState({fv:1},"","#figma"); pushed=true }catch(e){} }
+    /* shown once the file's first frame is drawn; Figma's wait reads for at
+       least a beat, and never hangs past eight seconds */
+    function show(){ if(!lay||my!==opening||lay.classList.contains("ready")) return;
+      setTimeout(function(){ if(lay&&my===opening){ lay.classList.add("ready"); try{ f.focus() }catch(e){} } }, Math.max(0,(reduce?0:900)-(Date.now()-t0))) }
+    lay.show=show; setTimeout(show,8000);
+  }
+  function close(){
+    if(!lay) return;
+    var L=document.getElementById("loader"), old=lay; lay=null; opening++;
+    function done(){ old.remove(); document.documentElement.classList.remove("fv-open"); try{ pill.focus({preventScroll:true}) }catch(e){} }
+    if(reduce||!L){ done(); return }
+    /* a fresh copy of the intro loader, so its sequence plays from the top */
+    var c=L.cloneNode(true); c.style.transition=""; c.classList.remove("hide"); c.style.zIndex="210";
+    L.parentNode.replaceChild(c,L);
+    setTimeout(done,60);
+    setTimeout(function(){
+      c.classList.add("hide");
+      var b=document.body; b.classList.remove("heroin","arriving"); void b.offsetWidth; b.classList.add("heroin","arriving");
+      setTimeout(function(){ b.classList.remove("arriving") },1500);
+    },1700);
+  }
+  function leave(){ if(pushed){ pushed=false; history.back() } else { close(); try{ history.replaceState(null,"",location.pathname+location.search) }catch(e){} } }
+  pill.addEventListener("click",function(e){
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button) return;   /* new tab still works */
+    e.preventDefault(); open(true);
+  });
+  addEventListener("message",function(e){
+    if(e.origin!==location.origin||!e.data) return;
+    if(e.data.fvReady&&lay&&lay.show) lay.show();
+    if(e.data.fvClose) leave();
+  });
+  addEventListener("popstate",function(){ if(location.hash==="#figma") open(false); else { pushed=false; close() } });
+  if(location.hash==="#figma") open(false);
+})();
+</script>
+
 <script>
 /* App Merge card: fluid phone (entrance, scroll drift, cursor lean) */
 (function(){
