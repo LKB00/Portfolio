@@ -3363,6 +3363,25 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .padbar{left:50%;right:auto;transform:translateX(-50%)}
 }
 @media (prefers-reduced-motion:reduce){.padsig{animation:none}}
+
+/* very quiet: a sign-off, not a field. No fill, no box; a hairline
+   above it, the address in small grey type, the × only on hover */
+.padsig{height:22px;margin:0 10px 6px;padding:0;border-radius:0;gap:5px;
+  border-top:1px solid rgba(20,20,20,.07);color:rgba(20,20,20,.32)}
+.padsig.is-on,.padsig.is-on:focus-within{background:transparent;box-shadow:none}
+.padsig.is-on:focus-within{border-top-color:rgba(20,20,20,.18);color:rgba(20,20,20,.5)}
+.padsig svg{width:10px;height:10px}
+.padsig input{font-size:11px;color:rgba(20,20,20,.5)}
+.padsig input:focus{color:#1B1B1B}
+.padsig input::placeholder{color:rgba(20,20,20,.28)}
+.padsig-x{width:16px;height:16px;opacity:0;transition:opacity .15s var(--ease);color:rgba(20,20,20,.4)}
+.padsig-x svg{width:8px;height:8px}
+.padnote:hover .padsig-x,.padsig:focus-within .padsig-x,.padsig-x:focus-visible{opacity:1}
+@media (hover:none){.padsig-x{opacity:.7}}
+.padsig.is-add{border-top-color:transparent}
+.padsig-add{height:20px;padding:0;font-size:11px;color:rgba(20,20,20,.3);background:transparent}
+@media (hover:hover){.padsig-add:hover{background:transparent;color:rgba(20,20,20,.6)}}
+@media (max-width:560px){.padsig{height:24px}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
