@@ -1511,8 +1511,15 @@ function runFind(){
   function head(t){ var h=document.createElement("div"); h.className="sh"; h.textContent=t; box.appendChild(h) }
   function row(icon,name,note,go){ var b=document.createElement("button"); b.className="fr"; b.innerHTML='<span class="ic">'+icon+'</span><span class="nm">'+esc(name)+'</span>'+(note?'<small>'+esc(note)+'</small>':''); b.addEventListener("click",go); box.appendChild(b) }
   if(pg.length){ head("Pages"); pg.forEach(function(i){ row("",PAGES[i].name,"",function(){ closeFind(); if(i!==st.page) loadPage(i) }) }) }
-  if(ly.length){ head("Layers on "+PAGES[st.page].name); ly.forEach(function(x){ row(iconOf(x.el,kindOf(x.el,x.f.root)),x.nm,x.f.name.split(" — ")[0],function(){ select(x.f,x.el); zoomSel() }) }) }
+  if(ly.length){ head("Layers on "+PAGES[st.page].name); ly.forEach(function(x){ row(iconOf(x.el,kindOf(x.el,x.f.root)),x.nm,x.f.name.split(" — ")[0],function(){ select(x.f,x.el); reveal(x.f,x.el) }) }) }
   if(!pg.length&&!ly.length){ var n=document.createElement("div"); n.className="none"; n.textContent="Nothing called “"+$("#findQ").value.trim()+"” here. Commands are in Actions, ⌘K."; box.appendChild(n) }
+}
+/* keep the zoom; only pan if the layer is off-screen, centring it */
+function reveal(f,el){
+  var r=el===f.root?{x:0,y:0,w:f.w,h:f.h}:frameRect(f,el);
+  var L=st.x+(f.x+r.x)*st.zoom, T=st.y+(f.y+r.y)*st.zoom, W=r.w*st.zoom, H=r.h*st.zoom, m=24;
+  if(L>=m&&T>=m&&L+W<=cv.clientWidth-m&&T+H<=cv.clientHeight-m) return;
+  st.x+=cv.clientWidth/2-(L+W/2); st.y+=cv.clientHeight/2-(T+H/2); apply(); draw();
 }
 $("#searchBtn").addEventListener("click",function(e){ e.stopPropagation(); if($("#lfind").hidden) openFind(); else closeFind() });
 $("#findQ").addEventListener("input",runFind);
