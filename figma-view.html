@@ -44,6 +44,13 @@ svg{flex:none}
 .app{display:grid;grid-template-columns:var(--lw) 1fr var(--rw);height:100vh;height:100dvh}
 .app.min{grid-template-columns:0 1fr 0}
 .app.min .lp,.app.min .rp{visibility:hidden}
+/* minimized, as in Figma: the panels go, but the file's name and the
+   top-right controls stay as two floating pills */
+.app.min .lh,.app.min .rt{visibility:visible;position:fixed;top:12px;z-index:30;height:48px;padding:0 8px;background:var(--ui);border-radius:12px;box-shadow:0 0 0 1px var(--line),0 4px 16px rgba(0,0,0,.18)}
+.app.min .lh{left:12px;gap:4px}.app.min .rt{right:12px;gap:8px}
+.app.min .fname{flex:none;flex-direction:row;align-items:center;gap:8px}
+.app.min .fname span{padding:1px 6px;border-radius:4px;background:var(--ui2);font-size:10px;line-height:16px}
+.mz{display:none}.app.min .mz{display:flex;margin-left:0}
 .tx2{color:var(--tx2)}
 
 /* ── shared bits ── */
@@ -417,6 +424,7 @@ button.av{cursor:pointer}
         <button class="av me" id="lkAv" style="background:#9747FF" data-tip="Follow Lokesh’s tour" aria-label="Follow Lokesh’s 1-minute tour"><img src="./assets/avatar-96.webp" alt=""></button>
         <span class="av" style="background:#14AE5C" title="You">Y</span>
       </div>
+      <button class="zoomb mz" id="zoomMini" aria-label="Zoom"><span id="zoomPctMini">100%</span><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button>
       <button class="play" id="presentBtn" aria-label="Present" data-tip="Present  ⌥⌘↵"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button>
       <button class="share" id="shareBtn">Share</button>
     </div>
@@ -872,6 +880,7 @@ function apply(){
   world.style.transform="translate("+st.x+"px,"+st.y+"px) scale("+st.zoom+")";
   world.style.setProperty("--z",st.zoom);
   var z=$("#zoomPct"); if(z) z.textContent=Math.round(st.zoom*100)+"%";
+  var zm=$("#zoomPctMini"); if(zm) zm.textContent=Math.round(st.zoom*100)+"%";
   paintLabels(); draw(); placeCursor(); placePins();
 }
 function paintLabels(){
@@ -1468,7 +1477,7 @@ function center(){ return {x:cv.clientWidth/2,y:cv.clientHeight/2} }
 function zoomSel(){ if(!st.sel) return fit(false); var s=st.sel, r=s.el===s.f.root?{x:0,y:0,w:s.f.w,h:s.f.h}:frameRect(s.f,s.el); zoomTo(s.f,r) }
 function zoomMenu(e){
   if(e) e.stopPropagation(); var c=center();
-  menu($("#zoomBtn"),[["Zoom in","⌘+",function(){ zoomAt(st.zoom*1.5,c.x,c.y) }],["Zoom out","⌘−",function(){ zoomAt(st.zoom/1.5,c.x,c.y) }],
+  menu((e&&e.currentTarget&&e.currentTarget.id==="zoomMini")?$("#zoomMini"):$("#zoomBtn"),[["Zoom in","⌘+",function(){ zoomAt(st.zoom*1.5,c.x,c.y) }],["Zoom out","⌘−",function(){ zoomAt(st.zoom/1.5,c.x,c.y) }],
     ["Zoom to fit","⇧1",function(){ fit(false) }],["Zoom to selection","⇧2",function(){ zoomSel() }],"-",
     ["Zoom to 50%","",function(){ zoomAt(.5,c.x,c.y) }],["Zoom to 100%","⇧0",function(){ zoomAt(1,c.x,c.y) }],["Zoom to 200%","",function(){ zoomAt(2,c.x,c.y) }]]);
 }
@@ -1546,6 +1555,7 @@ $("#fileBtn").addEventListener("click",function(e){
   menu(this,[["Show version history","⌥⌘H",showHistory],["Open this page on the website","",function(){ var p=PAGES[st.page]; window.open(p.src||"./index.html","_blank","noopener") }]]);
 });
 $("#presentBtn").addEventListener("click",function(){ present(true) });
+$("#zoomMini").addEventListener("click",zoomMenu);
 $("#shareBtn").addEventListener("click",function(){ copy(location.href.split("#")[0],"Link copied to clipboard") });
 function minUI(){ $("#app").classList.toggle("min"); setTimeout(function(){ draw(); placePins() },30) }
 $("#minBtn").addEventListener("click",minUI);
