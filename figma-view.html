@@ -75,6 +75,14 @@ svg{flex:none}
 .pg.on i{visibility:visible}
 .pg .cnt{margin-left:auto;display:flex;align-items:center;gap:3px;color:var(--purple);font-weight:500}
 .psep{height:1px;margin:6px 16px;background:var(--line)}
+.lfind{padding:8px;border-bottom:1px solid var(--line);flex:none}.lfind[hidden]{display:none}
+.lfind input{display:block;width:100%;height:28px;padding:0 10px;border-radius:6px;border:0;outline:0;background:#383838;color:#fff;font:12px Inter,sans-serif}
+.lp.finding .pages,.lp.finding .layers{display:none}
+.fres{flex:1;min-height:0;overflow:auto;padding:4px 0 16px}.fres[hidden]{display:none}
+.fres .sh{height:28px}.fres .fr{display:flex;align-items:center;gap:6px;height:28px;margin:0 8px;padding:0 8px;border-radius:5px;width:calc(100% - 16px);text-align:left;white-space:nowrap;overflow:hidden}
+.fres .fr:hover{background:var(--hover,rgba(255,255,255,.06))}.fres .fr .ic{flex:none;display:grid;place-items:center;width:16px;color:var(--tx3)}
+.fres .fr .nm{overflow:hidden;text-overflow:ellipsis}.fres .fr small{margin-left:auto;padding-left:8px;color:var(--tx3);font-size:10px}
+.fres .none{padding:8px 16px;color:var(--tx3)}
 .plabel{padding:4px 16px 2px;color:var(--tx3);font-size:10px;letter-spacing:.02em;text-transform:uppercase}
 .layers{flex:1;min-height:0;display:flex;flex-direction:column}
 .tree{flex:1;overflow:auto;padding:0 8px 16px;overscroll-behavior:contain}
@@ -364,7 +372,9 @@ button.av{cursor:pointer}
       <button class="ib" id="minBtn" aria-label="Minimize UI" data-tip="Minimize UI  ⇧\"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
     </div>
     <div class="ltabs"><button class="tab on">File</button><button class="tab" id="assetsTab">Assets</button>
-      <button class="ib" id="searchBtn" aria-label="Search actions" data-tip="Search  ⌘K"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button></div>
+      <button class="ib" id="searchBtn" aria-label="Find pages and layers" data-tip="Find  ⌘F"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button></div>
+    <div class="lfind" id="lfind" hidden><input id="findQ" type="search" placeholder="Find pages and layers…" aria-label="Find pages and layers"></div>
+    <div class="fres" id="fres" hidden></div>
     <div class="pages">
       <div class="sh">Pages</div>
       <div id="pages"></div>
@@ -807,6 +817,7 @@ function addFrame(name,w,h,x,src,srcdoc){
 }
 function loadPage(i,cb){
   if(PAGES[i].group) return;
+  findIdx=null;
   st.page=i; st.sel=null; st.hov=null; st.ctx=null;
   world.innerHTML=""; st.frames=[]; closePop();
   var P=PAGES[i];
@@ -1475,7 +1486,37 @@ var ACTIONS=[
   ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") },SEARCH_ONLY]
 ];
 $("#actBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(this,ACTIONS,true,true) });
-$("#searchBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(this,ACTIONS,true) });
+/* Find, as in Figma's left panel: pages and layers, not commands
+   (commands are Actions, ⌘K) */
+var findIdx=null;
+function openFind(){ var lf=$("#lfind"); lf.hidden=false; findIdx=null; $("#app").classList.add("show-l"); setTimeout(function(){ $("#findQ").focus(); $("#findQ").select() },0) }
+function closeFind(){ $("#lfind").hidden=true; $("#findQ").value=""; $("#fres").hidden=true; $(".lp").classList.remove("finding"); findIdx=null }
+function layerIndex(){
+  if(findIdx) return findIdx;
+  var out=[];
+  st.frames.forEach(function(f){
+    if(!f.root) return;
+    (function walk(el,d){ if(out.length>2000||d>14) return; kids(el).forEach(function(c){ out.push({f:f,el:c,nm:nameOf(c,f)}); walk(c,d+1) }) })(f.root,0);
+  });
+  /* cache only once every frame on the page has loaded */
+  if(st.frames.every(function(f){ return f.root })) findIdx=out;
+  return out;
+}
+function runFind(){
+  var q=$("#findQ").value.trim().toLowerCase(), box=$("#fres");
+  $(".lp").classList.toggle("finding",!!q); box.hidden=!q; box.innerHTML="";
+  if(!q) return;
+  var pg=[]; PAGES.forEach(function(p,i){ if(!p.group&&p.name.toLowerCase().indexOf(q)>-1) pg.push(i) });
+  var ly=layerIndex().filter(function(x){ return (x.nm||"").toLowerCase().indexOf(q)>-1 }).slice(0,40);
+  function head(t){ var h=document.createElement("div"); h.className="sh"; h.textContent=t; box.appendChild(h) }
+  function row(icon,name,note,go){ var b=document.createElement("button"); b.className="fr"; b.innerHTML='<span class="ic">'+icon+'</span><span class="nm">'+esc(name)+'</span>'+(note?'<small>'+esc(note)+'</small>':''); b.addEventListener("click",go); box.appendChild(b) }
+  if(pg.length){ head("Pages"); pg.forEach(function(i){ row("",PAGES[i].name,"",function(){ closeFind(); if(i!==st.page) loadPage(i) }) }) }
+  if(ly.length){ head("Layers on "+PAGES[st.page].name); ly.forEach(function(x){ row(iconOf(x.el,kindOf(x.el,x.f.root)),x.nm,x.f.name.split(" — ")[0],function(){ select(x.f,x.el); zoomSel() }) }) }
+  if(!pg.length&&!ly.length){ var n=document.createElement("div"); n.className="none"; n.textContent="Nothing called “"+$("#findQ").value.trim()+"” here. Commands are in Actions, ⌘K."; box.appendChild(n) }
+}
+$("#searchBtn").addEventListener("click",function(e){ e.stopPropagation(); if($("#lfind").hidden) openFind(); else closeFind() });
+$("#findQ").addEventListener("input",runFind);
+$("#findQ").addEventListener("keydown",function(e){ if(e.key==="Escape"){ e.stopPropagation(); closeFind() } if(e.key==="Enter"){ var b=$("#fres .fr"); if(b) b.click() } });
 $("#logoBtn").addEventListener("click",function(e){
   e.stopPropagation();
   menu(this,[["Back to the website","",function(){ location.href="./index.html" }],["Actions…","⌘K",function(){ menu($("#actBtn"),ACTIONS,true,true) }],"-",
@@ -1496,6 +1537,7 @@ document.addEventListener("keydown",function(e){
   if(k===" "&&!space){ space=true; cv.classList.add("hand"); e.preventDefault(); return }
   if((e.metaKey||e.ctrlKey)&&(k==="="||k==="+")){ e.preventDefault(); zoomAt(st.zoom*1.5,c.x,c.y); return }
   if((e.metaKey||e.ctrlKey)&&k==="-"){ e.preventDefault(); zoomAt(st.zoom/1.5,c.x,c.y); return }
+  if((e.metaKey||e.ctrlKey)&&(k==="f"||k==="F")){ e.preventDefault(); openFind(); return }
   if((e.metaKey||e.ctrlKey)&&(k==="k"||k==="/")){ e.preventDefault(); menu($("#actBtn"),ACTIONS,true,true); return }
   if((e.metaKey||e.ctrlKey)&&e.altKey&&k==="Enter"){ e.preventDefault(); present(true); return }
   if(e.metaKey||e.ctrlKey||e.altKey) return;
