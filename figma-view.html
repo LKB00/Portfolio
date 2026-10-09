@@ -397,39 +397,78 @@ button.av{cursor:pointer}
   .pfoot{padding-bottom:env(safe-area-inset-bottom);height:calc(48px + env(safe-area-inset-bottom))}
 }
 
-/* phones: the canvas, with the panels a tap away */
+/* ═══ PHONES (≤767px): a phone-first file, after Figma's own phone app.
+   A top bar (back, page ▾, more), the canvas, a bottom bar (Layers,
+   Comment, Present), and bottom sheets in thumb reach instead of side panels. */
+.scrim{display:none;position:fixed;inset:0;z-index:28;background:rgba(0,0,0,.32);opacity:0;pointer-events:none;transition:opacity .2s}
+.dclose,.grab,.stabs,.mob,#layersTb{display:none}
 @media (max-width:767px){
   .app{grid-template-columns:1fr}
-  .scrim{display:block}.app.show-l .scrim,.app.show-r .scrim{opacity:1;pointer-events:auto}
-  .dclose{display:grid!important}
-  .rp{padding-top:44px}
-  /* the pages drawer's close takes Minimize's place in the file header */
-  #minBtn{display:none}
-  #lpX{top:16px}
-  .tb #actBtn,.tb #devBtn,.tb .tsep,.tb #mvMenu{display:none}
-  .tb .tl.ponly{display:flex}
-  .lp,.rp{position:fixed;top:0;bottom:0;width:min(300px,86vw);box-shadow:0 0 40px rgba(0,0,0,.2);transition:transform .25s}
-  .lp{left:0;transform:translateX(-105%)}.rp{right:0;transform:translateX(105%)}
+  /* top bar */
+  .mob{display:flex;position:fixed;left:0;right:0;top:0;z-index:20;height:calc(52px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 4px 0;
+    align-items:center;gap:2px;background:var(--ui);border-bottom:1px solid var(--line)}
+  .mbtn{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:10px;color:var(--tx)}
+  .mbtn:active,.mtitle:active{background:var(--hover)}
+  .mtitle{flex:1;min-width:0;height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;line-height:1.2}
+  .mtitle small{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tx2)}
+  .mtitle small .beta{font-size:10px;line-height:14px;padding:0 5px}
+  .mtitle b{display:flex;align-items:center;gap:4px;max-width:100%;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mtitle .chev{width:10px;height:10px}
+  /* bottom bar: Layers, Comment, and Present first */
+  .tb{bottom:calc(12px + env(safe-area-inset-bottom));padding:6px;gap:4px;border-radius:16px}
+  .tb .tl{height:44px;min-width:44px;border-radius:11px}
+  .tb .tlg,.tb #actBtn,.tb #devBtn,.tb .tsep{display:none}
+  #layersTb,.tb .tl.ponly{display:flex}
+  .tb #presentTb{padding:0 16px 0 14px;gap:8px;background:var(--blue);color:#fff;font-size:14px;font-weight:600}
+  .tb #presentTb::after{content:"Present"}
+  .tb .tl[data-tool=comment].on{background:var(--blue);color:#fff}
+  /* sheets */
+  .scrim{display:block}.app.show-l .scrim{opacity:1;pointer-events:auto}
+  .lp,.rp{position:fixed;left:0;right:0;top:auto;bottom:0;width:auto;z-index:29;border:0;border-radius:16px 16px 0 0;box-shadow:0 -1px 0 var(--line),0 -8px 32px rgba(0,0,0,.14);
+    transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1),height .28s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom)}
+  .lp{height:min(78vh,640px)}
+  .rp{height:42vh;z-index:27}.rp.full{height:88vh}
   .app.show-l .lp,.app.show-r .rp{transform:none}
-  .mob{display:flex!important}
-  .intro{top:52px}
-  .tb .tl.act span{display:none}
+  .lp.dragging,.rp.dragging{transition:none}
+  .grab{display:block;flex:none;height:22px;position:relative;touch-action:none;cursor:grab}
+  .grab::before{content:"";position:absolute;left:50%;top:8px;width:36px;height:5px;margin-left:-18px;border-radius:3px;background:var(--tx3)}
+  .lp .lh,.lp .ltabs,.lp .lfind,.lp .fres,.rp .rt{display:none!important}
+  .stabs{display:flex;gap:2px;margin:0 16px 8px;padding:2px;border-radius:9px;background:var(--ui2);flex:none;touch-action:none}
+  .stabs button{flex:1;height:32px;border-radius:7px;font-size:13px;font-weight:500;color:var(--tx2)}
+  .stabs button.on{background:var(--ui);color:var(--tx);box-shadow:0 0 0 .5px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.08)}
+  .lp .pages{border:0;max-height:none;flex:1;overflow:auto;padding-bottom:16px}
+  .lp .pages .sh,.lp .layers .sh{display:none}
+  .lp .layers{display:none}
+  .lp.sl-layers .pages{display:none}.lp.sl-layers .layers{display:flex}
+  .pg{height:48px;font-size:15px;margin:0 8px;padding:0 12px;border-radius:10px}
+  .pg i{width:18px}
+  .pdiv{margin:6px 20px}
+  .row{height:40px;font-size:13px}
+  .rtabs{border-top:0;height:44px}.rtabs .tab{height:32px;font-size:13px}.rtabs .zoomb{display:none}
+  .props{font-size:12px}
+  /* the composer and comment cards: a card at the bottom, above the keyboard */
+  .pop{position:fixed!important;left:8px!important;right:8px;top:auto!important;width:auto!important;bottom:calc(var(--kb,0px) + 8px + env(safe-area-inset-bottom));z-index:31;border-radius:16px;padding:12px}
+  .pop textarea,.pop input{font-size:16px;line-height:22px}
+  .pop textarea{height:26px;min-height:26px}
+  .pop .send{width:36px;height:36px}
+  .pop.compose .cfoot{font-size:13px;margin-top:8px}
+  .lpop{height:40px;font-size:13px}.lpop button{height:32px;font-size:13px}
+  /* menus become an action sheet */
+  .menu{left:8px!important;right:8px;top:auto!important;bottom:calc(8px + env(safe-area-inset-bottom));min-width:0;border-radius:14px;padding:6px 0;z-index:40}
+  .menu{background:var(--ui);color:var(--tx);box-shadow:0 0 0 .5px var(--line),0 12px 40px rgba(0,0,0,.25)}
+  .menu button{height:50px!important;font-size:16px!important;padding:0 20px!important}
+  .menu button span,.menu button .lb{color:var(--tx)}.menu button .ck{display:none}
+  .menu button:hover,.menu button.hl,.menu button:active{background:var(--hover)}.menu button:hover span,.menu button.hl span{color:var(--tx)}
+  .menu hr{background:var(--line)}
+  .intro{top:calc(64px + env(safe-area-inset-top));left:12px;right:12px;transform:none;white-space:normal}
+  .intro .it{white-space:normal;display:block!important}.intro .it .tx2{display:inline!important}
+  .toast{bottom:calc(84px + env(safe-area-inset-bottom))}
+  #minBtn{display:none}
 }
-.scrim{display:none;position:fixed;inset:0;z-index:28;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
-@media (max-width:767px){.lp,.rp{z-index:29}}   /* drawers over the canvas; on desktop menus and tooltips stay above the panels */
-.dclose{position:absolute;top:10px;right:8px;z-index:2}
-@media (min-width:768px){.dclose{display:none!important}}
 .tb .ponly{display:none}
 /* keyboard focus, always visible */
 button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:2px solid #0D99FF;outline-offset:1px}
-.mob{display:none;position:absolute;top:10px;left:10px;right:10px;justify-content:space-between;z-index:6;pointer-events:none}
-.mob>button{pointer-events:auto;height:40px;padding:0 12px;border-radius:12px;background:var(--ui);box-shadow:var(--e2);font-weight:500}
-/* on phones the file pill stays: the logo's menu (Back to the website), and the
-   file name, which opens the pages and layers */
-.mpill{pointer-events:auto;display:flex;align-items:center;gap:2px;height:40px;padding:0 4px;border-radius:12px;background:var(--ui);box-shadow:var(--e2)}
-.mpill button{display:flex;align-items:center;gap:4px;height:32px;padding:0 6px;border-radius:8px}
-.mpill button:active{background:var(--hover)}
-.mpill b{font-weight:600;font-size:12px}
+
 
 .pop .tnote{margin:-2px 0 10px;padding:6px 10px;border-radius:8px;background:var(--purpleSoft);color:var(--purple);font-size:12px;line-height:17px}
 
@@ -490,6 +529,8 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visibl
 <div class="app" id="app">
 
   <aside class="lp" aria-label="Navigation">
+    <div class="grab" aria-hidden="true"></div>
+    <div class="stabs" role="tablist"><button role="tab" data-st="pages" class="on">Pages</button><button role="tab" data-st="layers">Layers</button></div>
     <button class="ib dclose" id="lpX" aria-label="Close pages and layers"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <div class="lh">
       <button class="logo" id="logoBtn" aria-label="Main menu">
@@ -521,10 +562,15 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visibl
       <div class="box sel" id="selBox"><i></i><i></i><i></i><i></i><span class="dim" id="selDim"></span></div>
     </div>
     <div class="fbar" id="fbar"><img src="./assets/avatar-96.webp" alt=""><span>Following Lokesh</span><span class="st" id="fstep"></span><button id="fnext">Next</button><button id="fstop">Stop</button></div>
-    <div class="mob"><div class="mpill"><button id="mobLogo" aria-label="Main menu"><svg width="12" height="18" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button><button id="mobL" aria-label="Pages and layers"><b>Portfolio</b><i class="beta">Beta</i><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></div><button id="mobR" aria-label="Open properties">Properties</button></div>
+    <div class="mob" role="banner">
+      <button class="mbtn" id="mobBack" aria-label="Back to the website"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="mtitle" id="mobL" aria-label="Pages" aria-haspopup="dialog"><small>Portfolio <i class="beta">Beta</i></small><b><span id="mobPage">Cover</span><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></b></button>
+      <button class="mbtn" id="mobMore" aria-label="More"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>
+    </div>
     <div class="scrim" id="scrim" aria-hidden="true"></div>
     <div class="tb" role="toolbar" aria-label="Tools">
       <span class="tlg"><button class="tl on" id="mvBtn" data-tool="move" data-tip="Move  V" aria-label="Move"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg></button><button class="tl tchev" id="mvMenu" aria-label="Move and hand tools"><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></span>
+      <button class="tl" id="layersTb" aria-label="Layers"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></button>
       <button class="tl" data-tool="comment" data-tip="Comment  C" aria-label="Comment"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 21V12a9 9 0 1 1 9 9z"/></svg></button>
       <button class="tl ponly" id="presentTb" aria-label="Present" data-tip="Present"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button>
       <span class="tsep" aria-hidden="true"></span>
@@ -543,6 +589,7 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visibl
   </main>
 
   <aside class="rp" aria-label="Properties">
+    <div class="grab" aria-hidden="true"></div>
     <button class="ib dclose" id="rpX" aria-label="Close properties"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <div class="rt">
       <div class="avs">
@@ -1118,7 +1165,8 @@ function loadPage(i,cb){
     };
     f.retry=tryRead; tryRead();
   }else{
-    var x=0; DEVICES.forEach(function(d){ addFrame(d.key+" — "+P.name,d.w,d.h,x,P.src); x+=d.w+160 });
+    var x=0, devs=isPhone()?DEVICES.filter(function(d){ return d.key===(st.pdesk?"Desktop":"Mobile") }):DEVICES;
+    devs.forEach(function(d){ addFrame(d.key+" — "+P.name,d.w,d.h,x,P.src); x+=d.w+160 });
   }
   renderPages(); renderTree(); renderTabs(); renderProps(); paintLabels();
   fit(true);
@@ -1180,10 +1228,12 @@ function fit(top){
   if(st.frames.length>1&&z<.32&&top){ z=Math.min(1,(W-side)/fw); x=side/2 }
   /* on a phone, open on the phone-sized frame */
   var mob=st.frames.filter(function(fr){ return fr.dev.key==="Mobile" })[0];
-  if(mob&&W<768&&top){ z=Math.min(1,(W-side)/mob.w); x=side/2-mob.x*z }
-  if(st.frames.length===1&&fh<=1000) z=Math.min(z,(H-head-90)/fh);
+  var phoneFrame=mob&&W<768;
+  if(phoneFrame&&top){ z=Math.min(1,(W-side)/mob.w); x=(W-mob.w*z)/2-mob.x*z }
+  /* a phone page is read by scrolling, so it is fitted to the width, never shrunk to its first screen */
+  if(st.frames.length===1&&fh<=1000&&!phoneFrame) z=Math.min(z,(H-head-90)/fh);
   if(x===undefined) x=(W-tw*z)/2;
-  st.zoom=z; st.x=x; st.y=top&&fh*z>H-head-60?head:Math.max(head,(H-fh*z)/2); apply();
+  st.zoom=z; st.fitZ=z; st.x=x; st.y=top&&fh*z>H-head-60?head:Math.max(head,(H-fh*z)/2); apply();
 }
 function zoomTo(f,r,pad){
   var W=cv.clientWidth,H=cv.clientHeight; pad=pad||160;
@@ -1252,11 +1302,15 @@ cv.addEventListener("pointermove",function(e){
   if(tap.moved){ st.x=tap.ox+dx; st.y=tap.oy+dy; apply() }
 });
 cv.addEventListener("pointerup",function(e){
-  if(tap&&e.pointerType==="touch"){ var t=tap; tap=null; if(!t.moved) press(t.e) }
+  if(tap&&e.pointerType==="touch"){ var t=tap; tap=null; if(t.moved) return;
+    if(st.tool!=="move"||!isPhone()){ press(t.e); return }
+    /* a single tap waits a beat, so a double-tap zooms without selecting */
+    if(lastTap&&Math.abs(lastTap.x-t.x)+Math.abs(lastTap.y-t.y)<40){ clearTimeout(lastTap.timer); lastTap=null; dblTap(t.e); return }
+    var me={x:t.x,y:t.y}; me.timer=setTimeout(function(){ if(lastTap===me){ lastTap=null; press(t.e) } },260); lastTap=me }
 });
 cv.addEventListener("pointercancel",function(){ tap=null });
 function press(e){
-  if(innerWidth<768&&($("#app").classList.contains("show-l")||$("#app").classList.contains("show-r"))){ closeDrawers(); return }
+  if(isPhone()&&$("#app").classList.contains("show-l")){ closeDrawers(); return }
   if(e.target.closest(".tb,.pop,.pin,.mob,.fbar,.intro")) return;
   closeMenus();
   if(following) stopFollow(true);
@@ -1282,7 +1336,9 @@ function press(e){
   if(under&&under.kind!=="home") setTimeout(function(){ showLinkPop(h.f,under) },0);
   var now=Date.now(), dbl=lastDown&&now-lastDown.t<400&&Math.abs(e.clientX-lastDown.x)<6&&Math.abs(e.clientY-lastDown.y)<6;
   lastDown=dbl?null:{t:now,x:e.clientX,y:e.clientY};
-  if(dbl&&st.sel&&st.sel.f===h.f&&st.sel.el!==h.t&&st.sel.el.contains(h.t)&&kids(st.sel.el).length){
+  /* on a phone there's no double-click (double-tap zooms): tapping inside the selection goes one layer in */
+  var touchIn=e.pointerType==="touch"&&isPhone();
+  if((dbl||touchIn)&&st.sel&&st.sel.f===h.f&&st.sel.el!==h.t&&st.sel.el.contains(h.t)&&kids(st.sel.el).length){
     var inner=pick(h.t,st.sel.el,h.f); if(inner){ select(h.f,inner.el,st.sel.el); return }
   }
   var ctx=(st.ctx&&st.sel&&st.sel.f===h.f)?st.ctx:h.f.root;
@@ -1301,6 +1357,7 @@ function select(f,el,ctx){
   if(!f){ st.sel=null; st.ctx=null } else { st.sel={f:f,el:el}; st.ctx=ctx||f.root }
   $("#app").classList.toggle("peek",!!f&&$("#app").classList.contains("min"));
   draw(); paintLabels(); renderProps(); markTree(true);
+  if(isPhone()){ if(f){ peekSel(); if(!select.hinted&&el!==f.root){ select.hinted=1; setTimeout(function(){ toast("Tap again to go inside · double-tap to zoom") },300) } } else { $("#app").classList.remove("show-r"); $(".rp").classList.remove("full") } }
 }
 function box(node,f,el){
   if(!f||!el||!f.doc){ node.style.display="none"; return null }
@@ -1348,6 +1405,7 @@ function measure(){
 var rowOf=new WeakMap(), openSet=new WeakSet();
 function renderPages(){
   var el=$("#pages"); el.innerHTML="";
+  var mp=$("#mobPage"); if(mp) mp.textContent=PAGES[st.page].name;
   PAGES.forEach(function(p,i){
     if(p.group){ var g=document.createElement("div"); g.className="pdiv"; g.setAttribute("role","separator"); g.setAttribute("aria-label",p.group); el.appendChild(g); return }
     var n=DECISIONS.filter(function(d){ return d.page===p.name }).length;
@@ -1386,7 +1444,7 @@ function node(f,el,depth){
     row.classList.toggle("open",openSet.has(el)); fill(); markTree(false);
   });
   row.addEventListener("click",function(){
-    if(innerWidth<768) setTimeout(closeDrawers,120);
+    if(isPhone()) setTimeout(function(){ $("#app").classList.remove("show-l"); peekSel() },120);
     select(f,el,layerParent(el,f)||f.root);
     var r=el===f.root?{x:0,y:0,w:f.w,h:Math.min(f.h,900)}:frameRect(f,el); ensureVisible(f,r);
   });
@@ -1774,6 +1832,7 @@ function startComment(e){
     '<div class="mailrow" hidden><input type="email" placeholder="you@email.com" aria-label="Your email, for a reply"></div>'+
     '<div class="cfoot"><span class="anon">Anonymous · <button class="lnk" type="button">Add email</button> for a reply</span></div>';
   ov.appendChild(popEl); placePop(popEl,sx,sy);
+  if(isPhone()){ toastEl.classList.remove("on"); var lim=cv.clientHeight-popEl.offsetHeight-140; if(sy>lim){ st.y-=sy-lim; apply() } }
   var ta=popEl.querySelector("textarea"), send=popEl.querySelector(".send"), mailrow=popEl.querySelector(".mailrow"), em=popEl.querySelector("input"), foot=popEl.querySelector(".anon");
   if(draftText){ ta.value=draftText; send.disabled=false; draftText=""; ta.style.height=Math.min(ta.scrollHeight,120)+"px" }
   ta.focus();
@@ -1862,7 +1921,7 @@ function setTool(t){
   [].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.classList.toggle("on",b.dataset.tool===t) });
   cv.classList.toggle("hand",t==="hand"); cv.classList.toggle("comment",t==="comment");
   if(t!=="move"){ st.hov=null; draw() }
-  if(t==="comment"){ st.rtab="comments"; renderTabs(); renderProps() }
+  if(t==="comment"){ st.rtab="comments"; renderTabs(); renderProps(); if(isPhone()){ if(st.sel) select(null); closeDrawers(); toast("Tap where you want to leave a comment") } }
   else if(st.rtab==="comments"){ st.rtab="design"; renderTabs(); renderProps() }
 }
 [].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.addEventListener("click",function(){ var t=b.dataset.tool; setTool(t===st.tool&&t==="comment"?"move":t) }) });
@@ -2033,7 +2092,6 @@ function logoMenu(e){
     ["Help and account","",null,false,{sub:[["Keyboard shortcuts","⌃⇧?",showKeys],["How to use this file","",showIntro]]}]]);
 }
 $("#logoBtn").addEventListener("click",logoMenu);
-$("#mobLogo").addEventListener("click",logoMenu);
 $("#fileBtn").addEventListener("click",function(e){
   e.stopPropagation();
   menu(this,[["Show version history","",showHistory]]);
@@ -2136,6 +2194,7 @@ $("#pClose").addEventListener("click",function(){ present(false) });
 function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ localStorage.setItem("lb.figma.intro","3") }catch(e){} } }
 (function(){
   var seen=false; try{ seen=localStorage.getItem("lb.figma.intro")==="3" }catch(e){}
+  if(isPhone()) $("#intro .it").innerHTML='<b>My portfolio, as a Figma file.</b> <span class="tx2">Pinch to zoom, tap anything to inspect it, or ▶ Present to use the site.</span>';
   if(!seen) $("#intro").hidden=false;
   $("#introOk").addEventListener("click",function(){ closeIntro() });
   if(TOUR_ON) $("#introTour").addEventListener("click",startFollow); else $("#introTour").remove();
@@ -2144,12 +2203,86 @@ function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ 
 })();
 
 /* ═══ PHONES ════════════════════════════════════════════════════════ */
-$("#mobL").addEventListener("click",function(){ $("#app").classList.toggle("show-l"); $("#app").classList.remove("show-r") });
-$("#mobR").addEventListener("click",function(){ $("#app").classList.toggle("show-r"); $("#app").classList.remove("show-l") });
-function closeDrawers(){ $("#app").classList.remove("show-l","show-r") }
+function isPhone(){ return innerWidth<768 }
+function openSheet(kind){
+  var app=$("#app"), lp=$(".lp");
+  lp.classList.toggle("sl-layers",kind==="layers");
+  [].forEach.call(document.querySelectorAll(".stabs button"),function(b){ b.classList.toggle("on",b.dataset.st===kind); b.setAttribute("aria-selected",String(b.dataset.st===kind)) });
+  if(kind==="layers") setTimeout(function(){ markTree(true) },300);
+  app.classList.add("show-l");
+}
+function closeDrawers(){ $("#app").classList.remove("show-l","show-r"); $(".rp").classList.remove("full") }
+$("#mobL").addEventListener("click",function(){ closePop(); openSheet("pages") });
+$("#layersTb").addEventListener("click",function(){ closePop(); openSheet("layers") });
+[].forEach.call(document.querySelectorAll(".stabs button"),function(b){ b.addEventListener("click",function(){ openSheet(b.dataset.st) }) });
+$("#mobBack").addEventListener("click",home);
+$("#mobMore").addEventListener("click",function(e){
+  e.stopPropagation();
+  menu(this,[
+    ["Share link to this page","",function(){
+      var u=shareURL(); T("fv_share",{page:pageSlug()});
+      if(navigator.share) navigator.share({title:"Lokesh Bhatia · Portfolio",url:u}).catch(function(){}); else copy(u,"Link copied");
+    }],
+    ["Your comments","",function(){ st.rtab="comments"; renderTabs(); renderProps(); $("#app").classList.add("show-r") }],
+    [st.pdesk?"Show the phone frame":"Show the desktop frame","",function(){ st.pdesk=!st.pdesk; var i=st.page; Object.keys(CACHE).forEach(function(k){ CACHE[k].wrap.remove() }); CACHE={}; CACHE_ORDER=[]; curWrap&&curWrap.remove(); curWrap=null; st.frames=[]; loadPage(i) }],
+    "-",
+    ["How to use this file","",showIntro],
+    ["Back to the website","",home]
+  ]);
+});
 $("#scrim").addEventListener("click",closeDrawers);
 $("#lpX").addEventListener("click",closeDrawers); $("#rpX").addEventListener("click",closeDrawers);
 $("#presentTb").addEventListener("click",function(){ present(true) });
+/* drag a sheet by its handle (or tabs): down to close, the properties sheet up to full */
+[".lp",".rp"].forEach(function(sel){
+  var sh=$(sel);
+  [].forEach.call(sh.querySelectorAll(".grab,.stabs,.rtabs"),function(h){
+    h.addEventListener("pointerdown",function(e){
+      if(!isPhone()) return;
+      var y0=e.clientY, dy=0, moved=false, id=e.pointerId;
+      function mv(ev){ if(ev.pointerId!==id) return; dy=ev.clientY-y0; if(!moved&&Math.abs(dy)<6) return; moved=true; sh.classList.add("dragging"); sh.style.transform="translateY("+Math.max(0,dy)+"px)" }
+      function up(ev){
+        if(ev.pointerId!==id) return;
+        removeEventListener("pointermove",mv); removeEventListener("pointerup",up); removeEventListener("pointercancel",up);
+        sh.classList.remove("dragging"); sh.style.transform="";
+        if(!moved) return;
+        if(sel===".rp"&&dy<-40) sh.classList.add("full");
+        else if(sel===".rp"&&dy>40&&sh.classList.contains("full")) sh.classList.remove("full");
+        else if(dy>70){ closeDrawers(); if(sel===".rp") select(null) }
+      }
+      addEventListener("pointermove",mv); addEventListener("pointerup",up); addEventListener("pointercancel",up);
+    });
+  });
+});
+/* the keyboard pushes the comment card up, never over it */
+if(window.visualViewport){ var kb=function(){ var v=visualViewport; document.documentElement.style.setProperty("--kb",Math.max(0,innerHeight-v.height-v.offsetTop)+"px") }; visualViewport.addEventListener("resize",kb); visualViewport.addEventListener("scroll",kb) }
+/* a selection on a phone shows its properties in a peek sheet, and the
+   selection is moved clear of it */
+function peekSel(){
+  if(!isPhone()||!st.sel) return;
+  $("#app").classList.add("show-r");
+  var s=st.sel, r=s.el===s.f.root?{x:0,y:0,w:s.f.w,h:Math.min(s.f.h,300)}:frameRect(s.f,s.el);
+  var H=cv.clientHeight*.58, top=st.y+(s.f.y+r.y)*st.zoom, bot=top+Math.min(r.h*st.zoom,H-80);
+  if(bot>H||top<64){ st.y+=Math.max(64,Math.min(H-Math.min(r.h*st.zoom,H-80),top))-top; apply() }
+}
+/* double-tap: zoom in where you tapped (to the section when that is a real
+   zoom, else 2×); double-tap when zoomed in goes back to fit, keeping your place */
+var lastTap=null;
+function dblTap(e){
+  var b=cv.getBoundingClientRect(), cx=e.clientX-b.left, cy=e.clientY-b.top, W=cv.clientWidth, base=st.fitZ||st.zoom;
+  if(st.zoom>base*1.3){
+    zoomAt(base,cx,cy);
+    var f0=st.frames[0], tw=st.frames[st.frames.length-1]; if(f0&&tw){ var fw=(tw.x+tw.w-f0.x)*st.zoom; if(fw<=W) st.x=(W-fw)/2-f0.x*st.zoom; apply() }
+    return;
+  }
+  var h=hit(e), z=Math.min(2,st.zoom*2);
+  if(h.f){
+    var el=h.t; while(el&&el.parentElement&&el.parentElement!==h.f.root&&el.parentElement.tagName!=="MAIN"&&el.parentElement!==h.f.doc.body) el=el.parentElement;
+    if(el&&el!==h.f.root){ var r=frameRect(h.f,el), zs=Math.min(2,(W-24)/r.w);
+      if(zs>=st.zoom*1.5){ st.zoom=zs; st.x=W/2-(h.f.x+r.x+r.w/2)*zs; st.y=72-(h.f.y+r.y)*zs; apply(); return } }
+  }
+  zoomAt(z,cx,cy);
+}
 /* a tablet opens with Figma's minimised UI; selecting brings properties back */
 if(innerWidth>=768&&innerWidth<1024&&!$("#app").classList.contains("min")) minUI();
 var touches={};
