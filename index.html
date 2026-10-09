@@ -32,6 +32,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Libre+Baskerville&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&text=%20BFOPaefghilmnoprstvw%E2%80%A6&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500&text=%E2%82%B90123456789%2C.&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
@@ -538,21 +539,44 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    page visibly ran out of breath on the way down. The hero keeps the
    larger opening gap; every band after it is spaced the same. */
 #work{padding-bottom:clamp(46px,7vw,72px)}
-/* the way into the Figma view: after the work, for whoever wants to see how
-   it's built. Quiet, in the Ask-my-AI-twin voice: lead-in grey, thing in ink */
-.figmacta{display:flex;justify-content:center;margin:clamp(32px,5vw,48px) 0 0}
-.figmacta a{display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 14px 0 14px;border-radius:9999px;
-  border:.5px solid color-mix(in srgb,var(--ink) 12%,transparent);background:var(--card,#fff);color:var(--ink);text-decoration:none;
-  font-family:var(--display);font-size:14px;font-weight:500;white-space:nowrap;transition:border-color .2s}
-.figmacta a:hover{border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
-.figmacta-q{color:var(--muted);font-weight:400}
-.figmacta i{font-style:normal;font-size:10px;font-weight:500;line-height:16px;padding:0 6px;border-radius:5px;letter-spacing:.04em;text-transform:uppercase;
-  background:color-mix(in srgb,#9747FF 13%,transparent);color:#7B35E0}
-:root[data-theme="dark"] .figmacta i{color:#C9A6FF;background:color-mix(in srgb,#9747FF 26%,transparent)}
-.figmacta-go{color:var(--muted);transition:transform .2s cubic-bezier(.2,.7,.2,1)}
-.figmacta a:hover .figmacta-go{transform:translateX(2px);color:var(--ink)}
+/* the way into the Figma view, built as Figma's own file pill (UI3, as it
+   floats top left with the UI minimised): 48px, 13px radius, Figma's
+   elevation, the one-colour Figma glyph, the name in Inter 13/600, a blue
+   plan-style badge, the panel icon. Figma's light and dark themes follow
+   the site's. Desktop and tablet only: on a phone the headline owns the top. */
+.figpill{--fp-bg:#fff;--fp-tx:#1E1E1E;--fp-tx2:#757575;--fp-hov:#F5F5F5;--fp-bd-bg:#E5F4FF;--fp-bd-tx:#007BE5;
+  position:fixed;top:18px;left:20px;z-index:60;display:flex;align-items:center;height:48px;padding:0 8px;border-radius:13px;
+  background:var(--fp-bg);color:var(--fp-tx);text-decoration:none;font:600 13px/16px Inter,system-ui,-apple-system,sans-serif;letter-spacing:-.0025em;
+  box-shadow:0 0 .5px rgba(0,0,0,.18),0 3px 8px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.1)}
+.figpill-ic{display:grid;place-items:center;width:32px;height:32px;border-radius:5px;transition:background-color .12s}
+.figpill:hover .figpill-ic{background:var(--fp-hov)}
+.figpill:hover,.figpill:focus,.figpill:visited{color:var(--fp-tx);opacity:1}
+.figpill-name{margin:0 8px 0 6px;white-space:nowrap}
+.figpill i{font-style:normal;font-weight:500;font-size:11px;line-height:16px;padding:0 6px;border-radius:5px;background:var(--fp-bd-bg);color:var(--fp-bd-tx);margin-right:4px}
+.figpill::after{content:attr(data-tip);position:absolute;left:8px;top:calc(100% + 6px);padding:4px 8px;border-radius:5px;background:#1E1E1E;color:#fff;
+  font:500 11px/16px Inter,system-ui,-apple-system,sans-serif;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .1s}
+.figpill:hover::after,.figpill:focus-visible::after{opacity:1;transition-delay:.35s}
+.figpill:focus-visible{outline:2px solid #0D99FF;outline-offset:2px}
+:root[data-theme="dark"] .figpill{--fp-bg:#2C2C2C;--fp-tx:#fff;--fp-tx2:#B3B3B3;--fp-hov:#383838;--fp-bd-bg:#0C3B5E;--fp-bd-tx:#7CC4F8;
+  box-shadow:0 0 .5px rgba(0,0,0,.5),0 3px 8px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.3)}
+:root[data-theme="dark"] .figpill::after{background:#383838}
+@media (max-width:684px){.figpill{display:none}}
 /* inside the Figma view itself, the way in would point at itself */
-.in-frame .figmacta{display:none}
+.in-frame .figpill{display:none}
+/* the Figma view opens over the page, not as a new one. While it loads,
+   Figma's own wait: its canvas grey and the logo's five shapes taking
+   their colour in turn. Going back replays the site's intro loader. */
+.fvlay{--fv-canvas:#F5F5F5;--fv-off:#E3E3E3;--fv-tx:#757575;position:fixed;inset:0;z-index:200;background:var(--fv-canvas);opacity:0;transition:opacity .2s ease}
+:root[data-theme="dark"] .fvlay{--fv-canvas:#1E1E1E;--fv-off:#383838;--fv-tx:#B3B3B3}
+.fvlay.on{opacity:1}
+.fvlay-load{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:18px;transition:opacity .3s ease}
+.fvlay-load path{fill:var(--fv-off);animation:fvShape 1.5s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes fvShape{0%,100%{fill:var(--fv-off)}25%,60%{fill:var(--c)}}
+.fvlay-load p{margin:0;font:500 11px/16px Inter,system-ui,-apple-system,sans-serif;color:var(--fv-tx)}
+.fvlay iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;transition:opacity .35s ease}
+.fvlay.ready iframe{opacity:1}.fvlay.ready .fvlay-load{opacity:0;pointer-events:none}
+html.fv-open,html.fv-open body{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.fvlay,.fvlay iframe,.fvlay-load{transition:none}.fvlay-load path{animation:none;fill:var(--c)}}
 
 /* 3. THE END OF THE PAGE. #contact carried nothing but a copyright: the
    one place a reader has finished the work and decided to act had no way
@@ -3628,7 +3652,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
   </button>
 
-  <header id="siteHeader">
+  <a class="figpill" href="./figma-view.html" data-tip="Open this portfolio as a Figma file" aria-label="Open this portfolio as a Figma file (beta)"><span class="figpill-ic" aria-hidden="true"><svg width="11" height="16" viewBox="-3 -3 44 63" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linejoin="round" aria-hidden="true"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span><span class="figpill-name">Figma view</span><i>Beta</i></a>
+<header id="siteHeader">
     <div class="navpill">
       <nav class="navlinks" aria-label="Main">
         <a class="navlink" href="./index.html" aria-current="page"><span class="navtext">Home</span><svg class="navico" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.2 7.2 8 2.4l5.8 4.8"/><path d="M3.8 6v7.1c0 .5.4.9.9.9h2.1v-3.6h2.4V14h2.1c.5 0 .9-.4.9-.9V6"/></svg></a>
@@ -3826,7 +3851,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </a>
 
     </div>
-    <p class="figmacta" data-reveal><a href="./figma-view.html"><svg width="11" height="16" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg><span><span class="figmacta-q">See it as</span> a Figma file</span><i>Beta</i><svg class="figmacta-go" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></p>
   </section>
 
   <section id="words" data-section="What people said" aria-label="What people said">
@@ -5058,6 +5082,62 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 })();
 </script>
 <script src="./aitwin.js?v=8"></script>
+<script>
+/* ═══ Figma view, opened in place ═══
+   The pill opens the file in a layer over the page, with Figma's loading
+   wait, and #figma in the address so Back closes it and the link can be
+   shared. Back to the website replays the site's own intro loader. */
+(function(){
+  var pill=document.querySelector(".figpill"); if(!pill) return;
+  var lay=null, pushed=false, opening=0;
+  var SHAPES='<path style="--c:#1ABCFE;animation-delay:0.36s" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path style="--c:#0ACF83;animation-delay:0.48s" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path style="--c:#FF7262;animation-delay:0.12s" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path style="--c:#F24E1E;animation-delay:0.00s" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path style="--c:#A259FF;animation-delay:0.24s" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/>';
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function open(push){
+    if(lay) return;
+    var my=++opening, t0=Date.now();
+    lay=document.createElement("div"); lay.className="fvlay"; lay.setAttribute("role","dialog"); lay.setAttribute("aria-label","Portfolio as a Figma file");
+    lay.innerHTML='<div class="fvlay-load" aria-hidden="true"><svg width="30" height="45" viewBox="0 0 38 57">'+SHAPES+'</svg><p>Opening Portfolio…</p></div>';
+    var f=document.createElement("iframe"); f.title="Portfolio as a Figma file"; f.src="./figma-view.html?theme="+(document.documentElement.getAttribute("data-theme")==="dark"?"dark":"light");   /* the theme on screen, not a saved one */
+    lay.appendChild(f); document.body.appendChild(lay);
+    document.documentElement.classList.add("fv-open");
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ lay&&lay.classList.add("on") }) });
+    if(push){ try{ history.pushState({fv:1},"","#figma"); pushed=true }catch(e){} }
+    /* shown once the file's first frame is drawn; Figma's wait reads for at
+       least a beat, and never hangs past eight seconds */
+    function show(){ if(!lay||my!==opening||lay.classList.contains("ready")) return;
+      setTimeout(function(){ if(lay&&my===opening){ lay.classList.add("ready"); try{ f.focus() }catch(e){} } }, Math.max(0,(reduce?0:900)-(Date.now()-t0))) }
+    lay.show=show; setTimeout(show,8000);
+  }
+  function close(){
+    if(!lay) return;
+    var L=document.getElementById("loader"), old=lay; lay=null; opening++;
+    function done(){ old.remove(); document.documentElement.classList.remove("fv-open"); try{ pill.focus({preventScroll:true}) }catch(e){} }
+    if(reduce||!L){ done(); return }
+    /* a fresh copy of the intro loader, so its sequence plays from the top */
+    var c=L.cloneNode(true); c.style.transition=""; c.classList.remove("hide"); c.style.zIndex="210";
+    L.parentNode.replaceChild(c,L);
+    setTimeout(done,60);
+    setTimeout(function(){
+      c.classList.add("hide");
+      var b=document.body; b.classList.remove("heroin","arriving"); void b.offsetWidth; b.classList.add("heroin","arriving");
+      setTimeout(function(){ b.classList.remove("arriving") },1500);
+    },1700);
+  }
+  function leave(){ if(pushed){ pushed=false; history.back() } else { close(); try{ history.replaceState(null,"",location.pathname+location.search) }catch(e){} } }
+  pill.addEventListener("click",function(e){
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button) return;   /* new tab still works */
+    e.preventDefault(); open(true);
+  });
+  addEventListener("message",function(e){
+    if(e.origin!==location.origin||!e.data) return;
+    if(e.data.fvReady&&lay&&lay.show) lay.show();
+    if(e.data.fvClose) leave();
+  });
+  addEventListener("popstate",function(){ if(location.hash==="#figma") open(false); else { pushed=false; close() } });
+  if(location.hash==="#figma") open(false);
+})();
+</script>
+
 <script>
 /* App Merge card: fluid phone (entrance, scroll drift, cursor lean) */
 (function(){

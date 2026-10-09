@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Portfolio · Figma view (beta)</title>
+<script>/* the file follows the portfolio's theme: light or dark, as the site is */
+(function(){var t=(location.search.match(/[?&]theme=(dark|light)/)||[])[1];
+if(!t){try{if(window.top!==window.self)t=parent.document.documentElement.getAttribute("data-theme")}catch(e){}}
+if(!t){try{t=localStorage.getItem("portfolio-theme")}catch(e){}}
+document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light");
+addEventListener("storage",function(e){if(e.key==="portfolio-theme")document.documentElement.setAttribute("data-theme",e.newValue==="dark"?"dark":"light")})})();</script>
 <script defer src="./analytics.js?v=4"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <link rel="icon" href="./assets/lokesh-face.webp">
@@ -72,7 +78,9 @@ svg{flex:none}
 .logo:hover,.fname:hover{background:var(--hover)}
 .fname{min-width:0;flex:1;display:flex;flex-direction:column;align-items:flex-start;padding:2px 6px;border-radius:5px;text-align:left}
 .fname b{display:flex;align-items:center;gap:4px;font-weight:600;font-size:12px;line-height:16px}
-.beta{font-style:normal;font-weight:500;font-size:9px;line-height:14px;padding:0 5px;border-radius:4px;background:var(--purpleSoft);color:var(--purple);letter-spacing:.03em;text-transform:uppercase}
+/* the same Beta badge as the homepage pill: Figma's blue plan badge */
+.beta{font-style:normal;font-weight:500;font-size:11px;line-height:16px;padding:0 6px;border-radius:5px;background:#E5F4FF;color:#007BE5}
+:root[data-theme="dark"] .beta{background:#0C3B5E;color:#7CC4F8}
 .fname span{color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .ltabs{display:flex;align-items:center;gap:2px;padding:4px 8px 8px;flex:none;border-bottom:1px solid var(--line)}
 .ltabs .ib{margin-left:auto}
@@ -524,6 +532,14 @@ var TOUR=[
 
 var st={page:1,zoom:.5,x:0,y:0,tool:"move",dev:false,rtab:"design",frames:[],sel:null,ctx:null,hov:null,hidden:new WeakSet()};
 
+/* opened over the homepage (in its layer) rather than as its own page */
+var EMBED=false; try{ EMBED=window.top!==window.self&&!!parent.document.querySelector(".fvlay") }catch(e){}
+function home(){ if(EMBED) parent.postMessage({fvClose:1},location.origin); else location.href="./index.html" }
+function shareURL(){ try{ if(EMBED) return parent.location.href.split("#")[0]+"#figma" }catch(e){} return location.href.split("#")[0] }
+var toldReady=false;
+
+addEventListener("storage",function(e){ if(e.key==="portfolio-theme"&&!EMBED&&st.frames.length) setTimeout(function(){ loadPage(st.page) },0) });
+
 /* ═══ HELPERS ═══════════════════════════════════════════════════════ */
 function toast(msg){ toastEl.textContent=msg; toastEl.classList.add("on"); clearTimeout(toast.t); toast.t=setTimeout(function(){toastEl.classList.remove("on")},2400) }
 var c2d=document.createElement("canvas").getContext("2d");
@@ -673,6 +689,16 @@ var FRAME_CSS='<link href="https://fonts.googleapis.com/css2?family=Geist:wght@4
  '.mono{font-family:"Geist Mono",monospace;font-size:12px;letter-spacing:.02em;color:#7A7676;text-transform:uppercase}'+
  '.serif{font-family:"STIX Two Text",Georgia,serif}a{color:inherit;text-decoration:none}</style>';
 
+function theme(){ return document.documentElement.getAttribute("data-theme")==="dark"?"dark":"light" }
+/* the generated frames in the site's dark colours (#0F0F0F, #F3EEEE, #A69E9E) */
+var DARK_CSS='<style>html[data-theme=dark],html[data-theme=dark] body{background:#0F0F0F;color:#F3EEEE}'+
+ '[data-theme=dark] .mono,[data-theme=dark] .role,[data-theme=dark] .legend,[data-theme=dark] .lede,[data-theme=dark] h2,[data-theme=dark] .c span,[data-theme=dark] .tr .l,[data-theme=dark] .tr .m,[data-theme=dark] .t span{color:#A69E9E}'+
+ '[data-theme=dark] .card p,[data-theme=dark] .live .hit p{color:#6E6666}[data-theme=dark] .shot{background:#1A1A1A}[data-theme=dark] .card .go{color:#5EB0FF}'+
+ '[data-theme=dark] .foot{border-top-color:rgba(255,255,255,.1)}[data-theme=dark] .links a{background:#161616;box-shadow:0 0 0 1px rgba(255,255,255,.12)}[data-theme=dark] .links a.dark{background:#F3EEEE;color:#0F0F0F}'+
+ '[data-theme=dark] .sum b{background-image:linear-gradient(transparent 62%,rgba(229,203,60,.32) 62%)}[data-theme=dark] .me img{box-shadow:0 0 0 1px rgba(255,255,255,.1),0 6px 16px -8px rgba(0,0,0,.6)}'+
+ '[data-theme=dark] .c,[data-theme=dark] .t{background:#161616;box-shadow:0 0 0 1px rgba(255,255,255,.1)}[data-theme=dark] .c i{background-color:#1F1F1F;background-image:linear-gradient(45deg,#2A2A2A 25%,transparent 25%),linear-gradient(-45deg,#2A2A2A 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#2A2A2A 75%),linear-gradient(-45deg,transparent 75%,#2A2A2A 75%)}'+
+ '[data-theme=dark] .ty,[data-theme=dark] .tr{border-color:rgba(255,255,255,.1)}[data-theme=dark] .dotp{background:#2C2C2C}</style>';
+function docHead(){ return '<!doctype html><html data-theme="'+theme()+'"><head><meta charset="utf-8">'+FRAME_CSS+DARK_CSS }
 function coverHTML(){
   var cards=[
     {go:"Getbaq",img:"./assets/getbaq-mac-ready.webp",t:"Designing an AI agent that fights for your refund",m:"Getbaq · AI agent",pos:"50% 40%"},
@@ -680,7 +706,7 @@ function coverHTML(){
     {go:"Rise portal",img:"./assets/rp-hero-nochrome.webp",t:"The first product Rupeezy’s partners ever had",m:"Rupeezy · B2B platform",pos:"50% 20%"},
     {go:"Web terminal",img:"./assets/watchlist-shell-card-1050.webp",t:"Designing the desktop trading experience",m:"Rupeezy · Web trading terminal",pos:"50% 30%"}
   ];
-  return '<!doctype html><html><head><meta charset="utf-8">'+FRAME_CSS+'<style>'+
+  return docHead()+'<style>'+
    'body{width:1440px;height:900px;padding:72px 80px;display:flex;flex-direction:column;gap:48px;overflow:hidden}'+
    '.top{display:flex;justify-content:space-between;align-items:center}'+
    '.me{display:flex;gap:24px;align-items:center}'+
@@ -734,7 +760,7 @@ function coverLive(){
     try{
       var d=ifr.contentDocument, work=d.getElementById("work");
       if(!work) return;
-      d.documentElement.setAttribute("data-theme","light"); d.documentElement.style.backgroundColor="transparent";
+      d.documentElement.setAttribute("data-theme",(parent.document.documentElement.getAttribute("data-theme")==="dark")?"dark":"light"); d.documentElement.style.backgroundColor="transparent";
       var st=d.createElement("style");
       st.textContent="html,body{background:transparent!important;margin:0!important;padding:0!important;overflow:hidden!important;min-height:0!important}"+
         "body>*:not(#work){display:none!important}"+
@@ -790,7 +816,7 @@ function readSite(cb){
 function foundationsHTML(s){
   var famCSS={"STIX Two Text":"'STIX Two Text',Georgia,serif","Geist":"Geist,Inter,sans-serif","Geist Mono":"'Geist Mono',monospace"};
   var cols=s.colours.filter(function(c){ return !/^--card-tint/.test(c.n) });
-  return '<!doctype html><html><head><meta charset="utf-8">'+FRAME_CSS+'<style>'+
+  return docHead()+'<style>'+
    'body{width:1440px;padding:80px}'+
    'h1{margin:0 0 8px;font-size:48px;font-weight:400;letter-spacing:-.02em}'+
    '.lede{margin:0 0 64px;font-size:18px;color:#7A7676;max-width:760px;line-height:1.5}'+
@@ -862,6 +888,8 @@ function whenReady(f,cb){ if(f.doc&&f.ready) cb(); else f.waits.push(cb) }
 function ready(f){
   var doc; try{ doc=f.ifr.contentDocument }catch(e){ return }
   if(!doc||!doc.body) return;
+  /* a page of the site, framed: it wears the file's theme, as the site would */
+  if(!f.ifr.hasAttribute("srcdoc")){ var t=theme(); doc.documentElement.setAttribute("data-theme",t); doc.documentElement.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA" }
   if(doc.body.textContent.indexOf("Reading the live site")===0&&PAGES[st.page].kind==="foundations") return;
   f.doc=doc; f.root=doc.body;
   var s=doc.createElement("style");
@@ -881,7 +909,7 @@ function ready(f){
   size(); setTimeout(size,600); setTimeout(size,1800); setTimeout(size,4000);
   try{ new (win(doc.body).ResizeObserver)(function(){ size() }).observe(doc.body) }catch(e){}
   renderTree(); renderProps();
-  setTimeout(function(){ f.ready=true; f.el.classList.remove("loading"); placePins(); var w=f.waits; f.waits=[]; w.forEach(function(cb){ cb() }) },350);
+  setTimeout(function(){ f.ready=true; f.el.classList.remove("loading"); if(EMBED&&!toldReady){ toldReady=true; parent.postMessage({fvReady:1},location.origin) } placePins(); var w=f.waits; f.waits=[]; w.forEach(function(cb){ cb() }) },350);
 }
 
 /* ═══ VIEW: PAN AND ZOOM ════════════════════════════════════════════ */
@@ -1563,7 +1591,7 @@ $("#findQ").addEventListener("input",runFind);
 $("#findQ").addEventListener("keydown",function(e){ if(e.key==="Escape"){ e.stopPropagation(); closeFind() } if(e.key==="Enter"){ var b=$("#fres .fr"); if(b) b.click() } });
 $("#logoBtn").addEventListener("click",function(e){
   e.stopPropagation();
-  menu(this,[["Back to the website","",function(){ location.href="./index.html" }],["Actions…","⌘K",function(){ menu($("#actBtn"),ACTIONS,true,true) }],"-",
+  menu(this,[["Back to the website","",home],["Actions…","⌘K",function(){ menu($("#actBtn"),ACTIONS,true,true) }],"-",
     ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") }]]);
 });
 $("#fileBtn").addEventListener("click",function(e){
@@ -1572,7 +1600,7 @@ $("#fileBtn").addEventListener("click",function(e){
 });
 $("#presentBtn").addEventListener("click",function(){ present(true) });
 $("#zoomMini").addEventListener("click",zoomMenu);
-$("#shareBtn").addEventListener("click",function(){ copy(location.href.split("#")[0],"Link copied to clipboard") });
+$("#shareBtn").addEventListener("click",function(){ copy(shareURL(),"Link copied to clipboard") });
 function minUI(){ $("#app").classList.toggle("min"); setTimeout(function(){ draw(); placePins() },30) }
 $("#minBtn").addEventListener("click",minUI);
 
