@@ -270,10 +270,12 @@ button.av{cursor:pointer}
 
 /* comment pins and bubbles */
 .pin{position:absolute;pointer-events:auto;transform:translate(0,-100%);padding:0;border:0;background:none;cursor:pointer}
-.pin .bub{width:30px;height:30px;border-radius:50% 50% 50% 0;background:var(--ui);box-shadow:0 2px 6px rgba(0,0,0,.22);display:grid;place-items:center;overflow:hidden}
+.pin .bub{width:30px;height:30px;border-radius:50% 50% 50% 0;background:var(--ui);box-shadow:var(--e2);display:grid;place-items:center;overflow:hidden}
 .pin .bub span{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center;overflow:hidden}
 .pin .bub img{width:24px;height:24px;border-radius:50%;object-fit:cover}
-.pin.draftpin{pointer-events:none;animation:pinIn .2s cubic-bezier(.34,1.56,.64,1)}
+.pin.draftpin{animation:pinIn .2s cubic-bezier(.34,1.56,.64,1)}
+.pin.mine,.pin.draftpin{cursor:grab}.pin.dragging{cursor:grabbing;z-index:5}
+.pin.dragging .bub{box-shadow:var(--e4)}
 @keyframes pinIn{from{transform:translate(0,-100%) scale(.4)}to{transform:translate(0,-100%) scale(1)}}
 .pop{position:absolute;pointer-events:auto;width:300px;background:var(--ui);border-radius:12px;box-shadow:var(--e4);padding:12px;z-index:4}
 .pop .phd{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:11px;color:var(--tx2)}
@@ -294,7 +296,12 @@ button.av{cursor:pointer}
 .pop .mailrow:focus-within{box-shadow:inset 0 0 0 1.5px var(--blue)}
 .pop .mailrow input{height:22px}
 .pop .mailrow input.bad{color:#E5484D}
-.pop .pfoot{margin:7px 2px 0;font-size:11px;color:var(--tx2)}
+.pop .cfoot{margin:6px 2px 0;font-size:11px;line-height:16px;color:var(--tx2)}
+/* the composer: Figma's — a bubble that sits against its pin, just the field and send */
+.pop.compose{width:280px;padding:8px;border-radius:12px}
+.pop.compose .crow{padding:6px 6px 6px 10px}
+.pop .when{color:var(--tx2);font-weight:400}
+.pin.open .bub{box-shadow:0 0 0 2px var(--blue),0 2px 6px rgba(0,0,0,.22)}
 .pop .lnk{color:var(--blue);font-weight:500;cursor:pointer}
 .pop .lnk:hover{text-decoration:underline}
 .pop.sending{opacity:.6;pointer-events:none}
@@ -1224,8 +1231,9 @@ function press(e){
   if(following) stopFollow(true);
   if(popEl&&!popEl.contains(e.target)){
     var ta=popEl.querySelector("textarea"), had=ta&&ta.value.trim();
-    if(had) draftText=had; closePop(); if(had) toast("Draft saved");
-    if(st.tool!=="comment") return;
+    var wasCompose=popEl.classList.contains("compose");
+    if(had) draftText=had; closePop();
+    if(st.tool!=="comment"||wasCompose) return;   /* the click that closes a composer doesn't open another */
   }
   if(e.button===1||space||st.tool==="hand"){ drag={x:st.x,y:st.y,cx:e.clientX,cy:e.clientY}; cv.classList.add("drag"); cv.setPointerCapture(e.pointerId); e.preventDefault(); return }
   if(st.tool==="comment"){ startComment(e); return }
@@ -1575,17 +1583,16 @@ function renderComments(){
   var byPage={}, order=[];
   mine.forEach(function(m){ var k=m.p.slug||""; if(!byPage[k]){ byPage[k]=[]; order.push(k) } byPage[k].push(m) });
   var nameOfSlug=function(sl){ for(var i=0;i<PAGES.length;i++) if(PAGES[i].name&&pageSlug(i)===sl) return PAGES[i].name; return "" };
-  var when=function(t){ if(!t) return ""; var d=Math.round((Date.now()-t)/60000); return d<1?"Just now":d<60?d+"m ago":d<1440?Math.round(d/60)+"h ago":new Date(t).toLocaleDateString(undefined,{day:"numeric",month:"short"}) };
   var html=DECISIONS.map(function(d,i){
     return '<div class="th" data-dec="'+i+'"><span class="av"><img src="'+AVATAR+'" alt=""></span><div class="tt"><b>'+esc(d.title)+'</b><p class="tx2">'+esc(d.text.slice(0,90))+'…</p><div class="meta">Lokesh · '+esc(d.page)+'</div></div></div>';
   }).join("");
   order.forEach(function(k){ html+='<div class="sub">'+esc(nameOfSlug(k)||"Page")+'</div>'+byPage[k].map(function(m){
-    return '<div class="th" data-mine="'+m.i+'"><span class="av" style="background:#14AE5C">Y</span><div class="tt"><b>You</b><p>'+esc(m.p.text.split("\n")[0].slice(0,120))+'</p><div class="meta">'+esc(when(m.p.t)||("on "+m.p.on))+(m.p.email?" · reply to "+esc(m.p.email):" · anonymous")+'</div></div></div>' }).join("") });
+    return '<div class="th" data-mine="'+m.i+'"><span class="av" style="background:#14AE5C">Y</span><div class="tt"><b>You</b><p>'+esc(m.p.text.split("\n")[0].slice(0,120))+'</p><div class="meta">'+[ago(m.p.t),m.p.email?"reply to "+esc(m.p.email):"anonymous"].filter(Boolean).join(" · ")+'</div></div></div>' }).join("") });
   props.innerHTML=html||'<p class="note" style="padding:16px">No comments yet. Press C, then click anywhere to leave Lokesh a note.</p>';
   [].forEach.call(props.querySelectorAll("[data-dec]"),function(b){ b.addEventListener("click",function(){ openDecision(+b.dataset.dec) }) });
   [].forEach.call(props.querySelectorAll("[data-mine]"),function(b){ b.addEventListener("click",function(){
     var p=pins[+b.dataset.mine], pi=-1; for(var i=0;i<PAGES.length;i++) if(PAGES[i].name&&pageSlug(i)===p.slug) pi=i;
-    var show=function(){ var w=Math.max(0,p.wx-200), h=Math.max(0,p.wy-150); st.x=cv.clientWidth/2-p.wx*st.zoom; st.y=cv.clientHeight/2-p.wy*st.zoom; apply(); placePins() };
+    var show=function(){ st.x=cv.clientWidth/2-p.wx*st.zoom; st.y=cv.clientHeight/2-p.wy*st.zoom; apply(); openPin(p) };
     if(pi>-1&&pi!==st.page) loadPage(pi,function(){ setTimeout(show,50) }); else show() }) });
 }
 function renderHistory(){
@@ -1645,9 +1652,11 @@ var draftText="";
 var popEl=null, draftPin=null;
 function closePop(){ if(popEl){ popEl.remove(); popEl=null } if(draftPin){ draftPin.remove(); draftPin=null } [].forEach.call(ov.querySelectorAll(".pin.open"),function(p){ p.classList.remove("open") }) }
 function placePop(pop,px,py){
+  /* px,py is the pin's point (its bubble sits up and right of it): the card
+     goes against the bubble, top edges level, or to its left if no room */
   var W=cv.clientWidth,H=cv.clientHeight,w=pop.offsetWidth,hh=pop.offsetHeight;
-  var x=px+40; if(x+w>W-12) x=px-w-12; x=Math.max(12,x);
-  var y=Math.max(12,Math.min(py-36,H-hh-80));
+  var x=px+38; if(x+w>W-12) x=px-w-8; x=Math.max(12,x);
+  var y=Math.max(12,Math.min(py-30,H-hh-80));
   pop.style.left=x+"px"; pop.style.top=y+"px";
 }
 function placePins(){
@@ -1668,19 +1677,49 @@ function placePins(){
     var px=st.x+p.wx*st.zoom, py=st.y+p.wy*st.zoom;
     d.style.left=px+"px"; d.style.top=py+"px";
     d.innerHTML='<span class="bub"><span>Y</span></span>';
-    d.addEventListener("pointerdown",function(e){ e.stopPropagation() });
-    d.addEventListener("click",function(e){ e.stopPropagation();
-      var was=popEl&&popEl.forPin===p; closePop(); if(was) return;
-      popEl=document.createElement("div"); popEl.className="pop read"; popEl.forPin=p;
-      popEl.innerHTML='<div class="phd"><span class="av" style="background:#14AE5C">Y</span><b>You</b><span class="tx2">on '+esc(p.on)+'</span><button class="px" type="button" aria-label="Close">'+XSVG+'</button></div><p>'+esc(p.text)+'</p><div class="pf">'+(p.email?"Sent · I’ll reply to "+esc(p.email):"Sent anonymously")+'</div>';
-      ov.appendChild(popEl); placePop(popEl,px,py);
-      popEl.querySelector(".px").addEventListener("click",closePop);
-      popEl.addEventListener("pointerdown",function(ev){ ev.stopPropagation() });
-    });
+    d.classList.add("mine");
+    if(popEl&&popEl.forPin===p) d.classList.add("open");
+    dragPin(d,{x:p.wx,y:p.wy},function(w){ p.wx=w.x; p.wy=w.y; if(popEl&&popEl.forPin===p) popEl.anchor={x:w.x,y:w.y} },
+      function(){ try{ localStorage.setItem(PINS_KEY,JSON.stringify(pins)) }catch(e){} },
+      function(){ var was=popEl&&popEl.forPin===p; closePop(); if(!was) openPin(p) });
     ov.appendChild(d);
   });
   if(draftPin&&draftPin.w){ draftPin.style.left=(st.x+draftPin.w.x*st.zoom)+"px"; draftPin.style.top=(st.y+draftPin.w.y*st.zoom)+"px" }
+  if(popEl&&popEl.anchor) placePop(popEl,st.x+popEl.anchor.x*st.zoom,st.y+popEl.anchor.y*st.zoom);
   if(popEl&&popEl.forDec!=null){ var a=decAnchor(DECISIONS[popEl.forDec]); if(a) placePop(popEl,st.x+a.wx*st.zoom,st.y+a.wy*st.zoom) }
+}
+/* your pins move as in Figma: drag one and it follows, its card with it;
+   a press that doesn't travel is a click */
+function dragPin(el,w0,move,done,click){
+  el.addEventListener("pointerdown",function(e){
+    e.stopPropagation(); if(e.button!==0) return;
+    var sx=e.clientX, sy=e.clientY, b={x:w0.x,y:w0.y}, w=b, moved=false;
+    el.setPointerCapture(e.pointerId);
+    function mv(ev){
+      var dx=ev.clientX-sx, dy=ev.clientY-sy;
+      if(!moved&&Math.abs(dx)+Math.abs(dy)<4) return;
+      moved=true; el.classList.add("dragging");
+      var nw={x:b.x+dx/st.zoom,y:b.y+dy/st.zoom}; w=nw;
+      el.style.left=(st.x+nw.x*st.zoom)+"px"; el.style.top=(st.y+nw.y*st.zoom)+"px";
+      move(nw); if(popEl&&popEl.anchor) placePop(popEl,st.x+popEl.anchor.x*st.zoom,st.y+popEl.anchor.y*st.zoom);
+    }
+    function up(){
+      el.removeEventListener("pointermove",mv); el.removeEventListener("pointerup",up); el.removeEventListener("pointercancel",up);
+      el.classList.remove("dragging");
+      if(moved){ w0.x=w.x; w0.y=w.y; done&&done() } else click&&click();
+    }
+    el.addEventListener("pointermove",mv); el.addEventListener("pointerup",up); el.addEventListener("pointercancel",up);
+  });
+  el.addEventListener("click",function(e){ e.stopPropagation() });
+}
+function ago(t){ if(!t) return ""; var d=Math.round((Date.now()-t)/60000); return d<1?"Just now":d<60?d+"m ago":d<1440?Math.round(d/60)+"h ago":new Date(t).toLocaleDateString(undefined,{day:"numeric",month:"short"}) }
+function openPin(p){
+  closePop();
+  popEl=document.createElement("div"); popEl.className="pop read"; popEl.forPin=p; popEl.anchor={x:p.wx,y:p.wy};
+  popEl.innerHTML='<div class="phd"><span class="av" style="background:#14AE5C">Y</span><b>You</b><span class="when">'+esc(ago(p.t))+'</span><button class="px" type="button" aria-label="Close">'+XSVG+'</button></div><p>'+esc(p.text)+'</p><div class="pf">'+(p.email?"Sent · Lokesh will reply to "+esc(p.email):"Sent to Lokesh anonymously")+'</div>';
+  ov.appendChild(popEl); placePins();
+  popEl.querySelector(".px").addEventListener("click",closePop);
+  popEl.addEventListener("pointerdown",function(ev){ ev.stopPropagation() });
 }
 function sectionOf(h){
   if(!h.f) return "the canvas";
@@ -1695,19 +1734,21 @@ function startComment(e){
   var h=hit(e), on=sectionOf(h), b=cv.getBoundingClientRect(), sx=e.clientX-b.left, sy=e.clientY-b.top;
   draftPin=document.createElement("button"); draftPin.className="pin draftpin"; draftPin.innerHTML='<span class="bub"><span>Y</span></span>';
   draftPin.w={x:(sx-st.x)/st.zoom,y:(sy-st.y)/st.zoom}; draftPin.style.left=sx+"px"; draftPin.style.top=sy+"px"; ov.appendChild(draftPin);
-  popEl=document.createElement("div"); popEl.className="pop";
-  popEl.innerHTML='<div class="phd"><span class="tx2">Comment to Lokesh · on <b>'+esc(on)+'</b></span><button class="px" type="button" aria-label="Close">'+XSVG+'</button></div>'+
-    '<div class="crow"><textarea rows="1" placeholder="Add a comment…" aria-label="Comment"></textarea><button class="send" disabled aria-label="Post comment"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button></div>'+
+  draftPin.setAttribute("aria-label","Your new comment’s pin; drag to move it");
+  dragPin(draftPin,draftPin.w,function(nw){ draftPin.w.x=nw.x; draftPin.w.y=nw.y },function(){ var t=popEl&&popEl.querySelector("textarea"); if(t) t.focus() },function(){ var t=popEl&&popEl.querySelector("textarea"); if(t) t.focus() });
+  popEl=document.createElement("div"); popEl.className="pop compose"; popEl.anchor=draftPin.w;
+  popEl.setAttribute("role","dialog"); popEl.setAttribute("aria-label","Comment to Lokesh");
+  popEl.innerHTML=
+    '<div class="crow"><textarea rows="1" placeholder="Add a comment for Lokesh" aria-label="Comment for Lokesh"></textarea><button class="send" disabled aria-label="Post comment"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button></div>'+
     '<div class="mailrow" hidden><input type="email" placeholder="you@email.com" aria-label="Your email, for a reply"></div>'+
-    '<div class="pfoot"><span class="anon">Anonymous · <button class="lnk" type="button">Add email</button> to get a reply</span></div>';
+    '<div class="cfoot"><span class="anon">Anonymous · <button class="lnk" type="button">Add email</button> for a reply</span></div>';
   ov.appendChild(popEl); placePop(popEl,sx,sy);
-  popEl.querySelector(".px").addEventListener("click",closePop);
   var ta=popEl.querySelector("textarea"), send=popEl.querySelector(".send"), mailrow=popEl.querySelector(".mailrow"), em=popEl.querySelector("input"), foot=popEl.querySelector(".anon");
-  if(draftText){ ta.value=draftText; send.disabled=false }
+  if(draftText){ ta.value=draftText; send.disabled=false; draftText=""; ta.style.height=Math.min(ta.scrollHeight,120)+"px" }
   ta.focus();
   ta.addEventListener("input",function(){ send.disabled=!ta.value.trim(); ta.style.height="auto"; ta.style.height=Math.min(ta.scrollHeight,120)+"px" });
   ta.addEventListener("keydown",function(ev){ if(ev.key==="Enter"&&!ev.shiftKey){ ev.preventDefault(); if(!send.disabled) send.click() } if(ev.key==="Escape") closePop() });
-  popEl.querySelector(".lnk").addEventListener("click",function(){ mailrow.hidden=false; foot.textContent="I’ll reply to this email"; em.focus() });
+  popEl.querySelector(".lnk").addEventListener("click",function(){ mailrow.hidden=false; foot.textContent="Lokesh will reply to this email"; em.focus() });
   em.addEventListener("keydown",function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); if(!send.disabled) send.click(); else ta.focus() } if(ev.key==="Escape") closePop() });
   em.addEventListener("input",function(){ em.classList.remove("bad") });
   popEl.addEventListener("pointerdown",function(ev){ ev.stopPropagation() });
@@ -2000,6 +2041,7 @@ document.addEventListener("keydown",function(e){
     if($("#present").classList.contains("on")) return present(false);
     if(following) return stopFollow();
     if(popEl) return closePop();
+    if(st.tool==="comment") return setTool("move");
     if(lpop) return closeLinkPop();
     if(st.tool!=="move") return setTool("move");
     if(!st.sel) return;
