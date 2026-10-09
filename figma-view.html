@@ -102,6 +102,9 @@ svg{flex:none}
 .fres .fr:hover{background:var(--hover,rgba(255,255,255,.06))}.fres .fr .ic{flex:none;display:grid;place-items:center;width:16px;color:var(--tx3)}
 .fres .fr .nm{overflow:hidden;text-overflow:ellipsis}.fres .fr small{margin-left:auto;padding-left:8px;color:var(--tx3);font-size:10px}
 .fres .none{padding:8px 16px;color:var(--tx3)}
+.row.kfocus{box-shadow:inset 0 0 0 1px var(--blue)}
+#tree:focus{outline:none}
+.pdiv{height:1px;margin:6px 16px;background:var(--line)}
 .plabel{padding:4px 16px 2px;color:var(--tx3);font-size:10px;letter-spacing:.02em;text-transform:uppercase}
 .layers{flex:1;min-height:0;display:flex;flex-direction:column}
 .tree{flex:1;overflow:auto;padding:0 8px 16px;overscroll-behavior:contain}
@@ -668,7 +671,7 @@ var CARET='<svg width="8" height="8" viewBox="0 0 8 8"><path d="M2.5 1.5 5.5 4l-
 /* ═══ READING THE REAL PAGES AS LAYERS ══════════════════════════════ */
 var SKIP={SCRIPT:1,STYLE:1,LINK:1,META:1,NOSCRIPT:1,TEMPLATE:1,BR:1,HEAD:1,TITLE:1};
 var INLINE={SPAN:1,B:1,I:1,EM:1,STRONG:1,A:1,SUP:1,SUB:1,SMALL:1,MARK:1,CODE:1,BR:1,ABBR:1,TIME:1,KBD:1};
-var NAMES={top:"Hero",work:"Selected work",words:"What people said",notes:"Notes",contact:"Footer",siteHeader:"Navigation",totop:"Back to top",askDock:"Ask my AI twin",padTrigger:"Note trigger",heroAsk:"Ask my AI twin"};
+var NAMES={next:"Next case study",experience:"Experience",loader:"Intro loader",palette:"Command palette",mobileNav:"Mobile menu",aiChat:"AI twin chat",toast:"Toast",top:"Hero",work:"Selected work",words:"What people said",notes:"Notes",contact:"Footer",siteHeader:"Navigation",totop:"Back to top",askDock:"Ask my AI twin",padTrigger:"Note trigger",heroAsk:"Ask my AI twin"};
 function win(el){ return el.ownerDocument.defaultView }
 function visible(el){
   if(SKIP[el.tagName]) return false;
@@ -689,8 +692,8 @@ function kids(el,withHidden){
   for(var i=0;i<el.children.length;i++){
     var c=el.children[i];
     if(SKIP[c.tagName]) continue;
-    if(c.tagName==="MAIN"||(c.classList.contains("wrap")&&c.parentElement===c.ownerDocument.body)){ out=out.concat(kids(c)); continue }
-    if(visible(c)||(withHidden&&(c.children.length||c.textContent.trim()))) out.push(c);
+    if(c.tagName==="MAIN"||((c.classList.contains("wrap")||c.classList.contains("shell"))&&c.parentElement===c.ownerDocument.body)){ out=out.concat(kids(c,withHidden)); continue }
+    if(visible(c)||(withHidden&&c.tagName.toUpperCase()!=="SVG"&&(c.children.length||c.textContent.trim()))) out.push(c);
   }
   return out;
 }
@@ -700,7 +703,7 @@ function kindOf(el,root){
   if(t==="IMG"||t==="PICTURE"||t==="CANVAS") return "image";
   if(t==="VIDEO") return "video";
   if(t==="SVG") return "vector";
-  if(t==="A"||t==="BUTTON"||el.hasAttribute("data-go")) return "instance";
+  if(compOf(el)) return "instance";
   if(isText(el)) return "text";
   var d=win(el).getComputedStyle(el).display;
   if(/flex|grid/.test(d)) return "auto";
@@ -711,36 +714,49 @@ function iconOf(el,k){
   if(k==="auto"){ var cs=win(el).getComputedStyle(el); return cs.display.indexOf("flex")>-1&&cs.flexDirection.indexOf("row")===0?ICON.autoH:ICON.auto }
   return ICON[k]||ICON.frame;
 }
-function human(s){
-  s=s.replace(/[-_]+/g," ").replace(/([a-z])([A-Z])/g,"$1 $2").toLowerCase().split(" ").filter(function(w,i,a){ return w.length>1||a.length===1 }).join(" ").trim()||s;
-  return s.charAt(0).toUpperCase()+s.slice(1);
-}
+function clip(x,n){ x=x.replace(/\s+/g," ").trim(); return x.length>n?x.slice(0,n)+"…":x }
 function nameOf(el,f){
   if(f&&el===f.root) return f.name;
   if(el.dataset&&el.dataset.layer) return el.dataset.layer;
   if(el.id&&NAMES[el.id]) return NAMES[el.id];
   if(el.dataset&&el.dataset.section) return el.dataset.section;
-  var t=el.tagName.toUpperCase();
-  if(isText(el)){ var s=el.textContent.replace(/\s+/g," ").trim(); return s.length>40?s.slice(0,40)+"…":s }
-  if(t==="IMG"){ var a=el.getAttribute("alt"); if(a) return a.length>40?a.slice(0,40)+"…":a; return (el.getAttribute("src")||"Image").split("/").pop().replace(/\.\w+$/,"") }
-  if(t==="VIDEO") return "Video";
+  var t=el.tagName.toUpperCase(), c=compOf(el);
+  if(c&&c.n==="Case card"&&c.p[0][1].trim()) return clip(c.p[0][1],40);
+  if(c) return c.n;
+  /* a navigation or landmark with a label goes by its label, even if it's all links */
+  var lab=el.getAttribute("aria-label");
+  if(lab&&/^(NAV|HEADER|FOOTER|SECTION|ASIDE|DIV|UL|OL)$/.test(t)) return clip(lab,40);
+  if(isText(el)) return clip(el.textContent,40)||"Text";
+  if(t==="IMG"){ var a=el.getAttribute("alt"); return a?clip(a,40):"Image" }
+  if(t==="VIDEO") return el.getAttribute("aria-label")?clip(el.getAttribute("aria-label"),40):"Video";
   if(t==="CANVAS") return "Canvas";
   if(t==="SVG") return el.getAttribute("aria-label")||"Vector";
-  var al=el.getAttribute("aria-label"); if(al) return al;
+  var al=el.getAttribute("aria-label"); if(al) return clip(al,40);
   if(t==="A"||t==="BUTTON"){
-    var hd=el.querySelector("h1,h2,h3,h4,[class*=title]");
-    if(hd&&hd.textContent.trim()){ var ht=hd.textContent.replace(/\s+/g," ").trim(); return ht.length>36?ht.slice(0,36)+"…":ht }
-    var x=el.textContent.replace(/\s+/g," ").trim(); return x?(x.length>32?x.slice(0,32)+"…":x):(t==="A"?"Link":"Button");
+    var hd=el.querySelector("h1,h2,h3,h4");
+    if(hd&&hd.textContent.trim()) return clip(hd.textContent,36);
+    var x=el.textContent; return x.trim()?clip(x,32):(t==="A"?"Link":"Button");
   }
-  if(el.classList.length) return human(el.classList[0]);
-  if(el.id) return human(el.id);
-  return t==="DIV"?"Frame":human(t.toLowerCase());
+  /* a section is called by its heading, as a designer would name it */
+  if(/^(SECTION|ARTICLE|HEADER|FOOTER|ASIDE|FIGURE|NAV)$/.test(t)){
+    var h=el.querySelector("h1,h2");
+    if(h&&h.textContent.trim()) return clip(h.textContent,40);
+    /* or by the short label it opens with ('Experience', 'Education') */
+    var first=el.firstElementChild;
+    if(first&&isText(first)&&first.textContent.trim().length<=30) return clip(first.textContent,30);
+    h=el.querySelector("h3"); if(h&&h.textContent.trim()) return clip(h.textContent,40);
+    if(t==="FIGURE"){ var fc=el.querySelector("figcaption"); if(fc&&fc.textContent.trim()) return clip(fc.textContent,40) }
+    return {SECTION:"Section",ARTICLE:"Article",HEADER:"Header",FOOTER:"Footer",ASIDE:"Aside",FIGURE:"Figure",NAV:"Navigation"}[t];
+  }
+  /* a block holding the page's title is named by it */
+  if(t==="DIV"){ var hh=el.querySelector(":scope > h1, :scope > h2, :scope > * > h1"); if(hh&&hh.textContent.trim()) return clip(hh.textContent,40) }
+  return {UL:"List",OL:"List",LI:"List item",DL:"List",FORM:"Form",TABLE:"Table",DETAILS:"Details"}[t]||"Frame";
 }
 function layerParent(el,f){
   if(el===f.root) return null;
   var p=el.parentElement;
   /* MAIN and the page wrapper are flattened in the tree, so they're never a parent */
-  function flat(n){ return n.tagName==="MAIN"||(n.classList&&n.classList.contains("wrap")&&n.parentElement===n.ownerDocument.body) }
+  function flat(n){ return n.tagName==="MAIN"||(n.classList&&(n.classList.contains("wrap")||n.classList.contains("shell"))&&n.parentElement===n.ownerDocument.body) }
   while(p&&p!==f.root&&(kids(p).indexOf(el)<0||flat(p))) p=p.parentElement;
   return p||f.root;
 }
@@ -1178,7 +1194,7 @@ var rowOf=new WeakMap(), openSet=new WeakSet();
 function renderPages(){
   var el=$("#pages"); el.innerHTML="";
   PAGES.forEach(function(p,i){
-    if(p.group){ var g=document.createElement("div"); g.className="plabel"; g.textContent=p.group; el.appendChild(g); return }
+    if(p.group){ var g=document.createElement("div"); g.className="pdiv"; g.setAttribute("role","separator"); g.setAttribute("aria-label",p.group); el.appendChild(g); return }
     var n=DECISIONS.filter(function(d){ return d.page===p.name }).length;
     var b=document.createElement("button"); b.className="pg"+(i===st.page?" on":"");
     b.innerHTML='<i>✓</i>'+esc(p.name)+(n?'<span class="cnt" title="'+n+' design decisions on this page"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 21V12a9 9 0 1 1 9 9z"/></svg>'+n+'</span>':'');
@@ -1236,6 +1252,17 @@ function markTree(reveal){
   row.classList.add("sel");
   if(reveal) row.scrollIntoView({block:"nearest"});
 }
+/* the tree by keyboard: ↑↓ move, → opens, ← closes or goes up, Enter selects */
+tree.setAttribute("tabindex","0");
+tree.addEventListener("keydown",function(e){
+  var rows=[].slice.call(tree.querySelectorAll(".row")), cur=tree.querySelector(".row.kfocus")||tree.querySelector(".row.sel"), i=rows.indexOf(cur);
+  function go(n){ if(!rows.length) return; n=Math.max(0,Math.min(rows.length-1,n)); if(cur) cur.classList.remove("kfocus"); rows[n].classList.add("kfocus"); rows[n].scrollIntoView({block:"nearest"}) }
+  if(e.key==="ArrowDown"){ e.preventDefault(); go(i+1) }
+  else if(e.key==="ArrowUp"){ e.preventDefault(); go(i<0?0:i-1) }
+  else if(e.key==="ArrowRight"&&cur){ e.preventDefault(); if(!cur.classList.contains("open")){ var c=cur.querySelector(".car:not(.none)"); if(c){ c.click(); setTimeout(function(){ var r2=[].slice.call(tree.querySelectorAll(".row")); r2[i].classList.add("kfocus") },0) } } else go(i+1) }
+  else if(e.key==="ArrowLeft"&&cur){ e.preventDefault(); if(cur.classList.contains("open")){ cur.querySelector(".car").click(); setTimeout(function(){ var r2=[].slice.call(tree.querySelectorAll(".row")); r2[i].classList.add("kfocus") },0) } else { var pad=parseFloat(cur.style.paddingLeft)||0; for(var k=i-1;k>=0;k--) if((parseFloat(rows[k].style.paddingLeft)||0)<pad){ go(k); break } } }
+  else if(e.key==="Enter"&&cur){ e.preventDefault(); e.stopPropagation(); cur.click() }
+});
 
 /* ═══ RIGHT PANEL ═══════════════════════════════════════════════════ */
 function renderTabs(){
@@ -1331,7 +1358,7 @@ function varMap(f){
 function paintVar(c,f){ var n=varMap(f)[c.hex+c.a]; return n?'<div class="paint"><span class="sw"><b style="background:'+c.css+'"></b></span><span class="vpill">'+esc(n)+'</span><span class="tx2" style="margin-left:auto">'+c.hex+'</span></div>':paint(c) }
 /* the four pieces the site really repeats are its components */
 function compOf(el,f){
-  if(!el||!el.matches||f.ifr.hasAttribute("srcdoc")) return null;
+  if(!el||!el.matches) return null;
   if(el.matches("#work .workrow")) return {n:"Case card",p:[["Title",(el.querySelector("h3")||{}).textContent||""]]};
   if(el.matches(".rec-item")) return {n:"Testimonial",p:[["Name",(el.querySelector(".rec-name")||{}).textContent||""]]};
   if(el.matches(".navlink,.mrow")) return {n:"Nav link",p:[["Label",el.textContent.trim()]]};
