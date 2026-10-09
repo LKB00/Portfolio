@@ -925,18 +925,23 @@ function readSite(cb){
   ifr.onload=function(){
     setTimeout(function(){
       var d=ifr.contentDocument, w=d.defaultView, rs=w.getComputedStyle(d.documentElement), out={colours:[],type:[],tokens:[]};
-      var seen={};
+      var seen={}, names=[];
       [].forEach.call(d.styleSheets,function(sh){
         var rules; try{ rules=sh.cssRules }catch(e){ return }
         [].forEach.call(rules||[],function(r){
           if(!r.selectorText||r.selectorText.trim()!==":root") return;
-          for(var i=0;i<r.style.length;i++){
-            var n=r.style[i]; if(n.indexOf("--")!==0||seen[n]) continue; seen[n]=1;
-            var val=rs.getPropertyValue(n).trim();
-            if(/^(#|rgb|hsl|color\()/i.test(val)){ var c=color(val); if(c) out.colours.push({n:n,hex:c.hex,a:c.a,css:val}) }
-            else if(/^--(t|r|s)-/.test(n)||n==="--shadow-float") out.tokens.push({n:n,v:val});
-          }
+          for(var i=0;i<r.style.length;i++){ var n=r.style[i]; if(n.indexOf("--")===0&&!seen[n]){ seen[n]=1; names.push(n) } }
         });
+      });
+      /* each variable in both of the site's modes: the theme switched, the values read */
+      var root=d.documentElement, was=root.getAttribute("data-theme");
+      root.setAttribute("data-theme","light"); var LV={}; names.forEach(function(n){ LV[n]=w.getComputedStyle(root).getPropertyValue(n).trim() });
+      root.setAttribute("data-theme","dark"); var DV={}; names.forEach(function(n){ DV[n]=w.getComputedStyle(root).getPropertyValue(n).trim() });
+      root.setAttribute("data-theme",was||"light");
+      names.forEach(function(n){
+        var val=LV[n];
+        if(/^(#|rgb|hsl|color\()/i.test(val)){ var c=color(val), c2=color(DV[n])||c; if(c) out.colours.push({n:n,hex:c.hex,a:c.a,css:val,dhex:c2.hex,da:c2.a,dcss:DV[n]||val}) }
+        else if(/^--(t|r|s)-/.test(n)||n==="--shadow-float") out.tokens.push({n:n,v:val});
       });
       [["Display · hero","#top h1"],["Body · hero line","#top .hero-sub, #top p"],["Card title",".worktext h3"],["Quote","#words blockquote, #words .rec p"],["Note title",".padtriggertext"],["Caption",".padtriggerhint"],["Navigation",".navlink"],["Mono label",".num, .mono"]].forEach(function(t){
         var el=d.querySelector(t[1]); if(!el) return; var cs=w.getComputedStyle(el);
@@ -963,13 +968,19 @@ function foundationsHTML(s){
    '.tr{display:grid;grid-template-columns:200px 1fr 280px;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(36,32,32,.1)}'+
    '.tr .l{font-size:13px;color:#7A7676}.tr .m{font-family:"Geist Mono",monospace;font-size:11px;color:#7A7676;line-height:1.6}'+
    '.tok{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}'+
+   '.vt{border-top:1px solid rgba(36,32,32,.1)}.vh,.vr{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(36,32,32,.1);font-size:13px}'+
+   '.vh{font-family:"Geist Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#7A7676}'+
+   '.vc{display:flex;align-items:center;gap:10px;font-family:"Geist Mono",monospace;font-size:12px}.vc i{position:relative;width:24px;height:24px;border-radius:6px;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(36,32,32,.12);background-image:linear-gradient(45deg,#eee 25%,transparent 25%),linear-gradient(-45deg,#eee 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#eee 75%),linear-gradient(-45deg,transparent 75%,#eee 75%);background-size:8px 8px;background-position:0 0,0 4px,4px -4px,-4px 0}.vc i b{position:absolute;inset:0}'+
+   '[data-theme=dark] .vt,[data-theme=dark] .vh,[data-theme=dark] .vr{border-color:rgba(255,255,255,.1)}[data-theme=dark] .vh{color:#A69E9E}'+
    '@media (max-width:600px){body{width:390px;padding:40px 20px}h1{font-size:36px}.sw{grid-template-columns:repeat(2,1fr)}.tr{grid-template-columns:1fr;gap:6px}.tok{grid-template-columns:1fr 1fr}}'+
    '.t{padding:14px 16px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px rgba(36,32,32,.08);font-family:"Geist Mono",monospace;font-size:12px}.t span{display:block;color:#7A7676;margin-top:4px}'+
    '</style></head><body>'+
    '<h1 class="serif" data-layer="Title">Foundations</h1>'+
    '<p class="lede" data-layer="Note">The system the portfolio is built on. Nothing here is retyped: every value is read from the live homepage when this page opens.</p>'+
-   '<section data-step="colour" data-layer="Colour"><h2>Colour · '+cols.length+' variables</h2><div class="sw">'+cols.map(function(c){
-     return '<div class="c" data-layer="'+esc(c.n.slice(2))+'"><i><b style="background:'+esc(c.css)+'"></b></i><div>'+esc(c.n.slice(2))+'<span>'+c.hex+(c.a<100?' · '+c.a+'%':'')+'</span></div></div>';
+   /* Figma's variables table: one collection, a column per mode */
+   '<section data-step="colour" data-layer="Colour"><h2>Colour · '+cols.length+' variables · 2 modes</h2><div class="vt" data-layer="Colour collection"><div class="vh"><span>Name</span><span>Light</span><span>Dark</span></div>'+cols.map(function(c){
+     var cell=function(css,hex,a){ return '<span class="vc"><i><b style="background:'+esc(css)+'"></b></i>'+hex+(a<100?' · '+a+'%':'')+'</span>' };
+     return '<div class="vr" data-layer="'+esc(c.n.slice(2))+'"><span class="vn">'+esc(c.n.slice(2))+'</span>'+cell(c.css,c.hex,c.a)+cell(c.dcss||c.css,c.dhex||c.hex,c.da==null?c.a:c.da)+'</div>';
    }).join("")+'</div></section>'+
    '<section data-layer="Type"><h2>Type · as used on the homepage</h2><div class="ty">'+s.type.map(function(t){
      var f=famCSS[t.fam]||t.fam;
