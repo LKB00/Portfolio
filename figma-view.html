@@ -52,7 +52,7 @@ svg{flex:none}
 .app.min .lh{left:12px;gap:4px}.app.min .rt{right:12px;gap:8px}
 .app.min .fname{flex:none;flex-direction:row;align-items:center;gap:8px}
 .app.min .fname span{padding:1px 6px;border-radius:4px;background:var(--ui2);font-size:10px;line-height:16px}
-.mz{display:none}.app.min .mz{display:flex;margin-left:0}
+.rt .mz{display:none}.app.min .rt .mz{display:flex;margin-left:0}
 .tx2{color:var(--tx2)}
 
 /* ── shared bits ── */
@@ -415,7 +415,7 @@ button.av{cursor:pointer}
     <div class="toast" id="toast" role="status"></div>
     <div class="intro" id="intro" hidden>
       <img src="./assets/avatar-96.webp" alt="">
-      <span class="it"><b>My portfolio, as a Figma file.</b> <span class="tx2">See how it’s made: the decisions, the system, the history.</span></span>
+      <span class="it"><b>My portfolio, as a Figma file.</b> <span class="tx2">Click any part to see how it’s built, or a case study to open it.</span></span>
       <button class="pri" id="introTour">Take the 1-minute tour</button>
       <button class="ib" id="introOk" aria-label="Dismiss"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
@@ -509,7 +509,9 @@ var HISTORY=[
   {d:"24 Aug 2026",t:"First version",p:"The portfolio goes into version control."}
 ];
 
-/* the 1-minute tour, as Figma's spotlight: you follow my cursor */
+/* the 1-minute tour, as Figma's spotlight: you follow my cursor.
+   Off for now (the user's call): no button, no avatar click, no action. */
+var TOUR_ON=false;
 var TOUR=[
   {page:"Cover",sel:"[data-step=me]",msg:"Hi, I’m Lokesh. This is my portfolio as a design file. Here’s the one-minute version."},
   {page:"Cover",sel:"[data-step=work]",msg:"Four case studies. The newest, an AI agent, is the one to start with."},
@@ -1430,7 +1432,8 @@ function runStep(){
 }
 $("#fnext").addEventListener("click",function(){ step++; closePop(); runStep() });
 $("#fstop").addEventListener("click",function(){ stopFollow() });
-$("#lkAv").addEventListener("click",function(){ following?stopFollow():startFollow() });
+if(TOUR_ON) $("#lkAv").addEventListener("click",function(){ following?stopFollow():startFollow() });
+else { var lk=$("#lkAv"); lk.setAttribute("data-tip","Lokesh Bhatia"); lk.setAttribute("aria-label","Lokesh Bhatia, owner"); lk.style.cursor="default" }
 
 /* ═══ TOOLS, MENUS, KEYS ════════════════════════════════════════════ */
 function setTool(t){
@@ -1453,13 +1456,17 @@ function menu(anchor,items,search,up){
   var m=document.createElement("div"); m.className="menu";
   var list=document.createElement("div");
   function paintList(q){
-    list.innerHTML=""; var first=true;
+    list.innerHTML=""; var first=true, pendH=null, pendHr=false, any=false;
+    /* headings and dividers appear only above a group that has something in it */
     items.forEach(function(it){
-      if(it==="-"){ if(!q) list.appendChild(document.createElement("hr")); return }
-      if(typeof it==="string"){ if(!q){ var h=document.createElement("div"); h.className="mh"; h.textContent=it; list.appendChild(h) } return }
+      if(it==="-"){ if(!q&&any) pendHr=true; return }
+      if(typeof it==="string"){ if(!q) pendH=it; return }
       /* a 4th field marks an action that has a home elsewhere: it shows only when searched */
       if(!q&&it[3]) return;
       if(q&&it[0].toLowerCase().indexOf(q)<0) return;
+      if(pendHr){ list.appendChild(document.createElement("hr")); pendHr=false }
+      if(pendH){ var h=document.createElement("div"); h.className="mh"; h.textContent=pendH; list.appendChild(h); pendH=null }
+      any=true;
       var b=document.createElement("button"); b.innerHTML=esc(it[0])+'<span>'+esc(it[1]||"")+'</span>';
       if(q&&first){ b.classList.add("hl"); first=false }
       b.addEventListener("click",function(){ closeMenus(); it[2]() }); list.appendChild(b);
@@ -1513,6 +1520,7 @@ var ACTIONS=[
   ["Zoom to fit","⇧1",function(){ fit(false) },SEARCH_ONLY],
   ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") },SEARCH_ONLY]
 ];
+if(!TOUR_ON) ACTIONS=ACTIONS.filter(function(it){ return !(it&&it[0]==="Follow Lokesh’s 1-minute tour") });
 if(!DECISIONS.length) ACTIONS=ACTIONS.filter(function(it){ return !(it&&it[0]==="Show design decisions") });
 $("#actBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(this,ACTIONS,true,true) });
 /* Find, as in Figma's left panel: pages and layers, not commands
@@ -1617,7 +1625,7 @@ function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ 
   var seen=false; try{ seen=localStorage.getItem("lb.figma.intro")==="2" }catch(e){}
   if(!seen) $("#intro").hidden=false;
   $("#introOk").addEventListener("click",function(){ closeIntro(); fit(true) });
-  $("#introTour").addEventListener("click",startFollow);
+  if(TOUR_ON) $("#introTour").addEventListener("click",startFollow); else $("#introTour").remove();
   cv.addEventListener("pointerdown",function(e){ if(!e.target.closest(".intro")) closeIntro() },true);
   document.querySelector(".tb").addEventListener("click",closeIntro);
 })();
