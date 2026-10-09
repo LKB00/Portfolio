@@ -622,6 +622,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   letter-spacing:-.005em;color:#1B1B1B}
 .padnote textarea::placeholder{color:rgba(20,20,20,.42)}
 .padnote.t0{background:#FDF0B7}
+.padnote.t1{background:#FBDDE4}
+.padnote.t2{background:#D9E9FB}
+.padnote.t3{background:#DAF0DE}
 
 /* ── the tool pill, floating on the canvas ── */
 .padbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
@@ -633,12 +636,12 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   color:var(--ink);transition:background .18s var(--ease),color .18s var(--ease)}
 @media (hover:hover){.padtool:hover{background:var(--surface)}}
 .padtool[disabled]{color:var(--faint);opacity:.5;background:transparent}
-.padtrash{color:var(--muted)}
-@media (hover:hover){.padtrash:hover{color:var(--ink)}}
+
+
 .padcount{min-width:16px;padding:0 2px;text-align:center;
   font-family:var(--mono);font-size:11px;font-weight:500;color:var(--faint);
   font-variant-numeric:tabular-nums}
-.padsep{width:1px;height:18px;margin:0 3px;background:var(--line)}
+
 .padsend{display:inline-flex;align-items:center;gap:6px;height:32px;
   padding:0 13px;border:0;border-radius:var(--r-pill);cursor:pointer;
   background:var(--ink);color:var(--bg);font-family:inherit;font-size:13px;
@@ -656,16 +659,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   background:var(--card);color:var(--muted);box-shadow:var(--shadow-float);
   font-size:12.5px;line-height:1.35}
 .padtoast svg{flex:0 0 auto;color:var(--accent)}
-/* ── the always-on notice, pinned to the top of the board ──
-   Unlike .padblank (only visible with zero notes, which the trigger
-   button never actually leaves the board in — it opens and adds a
-   note in the same click), this sits above the canvas at all times
-   so the anonymity/reply line is never state-dependent. */
-.padinfo{position:absolute;left:50%;top:14px;transform:translateX(-50%);
-  z-index:8;max-width:calc(100% - 28px);margin:0;padding:0;
-  color:var(--faint);font-size:12px;line-height:1.35;
-  text-align:center;white-space:nowrap;pointer-events:none}
-@media (max-width:560px){.padinfo{font-size:11.5px;white-space:normal}}
+
+
+
 /* scoped to the board itself, not .padwrap: the board is a direct
    child of <body> while it floats open, outside .padwrap entirely */
 #padBoard [hidden]{display:none}
@@ -3185,6 +3181,282 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .rec-item,.rec-item.is-on{transition:opacity .2s ease,visibility 0s}
   .rec-bar.is-on .rec-ring-fill{animation:none;stroke-dashoffset:0}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.padboard.is-floating{height:clamp(420px,44vw,452px)}
+
+.padhead ~ .padtoast,#padBoard .padtoast{top:auto;bottom:62px}
+
+
+
+
+
+
+
+
+
+@keyframes padShakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}
+  40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@media (max-width:560px){
+  .padboard.is-floating{height:clamp(420px,118vw,470px)}
+  
+  
+  .padbar{left:10px;right:10px;transform:none}
+  
+  
+}
+
+
+
+/* ── the send bar, redrawn ──
+   Lucide icons (ISC licence) at one stroke weight, the same set the AI
+   twin uses, instead of hand-drawn marks at three different weights.
+   The field is no longer a grey well inside a white pill: it sits on the
+   bar itself between two hairlines, so the bar reads as one object with
+   one primary action. The note count only matters once there is more
+   than one, so it rides on the plus as a badge. */
+.padbar{gap:2px;padding:6px;height:auto}
+.padbar .padtool{width:36px;height:36px;color:var(--ink)}
+
+.padadd{position:relative}
+.padadd .padcount{position:absolute;top:-1px;right:-3px;min-width:15px;height:15px;padding:0 4px;
+  border-radius:var(--r-pill);background:var(--ink);color:var(--bg);
+  font-family:var(--sans,inherit);font-size:10px;font-weight:600;line-height:15px;text-align:center;
+  box-shadow:0 0 0 2px var(--card);transform:scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.padbar.multi .padadd .padcount{transform:scale(1)}
+
+
+
+
+
+.padbar .padsend{height:36px;padding:0 14px 0 16px;gap:8px;font-size:13.5px;white-space:nowrap;flex:none}
+
+.padbar .padsend svg{transition:transform .2s var(--ease)}
+@media (hover:hover){.padbar .padsend:not([disabled]):hover svg.ico-send{transform:translate(2px,-2px)}}
+@media (max-width:560px){
+  
+  
+  .padbar .padsend{padding:0 12px 0 14px}
+}
+@media (prefers-reduced-motion:reduce){.padadd .padcount,.padbar .padsend svg{transition:none}}
+
+
+
+
+
+
+
+
+
+#padBoard .padtoast{bottom:100px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* a note being written comes forward with a deeper shadow, not a hard
+   outline: the ring read as a second, darker card behind the first */
+.padnote:focus-within{z-index:4;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 14%,transparent),
+  0 18px 30px -16px rgba(16,16,24,.5)}
+.padnote.is-dragging{z-index:5}
+@media (max-width:560px){
+  /* two to a row on a phone, so a second note has somewhere to go */
+  .padnote{width:150px}
+  .padnote textarea{height:86px}
+}
+
+
+.padnote{display:flex;flex-direction:column;height:112px}
+.padnote textarea{flex:1;height:auto;min-height:0}
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes padSigIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+@media (max-width:560px){
+  .padnote{height:118px}
+  /* 16px or iOS zooms on focus; drawn at 12px so the address fits */
+  
+  .padbar{left:50%;right:auto;transform:translateX(-50%)}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* how many notes Send will send, on the button that sends them */
+.padbar .padsend .padcount{position:static;display:none;min-width:18px;height:18px;padding:0 5px;margin-left:-2px;
+  border-radius:var(--r-pill);background:color-mix(in srgb,var(--bg) 20%,transparent);color:var(--bg);
+  box-shadow:none;transform:none;font-family:inherit;font-size:11px;font-weight:600;line-height:18px;text-align:center;
+  font-variant-numeric:tabular-nums}
+.padbar.multi .padsend .padcount{display:inline-block;animation:padCountIn .25s cubic-bezier(.34,1.56,.64,1)}
+@keyframes padCountIn{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+.padsend[disabled] .padcount{display:none!important}
+@media (prefers-reduced-motion:reduce){.padbar.multi .padsend .padcount{animation:none}}
+
+/* ══ THE BOARD, SIMPLIFIED ═══════════════════════════════════════════
+   Notes, and one bar: add · who it's from · send. Nothing above the
+   notes -- the row that opened the board already said what it is for.
+   The bar is there from the first moment, because the chip in it is
+   also the promise about anonymity. */
+.padboard:not(.has-text) .padbar{display:flex}
+.padnote{display:flex;flex-direction:column;height:104px}
+.padnote textarea{flex:1;height:auto;min-height:0}
+@media (max-width:560px){.padnote{height:110px}}
+.padboard.is-floating{height:clamp(380px,40vw,412px)}
+@media (max-width:560px){.padboard.is-floating{height:clamp(380px,108vw,430px)}}
+
+/* who it's from: one chip that states it and changes it */
+.padme{display:flex;align-items:center;min-width:0}
+.padme-anon,.padme-mail{display:flex;align-items:center;gap:7px;height:36px;padding:0 12px;
+  border-radius:var(--r-pill);font-family:inherit;font-size:13px;white-space:nowrap}
+.padme-anon{border:0;cursor:pointer;background:transparent;color:var(--muted);
+  transition:background .18s var(--ease),color .18s var(--ease)}
+.padme-anon svg,.padme-mail svg{flex:none}
+.padme-dot{color:var(--faint)}
+.padme-cta{color:var(--ink);font-weight:500}
+@media (hover:hover){.padme-anon:hover{background:var(--surface)}}
+.padme-anon:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.padme-mail{background:var(--surface);color:var(--muted);padding:0 4px 0 12px;cursor:text;animation:padMeIn .22s var(--ease)}
+.padme-mail input{width:170px;min-width:0;padding:0;border:0;outline:0;background:transparent;
+  font-family:inherit;font-size:13px;color:var(--ink)}
+.padme-mail input::placeholder{color:var(--faint)}
+.padme-mail:focus-within{box-shadow:0 0 0 1.5px var(--accent)}
+.padme.is-known .padme-mail{color:var(--ink)}
+.padme-x{display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:50%;
+  background:transparent;color:var(--faint);cursor:pointer}
+@media (hover:hover){.padme-x:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}}
+.padme-x:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@keyframes padMeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.padbar{gap:4px}
+
+/* the one contextual line, above the bar, only when it helps */
+.padhint{position:absolute;left:50%;bottom:66px;transform:translateX(-50%);z-index:6;
+  display:flex;align-items:center;gap:8px;max-width:calc(100% - 28px);width:max-content;margin:0;
+  padding:6px 13px;border-radius:var(--r-pill);background:var(--card);
+  box-shadow:0 0 0 1px var(--line),0 6px 18px -12px rgba(16,16,24,.35);
+  color:var(--muted);font-size:12px;line-height:1.35;animation:padMeIn .22s var(--ease)}
+.padhint svg{flex:none;color:var(--ink)}
+.padhint .padlink{all:unset;cursor:pointer;color:var(--ink);font-weight:500;white-space:nowrap;
+  text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 30%,transparent);text-underline-offset:2px}
+@media (hover:hover){.padhint .padlink:hover{text-decoration-color:var(--ink)}}
+.padhint .padlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+#padBoard .padtoast{bottom:110px}
+
+@media (max-width:560px){
+  .padbar{left:50%;right:auto;transform:translateX(-50%);max-width:calc(100% - 20px)}
+  .padme{flex:1;min-width:0}
+  .padme-anon{padding:0 8px;gap:5px;font-size:12px}
+  .padme-mail{flex:1;min-width:0}
+  .padme-mail input{width:100%;font-size:16px}
+  .padhint{font-size:11.5px;white-space:normal}
+}
+@media (max-width:370px){.padme-anon svg{display:none}}
+@media (prefers-reduced-motion:reduce){.padme-mail,.padhint{animation:none}.padme-anon{transition:none}}
+
+/* text wraps clear of the strip a neighbour may overlap */
+.padnote textarea{padding-right:18px}
+
+/* the anonymity line, back at the top of the board */
+.padtop{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:6;
+  display:flex;align-items:center;gap:8px;width:max-content;max-width:calc(100% - 28px);margin:0;
+  padding:4px 14px 4px 4px;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--card) 88%,transparent);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  box-shadow:0 0 0 1px var(--line),0 6px 18px -12px rgba(16,16,24,.35);
+  color:var(--muted);font-size:12px;line-height:1.35;white-space:nowrap}
+.padtop-ico{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;
+  background:var(--surface);color:var(--muted);transition:background .2s var(--ease),color .2s var(--ease)}
+.padtop .ico-known,.padtop.is-known .ico-anon{display:none}
+.padtop.is-known .ico-known{display:block}
+.padtop.is-known{color:var(--ink)}
+.padtop.is-known .padtop-ico{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.padtop b{font-weight:500;color:var(--ink)}
+.padtop .padlink{all:unset;cursor:pointer;color:var(--ink);font-weight:500;white-space:nowrap;
+  text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 30%,transparent);text-underline-offset:2px}
+@media (hover:hover){.padtop .padlink:hover{text-decoration-color:var(--ink)}}
+.padtop .padlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+@media (max-width:560px){.padtop{top:10px}}
+
+/* the field, when asked for */
+.padme-mail{background:var(--surface)}
+.padme-mail.is-bad{box-shadow:0 0 0 1.5px #C64B6E;color:#C64B6E}
+.padme-mail.is-bad:focus-within{box-shadow:0 0 0 1.5px #C64B6E}
+.padme-mail.is-nudged{animation:padShakeX .42s ease-in-out}
+@keyframes padShakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}
+  40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.padtop.is-bad{color:#C64B6E}
+.padtop.is-bad .padtop-ico{background:color-mix(in srgb,#C64B6E 12%,transparent);color:#C64B6E}
+/* a full board: + goes quiet, and the note says it in one line */
+.padadd.is-full{color:var(--faint)}
+#padBoard .padtoast{white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.padme-mail.is-nudged{animation:none}}
+
+/* messages rise from the bar into the strip kept clear of notes */
+#padBoard .padtoast{bottom:64px;padding:6px 12px;font-size:12px}
+
+@media (max-width:560px){
+  /* with the email field open, the bar takes the width so the address is readable */
+  .padbar:has(.padme-mail:not([hidden])){left:10px;right:10px;transform:none;max-width:none}
+}
+
+/* closing is a deliberate act, so it has its own control */
+.padclose{position:absolute;top:12px;right:12px;z-index:7;display:grid;place-items:center;
+  width:32px;height:32px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:transparent;color:var(--muted);transition:background .18s var(--ease),color .18s var(--ease)}
+@media (hover:hover){.padclose:hover{background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--ink)}}
+.padclose:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.padtop{max-width:calc(100% - 104px)}
+@media (max-width:560px){.padtop{white-space:normal;left:12px;transform:none;max-width:calc(100% - 64px)}
+  .padclose{top:8px;right:8px}}
+/* the empty board: the + and what it does */
+.padblank{bottom:96px}
+.padblank-t{margin:0;font-size:12.5px;color:var(--muted)}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3436,7 +3708,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="notes" data-section="Notes board">
       <div class="padwrap" data-reveal>
-      <h2 class="sr-only">The floor is yours.</h2>
+      <h2 class="sr-only">I&#8217;d love to hear your thoughts</h2>
 
       <div class="notesrow">
       <div class="padstack">
@@ -3445,35 +3717,44 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         </span>
         <span class="padtriggercopy">
-          <span class="padtriggertext">The floor is yours.</span>
-          <span class="padtriggerhint">Leave a note &#8212; anonymous, and I read every one.</span>
+          <span class="padtriggertext">I&#8217;d love to hear your thoughts.</span>
+          <span class="padtriggerhint">What do you think of my work and this portfolio? Anonymous, unless you add your email for a reply.</span>
         </span>
       </button>
 
       <div class="padboard" id="padBoard">
-        <p class="padinfo" id="padInfo">It&#8217;s anonymous. Want a reply? Add your email or contact info.</p>
+        <button type="button" class="padclose" id="padClose" aria-label="Close the board" title="Close (Esc)"><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
         <div class="padblank" id="padBlank">
-          <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
+          <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add a note">
             <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </button>
+          <p class="padblank-t">Add a note</p>
         </div>
 
         <div class="padtoast" id="padToast" role="status" hidden>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span id="padToastText">Sent. Thank you &#8212; I read every one.</span>
+          <span id="padToastText">Sent. Thank you, I read every one.</span>
         </div>
 
+        <p class="padtop" id="padTop" aria-live="polite">
+          <span class="padtop-ico" aria-hidden="true"><svg class="ico-anon" width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg><svg class="ico-known" width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="m16 19 2 2 4-4"/></svg></span>
+          <span id="padTopText"></span></p>
+        <p class="padhint" id="padHint" aria-live="polite" hidden></p>
         <div class="padbar" role="toolbar" aria-label="Board tools">
-          <button type="button" class="padtool" id="padAdd" title="Add a note" aria-label="Add a note">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
-          <span class="padcount" id="padCount" aria-live="polite">1</span>
-          <span class="padsep" aria-hidden="true"></span>
-          <button type="button" class="padtool padtrash" id="padClear" title="Clear the board" aria-label="Clear the board">
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 4.5h9M6.5 4.5V3.2h3v1.3M5 4.5l.6 8h4.8l.6-8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="padtool padadd" id="padAdd" title="Add a note" aria-label="Add a note">
+            <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
+          <div class="padme" id="padWho">
+            <label class="padme-mail" id="padWhoMail" hidden>
+              <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input id="padEmail" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="120" placeholder="your@email.com" aria-label="Your email, so I can reply">
+              <button type="button" class="padme-x" id="padWhoX" aria-label="Remove email and send anonymously"><svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+            </label>
+          </div>
           <button type="button" class="padsend" id="padSend" title="Send these to me" aria-label="Send these notes to Lokesh">
-            <svg class="ico-send" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14 2 7.4 8.6M14 2l-4.3 12-2.3-5.4L2 6.3 14 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-            <svg class="ico-done" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="sendlabel">Send</span></button>
+            <span class="sendlabel">Send</span>
+            <span class="padcount" id="padCount" aria-hidden="true">1</span>
+            <svg class="ico-send" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+            <svg class="ico-done" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></button>
         </div>
       </div>
       </div>
@@ -3939,11 +4220,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       addBtn=document.getElementById("padAdd"),
       blankAdd=document.getElementById("padBlankAdd"),
       sendBtn=document.getElementById("padSend"),
-      clearBtn=document.getElementById("padClear"),
       count=document.getElementById("padCount"),
       toast=document.getElementById("padToast"),
-      toastText=document.getElementById("padToastText");
-  if(!addBtn||!blankAdd||!sendBtn||!clearBtn||!count||!toast) return;
+      toastText=document.getElementById("padToastText"),
+      hint=document.getElementById("padHint"),
+      who=document.getElementById("padWho"),
+      whoMail=document.getElementById("padWhoMail"),
+      emailIn=document.getElementById("padEmail"),
+      whoX=document.getElementById("padWhoX"),
+      top=document.getElementById("padTop"),
+      topText=document.getElementById("padTopText");
+  if(!addBtn||!blankAdd||!sendBtn||!count||!toast) return;
 
   /* the board's own spot on the page, so it can be moved back to it on
      close — it floats as a direct child of <body> while open, which is
@@ -3960,14 +4247,217 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      keeps working either way.
      ───────────────────────────────────────────────────────────────── */
   var SHEET_URL = "https://script.google.com/macros/s/AKfycbyK0dI4FgZ6NxfpPcsAoRoccPWE4FRUKQdXlazPBXx8LpXcB3mpcqF-wweGusk9SRDbPA/exec";
-  var notes=[], sending=false;
+  var notes=[], sending=false, fullAt=Infinity;
+
+  /* ── one bar: add, who it's from, send ──
+     The visitor is never asked to sort their note. What it is about is
+     read from the words, and only one case changes anything on screen:
+     a note about work gets my address and LinkedIn. The sheet still gets
+     a label. */
+  var LINKEDIN="https://www.linkedin.com/in/lkb01/";
+  var LABEL={feedback:"Feedback",question:"Question",work:"Work",hi:"Hi"};
+  function guess(t){
+    t=(t||"").trim();
+    if(/\b(hir(e|ing)|role|position|opening|job|freelance|contract|recruit|opportunit|collab|work with|join (us|our)|interview|portfolio review)\b/i.test(t)) return "work";
+    if(/\?\s*$/.test(t)||/^(how|what|why|when|where|who|which|can|could|do|did|does|is|are|would|will)\b/i.test(t)) return "question";
+    if(/^(hi|hey|hello|hii+|yo|namaste)\b/i.test(t)&&t.length<60) return "hi";
+    return "feedback";
+  }
+  var META="lb.notes.meta", email="", editing=false;
+  function readMeta(){ try{ return JSON.parse(localStorage.getItem(META))||{} }catch(e){ return {} } }
+  function saveMeta(){ try{ localStorage.setItem(META,JSON.stringify({email:email})) }catch(e){} }
+  /* an address only counts once it looks like one */
+  var EMAIL_RE=/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i;
+  function valid(e){ return EMAIL_RE.test((e||"").trim()) }
+  function known(){ return valid(email)?email.trim():"" }
+  var flagged=false;   /* show "doesn't look like an email" only after they leave the field or try to send */
+  function bad(){ return !!email.trim() && !valid(email) }
+
+  /* The bar is just add and send. The email field appears when someone
+     asks for it (the link in the line at the top), and stays while it
+     holds an address. */
+  function paintWho(){
+    var on=editing||!!email.trim();
+    if(whoMail) whoMail.hidden=!on;
+    var isBad=flagged&&bad();
+    if(whoMail) whoMail.classList.toggle("is-bad",isBad);
+    if(emailIn) emailIn.setAttribute("aria-invalid",isBad?"true":"false");
+    if(who) who.classList.toggle("is-known",!!known());
+    if(emailIn && document.activeElement!==emailIn) emailIn.value=email;
+    /* the line at the top, in the state it is in. "Add your email" is
+       only a link once there is something to send. */
+    if(top && topText){
+      var me=known(), narrow=matchMedia("(max-width:560px)").matches;
+      top.classList.toggle("is-known",!!me);
+      top.classList.toggle("is-bad",isBad);
+      if(isBad) topText.textContent=narrow?"That doesn’t look like an email.":"That doesn’t look like an email. Fix it, or remove it to stay anonymous.";
+      else if(me){ topText.innerHTML="I’ll know it’s you, and reply to <b></b>."; topText.querySelector("b").textContent=me }
+      else if(editing) topText.textContent=narrow?"Add your email to get a reply.":"Add your email below and I’ll reply to it.";
+      else topText.innerHTML=(narrow?"Anonymous. ":"Anonymous: I won’t know it’s you. ")+(board.classList.contains("has-text")
+        ? '<button type="button" class="padlink" data-act="email">Add your email</button>'
+        : "Add your email")+" to get a reply.";
+    }
+    var w=written().length;
+    sendBtn.setAttribute("aria-label",(w>1?"Send "+w+" notes":"Send")+(known()?" to Lokesh, from "+known():" to Lokesh anonymously"));
+  }
+  function openEmail(){
+    editing=true; paintWho();
+    if(emailIn){ emailIn.focus({preventScroll:true}) }
+  }
+  if(top){
+    top.addEventListener("pointerdown",function(e){ if(e.target.closest('[data-act="email"]')) e.preventDefault() });
+    top.addEventListener("click",function(e){ if(e.target.closest('[data-act="email"]')) openEmail() });
+  }
+  if(emailIn){
+    emailIn.addEventListener("input",function(){
+      email=emailIn.value;
+      if(flagged && !bad()) flagged=false;   /* clears the moment it is fixed */
+      saveMeta(); paintWho();
+    });
+    emailIn.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); emailIn.blur() } });
+    emailIn.addEventListener("blur",function(){
+      editing=false; email=emailIn.value.trim(); flagged=bad(); saveMeta(); paintWho();
+    });
+  }
+  if(whoX){
+    whoX.addEventListener("pointerdown",function(e){ e.preventDefault() });
+    whoX.addEventListener("click",function(){
+      email=""; editing=false; flagged=false; if(emailIn) emailIn.value=""; saveMeta(); paintWho();
+    });
+  }
+
+  /* the one contextual line, only when it helps */
+  var BRIEF='<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>';
+  var hintKind="";
+  function paintHint(){
+    if(!hint) return;
+    var kinds=written().map(function(n){ return guess(n.text) }),
+        k=kinds.indexOf("work")>-1?"work":"";
+    if(k===hintKind) return;
+    hintKind=k;
+    if(!k){ hint.hidden=true; hint.innerHTML=""; return }
+    hint.innerHTML=BRIEF+'<span>Hiring? Reach me at <button type="button" class="padlink" data-act="copy">'+MAIL+'</button> or <a class="padlink" href="'+LINKEDIN+'" target="_blank" rel="noopener">LinkedIn</a></span>';
+    hint.hidden=false;
+  }
+  if(hint){
+    hint.addEventListener("pointerdown",function(e){ if(e.target.closest("[data-act]")) e.preventDefault() });
+    hint.addEventListener("click",function(e){
+      var a=e.target.closest("[data-act]"); if(!a) return;
+      if(a.dataset.act==="copy"){
+        var done=function(){ showToast("Copied "+MAIL) };
+        if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(MAIL).then(done,function(){ window.copyText&&window.copyText(MAIL) });
+        else if(window.copyText) window.copyText(MAIL);
+      }
+    });
+  }
+
+  /* the header's real height, so notes can never be dropped under it */
+  function topSpace(){ return (edge()<20?22:30)+(top?top.offsetHeight+4:0) }
+  function placeAll(){
+    if(!board.classList.contains("is-floating")) return;
+    notes.forEach(function(n){ var el=ELS.get(n); if(el) settle(el,n) });
+  }
+  var ELS=new Map();
+
+  /* ── where a note may sit ──
+     Between the header and the status line + send bar, never under
+     either. The bottom reserve is fixed rather than read from the bar,
+     which is hidden until there is text: reading it live meant the
+     space changed the moment someone typed and notes jumped. */
+  var GAP=12, BOTTOM=96;
+  /* room around the cluster: generous on a desktop, tighter on a phone so two notes still fit across */
+  function edge(){ return board.getBoundingClientRect().width<420?14:30 }
+  function area(){
+    var bb=board.getBoundingClientRect();
+    return {w:bb.width,h:bb.height,top:topSpace(),left:edge(),right:bb.width-edge(),bottom:bb.height-BOTTOM};
+  }
+  function rectOf(n,el,A){
+    return {x:n.x/100*A.w,y:n.y/100*A.h,w:el.offsetWidth,h:el.offsetHeight};
+  }
+  function hits(a,b,gap){
+    return a.x<b.x+b.w+gap && b.x<a.x+a.w+gap && a.y<b.y+b.h+gap && b.y<a.y+a.h+gap;
+  }
+  /* The first free slot, reading order: left to right, top to bottom, on
+     an even grid that fills the usable area. When none is left the board
+     is full (six on a desktop, four on a phone): a note is never dropped
+     on top of another. */
+  /* A loose cluster, the way notes end up on a real board: slots a
+     little closer than a note is wide, so neighbours just overlap, the
+     whole group centred with room around it, and each note nudged off
+     its slot at random. A slot counts as taken when a note's centre is
+     in it, so the jitter never makes the board think it is full. */
+  var OVER_X=8, OVER_Y=2, JIT_X=6, JIT_Y=8;
+  function overlap(a,b){
+    var ix=Math.max(0,Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x)),
+        iy=Math.max(0,Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y));
+    return ix*iy/(a.w*a.h);
+  }
+  function freeSpot(el,others){
+    var A=area(); if(!A.w) return {x:8,y:20};
+    var w=el.offsetWidth,h=el.offsetHeight,
+        W=A.right-A.left, H=A.bottom-A.top,
+        sx=w-OVER_X, sy=h-OVER_Y,
+        cols=Math.max(1,Math.floor((W-w)/sx)+1),
+        rows=Math.max(1,Math.floor((H-h)/sy)+1),
+        ox=A.left+(W-(w+(cols-1)*sx))/2,
+        oy=A.top+Math.max(0,(H-(h+(rows-1)*sy))/2),
+        rects=others.map(function(o){ return rectOf(o.n,o.el,A) });
+    function rnd(k){ return (Math.random()*2-1)*k }
+    for(var r=0;r<rows;r++) for(var c=0;c<cols;c++){
+      var cx=ox+c*sx+w/2, cy=oy+r*sy+h/2;
+      var taken=rects.some(function(q){
+        return Math.abs(q.x+q.w/2-cx)<sx/2 && Math.abs(q.y+q.h/2-cy)<sy/2;
+      });
+      if(taken) continue;
+      var x=Math.min(A.right-w,Math.max(A.left,ox+c*sx+rnd(JIT_X))),
+          y=Math.min(A.bottom-h,Math.max(A.top,oy+r*sy+rnd(JIT_Y)));
+      return {x:x/A.w*100,y:y/A.h*100};
+    }
+    /* off-grid notes (dragged, or saved on another screen) can leave a
+       real gap: take any spot that covers no other note by more than a
+       corner */
+    for(var yy=A.top;yy<=A.bottom-h;yy+=8) for(var xx=A.left;xx<=A.right-w;xx+=8){
+      var m={x:xx,y:yy,w:w,h:h};
+      if(!rects.some(function(q){ return overlap(m,q)>.12 })) return {x:xx/A.w*100,y:yy/A.h*100};
+    }
+    return null;
+  }
+  function others(except){
+    return notes.filter(function(n){ return n!==except && ELS.get(n) }).map(function(n){ return {n:n,el:ELS.get(n)} });
+  }
+  /* Notes saved on another screen come back in percentages of a board
+     that was a different size, so on a phone they can land on each
+     other. If any two overlap, the whole board is laid out again in the
+     order it reads (top to bottom, left to right), each into the first
+     free slot. Notes that do not overlap anything are left exactly where
+     their writer put them. Past the board's capacity, the extras stack
+     neatly on the last slot, offset so each one's edge still shows. */
+  function untangle(){
+    var A=area(); if(!A.w) return;
+    var list=notes.filter(function(n){ return ELS.get(n) });
+    var clash=list.some(function(n,i){
+      var a=rectOf(n,ELS.get(n),A);
+      return list.slice(i+1).some(function(m){ return overlap(a,rectOf(m,ELS.get(m),A))>.3 });
+    });
+    if(!clash) return;
+    list.sort(function(a,b){ return (a.y-b.y)||(a.x-b.x) });
+    var placed=[], lastSpot=null, extra=0;
+    list.forEach(function(n){
+      var el=ELS.get(n), s=freeSpot(el,placed);
+      if(s){ lastSpot=s }
+      else if(lastSpot){ extra++; s={x:lastSpot.x+extra*8/A.w*100*-1, y:lastSpot.y+extra*8/A.h*100} }
+      if(s){ n.x=s.x; n.y=s.y; settle(el,n) }
+      placed.push({n:n,el:el});
+    });
+    save();
+  }
 
   function read(){ try{ return JSON.parse(localStorage.getItem(KEY)) }catch(e){ return null } }
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(notes)) }catch(e){} }
   function written(){ return notes.filter(function(n){ return (n.text||"").trim() }) }
   function blank(){
     var i=notes.findIndex(function(n){ return !(n.text||"").trim() });
-    return i<0?null:{note:notes[i],el:board.querySelectorAll(".padnote")[i]};
+    return i<0?null:{note:notes[i],el:ELS.get(notes[i])};
   }
 
   function open(){
@@ -3987,15 +4477,15 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     /* notes restored from a previous visit were positioned against a
        closed board that had no real size yet — re-clamp them now that
        the board has one */
-    var els=board.querySelectorAll(".padnote");
-    notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
+    placeAll(); untangle();
   }
   /* A successful send empties the board, and sync() closes an empty
      board — which used to hide the thank-you in the same tick it was
      shown. The one moment that has to be confirmed was the one moment
      nothing was. So closing waits for the toast to finish; the toast's
      own timer calls sync() again on the way out. */
-  function close(){
+  function close(force){
+    if(force===true) hideToast();
     if(wrap && toast.hidden){
       wrap.classList.remove("is-open");
       if(trigger) trigger.disabled=false;
@@ -4007,22 +4497,26 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   function sync(){
     var n=notes.length, w=written().length;
-    /* an empty board is just space: give it back. It never opens itself
-       the other way — that used to also fire on the very first render
-       for a returning visitor with saved notes, popping the modal open
-       over whatever they'd actually scrolled to. Opening is always a
-       click now: the trigger, explicitly. */
-    if(n===0) close();
+    /* Opening is always a click on the trigger; the board never opens
+       itself for a returning visitor with saved notes. */
+    /* an empty board stays open: deleting the last note is not a request
+       to leave. It shows the big + instead. Closing is always explicit --
+       the close button, Escape, the backdrop -- or the pause after a send. */
     board.classList.toggle("has-notes",n>0);   /* hides the empty state */
+    var hadText=board.classList.contains("has-text");
     board.classList.toggle("has-text",w>0);    /* brings up the toolbar */
-    count.textContent=String(n);
+    paintHint(); paintWho();
+    /* the count is of what will be sent, so it lives on Send and counts
+       only notes with words in them */
+    count.textContent=String(w);
+    var bar=board.querySelector(".padbar"); if(bar) bar.classList.toggle("multi",w>1);
     /* Add stays live even when a blank note is on the board: greying it
        out leaves the visitor guessing. It is clickable, and clicking it
        shakes the note that still needs filling — a refusal that says
        which note, instead of a dead button that says nothing. */
     addBtn.disabled = n>=MAX;
+    if(n<fullAt){ fullAt=Infinity; addBtn.classList.remove("is-full"); addBtn.title="Add a note" }
     sendBtn.disabled = w===0 || sending;
-    clearBtn.disabled = n===0;
   }
 
   function nudge(){
@@ -4034,10 +4528,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   function settle(el,note){
     var bb=board.getBoundingClientRect(); if(!bb.width) return;
-    var pad=6,
-        maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
-        maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
-        minX=pad/bb.width*100, minY=(pad+TOPBAR)/bb.height*100;
+    var A=area(),
+        maxX=(A.right-el.offsetWidth)/A.w*100,
+        maxY=(A.bottom-el.offsetHeight)/A.h*100,
+        minX=A.left/A.w*100, minY=A.top/A.h*100;
     note.x=Math.max(minX,Math.min(note.x,Math.max(minX,maxX)));
     note.y=Math.max(minY,Math.min(note.y,Math.max(minY,maxY)));
     el.style.left=note.x+"%"; el.style.top=note.y+"%";
@@ -4055,13 +4549,13 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       '<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>'+
       '</svg></button></div>';
     var ta=document.createElement("textarea");
-    ta.placeholder="Type a note…"; ta.value=note.text||"";
+    ta.placeholder="Feedback, a question, or just hi…"; ta.value=note.text||"";
     ta.setAttribute("aria-label","Note text");
     ta.addEventListener("input",function(){ note.text=ta.value; save(); sync() });
     el.appendChild(ta);
 
     el.querySelector(".padkill").addEventListener("click",function(){
-      notes.splice(notes.indexOf(note),1); el.remove(); save(); sync();
+      notes.splice(notes.indexOf(note),1); ELS.delete(note); el.remove(); save(); sync();
     });
 
     var grip=el.querySelector(".padgrip"), dx=0, dy=0;
@@ -4075,10 +4569,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       board.appendChild(el);
       try{ grip.setPointerCapture(e.pointerId) }catch(err){}
       function move(ev){
-        var bb=board.getBoundingClientRect(), pad=6,
-            maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
-            maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
-            minX=pad/bb.width*100, minY=pad/bb.height*100;
+        var bb=board.getBoundingClientRect(), A=area(),
+            maxX=(A.right-el.offsetWidth)/A.w*100,
+            maxY=(A.bottom-el.offsetHeight)/A.h*100,
+            minX=A.left/A.w*100, minY=A.top/A.h*100;
         var x=(ev.clientX-bb.left-dx)/bb.width*100,
             y=(ev.clientY-bb.top-dy)/bb.height*100;
         note.x=Math.max(minX,Math.min(x,Math.max(minX,maxX)));
@@ -4109,6 +4603,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     });
 
     board.appendChild(el);
+    ELS.set(note,el);
     return el;
   }
 
@@ -4137,12 +4632,20 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
 
   function add(x,y){
-    if(notes.length>=MAX) return;
+    if(notes.length>=MAX){ showToast("That’s the most the board holds. Send these first."); return }
     if(blank()){ nudge(); return }     /* one blank note at a time */
     var i=notes.length;
-    var note={ x:x, y:y, text:"", tone:i%4, tilt:[-2,1.4,-1,2][i%4] };
+    /* a fresh tilt each time, never quite level */
+    var t=(1+Math.random()*2.6)*(Math.random()<.5?-1:1);
+    var note={ x:x||0, y:y||0, text:"", tone:i%4, tilt:Math.round(t*10)/10 };
+    var el=render(note);
+    if(x===undefined){
+      var s=freeSpot(el,others(note));
+      if(!s){ ELS.delete(note); el.remove(); fullAt=notes.length; addBtn.classList.add("is-full"); addBtn.title="The board is full"; showToast("Board’s full. Send these first."); return }
+      note.x=s.x; note.y=s.y;
+    }
     notes.push(note); save(); sync();
-    var el=render(note); settle(el,note);
+    settle(el,note);
     el.classList.add("is-new");
     el.addEventListener("animationend",function(){ el.classList.remove("is-new") },{once:true});
     /* preventScroll: focusing a field inside a box that is still growing
@@ -4165,45 +4668,65 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     },0);
   });
 
-  blankAdd.addEventListener("click",function(){ add(8,12) });
+  blankAdd.addEventListener("click",function(){ add() });
   /* one move: open the board and start the note */
-  if(trigger) trigger.addEventListener("click",function(){ open(); add(8,12) });
+  if(trigger) trigger.addEventListener("click",function(){
+    open();
+    if(!notes.length){ add(); return }
+    var b=blank(), el=b?b.el:ELS.get(notes[notes.length-1]), ta=el&&el.querySelector("textarea");
+    if(ta){ ta.focus({preventScroll:true}); var n=ta.value.length; try{ ta.setSelectionRange(n,n) }catch(e){} }
+  });
   /* floating card, so it dismisses the way every other overlay on this
      page does: a click on the backdrop, or Escape — the notes already
      written stay put in localStorage either way, nothing is lost */
   if(overlay) overlay.addEventListener("click",close);
+  var closeBtn=document.getElementById("padClose");
+  if(closeBtn) closeBtn.addEventListener("click",function(){ close(true) });
   window.addEventListener("keydown",function(e){
     if(e.key==="Escape" && wrap && wrap.classList.contains("is-open")) close();
   });
-  addBtn.addEventListener("click",function(){
-    var n=notes.length; add(6+(n%4)*21, 8+(Math.floor(n/4)%3)*24);
-  });
+  addBtn.addEventListener("click",function(){ add() });
   board.addEventListener("dblclick",function(e){
     if(e.target.closest(".padnote")||e.target.closest(".padbar")||e.target.closest(".padblank")) return;
     var bb=board.getBoundingClientRect();
     add((e.clientX-bb.left-76)/bb.width*100,(e.clientY-bb.top-14)/bb.height*100);
   });
 
-  clearBtn.addEventListener("click",function(){
-    notes=[];
-    [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() });
-    hideToast(); save(); sync();
-  });
-
   /* It carries no decision, so it needs no dismiss: it says its piece
      and goes. 4.2s is a short sentence read once, unhurried. */
-  var toastTimer=null;
+  var toastTimer=null, closeAfterToast=false;
   function showToast(msg){
     toastText.textContent=msg; toast.hidden=false;
     clearTimeout(toastTimer);
-    toastTimer=setTimeout(function(){ hideToast(); sync() },4200);
+    toastTimer=setTimeout(function(){
+      hideToast(); sync();
+      if(closeAfterToast){ closeAfterToast=false; close(true) }
+    },4200);
   }
   function hideToast(){ clearTimeout(toastTimer); toast.hidden=true }
 
   sendBtn.addEventListener("click",function(){
     var lines=written().map(function(n,i){ return (i+1)+". "+n.text.trim() });
     if(!lines.length||sending) return;
-    var bodyText="Notes from your portfolio:\n\n"+lines.join("\n\n");
+    if(bad()){
+      flagged=true; editing=true; paintWho();
+      if(whoMail){ whoMail.classList.remove("is-nudged"); void whoMail.offsetWidth; whoMail.classList.add("is-nudged") }
+      if(emailIn) emailIn.focus({preventScroll:true});
+      return;
+    }
+    var back=known(), anySigned=!!back;
+    /* work without any way back is the one note that can't do its job:
+       ask once, then let it go if they still want to send it as is */
+    if(!back && written().some(function(n){ return guess(n.text)==="work" }) && !/@|linkedin|\+?\d[\d\s-]{7,}/i.test(lines.join(" ")) && !sendBtn.dataset.asked){
+      sendBtn.dataset.asked="1";
+      openEmail();
+      showToast("Add your email so I can reply. Or press Send again.");
+      return;
+    }
+    delete sendBtn.dataset.asked;
+    function tagOf(n){ return "["+LABEL[guess(n.text)]+(back?" · reply to "+back:" · anonymous")+"] " }
+    var tagged=written().map(function(n){ return tagOf(n)+n.text.trim() });
+    var bodyText="Notes from your portfolio\n\n"+tagged.map(function(t,i){ return (i+1)+". "+t }).join("\n\n");
     sending=true; sync();
     var label=sendBtn.querySelector(".sendlabel");
     if(label) label.textContent="Sending…";
@@ -4216,7 +4739,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     fetch(SHEET_URL,{method:"POST",
       headers:{"Content-Type":"text/plain;charset=utf-8"},
       body:JSON.stringify({
-        notes:written().map(function(n){ return n.text.trim() }),
+        notes:tagged,
+        topic:guess(written()[0].text),
+        replyTo:anySigned?back:"",
         page:location.href,
         sentAt:new Date().toISOString()
       })})
@@ -4226,9 +4751,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       if(label) label.textContent="Send";
       sendBtn.classList.add("is-done");
       setTimeout(function(){ sendBtn.classList.remove("is-done") },2600);
-      showToast("Sent. Thank you — I read every one.");
+      closeAfterToast=true;
+      showToast(anySigned?"Sent. I’ll reply to "+back+".":"Sent anonymously. Thank you, I read every one.");
       notes=[]; save();
-      [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() });
+      [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() }); ELS.clear();
       sync();
     })
     .catch(function(){ handOff(bodyText,"Couldn’t reach the board’s inbox — opening your mail app instead.") });
@@ -4263,6 +4789,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     scope.style.setProperty("--trig-h",h+"px");
   }
 
+  var meta=readMeta();
+  email=meta.email||"";
   var stored=read();
   if(Array.isArray(stored)&&stored.length){
     notes=stored;
@@ -4293,9 +4821,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
          re-settles everything against the real thing the moment it's
          actually asked for */
       if(wrap && wrap.classList.contains("is-open")){
-        var els=board.querySelectorAll(".padnote");
-        notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
-        save();
+        placeAll(); untangle();
       }
     },160);
   });
