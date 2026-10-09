@@ -375,6 +375,13 @@ button.av{cursor:pointer}
   font-size:calc(13px / var(--z,1));color:var(--tx2);white-space:nowrap}
 @keyframes shimmer{from{background-position:150% 0}to{background-position:-50% 0}}
 @media (prefers-reduced-motion:reduce){.frame.loading::before{animation:none}}
+/* Figma's hyperlink popover: shown above a link you click on the canvas */
+.lpop{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;height:32px;padding:0 6px 0 10px;border-radius:8px;background:var(--ui);color:var(--tx);
+  box-shadow:0 0 .5px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.14);font-size:11px;white-space:nowrap;transform:translate(-50%,calc(-100% - 8px));pointer-events:auto;cursor:default}
+.lpop .lp-t{color:var(--tx2);max-width:220px;overflow:hidden;text-overflow:ellipsis}
+.lpop button{display:flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:5px;color:var(--blue);font-weight:500}
+.lpop button:hover{background:var(--blueSoft)}
+.ixgo{color:var(--blue);text-decoration:none;font-weight:500}.ixgo:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -573,6 +580,39 @@ function pageOfLink(t){
   for(var i=0;i<PAGES.length;i++) if(PAGES[i].src&&PAGES[i].src.replace("./","")===path) return i;
   return -1;
 }
+/* Where a link goes, from the element's own attributes only. Used by the
+   canvas popover and by Interactions, so both always say the same. */
+function linkInfo(el,f){
+  if(!el||!el.closest) return null;
+  var a=el.closest("a[href],[data-go],[data-href],[data-copy],[data-home]"); if(!a) return null;
+  if(a.dataset&&a.dataset.home) return {a:a,kind:"home",verb:"Back to the website",label:"",act:home};
+  if(a.dataset&&a.dataset.go){ var gi=pageIndex(a.dataset.go); return {a:a,kind:"page",verb:"Navigate to",label:a.dataset.go,act:function(){ T("fv_follow_link",{from:pageSlug(),to:pageSlug(gi)}); loadPage(gi) }} }
+  if(a.dataset&&a.dataset.copy) return {a:a,kind:"copy",verb:"Copy",label:a.dataset.copy,act:function(){ copy(a.dataset.copy,"Copied "+a.dataset.copy) }};
+  if(a.dataset&&a.dataset.href) return {a:a,kind:"url",verb:"Open link",label:a.dataset.href.replace(/^https?:\/\//,"").replace(/\/$/,""),act:function(){ T("fv_follow_link",{from:pageSlug(),to:"external"}); window.open(a.dataset.href,"_blank","noopener") }};
+  var href=a.getAttribute("href")||"";
+  if(/^mailto:/i.test(href)){ var m=href.replace(/^mailto:/i,"").split("?")[0]; return {a:a,kind:"copy",verb:"Copy",label:m,act:function(){ copy(m,"Copied "+m) }} }
+  var pi=pageOfLink(a);
+  if(pi>-1&&pi!==st.page) return {a:a,kind:"page",verb:"Navigate to",label:PAGES[pi].name,act:function(){ T("fv_follow_link",{from:pageSlug(),to:pageSlug(pi)}); loadPage(pi) }};
+  var hash=href.indexOf("#")>-1?href.slice(href.indexOf("#")+1):"";
+  if((pi===st.page||href.charAt(0)==="#")&&hash){ var t=a.ownerDocument.getElementById(hash), nm=t&&f?nameOf(t,f):hash;
+    return {a:a,kind:"scroll",verb:"Scroll to",label:nm,act:function(){ if(t&&f){ select(f,t,layerParent(t,f)); reveal(f,t) } }} }
+  if(/^https?:/i.test(href)) return {a:a,kind:"url",verb:"Open link",label:href.replace(/^https?:\/\/(www\.)?/,"").replace(/\/$/,""),act:function(){ T("fv_follow_link",{from:pageSlug(),to:"external"}); window.open(a.href,"_blank","noopener") }};
+  if(/\.pdf($|\?)/i.test(href)) return {a:a,kind:"url",verb:"Open link",label:href.replace(/^\.\//,""),act:function(){ window.open(a.href,"_blank","noopener") }};
+  return null;
+}
+/* the popover: above the link you clicked, following the canvas as it moves */
+var lpop=null;
+function closeLinkPop(){ if(lpop){ lpop.el.remove(); lpop=null } }
+function showLinkPop(f,info){
+  closeLinkPop();
+  var r=frameRect(f,info.a), el=document.createElement("div"); el.className="lpop"; el.setAttribute("role","dialog");
+  var ext=info.kind==="url"?' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>':"";
+  el.innerHTML=(info.label&&info.kind!=="page"?'<span class="lp-t">'+esc(info.label)+'</span>':'')+'<button type="button">'+esc(info.kind==="page"?"Go to "+info.label:info.kind==="copy"?"Copy":info.kind==="scroll"?"Scroll to "+info.label:"Open")+ext+'</button>';
+  el.addEventListener("pointerdown",function(e){ e.stopPropagation() });
+  el.querySelector("button").addEventListener("click",function(){ var a=info.act; closeLinkPop(); a() });
+  ov.appendChild(el); lpop={el:el,f:f,w:{x:f.x+r.x+r.w/2,y:f.y+r.y}}; placeLinkPop();
+}
+function placeLinkPop(){ if(lpop){ lpop.el.style.left=(st.x+lpop.w.x*st.zoom)+"px"; lpop.el.style.top=(st.y+lpop.w.y*st.zoom)+"px" } }
 function copy(text,msg){ (navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(function(){ toast(msg||"Copied") },function(){ toast(text) }) }
 var CHEV='<svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>';
 var XSVG='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
@@ -667,7 +707,9 @@ function nameOf(el,f){
 function layerParent(el,f){
   if(el===f.root) return null;
   var p=el.parentElement;
-  while(p&&p!==f.root&&kids(p).indexOf(el)<0) p=p.parentElement;
+  /* MAIN and the page wrapper are flattened in the tree, so they're never a parent */
+  function flat(n){ return n.tagName==="MAIN"||(n.classList&&n.classList.contains("wrap")&&n.parentElement===n.ownerDocument.body) }
+  while(p&&p!==f.root&&(kids(p).indexOf(el)<0||flat(p))) p=p.parentElement;
   return p||f.root;
 }
 function pick(target,ctx,f){
@@ -752,8 +794,8 @@ function coverHTML(){
      return '<div class="card" data-go="'+c.go+'" data-layer="'+c.go+'"><div class="shot"><img src="'+c.img+'" alt="" style="object-position:'+c.pos+'"></div><h3>'+c.t+'</h3><p>'+c.m+'</p><span class="go">Open page →</span></div>';
    }).join("")+'</div>'+
    '<div class="foot" data-step="contact" data-layer="Contact">'+
-     '<div class="links"><a class="dark" data-copy="'+MAIL+'" data-layer="Email">'+MAIL+'</a><a data-href="'+LINKEDIN+'" data-layer="LinkedIn">LinkedIn ↗</a><a data-go="Resume" data-layer="Resume">Résumé</a><a data-href="./index.html" data-layer="Website">The website ↗</a></div>'+
-     '<div class="legend" data-layer="How to read this file">'+(DECISIONS.length?'<span><i class="dotp"><img src="'+AVATAR+'" alt=""></i>Pins are my design decisions</span>':'')+'<span>Click to inspect · ▶ to use the site · C to comment</span></div>'+
+     '<div class="links"><a class="dark" data-copy="'+MAIL+'" data-layer="Email">'+MAIL+'</a><a data-href="'+LINKEDIN+'" data-layer="LinkedIn">LinkedIn ↗</a><a data-go="Resume" data-layer="Resume">Résumé</a><a data-home="1" data-layer="Back to the website">Back to the website</a></div>'+
+     '<div class="legend" data-layer="How to read this file">'+(DECISIONS.length?'<span><i class="dotp"><img src="'+AVATAR+'" alt=""></i>Pins are my design decisions</span>':'')+'<span>Click to inspect · ▶ Present to use the site · C to comment</span></div>'+
    '</div><script>('+coverLive.toString()+')()<\/script></body></html>';
 }
 /* runs inside the Cover: keep only the homepage's work grid, four across, light */
@@ -872,7 +914,7 @@ function addFrame(name,w,h,x,src,srcdoc){
 }
 function loadPage(i,cb){
   if(PAGES[i].group) return;
-  findIdx=null;
+  findIdx=null; closeLinkPop();
   st.page=i; T("fv_page",{page:pageSlug(i)}); st.sel=null; st.hov=null; st.ctx=null;
   world.innerHTML=""; st.frames=[]; closePop();
   var P=PAGES[i];
@@ -985,9 +1027,8 @@ function hover(e){
   if(drag||st.tool!=="move"){ st.hov=null; draw(); return }
   var h=hit(e);
   if(!h.f){ st.hov=null; draw(); cv.style.cursor=""; return }
-  var link=h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy]");
-  var toPage=!(e.metaKey||e.ctrlKey)&&pageOfLink(h.t);
-  cv.style.cursor=(link||(toPage>-1&&toPage!==st.page))?"pointer":"";
+  var link=!(e.metaKey||e.ctrlKey)&&h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy],[data-home]");
+  cv.style.cursor=link?"pointer":"";
   var ctx=(st.ctx&&st.sel&&st.sel.f===h.f)?st.ctx:h.f.root;
   var p=(e.metaKey||e.ctrlKey)?{el:deepest(h.t,h.f)}:pick(h.t,ctx,h.f);
   st.hov=p&&p.el?{f:h.f,el:p.el}:null; draw();
@@ -1031,17 +1072,15 @@ function press(e){
   if(st.tool==="comment"){ startComment(e); return }
   var h=hit(e);
   if(!h.f){ select(null); return }
-  /* the Cover's cards and links work like links: they take you somewhere */
-  var link=h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy]");
-  if(link){
-    if(link.dataset.go){ var gi=pageIndex(link.dataset.go); if(gi>-1) loadPage(gi) }
-    else if(link.dataset.href) window.open(link.dataset.href,"_blank","noopener");
-    else if(link.dataset.copy) copy(link.dataset.copy,"Email copied: "+link.dataset.copy);
-    return;
-  }
-  /* so do the site's own links to other pages, as they would on the site;
-     ⌘/Ctrl-click still selects the layer instead */
-  if(!(e.metaKey||e.ctrlKey)){ var pi=pageOfLink(h.t); if(pi>-1&&pi!==st.page){ loadPage(pi); return } }
+  closeLinkPop();
+  /* the Cover is the file's index: its cards and links act on one click
+     (the one deviation from Figma). ⌘/Ctrl-click still selects them. */
+  var link=!(e.metaKey||e.ctrlKey)&&h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy],[data-home]");
+  if(link){ var li=linkInfo(link,h.f); if(li) li.act(); return }
+  /* everywhere else a click selects, as in Figma; a link under the pointer
+     also gets Figma's link popover, so following it is one more click */
+  var under=linkInfo(h.t,h.f);
+  if(under&&under.kind!=="home") setTimeout(function(){ showLinkPop(h.f,under) },0);
   var now=Date.now(), dbl=lastDown&&now-lastDown.t<400&&Math.abs(e.clientX-lastDown.x)<6&&Math.abs(e.clientY-lastDown.y)<6;
   lastDown=dbl?null:{t:now,x:e.clientX,y:e.clientY};
   if(dbl&&st.sel&&st.sel.f===h.f&&st.sel.el!==h.t&&st.sel.el.contains(h.t)&&kids(st.sel.el).length){
@@ -1055,6 +1094,7 @@ cv.addEventListener("pointerup",function(){ if(drag){ drag=null; cv.classList.re
 
 /* ═══ SELECTION ═════════════════════════════════════════════════════ */
 function select(f,el,ctx){
+  if(!f) closeLinkPop();
   /* choosing something yourself ends following, as in Figma */
   if(following) stopFollow(true);
   if(f&&st.rtab==="history"){ st.rtab="design"; renderTabs() }
@@ -1076,6 +1116,7 @@ function draw(){
   var r=box(selBox,s&&s.f,s&&s.el);
   if(r) selDim.textContent=Math.round(r.w)+" × "+Math.round(r.h);
   if(h&&!(s&&s.el===h.el)) box(hovBox,h.f,h.el); else hovBox.style.display="none";
+  placeLinkPop();
 }
 
 /* ═══ LEFT PANEL ════════════════════════════════════════════════════ */
@@ -1254,21 +1295,15 @@ function renderCode(){
   $("#copyCss").addEventListener("click",function(){ copy(text,"CSS copied") });
 }
 function renderProto(){
-  var s=st.sel, html='<div class="blk">'+bh("Flow starting point")+'<div class="ix"><span class="dot"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span><span>'+esc(PAGES[st.page].name)+' flow</span></div></div>';
-  if(!s){ props.innerHTML=html+'<div class="blk">'+bh("Interactions")+'<p class="note">Select a link or button to see where it goes.</p></div>'; return }
-  var el=s.el, a=el.closest&&el.closest("a,button,[data-go],[data-href],[data-copy]"), ix="";
-  if(!a&&el.querySelector) a=el.querySelector("a[href],button,[data-go]");
-  if(a&&a.dataset&&a.dataset.go) ix="Navigate to <b>"+esc(a.dataset.go)+"</b>";
-  else if(a&&a.dataset&&a.dataset.copy) ix="Copy <b>"+esc(a.dataset.copy)+"</b>";
-  else if(a&&a.dataset&&a.dataset.href) ix="Open link <b>"+esc(a.dataset.href.replace(/^https?:\/\//,"").slice(0,30))+"</b>";
-  else if(a&&a.tagName==="A"&&a.getAttribute("href")){
-    var href=a.getAttribute("href"), page=PAGES.filter(function(p){ return p.src&&p.src.replace("./","")===href.replace("./","").split("#")[0] })[0];
-    ix=page?"Navigate to <b>"+esc(page.name)+"</b>":(/^https?:/.test(href)?"Open link <b>"+esc(href.replace(/^https?:\/\//,"").slice(0,30))+"</b>":(/^mailto:/.test(href)?"Send email":"Scroll to <b>"+esc(href)+"</b>"));
-  }else if(a&&a.tagName==="BUTTON"){
-    var id=a.id||"", nm={padTrigger:"Notes board",heroAsk:"AI twin",askDock:"AI twin",burgerBtn:"Menu",themeToggle:"theme",totop:"top"}[id];
-    ix=nm?(id==="themeToggle"?"Change variable mode: <b>light / dark</b>":(id==="totop"?"Scroll to <b>top</b>":"Open overlay <b>"+nm+"</b>")):"Open <b>"+esc(nameOf(a,s.f))+"</b>";
-  }
-  props.innerHTML=html+'<div class="blk">'+bh("Interactions",PLUS)+(ix?'<div class="ix"><span class="tx2">On click</span><span>'+ix+'</span></div>':'<p class="note">No interactions on this layer.</p>')+'</div>';
+  var s=st.sel;
+  if(!s){ props.innerHTML='<div class="blk">'+bh("Interactions")+'<p class="note">Select a link or button to see what it does.</p></div>'; return }
+  var info=linkInfo(s.el,s.f), ix="", act=null;
+  if(info){ ix=esc(info.verb)+(info.label?' <a class="ixgo" href="#">'+esc(info.label)+'</a>':''); act=info.act }
+  else { var b=s.el.closest&&s.el.closest("button"), id=b&&b.id||"",
+      nm={padTrigger:"Notes board",heroAsk:"AI twin",askDock:"AI twin",themeToggle:"theme"}[id];
+    if(nm) ix=id==="themeToggle"?"Change variable mode → <b>"+(theme()==="dark"?"Light":"Dark")+"</b>":"Open overlay <b>"+nm+"</b>"; }
+  props.innerHTML='<div class="blk">'+bh("Interactions")+(ix?'<div class="ix"><span class="tx2">On click</span><span>'+ix+'</span></div>':'<p class="note">No interactions on this layer.</p>')+'</div>';
+  var go=props.querySelector(".ixgo"); if(go) go.addEventListener("click",function(e){ e.preventDefault(); act() });
 }
 function renderComments(){
   var html="";
@@ -1633,12 +1668,20 @@ document.addEventListener("keydown",function(e){
     if($("#present").classList.contains("on")) return present(false);
     if(following) return stopFollow();
     if(popEl) return closePop();
+    if(lpop) return closeLinkPop();
     if(st.tool!=="move") return setTool("move");
     if(!st.sel) return;
     if(st.sel.el===st.sel.f.root) return select(null);
     var p=layerParent(st.sel.el,st.sel.f); select(st.sel.f,p,p===st.sel.f.root?p:layerParent(p,st.sel.f));
   }
+  else if(k==="Enter"&&e.shiftKey&&st.sel){ if(st.sel.el!==st.sel.f.root){ var pp=layerParent(st.sel.el,st.sel.f); select(st.sel.f,pp,pp===st.sel.f.root?pp:layerParent(pp,st.sel.f)) } }
   else if(k==="Enter"&&st.sel){ var ch=kids(st.sel.el); if(ch.length) select(st.sel.f,ch[0],st.sel.el) }
+  else if(k==="Tab"&&st.sel&&st.sel.el!==st.sel.f.root){ e.preventDefault();
+    var par=layerParent(st.sel.el,st.sel.f), sib=kids(par), ix=sib.indexOf(st.sel.el);
+    if(sib.length>1&&ix>-1){ var nx=sib[(ix+(e.shiftKey?-1:1)+sib.length)%sib.length]; select(st.sel.f,nx,par); reveal(st.sel.f,nx) } }
+  else if((k==="n"||k==="N")&&st.frames.length){
+    var fi=st.sel?st.frames.indexOf(st.sel.f):-1, nf=st.frames[(fi+(e.shiftKey?-1:1)+st.frames.length)%st.frames.length];
+    if(nf&&nf.root){ select(nf,nf.root,nf.root); zoomTo(nf,{x:0,y:0,w:nf.w,h:Math.min(nf.h,nf.w*1.4)}) } }
 });
 document.addEventListener("keyup",function(e){ if(e.key===" "){ space=false; cv.classList.toggle("hand",st.tool==="hand") } });
 
