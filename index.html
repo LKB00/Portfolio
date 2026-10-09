@@ -3493,27 +3493,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 }
 @keyframes padType{0%,60%,100%{transform:none;opacity:.55}30%{transform:translateY(-2px);opacity:1}}
 @media (prefers-reduced-motion:reduce){.padart i,.padart b{transition:none}.padart b em{animation:none!important}}
-
-/* ══ THE VIEWS CARD'S PICTURE ════════════════════════════════════════
-   The number is the news, so it gets drawn: a field of dots, each one a
-   handful of real views, filled from the live total -- and one yellow dot
-   at the end, which is the visitor reading it. Empty seats stay faint, so
-   the field also says there is room for more. */
-#notes .readpill{gap:20px}
-#notes .rp-crowd{flex:1;min-width:0;align-self:stretch;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:8px}
-#notes .rp-dots{display:grid;grid-template-columns:repeat(var(--cols,12),6px);gap:4px;direction:ltr}
-#notes .rp-dots i{width:6px;height:6px;border-radius:50%;background:color-mix(in srgb,var(--rp-fg) 12%,transparent);
-  transition:background-color .3s var(--ease),transform .3s var(--ease)}
-#notes .rp-dots i.on{background:color-mix(in srgb,var(--rp-fg) 62%,transparent)}
-#notes .rp-dots i.you{background:#FBE14D;box-shadow:0 0 0 3px rgba(251,225,77,.22);animation:rpYou 2.4s ease-in-out infinite}
-:root[data-theme="dark"] #notes .rp-dots i.you{background:#E0A800;box-shadow:0 0 0 3px rgba(224,168,0,.22)}
-@keyframes rpYou{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
-#notes .rp-key{font-family:var(--mono);font-size:10px;letter-spacing:.02em;color:color-mix(in srgb,var(--rp-fg) 50%,transparent);white-space:nowrap}
-/* arrival: the dots fill in a wave as the number climbs */
-#notes .readpill.is-filling .rp-dots i.on{animation:rpFill .5s var(--ease) both;animation-delay:calc(var(--i) * 9ms)}
-@keyframes rpFill{from{background:color-mix(in srgb,var(--rp-fg) 12%,transparent);transform:scale(.4)}}
-@media (max-width:420px){#notes .rp-key{display:none}}
-@media (prefers-reduced-motion:reduce){#notes .rp-dots i.you,#notes .readpill.is-filling .rp-dots i.on{animation:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3815,8 +3794,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </div>
 
       <span class="readpill" data-readpill>
-        <span class="rp-txt"><b data-rp-line>You&#8217;re in the count.</b><span class="rp-sub"><span class="rp-sub-a">The yellow dot is you.</span><span class="rp-sub-b" aria-hidden="true">Still building the page that shows the rest</span></span></span>
-        <span class="rp-crowd" aria-hidden="true"><span class="rp-dots"></span><span class="rp-key"></span></span>
+        <span class="rp-faces" aria-hidden="true"><i style="background:#D8E4F2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.6 0-6 2.5-6 6.1 0 2.7.3 5.5-.5 7.7h3c-.7-2-.9-4.3-.9-6.4 0-2.7 1.9-4.1 4.4-4.1s4.4 1.4 4.4 4.1c0 2.1-.2 4.4-.9 6.4h3c-.8-2.2-.5-5-.5-7.7 0-3.6-2.4-6.1-6-6.1Z" fill="#2B2320"/><circle cx="12" cy="25.6" r="8.6" fill="#2A6BB0"/><circle cx="12" cy="10.6" r="4.9" fill="#F2CBA8"/><path d="M12 5.3c-2.9 0-4.5 1.8-4.5 4.1 0 .5.1 1 .2 1.5.7-1.7 2.4-2.6 4.3-2.6s3.6.9 4.3 2.6c.1-.5.2-1 .2-1.5 0-2.3-1.6-4.1-4.5-4.1Z" fill="#2B2320"/></svg></i><i style="background:#F5E2CC"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="2.9" r="2.3" fill="#3E2A20"/><circle cx="12" cy="25.6" r="8.6" fill="#C4762A"/><circle cx="12" cy="10.6" r="4.9" fill="#E0AC80"/><path d="M12 4.6c-3 0-5 2-5 4.8 0 .7.1 1.4.3 2 .6-2 2.4-3.1 4.7-3.1s4.1 1.1 4.7 3.1c.2-.6.3-1.3.3-2 0-2.8-2-4.8-5-4.8Z" fill="#3E2A20"/></svg></i><i style="background:#D9E9DC"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.2c-3.7 0-6.1 2.5-6.1 6.2 0 1.9.2 3.7.2 5.4h2.6c-.5-1.6-.7-3.4-.7-5 0-2.7 1.7-4.3 4-4.3s4 1.6 4 4.3c0 1.6-.2 3.4-.7 5h2.6c0-1.7.2-3.5.2-5.4 0-3.7-2.4-6.2-6.1-6.2Z" fill="#1E1A17"/><circle cx="12" cy="25.6" r="8.6" fill="#4E8A5F"/><circle cx="12" cy="10.6" r="4.9" fill="#C08457"/><path d="M12 5.4c-2.9 0-4.6 1.8-4.6 4.2 0 .6.1 1.1.3 1.6.9-1.4 2.4-2.1 4.3-2.1s3.4.7 4.3 2.1c.2-.5.3-1 .3-1.6 0-2.4-1.7-4.2-4.6-4.2Z" fill="#1E1A17"/></svg></i><i class="rp-me">+1</i></span>
+        <span class="rp-txt"><b data-rp-line>You&#8217;re in the count.</b><span class="rp-sub"><span class="rp-sub-a">That +1 was you.</span><span class="rp-sub-b" aria-hidden="true">Still building the page that shows the rest</span></span></span>
       </span>
       </div>
       </div>
@@ -5203,35 +5182,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   new IntersectionObserver(function(es){
     if(f.contentWindow) f.contentWindow.postMessage({type:'rupeezy-play',on:es[0].isIntersecting},'*');
   },{threshold:.2}).observe(f);
-})();
-</script>
-
-<script>
-/* The views card's dot field: drawn from the same live total the card
-   prints. One dot stands for a round number of views, chosen so the field
-   fills most of the space it has; the last lit dot is yellow -- you. */
-(function(){
-  var pill=document.querySelector("#notes [data-readpill]"); if(!pill) return;
-  var dots=pill.querySelector(".rp-dots"), key=pill.querySelector(".rp-key"), line=pill.querySelector("[data-rp-line]");
-  if(!dots||!line) return;
-  var STEPS=[1,2,5,10,20,25,50,100,200,250,500,1000], last=-1, filled=false;
-  function views(){ var n=line.querySelector(".rp-n"); return n?parseInt(n.textContent.replace(/[^\d]/g,""),10)||0:0 }
-  function paint(){
-    var n=views(); if(n===last) return; last=n;
-    var box=pill.querySelector(".rp-crowd"), w=box.clientWidth, h=box.clientHeight-(key.offsetHeight||0)-8;
-    var cols=Math.max(6,Math.min(28,Math.floor((w+4)/10))), rows=Math.max(3,Math.min(8,Math.floor((h+4)/10))), cap=cols*rows;
-    var per=1; for(var s=0;s<STEPS.length;s++){ per=STEPS[s]; if(Math.ceil(n/per)<=cap*.85) break }
-    var lit=n?Math.max(1,Math.ceil(n/per)):1;
-    dots.style.setProperty("--cols",cols);
-    var html=""; for(var i=0;i<cap;i++) html+='<i class="'+(i<lit-1?"on":(i===lit-1?"you":""))+'" style="--i:'+i+'"></i>';
-    dots.innerHTML=html;
-    key.textContent=n?("1 dot = "+per+" view"+(per===1?"":"s")):"";
-    if(!filled&&n){ filled=true; pill.classList.add("is-filling"); setTimeout(function(){ pill.classList.remove("is-filling") },1800) }
-  }
-  paint();
-  /* the number climbs before it lands; draw once it has landed */
-  var mt; new MutationObserver(function(){ clearTimeout(mt); mt=setTimeout(paint,140) }).observe(line,{childList:true,subtree:true,characterData:true});
-  var t; addEventListener("resize",function(){ clearTimeout(t); t=setTimeout(function(){ last=-1; paint() },150) });
 })();
 </script>
 </body>
