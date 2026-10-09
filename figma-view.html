@@ -910,7 +910,10 @@ function coverHTML(){
    '.live .hit h3{margin:0;font-size:15px;line-height:1.35;font-weight:500}.live .hit p{margin:4px 0 0;font-size:13px;color:#B0ACAC}'+
    'body:has(.live.ok){gap:40px}'+
    '.live.ok{display:block}.live.ok+.cards{display:none}'+
-   '@media (max-width:600px){.live,.live.ok{display:none}.live.ok+.cards{display:grid}}'+
+   /* phones: the same live cards, one column, at the homepage's own phone size */
+   '@media (max-width:600px){.live{height:auto}.live iframe{position:relative;display:block;width:100%;height:var(--h,600px);transform:none}'+
+   '.live .hit{left:0!important;width:100%;padding:0}.live .hit h3,.live .hit p{display:none}}'+
+   '.tch{display:none}@media (max-width:600px){.kb{display:none}.tch{display:inline}}'+
    '.dotp{width:18px;height:18px;border-radius:50% 50% 50% 0;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.25);display:grid;place-items:center}.dotp img{width:14px;height:14px;border-radius:50%}'+
    '</style></head><body>'+
    '<div class="top" data-layer="Header"><span class="mono" data-layer="File label">Portfolio · 2026</span><span class="mono" data-layer="Location">Bengaluru, India</span></div>'+
@@ -924,7 +927,7 @@ function coverHTML(){
    }).join("")+'</div>'+
    '<div class="foot" data-step="contact" data-layer="Contact">'+
      '<div class="links"><a class="dark" data-copy="'+MAIL+'" data-layer="Email">'+MAIL+'</a><a data-href="'+LINKEDIN+'" data-layer="LinkedIn">LinkedIn ↗</a><a data-go="Resume" data-layer="Resume">Résumé</a><a data-home="1" data-layer="Back to the website">Back to the website</a></div>'+
-     '<div class="legend" data-layer="How to read this file">'+(DECISIONS.length?'<span><i class="dotp"><img src="'+AVATAR+'" alt=""></i>Pins are my design decisions</span>':'')+'<span>Click to inspect · ▶ Present to use the site · C to comment</span></div>'+
+     '<div class="legend" data-layer="How to read this file">'+(DECISIONS.length?'<span><i class="dotp"><img src="'+AVATAR+'" alt=""></i>Pins are my design decisions</span>':'')+'<span class="kb">Click to inspect · ▶ Present to use the site · C to comment</span><span class="tch">Tap to inspect · ▶ to use the site · 💬 to comment</span></div>'+
    '</div><script>('+coverLive.toString()+')()<\/script></body></html>';
 }
 /* runs inside the Cover: keep only the homepage's work grid, four across, light */
@@ -936,21 +939,32 @@ function coverLive(){
       var d=ifr.contentDocument, work=d.getElementById("work");
       if(!work) return;
       d.documentElement.setAttribute("data-theme",(parent.document.documentElement.getAttribute("data-theme")==="dark")?"dark":"light"); d.documentElement.style.backgroundColor="transparent";
-      var st=d.createElement("style");
+      var phone=innerWidth<=600, st=d.createElement("style");
       st.textContent="html,body{background:transparent!important;margin:0!important;padding:0!important;overflow:hidden!important;min-height:0!important}"+
         "body>*:not(#work){display:none!important}"+
-        "#work{max-width:none!important;width:1632px!important;margin:0!important;padding:0!important}"+
-        "#work .workgrid{grid-template-columns:repeat(4,393px)!important;column-gap:20px!important;row-gap:0!important}"+
+        (phone?"#work{max-width:none!important;width:100%!important;margin:0!important;padding:0!important}"
+              :"#work{max-width:none!important;width:1632px!important;margin:0!important;padding:0!important}"+
+               "#work .workgrid{grid-template-columns:repeat(4,393px)!important;column-gap:20px!important;row-gap:0!important}")+
         "#work [data-reveal]{opacity:1!important;transform:none!important}";
       d.head.appendChild(st);
       d.body.appendChild(work);
       [].forEach.call(work.querySelectorAll("[data-reveal]"),function(el){ el.classList.add("shown") });
       d.defaultView.scrollTo(0,0);
       band.classList.add("ok");
+      /* phones: the band is as tall as the homepage's one-column grid, and
+         each card's hit area sits over that card */
+      if(phone){
+        var fit=function(){
+          var g=work.querySelector(".workgrid"), rows=g?g.children:[], hits=band.querySelectorAll(".hit");
+          band.style.setProperty("--h",work.scrollHeight+"px");
+          [].forEach.call(rows,function(r,i){ if(hits[i]){ var b=r.getBoundingClientRect(); hits[i].style.top=(b.top+d.defaultView.scrollY)+"px"; hits[i].style.height=b.height+"px" } });
+        };
+        fit(); setTimeout(fit,500); setTimeout(fit,1500);
+        try{ new d.defaultView.ResizeObserver(fit).observe(work) }catch(e){}
+      }
       /* the tour and the layers point at whichever set of cards is showing */
       var cards=band.nextElementSibling;
-      if(innerWidth>600&&cards){ band.setAttribute("data-step","work"); cards.removeAttribute("data-step"); cards.removeAttribute("data-layer"); cards.setAttribute("data-fvskip","") }
-      else band.removeAttribute("data-layer");
+      if(cards){ band.setAttribute("data-step","work"); cards.removeAttribute("data-step"); cards.removeAttribute("data-layer"); cards.setAttribute("data-fvskip","") }
       try{ parent.postMessage({fvCoverLive:1},location.origin) }catch(e){}
     }catch(e){}
   });
