@@ -32,6 +32,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Libre+Baskerville&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&text=%20BFOaefghilmnoprstvw&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500&text=%E2%82%B90123456789%2C.&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
@@ -538,31 +539,29 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    page visibly ran out of breath on the way down. The hero keeps the
    larger opening gap; every band after it is spaced the same. */
 #work{padding-bottom:clamp(46px,7vw,72px)}
-/* the way into the Figma view, as Figma's own file pill (UI3): top left,
-   white on the light theme and Figma's grey on the dark, Inter, a purple
-   Beta badge and an open-in arrow; Figma's dark tooltip on hover.
-   Desktop and tablet only: on a phone the headline owns the top. */
-.figpill{position:fixed;top:22px;left:24px;z-index:60;display:flex;align-items:center;gap:8px;height:40px;padding:0 10px 0 12px;border-radius:12px;
-  background:#fff;color:#1E1E1E;text-decoration:none;font:600 12px/16px Inter,system-ui,-apple-system,sans-serif;letter-spacing:-.005em;
-  box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.08),0 10px 24px -10px rgba(0,0,0,.16);transition:box-shadow .2s}
-.figpill:hover{box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.1),0 12px 28px -10px rgba(0,0,0,.22)}
-.figpill-logo{display:flex;align-items:center;gap:3px;padding-right:2px}
-.figpill-logo .chev{width:8px;height:8px;color:#757575}
-.figpill b{font-weight:600}
-.figpill i{font-style:normal;font-weight:500;font-size:11px;line-height:16px;padding:0 5px;border-radius:5px;background:#F1E8FF;color:#8638E5}
-.figpill-go{color:#757575;transition:color .2s,transform .2s cubic-bezier(.2,.7,.2,1)}
-.figpill:hover .figpill-go{color:#1E1E1E;transform:translate(1px,-1px)}
-.figpill::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 8px);padding:4px 8px;border-radius:5px;background:#1E1E1E;color:#fff;
-  font:500 11px/16px Inter,system-ui,-apple-system,sans-serif;white-space:nowrap;opacity:0;transform:translateY(-2px);pointer-events:none;transition:opacity .15s,transform .15s}
-.figpill:hover::after,.figpill:focus-visible::after{opacity:1;transform:none}
+/* the way into the Figma view, built as Figma's own file pill (UI3, as it
+   floats top left with the UI minimised): 48px, 13px radius, Figma's
+   elevation, the one-colour Figma glyph, the name in Inter 13/600, a blue
+   plan-style badge, the panel icon. Figma's light and dark themes follow
+   the site's. Desktop and tablet only: on a phone the headline owns the top. */
+.figpill{--fp-bg:#fff;--fp-tx:#1E1E1E;--fp-tx2:#757575;--fp-hov:#F5F5F5;--fp-bd-bg:#E5F4FF;--fp-bd-tx:#007BE5;
+  position:fixed;top:18px;left:20px;z-index:60;display:flex;align-items:center;height:48px;padding:0 8px;border-radius:13px;
+  background:var(--fp-bg);color:var(--fp-tx);text-decoration:none;font:600 13px/16px Inter,system-ui,-apple-system,sans-serif;letter-spacing:-.0025em;
+  box-shadow:0 0 .5px rgba(0,0,0,.18),0 3px 8px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.1)}
+.figpill-ic{display:grid;place-items:center;width:32px;height:32px;border-radius:5px;transition:background-color .12s}
+.figpill:hover .figpill-ic{background:var(--fp-hov)}
+.figpill:hover,.figpill:focus,.figpill:visited{color:var(--fp-tx);opacity:1}
+.figpill-name{margin:0 8px 0 6px;white-space:nowrap}
+.figpill i{font-style:normal;font-weight:500;font-size:11px;line-height:16px;padding:0 6px;border-radius:5px;background:var(--fp-bd-bg);color:var(--fp-bd-tx);margin-right:8px}
+.figpill-ic.side{color:var(--fp-tx)}
+.figpill::after{content:attr(data-tip);position:absolute;left:8px;top:calc(100% + 6px);padding:4px 8px;border-radius:5px;background:#1E1E1E;color:#fff;
+  font:500 11px/16px Inter,system-ui,-apple-system,sans-serif;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .1s}
+.figpill:hover::after,.figpill:focus-visible::after{opacity:1;transition-delay:.35s}
 .figpill:focus-visible{outline:2px solid #0D99FF;outline-offset:2px}
-:root[data-theme="dark"] .figpill{background:#2C2C2C;color:#fff;box-shadow:0 0 0 .5px rgba(255,255,255,.12),0 10px 24px -10px rgba(0,0,0,.6)}
-:root[data-theme="dark"] .figpill i{background:#3A2A55;color:#D1B3FF}
-:root[data-theme="dark"] .figpill-go,:root[data-theme="dark"] .figpill-logo .chev{color:#B3B3B3}
-:root[data-theme="dark"] .figpill:hover .figpill-go{color:#fff}
-:root[data-theme="dark"] .figpill::after{background:#fff;color:#1E1E1E}
+:root[data-theme="dark"] .figpill{--fp-bg:#2C2C2C;--fp-tx:#fff;--fp-tx2:#B3B3B3;--fp-hov:#383838;--fp-bd-bg:#0C3B5E;--fp-bd-tx:#7CC4F8;
+  box-shadow:0 0 .5px rgba(0,0,0,.5),0 3px 8px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.3)}
+:root[data-theme="dark"] .figpill::after{background:#383838}
 @media (max-width:684px){.figpill{display:none}}
-@media (prefers-reduced-motion:reduce){.figpill,.figpill-go{transition:none}}
 /* inside the Figma view itself, the way in would point at itself */
 .in-frame .figpill{display:none}
 
@@ -3640,7 +3639,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
   </button>
 
-  <a class="figpill" href="./figma-view.html" data-tip="Open this portfolio as a Figma file" aria-label="Open this portfolio as a Figma file (beta)"><span class="figpill-logo" aria-hidden="true"><svg width="10" height="15" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></span><b>Figma view</b><i>Beta</i><svg class="figpill-go" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+  <a class="figpill" href="./figma-view.html" data-tip="Open this portfolio as a Figma file" aria-label="Open this portfolio as a Figma file (beta)"><span class="figpill-ic" aria-hidden="true"><svg width="11" height="16" viewBox="-3 -3 44 63" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linejoin="round" aria-hidden="true"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span><span class="figpill-name">Figma view</span><i>Beta</i><span class="figpill-ic side" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></span></a>
 <header id="siteHeader">
     <div class="navpill">
       <nav class="navlinks" aria-label="Main">
