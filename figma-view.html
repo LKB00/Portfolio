@@ -1418,6 +1418,8 @@ function menu(anchor,items,search,up){
     items.forEach(function(it){
       if(it==="-"){ if(!q) list.appendChild(document.createElement("hr")); return }
       if(typeof it==="string"){ if(!q){ var h=document.createElement("div"); h.className="mh"; h.textContent=it; list.appendChild(h) } return }
+      /* a 4th field marks an action that has a home elsewhere: it shows only when searched */
+      if(!q&&it[3]) return;
       if(q&&it[0].toLowerCase().indexOf(q)<0) return;
       var b=document.createElement("button"); b.innerHTML=esc(it[0])+'<span>'+esc(it[1]||"")+'</span>';
       if(q&&first){ b.classList.add("hl"); first=false }
@@ -1425,7 +1427,7 @@ function menu(anchor,items,search,up){
     });
   }
   if(search){
-    var q=document.createElement("input"); q.className="q"; q.placeholder="Search actions…"; m.appendChild(q);
+    var q=document.createElement("input"); q.className="q"; q.placeholder="Search all actions…"; m.appendChild(q);
     q.addEventListener("input",function(){ paintList(q.value.trim().toLowerCase()) });
     q.addEventListener("keydown",function(e){ if(e.key==="Enter"){ var hl=list.querySelector("button.hl")||list.querySelector("button"); if(hl) hl.click() } if(e.key==="Escape") closeMenus() });
     setTimeout(function(){ q.focus() },0);
@@ -1449,22 +1451,28 @@ function zoomMenu(e){
 }
 function showHistory(){ st.rtab="history"; renderTabs(); renderProps(); $("#app").classList.add("show-r") }
 function showComments(){ setTool("comment"); $("#app").classList.add("show-r") }
+/* Where each thing lives, so menus don't repeat each other:
+   pages panel = moving between pages; file-name menu = this file;
+   logo menu = leaving, and help; toolbar and top bar = present, dev
+   mode, zoom. Actions shows only what has no other home, and finds
+   everything else when you search, as Figma's Actions does. */
+var SEARCH_ONLY=true;
 var ACTIONS=[
   "Get to know me",
   ["Follow Lokesh’s 1-minute tour","",startFollow],
-  ["Go to Cover","",function(){ loadPage(0) }],
   ["Show design decisions","",showComments],
-  ["Show version history","⌥⌘H",showHistory],
+  ["Go to Cover","",function(){ loadPage(0) },SEARCH_ONLY],
+  ["Show version history","⌥⌘H",showHistory,SEARCH_ONLY],
   "-","Reach me",
   ["Copy my email","",function(){ copy(MAIL,"Email copied: "+MAIL) }],
   ["Open LinkedIn","",function(){ window.open(LINKEDIN,"_blank","noopener") }],
-  ["Open résumé","",function(){ loadPage(pageIndex("Resume")) }],
+  ["Open résumé","",function(){ loadPage(pageIndex("Resume")) },SEARCH_ONLY],
   "-","View",
-  ["Present the real site","⌥⌘↵",function(){ present(true) }],
-  ["Dev Mode","⇧D",function(){ setDev(!st.dev) }],
   ["Minimize UI","⇧\\",function(){ minUI() }],
-  ["Zoom to fit","⇧1",function(){ fit(false) }],
-  ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") }]
+  ["Present the real site","⌥⌘↵",function(){ present(true) },SEARCH_ONLY],
+  ["Dev Mode","⇧D",function(){ setDev(!st.dev) },SEARCH_ONLY],
+  ["Zoom to fit","⇧1",function(){ fit(false) },SEARCH_ONLY],
+  ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") },SEARCH_ONLY]
 ];
 $("#actBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(this,ACTIONS,true,true) });
 $("#searchBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(this,ACTIONS,true) });
@@ -1475,7 +1483,7 @@ $("#logoBtn").addEventListener("click",function(e){
 });
 $("#fileBtn").addEventListener("click",function(e){
   e.stopPropagation();
-  menu(this,[["Show version history","",showHistory],["Show design decisions","",showComments],"-",["Open this page on the website","",function(){ var p=PAGES[st.page]; window.open(p.src||"./index.html","_blank","noopener") }],["Copy link","",function(){ copy(location.href.split("#")[0],"Link copied") }]]);
+  menu(this,[["Show version history","⌥⌘H",showHistory],["Open this page on the website","",function(){ var p=PAGES[st.page]; window.open(p.src||"./index.html","_blank","noopener") }]]);
 });
 $("#presentBtn").addEventListener("click",function(){ present(true) });
 $("#shareBtn").addEventListener("click",function(){ copy(location.href.split("#")[0],"Link copied to clipboard") });
