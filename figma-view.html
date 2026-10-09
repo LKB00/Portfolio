@@ -395,7 +395,10 @@ button.av{cursor:pointer}
   .app{grid-template-columns:1fr}
   .scrim{display:block}.app.show-l .scrim,.app.show-r .scrim{opacity:1;pointer-events:auto}
   .dclose{display:grid!important}
-  .lp,.rp{padding-top:44px}
+  .rp{padding-top:44px}
+  /* the pages drawer's close takes Minimize's place in the file header */
+  #minBtn{display:none}
+  #lpX{top:16px}
   .tb #actBtn,.tb #devBtn,.tb .tsep,.tb #mvMenu{display:none}
   .tb .tl.ponly{display:flex}
   .lp,.rp{position:fixed;top:0;bottom:0;width:min(300px,86vw);box-shadow:0 0 40px rgba(0,0,0,.2);transition:transform .25s}
@@ -407,12 +410,19 @@ button.av{cursor:pointer}
 }
 .scrim{display:none;position:fixed;inset:0;z-index:28;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
 @media (max-width:767px){.lp,.rp{z-index:29}}   /* drawers over the canvas; on desktop menus and tooltips stay above the panels */
-.dclose{display:none!important;position:absolute;top:10px;right:8px;z-index:2}
+.dclose{position:absolute;top:10px;right:8px;z-index:2}
+@media (min-width:768px){.dclose{display:none!important}}
 .tb .ponly{display:none}
 /* keyboard focus, always visible */
 button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:2px solid #0D99FF;outline-offset:1px}
 .mob{display:none;position:absolute;top:10px;left:10px;right:10px;justify-content:space-between;z-index:6;pointer-events:none}
-.mob button{pointer-events:auto;height:32px;padding:0 12px;border-radius:8px;background:var(--ui);box-shadow:var(--e2);font-weight:500}
+.mob>button{pointer-events:auto;height:40px;padding:0 12px;border-radius:12px;background:var(--ui);box-shadow:var(--e2);font-weight:500}
+/* on phones the file pill stays: the logo's menu (Back to the website), and the
+   file name, which opens the pages and layers */
+.mpill{pointer-events:auto;display:flex;align-items:center;gap:2px;height:40px;padding:0 4px;border-radius:12px;background:var(--ui);box-shadow:var(--e2)}
+.mpill button{display:flex;align-items:center;gap:4px;height:32px;padding:0 6px;border-radius:8px}
+.mpill button:active{background:var(--hover)}
+.mpill b{font-weight:600;font-size:12px}
 
 .pop .tnote{margin:-2px 0 10px;padding:6px 10px;border-radius:8px;background:var(--purpleSoft);color:var(--purple);font-size:12px;line-height:17px}
 
@@ -504,7 +514,7 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visibl
       <div class="box sel" id="selBox"><i></i><i></i><i></i><i></i><span class="dim" id="selDim"></span></div>
     </div>
     <div class="fbar" id="fbar"><img src="./assets/avatar-96.webp" alt=""><span>Following Lokesh</span><span class="st" id="fstep"></span><button id="fnext">Next</button><button id="fstop">Stop</button></div>
-    <div class="mob"><button id="mobL" aria-label="Open pages and layers">Pages</button><button id="mobR" aria-label="Open properties">Properties</button></div>
+    <div class="mob"><div class="mpill"><button id="mobLogo" aria-label="Main menu"><svg width="12" height="18" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button><button id="mobL" aria-label="Pages and layers"><b>Portfolio</b><i class="beta">Beta</i><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></div><button id="mobR" aria-label="Open properties">Properties</button></div>
     <div class="scrim" id="scrim" aria-hidden="true"></div>
     <div class="tb" role="toolbar" aria-label="Tools">
       <span class="tlg"><button class="tl on" id="mvBtn" data-tool="move" data-tip="Move  V" aria-label="Move"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg></button><button class="tl tchev" id="mvMenu" aria-label="Move and hand tools"><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></span>
@@ -1994,11 +2004,15 @@ $("#findQ").addEventListener("keydown",function(e){
   if(e.key==="Escape"){ e.stopPropagation(); closeFind() }
   else if((e.key==="ArrowDown"||e.key==="ArrowUp")&&rs.length){ e.preventDefault(); if(cur) cur.classList.remove("hl"); var n=rs[(i+(e.key==="ArrowDown"?1:-1)+rs.length)%rs.length]; n.classList.add("hl"); n.scrollIntoView({block:"nearest"}) }
   else if(e.key==="Enter"){ e.preventDefault(); var b=cur||rs[0]; if(b) b.click() } });
-$("#logoBtn").addEventListener("click",function(e){
+function logoMenu(e){
   e.stopPropagation();
+  /* phones: no keyboard, no room for a submenu */
+  if(innerWidth<768) return menu(this,[["Back to the website","",home],"-",["How to use this file","",showIntro]]);
   menu(this,[["Back to the website","",home],"-",
     ["Help and account","",null,false,{sub:[["Keyboard shortcuts","⌃⇧?",showKeys],["How to use this file","",showIntro]]}]]);
-});
+}
+$("#logoBtn").addEventListener("click",logoMenu);
+$("#mobLogo").addEventListener("click",logoMenu);
 $("#fileBtn").addEventListener("click",function(e){
   e.stopPropagation();
   menu(this,[["Show version history","",showHistory]]);
