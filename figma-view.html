@@ -426,8 +426,8 @@ button.av{cursor:pointer}
   .scrim{display:block}.app.show-l .scrim{opacity:1;pointer-events:auto}
   .lp,.rp{position:fixed;left:0;right:0;top:auto;bottom:0;width:auto;z-index:29;border:0;border-radius:16px 16px 0 0;box-shadow:0 -1px 0 var(--line),0 -8px 32px rgba(0,0,0,.14);
     transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1),height .28s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom)}
-  .lp{height:min(78vh,640px)}
-  .rp{height:42vh;z-index:27}.rp.full{height:88vh}
+  .lp{height:min(78vh,640px);height:min(78dvh,640px)}
+  .rp{height:42vh;height:42dvh;z-index:27}.rp.full{height:88vh;height:88dvh}
   .app.show-l .lp,.app.show-r .rp{transform:none}
   .lp.dragging,.rp.dragging{transition:none}
   .grab{display:block;flex:none;height:22px;position:relative;touch-action:none;cursor:grab}
@@ -1299,7 +1299,7 @@ cv.addEventListener("pointermove",function(e){
   if(!tap||e.pointerType!=="touch") return;
   var dx=e.clientX-tap.x, dy=e.clientY-tap.y;
   if(!tap.moved&&Math.abs(dx)+Math.abs(dy)>8){ tap.moved=true; closePop() }
-  if(tap.moved){ st.x=tap.ox+dx; st.y=tap.oy+dy; apply() }
+  if(tap.moved){ st.x=tap.ox+dx; st.y=tap.oy+dy; if(peekCam) peekCam.moved=true; apply() }
 });
 cv.addEventListener("pointerup",function(e){
   if(tap&&e.pointerType==="touch"){ var t=tap; tap=null; if(t.moved) return;
@@ -1357,7 +1357,7 @@ function select(f,el,ctx){
   if(!f){ st.sel=null; st.ctx=null } else { st.sel={f:f,el:el}; st.ctx=ctx||f.root }
   $("#app").classList.toggle("peek",!!f&&$("#app").classList.contains("min"));
   draw(); paintLabels(); renderProps(); markTree(true);
-  if(isPhone()){ if(f){ peekSel(); if(!select.hinted&&el!==f.root){ select.hinted=1; setTimeout(function(){ toast("Tap again to go inside · double-tap to zoom") },300) } } else { $("#app").classList.remove("show-r"); $(".rp").classList.remove("full") } }
+  if(isPhone()){ if(f){ peekSel(); if(!select.hinted&&el!==f.root){ select.hinted=1; setTimeout(function(){ toast("Tap again to go inside · double-tap to zoom") },300) } } else { if($("#app").classList.contains("show-r")) unpeek(); $("#app").classList.remove("show-r"); $(".rp").classList.remove("full") } }
 }
 function box(node,f,el){
   if(!f||!el||!f.doc){ node.style.display="none"; return null }
@@ -2248,7 +2248,7 @@ $("#presentTb").addEventListener("click",function(){ present(true) });
         if(!moved) return;
         if(sel===".rp"&&dy<-40) sh.classList.add("full");
         else if(sel===".rp"&&dy>40&&sh.classList.contains("full")) sh.classList.remove("full");
-        else if(dy>70){ closeDrawers(); if(sel===".rp") select(null) }
+        else if(dy>70){ if(sel===".rp") select(null); closeDrawers() }
       }
       addEventListener("pointermove",mv); addEventListener("pointerup",up); addEventListener("pointercancel",up);
     });
@@ -2258,12 +2258,40 @@ $("#presentTb").addEventListener("click",function(){ present(true) });
 if(window.visualViewport){ var kb=function(){ var v=visualViewport; document.documentElement.style.setProperty("--kb",Math.max(0,innerHeight-v.height-v.offsetTop)+"px") }; visualViewport.addEventListener("resize",kb); visualViewport.addEventListener("scroll",kb) }
 /* a selection on a phone shows its properties in a peek sheet, and the
    selection is moved clear of it */
+/* a selection on a phone shows its properties in a peek sheet, and the
+   camera moves so the whole selection sits in the room above it: panned if
+   it fits, zoomed out just enough if it doesn't. Closing the sheet puts the
+   view back where you had it, unless you've moved it since. */
+var peekCam=null;
+function camTo(z,x,y){
+  var a={z:st.zoom,x:st.x,y:st.y}, t0=performance.now();
+  (function step(now){ var k=Math.min(1,(now-t0)/240), e=1-Math.pow(1-k,3);
+    st.zoom=a.z+(z-a.z)*e; st.x=a.x+(x-a.x)*e; st.y=a.y+(y-a.y)*e; apply(); if(k<1) requestAnimationFrame(step) })(t0);
+}
 function peekSel(){
   if(!isPhone()||!st.sel) return;
   $("#app").classList.add("show-r");
-  var s=st.sel, r=s.el===s.f.root?{x:0,y:0,w:s.f.w,h:Math.min(s.f.h,300)}:frameRect(s.f,s.el);
-  var H=cv.clientHeight*.58, top=st.y+(s.f.y+r.y)*st.zoom, bot=top+Math.min(r.h*st.zoom,H-80);
-  if(bot>H||top<64){ st.y+=Math.max(64,Math.min(H-Math.min(r.h*st.zoom,H-80),top))-top; apply() }
+  /* the room you can actually see: under the top bar, above the sheet, both
+     measured (the notch and Safari's toolbars change them on a real phone) */
+  var cb=cv.getBoundingClientRect(), rp=$(".rp"), W=cb.width,
+      gapTop=$(".mob").getBoundingClientRect().bottom-cb.top+12,
+      gapBot=cb.height-rp.offsetHeight-12, room=gapBot-gapTop;
+  if(room<60) return;
+  var s=st.sel; if(s.el===s.f.root) return;   /* the whole page: nothing to bring into view */
+  var r=frameRect(s.f,s.el);
+  var top=st.y+(s.f.y+r.y)*st.zoom, h=r.h*st.zoom, left=st.x+(s.f.x+r.x)*st.zoom, w=r.w*st.zoom;
+  /* the zoom you were reading at, never more; less only if the selection needs it */
+  var cap=peekCam?peekCam.z:st.zoom, base=st.fitZ||st.zoom, z=Math.max(Math.min(cap,room/r.h,(W-24)/r.w),base*.3);
+  if(Math.abs(z-st.zoom)<.01&&top>=gapTop&&top+h<=gapBot&&left>=0&&left+w<=W) return;   /* already in view */
+  if(!peekCam) peekCam={z:st.zoom,x:st.x,y:st.y,moved:false};
+  var cx=s.f.x+r.x+r.w/2, hh=r.h*z;
+  var y=(hh<=room?gapTop+(room-hh)/2:gapTop)-(s.f.y+r.y)*z;
+  var x=Math.abs(z-st.zoom)>.01||w>W?W/2-cx*z:st.x;
+  camTo(z,x,y);
+}
+function unpeek(){
+  if(peekCam&&!peekCam.moved) camTo(peekCam.z,peekCam.x,peekCam.y);
+  peekCam=null;
 }
 /* double-tap: zoom in where you tapped (to the section when that is a real
    zoom, else 2×); double-tap when zoomed in goes back to fit, keeping your place */
@@ -2288,7 +2316,7 @@ if(innerWidth>=768&&innerWidth<1024&&!$("#app").classList.contains("min")) minUI
 var touches={};
 cv.addEventListener("touchstart",function(e){ if(e.touches.length===2){ tap=null; var a=e.touches[0],b=e.touches[1]; touches={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),z:st.zoom,mx:(a.clientX+b.clientX)/2,my:(a.clientY+b.clientY)/2,x:st.x,y:st.y} } },{passive:true});
 cv.addEventListener("touchmove",function(e){
-  if(e.touches.length!==2||!touches.d) return; e.preventDefault();
+  if(e.touches.length!==2||!touches.d) return; e.preventDefault(); if(peekCam) peekCam.moved=true;
   var a=e.touches[0],b=e.touches[1], d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY), r=cv.getBoundingClientRect();
   var mx=(a.clientX+b.clientX)/2, my=(a.clientY+b.clientY)/2;
   st.x=touches.x+(mx-touches.mx); st.y=touches.y+(my-touches.my); st.zoom=touches.z;
