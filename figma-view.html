@@ -380,8 +380,13 @@ button.av{cursor:pointer}
 .prest{height:28px;padding:0 10px;border-radius:5px;color:#fff;margin-left:8px}.prest:hover{background:#383838}
 
 /* phones: the canvas, with the panels a tap away */
-@media (max-width:900px){
+@media (max-width:767px){
   .app{grid-template-columns:1fr}
+  .scrim{display:block}.app.show-l .scrim,.app.show-r .scrim{opacity:1;pointer-events:auto}
+  .dclose{display:grid!important}
+  .lp,.rp{padding-top:44px}
+  .tb #actBtn,.tb #devBtn,.tb .tsep,.tb #mvMenu{display:none}
+  .tb .tl.ponly{display:flex}
   .lp,.rp{position:fixed;top:0;bottom:0;width:min(300px,86vw);box-shadow:0 0 40px rgba(0,0,0,.2);transition:transform .25s}
   .lp{left:0;transform:translateX(-105%)}.rp{right:0;transform:translateX(105%)}
   .app.show-l .lp,.app.show-r .rp{transform:none}
@@ -389,6 +394,12 @@ button.av{cursor:pointer}
   .intro{top:52px}
   .tb .tl.act span{display:none}
 }
+.scrim{display:none;position:fixed;inset:0;z-index:28;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
+.lp,.rp{z-index:29}
+.dclose{display:none!important;position:absolute;top:10px;right:8px;z-index:2}
+.tb .ponly{display:none}
+/* keyboard focus, always visible */
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:2px solid #0D99FF;outline-offset:1px}
 .mob{display:none;position:absolute;top:10px;left:10px;right:10px;justify-content:space-between;z-index:6;pointer-events:none}
 .mob button{pointer-events:auto;height:32px;padding:0 12px;border-radius:8px;background:var(--ui);box-shadow:0 2px 8px rgba(0,0,0,.12);font-weight:500}
 
@@ -451,6 +462,7 @@ button.av{cursor:pointer}
 <div class="app" id="app">
 
   <aside class="lp" aria-label="Navigation">
+    <button class="ib dclose" id="lpX" aria-label="Close pages and layers"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <div class="lh">
       <button class="logo" id="logoBtn" aria-label="Main menu">
         <svg width="12" height="18" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>
@@ -481,10 +493,12 @@ button.av{cursor:pointer}
       <div class="box sel" id="selBox"><i></i><i></i><i></i><i></i><span class="dim" id="selDim"></span></div>
     </div>
     <div class="fbar" id="fbar"><img src="./assets/avatar-96.webp" alt=""><span>Following Lokesh</span><span class="st" id="fstep"></span><button id="fnext">Next</button><button id="fstop">Stop</button></div>
-    <div class="mob"><button id="mobL">Pages &amp; layers</button><button id="mobR">Design</button></div>
+    <div class="mob"><button id="mobL" aria-label="Open pages and layers">Pages</button><button id="mobR" aria-label="Open properties">Properties</button></div>
+    <div class="scrim" id="scrim" aria-hidden="true"></div>
     <div class="tb" role="toolbar" aria-label="Tools">
       <span class="tlg"><button class="tl on" id="mvBtn" data-tool="move" data-tip="Move  V" aria-label="Move"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg></button><button class="tl tchev" id="mvMenu" aria-label="Move and hand tools"><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></span>
       <button class="tl" data-tool="comment" data-tip="Comment  C" aria-label="Comment"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 21V12a9 9 0 1 1 9 9z"/></svg></button>
+      <button class="tl ponly" id="presentTb" aria-label="Present" data-tip="Present"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button>
       <span class="tsep" aria-hidden="true"></span>
       <button class="tl act" id="actBtn" data-tip="Actions  ⌘K" aria-label="Actions"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M9.9 15.5A2 2 0 0 0 8.5 14l-6.1-1.6a.5.5 0 0 1 0-1L8.5 10a2 2 0 0 0 1.4-1.4l1.6-6.1a.5.5 0 0 1 1 0L14 8.5A2 2 0 0 0 15.5 10l6.1 1.6a.5.5 0 0 1 0 1L15.5 14a2 2 0 0 0-1.4 1.4l-1.6 6.1a.5.5 0 0 1-1 0z"/></svg><span>Actions</span></button>
       <span class="tsep" aria-hidden="true"></span>
@@ -501,6 +515,7 @@ button.av{cursor:pointer}
   </main>
 
   <aside class="rp" aria-label="Properties">
+    <button class="ib dclose" id="rpX" aria-label="Close properties"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <div class="rt">
       <div class="avs">
         <button class="av me" id="lkAv" style="background:#9747FF" data-tip="Follow Lokesh’s tour" aria-label="Follow Lokesh’s 1-minute tour"><img src="./assets/avatar-96.webp" alt=""></button>
@@ -1123,7 +1138,7 @@ function fit(top){
   if(st.frames.length>1&&z<.32&&top){ z=Math.min(1,(W-side)/fw); x=side/2 }
   /* on a phone, open on the phone-sized frame */
   var mob=st.frames.filter(function(fr){ return fr.dev.key==="Mobile" })[0];
-  if(mob&&W<600&&top){ z=Math.min(1,(W-side)/mob.w); x=side/2-mob.x*z }
+  if(mob&&W<768&&top){ z=Math.min(1,(W-side)/mob.w); x=side/2-mob.x*z }
   if(st.frames.length===1&&fh<=1000) z=Math.min(z,(H-head-90)/fh);
   if(x===undefined) x=(W-tw*z)/2;
   st.zoom=z; st.x=x; st.y=top&&fh*z>H-head-60?head:Math.max(head,(H-fh*z)/2); apply();
@@ -1199,6 +1214,7 @@ cv.addEventListener("pointerup",function(e){
 });
 cv.addEventListener("pointercancel",function(){ tap=null });
 function press(e){
+  if(innerWidth<768&&($("#app").classList.contains("show-l")||$("#app").classList.contains("show-r"))){ closeDrawers(); return }
   if(e.target.closest(".tb,.pop,.pin,.mob,.fbar,.intro")) return;
   closeMenus();
   if(following) stopFollow(true);
@@ -1327,6 +1343,7 @@ function node(f,el,depth){
     row.classList.toggle("open",openSet.has(el)); fill(); markTree(false);
   });
   row.addEventListener("click",function(){
+    if(innerWidth<768) setTimeout(closeDrawers,120);
     select(f,el,layerParent(el,f)||f.root);
     var r=el===f.root?{x:0,y:0,w:f.w,h:Math.min(f.h,900)}:frameRect(f,el); ensureVisible(f,r);
   });
@@ -1774,7 +1791,7 @@ function setTool(t){
 }
 [].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.addEventListener("click",function(){ var t=b.dataset.tool; setTool(t===st.tool&&t==="comment"?"move":t) }) });
 $("#mvMenu").addEventListener("click",function(e){ e.stopPropagation(); menu(this,[["Move","V",function(){ setTool("move") },false,{check:st.tool==="move"}],["Hand tool","H",function(){ setTool("hand") },false,{check:st.tool==="hand"}]],false,true) });
-function setDev(on){ st.dev=on; $("#app").classList.toggle("dev",on); T("fv_devmode",{on:on}); var b=$("#devBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); if(st.rtab!=="design"&&st.rtab!=="prototype") st.rtab="design"; renderTabs(); renderProps(); toast(on?"Dev Mode: inspect any layer’s CSS":"Design mode") }
+function setDev(on){ st.dev=on; var mr=$("#mobR"); if(mr) mr.textContent=on?"Inspect":"Properties"; $("#app").classList.toggle("dev",on); T("fv_devmode",{on:on}); var b=$("#devBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); if(st.rtab!=="design"&&st.rtab!=="prototype") st.rtab="design"; renderTabs(); renderProps(); toast(on?"Dev Mode: inspect any layer’s CSS":"Design mode") }
 $("#devBtn").addEventListener("click",function(){ setDev(!st.dev) });
 
 var menuEl=null;
@@ -2048,6 +2065,12 @@ function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ 
 /* ═══ PHONES ════════════════════════════════════════════════════════ */
 $("#mobL").addEventListener("click",function(){ $("#app").classList.toggle("show-l"); $("#app").classList.remove("show-r") });
 $("#mobR").addEventListener("click",function(){ $("#app").classList.toggle("show-r"); $("#app").classList.remove("show-l") });
+function closeDrawers(){ $("#app").classList.remove("show-l","show-r") }
+$("#scrim").addEventListener("click",closeDrawers);
+$("#lpX").addEventListener("click",closeDrawers); $("#rpX").addEventListener("click",closeDrawers);
+$("#presentTb").addEventListener("click",function(){ present(true) });
+/* a tablet opens with Figma's minimised UI; selecting brings properties back */
+if(innerWidth>=768&&innerWidth<1024&&!$("#app").classList.contains("min")) minUI();
 var touches={};
 cv.addEventListener("touchstart",function(e){ if(e.touches.length===2){ tap=null; var a=e.touches[0],b=e.touches[1]; touches={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),z:st.zoom,mx:(a.clientX+b.clientX)/2,my:(a.clientY+b.clientY)/2,x:st.x,y:st.y} } },{passive:true});
 cv.addEventListener("touchmove",function(e){
