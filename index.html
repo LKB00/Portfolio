@@ -3508,6 +3508,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* the faces are Notionists portraits (Zoish, CC0), cropped to the head */
 #notes .rp-faces i img{display:block;width:138%;height:138%;max-width:none;margin:-2% 0 0 -19%}
+
+/* the two cards stay where they are on hover; only what is inside them moves */
+@media (hover:hover){
+  .padwrap:not(.is-open) .padstack:hover,
+  #notes .readpill:hover{transform:none}
+}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
