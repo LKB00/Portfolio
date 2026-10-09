@@ -3575,6 +3575,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* the anonymity line sits on the board, not above it: no shadow, just its edge */
 .padtop{box-shadow:0 0 0 1px var(--line);-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--card)}
+
+/* the empty board's + sits flat on the board: no shadow, still or moving */
+.padblankadd{box-shadow:none;animation-name:padHangFlat}
+@keyframes padHangFlat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media (hover:hover){.padblankadd:hover{box-shadow:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
