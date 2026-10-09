@@ -423,10 +423,9 @@ button.av{cursor:pointer}
   .tb #presentTb::after{content:"Present"}
   .tb .tl[data-tool=comment].on{background:var(--blue);color:#fff}
   /* sheets */
-  .scrim{display:block}.app.show-l .scrim{opacity:1;pointer-events:auto}
   .lp,.rp{position:fixed;left:0;right:0;top:auto;bottom:0;width:auto;z-index:29;border:0;border-radius:16px 16px 0 0;box-shadow:0 -1px 0 var(--line),0 -8px 32px rgba(0,0,0,.14);
     transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1),height .28s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom)}
-  .lp{height:min(78vh,640px);height:min(78dvh,640px)}
+  .lp{height:46vh;height:46dvh}.lp.full{height:88vh;height:88dvh}
   .rp{height:42vh;height:42dvh;z-index:27}.rp.full{height:88vh;height:88dvh}
   .app.show-l .lp,.app.show-r .rp{transform:none}
   .lp.dragging,.rp.dragging{transition:none}
@@ -1299,7 +1298,7 @@ cv.addEventListener("pointermove",function(e){
   if(!tap||e.pointerType!=="touch") return;
   var dx=e.clientX-tap.x, dy=e.clientY-tap.y;
   if(!tap.moved&&Math.abs(dx)+Math.abs(dy)>8){ tap.moved=true; closePop() }
-  if(tap.moved){ st.x=tap.ox+dx; st.y=tap.oy+dy; if(peekCam) peekCam.moved=true; apply() }
+  if(tap.moved){ st.x=tap.ox+dx; st.y=tap.oy+dy; if(peekCam) peekCam.moved=true; camRun++; apply() }
 });
 cv.addEventListener("pointerup",function(e){
   if(tap&&e.pointerType==="touch"){ var t=tap; tap=null; if(t.moved) return;
@@ -1310,7 +1309,7 @@ cv.addEventListener("pointerup",function(e){
 });
 cv.addEventListener("pointercancel",function(){ tap=null });
 function press(e){
-  if(isPhone()&&$("#app").classList.contains("show-l")){ closeDrawers(); return }
+  if(isPhone()&&$("#app").classList.contains("show-l")&&!layersOpen()){ closeDrawers(); return }
   if(e.target.closest(".tb,.pop,.pin,.mob,.fbar,.intro")) return;
   closeMenus();
   if(following) stopFollow(true);
@@ -1357,7 +1356,7 @@ function select(f,el,ctx){
   if(!f){ st.sel=null; st.ctx=null } else { st.sel={f:f,el:el}; st.ctx=ctx||f.root }
   $("#app").classList.toggle("peek",!!f&&$("#app").classList.contains("min"));
   draw(); paintLabels(); renderProps(); markTree(true);
-  if(isPhone()){ if(f){ peekSel(); if(!select.hinted&&el!==f.root){ select.hinted=1; setTimeout(function(){ toast("Tap again to go inside · double-tap to zoom") },300) } } else { if($("#app").classList.contains("show-r")) unpeek(); $("#app").classList.remove("show-r"); $(".rp").classList.remove("full") } }
+  if(isPhone()){ if(f){ peekSel(); if(!select.hinted&&el!==f.root){ select.hinted=1; setTimeout(function(){ toast("Tap again to go inside · double-tap to zoom") },300) } } else { if($("#app").classList.contains("show-r")||layersOpen()) unpeek(); $("#app").classList.remove("show-r"); $(".rp").classList.remove("full") } }
 }
 function box(node,f,el){
   if(!f||!el||!f.doc){ node.style.display="none"; return null }
@@ -1444,8 +1443,8 @@ function node(f,el,depth){
     row.classList.toggle("open",openSet.has(el)); fill(); markTree(false);
   });
   row.addEventListener("click",function(){
-    if(isPhone()) setTimeout(function(){ $("#app").classList.remove("show-l"); peekSel() },120);
     select(f,el,layerParent(el,f)||f.root);
+    if(isPhone()) return;   /* phones bring it above the sheet themselves */
     var r=el===f.root?{x:0,y:0,w:f.w,h:Math.min(f.h,900)}:frameRect(f,el); ensureVisible(f,r);
   });
   row.addEventListener("dblclick",function(){ var r=el===f.root?{x:0,y:0,w:f.w,h:f.h}:frameRect(f,el); zoomTo(f,r) });
@@ -2208,10 +2207,11 @@ function openSheet(kind){
   var app=$("#app"), lp=$(".lp");
   lp.classList.toggle("sl-layers",kind==="layers");
   [].forEach.call(document.querySelectorAll(".stabs button"),function(b){ b.classList.toggle("on",b.dataset.st===kind); b.setAttribute("aria-selected",String(b.dataset.st===kind)) });
-  if(kind==="layers") setTimeout(function(){ markTree(true) },300);
+  app.classList.remove("show-r"); $(".rp").classList.remove("full");
   app.classList.add("show-l");
+  if(kind==="layers") setTimeout(function(){ markTree(true); peekSel() },300);
 }
-function closeDrawers(){ $("#app").classList.remove("show-l","show-r"); $(".rp").classList.remove("full") }
+function closeDrawers(){ $("#app").classList.remove("show-l","show-r"); $(".rp").classList.remove("full"); $(".lp").classList.remove("full") }
 $("#mobL").addEventListener("click",function(){ closePop(); openSheet("pages") });
 $("#layersTb").addEventListener("click",function(){ closePop(); openSheet("layers") });
 [].forEach.call(document.querySelectorAll(".stabs button"),function(b){ b.addEventListener("click",function(){ openSheet(b.dataset.st) }) });
@@ -2246,9 +2246,9 @@ $("#presentTb").addEventListener("click",function(){ present(true) });
         removeEventListener("pointermove",mv); removeEventListener("pointerup",up); removeEventListener("pointercancel",up);
         sh.classList.remove("dragging"); sh.style.transform="";
         if(!moved) return;
-        if(sel===".rp"&&dy<-40) sh.classList.add("full");
-        else if(sel===".rp"&&dy>40&&sh.classList.contains("full")) sh.classList.remove("full");
-        else if(dy>70){ if(sel===".rp") select(null); closeDrawers() }
+        if(dy<-40) sh.classList.add("full");
+        else if(dy>40&&sh.classList.contains("full")) sh.classList.remove("full");
+        else if(dy>70){ if(sel===".rp"){ select(null); closeDrawers() } else { closeDrawers(); if(st.sel) peekSel() } }
       }
       addEventListener("pointermove",mv); addEventListener("pointerup",up); addEventListener("pointercancel",up);
     });
@@ -2263,17 +2263,22 @@ if(window.visualViewport){ var kb=function(){ var v=visualViewport; document.doc
    it fits, zoomed out just enough if it doesn't. Closing the sheet puts the
    view back where you had it, unless you've moved it since. */
 var peekCam=null;
+var camRun=0;
 function camTo(z,x,y){
-  var a={z:st.zoom,x:st.x,y:st.y}, t0=performance.now();
-  (function step(now){ var k=Math.min(1,(now-t0)/240), e=1-Math.pow(1-k,3);
-    st.zoom=a.z+(z-a.z)*e; st.x=a.x+(x-a.x)*e; st.y=a.y+(y-a.y)*e; apply(); if(k<1) requestAnimationFrame(step) })(t0);
+  var me=++camRun, a={z:st.zoom,x:st.x,y:st.y}, t0=performance.now();   /* a newer move replaces this one */
+  function step(now){ if(me!==camRun) return; var k=Math.min(1,(now-t0)/240), e=1-Math.pow(1-k,3);
+    st.zoom=a.z+(z-a.z)*e; st.x=a.x+(x-a.x)*e; st.y=a.y+(y-a.y)*e; apply(); if(k<1) requestAnimationFrame(step) }
+  step(t0);
+  /* if frames are paused (a background tab), still land in the right place */
+  setTimeout(function(){ if(me===camRun&&(st.zoom!==z||st.x!==x||st.y!==y)){ st.zoom=z; st.x=x; st.y=y; apply() } },320);
 }
+function layersOpen(){ return $("#app").classList.contains("show-l")&&$(".lp").classList.contains("sl-layers") }
 function peekSel(){
   if(!isPhone()||!st.sel) return;
-  $("#app").classList.add("show-r");
+  if(!layersOpen()) $("#app").classList.add("show-r");
   /* the room you can actually see: under the top bar, above the sheet, both
      measured (the notch and Safari's toolbars change them on a real phone) */
-  var cb=cv.getBoundingClientRect(), rp=$(".rp"), W=cb.width,
+  var cb=cv.getBoundingClientRect(), rp=layersOpen()?$(".lp"):$(".rp"), W=cb.width,
       gapTop=$(".mob").getBoundingClientRect().bottom-cb.top+12,
       gapBot=cb.height-rp.offsetHeight-12, room=gapBot-gapTop;
   if(room<60) return;
@@ -2316,7 +2321,7 @@ if(innerWidth>=768&&innerWidth<1024&&!$("#app").classList.contains("min")) minUI
 var touches={};
 cv.addEventListener("touchstart",function(e){ if(e.touches.length===2){ tap=null; var a=e.touches[0],b=e.touches[1]; touches={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),z:st.zoom,mx:(a.clientX+b.clientX)/2,my:(a.clientY+b.clientY)/2,x:st.x,y:st.y} } },{passive:true});
 cv.addEventListener("touchmove",function(e){
-  if(e.touches.length!==2||!touches.d) return; e.preventDefault(); if(peekCam) peekCam.moved=true;
+  if(e.touches.length!==2||!touches.d) return; e.preventDefault(); if(peekCam) peekCam.moved=true; camRun++;
   var a=e.touches[0],b=e.touches[1], d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY), r=cv.getBoundingClientRect();
   var mx=(a.clientX+b.clientX)/2, my=(a.clientY+b.clientY)/2;
   st.x=touches.x+(mx-touches.mx); st.y=touches.y+(my-touches.my); st.zoom=touches.z;
