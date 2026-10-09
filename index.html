@@ -3514,6 +3514,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .padwrap:not(.is-open) .padstack:hover,
   #notes .readpill:hover{transform:none}
 }
+
+/* the note pile moves the way the faces beside it do: the same spring,
+   the same small distances -- a spread, and the bubble lifts like the +1 */
+.padart i,.padart b{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+@media (hover:hover){
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n1{transform:rotate(-15deg) translate(-3px,0)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n2{transform:rotate(12deg) translate(3px,0)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n3{transform:rotate(-3deg)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart b{transform:translateY(-3px) rotate(-6deg)}
+}
+@media (prefers-reduced-motion:reduce){.padart i,.padart b{transition:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
