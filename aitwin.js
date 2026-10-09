@@ -507,7 +507,9 @@
   var ringSvg = heroAsk && heroAsk.querySelector(".heroask-ring"), ringRect = ringSvg && ringSvg.querySelectorAll("rect[pathLength]");
   function sizeRing(){
     if (!ringRect) return;
-    var w = heroAsk.offsetWidth + 2, h = heroAsk.offsetHeight + 2, sw = 1.25;
+    // size from the svg's own box: it sits on the padding box, so the
+    // button's border-box size overshoots it and the mask crops the stroke
+    var cs = getComputedStyle(ringSvg), w = parseFloat(cs.width), h = parseFloat(cs.height), sw = 1.25;
     Array.prototype.forEach.call(ringRect, function(r){
       r.setAttribute("x", sw / 2); r.setAttribute("y", sw / 2);
       r.setAttribute("width", Math.max(0, w - sw)); r.setAttribute("height", Math.max(0, h - sw));
