@@ -668,18 +668,56 @@ function coverHTML(){
    '.legend{display:flex;gap:20px;font-size:13px;color:#7A7676}.legend span{display:flex;align-items:center;gap:8px}'+
    '@media (max-width:600px){body{width:390px;height:auto;padding:40px 24px;gap:32px}h1{font-size:40px}.role{font-size:16px}.me{gap:16px}.me img{width:72px;height:72px}.sum{font-size:18px}'+
    '.cards{grid-template-columns:1fr;gap:28px}.shot{height:200px}.foot{flex-direction:column;align-items:flex-start;gap:16px}.links{flex-wrap:wrap}.legend{flex-direction:column;gap:6px}.top .mono:last-child{display:none}}'+
+   /* the live band: the homepage's own work cards, animations and all */
+   '.live{position:relative;height:300px;display:none}.live iframe{position:absolute;left:0;top:0;border:0;width:1632px;height:302px;transform:scale(.784314);transform-origin:0 0;pointer-events:none;opacity:0;transition:opacity .4s}.live.ok iframe{opacity:1}'+
+   '.live .hit{position:absolute;top:0;height:100%;width:24.08%;cursor:pointer;padding-top:251px}'+
+   '.live .hit h3{margin:0;font-size:15px;line-height:1.35;font-weight:500}.live .hit p{margin:4px 0 0;font-size:13px;color:#B0ACAC}'+
+   'body:has(.live.ok){gap:40px}'+
+   '.live.ok{display:block}.live.ok+.cards{display:none}'+
+   '@media (max-width:600px){.live,.live.ok{display:none}.live.ok+.cards{display:grid}}'+
    '.dotp{width:18px;height:18px;border-radius:50% 50% 50% 0;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.25);display:grid;place-items:center}.dotp img{width:14px;height:14px;border-radius:50%}'+
    '</style></head><body>'+
    '<div class="top" data-layer="Header"><span class="mono" data-layer="File label">Portfolio · 2026</span><span class="mono" data-layer="Location">Bengaluru, India</span></div>'+
    '<div class="me" data-step="me" data-layer="Who I am"><img src="./assets/avatar-96.webp" alt="Lokesh Bhatia"><div><h1 class="serif">Lokesh Bhatia</h1><p class="role">Product designer · Fintech &amp; AI</p></div></div>'+
    '<p class="sum" data-layer="In one line">Three years, usually as the only designer. I owned a trading app behind <b>97% of company revenue</b>, built the <b>first product</b> Rupeezy’s partners ever had, and took an <b>AI agent platform from 0→1</b>.</p>'+
+   '<div class="live" data-layer="Case studies"><iframe title="Selected work" tabindex="-1" src="./index.html?figma=1&amp;cover=1"></iframe>'+cards.map(function(c,i){
+     return '<div class="hit" data-go="'+c.go+'" data-layer="'+c.go+'" style="left:'+(i*413/16.32).toFixed(2)+'%"><h3>'+c.t+'</h3><p>'+c.m+'</p></div>';
+   }).join("")+'</div>'+
    '<div class="cards" data-step="work" data-layer="Case studies">'+cards.map(function(c){
      return '<div class="card" data-go="'+c.go+'" data-layer="'+c.go+'"><div class="shot"><img src="'+c.img+'" alt="" style="object-position:'+c.pos+'"></div><h3>'+c.t+'</h3><p>'+c.m+'</p><span class="go">Open page →</span></div>';
    }).join("")+'</div>'+
    '<div class="foot" data-step="contact" data-layer="Contact">'+
      '<div class="links"><a class="dark" data-copy="'+MAIL+'" data-layer="Email">'+MAIL+'</a><a data-href="'+LINKEDIN+'" data-layer="LinkedIn">LinkedIn ↗</a><a data-go="Resume" data-layer="Resume">Résumé</a><a data-href="./index.html" data-layer="Website">The website ↗</a></div>'+
      '<div class="legend" data-layer="How to read this file"><span><i class="dotp"><img src="'+AVATAR+'" alt=""></i>Pins are my design decisions</span><span>Click to inspect · ▶ to use the site · C to comment</span></div>'+
-   '</div></body></html>';
+   '</div><script>('+coverLive.toString()+')()<\/script></body></html>';
+}
+/* runs inside the Cover: keep only the homepage's work grid, four across, light */
+function coverLive(){
+  var band=document.querySelector(".live"), ifr=band&&band.querySelector("iframe");
+  if(!ifr) return;
+  ifr.addEventListener("load",function(){
+    try{
+      var d=ifr.contentDocument, work=d.getElementById("work");
+      if(!work) return;
+      d.documentElement.setAttribute("data-theme","light"); d.documentElement.style.backgroundColor="transparent";
+      var st=d.createElement("style");
+      st.textContent="html,body{background:transparent!important;margin:0!important;padding:0!important;overflow:hidden!important;min-height:0!important}"+
+        "body>*:not(#work){display:none!important}"+
+        "#work{max-width:none!important;width:1632px!important;margin:0!important;padding:0!important}"+
+        "#work .workgrid{grid-template-columns:repeat(4,393px)!important;column-gap:20px!important;row-gap:0!important}"+
+        "#work [data-reveal]{opacity:1!important;transform:none!important}";
+      d.head.appendChild(st);
+      d.body.appendChild(work);
+      [].forEach.call(work.querySelectorAll("[data-reveal]"),function(el){ el.classList.add("shown") });
+      d.defaultView.scrollTo(0,0);
+      band.classList.add("ok");
+      /* the tour and the layers point at whichever set of cards is showing */
+      var cards=band.nextElementSibling;
+      if(innerWidth>600&&cards){ band.setAttribute("data-step","work"); cards.removeAttribute("data-step"); cards.removeAttribute("data-layer") }
+      else band.removeAttribute("data-layer");
+      try{ parent.postMessage({fvCoverLive:1},location.origin) }catch(e){}
+    }catch(e){}
+  });
 }
 
 /* Foundations: the system, read from the live homepage, not retyped */
@@ -979,6 +1017,8 @@ function renderPages(){
     el.appendChild(b);
   });
 }
+/* the Cover's live cards arrive after its layers were drawn: redraw them */
+addEventListener("message",function(e){ if(e.origin===location.origin&&e.data&&e.data.fvCoverLive&&st.frames[0]&&st.frames[0].name==="Cover") renderTree() });
 function renderTree(){
   tree.innerHTML=""; rowOf=new WeakMap();
   st.frames.forEach(function(f,i){
