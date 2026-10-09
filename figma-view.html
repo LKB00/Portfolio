@@ -94,7 +94,8 @@ svg{flex:none}
 .pg .cnt{margin-left:auto;display:flex;align-items:center;gap:3px;color:var(--purple);font-weight:500}
 .psep{height:1px;margin:6px 16px;background:var(--line)}
 .lfind{padding:8px;border-bottom:1px solid var(--line);flex:none}.lfind[hidden]{display:none}
-.lfind input{display:block;width:100%;height:28px;padding:0 10px;border-radius:6px;border:0;outline:0;background:#383838;color:#fff;font:12px Inter,sans-serif}
+.lfind input{display:block;width:100%;height:28px;padding:0 10px;border-radius:6px;border:0;outline:0;background:#F5F5F5;color:rgba(0,0,0,.9);font:12px Inter,sans-serif}
+:root[data-theme="dark"] .lfind input{background:#383838;color:#fff}
 .lp.finding .pages,.lp.finding .layers{display:none}
 .fres{flex:1;min-height:0;overflow:auto;padding:4px 0 16px}.fres[hidden]{display:none}
 .fres .sh{height:28px}.fres .fr{display:flex;align-items:center;gap:6px;height:28px;margin:0 8px;padding:0 8px;border-radius:5px;width:calc(100% - 16px);text-align:left;white-space:nowrap;overflow:hidden}
@@ -212,8 +213,12 @@ button.av{cursor:pointer}
 .cv.comment{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M3 21V12a9 9 0 1 1 9 9z' fill='%23fff' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") 2 22,crosshair}
 .cv.follow{box-shadow:inset 0 0 0 3px var(--purple)}
 .world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
-.frame{position:absolute;background:#fff}
-.frame iframe{display:block;border:0;pointer-events:none;background:#fff}
+.frame{position:absolute;background:var(--page,#FAFAFA)}
+.frame iframe{display:block;border:0;pointer-events:none;background:var(--page,#FAFAFA)}
+:root{--page:#FAFAFA}:root[data-theme="dark"]{--page:#0F0F0F}
+/* a frame that didn't load says so, and offers to try again */
+.frame .ferr{position:absolute;left:50%;top:calc(120px / var(--z,1));transform:translateX(-50%) scale(calc(1 / var(--z,1)));transform-origin:top center;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--tx2);font-size:13px;white-space:nowrap}
+.frame .ferr button{height:28px;padding:0 12px;border-radius:5px;background:var(--blue);color:#fff;font-weight:500;cursor:pointer}
 .flabel{position:absolute;transform-origin:0 100%;white-space:nowrap;font-size:11px;color:var(--tx2);padding-bottom:4px}
 .flabel.sel{color:var(--blue)}
 .ov{position:absolute;inset:0;pointer-events:none}
@@ -551,7 +556,15 @@ var T0=Date.now(), seenSel={};
 function T(name,data){ try{ if(window.pfTrack) window.pfTrack(name,data) }catch(e){} }
 function pageSlug(i){ var p=PAGES[i==null?st.page:i]; return p&&p.name?p.name.toLowerCase().replace(/[^a-z0-9]+/g,"-"):"" }
 
-addEventListener("storage",function(e){ if(e.key==="portfolio-theme"&&!EMBED&&st.frames.length) setTimeout(function(){ loadPage(st.page) },0) });
+function applyTheme(t){
+  t=t==="dark"?"dark":"light"; document.documentElement.setAttribute("data-theme",t);
+  st.frames.forEach(function(f){
+    if(f.ifr.hasAttribute("srcdoc")){ f.ready=false; f.doc=null; f.ifr.srcdoc=f.name==="Cover"?coverHTML():(SITE?foundationsHTML(SITE):f.ifr.srcdoc) }
+    else if(f.doc){ f.doc.documentElement.setAttribute("data-theme",t); f.doc.documentElement.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA" }
+  });
+  renderProps();
+}
+addEventListener("storage",function(e){ if(e.key==="portfolio-theme") applyTheme(e.newValue) });
 
 /* ═══ HELPERS ═══════════════════════════════════════════════════════ */
 function toast(msg){ toastEl.textContent=msg; toastEl.classList.add("on"); clearTimeout(toast.t); toast.t=setTimeout(function(){toastEl.classList.remove("on")},2400) }
@@ -831,8 +844,10 @@ function coverLive(){
 
 /* Foundations: the system, read from the live homepage, not retyped */
 var SITE=null;
+var SITE_READING=false, SITE_WAIT=[];
 function readSite(cb){
   if(SITE) return cb(SITE);
+  SITE_WAIT.push(cb); if(SITE_READING) return; SITE_READING=true; cb=function(x){ var w=SITE_WAIT; SITE_WAIT=[]; SITE_READING=false; w.forEach(function(c){ c(x) }) };
   var ifr=document.createElement("iframe");
   ifr.style.cssText="position:fixed;left:-3000px;top:0;width:1440px;height:900px;visibility:hidden";
   ifr.src="./index.html?figma=1";
@@ -912,7 +927,19 @@ function addFrame(name,w,h,x,src,srcdoc){
   st.frames.push(f);
   lab.addEventListener("pointerdown",function(e){ e.stopPropagation(); if(f.root) select(f,f.root,f.root) });
   ifr.addEventListener("load",function(){ ready(f) });
+  watch(f);
   return f;
+}
+function watch(f){
+  clearTimeout(f.wd);
+  f.wd=setTimeout(function(){
+    if(f.ready||st.frames.indexOf(f)<0) return;
+    var page=f.name.split(" — ").pop(), m=document.createElement("div"); m.className="ferr";
+    m.innerHTML='<span>'+esc(page)+' didn’t load.</span><button type="button">Try again</button>';
+    m.querySelector("button").addEventListener("pointerdown",function(e){ e.stopPropagation() });
+    m.querySelector("button").addEventListener("click",function(){ m.remove(); f.el.classList.add("loading"); var src=f.ifr.getAttribute("src"); if(src){ f.ifr.src=src } else { f.ifr.srcdoc=f.ifr.srcdoc } watch(f) });
+    f.el.classList.remove("loading"); f.el.appendChild(m);
+  },12000);
 }
 function loadPage(i,cb){
   if(PAGES[i].group) return;
@@ -923,8 +950,15 @@ function loadPage(i,cb){
   var narrow=cv.clientWidth<600;
   if(P.kind==="cover") addFrame("Cover",narrow?390:1440,narrow?1400:900,0,null,coverHTML());
   else if(P.kind==="foundations"){
-    var f=addFrame("Foundations",narrow?390:1440,1200,0,null,'<!doctype html><html><body style="margin:0;font:14px Inter,sans-serif;color:#999;padding:80px">Reading the live site…</body></html>');
-    readSite(function(s){ if(st.frames[0]===f){ f.doc=null; f.ifr.srcdoc=foundationsHTML(s) } });
+    var wait=function(msg,retry){ return docHead()+'</head><body style="padding:80px;font-size:14px"><p class="mono" style="text-transform:none;font-size:14px">'+msg+'</p>'+(retry?'<p><a data-retry="1" style="color:#0D99FF;cursor:pointer">Try again</a></p>':'')+'</body></html>' };
+    var f=addFrame("Foundations",narrow?390:1440,1200,0,null,wait("Reading the live site…"));
+    var tryRead=function(){
+      var done=false;
+      readSite(function(s){ done=true; if(st.frames[0]===f){ f.doc=null; f.ifr.srcdoc=foundationsHTML(s) } });
+      /* the live site couldn't be read: say so, and offer to try again */
+      setTimeout(function(){ if(!done&&st.frames[0]===f){ SITE_READING=false; f.doc=null; f.ifr.srcdoc=wait("Couldn’t read the live site.",true) } },12000);
+    };
+    f.retry=tryRead; tryRead();
   }else{
     var x=0; DEVICES.forEach(function(d){ addFrame(d.key+" — "+P.name,d.w,d.h,x,P.src); x+=d.w+160 });
   }
@@ -1077,6 +1111,7 @@ function press(e){
   closeLinkPop();
   /* the Cover is the file's index: its cards and links act on one click
      (the one deviation from Figma). ⌘/Ctrl-click still selects them. */
+  if(h.t.closest&&h.t.closest("[data-retry]")&&h.f.retry){ h.f.ifr.srcdoc=docHead()+'</head><body style="padding:80px"><p class="mono" style="text-transform:none;font-size:14px">Reading the live site…</p></body></html>'; h.f.doc=null; h.f.retry(); return }
   var link=!(e.metaKey||e.ctrlKey)&&h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy],[data-home]");
   if(link){ var li=linkInfo(link,h.f); if(li) li.act(); return }
   /* everywhere else a click selects, as in Figma; a link under the pointer
@@ -1718,9 +1753,7 @@ addEventListener("resize",function(){ draw(); placePins() });
 /* the file opens on its Cover */
 loadPage(0);
 T("fv_open",{entry:(location.search.match(/[?&]entry=(pill|link)/)||[])[1]||(EMBED?"pill":"direct"),page:pageSlug()});
-/* read the live site for Foundations while the visitor looks at the
-   Cover, so that page (and its tour step) opens instantly */
-setTimeout(function(){ readSite(function(){}) },2500);
+
 })();
 </script>
 </body>
