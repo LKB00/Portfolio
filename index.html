@@ -3382,6 +3382,16 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .padsig-add{height:20px;padding:0;font-size:11px;color:rgba(20,20,20,.3);background:transparent}
 @media (hover:hover){.padsig-add:hover{background:transparent;color:rgba(20,20,20,.6)}}
 @media (max-width:560px){.padsig{height:24px}}
+
+/* how many notes Send will send, on the button that sends them */
+.padbar .padsend .padcount{position:static;display:none;min-width:18px;height:18px;padding:0 5px;margin-left:-2px;
+  border-radius:var(--r-pill);background:color-mix(in srgb,var(--bg) 20%,transparent);color:var(--bg);
+  box-shadow:none;transform:none;font-family:inherit;font-size:11px;font-weight:600;line-height:18px;text-align:center;
+  font-variant-numeric:tabular-nums}
+.padbar.multi .padsend .padcount{display:inline-block;animation:padCountIn .25s cubic-bezier(.34,1.56,.64,1)}
+@keyframes padCountIn{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+.padsend[disabled] .padcount{display:none!important}
+@media (prefers-reduced-motion:reduce){.padbar.multi .padsend .padcount{animation:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3674,12 +3684,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <span id="padStatusText"></span></p>
         <div class="padbar" role="toolbar" aria-label="Board tools">
           <button type="button" class="padtool padadd" id="padAdd" title="Add a note" aria-label="Add a note">
-            <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            <span class="padcount" id="padCount" aria-live="polite">1</span></button>
+            <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
           <button type="button" class="padtool padtrash" id="padClear" title="Clear the board" aria-label="Clear the board">
             <svg width="17" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></button>
           <button type="button" class="padsend" id="padSend" title="Send these to me" aria-label="Send these notes to Lokesh">
             <span class="sendlabel">Send</span>
+            <span class="padcount" id="padCount" aria-hidden="true">1</span>
             <svg class="ico-send" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
             <svg class="ico-done" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></button>
         </div>
@@ -4231,7 +4241,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       var b=statusText.querySelector("b"); if(b) b.textContent=who;
     }
     if(sendLabel && !sending) sendLabel.textContent=(k>0||narrow)?"Send":"Send anonymously";
-    sendBtn.setAttribute("aria-label",k>0?"Send to Lokesh, with your email":"Send to Lokesh anonymously");
+    var what=w.length>1?"Send "+w.length+" notes":"Send";
+    sendBtn.setAttribute("aria-label",what+(k>0?" to Lokesh, with your email":" to Lokesh anonymously"));
   }
 
   /* ── the email, inside the notes ──
@@ -4423,8 +4434,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var hadText=board.classList.contains("has-text");
     board.classList.toggle("has-text",w>0);    /* brings up the toolbar */
     if(hadText!==(w>0)) syncWho();             /* "Add your email" becomes a link */
-    count.textContent=String(n);
-    var bar=board.querySelector(".padbar"); if(bar) bar.classList.toggle("multi",n>1);
+    else sendBtn.setAttribute("aria-label",(w>1?"Send "+w+" notes":"Send")+(written().some(signed)?" to Lokesh, with your email":" to Lokesh anonymously"));
+    /* the count is of what will be sent, so it lives on Send and counts
+       only notes with words in them */
+    count.textContent=String(w);
+    var bar=board.querySelector(".padbar"); if(bar) bar.classList.toggle("multi",w>1);
     /* Add stays live even when a blank note is on the board: greying it
        out leaves the visitor guessing. It is clickable, and clicking it
        shakes the note that still needs filling — a refusal that says
