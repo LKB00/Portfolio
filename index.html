@@ -3444,6 +3444,19 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   /* with the email field open, the bar takes the width so the address is readable */
   .padbar:has(.padme-mail:not([hidden])){left:10px;right:10px;transform:none;max-width:none}
 }
+
+/* closing is a deliberate act, so it has its own control */
+.padclose{position:absolute;top:12px;right:12px;z-index:7;display:grid;place-items:center;
+  width:32px;height:32px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:transparent;color:var(--muted);transition:background .18s var(--ease),color .18s var(--ease)}
+@media (hover:hover){.padclose:hover{background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--ink)}}
+.padclose:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.padtop{max-width:calc(100% - 104px)}
+@media (max-width:560px){.padtop{white-space:normal;left:12px;transform:none;max-width:calc(100% - 64px)}
+  .padclose{top:8px;right:8px}}
+/* the empty board: the + and what it does */
+.padblank{bottom:96px}
+.padblank-t{margin:0;font-size:12.5px;color:var(--muted)}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3710,10 +3723,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </button>
 
       <div class="padboard" id="padBoard">
+        <button type="button" class="padclose" id="padClose" aria-label="Close the board" title="Close (Esc)"><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
         <div class="padblank" id="padBlank">
-          <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
+          <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add a note">
             <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </button>
+          <p class="padblank-t">Add a note</p>
         </div>
 
         <div class="padtoast" id="padToast" role="status" hidden>
@@ -4482,12 +4497,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   function sync(){
     var n=notes.length, w=written().length;
-    /* an empty board is just space: give it back. It never opens itself
-       the other way — that used to also fire on the very first render
-       for a returning visitor with saved notes, popping the modal open
-       over whatever they'd actually scrolled to. Opening is always a
-       click now: the trigger, explicitly. */
-    if(n===0) close();
+    /* Opening is always a click on the trigger; the board never opens
+       itself for a returning visitor with saved notes. */
+    /* an empty board stays open: deleting the last note is not a request
+       to leave. It shows the big + instead. Closing is always explicit --
+       the close button, Escape, the backdrop -- or the pause after a send. */
     board.classList.toggle("has-notes",n>0);   /* hides the empty state */
     var hadText=board.classList.contains("has-text");
     board.classList.toggle("has-text",w>0);    /* brings up the toolbar */
@@ -4666,6 +4680,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      page does: a click on the backdrop, or Escape — the notes already
      written stay put in localStorage either way, nothing is lost */
   if(overlay) overlay.addEventListener("click",close);
+  var closeBtn=document.getElementById("padClose");
+  if(closeBtn) closeBtn.addEventListener("click",function(){ close(true) });
   window.addEventListener("keydown",function(e){
     if(e.key==="Escape" && wrap && wrap.classList.contains("is-open")) close();
   });
@@ -4678,11 +4694,14 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   /* It carries no decision, so it needs no dismiss: it says its piece
      and goes. 4.2s is a short sentence read once, unhurried. */
-  var toastTimer=null;
+  var toastTimer=null, closeAfterToast=false;
   function showToast(msg){
     toastText.textContent=msg; toast.hidden=false;
     clearTimeout(toastTimer);
-    toastTimer=setTimeout(function(){ hideToast(); sync() },4200);
+    toastTimer=setTimeout(function(){
+      hideToast(); sync();
+      if(closeAfterToast){ closeAfterToast=false; close(true) }
+    },4200);
   }
   function hideToast(){ clearTimeout(toastTimer); toast.hidden=true }
 
@@ -4732,6 +4751,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       if(label) label.textContent="Send";
       sendBtn.classList.add("is-done");
       setTimeout(function(){ sendBtn.classList.remove("is-done") },2600);
+      closeAfterToast=true;
       showToast(anySigned?"Sent. I’ll reply to "+back+".":"Sent anonymously. Thank you, I read every one.");
       notes=[]; save();
       [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() }); ELS.clear();
