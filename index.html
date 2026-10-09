@@ -4138,7 +4138,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     "":       {label:"Note",      ph:"Type a note…",
                info:""},
     feedback: {label:"Feedback",  ph:"What worked, what didn’t, what was unclear…",
-               info:"Honest beats kind. What worked, and what didn’t?"},
+               info:"Honest beats kind."},
     question: {label:"Question",  ph:"Ask about the work, the process, or this site…",
                info:'Want an answer now? <button type="button" class="padlink" data-act="twin">Ask my AI twin</button>.'},
     work:     {label:"Work",      ph:"The role, the team, and where you found me…",
@@ -4177,7 +4177,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     if(statusEl) statusEl.classList.toggle("is-known",!!who);
     if(statusText) statusText.innerHTML=who
       ? (narrow?"I’ll know it’s you, and reply.":"I’ll know it’s you, and reply to <b></b>.")
-      : (narrow?"Anonymous. ":"Anonymous: I won’t know it’s you. ")+'<button type="button" class="padlink" data-act="email">Add your email</button> to get a reply.';
+      : (narrow?"Anonymous. ":"Anonymous: I won’t know it’s you. ")+(board.classList.contains("has-text")
+          ? '<button type="button" class="padlink" data-act="email">Add your email</button>'
+          : 'Add your email')+" to get a reply.";
     var b=statusText&&statusText.querySelector("b"); if(b) b.textContent=who;
     if(sendLabel && !sending) sendLabel.textContent=(who||narrow)?"Send":"Send anonymously";
     sendBtn.setAttribute("aria-label",who?"Send to Lokesh, with your email":"Send to Lokesh anonymously");
@@ -4316,7 +4318,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
        click now: the trigger, explicitly. */
     if(n===0) close();
     board.classList.toggle("has-notes",n>0);   /* hides the empty state */
+    var hadText=board.classList.contains("has-text");
     board.classList.toggle("has-text",w>0);    /* brings up the toolbar */
+    if(hadText!==(w>0)) syncWho();             /* "Add your email" becomes a link */
     count.textContent=String(n);
     var bar=board.querySelector(".padbar"); if(bar) bar.classList.toggle("multi",n>1);
     /* Add stays live even when a blank note is on the board: greying it
@@ -4499,7 +4503,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   topicBtns.forEach(function(b){
     b.addEventListener("click",function(){
-      setTopic(topic===b.dataset.topic?"":b.dataset.topic);
+      setTopic(b.dataset.topic);
       var bl=blank(), last=board.querySelector(".padnote:last-of-type textarea");
       var ta=bl&&bl.el?bl.el.querySelector("textarea"):last;
       if(ta) ta.focus({preventScroll:true});
@@ -4518,7 +4522,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   });
   if(statusEl) statusEl.addEventListener("click",function(e){
     if(!e.target.closest('[data-act="email"]')) return;
-    if(!board.classList.contains("has-text")){ var ta=board.querySelector(".padnote textarea"); if(ta) ta.focus(); showToast("Write your note first, then add your email."); return }
     if(reply){ reply.focus(); if(replyBox){ replyBox.classList.remove("is-nudged"); void replyBox.offsetWidth; replyBox.classList.add("is-nudged") } }
   });
   if(reply) reply.addEventListener("input",function(){
@@ -4586,7 +4589,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       if(reply) reply.value=""; syncWho();
       notes=[]; save();
       if(reply) reply.value="";
-      setTopic("");
+      setTopic("feedback");
       [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() }); ELS.clear();
       sync();
     })
@@ -4624,7 +4627,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   var meta=readMeta();
   if(reply&&meta.reply) reply.value=meta.reply;
-  setTopic(meta.topic||"");
+  setTopic(meta.topic||"feedback");
   var stored=read();
   if(Array.isArray(stored)&&stored.length){
     notes=stored;
