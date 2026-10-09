@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>try{if(self!==top)document.documentElement.classList.add("in-frame")}catch(e){document.documentElement.classList.add("in-frame")}</script>
 <script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -537,6 +538,21 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    page visibly ran out of breath on the way down. The hero keeps the
    larger opening gap; every band after it is spaced the same. */
 #work{padding-bottom:clamp(46px,7vw,72px)}
+/* the way into the Figma view: after the work, for whoever wants to see how
+   it's built. Quiet, in the Ask-my-AI-twin voice: lead-in grey, thing in ink */
+.figmacta{display:flex;justify-content:center;margin:clamp(32px,5vw,48px) 0 0}
+.figmacta a{display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 14px 0 14px;border-radius:9999px;
+  border:.5px solid color-mix(in srgb,var(--ink) 12%,transparent);background:var(--card,#fff);color:var(--ink);text-decoration:none;
+  font-family:var(--display);font-size:14px;font-weight:500;white-space:nowrap;transition:border-color .2s}
+.figmacta a:hover{border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
+.figmacta-q{color:var(--muted);font-weight:400}
+.figmacta i{font-style:normal;font-size:10px;font-weight:500;line-height:16px;padding:0 6px;border-radius:5px;letter-spacing:.04em;text-transform:uppercase;
+  background:color-mix(in srgb,#9747FF 13%,transparent);color:#7B35E0}
+:root[data-theme="dark"] .figmacta i{color:#C9A6FF;background:color-mix(in srgb,#9747FF 26%,transparent)}
+.figmacta-go{color:var(--muted);transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+.figmacta a:hover .figmacta-go{transform:translateX(2px);color:var(--ink)}
+/* inside the Figma view itself, the way in would point at itself */
+.in-frame .figmacta{display:none}
 
 /* 3. THE END OF THE PAGE. #contact carried nothing but a copyright: the
    one place a reader has finished the work and decided to act had no way
@@ -3584,7 +3600,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* the empty state sits in the true centre of the board */
 #padBoard .padblank{inset:0;padding:0}
 </style>
-<script defer src="./analytics.js?v=3"></script>
+<script defer src="./analytics.js?v=4"></script>
 <script defer src="./readpill.js?v=11"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -3810,6 +3826,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </a>
 
     </div>
+    <p class="figmacta" data-reveal><a href="./figma-view.html"><svg width="11" height="16" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg><span><span class="figmacta-q">See it as</span> a Figma file</span><i>Beta</i><svg class="figmacta-go" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></p>
   </section>
 
   <section id="words" data-section="What people said" aria-label="What people said">
@@ -5040,7 +5057,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
 })();
 </script>
-<script src="./aitwin.js?v=7"></script>
+<script src="./aitwin.js?v=8"></script>
 <script>
 /* App Merge card: fluid phone (entrance, scroll drift, cursor lean) */
 (function(){
