@@ -3422,6 +3422,28 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (hover:hover){.padtop .padlink:hover{text-decoration-color:var(--ink)}}
 .padtop .padlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
 @media (max-width:560px){.padtop{top:10px}}
+
+/* the field, when asked for */
+.padme-mail{background:var(--surface)}
+.padme-mail.is-bad{box-shadow:0 0 0 1.5px #C64B6E;color:#C64B6E}
+.padme-mail.is-bad:focus-within{box-shadow:0 0 0 1.5px #C64B6E}
+.padme-mail.is-nudged{animation:padShakeX .42s ease-in-out}
+@keyframes padShakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}
+  40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.padtop.is-bad{color:#C64B6E}
+.padtop.is-bad .padtop-ico{background:color-mix(in srgb,#C64B6E 12%,transparent);color:#C64B6E}
+/* a full board: + goes quiet, and the note says it in one line */
+.padadd.is-full{color:var(--faint)}
+#padBoard .padtoast{white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.padme-mail.is-nudged{animation:none}}
+
+/* messages rise from the bar into the strip kept clear of notes */
+#padBoard .padtoast{bottom:64px;padding:6px 12px;font-size:12px}
+
+@media (max-width:560px){
+  /* with the email field open, the bar takes the width so the address is readable */
+  .padbar:has(.padme-mail:not([hidden])){left:10px;right:10px;transform:none;max-width:none}
+}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3707,9 +3729,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <button type="button" class="padtool padadd" id="padAdd" title="Add a note" aria-label="Add a note">
             <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
           <div class="padme" id="padWho">
-            <button type="button" class="padme-anon" id="padWhoAdd" aria-label="Anonymous. Add your email to get a reply">
-              <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
-              <span class="padme-t">Anonymous</span><span class="padme-dot" aria-hidden="true">&#183;</span><span class="padme-cta">Add email</span></button>
             <label class="padme-mail" id="padWhoMail" hidden>
               <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
               <input id="padEmail" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="120" placeholder="your@email.com" aria-label="Your email, so I can reply">
@@ -4191,7 +4210,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       toastText=document.getElementById("padToastText"),
       hint=document.getElementById("padHint"),
       who=document.getElementById("padWho"),
-      whoAdd=document.getElementById("padWhoAdd"),
       whoMail=document.getElementById("padWhoMail"),
       emailIn=document.getElementById("padEmail"),
       whoX=document.getElementById("padWhoX"),
@@ -4214,7 +4232,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      keeps working either way.
      ───────────────────────────────────────────────────────────────── */
   var SHEET_URL = "https://script.google.com/macros/s/AKfycbyK0dI4FgZ6NxfpPcsAoRoccPWE4FRUKQdXlazPBXx8LpXcB3mpcqF-wweGusk9SRDbPA/exec";
-  var notes=[], sending=false;
+  var notes=[], sending=false, fullAt=Infinity;
 
   /* ── one bar: add, who it's from, send ──
      The visitor is never asked to sort their note. What it is about is
@@ -4233,21 +4251,33 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   var META="lb.notes.meta", email="", editing=false;
   function readMeta(){ try{ return JSON.parse(localStorage.getItem(META))||{} }catch(e){ return {} } }
   function saveMeta(){ try{ localStorage.setItem(META,JSON.stringify({email:email})) }catch(e){} }
-  function known(){ return email.trim() }
+  /* an address only counts once it looks like one */
+  var EMAIL_RE=/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i;
+  function valid(e){ return EMAIL_RE.test((e||"").trim()) }
+  function known(){ return valid(email)?email.trim():"" }
+  var flagged=false;   /* show "doesn't look like an email" only after they leave the field or try to send */
+  function bad(){ return !!email.trim() && !valid(email) }
 
-  /* the chip is the anonymity line and the email field in one control */
+  /* The bar is just add and send. The email field appears when someone
+     asks for it (the link in the line at the top), and stays while it
+     holds an address. */
   function paintWho(){
-    var on=editing||!!known();
-    if(whoAdd) whoAdd.hidden=on;
+    var on=editing||!!email.trim();
     if(whoMail) whoMail.hidden=!on;
+    var isBad=flagged&&bad();
+    if(whoMail) whoMail.classList.toggle("is-bad",isBad);
+    if(emailIn) emailIn.setAttribute("aria-invalid",isBad?"true":"false");
     if(who) who.classList.toggle("is-known",!!known());
     if(emailIn && document.activeElement!==emailIn) emailIn.value=email;
-    /* the promise at the top of the board, in the state it is in. "Add
-       your email" is only a link once there is something to send. */
+    /* the line at the top, in the state it is in. "Add your email" is
+       only a link once there is something to send. */
     if(top && topText){
       var me=known(), narrow=matchMedia("(max-width:560px)").matches;
       top.classList.toggle("is-known",!!me);
-      if(me){ topText.innerHTML="I’ll know it’s you, and reply to <b></b>."; topText.querySelector("b").textContent=me }
+      top.classList.toggle("is-bad",isBad);
+      if(isBad) topText.textContent=narrow?"That doesn’t look like an email.":"That doesn’t look like an email. Fix it, or remove it to stay anonymous.";
+      else if(me){ topText.innerHTML="I’ll know it’s you, and reply to <b></b>."; topText.querySelector("b").textContent=me }
+      else if(editing) topText.textContent=narrow?"Add your email to get a reply.":"Add your email below and I’ll reply to it.";
       else topText.innerHTML=(narrow?"Anonymous. ":"Anonymous: I won’t know it’s you. ")+(board.classList.contains("has-text")
         ? '<button type="button" class="padlink" data-act="email">Add your email</button>'
         : "Add your email")+" to get a reply.";
@@ -4259,20 +4289,27 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     editing=true; paintWho();
     if(emailIn){ emailIn.focus({preventScroll:true}) }
   }
-  if(whoAdd) whoAdd.addEventListener("click",openEmail);
   if(top){
     top.addEventListener("pointerdown",function(e){ if(e.target.closest('[data-act="email"]')) e.preventDefault() });
     top.addEventListener("click",function(e){ if(e.target.closest('[data-act="email"]')) openEmail() });
   }
   if(emailIn){
-    emailIn.addEventListener("input",function(){ email=emailIn.value; saveMeta(); paintWho() });
+    emailIn.addEventListener("input",function(){
+      email=emailIn.value;
+      if(flagged && !bad()) flagged=false;   /* clears the moment it is fixed */
+      saveMeta(); paintWho();
+    });
     emailIn.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); emailIn.blur() } });
-    emailIn.addEventListener("blur",function(){ editing=false; email=emailIn.value.trim(); saveMeta(); paintWho() });
+    emailIn.addEventListener("blur",function(){
+      editing=false; email=emailIn.value.trim(); flagged=bad(); saveMeta(); paintWho();
+    });
   }
-  if(whoX) whoX.addEventListener("click",function(){
-    email=""; editing=false; if(emailIn) emailIn.value=""; saveMeta(); paintWho();
-    if(whoAdd) whoAdd.focus({preventScroll:true});
-  });
+  if(whoX){
+    whoX.addEventListener("pointerdown",function(e){ e.preventDefault() });
+    whoX.addEventListener("click",function(){
+      email=""; editing=false; flagged=false; if(emailIn) emailIn.value=""; saveMeta(); paintWho();
+    });
+  }
 
   /* the one contextual line, only when it helps */
   var BRIEF='<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>';
@@ -4464,6 +4501,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
        shakes the note that still needs filling — a refusal that says
        which note, instead of a dead button that says nothing. */
     addBtn.disabled = n>=MAX;
+    if(n<fullAt){ fullAt=Infinity; addBtn.classList.remove("is-full"); addBtn.title="Add a note" }
     sendBtn.disabled = w===0 || sending;
   }
 
@@ -4589,7 +4627,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var el=render(note);
     if(x===undefined){
       var s=freeSpot(el,others(note));
-      if(!s){ ELS.delete(note); el.remove(); showToast("The board is full. Send these, then write more."); return }
+      if(!s){ ELS.delete(note); el.remove(); fullAt=notes.length; addBtn.classList.add("is-full"); addBtn.title="The board is full"; showToast("Board’s full. Send these first."); return }
       note.x=s.x; note.y=s.y;
     }
     notes.push(note); save(); sync();
@@ -4651,6 +4689,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   sendBtn.addEventListener("click",function(){
     var lines=written().map(function(n,i){ return (i+1)+". "+n.text.trim() });
     if(!lines.length||sending) return;
+    if(bad()){
+      flagged=true; editing=true; paintWho();
+      if(whoMail){ whoMail.classList.remove("is-nudged"); void whoMail.offsetWidth; whoMail.classList.add("is-nudged") }
+      if(emailIn) emailIn.focus({preventScroll:true});
+      return;
+    }
     var back=known(), anySigned=!!back;
     /* work without any way back is the one note that can't do its job:
        ask once, then let it go if they still want to send it as is */
