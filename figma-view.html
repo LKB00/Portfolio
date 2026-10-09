@@ -101,6 +101,7 @@ svg{flex:none}
 .fres .sh{height:28px}.fres .fr{display:flex;align-items:center;gap:6px;height:28px;margin:0 8px;padding:0 8px;border-radius:5px;width:calc(100% - 16px);text-align:left;white-space:nowrap;overflow:hidden}
 .fres .fr:hover{background:var(--hover,rgba(255,255,255,.06))}.fres .fr .ic{flex:none;display:grid;place-items:center;width:16px;color:var(--tx3)}
 .fres .fr .nm{overflow:hidden;text-overflow:ellipsis}.fres .fr small{margin-left:auto;padding-left:8px;color:var(--tx3);font-size:10px}
+.fres .fr.hl{background:var(--blueSoft)}
 .fres .none{padding:8px 16px;color:var(--tx3)}
 .row.kfocus{box-shadow:inset 0 0 0 1px var(--blue)}
 #tree:focus{outline:none}
@@ -299,6 +300,7 @@ button.av{cursor:pointer}
 .tl:hover{background:var(--hover)}
 .tl.on{background:var(--blue);color:#fff}
 .tl .chev{color:inherit;opacity:.7}
+.tlg{display:flex;align-items:center}.tlg .tchev{min-width:16px;width:16px;padding:0;margin-left:-2px}
 .tl.act{gap:6px;font-weight:500}
 .tsep{width:1px;height:20px;background:var(--line);margin:0 4px}
 .mode{display:flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 10px;border-radius:8px;font-weight:500}
@@ -324,6 +326,9 @@ button.av{cursor:pointer}
 .menu button:hover span,.menu button.hl span{color:#fff}
 .menu hr{border:0;height:1px;background:#383838;margin:6px 0}
 .menu .q{display:block;width:calc(100% - 16px);margin:0 8px 6px;height:28px;padding:0 10px;border-radius:6px;border:0;outline:0;background:#383838;color:#fff;font:12px Inter,sans-serif}
+.menu .ck{width:12px;margin-left:-16px;display:grid;place-items:center;flex:none}
+.menu .lb{flex:1;text-align:left;white-space:nowrap}.menu .lb i{font-style:normal;color:#999}
+.menu button:hover .lb i,.menu button.hl .lb i{color:#fff}
 .menu .mh{padding:4px 24px 2px;color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
 
 /* following someone: Figma's spotlight bar */
@@ -409,6 +414,19 @@ button.av{cursor:pointer}
 .ixgo{color:var(--blue);text-decoration:none;font-weight:500}.ixgo:hover{text-decoration:underline}
 .playg{display:flex;align-items:center}.playg .pchev{width:16px;padding:0;margin-left:-4px}
 .hv .d{display:flex;align-items:center;gap:6px}.hva{width:16px;height:16px;border:0;flex:none}.hva img{width:100%;height:100%;object-fit:cover}
+.kbd{position:absolute;left:12px;right:12px;bottom:12px;z-index:12;max-height:46%;overflow:auto;border-radius:13px;background:var(--ui);color:var(--tx);box-shadow:0 0 .5px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.18)}
+.kbd[hidden]{display:none}
+.kbd .kh{display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 8px 0 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ui)}
+.kbd .kh .ib{font-size:16px}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 24px;padding:12px 16px 16px}
+.kg h4{margin:8px 0 4px;font-size:11px;font-weight:600}
+.kg div{display:flex;justify-content:space-between;gap:12px;height:24px;align-items:center;font-size:11px;color:var(--tx2)}
+.kg kbd{font:11px Inter,sans-serif;color:var(--tx)}
+/* Hide UI: only the canvas; minimise peek: the properties panel back while something is selected */
+.app.hideui .lp,.app.hideui .rp,.app.hideui .tb,.app.hideui .intro{display:none!important}
+.app.hideui{grid-template-columns:0 1fr 0}
+.app.min.peek .rp{visibility:visible;position:fixed;right:12px;top:72px;bottom:72px;width:240px;z-index:25;border-radius:13px;border:0;box-shadow:0 0 .5px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.2);overflow:auto}
+.app.min.peek .rp .rt{display:none}
 </style>
 </head>
 <body>
@@ -425,7 +443,7 @@ button.av{cursor:pointer}
     </div>
     <div class="ltabs"><span class="tab on" aria-current="page">File</span>
       <button class="ib" id="searchBtn" aria-label="Find pages and layers" data-tip="Find  ⌘F"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button></div>
-    <div class="lfind" id="lfind" hidden><input id="findQ" type="search" placeholder="Find pages and layers…" aria-label="Find pages and layers"></div>
+    <div class="lfind" id="lfind" hidden><input id="findQ" type="search" placeholder="Find pages and layers" aria-label="Find pages and layers"></div>
     <div class="fres" id="fres" hidden></div>
     <div class="pages">
       <div class="sh">Pages</div>
@@ -446,8 +464,7 @@ button.av{cursor:pointer}
     <div class="fbar" id="fbar"><img src="./assets/avatar-96.webp" alt=""><span>Following Lokesh</span><span class="st" id="fstep"></span><button id="fnext">Next</button><button id="fstop">Stop</button></div>
     <div class="mob"><button id="mobL">Pages &amp; layers</button><button id="mobR">Design</button></div>
     <div class="tb" role="toolbar" aria-label="Tools">
-      <button class="tl on" data-tool="move" data-tip="Move  V" aria-label="Move"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button>
-      <button class="tl" data-tool="hand" data-tip="Hand tool  H" aria-label="Hand tool"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></button>
+      <span class="tlg"><button class="tl on" id="mvBtn" data-tool="move" data-tip="Move  V" aria-label="Move"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg></button><button class="tl tchev" id="mvMenu" aria-label="Move and hand tools"><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></span>
       <button class="tl" data-tool="comment" data-tip="Comment  C" aria-label="Comment"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 21V12a9 9 0 1 1 9 9z"/></svg></button>
       <span class="tsep" aria-hidden="true"></span>
       <button class="tl act" id="actBtn" data-tip="Actions  ⌘K" aria-label="Actions"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M9.9 15.5A2 2 0 0 0 8.5 14l-6.1-1.6a.5.5 0 0 1 0-1L8.5 10a2 2 0 0 0 1.4-1.4l1.6-6.1a.5.5 0 0 1 1 0L14 8.5A2 2 0 0 0 15.5 10l6.1 1.6a.5.5 0 0 1 0 1L15.5 14a2 2 0 0 0-1.4 1.4l-1.6 6.1a.5.5 0 0 1-1 0z"/></svg><span>Actions</span></button>
@@ -455,6 +472,7 @@ button.av{cursor:pointer}
       <button class="mode" id="devBtn" data-tip="Dev Mode  ⇧D" aria-label="Dev Mode" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg><span class="sw2"></span></button>
     </div>
     <div class="toast" id="toast" role="status"></div>
+    <div class="kbd" id="kbd" hidden role="dialog" aria-label="Keyboard shortcuts"><div class="kh"><b>Keyboard shortcuts</b><button class="ib" id="kbdX" aria-label="Close keyboard shortcuts" data-tip="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div class="kg" id="kbdBody"></div></div>
     <div class="intro" id="intro" hidden>
       <img src="./assets/avatar-96.webp" alt="">
       <span class="it"><b>My portfolio, as a Figma file.</b> <span class="tx2">Click any part to see how it’s built, or a case study to open it.</span></span>
@@ -691,7 +709,7 @@ function kids(el,withHidden){
   var out=[];
   for(var i=0;i<el.children.length;i++){
     var c=el.children[i];
-    if(SKIP[c.tagName]) continue;
+    if(SKIP[c.tagName]||c.hasAttribute("data-fvskip")) continue;
     if(c.tagName==="MAIN"||((c.classList.contains("wrap")||c.classList.contains("shell"))&&c.parentElement===c.ownerDocument.body)){ out=out.concat(kids(c,withHidden)); continue }
     if(visible(c)||(withHidden&&c.tagName.toUpperCase()!=="SVG"&&(c.children.length||c.textContent.trim()))) out.push(c);
   }
@@ -868,7 +886,7 @@ function coverLive(){
       band.classList.add("ok");
       /* the tour and the layers point at whichever set of cards is showing */
       var cards=band.nextElementSibling;
-      if(innerWidth>600&&cards){ band.setAttribute("data-step","work"); cards.removeAttribute("data-step"); cards.removeAttribute("data-layer") }
+      if(innerWidth>600&&cards){ band.setAttribute("data-step","work"); cards.removeAttribute("data-step"); cards.removeAttribute("data-layer"); cards.setAttribute("data-fvskip","") }
       else band.removeAttribute("data-layer");
       try{ parent.postMessage({fvCoverLive:1},location.origin) }catch(e){}
     }catch(e){}
@@ -1170,6 +1188,7 @@ function select(f,el,ctx){
   if(f&&st.rtab==="history"){ st.rtab="design"; renderTabs() }
   if(f&&el){ var sk=pageSlug()+":"+kindOf(el,f.root); if(!seenSel[sk]){ seenSel[sk]=1; T("fv_select",{page:pageSlug(),kind:kindOf(el,f.root)}) } }
   if(!f){ st.sel=null; st.ctx=null } else { st.sel={f:f,el:el}; st.ctx=ctx||f.root }
+  $("#app").classList.toggle("peek",!!f&&$("#app").classList.contains("min"));
   draw(); paintLabels(); renderProps(); markTree(true);
 }
 function box(node,f,el){
@@ -1507,7 +1526,7 @@ function placePins(){
     b.addEventListener("click",function(e){ e.stopPropagation(); if(popEl&&popEl.forDec===i){ closePop(); return } showDecision(i) });
     ov.appendChild(b);
   });
-  pins.filter(function(p){ return p.slug===pageSlug() }).forEach(function(p){
+  if(!st.pinsOff) pins.filter(function(p){ return p.slug===pageSlug() }).forEach(function(p){
     var d=document.createElement("button"); d.className="pin"; d.setAttribute("aria-label","Your comment on "+p.on);
     var px=st.x+p.wx*st.zoom, py=st.y+p.wy*st.zoom;
     d.style.left=px+"px"; d.style.top=py+"px";
@@ -1627,64 +1646,103 @@ if(TOUR_ON) $("#lkAv").addEventListener("click",function(){ following?stopFollow
 else { var lk=$("#lkAv"); if(lk) lk.remove() }
 
 /* ═══ TOOLS, MENUS, KEYS ════════════════════════════════════════════ */
+var ICON_MOVE='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg>', ICON_HAND='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>';
 function setTool(t){
   st.tool=t;
+  var mv=$("#mvBtn"); if(mv){ var hand=t==="hand"; mv.innerHTML=hand?ICON_HAND:ICON_MOVE; mv.dataset.tool=hand?"hand":"move"; mv.setAttribute("data-tip",hand?"Hand tool  H":"Move  V"); mv.setAttribute("aria-label",hand?"Hand tool":"Move"); mv.classList.toggle("on",t==="move"||t==="hand") }
   [].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.classList.toggle("on",b.dataset.tool===t) });
   cv.classList.toggle("hand",t==="hand"); cv.classList.toggle("comment",t==="comment");
   if(t!=="move"){ st.hov=null; draw() }
   if(t==="comment"){ st.rtab="comments"; renderTabs(); renderProps() }
   else if(st.rtab==="comments"){ st.rtab="design"; renderTabs(); renderProps() }
 }
-[].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.addEventListener("click",function(){ setTool(b.dataset.tool===st.tool&&b.dataset.tool!=="move"?"move":b.dataset.tool) }) });
+[].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.addEventListener("click",function(){ var t=b.dataset.tool; setTool(t===st.tool&&t==="comment"?"move":t) }) });
+$("#mvMenu").addEventListener("click",function(e){ e.stopPropagation(); menu(this,[["Move","V",function(){ setTool("move") },false,{check:st.tool==="move"}],["Hand tool","H",function(){ setTool("hand") },false,{check:st.tool==="hand"}]],false,true) });
 function setDev(on){ st.dev=on; T("fv_devmode",{on:on}); var b=$("#devBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); if(st.rtab!=="design"&&st.rtab!=="prototype") st.rtab="design"; renderTabs(); renderProps(); toast(on?"Dev Mode: inspect any layer’s CSS":"Design mode") }
 $("#devBtn").addEventListener("click",function(){ setDev(!st.dev) });
 
 var menuEl=null;
-function closeMenus(){ if(menuEl){ menuEl.remove(); menuEl=null } }
-function menu(anchor,items,search,up){
-  closeMenus();
-  var m=document.createElement("div"); m.className="menu";
+function closeMenus(){ if(subEl){ subEl.remove(); subEl=null } if(menuEl){ menuEl.remove(); menuEl=null } }
+/* items: [label, shortcut, fn, searchOnly, {sub, hint, syn, check}] · "-" divider · "Heading" */
+function menu(anchor,items,search,up,side){
+  if(!side) closeMenus(); else if(subEl){ subEl.remove(); subEl=null }
+  var m=document.createElement("div"); m.className="menu"; m.setAttribute("role","menu");
   var list=document.createElement("div");
   function paintList(q){
     list.innerHTML=""; var first=true, pendH=null, pendHr=false, any=false;
-    /* headings and dividers appear only above a group that has something in it */
     items.forEach(function(it){
       if(it==="-"){ if(!q&&any) pendHr=true; return }
       if(typeof it==="string"){ if(!q) pendH=it; return }
-      /* a 4th field marks an action that has a home elsewhere: it shows only when searched */
+      var o=it[4]||{};
       if(!q&&it[3]) return;
-      if(q&&it[0].toLowerCase().indexOf(q)<0) return;
+      if(q&&(it[0]+" "+(o.syn||"")).toLowerCase().indexOf(q)<0) return;
+      if(q&&o.sub) return;
       if(pendHr){ list.appendChild(document.createElement("hr")); pendHr=false }
       if(pendH){ var h=document.createElement("div"); h.className="mh"; h.textContent=pendH; list.appendChild(h); pendH=null }
       any=true;
-      var b=document.createElement("button"); b.innerHTML=esc(it[0])+'<span>'+esc(it[1]||"")+'</span>';
+      var b=document.createElement("button"); b.setAttribute("role","menuitem"); b.type="button";
+      b.innerHTML='<em class="ck">'+(o.check?'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>':'')+'</em>'+
+        '<span class="lb">'+esc(it[0])+(o.hint?' <i>'+esc(o.hint)+'</i>':'')+'</span><span>'+(o.sub?'<svg width="8" height="8" viewBox="0 0 8 8"><path d="M2.5 1.5 5.5 4l-3 2.5" fill="currentColor"/></svg>':esc(it[1]||""))+'</span>';
       if(q&&first){ b.classList.add("hl"); first=false }
-      b.addEventListener("click",function(){ closeMenus(); if(search) T("fv_action",{label:it[0]}); it[2]() }); list.appendChild(b);
+      if(o.sub){ b.dataset.sub="1"; var open=function(){ hlOnly(b); menu(b,o.sub,false,false,true) }; b.addEventListener("mouseenter",open); b.addEventListener("click",open) }
+      else { b.addEventListener("mouseenter",function(){ hlOnly(b); if(!side&&subEl){ subEl.remove(); subEl=null } });
+        b.addEventListener("click",function(){ closeMenus(); if(search) T("fv_action",{label:it[0]}); it[2]() }) }
+      list.appendChild(b);
     });
+    if(q&&!any){ var n=document.createElement("div"); n.className="mh"; n.style.textTransform="none"; n.textContent="No actions match"; list.appendChild(n) }
   }
+  function hlOnly(b){ [].forEach.call(list.querySelectorAll("button.hl"),function(x){ x.classList.remove("hl") }); if(b) b.classList.add("hl") }
+  m.move=function(d){ var bs=[].slice.call(list.querySelectorAll("button")); if(!bs.length) return; var i=bs.indexOf(list.querySelector("button.hl")); hlOnly(bs[(i+d+bs.length)%bs.length]); bs[(i+d+bs.length)%bs.length].scrollIntoView({block:"nearest"}) };
+  m.enter=function(){ var b=list.querySelector("button.hl"); if(b) b.click() };
+  m.right=function(){ var b=list.querySelector("button.hl"); if(b&&b.dataset.sub) b.click() };
   if(search){
-    var q=document.createElement("input"); q.className="q"; q.placeholder="Search all actions…"; m.appendChild(q);
+    var q=document.createElement("input"); q.className="q"; q.placeholder="Search all actions…"; q.setAttribute("aria-label","Search actions"); m.appendChild(q);
     q.addEventListener("input",function(){ paintList(q.value.trim().toLowerCase()) });
-    q.addEventListener("keydown",function(e){ if(e.key==="Enter"){ var hl=list.querySelector("button.hl")||list.querySelector("button"); if(hl) hl.click() } if(e.key==="Escape") closeMenus() });
+    q.addEventListener("keydown",function(e){
+      if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); m.move(e.key==="ArrowDown"?1:-1) }
+      else if(e.key==="Enter"){ e.preventDefault(); if(!list.querySelector("button.hl")) m.move(1); m.enter() }
+      else if(e.key==="Escape"){ e.stopPropagation(); closeMenus() } });
     setTimeout(function(){ q.focus() },0);
   }
   m.appendChild(list); paintList("");
   document.body.appendChild(m);
   var r=anchor.getBoundingClientRect();
-  m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+"px";
-  m.style.top=(up?Math.max(8,r.top-m.offsetHeight-8):r.bottom+4)+"px";
+  if(side){ m.style.left=Math.min(r.right+2,innerWidth-m.offsetWidth-8)+"px"; m.style.top=Math.max(8,r.top-8)+"px"; subEl=m }
+  else { m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+"px";
+    m.style.top=(up?Math.max(8,r.top-m.offsetHeight-8):r.bottom+4)+"px"; menuEl=m }
   m.addEventListener("pointerdown",function(e){ e.stopPropagation() });
-  menuEl=m;
 }
-document.addEventListener("pointerdown",function(e){ if(menuEl&&!menuEl.contains(e.target)) closeMenus() });
+var subEl=null;
+/* ↑↓ move, Enter chooses, → opens a submenu, ← closes it, Esc closes */
+document.addEventListener("keydown",function(e){
+  if(!menuEl||(e.target.closest&&e.target.closest("input,textarea"))) return;
+  var m=subEl||menuEl;
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); e.stopImmediatePropagation(); m.move(e.key==="ArrowDown"?1:-1) }
+  else if(e.key==="Enter"){ e.preventDefault(); e.stopImmediatePropagation(); m.enter() }
+  else if(e.key==="ArrowRight"&&!subEl){ e.preventDefault(); e.stopImmediatePropagation(); menuEl.right() }
+  else if(e.key==="ArrowLeft"&&subEl){ e.preventDefault(); e.stopImmediatePropagation(); subEl.remove(); subEl=null }
+  else if(e.key==="Escape"){ e.preventDefault(); e.stopImmediatePropagation(); if(subEl){ subEl.remove(); subEl=null } else closeMenus() }
+},true);
+document.addEventListener("pointerdown",function(e){ if(menuEl&&!menuEl.contains(e.target)&&!(subEl&&subEl.contains(e.target))) closeMenus() });
 function center(){ return {x:cv.clientWidth/2,y:cv.clientHeight/2} }
 function zoomSel(){ if(!st.sel) return fit(false); var s=st.sel, r=s.el===s.f.root?{x:0,y:0,w:s.f.w,h:s.f.h}:frameRect(s.f,s.el); zoomTo(s.f,r) }
 function zoomMenu(e){
   if(e) e.stopPropagation(); var c=center();
   menu((e&&e.currentTarget&&e.currentTarget.id==="zoomMini")?$("#zoomMini"):$("#zoomBtn"),[["Zoom in","⌘+",function(){ zoomAt(st.zoom*1.5,c.x,c.y) }],["Zoom out","⌘−",function(){ zoomAt(st.zoom/1.5,c.x,c.y) }],
     ["Zoom to fit","⇧1",function(){ fit(false) }],["Zoom to selection","⇧2",function(){ zoomSel() }],"-",
-    ["Zoom to 50%","",function(){ zoomAt(.5,c.x,c.y) }],["Zoom to 100%","⇧0",function(){ zoomAt(1,c.x,c.y) }],["Zoom to 200%","",function(){ zoomAt(2,c.x,c.y) }]]);
+    ["Zoom to 50%","",function(){ zoomAt(.5,c.x,c.y) }],["Zoom to 100%","⇧0",function(){ zoomAt(1,c.x,c.y) }],["Zoom to 200%","",function(){ zoomAt(2,c.x,c.y) }],"-",
+    ["Comments","⇧C",togglePins,false,{check:!st.pinsOff}]]);
 }
+var KEYS=[["Tools",[["Move","V"],["Hand tool","H"],["Pan","Space + drag"],["Comment","C"],["Dev Mode","⇧D"]]],
+  ["View",[["Zoom to fit","⇧1"],["Zoom to selection","⇧2"],["Zoom to 100%","⇧0"],["Zoom in / out","⌘+ / ⌘−"],["Minimize UI","⌘⇧\\"],["Hide UI","⌘\\"],["Show/hide comments","⇧C"]]],
+  ["Selection",[["Select child","Enter"],["Select parent","⇧Enter"],["Next / previous sibling","Tab / ⇧Tab"],["Deep select","⌘ + click"],["Up a level, then deselect","Esc"]]],
+  ["Navigate",[["Next / previous frame","N / ⇧N"],["Find pages and layers","⌘F"],["Actions","⌘K"]]],
+  ["Present",[["Present","⌥⌘↵"],["Next / previous page","→ / ←"],["Restart","R"],["Close","Esc"]]]];
+function showKeys(){ $("#kbdBody").innerHTML=KEYS.map(function(g){ return '<section><h4>'+g[0]+'</h4>'+g[1].map(function(k){ return '<div><span>'+esc(k[0])+'</span><kbd>'+esc(k[1])+'</kbd></div>' }).join("")+'</section>' }).join(""); $("#kbd").hidden=false }
+function hideKeys(){ $("#kbd").hidden=true }
+function showIntro(){ $("#intro").hidden=false }
+function hideUI(){ $("#app").classList.toggle("hideui"); setTimeout(function(){ draw(); placePins() },30) }
+function togglePins(){ st.pinsOff=!st.pinsOff; placePins(); toast(st.pinsOff?"Comments hidden":"Comments shown") }
 function showHistory(){ st.rtab="history"; renderTabs(); renderProps(); $("#app").classList.add("show-r") }
 function showComments(){ setTool("comment"); $("#app").classList.add("show-r") }
 /* Where each thing lives, so menus don't repeat each other:
@@ -1694,22 +1752,23 @@ function showComments(){ setTool("comment"); $("#app").classList.add("show-r") }
    everything else when you search, as Figma's Actions does. */
 var SEARCH_ONLY=true;
 var ACTIONS=[
-  "Get to know me",
-  ["Follow Lokesh’s 1-minute tour","",startFollow],
-  ["Show design decisions","",showComments],
-  ["Go to Cover","",function(){ loadPage(0) },SEARCH_ONLY],
-  ["Show version history","",showHistory,SEARCH_ONLY],
-  "-","Reach me",
-  ["Copy my email","",function(){ copy(MAIL,"Email copied: "+MAIL) }],
-  ["Open LinkedIn","",function(){ window.open(LINKEDIN,"_blank","noopener") }],
-  ["Open résumé","",function(){ loadPage(pageIndex("Resume")) },SEARCH_ONLY],
-  "-","View",
-  ["Minimize UI","⇧\\",function(){ minUI() },SEARCH_ONLY],
-  ["Present the real site","⌥⌘↵",function(){ present(true) },SEARCH_ONLY],
-  ["Dev Mode","⇧D",function(){ setDev(!st.dev) },SEARCH_ONLY],
+  "Reach Lokesh",
+  ["Copy email","",function(){ copy(MAIL,"Email copied: "+MAIL) },false,{hint:MAIL,syn:"contact hire mail"}],
+  ["Open LinkedIn ↗","",function(){ window.open(LINKEDIN,"_blank","noopener") },false,{syn:"contact hire linkedin"}],
+  "-"
+].concat(PAGES.filter(function(p){ return p.name }).map(function(p){ return ["Go to "+p.name,"",function(){ loadPage(pageIndex(p.name)) },SEARCH_ONLY,{syn:p.name==="Resume"?"cv résumé":p.name==="Foundations"?"design system tokens colours type":""}] }),[
+  ["Present","⌥⌘↵",function(){ present(true) },SEARCH_ONLY,{syn:"play prototype"}],
+  ["Present in new tab","",function(){ window.open(PAGES[st.page].src||"./index.html","_blank","noopener") },SEARCH_ONLY,{syn:"open website"}],
+  ["Show version history","",showHistory,SEARCH_ONLY,{syn:"changelog"}],
+  ["Dev Mode","⇧D",function(){ setDev(!st.dev) },SEARCH_ONLY,{syn:"inspect code css"}],
   ["Zoom to fit","⇧1",function(){ fit(false) },SEARCH_ONLY],
-  ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") },SEARCH_ONLY]
-];
+  ["Zoom to selection","⇧2",function(){ zoomSel() },SEARCH_ONLY],
+  ["Minimize UI","⌘⇧\\",function(){ minUI() },SEARCH_ONLY],
+  ["Hide UI","⌘\\",function(){ hideUI() },SEARCH_ONLY],
+  ["Show/hide comments","⇧C",togglePins,SEARCH_ONLY],
+  ["Keyboard shortcuts","⌃⇧?",showKeys,SEARCH_ONLY,{syn:"help keys"}],
+  ["Back to the website","",home,SEARCH_ONLY,{syn:"exit close leave"}]
+]);
 if(!TOUR_ON) ACTIONS=ACTIONS.filter(function(it){ return !(it&&it[0]==="Follow Lokesh’s 1-minute tour") });
 if(!DECISIONS.length) ACTIONS=ACTIONS.filter(function(it){ return !(it&&it[0]==="Show design decisions") });
 $("#actBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(this,ACTIONS,true,true) });
@@ -1737,9 +1796,11 @@ function runFind(){
   var ly=layerIndex().filter(function(x){ return (x.nm||"").toLowerCase().indexOf(q)>-1 }).slice(0,40);
   function head(t){ var h=document.createElement("div"); h.className="sh"; h.textContent=t; box.appendChild(h) }
   function row(icon,name,note,go){ var b=document.createElement("button"); b.className="fr"; b.innerHTML='<span class="ic">'+icon+'</span><span class="nm">'+esc(name)+'</span>'+(note?'<small>'+esc(note)+'</small>':''); b.addEventListener("click",go); box.appendChild(b) }
-  if(pg.length){ head("Pages"); pg.forEach(function(i){ row("",PAGES[i].name,"",function(){ closeFind(); if(i!==st.page) loadPage(i) }) }) }
-  if(ly.length){ head("Layers on "+PAGES[st.page].name); ly.forEach(function(x){ row(iconOf(x.el,kindOf(x.el,x.f.root)),x.nm,x.f.name.split(" — ")[0],function(){ select(x.f,x.el); reveal(x.f,x.el) }) }) }
-  if(!pg.length&&!ly.length){ var n=document.createElement("div"); n.className="none"; n.textContent="Nothing called “"+$("#findQ").value.trim()+"” here. Commands are in Actions, ⌘K."; box.appendChild(n) }
+  if(pg.length){ head("Pages"); pg.forEach(function(i){ row(ICON.page||"",PAGES[i].name,"",function(){ closeFind(); if(i!==st.page) loadPage(i) }) }) }
+  /* layers, each with its type and where it sits */
+  if(ly.length){ head("On this page"); ly.forEach(function(x){ var par=layerParent(x.el,x.f); row(iconOf(x.el,kindOf(x.el,x.f.root)),x.nm,par&&par!==x.f.root?nameOf(par,x.f):x.f.name.split(" — ")[0],function(){ select(x.f,x.el); reveal(x.f,x.el) }) }) }
+  if(!pg.length&&!ly.length){ var n=document.createElement("div"); n.className="none"; n.textContent="No results for “"+$("#findQ").value.trim()+"”"; box.appendChild(n) }
+  var f1=box.querySelector(".fr"); if(f1) f1.classList.add("hl");
 }
 /* keep the zoom; only pan if the layer is off-screen, centring it */
 function reveal(f,el){
@@ -1750,11 +1811,15 @@ function reveal(f,el){
 }
 $("#searchBtn").addEventListener("click",function(e){ e.stopPropagation(); if($("#lfind").hidden) openFind(); else closeFind() });
 $("#findQ").addEventListener("input",runFind);
-$("#findQ").addEventListener("keydown",function(e){ if(e.key==="Escape"){ e.stopPropagation(); closeFind() } if(e.key==="Enter"){ var b=$("#fres .fr"); if(b) b.click() } });
+$("#findQ").addEventListener("keydown",function(e){
+  var rs=[].slice.call(document.querySelectorAll("#fres .fr")), cur=document.querySelector("#fres .fr.hl"), i=rs.indexOf(cur);
+  if(e.key==="Escape"){ e.stopPropagation(); closeFind() }
+  else if((e.key==="ArrowDown"||e.key==="ArrowUp")&&rs.length){ e.preventDefault(); if(cur) cur.classList.remove("hl"); var n=rs[(i+(e.key==="ArrowDown"?1:-1)+rs.length)%rs.length]; n.classList.add("hl"); n.scrollIntoView({block:"nearest"}) }
+  else if(e.key==="Enter"){ e.preventDefault(); var b=cur||rs[0]; if(b) b.click() } });
 $("#logoBtn").addEventListener("click",function(e){
   e.stopPropagation();
   menu(this,[["Back to the website","",home],"-",
-    ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") }]]);
+    ["Help and account","",null,false,{sub:[["Keyboard shortcuts","⌃⇧?",showKeys],["How to use this file","",showIntro]]}]]);
 });
 $("#fileBtn").addEventListener("click",function(e){
   e.stopPropagation();
@@ -1766,8 +1831,9 @@ $("#presentMenu").addEventListener("click",function(e){ e.stopPropagation();
   menu(this,[["Present","⌥⌘↵",function(){ present(true) }],["Present in new tab","",function(){ T("fv_follow_link",{from:pageSlug(),to:"new-tab"}); window.open(src,"_blank","noopener") }]]) });
 $("#zoomMini").addEventListener("click",zoomMenu);
 $("#shareBtn").addEventListener("click",function(){ T("fv_share",{page:pageSlug()}); copy(shareURL(),"Link copied to clipboard") });
-function minUI(){ $("#app").classList.toggle("min"); if($("#app").classList.contains("min")) T("fv_minimize"); setTimeout(function(){ draw(); placePins() },30) }
+function minUI(){ $("#app").classList.toggle("min"); $("#app").classList.remove("peek"); if($("#app").classList.contains("min")) T("fv_minimize"); setTimeout(function(){ draw(); placePins() },30) }
 $("#minBtn").addEventListener("click",minUI);
+$("#kbdX").addEventListener("click",hideKeys);
 
 document.addEventListener("keydown",function(e){
   if(e.target.closest&&e.target.closest("textarea,input")) return;
@@ -1778,17 +1844,22 @@ document.addEventListener("keydown",function(e){
   if((e.metaKey||e.ctrlKey)&&(k==="f"||k==="F")){ e.preventDefault(); openFind(); return }
   if((e.metaKey||e.ctrlKey)&&(k==="k"||k==="/")){ e.preventDefault(); menu($("#actBtn"),ACTIONS,true,true); return }
   if((e.metaKey||e.ctrlKey)&&e.altKey&&k==="Enter"){ e.preventDefault(); present(true); return }
+  if((e.metaKey||e.ctrlKey)&&e.code==="Backslash"){ e.preventDefault(); if(e.shiftKey) minUI(); else hideUI(); return }
+  if(e.ctrlKey&&e.shiftKey&&(k==="?"||e.code==="Slash")){ e.preventDefault(); showKeys(); return }
   if(e.metaKey||e.ctrlKey||e.altKey) return;
   if(e.shiftKey&&(k==="|"||e.code==="Backslash")){ minUI(); return }
   if(e.shiftKey&&(k==="!"||e.code==="Digit1")){ fit(false); return }
   if(e.shiftKey&&(k==="@"||e.code==="Digit2")){ zoomSel(); return }
   if(e.shiftKey&&(k===")"||e.code==="Digit0")){ zoomAt(1,c.x,c.y); return }
   if(e.shiftKey&&(k==="D"||k==="d")){ setDev(!st.dev); return }
+  if(e.shiftKey&&(k==="C"||k==="c")){ togglePins(); return }
   if(k==="v"||k==="V") setTool("move");
   else if(k==="h"||k==="H") setTool("hand");
   else if(k==="c"||k==="C") setTool("comment");
   else if(k==="Escape"){
     closeMenus();
+    if(!$("#kbd").hidden) return hideKeys();
+    if($("#app").classList.contains("hideui")) return hideUI();
     if($("#present").classList.contains("on")) return present(false);
     if(following) return stopFollow();
     if(popEl) return closePop();
