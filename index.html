@@ -3401,6 +3401,27 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* text wraps clear of the strip a neighbour may overlap */
 .padnote textarea{padding-right:18px}
+
+/* the anonymity line, back at the top of the board */
+.padtop{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:6;
+  display:flex;align-items:center;gap:8px;width:max-content;max-width:calc(100% - 28px);margin:0;
+  padding:4px 14px 4px 4px;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--card) 88%,transparent);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  box-shadow:0 0 0 1px var(--line),0 6px 18px -12px rgba(16,16,24,.35);
+  color:var(--muted);font-size:12px;line-height:1.35;white-space:nowrap}
+.padtop-ico{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;
+  background:var(--surface);color:var(--muted);transition:background .2s var(--ease),color .2s var(--ease)}
+.padtop .ico-known,.padtop.is-known .ico-anon{display:none}
+.padtop.is-known .ico-known{display:block}
+.padtop.is-known{color:var(--ink)}
+.padtop.is-known .padtop-ico{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.padtop b{font-weight:500;color:var(--ink)}
+.padtop .padlink{all:unset;cursor:pointer;color:var(--ink);font-weight:500;white-space:nowrap;
+  text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 30%,transparent);text-underline-offset:2px}
+@media (hover:hover){.padtop .padlink:hover{text-decoration-color:var(--ink)}}
+.padtop .padlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+@media (max-width:560px){.padtop{top:10px}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3678,6 +3699,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <span id="padToastText">Sent. Thank you, I read every one.</span>
         </div>
 
+        <p class="padtop" id="padTop" aria-live="polite">
+          <span class="padtop-ico" aria-hidden="true"><svg class="ico-anon" width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg><svg class="ico-known" width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="m16 19 2 2 4-4"/></svg></span>
+          <span id="padTopText"></span></p>
         <p class="padhint" id="padHint" aria-live="polite" hidden></p>
         <div class="padbar" role="toolbar" aria-label="Board tools">
           <button type="button" class="padtool padadd" id="padAdd" title="Add a note" aria-label="Add a note">
@@ -4170,7 +4194,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       whoAdd=document.getElementById("padWhoAdd"),
       whoMail=document.getElementById("padWhoMail"),
       emailIn=document.getElementById("padEmail"),
-      whoX=document.getElementById("padWhoX");
+      whoX=document.getElementById("padWhoX"),
+      top=document.getElementById("padTop"),
+      topText=document.getElementById("padTopText");
   if(!addBtn||!blankAdd||!sendBtn||!count||!toast) return;
 
   /* the board's own spot on the page, so it can be moved back to it on
@@ -4216,6 +4242,16 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     if(whoMail) whoMail.hidden=!on;
     if(who) who.classList.toggle("is-known",!!known());
     if(emailIn && document.activeElement!==emailIn) emailIn.value=email;
+    /* the promise at the top of the board, in the state it is in. "Add
+       your email" is only a link once there is something to send. */
+    if(top && topText){
+      var me=known(), narrow=matchMedia("(max-width:560px)").matches;
+      top.classList.toggle("is-known",!!me);
+      if(me){ topText.innerHTML="I’ll know it’s you, and reply to <b></b>."; topText.querySelector("b").textContent=me }
+      else topText.innerHTML=(narrow?"Anonymous. ":"Anonymous: I won’t know it’s you. ")+(board.classList.contains("has-text")
+        ? '<button type="button" class="padlink" data-act="email">Add your email</button>'
+        : "Add your email")+" to get a reply.";
+    }
     var w=written().length;
     sendBtn.setAttribute("aria-label",(w>1?"Send "+w+" notes":"Send")+(known()?" to Lokesh, from "+known():" to Lokesh anonymously"));
   }
@@ -4224,6 +4260,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     if(emailIn){ emailIn.focus({preventScroll:true}) }
   }
   if(whoAdd) whoAdd.addEventListener("click",openEmail);
+  if(top){
+    top.addEventListener("pointerdown",function(e){ if(e.target.closest('[data-act="email"]')) e.preventDefault() });
+    top.addEventListener("click",function(e){ if(e.target.closest('[data-act="email"]')) openEmail() });
+  }
   if(emailIn){
     emailIn.addEventListener("input",function(){ email=emailIn.value; saveMeta(); paintWho() });
     emailIn.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); emailIn.blur() } });
@@ -4260,7 +4300,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
 
   /* the header's real height, so notes can never be dropped under it */
-  function topSpace(){ return edge()<20?22:30 }
+  function topSpace(){ return (edge()<20?22:30)+(top?top.offsetHeight+4:0) }
   function placeAll(){
     if(!board.classList.contains("is-floating")) return;
     notes.forEach(function(n){ var el=ELS.get(n); if(el) settle(el,n) });
