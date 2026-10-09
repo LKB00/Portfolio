@@ -213,10 +213,8 @@ button.av{cursor:pointer}
 .pin .bub{width:30px;height:30px;border-radius:50% 50% 50% 0;background:var(--ui);box-shadow:0 2px 6px rgba(0,0,0,.22);display:grid;place-items:center;overflow:hidden}
 .pin .bub span{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center;overflow:hidden}
 .pin .bub img{width:24px;height:24px;border-radius:50%;object-fit:cover}
-.pin.lk .bub{box-shadow:0 0 0 2px var(--purple),0 2px 6px rgba(0,0,0,.22)}
 .pin.draftpin{pointer-events:none;animation:pinIn .2s cubic-bezier(.34,1.56,.64,1)}
 @keyframes pinIn{from{transform:translate(0,-100%) scale(.4)}to{transform:translate(0,-100%) scale(1)}}
-.pin.lk:hover .bub,.pin.open .bub{transform:scale(1.08)}
 .pop{position:absolute;pointer-events:auto;width:300px;background:var(--ui);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.2),0 0 0 .5px rgba(0,0,0,.1);padding:12px;z-index:4}
 .pop .phd{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:11px;color:var(--tx2)}
 .pop .phd b{color:var(--tx);font-weight:600}
@@ -328,6 +326,18 @@ button.av{cursor:pointer}
 .mob button{pointer-events:auto;height:32px;padding:0 12px;border-radius:8px;background:var(--ui);box-shadow:0 2px 8px rgba(0,0,0,.12);font-weight:500}
 
 .pop .tnote{margin:-2px 0 10px;padding:6px 10px;border-radius:8px;background:var(--purpleSoft);color:var(--purple);font-size:12px;line-height:17px}
+
+/* decision markers: present, not loud. A small numbered dot; the title on
+   hover, the full note on click */
+.pin.lk{transform:translate(-50%,-50%)}
+.pin.lk .dotn{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;
+  background:var(--purple);color:#fff;font-size:10px;font-weight:600;line-height:1;
+  box-shadow:0 0 0 2px var(--ui),0 1px 4px rgba(0,0,0,.18);transition:transform .15s}
+.pin.lk:hover .dotn,.pin.lk.open .dotn{transform:scale(1.2)}
+.pin.lk .tip{position:absolute;left:24px;top:50%;transform:translateY(-50%);padding:3px 8px;border-radius:5px;
+  background:#1E1E1E;color:#fff;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s}
+.pin.lk:hover .tip{opacity:1}
+.pin.lk.open .tip{display:none}
 </style>
 </head>
 <body>
@@ -1134,7 +1144,7 @@ function decAnchor(d){
   if(!f||!f.doc||PAGES[st.page].name!==d.page) return null;
   var t=f.doc.querySelector(d.sel); if(!t) return null;
   var r=frameRect(f,t);
-  return {f:f,r:r,wx:f.x+Math.min(r.x+r.w-6,f.w-30),wy:f.y+r.y+18};
+  return {f:f,r:r,wx:f.x+Math.min(r.x+r.w+6,f.w-14),wy:f.y+r.y+6};
 }
 function openDecision(i){
   var d=DECISIONS[i], pi=pageIndex(d.page);
@@ -1179,7 +1189,8 @@ function placePins(){
     var a=decAnchor(d); if(!a||!a.f.ready) return;
     var b=document.createElement("button"); b.className="pin lk"+(popEl&&popEl.forDec===i?" open":""); b.dataset.dec=i;
     b.setAttribute("aria-label","Lokesh’s decision: "+d.title);
-    b.innerHTML='<span class="bub"><img src="'+AVATAR+'" alt=""></span>';
+    var nth=DECISIONS.filter(function(x){ return x.page===d.page }).indexOf(d)+1;
+    b.innerHTML='<span class="dotn">'+nth+'</span><span class="tip">'+esc(d.title)+'</span>';
     b.style.left=(st.x+a.wx*st.zoom)+"px"; b.style.top=(st.y+a.wy*st.zoom)+"px";
     b.addEventListener("pointerdown",function(e){ e.stopPropagation() });
     b.addEventListener("click",function(e){ e.stopPropagation(); if(popEl&&popEl.forDec===i){ closePop(); return } showDecision(i) });
