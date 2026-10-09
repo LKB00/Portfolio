@@ -389,6 +389,13 @@ button.av{cursor:pointer}
 .pnav{width:32px;height:32px;border-radius:6px;display:grid;place-items:center;color:#fff;position:relative}.pnav:hover{background:#383838}.pnav:disabled{opacity:.35}
 .pcount{font-size:11px;color:#B3B3B3;min-width:64px;text-align:center}
 .prest{height:28px;padding:0 10px;border-radius:5px;color:#fff;margin-left:8px}.prest:hover{background:#383838}
+/* phones: the phone is the device, so no Desktop/Mobile switch, and the page fills the screen */
+@media (max-width:767px){
+  .pbar .seg{display:none}
+  .pstage{padding:0}
+  .pstage iframe,.pstage.mobile iframe{width:100%;height:100%;border-radius:0;box-shadow:none}
+  .pfoot{padding-bottom:env(safe-area-inset-bottom);height:calc(48px + env(safe-area-inset-bottom))}
+}
 
 /* phones: the canvas, with the panels a tap away */
 @media (max-width:767px){
