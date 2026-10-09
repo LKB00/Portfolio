@@ -3525,6 +3525,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .padwrap:not(.is-open) .padtrigger:hover .padart b{transform:translateY(-3px) rotate(-6deg)}
 }
 @media (prefers-reduced-motion:reduce){.padart i,.padart b{transition:none}}
+
+/* elastic, so it is felt: more travel, a springier overshoot, and each
+   note a beat after the one before -- a pile being riffled */
+.padart i,.padart b{transition:transform .55s cubic-bezier(.3,1.9,.5,1)}
+.padart .n2{transition-delay:.04s}.padart .n3{transition-delay:.08s}.padart b{transition-delay:.12s}
+@media (hover:hover){
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n1{transform:rotate(-22deg) translate(-7px,1px)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n2{transform:rotate(19deg) translate(7px,-3px)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n3{transform:rotate(3deg) translateY(-5px)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart b{transform:translate(3px,-6px) rotate(-10deg) scale(1.08)}
+}
+@media (prefers-reduced-motion:reduce){.padart i,.padart b{transition:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
