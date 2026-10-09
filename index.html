@@ -622,6 +622,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   letter-spacing:-.005em;color:#1B1B1B}
 .padnote textarea::placeholder{color:rgba(20,20,20,.42)}
 .padnote.t0{background:#FDF0B7}
+.padnote.t1{background:#FBDDE4}
+.padnote.t2{background:#D9E9FB}
+.padnote.t3{background:#DAF0DE}
 
 /* ── the tool pill, floating on the canvas ── */
 .padbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
@@ -3221,7 +3224,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   text-underline-offset:2px}
 @media (hover:hover){.padinfo .padlink:hover,.padstatus .padlink:hover{text-decoration-color:var(--ink)}}
 .padinfo .padlink:focus-visible,.padstatus .padlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
-.padboard.is-floating{height:clamp(360px,40vw,420px)}
+.padboard.is-floating{height:clamp(420px,44vw,452px)}
 /* the header owns the top now, so the acknowledgement rises from the send bar */
 .padhead ~ .padtoast,#padBoard .padtoast{top:auto;bottom:62px}
 
@@ -3315,9 +3318,21 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .padstatus.is-known .ico-known{color:inherit}
 .padstatus b{font-weight:500;color:var(--ink)}
 .padstatus .padlink{white-space:nowrap}
-.padhead .padinfo[hidden]{display:none}
+.padhead .padinfo{min-height:16px}
+#padBoard .padhead .padinfo[hidden]{display:block;visibility:hidden}
 @media (max-width:560px){.padboard:not(.has-text) .padstatus{bottom:14px}}
 @media (prefers-reduced-motion:reduce){.padstatus,.padwho{transition:none}}
+
+/* a note being written comes forward with a deeper shadow, not a hard
+   outline: the ring read as a second, darker card behind the first */
+.padnote:focus-within{z-index:4;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 14%,transparent),
+  0 18px 30px -16px rgba(16,16,24,.5)}
+.padnote.is-dragging{z-index:5}
+@media (max-width:560px){
+  /* two to a row on a phone, so a second note has somewhere to go */
+  .padnote{width:150px}
+  .padnote textarea{height:86px}
+}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -4171,8 +4186,80 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   function topSpace(){ return (head?head.offsetHeight:0)+10 }
   function placeAll(){
     if(!board.classList.contains("is-floating")) return;
-    var els=board.querySelectorAll(".padnote");
-    notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
+    notes.forEach(function(n){ var el=ELS.get(n); if(el) settle(el,n) });
+  }
+  var ELS=new Map();
+
+  /* ── where a note may sit ──
+     Between the header and the status line + send bar, never under
+     either. The bottom reserve is fixed rather than read from the bar,
+     which is hidden until there is text: reading it live meant the
+     space changed the moment someone typed and notes jumped. */
+  var GAP=12, EDGE=10, BOTTOM=112;
+  function area(){
+    var bb=board.getBoundingClientRect();
+    return {w:bb.width,h:bb.height,top:topSpace(),left:EDGE,right:bb.width-EDGE,bottom:bb.height-BOTTOM};
+  }
+  function rectOf(n,el,A){
+    return {x:n.x/100*A.w,y:n.y/100*A.h,w:el.offsetWidth,h:el.offsetHeight};
+  }
+  function hits(a,b,gap){
+    return a.x<b.x+b.w+gap && b.x<a.x+a.w+gap && a.y<b.y+b.h+gap && b.y<a.y+a.h+gap;
+  }
+  /* The first free slot, reading order: left to right, top to bottom, on
+     an even grid that fills the usable area. When none is left the board
+     is full (six on a desktop, four on a phone): a note is never dropped
+     on top of another. */
+  function freeSpot(el,others){
+    var A=area(); if(!A.w) return {x:8,y:20};
+    var w=el.offsetWidth,h=el.offsetHeight,
+        availW=A.right-A.left-w, availH=A.bottom-A.top-h,
+        cols=Math.max(1,Math.floor((availW+w+GAP)/(w+GAP))),
+        rows=Math.max(1,Math.floor((availH+h+GAP)/(h+GAP))),
+        rects=others.map(function(o){ return rectOf(o.n,o.el,A) });
+    for(var r=0;r<rows;r++) for(var c=0;c<cols;c++){
+      var x=A.left+(cols>1?c*availW/(cols-1):0),
+          y=A.top+(rows>1?r*availH/(rows-1):0),
+          me={x:x,y:y,w:w,h:h};
+      if(!rects.some(function(q){ return hits(me,q,GAP-2) })) return {x:x/A.w*100,y:y/A.h*100};
+    }
+    /* a note moved by hand (or saved on another screen) sits off the
+       grid and can block a slot while leaving room beside it, so before
+       calling the board full, look for any gap at all */
+    for(var yy=A.top;yy<=A.top+availH;yy+=8) for(var xx=A.left;xx<=A.left+availW;xx+=8){
+      var m={x:xx,y:yy,w:w,h:h};
+      if(!rects.some(function(q){ return hits(m,q,6) })) return {x:xx/A.w*100,y:yy/A.h*100};
+    }
+    return null;
+  }
+  function others(except){
+    return notes.filter(function(n){ return n!==except && ELS.get(n) }).map(function(n){ return {n:n,el:ELS.get(n)} });
+  }
+  /* Notes saved on another screen come back in percentages of a board
+     that was a different size, so on a phone they can land on each
+     other. If any two overlap, the whole board is laid out again in the
+     order it reads (top to bottom, left to right), each into the first
+     free slot. Notes that do not overlap anything are left exactly where
+     their writer put them. Past the board's capacity, the extras stack
+     neatly on the last slot, offset so each one's edge still shows. */
+  function untangle(){
+    var A=area(); if(!A.w) return;
+    var list=notes.filter(function(n){ return ELS.get(n) });
+    var clash=list.some(function(n,i){
+      var a=rectOf(n,ELS.get(n),A);
+      return list.slice(i+1).some(function(m){ return hits(a,rectOf(m,ELS.get(m),A),-4) });
+    });
+    if(!clash) return;
+    list.sort(function(a,b){ return (a.y-b.y)||(a.x-b.x) });
+    var placed=[], lastSpot=null, extra=0;
+    list.forEach(function(n){
+      var el=ELS.get(n), s=freeSpot(el,placed);
+      if(s){ lastSpot=s }
+      else if(lastSpot){ extra++; s={x:lastSpot.x+extra*8/A.w*100*-1, y:lastSpot.y+extra*8/A.h*100} }
+      if(s){ n.x=s.x; n.y=s.y; settle(el,n) }
+      placed.push({n:n,el:el});
+    });
+    save();
   }
 
   function read(){ try{ return JSON.parse(localStorage.getItem(KEY)) }catch(e){ return null } }
@@ -4180,7 +4267,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   function written(){ return notes.filter(function(n){ return (n.text||"").trim() }) }
   function blank(){
     var i=notes.findIndex(function(n){ return !(n.text||"").trim() });
-    return i<0?null:{note:notes[i],el:board.querySelectorAll(".padnote")[i]};
+    return i<0?null:{note:notes[i],el:ELS.get(notes[i])};
   }
 
   function open(){
@@ -4200,8 +4287,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     /* notes restored from a previous visit were positioned against a
        closed board that had no real size yet — re-clamp them now that
        the board has one */
-    var els=board.querySelectorAll(".padnote");
-    notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
+    placeAll(); untangle();
     var th=board.querySelector(".padthumb");
     if(th){ th.style.transition="none"; moveThumb(); void th.offsetWidth; th.style.transition="" }
   }
@@ -4251,10 +4337,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   function settle(el,note){
     var bb=board.getBoundingClientRect(); if(!bb.width) return;
-    var pad=6,
-        maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
-        maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
-        minX=pad/bb.width*100, minY=(pad+topSpace())/bb.height*100;
+    var A=area(),
+        maxX=(A.right-el.offsetWidth)/A.w*100,
+        maxY=(A.bottom-el.offsetHeight)/A.h*100,
+        minX=A.left/A.w*100, minY=A.top/A.h*100;
     note.x=Math.max(minX,Math.min(note.x,Math.max(minX,maxX)));
     note.y=Math.max(minY,Math.min(note.y,Math.max(minY,maxY)));
     el.style.left=note.x+"%"; el.style.top=note.y+"%";
@@ -4278,7 +4364,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     el.appendChild(ta);
 
     el.querySelector(".padkill").addEventListener("click",function(){
-      notes.splice(notes.indexOf(note),1); el.remove(); save(); sync();
+      notes.splice(notes.indexOf(note),1); ELS.delete(note); el.remove(); save(); sync();
     });
 
     var grip=el.querySelector(".padgrip"), dx=0, dy=0;
@@ -4292,10 +4378,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       board.appendChild(el);
       try{ grip.setPointerCapture(e.pointerId) }catch(err){}
       function move(ev){
-        var bb=board.getBoundingClientRect(), pad=6,
-            maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
-            maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
-            minX=pad/bb.width*100, minY=(pad+topSpace())/bb.height*100;
+        var bb=board.getBoundingClientRect(), A=area(),
+            maxX=(A.right-el.offsetWidth)/A.w*100,
+            maxY=(A.bottom-el.offsetHeight)/A.h*100,
+            minX=A.left/A.w*100, minY=A.top/A.h*100;
         var x=(ev.clientX-bb.left-dx)/bb.width*100,
             y=(ev.clientY-bb.top-dy)/bb.height*100;
         note.x=Math.max(minX,Math.min(x,Math.max(minX,maxX)));
@@ -4326,6 +4412,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     });
 
     board.appendChild(el);
+    ELS.set(note,el);
     return el;
   }
 
@@ -4354,12 +4441,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
 
   function add(x,y){
-    if(notes.length>=MAX) return;
+    if(notes.length>=MAX){ showToast("That’s the most the board holds. Send these first."); return }
     if(blank()){ nudge(); return }     /* one blank note at a time */
     var i=notes.length;
-    var note={ x:x, y:y, text:"", tone:i%4, tilt:[-2,1.4,-1,2][i%4] };
+    var note={ x:x||0, y:y||0, text:"", tone:i%4, tilt:[-2,1.4,-1,2][i%4] };
+    var el=render(note);
+    if(x===undefined){
+      var s=freeSpot(el,others(note));
+      if(!s){ ELS.delete(note); el.remove(); showToast("The board is full. Send these, then write more."); return }
+      note.x=s.x; note.y=s.y;
+    }
     notes.push(note); save(); sync();
-    var el=render(note); settle(el,note);
+    settle(el,note);
     el.classList.add("is-new");
     el.addEventListener("animationend",function(){ el.classList.remove("is-new") },{once:true});
     /* preventScroll: focusing a field inside a box that is still growing
@@ -4382,9 +4475,14 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     },0);
   });
 
-  blankAdd.addEventListener("click",function(){ add(8,12) });
+  blankAdd.addEventListener("click",function(){ add() });
   /* one move: open the board and start the note */
-  if(trigger) trigger.addEventListener("click",function(){ open(); add(8,12) });
+  if(trigger) trigger.addEventListener("click",function(){
+    open();
+    if(!notes.length){ add(); return }
+    var b=blank(), el=b?b.el:ELS.get(notes[notes.length-1]), ta=el&&el.querySelector("textarea");
+    if(ta){ ta.focus({preventScroll:true}); var n=ta.value.length; try{ ta.setSelectionRange(n,n) }catch(e){} }
+  });
   /* floating card, so it dismisses the way every other overlay on this
      page does: a click on the backdrop, or Escape — the notes already
      written stay put in localStorage either way, nothing is lost */
@@ -4392,9 +4490,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   window.addEventListener("keydown",function(e){
     if(e.key==="Escape" && wrap && wrap.classList.contains("is-open")) close();
   });
-  addBtn.addEventListener("click",function(){
-    var n=notes.length; add(6+(n%4)*21, 8+(Math.floor(n/4)%3)*24);
-  });
+  addBtn.addEventListener("click",function(){ add() });
   board.addEventListener("dblclick",function(e){
     if(e.target.closest(".padnote")||e.target.closest(".padbar")||e.target.closest(".padblank")) return;
     var bb=board.getBoundingClientRect();
@@ -4432,7 +4528,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   clearBtn.addEventListener("click",function(){
     notes=[];
-    [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() });
+    [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() }); ELS.clear();
     hideToast(); save(); sync();
   });
 
@@ -4491,7 +4587,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       notes=[]; save();
       if(reply) reply.value="";
       setTopic("");
-      [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() });
+      [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() }); ELS.clear();
       sync();
     })
     .catch(function(){ handOff(bodyText,"Couldn’t reach the board’s inbox — opening your mail app instead.") });
@@ -4559,9 +4655,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
          re-settles everything against the real thing the moment it's
          actually asked for */
       if(wrap && wrap.classList.contains("is-open")){
-        var els=board.querySelectorAll(".padnote");
-        notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
-        save();
+        placeAll(); untangle();
       }
     },160);
   });
