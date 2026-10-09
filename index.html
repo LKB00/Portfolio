@@ -3457,6 +3457,42 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* the empty board: the + and what it does */
 .padblank{bottom:96px}
 .padblank-t{margin:0;font-size:12.5px;color:var(--muted)}
+
+/* ══ THE NOTE ROW'S PICTURE ══════════════════════════════════════════
+   A plus said "add something", but not what. The row now shows what it
+   opens: a little pile of the board's own sticky notes, in its own
+   colours, the front one written on, with a speech bubble that says
+   this is where you talk to me. On hover the pile fans out, the way
+   you'd reach for the next note. */
+.padart{position:relative;flex:none;width:64px;height:58px;margin:-4px 2px -4px -4px}
+.padart i{position:absolute;width:36px;height:36px;border-radius:3px;
+  box-shadow:0 1px 1px rgba(0,0,0,.05),0 8px 14px -10px rgba(16,16,24,.5);
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.padart .n1{left:4px;top:15px;background:#CFE2F8;transform:rotate(-12deg)}
+.padart .n2{left:24px;top:8px;background:#F8D2DC;transform:rotate(9deg)}
+.padart .n3{left:13px;top:18px;background:#FDF0B7;transform:rotate(-3deg)}
+/* the front note is written on: three short pencil lines */
+.padart .n3::before{content:"";position:absolute;left:7px;right:9px;top:10px;height:13px;
+  background:linear-gradient(rgba(36,32,32,.32),rgba(36,32,32,.32)) 0 0/100% 1.5px no-repeat,
+             linear-gradient(rgba(36,32,32,.32),rgba(36,32,32,.32)) 0 5.5px/82% 1.5px no-repeat,
+             linear-gradient(rgba(36,32,32,.32),rgba(36,32,32,.32)) 0 11px/56% 1.5px no-repeat;
+  border-radius:1px}
+/* the speech bubble: you're talking to me */
+.padart b{position:absolute;right:0;top:0;display:flex;align-items:center;justify-content:center;gap:2px;
+  width:26px;height:20px;border-radius:10px 10px 10px 3px;background:var(--accent);
+  box-shadow:0 4px 10px -4px rgba(16,16,24,.45);transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.padart b em{width:3px;height:3px;border-radius:50%;background:var(--onAccent)}
+@media (hover:hover){
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n1{transform:rotate(-20deg) translate(-3px,1px)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n2{transform:rotate(16deg) translate(3px,-1px)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart .n3{transform:rotate(-1deg) translateY(-3px)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart b{transform:translate(1px,-2px) scale(1.08)}
+  .padwrap:not(.is-open) .padtrigger:hover .padart b em{animation:padType 1s ease-in-out infinite}
+  .padwrap:not(.is-open) .padtrigger:hover .padart b em:nth-child(2){animation-delay:.15s}
+  .padwrap:not(.is-open) .padtrigger:hover .padart b em:nth-child(3){animation-delay:.3s}
+}
+@keyframes padType{0%,60%,100%{transform:none;opacity:.55}30%{transform:translateY(-2px);opacity:1}}
+@media (prefers-reduced-motion:reduce){.padart i,.padart b{transition:none}.padart b em{animation:none!important}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3713,9 +3749,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       <div class="notesrow">
       <div class="padstack">
       <button type="button" class="padtrigger" id="padTrigger">
-        <span class="padtriggerplus" aria-hidden="true">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        </span>
+        <span class="padart" aria-hidden="true"><i class="n1"></i><i class="n2"></i><i class="n3"></i><b><em></em><em></em><em></em></b></span>
         <span class="padtriggercopy">
           <span class="padtriggertext">I&#8217;d love to hear your thoughts.</span>
           <span class="padtriggerhint">What do you think of my work and this portfolio? Anonymous, unless you add your email for a reply.</span>
