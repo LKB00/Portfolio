@@ -3537,6 +3537,25 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .padwrap:not(.is-open) .padtrigger:hover .padart b{transform:translate(3px,-6px) rotate(-10deg) scale(1.08)}
 }
 @media (prefers-reduced-motion:reduce){.padart i,.padart b{transition:none}}
+
+/* ══ WHAT PEOPLE SAID: THE POINT, AND THE ANGLE ══════════════════════
+   Each quote's key phrase gets the site's yellow highlighter, swept in
+   once the words have landed, so a skim reads the gist. And the three
+   dots become the three angles they are -- Manager, PM, Engineer --
+   because that is the claim: the same person, from three directions. */
+.rec-q .w.hl{position:relative;isolation:isolate}
+.rec-q .w.hl::before{content:"";position:absolute;left:-.05em;right:-.3em;bottom:.1em;height:.36em;z-index:-1;
+  background:var(--markWash);transform:scaleX(0);transform-origin:left center;transition:transform 0s .32s}
+.rec-q .w.hl-end::before{right:-.05em}
+.rec-item.is-on .rec-q .w.hl::before{transform:scaleX(1);
+  transition:transform .28s cubic-bezier(.3,.7,.4,1);transition-delay:calc(var(--t-end) + 120ms + var(--j) * 70ms)}
+.rec-bars{gap:clamp(14px,2.4vw,24px)}
+.rec-bar{width:auto;height:auto;flex-direction:column;gap:4px;padding:2px 4px 4px;border-radius:10px;display:flex;align-items:center}
+.rec-av{position:relative;display:grid;place-items:center;width:44px;height:44px}
+.rec-role{font-size:12px;line-height:16px;letter-spacing:var(--tr-body);color:var(--faint);transition:color .25s ease}
+.rec-bar:hover .rec-role{color:var(--muted)}
+.rec-bar.is-on .rec-role{color:var(--ink);font-weight:500}
+@media (prefers-reduced-motion:reduce){.rec-q .w.hl::before{transform:none!important;transition:none!important}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3770,19 +3789,19 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     <div class="rec" data-reveal>
       <div class="rec-stage">
         <figure class="rec-item is-on" role="group" aria-roledescription="slide" aria-label="1 of 3">
-          <blockquote class="rec-q">Without a doubt, I’d love to have him on any team I lead in the future.</blockquote>
+          <blockquote class="rec-q" data-mark="I’d love to have him on any team I lead">Without a doubt, I’d love to have him on any team I lead in the future.</blockquote>
           <figcaption class="rec-by"><span class="rec-who"><span class="rec-name"><b>Mukesh Kumar Ranjan</b></span><span>Product Design Manager, Rupeezy · hired and managed Lokesh · <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span></span></figcaption>
         </figure>
         <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true">
-          <blockquote class="rec-q">One of the most collaborative designers I have ever worked with.</blockquote>
+          <blockquote class="rec-q" data-mark="most collaborative designers">One of the most collaborative designers I have ever worked with.</blockquote>
           <figcaption class="rec-by"><span class="rec-who"><span class="rec-name"><b>Kushagra Rustagi</b></span><span>Ex-PM, Fintech & SaaS · worked with Lokesh at Rupeezy · <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span></span></figcaption>
         </figure>
         <figure class="rec-item" role="group" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true">
-          <blockquote class="rec-q">His ability to transform complex requirements into clean, user-friendly designs consistently impressed the team.</blockquote>
+          <blockquote class="rec-q" data-mark="complex requirements into clean, user-friendly designs">His ability to transform complex requirements into clean, user-friendly designs consistently impressed the team.</blockquote>
           <figcaption class="rec-by"><span class="rec-who"><span class="rec-name"><b>Dharani KR</b></span><span>UI Engineer · worked on the same team · <a class="rec-src" href="https://www.linkedin.com/in/lkb01/details/recommendations/" target="_blank" rel="noopener">View on LinkedIn <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span></span></figcaption>
         </figure>
       </div>
-      <div class="rec-nav"><div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Mukesh Kumar Ranjan, 1 of 3" aria-current="true"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-mukesh.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></button><button type="button" class="rec-bar" aria-label="Kushagra Rustagi, 2 of 3"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-kushagra.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></button><button type="button" class="rec-bar" aria-label="Dharani KR, 3 of 3"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-dharani.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></button></div></div>
+      <div class="rec-nav"><div class="rec-bars"><button type="button" class="rec-bar is-on" aria-label="Mukesh Kumar Ranjan, my manager, 1 of 3" aria-current="true"><span class="rec-av"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-mukesh.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></span><span class="rec-role">Manager</span></button><button type="button" class="rec-bar" aria-label="Kushagra Rustagi, product manager, 2 of 3"><span class="rec-av"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-kushagra.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></span><span class="rec-role">PM</span></button><button type="button" class="rec-bar" aria-label="Dharani KR, engineer, 3 of 3"><span class="rec-av"><svg class="rec-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/><circle class="rec-ring-fill" cx="22" cy="22" r="20.5"/></svg><img src="./assets/rec-dharani.webp" alt="" width="32" height="32" loading="lazy" decoding="async"></span><span class="rec-role">Engineer</span></button></div></div>
     </div>
   </section>
 
@@ -4930,7 +4949,16 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   items.forEach(function(el){
     var q = el.querySelector(".rec-q"), words = q.textContent.trim().split(/\s+/);
     q.setAttribute("aria-label", q.textContent.trim());
-    q.innerHTML = words.map(function(w, k){ return '<span class="w" aria-hidden="true" style="--i:' + k + '">' + w.replace(/&/g,"&amp;").replace(/</g,"&lt;") + '</span>'; }).join(" ");
+    /* the phrase that carries the quote gets the site's highlighter,
+       drawn word by word once the sentence has landed */
+    var mark = (q.getAttribute("data-mark") || "").split(/\s+/).filter(Boolean), from = -1;
+    if (mark.length) for (var s = 0; s + mark.length <= words.length && from < 0; s++){
+      if (mark.every(function(m, j){ return words[s + j] === m; })) from = s;
+    }
+    q.innerHTML = words.map(function(w, k){
+      var hl = from > -1 && k >= from && k < from + mark.length;
+      return '<span class="w' + (hl ? ' hl' + (k === from + mark.length - 1 ? ' hl-end' : '') : '') + '" aria-hidden="true" style="--i:' + k + (hl ? ';--j:' + (k - from) : '') + '">' + w.replace(/&/g,"&amp;").replace(/</g,"&lt;") + '</span>';
+    }).join(" ");
     el.style.setProperty("--t-by", Math.round(160 + words.length * 32 * .7) + "ms");
     el.style.setProperty("--t-end", (160 + words.length * 32) + "ms");
   });
