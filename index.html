@@ -4189,9 +4189,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   /* ── one bar: add, who it's from, send ──
      The visitor is never asked to sort their note. What it is about is
-     read from the words, and only two cases change anything on screen:
-     a note about work gets my address and LinkedIn, a question gets the
-     AI twin that can answer it now. The sheet still gets a label. */
+     read from the words, and only one case changes anything on screen:
+     a note about work gets my address and LinkedIn. The sheet still gets
+     a label. */
   var LINKEDIN="https://www.linkedin.com/in/lkb01/";
   var LABEL={feedback:"Feedback",question:"Question",work:"Work",hi:"Hi"};
   function guess(t){
@@ -4232,19 +4232,16 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   });
 
   /* the one contextual line, only when it helps */
-  var BRIEF='<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>',
-      SPARK='<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>';
+  var BRIEF='<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>';
   var hintKind="";
   function paintHint(){
     if(!hint) return;
     var kinds=written().map(function(n){ return guess(n.text) }),
-        k=kinds.indexOf("work")>-1?"work":(kinds.indexOf("question")>-1?"question":"");
+        k=kinds.indexOf("work")>-1?"work":"";
     if(k===hintKind) return;
     hintKind=k;
     if(!k){ hint.hidden=true; hint.innerHTML=""; return }
-    hint.innerHTML=k==="work"
-      ? BRIEF+'<span>Hiring? Reach me at <button type="button" class="padlink" data-act="copy">'+MAIL+'</button> or <a class="padlink" href="'+LINKEDIN+'" target="_blank" rel="noopener">LinkedIn</a></span>'
-      : SPARK+'<span>Want an answer now? <button type="button" class="padlink" data-act="twin">Ask my AI twin</button></span>';
+    hint.innerHTML=BRIEF+'<span>Hiring? Reach me at <button type="button" class="padlink" data-act="copy">'+MAIL+'</button> or <a class="padlink" href="'+LINKEDIN+'" target="_blank" rel="noopener">LinkedIn</a></span>';
     hint.hidden=false;
   }
   if(hint){
@@ -4255,9 +4252,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         var done=function(){ showToast("Copied "+MAIL) };
         if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(MAIL).then(done,function(){ window.copyText&&window.copyText(MAIL) });
         else if(window.copyText) window.copyText(MAIL);
-      }else if(a.dataset.act==="twin"){
-        close(true);
-        var dock=document.getElementById("askDock"); if(dock) dock.click();
       }
     });
   }
