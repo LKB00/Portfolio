@@ -3493,6 +3493,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 }
 @keyframes padType{0%,60%,100%{transform:none;opacity:.55}30%{transform:translateY(-2px);opacity:1}}
 @media (prefers-reduced-motion:reduce){.padart i,.padart b{transition:none}.padart b em{animation:none!important}}
+
+/* the faces, a step larger; "+1" in the highlighter yellow, because it
+   is the visitor; on hover the pile spreads like the notes beside it */
+#notes .rp-faces i{width:30px;height:30px;transition:margin .35s cubic-bezier(.34,1.56,.64,1),transform .35s cubic-bezier(.34,1.56,.64,1)}
+#notes .rp-faces i + i{margin-left:-11px}
+#notes .rp-faces i.rp-me{background:#FBE14D;color:#242020;font-size:11px;font-weight:600}
+:root[data-theme="dark"] #notes .rp-faces i.rp-me{background:#F2D43A;color:#141414}
+@media (hover:hover){
+  #notes .readpill:hover .rp-faces i + i{margin-left:-5px}
+  #notes .readpill:hover .rp-faces i.rp-me{transform:translateY(-3px) rotate(-6deg)}
+}
+@media (prefers-reduced-motion:reduce){#notes .rp-faces i{transition:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
