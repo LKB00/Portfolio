@@ -3398,6 +3398,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 }
 @media (max-width:370px){.padme-anon svg{display:none}}
 @media (prefers-reduced-motion:reduce){.padme-mail,.padhint{animation:none}.padme-anon{transition:none}}
+
+/* text wraps clear of the strip a neighbour may overlap */
+.padnote textarea{padding-right:18px}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -4257,7 +4260,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
 
   /* the header's real height, so notes can never be dropped under it */
-  function topSpace(){ return 16 }
+  function topSpace(){ return edge()<20?22:30 }
   function placeAll(){
     if(!board.classList.contains("is-floating")) return;
     notes.forEach(function(n){ var el=ELS.get(n); if(el) settle(el,n) });
@@ -4269,10 +4272,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      either. The bottom reserve is fixed rather than read from the bar,
      which is hidden until there is text: reading it live meant the
      space changed the moment someone typed and notes jumped. */
-  var GAP=12, EDGE=10, BOTTOM=100;
+  var GAP=12, BOTTOM=96;
+  /* room around the cluster: generous on a desktop, tighter on a phone so two notes still fit across */
+  function edge(){ return board.getBoundingClientRect().width<420?14:30 }
   function area(){
     var bb=board.getBoundingClientRect();
-    return {w:bb.width,h:bb.height,top:topSpace(),left:EDGE,right:bb.width-EDGE,bottom:bb.height-BOTTOM};
+    return {w:bb.width,h:bb.height,top:topSpace(),left:edge(),right:bb.width-edge(),bottom:bb.height-BOTTOM};
   }
   function rectOf(n,el,A){
     return {x:n.x/100*A.w,y:n.y/100*A.h,w:el.offsetWidth,h:el.offsetHeight};
@@ -4284,25 +4289,44 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      an even grid that fills the usable area. When none is left the board
      is full (six on a desktop, four on a phone): a note is never dropped
      on top of another. */
+  /* A loose cluster, the way notes end up on a real board: slots a
+     little closer than a note is wide, so neighbours just overlap, the
+     whole group centred with room around it, and each note nudged off
+     its slot at random. A slot counts as taken when a note's centre is
+     in it, so the jitter never makes the board think it is full. */
+  var OVER_X=8, OVER_Y=2, JIT_X=6, JIT_Y=8;
+  function overlap(a,b){
+    var ix=Math.max(0,Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x)),
+        iy=Math.max(0,Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y));
+    return ix*iy/(a.w*a.h);
+  }
   function freeSpot(el,others){
     var A=area(); if(!A.w) return {x:8,y:20};
     var w=el.offsetWidth,h=el.offsetHeight,
-        availW=A.right-A.left-w, availH=A.bottom-A.top-h,
-        cols=Math.max(1,Math.floor((availW+w+GAP)/(w+GAP))),
-        rows=Math.max(1,Math.floor((availH+h+GAP)/(h+GAP))),
+        W=A.right-A.left, H=A.bottom-A.top,
+        sx=w-OVER_X, sy=h-OVER_Y,
+        cols=Math.max(1,Math.floor((W-w)/sx)+1),
+        rows=Math.max(1,Math.floor((H-h)/sy)+1),
+        ox=A.left+(W-(w+(cols-1)*sx))/2,
+        oy=A.top+Math.max(0,(H-(h+(rows-1)*sy))/2),
         rects=others.map(function(o){ return rectOf(o.n,o.el,A) });
+    function rnd(k){ return (Math.random()*2-1)*k }
     for(var r=0;r<rows;r++) for(var c=0;c<cols;c++){
-      var x=A.left+(cols>1?c*availW/(cols-1):0),
-          y=A.top+(rows>1?r*availH/(rows-1):0),
-          me={x:x,y:y,w:w,h:h};
-      if(!rects.some(function(q){ return hits(me,q,GAP-2) })) return {x:x/A.w*100,y:y/A.h*100};
+      var cx=ox+c*sx+w/2, cy=oy+r*sy+h/2;
+      var taken=rects.some(function(q){
+        return Math.abs(q.x+q.w/2-cx)<sx/2 && Math.abs(q.y+q.h/2-cy)<sy/2;
+      });
+      if(taken) continue;
+      var x=Math.min(A.right-w,Math.max(A.left,ox+c*sx+rnd(JIT_X))),
+          y=Math.min(A.bottom-h,Math.max(A.top,oy+r*sy+rnd(JIT_Y)));
+      return {x:x/A.w*100,y:y/A.h*100};
     }
-    /* a note moved by hand (or saved on another screen) sits off the
-       grid and can block a slot while leaving room beside it, so before
-       calling the board full, look for any gap at all */
-    for(var yy=A.top;yy<=A.top+availH;yy+=8) for(var xx=A.left;xx<=A.left+availW;xx+=8){
+    /* off-grid notes (dragged, or saved on another screen) can leave a
+       real gap: take any spot that covers no other note by more than a
+       corner */
+    for(var yy=A.top;yy<=A.bottom-h;yy+=8) for(var xx=A.left;xx<=A.right-w;xx+=8){
       var m={x:xx,y:yy,w:w,h:h};
-      if(!rects.some(function(q){ return hits(m,q,6) })) return {x:xx/A.w*100,y:yy/A.h*100};
+      if(!rects.some(function(q){ return overlap(m,q)>.12 })) return {x:xx/A.w*100,y:yy/A.h*100};
     }
     return null;
   }
@@ -4321,7 +4345,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var list=notes.filter(function(n){ return ELS.get(n) });
     var clash=list.some(function(n,i){
       var a=rectOf(n,ELS.get(n),A);
-      return list.slice(i+1).some(function(m){ return hits(a,rectOf(m,ELS.get(m),A),-4) });
+      return list.slice(i+1).some(function(m){ return overlap(a,rectOf(m,ELS.get(m),A))>.3 });
     });
     if(!clash) return;
     list.sort(function(a,b){ return (a.y-b.y)||(a.x-b.x) });
@@ -4519,7 +4543,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     if(notes.length>=MAX){ showToast("That’s the most the board holds. Send these first."); return }
     if(blank()){ nudge(); return }     /* one blank note at a time */
     var i=notes.length;
-    var note={ x:x||0, y:y||0, text:"", tone:i%4, tilt:[-2,1.4,-1,2][i%4] };
+    /* a fresh tilt each time, never quite level */
+    var t=(1+Math.random()*2.6)*(Math.random()<.5?-1:1);
+    var note={ x:x||0, y:y||0, text:"", tone:i%4, tilt:Math.round(t*10)/10 };
     var el=render(note);
     if(x===undefined){
       var s=freeSpot(el,others(note));
