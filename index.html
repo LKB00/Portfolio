@@ -538,21 +538,33 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    page visibly ran out of breath on the way down. The hero keeps the
    larger opening gap; every band after it is spaced the same. */
 #work{padding-bottom:clamp(46px,7vw,72px)}
-/* the way into the Figma view: after the work, for whoever wants to see how
-   it's built. Quiet, in the Ask-my-AI-twin voice: lead-in grey, thing in ink */
-.figmacta{display:flex;justify-content:center;margin:clamp(32px,5vw,48px) 0 0}
-.figmacta a{display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 14px 0 14px;border-radius:9999px;
-  border:.5px solid color-mix(in srgb,var(--ink) 12%,transparent);background:var(--card,#fff);color:var(--ink);text-decoration:none;
-  font-family:var(--display);font-size:14px;font-weight:500;white-space:nowrap;transition:border-color .2s}
-.figmacta a:hover{border-color:color-mix(in srgb,var(--ink) 26%,transparent)}
-.figmacta-q{color:var(--muted);font-weight:400}
-.figmacta i{font-style:normal;font-size:10px;font-weight:500;line-height:16px;padding:0 6px;border-radius:5px;letter-spacing:.04em;text-transform:uppercase;
-  background:color-mix(in srgb,#9747FF 13%,transparent);color:#7B35E0}
-:root[data-theme="dark"] .figmacta i{color:#C9A6FF;background:color-mix(in srgb,#9747FF 26%,transparent)}
-.figmacta-go{color:var(--muted);transition:transform .2s cubic-bezier(.2,.7,.2,1)}
-.figmacta a:hover .figmacta-go{transform:translateX(2px);color:var(--ink)}
+/* the way into the Figma view, as Figma's own file pill (UI3): top left,
+   white on the light theme and Figma's grey on the dark, Inter, a purple
+   Beta badge and an open-in arrow; Figma's dark tooltip on hover.
+   Desktop and tablet only: on a phone the headline owns the top. */
+.figpill{position:fixed;top:22px;left:24px;z-index:60;display:flex;align-items:center;gap:8px;height:40px;padding:0 10px 0 12px;border-radius:12px;
+  background:#fff;color:#1E1E1E;text-decoration:none;font:600 12px/16px Inter,system-ui,-apple-system,sans-serif;letter-spacing:-.005em;
+  box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.08),0 10px 24px -10px rgba(0,0,0,.16);transition:box-shadow .2s}
+.figpill:hover{box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.1),0 12px 28px -10px rgba(0,0,0,.22)}
+.figpill-logo{display:flex;align-items:center;gap:3px;padding-right:2px}
+.figpill-logo .chev{width:8px;height:8px;color:#757575}
+.figpill b{font-weight:600}
+.figpill i{font-style:normal;font-weight:500;font-size:11px;line-height:16px;padding:0 5px;border-radius:5px;background:#F1E8FF;color:#8638E5}
+.figpill-go{color:#757575;transition:color .2s,transform .2s cubic-bezier(.2,.7,.2,1)}
+.figpill:hover .figpill-go{color:#1E1E1E;transform:translate(1px,-1px)}
+.figpill::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 8px);padding:4px 8px;border-radius:5px;background:#1E1E1E;color:#fff;
+  font:500 11px/16px Inter,system-ui,-apple-system,sans-serif;white-space:nowrap;opacity:0;transform:translateY(-2px);pointer-events:none;transition:opacity .15s,transform .15s}
+.figpill:hover::after,.figpill:focus-visible::after{opacity:1;transform:none}
+.figpill:focus-visible{outline:2px solid #0D99FF;outline-offset:2px}
+:root[data-theme="dark"] .figpill{background:#2C2C2C;color:#fff;box-shadow:0 0 0 .5px rgba(255,255,255,.12),0 10px 24px -10px rgba(0,0,0,.6)}
+:root[data-theme="dark"] .figpill i{background:#3A2A55;color:#D1B3FF}
+:root[data-theme="dark"] .figpill-go,:root[data-theme="dark"] .figpill-logo .chev{color:#B3B3B3}
+:root[data-theme="dark"] .figpill:hover .figpill-go{color:#fff}
+:root[data-theme="dark"] .figpill::after{background:#fff;color:#1E1E1E}
+@media (max-width:684px){.figpill{display:none}}
+@media (prefers-reduced-motion:reduce){.figpill,.figpill-go{transition:none}}
 /* inside the Figma view itself, the way in would point at itself */
-.in-frame .figmacta{display:none}
+.in-frame .figpill{display:none}
 
 /* 3. THE END OF THE PAGE. #contact carried nothing but a copyright: the
    one place a reader has finished the work and decided to act had no way
@@ -3628,7 +3640,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5v-11M3.5 7L8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
   </button>
 
-  <header id="siteHeader">
+  <a class="figpill" href="./figma-view.html" data-tip="Open this portfolio as a Figma file" aria-label="Open this portfolio as a Figma file (beta)"><span class="figpill-logo" aria-hidden="true"><svg width="10" height="15" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></span><b>Figma view</b><i>Beta</i><svg class="figpill-go" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+<header id="siteHeader">
     <div class="navpill">
       <nav class="navlinks" aria-label="Main">
         <a class="navlink" href="./index.html" aria-current="page"><span class="navtext">Home</span><svg class="navico" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.2 7.2 8 2.4l5.8 4.8"/><path d="M3.8 6v7.1c0 .5.4.9.9.9h2.1v-3.6h2.4V14h2.1c.5 0 .9-.4.9-.9V6"/></svg></a>
@@ -3826,7 +3839,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </a>
 
     </div>
-    <p class="figmacta" data-reveal><a href="./figma-view.html"><svg width="11" height="16" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg><span><span class="figmacta-q">See it as</span> a Figma file</span><i>Beta</i><svg class="figmacta-go" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></p>
   </section>
 
   <section id="words" data-section="What people said" aria-label="What people said">
