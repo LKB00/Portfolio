@@ -283,20 +283,21 @@ button.av{cursor:pointer}
 .fbar button{height:24px;padding:0 10px;border-radius:12px;background:rgba(255,255,255,.18);cursor:pointer}
 .fbar button:hover{background:rgba(255,255,255,.3)}
 
-/* first visit */
-.intro{position:absolute;left:16px;top:16px;z-index:6;width:300px;padding:16px;border-radius:12px;background:var(--ui);box-shadow:0 2px 12px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.12)}
-.intro .ih{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.intro .ih img{width:28px;height:28px;border-radius:50%}
-.intro b{font-size:12px}
-.intro p{margin:0 0 10px;color:var(--tx2);font-size:12px;line-height:18px}
-.intro ul{margin:0 0 12px;padding:0;list-style:none}
-.intro li{display:flex;gap:8px;padding:3px 0;color:var(--tx2)}
-.intro kbd{flex:none;min-width:70px;font:inherit;font-weight:500;color:var(--tx)}
-.intro .ib2{display:flex;gap:8px}
-.intro button{height:28px;padding:0 12px;border-radius:6px;font-weight:500;cursor:pointer}
-.intro .pri{background:var(--purple);color:#fff}
-.intro .sec{box-shadow:inset 0 0 0 1px var(--line)}
-.intro .sec:hover{background:var(--hover)}
+/* first visit: one line at the top, not a card over the Cover */
+.intro{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:10px;
+  max-width:calc(100% - 24px);padding:6px 6px 6px 8px;border-radius:12px;background:var(--ui);
+  box-shadow:0 2px 12px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.12);font-size:12px;line-height:16px}
+.intro[hidden]{display:none}
+.intro img{width:26px;height:26px;border-radius:50%;flex:none}
+.intro .it{min-width:0}
+.intro b{font-weight:600}
+.intro .pri{flex:none;height:28px;padding:0 12px;border-radius:7px;background:var(--purple);color:#fff;font-weight:500;cursor:pointer;white-space:nowrap}
+.intro .pri:hover{background:#8638F0}
+.intro .ib{flex:none;cursor:pointer}
+.cv{container-type:size}
+.intro .it{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@container (max-width:760px){.intro .it .tx2{display:none}}
+@container (max-width:420px){.intro .it{display:none}}
 
 /* present */
 .present{position:fixed;inset:0;z-index:30;background:#1E1E1E;display:none;flex-direction:column}
@@ -319,7 +320,7 @@ button.av{cursor:pointer}
   .lp{left:0;transform:translateX(-105%)}.rp{right:0;transform:translateX(105%)}
   .app.show-l .lp,.app.show-r .rp{transform:none}
   .mob{display:flex!important}
-  .intro{left:10px;right:10px;width:auto;top:52px}
+  .intro{top:52px}
   .tb .tl.act span{display:none}
 }
 .mob{display:none;position:absolute;top:10px;left:10px;right:10px;justify-content:space-between;z-index:6;pointer-events:none}
@@ -337,6 +338,16 @@ button.av{cursor:pointer}
   background:#1E1E1E;color:#fff;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s}
 .pin.lk:hover .tip{opacity:1}
 .pin.lk.open .tip{display:none}
+
+/* a frame that is still loading says so, instead of sitting blank */
+.frame iframe{transition:opacity .3s}
+.frame.loading iframe{opacity:0}
+.frame.loading{background:var(--ui);overflow:hidden}
+.frame.loading::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(0,0,0,.04) 50%,transparent 70%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+.frame.loading::after{content:attr(data-loading);position:absolute;left:50%;top:calc(120px / var(--z,1));transform:translateX(-50%);
+  font-size:calc(13px / var(--z,1));color:var(--tx2);white-space:nowrap}
+@keyframes shimmer{from{background-position:150% 0}to{background-position:-50% 0}}
+@media (prefers-reduced-motion:reduce){.frame.loading::before{animation:none}}
 </style>
 </head>
 <body>
@@ -382,15 +393,10 @@ button.av{cursor:pointer}
     </div>
     <div class="toast" id="toast" role="status"></div>
     <div class="intro" id="intro" hidden>
-      <div class="ih"><img src="./assets/avatar-96.webp" alt=""><b>My portfolio, opened as a Figma file</b></div>
-      <p>The website shows what I made. This file shows how: the decisions behind it, the system it’s built on, and how it changed.</p>
-      <ul>
-        <li><kbd>Purple pins</kbd>My design decisions, where they apply</li>
-        <li><kbd>Click</kbd>Inspect any part · double-click to go in</li>
-        <li><kbd>▶</kbd>Use the real website</li>
-        <li><kbd>C</kbd>Leave me a comment anywhere</li>
-      </ul>
-      <div class="ib2"><button class="pri" id="introTour">Take the 1-minute tour</button><button class="sec" id="introOk">Explore myself</button></div>
+      <img src="./assets/avatar-96.webp" alt="">
+      <span class="it"><b>My portfolio, as a Figma file.</b> <span class="tx2">See how it’s made: the decisions, the system, the history.</span></span>
+      <button class="pri" id="introTour">Take the 1-minute tour</button>
+      <button class="ib" id="introOk" aria-label="Dismiss"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
   </main>
 
@@ -482,7 +488,7 @@ var HISTORY=[
 var TOUR=[
   {page:"Cover",sel:"[data-step=me]",msg:"Hi, I’m Lokesh. This is my portfolio as a design file. Here’s the one-minute version."},
   {page:"Cover",sel:"[data-step=work]",msg:"Four case studies. The newest, an AI agent, is the one to start with."},
-  {page:"Home",dev:"Desktop",sel:"#top h1",open:0,msg:"Every purple pin is a decision I made, and why. This one is about the first line."},
+  {page:"Home",dev:"Desktop",sel:"#top h1",open:0,msg:"Each pin with my photo is a decision I made, and why. This one is about the first line."},
   {page:"Home",dev:"Desktop",sel:"#padTrigger, #notes",open:5,msg:"This one changed because of what visitors actually did."},
   {page:"Foundations",sel:"[data-step=colour]",msg:"The system underneath: every colour and type size, read from the live site."},
   {page:"Cover",sel:"[data-step=contact]",msg:"That’s the tour. Press C to comment anywhere, or reach me here."}
@@ -659,7 +665,9 @@ function coverHTML(){
    '.links a{display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(36,32,32,.1);font-size:14px;cursor:pointer}'+
    '.links a.dark{background:#171717;color:#fff;box-shadow:none}'+
    '.legend{display:flex;gap:20px;font-size:13px;color:#7A7676}.legend span{display:flex;align-items:center;gap:8px}'+
-   '.dotp{width:14px;height:14px;border-radius:50% 50% 50% 0;background:#fff;box-shadow:0 0 0 2px #9747FF}'+
+   '@media (max-width:600px){body{width:390px;height:auto;padding:40px 24px;gap:32px}h1{font-size:40px}.role{font-size:16px}.me{gap:16px}.me img{width:72px;height:72px}.sum{font-size:18px}'+
+   '.cards{grid-template-columns:1fr;gap:28px}.shot{height:200px}.foot{flex-direction:column;align-items:flex-start;gap:16px}.links{flex-wrap:wrap}.legend{flex-direction:column;gap:6px}.top .mono:last-child{display:none}}'+
+   '.dotp{width:18px;height:18px;border-radius:50% 50% 50% 0;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.25);display:grid;place-items:center}.dotp img{width:14px;height:14px;border-radius:50%}'+
    '</style></head><body>'+
    '<div class="top" data-layer="Header"><span class="mono" data-layer="File label">Portfolio · 2026</span><span class="mono" data-layer="Location">Bengaluru, India</span></div>'+
    '<div class="me" data-step="me" data-layer="Who I am"><img src="./assets/avatar-96.webp" alt="Lokesh Bhatia"><div><h1 class="serif">Lokesh Bhatia</h1><p class="role">Product designer · Fintech &amp; AI</p></div></div>'+
@@ -669,7 +677,7 @@ function coverHTML(){
    }).join("")+'</div>'+
    '<div class="foot" data-step="contact" data-layer="Contact">'+
      '<div class="links"><a class="dark" data-copy="'+MAIL+'" data-layer="Email">'+MAIL+'</a><a data-href="'+LINKEDIN+'" data-layer="LinkedIn">LinkedIn ↗</a><a data-go="Resume" data-layer="Resume">Résumé</a><a data-href="./index.html" data-layer="Website">The website ↗</a></div>'+
-     '<div class="legend" data-layer="How to read this file"><span><i class="dotp"></i>My design decisions</span><span>Click to inspect · ▶ to use the site</span></div>'+
+     '<div class="legend" data-layer="How to read this file"><span><i class="dotp"><img src="'+AVATAR+'" alt=""></i>Pins are my design decisions</span><span>Click to inspect · ▶ to use the site · C to comment</span></div>'+
    '</div></body></html>';
 }
 
@@ -721,6 +729,7 @@ function foundationsHTML(s){
    '.tr{display:grid;grid-template-columns:200px 1fr 280px;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(36,32,32,.1)}'+
    '.tr .l{font-size:13px;color:#7A7676}.tr .m{font-family:"Geist Mono",monospace;font-size:11px;color:#7A7676;line-height:1.6}'+
    '.tok{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}'+
+   '@media (max-width:600px){body{width:390px;padding:40px 20px}h1{font-size:36px}.sw{grid-template-columns:repeat(2,1fr)}.tr{grid-template-columns:1fr;gap:6px}.tok{grid-template-columns:1fr 1fr}}'+
    '.t{padding:14px 16px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px rgba(36,32,32,.08);font-family:"Geist Mono",monospace;font-size:12px}.t span{display:block;color:#7A7676;margin-top:4px}'+
    '</style></head><body>'+
    '<h1 class="serif" data-layer="Title">Foundations</h1>'+
@@ -748,6 +757,7 @@ function addFrame(name,w,h,x,src,srcdoc){
   ifr.setAttribute("tabindex","-1");
   if(srcdoc!=null) ifr.srcdoc=srcdoc; else ifr.src=src+(src.indexOf("?")>-1?"&":"?")+"figma=1";
   fr.appendChild(ifr);
+  fr.classList.add("loading"); fr.dataset.loading="Loading "+name.split(" — ").pop()+"…";
   var lab=document.createElement("div"); lab.className="flabel"; lab.textContent=name;
   world.appendChild(lab); world.appendChild(fr);
   var f={name:name,dev:{key:name.split(" — ")[0]},x:x,y:0,w:w,h:h,el:fr,ifr:ifr,label:lab,doc:null,root:null,waits:[]};
@@ -761,9 +771,10 @@ function loadPage(i,cb){
   st.page=i; st.sel=null; st.hov=null; st.ctx=null;
   world.innerHTML=""; st.frames=[]; closePop();
   var P=PAGES[i];
-  if(P.kind==="cover") addFrame("Cover",1440,900,0,null,coverHTML());
+  var narrow=cv.clientWidth<600;
+  if(P.kind==="cover") addFrame("Cover",narrow?390:1440,narrow?1400:900,0,null,coverHTML());
   else if(P.kind==="foundations"){
-    var f=addFrame("Foundations",1440,1200,0,null,'<!doctype html><html><body style="margin:0;font:14px Inter,sans-serif;color:#999;padding:80px">Reading the live site…</body></html>');
+    var f=addFrame("Foundations",narrow?390:1440,1200,0,null,'<!doctype html><html><body style="margin:0;font:14px Inter,sans-serif;color:#999;padding:80px">Reading the live site…</body></html>');
     readSite(function(s){ if(st.frames[0]===f){ f.doc=null; f.ifr.srcdoc=foundationsHTML(s) } });
   }else{
     var x=0; DEVICES.forEach(function(d){ addFrame(d.key+" — "+P.name,d.w,d.h,x,P.src); x+=d.w+160 });
@@ -795,12 +806,13 @@ function ready(f){
   size(); setTimeout(size,600); setTimeout(size,1800); setTimeout(size,4000);
   try{ new (win(doc.body).ResizeObserver)(function(){ size() }).observe(doc.body) }catch(e){}
   renderTree(); renderProps();
-  setTimeout(function(){ f.ready=true; placePins(); var w=f.waits; f.waits=[]; w.forEach(function(cb){ cb() }) },350);
+  setTimeout(function(){ f.ready=true; f.el.classList.remove("loading"); placePins(); var w=f.waits; f.waits=[]; w.forEach(function(cb){ cb() }) },350);
 }
 
 /* ═══ VIEW: PAN AND ZOOM ════════════════════════════════════════════ */
 function apply(){
   world.style.transform="translate("+st.x+"px,"+st.y+"px) scale("+st.zoom+")";
+  world.style.setProperty("--z",st.zoom);
   var z=$("#zoomPct"); if(z) z.textContent=Math.round(st.zoom*100)+"%";
   paintLabels(); draw(); placeCursor(); placePins();
 }
@@ -814,9 +826,18 @@ function paintLabels(){
 function zoomAt(z,cx,cy){ z=Math.max(.02,Math.min(4,z)); st.x=cx-(cx-st.x)*z/st.zoom; st.y=cy-(cy-st.y)*z/st.zoom; st.zoom=z; apply() }
 function fit(top){
   var W=cv.clientWidth,H=cv.clientHeight; if(!W) return;
-  var last=st.frames[st.frames.length-1], tw=last?last.x+last.w:1440, fh=st.frames[0]?st.frames[0].h:900;
-  var z=Math.min(1,(W-120)/tw); if(st.frames.length===1&&fh<=1000) z=Math.min(z,(H-140)/fh);
-  st.zoom=z; st.x=(W-tw*z)/2; st.y=top&&fh*z>H-120?56:Math.max(48,(H-fh*z)/2); apply();
+  var last=st.frames[st.frames.length-1], tw=last?last.x+last.w:1440, f0=st.frames[0], fh=f0?f0.h:900, fw=f0?f0.w:1440;
+  var head=($("#intro")&&!$("#intro").hidden?86:56)+(W<600?24:0), side=W<700?32:96;
+  var z=Math.min(1,(W-side)/tw), x;
+  /* desktop and phone side by side only while both stay readable;
+     otherwise open on the desktop frame, the phone a pan away */
+  if(st.frames.length>1&&z<.32&&top){ z=Math.min(1,(W-side)/fw); x=side/2 }
+  /* on a phone, open on the phone-sized frame */
+  var mob=st.frames.filter(function(fr){ return fr.dev.key==="Mobile" })[0];
+  if(mob&&W<600&&top){ z=Math.min(1,(W-side)/mob.w); x=side/2-mob.x*z }
+  if(st.frames.length===1&&fh<=1000) z=Math.min(z,(H-head-90)/fh);
+  if(x===undefined) x=(W-tw*z)/2;
+  st.zoom=z; st.x=x; st.y=top&&fh*z>H-head-60?head:Math.max(head,(H-fh*z)/2); apply();
 }
 function zoomTo(f,r,pad){
   var W=cv.clientWidth,H=cv.clientHeight; pad=pad||160;
@@ -867,7 +888,28 @@ cv.addEventListener("pointermove",function(e){
   hover(e);
 });
 cv.addEventListener("pointerleave",function(){ st.hov=null; draw() });
+/* On a touch screen one finger moves the canvas, as it does on a phone;
+   a tap that does not move is the click. */
+var tap=null;
 cv.addEventListener("pointerdown",function(e){
+  if(e.pointerType==="touch"&&!e.target.closest(".tb,.pop,.pin,.mob,.fbar,.intro")){
+    tap={e:e,x:e.clientX,y:e.clientY,moved:false,ox:st.x,oy:st.y};
+    try{ cv.setPointerCapture(e.pointerId) }catch(err){}
+    return;
+  }
+  press(e);
+});
+cv.addEventListener("pointermove",function(e){
+  if(!tap||e.pointerType!=="touch") return;
+  var dx=e.clientX-tap.x, dy=e.clientY-tap.y;
+  if(!tap.moved&&Math.abs(dx)+Math.abs(dy)>8){ tap.moved=true; closePop() }
+  if(tap.moved){ st.x=tap.ox+dx; st.y=tap.oy+dy; apply() }
+});
+cv.addEventListener("pointerup",function(e){
+  if(tap&&e.pointerType==="touch"){ var t=tap; tap=null; if(!t.moved) press(t.e) }
+});
+cv.addEventListener("pointercancel",function(){ tap=null });
+function press(e){
   if(e.target.closest(".tb,.pop,.pin,.mob,.fbar,.intro")) return;
   closeMenus();
   if(following) stopFollow(true);
@@ -896,7 +938,7 @@ cv.addEventListener("pointerdown",function(e){
   var ctx=(st.ctx&&st.sel&&st.sel.f===h.f)?st.ctx:h.f.root;
   var p=(e.metaKey||e.ctrlKey)?{el:deepest(h.t,h.f),ctx:null}:pick(h.t,ctx,h.f);
   if(p&&p.el) select(h.f,p.el,p.ctx||layerParent(p.el,h.f)); else select(h.f,h.f.root,h.f.root);
-});
+}
 cv.addEventListener("pointerup",function(){ if(drag){ drag=null; cv.classList.remove("drag") } });
 
 /* ═══ SELECTION ═════════════════════════════════════════════════════ */
@@ -931,7 +973,7 @@ function renderPages(){
     if(p.group){ var g=document.createElement("div"); g.className="plabel"; g.textContent=p.group; el.appendChild(g); return }
     var n=DECISIONS.filter(function(d){ return d.page===p.name }).length;
     var b=document.createElement("button"); b.className="pg"+(i===st.page?" on":"");
-    b.innerHTML='<i>✓</i>'+esc(p.name)+(n?'<span class="cnt" title="'+n+' design decisions">'+n+'</span>':'');
+    b.innerHTML='<i>✓</i>'+esc(p.name)+(n?'<span class="cnt" title="'+n+' design decisions on this page"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 21V12a9 9 0 1 1 9 9z"/></svg>'+n+'</span>':'');
     b.addEventListener("click",function(){ if(following) stopFollow(true); if(i!==st.page) loadPage(i); $("#app").classList.remove("show-l") });
     el.appendChild(b);
   });
@@ -1021,8 +1063,8 @@ function renderProps(){
   if(!s){
     var f0=st.frames[0], bg=f0&&f0.doc?color(win(f0.doc.body).getComputedStyle(f0.doc.body).backgroundColor)||color(win(f0.doc.body).getComputedStyle(f0.doc.documentElement).backgroundColor):null;
     html+='<div class="blk">'+bh("Page")+(bg?paint(bg):'<p class="note">Loading…</p>')+'</div>';
-    html+='<div class="blk">'+bh("Variables")+'<div class="vars" id="varList">'+vars(f0,6)+'</div></div>';
-    html+='<div class="blk">'+bh("About this file")+'<p class="note">Click any part of a frame to see how it’s built. Purple pins are the decisions behind it. Everything here is read from the live site.</p></div>';
+    var vl=vars(f0,6); if(vl.indexOf("None in this frame")<0) html+='<div class="blk">'+bh("Variables")+'<div class="vars" id="varList">'+vl+'</div></div>';
+    html+='<div class="blk">'+bh("About this file")+'<p class="note">Click any part of a frame to see how it’s built. The pins with my photo are the decisions behind it. Everything here is read from the live site.</p></div>';
     html+='<div class="blk">'+bh("Export",PLUS)+'</div>';
     props.innerHTML=html;
     var m=$("#moreVars"); if(m) m.addEventListener("click",function(){ $("#varList").innerHTML=vars(f0,999) });
@@ -1446,7 +1488,7 @@ function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ 
 (function(){
   var seen=false; try{ seen=localStorage.getItem("lb.figma.intro")==="2" }catch(e){}
   if(!seen) $("#intro").hidden=false;
-  $("#introOk").addEventListener("click",closeIntro);
+  $("#introOk").addEventListener("click",function(){ closeIntro(); fit(true) });
   $("#introTour").addEventListener("click",startFollow);
   cv.addEventListener("pointerdown",function(e){ if(!e.target.closest(".intro")) closeIntro() },true);
   document.querySelector(".tb").addEventListener("click",closeIntro);
@@ -1456,7 +1498,7 @@ function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ 
 $("#mobL").addEventListener("click",function(){ $("#app").classList.toggle("show-l"); $("#app").classList.remove("show-r") });
 $("#mobR").addEventListener("click",function(){ $("#app").classList.toggle("show-r"); $("#app").classList.remove("show-l") });
 var touches={};
-cv.addEventListener("touchstart",function(e){ if(e.touches.length===2){ var a=e.touches[0],b=e.touches[1]; touches={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),z:st.zoom,mx:(a.clientX+b.clientX)/2,my:(a.clientY+b.clientY)/2,x:st.x,y:st.y} } },{passive:true});
+cv.addEventListener("touchstart",function(e){ if(e.touches.length===2){ tap=null; var a=e.touches[0],b=e.touches[1]; touches={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),z:st.zoom,mx:(a.clientX+b.clientX)/2,my:(a.clientY+b.clientY)/2,x:st.x,y:st.y} } },{passive:true});
 cv.addEventListener("touchmove",function(e){
   if(e.touches.length!==2||!touches.d) return; e.preventDefault();
   var a=e.touches[0],b=e.touches[1], d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY), r=cv.getBoundingClientRect();
@@ -1469,6 +1511,9 @@ cv.addEventListener("touchend",function(){ touches={} });
 addEventListener("resize",function(){ draw(); placePins() });
 /* the file opens on its Cover */
 loadPage(0);
+/* read the live site for Foundations while the visitor looks at the
+   Cover, so that page (and its tour step) opens instantly */
+setTimeout(function(){ readSite(function(){}) },2500);
 })();
 </script>
 </body>
