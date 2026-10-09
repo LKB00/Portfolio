@@ -528,6 +528,14 @@ function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&am
 var WEIGHTS={100:"Thin",200:"Extra Light",300:"Light",400:"Regular",500:"Medium",600:"Semi Bold",700:"Bold",800:"Extra Bold",900:"Black"};
 var EMAIL_RE=/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i;
 function pageIndex(name){ for(var i=0;i<PAGES.length;i++) if(PAGES[i].name===name) return i; return -1 }
+/* a real link inside a page frame that points at another page in this file */
+function pageOfLink(t){
+  var a=t&&t.closest&&t.closest("a[href]"); if(!a) return -1;
+  var path; try{ path=new URL(a.getAttribute("href"),a.ownerDocument.baseURI).pathname.replace(/^\//,"") }catch(e){ return -1 }
+  if(path==="") path="index.html";
+  for(var i=0;i<PAGES.length;i++) if(PAGES[i].src&&PAGES[i].src.replace("./","")===path) return i;
+  return -1;
+}
 function copy(text,msg){ (navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(function(){ toast(msg||"Copied") },function(){ toast(text) }) }
 var CHEV='<svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>';
 var XSVG='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
@@ -928,7 +936,8 @@ function hover(e){
   var h=hit(e);
   if(!h.f){ st.hov=null; draw(); cv.style.cursor=""; return }
   var link=h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy]");
-  cv.style.cursor=link?"pointer":"";
+  var toPage=!(e.metaKey||e.ctrlKey)&&pageOfLink(h.t);
+  cv.style.cursor=(link||(toPage>-1&&toPage!==st.page))?"pointer":"";
   var ctx=(st.ctx&&st.sel&&st.sel.f===h.f)?st.ctx:h.f.root;
   var p=(e.metaKey||e.ctrlKey)?{el:deepest(h.t,h.f)}:pick(h.t,ctx,h.f);
   st.hov=p&&p.el?{f:h.f,el:p.el}:null; draw();
@@ -980,6 +989,9 @@ function press(e){
     else if(link.dataset.copy) copy(link.dataset.copy,"Email copied: "+link.dataset.copy);
     return;
   }
+  /* so do the site's own links to other pages, as they would on the site;
+     ⌘/Ctrl-click still selects the layer instead */
+  if(!(e.metaKey||e.ctrlKey)){ var pi=pageOfLink(h.t); if(pi>-1&&pi!==st.page){ loadPage(pi); return } }
   var now=Date.now(), dbl=lastDown&&now-lastDown.t<400&&Math.abs(e.clientX-lastDown.x)<6&&Math.abs(e.clientY-lastDown.y)<6;
   lastDown=dbl?null:{t:now,x:e.clientX,y:e.clientY};
   if(dbl&&st.sel&&st.sel.f===h.f&&st.sel.el!==h.t&&st.sel.el.contains(h.t)&&kids(st.sel.el).length){
