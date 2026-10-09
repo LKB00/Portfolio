@@ -240,6 +240,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:defa
 .intro kbd{flex:none;min-width:64px;font:inherit;font-weight:500;color:var(--tx)}
 .intro button{height:26px;padding:0 12px;border-radius:6px;background:var(--blue);color:#fff;font-weight:500;cursor:pointer}
 @media (max-width:900px){.intro{left:10px;right:10px;width:auto;top:52px}}
+
+.pop .phd .px{margin-left:auto;width:22px;height:22px;border-radius:5px;display:grid;place-items:center;color:var(--tx2);cursor:pointer;flex:none}
+.pop .phd .px:hover{background:var(--hover);color:var(--tx)}
 </style>
 </head>
 <body>
@@ -568,6 +571,7 @@ function ensureVisible(f,r){
 }
 cv.addEventListener("wheel",function(e){
   e.preventDefault();
+  if(popEl&&popEl.classList.contains("read")) closePop();
   var b=cv.getBoundingClientRect(), cx=e.clientX-b.left, cy=e.clientY-b.top;
   if(e.ctrlKey||e.metaKey){ zoomAt(st.zoom*Math.exp(-e.deltaY*(e.ctrlKey&&!e.metaKey?.01:.0025)),cx,cy) }
   else{ st.x-=e.shiftKey&&!e.deltaX?e.deltaY:e.deltaX; st.y-=e.shiftKey&&!e.deltaX?0:e.deltaY; apply() }
@@ -604,6 +608,14 @@ cv.addEventListener("pointerleave",function(){ st.hov=null; draw() });
 cv.addEventListener("pointerdown",function(e){
   if(e.target.closest(".tb,.pop,.pin,.mob")) return;
   closeMenus();
+  if(popEl&&!popEl.contains(e.target)){
+    var hadText=popEl.querySelector("textarea")&&popEl.querySelector("textarea").value.trim();
+    closePop();
+    /* a click away just closes it, the way Figma does; a draft with words
+       in it says it was discarded rather than vanishing silently */
+    if(hadText) toast("Comment discarded");
+    if(st.tool!=="comment") return;
+  }
   if(e.button===1||space||st.tool==="hand"){ drag={x:st.x,y:st.y,cx:e.clientX,cy:e.clientY}; cv.classList.add("drag"); cv.setPointerCapture(e.pointerId); e.preventDefault(); return }
   if(st.tool==="comment"){ startComment(e); return }
   if(st.tool!=="move"){ toast("This file is view-only. It’s my portfolio, not a draft 🙂"); setTool("move"); return }
@@ -973,10 +985,12 @@ function placePins(){
     var d=pinEl("Y"); d.setAttribute("aria-label","Your comment on "+p.on);
     var px=st.x+p.wx*st.zoom, py=st.y+p.wy*st.zoom;
     d.style.left=px+"px"; d.style.top=py+"px";
-    d.addEventListener("click",function(e){ e.stopPropagation(); closePop();
-      popEl=document.createElement("div"); popEl.className="pop read";
-      popEl.innerHTML='<div class="phd"><span class="av sm" style="background:#14AE5C">Y</span><b>You</b><span class="tx2">on '+esc(p.on)+'</span></div><p>'+esc(p.text)+'</p><div class="ctx">'+(p.email?"Sent · I’ll reply to "+esc(p.email):"Sent anonymously")+'</div>';
+    d.addEventListener("click",function(e){ e.stopPropagation();
+      var wasMine=popEl&&popEl.forPin===p; closePop(); if(wasMine) return;
+      popEl=document.createElement("div"); popEl.className="pop read"; popEl.forPin=p;
+      popEl.innerHTML='<div class="phd"><span class="av sm" style="background:#14AE5C">Y</span><b>You</b><span class="tx2">on '+esc(p.on)+'</span><button class="px" type="button" aria-label="Close comment"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><p>'+esc(p.text)+'</p><div class="ctx">'+(p.email?"Sent · I’ll reply to "+esc(p.email):"Sent anonymously")+'</div>';
       ov.appendChild(popEl); placePop(popEl,px,py);
+      popEl.querySelector(".px").addEventListener("click",closePop);
       popEl.addEventListener("pointerdown",function(ev){ ev.stopPropagation() });
     });
     d.addEventListener("pointerdown",function(e){ e.stopPropagation() });
@@ -994,12 +1008,13 @@ function startComment(e){
   /* 2. the composer opens beside it, saying exactly where this goes */
   popEl=document.createElement("div"); popEl.className="pop";
   popEl.innerHTML=
-    '<div class="phd"><span class="tx2">Comment to Lokesh · on <b>'+esc(on)+'</b></span></div>'+
+    '<div class="phd"><span class="tx2">Comment to Lokesh · on <b>'+esc(on)+'</b></span><button class="px" type="button" aria-label="Close comment"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>'+
     '<div class="crow"><textarea rows="1" placeholder="Add a comment…" aria-label="Comment"></textarea>'+
     '<button class="send" disabled aria-label="Post comment"><svg width="14" height="14" '+'xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'+'><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button></div>'+
     '<div class="mailrow" hidden><input type="email" placeholder="you@email.com" aria-label="Your email, for a reply"></div>'+
     '<div class="pfoot"><span class="anon">Anonymous · <button class="lnk" type="button">Add email</button> to get a reply</span></div>';
   ov.appendChild(popEl); placePop(popEl,sx,sy);
+  popEl.querySelector(".px").addEventListener("click",closePop);
   var ta=popEl.querySelector("textarea"), send=popEl.querySelector(".send"),
       mailrow=popEl.querySelector(".mailrow"), em=popEl.querySelector("input"), foot=popEl.querySelector(".anon");
   ta.focus();
