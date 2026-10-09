@@ -560,7 +560,14 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
 :root[data-theme="dark"] .figpill{--fp-bg:#2C2C2C;--fp-tx:#fff;--fp-tx2:#B3B3B3;--fp-hov:#383838;--fp-bd-bg:#0C3B5E;--fp-bd-tx:#7CC4F8;
   box-shadow:0 0 .5px rgba(0,0,0,.5),0 3px 8px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.3)}
 :root[data-theme="dark"] .figpill::after{background:#383838}
-@media (max-width:684px){.figpill{display:none}}
+/* phones: the same pill, a size smaller, at the top of the page; it scrolls
+   away with the hero instead of floating over the text */
+@media (max-width:684px){
+  .figpill{position:absolute;top:calc(12px + env(safe-area-inset-top));left:16px;height:40px;padding:0 6px;border-radius:12px;font-size:12px}
+  .figpill-ic{width:28px;height:28px}
+  .figpill-name{margin:0 6px 0 4px}
+  .figpill::after{display:none}
+}
 /* inside the Figma view itself, the way in would point at itself */
 .in-frame .figpill{display:none}
 /* the Figma view opens over the page, not as a new one. While it loads,
@@ -3073,7 +3080,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* phones: the nav lives at the bottom of the screen, so the top no
    longer needs a bar's worth of clearance; the page starts close to the
    top edge, clear of the notch */
-@media (max-width:576px){ #top{padding-top:calc(40px + env(safe-area-inset-top))} }
+@media (max-width:576px){ #top{padding-top:calc(76px + env(safe-area-inset-top))} }   /* room for the Figma view pill */
 
 /* ===== BACK TO TOP, READ AS PROGRESS =====
    A blue arc sweeping round a grey circle is the loading spinner
