@@ -3556,6 +3556,22 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .rec-bar:hover .rec-role{color:var(--muted)}
 .rec-bar.is-on .rec-role{color:var(--ink);font-weight:500}
 @media (prefers-reduced-motion:reduce){.rec-q .w.hl::before{transform:none!important;transition:none!important}}
+
+/* ══ THE BOARD, LIFTED OFF THE PAGE ══════════════════════════════════
+   In the dark theme the open board was the same near-black as the page
+   behind it and dissolved into it. The page now blurs and dims behind
+   the board, and the board gets a hairline edge and a deeper shadow, so
+   it reads as a sheet in front in both themes. */
+.padoverlay{-webkit-backdrop-filter:blur(6px) saturate(.9);backdrop-filter:blur(6px) saturate(.9)}
+.padboard.is-floating{box-shadow:0 0 0 1px rgba(20,20,22,.06),0 24px 70px -30px rgba(20,24,45,.45)}
+:root[data-theme="dark"] .padoverlay{background:rgba(0,0,0,.55)}
+:root[data-theme="dark"] .padboard.is-floating{background-color:#202020;
+  box-shadow:0 0 0 1px rgba(255,255,255,.09),0 30px 80px -24px rgba(0,0,0,.9)}
+
+/* the quote highlighter as one solid stroke: semi-transparent pieces
+   doubled up where neighbouring words overlap and striped the line */
+.rec-q .w.hl::before{background:color-mix(in srgb,#FBE14D 50%,var(--surface))}
+:root[data-theme="dark"] .rec-q .w.hl::before{background:color-mix(in srgb,#E5CB3C 26%,var(--surface))}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
