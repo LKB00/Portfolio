@@ -534,9 +534,13 @@ var st={page:1,zoom:.5,x:0,y:0,tool:"move",dev:false,rtab:"design",frames:[],sel
 
 /* opened over the homepage (in its layer) rather than as its own page */
 var EMBED=false; try{ EMBED=window.top!==window.self&&!!parent.document.querySelector(".fvlay") }catch(e){}
-function home(){ if(EMBED) parent.postMessage({fvClose:1},location.origin); else location.href="./index.html" }
+function home(){ T("fv_back",{page:pageSlug(),secondsOpen:Math.round((Date.now()-T0)/1000)}); if(EMBED) parent.postMessage({fvClose:1},location.origin); else location.href="./index.html" }
 function shareURL(){ try{ if(EMBED) return parent.location.href.split("#")[0]+"#figma" }catch(e){} return location.href.split("#")[0] }
 var toldReady=false;
+/* usage: what visitors do in the file, never what they type */
+var T0=Date.now(), seenSel={};
+function T(name,data){ try{ if(window.pfTrack) window.pfTrack(name,data) }catch(e){} }
+function pageSlug(i){ var p=PAGES[i==null?st.page:i]; return p&&p.name?p.name.toLowerCase().replace(/[^a-z0-9]+/g,"-"):"" }
 
 addEventListener("storage",function(e){ if(e.key==="portfolio-theme"&&!EMBED&&st.frames.length) setTimeout(function(){ loadPage(st.page) },0) });
 
@@ -869,7 +873,7 @@ function addFrame(name,w,h,x,src,srcdoc){
 function loadPage(i,cb){
   if(PAGES[i].group) return;
   findIdx=null;
-  st.page=i; st.sel=null; st.hov=null; st.ctx=null;
+  st.page=i; T("fv_page",{page:pageSlug(i)}); st.sel=null; st.hov=null; st.ctx=null;
   world.innerHTML=""; st.frames=[]; closePop();
   var P=PAGES[i];
   var narrow=cv.clientWidth<600;
@@ -1054,6 +1058,7 @@ function select(f,el,ctx){
   /* choosing something yourself ends following, as in Figma */
   if(following) stopFollow(true);
   if(f&&st.rtab==="history"){ st.rtab="design"; renderTabs() }
+  if(f&&el){ var sk=pageSlug()+":"+kindOf(el,f.root); if(!seenSel[sk]){ seenSel[sk]=1; T("fv_select",{page:pageSlug(),kind:kindOf(el,f.root)}) } }
   if(!f){ st.sel=null; st.ctx=null } else { st.sel={f:f,el:el}; st.ctx=ctx||f.root }
   draw(); paintLabels(); renderProps(); markTree(true);
 }
@@ -1403,6 +1408,7 @@ function startComment(e){
       body:JSON.stringify({notes:["[Comment on "+PAGES[st.page].name+" · "+on+(mail?" · reply to "+mail:" · anonymous")+"] "+text],topic:"comment",replyTo:mail,page:location.href,sentAt:new Date().toISOString()})})
     .then(function(r){ if(!r.ok) throw 0 })
     .then(function(){
+      T("fv_comment_sent",{page:pageSlug(),withEmail:!!mail});
       pins.push({page:st.page,wx:w.x,wy:w.y,text:text,on:on,email:mail});
       try{ localStorage.setItem(PINS_KEY,JSON.stringify(pins)) }catch(e){}
       closePop(); placePins(); if(st.rtab==="comments") renderProps();
@@ -1473,7 +1479,7 @@ function setTool(t){
   else if(st.rtab==="comments"){ st.rtab="design"; renderTabs(); renderProps() }
 }
 [].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.addEventListener("click",function(){ setTool(b.dataset.tool===st.tool&&b.dataset.tool!=="move"?"move":b.dataset.tool) }) });
-function setDev(on){ st.dev=on; var b=$("#devBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); if(st.rtab!=="design"&&st.rtab!=="prototype") st.rtab="design"; renderTabs(); renderProps(); toast(on?"Dev Mode: inspect any layer’s CSS":"Design mode") }
+function setDev(on){ st.dev=on; T("fv_devmode",{on:on}); var b=$("#devBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); if(st.rtab!=="design"&&st.rtab!=="prototype") st.rtab="design"; renderTabs(); renderProps(); toast(on?"Dev Mode: inspect any layer’s CSS":"Design mode") }
 $("#devBtn").addEventListener("click",function(){ setDev(!st.dev) });
 $("#assetsTab").addEventListener("click",function(){ loadPage(pageIndex("Foundations")); toast("The system lives on the Foundations page") });
 
@@ -1497,7 +1503,7 @@ function menu(anchor,items,search,up){
       any=true;
       var b=document.createElement("button"); b.innerHTML=esc(it[0])+'<span>'+esc(it[1]||"")+'</span>';
       if(q&&first){ b.classList.add("hl"); first=false }
-      b.addEventListener("click",function(){ closeMenus(); it[2]() }); list.appendChild(b);
+      b.addEventListener("click",function(){ closeMenus(); if(search) T("fv_action",{label:it[0]}); it[2]() }); list.appendChild(b);
     });
   }
   if(search){
@@ -1555,7 +1561,7 @@ $("#actBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(thi
    (commands are Actions, ⌘K) */
 var findIdx=null;
 function openFind(){ var lf=$("#lfind"); lf.hidden=false; findIdx=null; $("#app").classList.add("show-l"); setTimeout(function(){ $("#findQ").focus(); $("#findQ").select() },0) }
-function closeFind(){ $("#lfind").hidden=true; $("#findQ").value=""; $("#fres").hidden=true; $(".lp").classList.remove("finding"); findIdx=null }
+function closeFind(){ if($("#findQ").value.trim()) T("fv_find",{results:$("#fres").querySelectorAll(".fr").length}); $("#lfind").hidden=true; $("#findQ").value=""; $("#fres").hidden=true; $(".lp").classList.remove("finding"); findIdx=null }
 function layerIndex(){
   if(findIdx) return findIdx;
   var out=[];
@@ -1600,8 +1606,8 @@ $("#fileBtn").addEventListener("click",function(e){
 });
 $("#presentBtn").addEventListener("click",function(){ present(true) });
 $("#zoomMini").addEventListener("click",zoomMenu);
-$("#shareBtn").addEventListener("click",function(){ copy(shareURL(),"Link copied to clipboard") });
-function minUI(){ $("#app").classList.toggle("min"); setTimeout(function(){ draw(); placePins() },30) }
+$("#shareBtn").addEventListener("click",function(){ T("fv_share",{page:pageSlug()}); copy(shareURL(),"Link copied to clipboard") });
+function minUI(){ $("#app").classList.toggle("min"); if($("#app").classList.contains("min")) T("fv_minimize"); setTimeout(function(){ draw(); placePins() },30) }
 $("#minBtn").addEventListener("click",minUI);
 
 document.addEventListener("keydown",function(e){
@@ -1640,7 +1646,7 @@ document.addEventListener("keyup",function(e){ if(e.key===" "){ space=false; cv.
 var pDev="desktop";
 function present(on){
   var p=$("#present"), P=PAGES[st.page];
-  if(on){ $("#pTitle").textContent=P.name; $("#pFrame").src=P.src||"./index.html"; p.classList.add("on"); paintDev() }
+  if(on){ T("fv_present",{page:pageSlug(),device:pDev}); $("#pTitle").textContent=P.name; $("#pFrame").src=P.src||"./index.html"; p.classList.add("on"); paintDev() }
   else{ p.classList.remove("on"); $("#pFrame").src="about:blank" }
 }
 function paintDev(){ $("#pStage").classList.toggle("mobile",pDev==="mobile"); [].forEach.call(document.querySelectorAll("[data-dev]"),function(b){ b.classList.toggle("on",b.dataset.dev===pDev) }) }
@@ -1675,6 +1681,7 @@ cv.addEventListener("touchend",function(){ touches={} });
 addEventListener("resize",function(){ draw(); placePins() });
 /* the file opens on its Cover */
 loadPage(0);
+T("fv_open",{entry:(location.search.match(/[?&]entry=(pill|link)/)||[])[1]||(EMBED?"pill":"direct"),page:pageSlug()});
 /* read the live site for Foundations while the visitor looks at the
    Cover, so that page (and its tour step) opens instantly */
 setTimeout(function(){ readSite(function(){}) },2500);

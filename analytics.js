@@ -37,7 +37,13 @@
   // A page shown inside another page (the Figma view's frames, the
   // Cover's live cards) is not a visit: only the page you opened counts.
   function framed() {
-    try { return window.top !== window.self; }
+    try {
+      if (window.top === window.self) return false;
+      // the one framing that is a visit: the Figma view, opened over the
+      // homepage on this same site. The pages framed inside it stay off.
+      if (/figma-view\.html$/.test(location.pathname) && window.top.location.origin === location.origin) return false;
+      return true;
+    }
     catch (e) { return true; }         // a cross-origin parent: still framed
   }
 
