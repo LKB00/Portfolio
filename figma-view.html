@@ -176,8 +176,23 @@ button.av{cursor:pointer}
 .var .vv{color:var(--tx2);font-variant-numeric:tabular-nums;text-transform:uppercase}
 .more{margin:2px 16px 0;color:var(--blue);font-weight:500;cursor:pointer}
 .selhead{display:flex;align-items:center;gap:6px;height:40px;padding:0 8px 0 16px;border-bottom:1px solid var(--line)}
-.selhead .ty{display:flex;align-items:center;gap:4px;font-weight:600}
-.selhead .nm{color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.selhead .ic{display:grid;place-items:center;color:var(--tx2)}
+.selhead .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.selhead .tx2{margin-left:auto;padding-right:8px;flex:none}
+/* a labelled value row: Figma's property rows, with words for labels */
+.kv{display:flex;align-items:center;justify-content:space-between;gap:8px;height:24px;padding:0 16px;font-size:11px}
+.kv span{color:var(--tx2)}.kv b{font-weight:400;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%;text-align:right}
+.vpill{display:inline-flex;align-items:center;height:18px;padding:0 6px;border-radius:4px;background:var(--ui2);color:var(--tx);font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sw.thumb{background-size:cover;background-position:center}
+.flow{display:flex;align-items:flex-start;gap:8px;width:calc(100% - 16px);margin:0 8px;padding:6px 8px;border-radius:5px;text-align:left}
+.flow:hover{background:var(--hover)}
+.flow .dot{margin-top:2px}.flow .fl{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.flow .fl b{font-weight:500}.flow .fl .tx2{line-height:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.flow .fplay{opacity:0;color:var(--tx2);font-size:9px;margin-top:3px}.flow:hover .fplay{opacity:1}
+.exrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 16px 4px;font-size:11px}
+.exrow span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.exbtn{height:24px;padding:0 10px;border-radius:5px;display:inline-flex;align-items:center;background:var(--ui2);color:var(--tx);text-decoration:none;font-weight:500}
+.exbtn:hover{background:var(--hover)}
 .code{margin:0 16px;padding:10px 12px;border-radius:6px;background:var(--ui2);font:11px/18px var(--mono);white-space:pre-wrap;word-break:break-word;user-select:text;color:var(--tx)}
 .code .k{color:#C2185B}.code .v{color:var(--blue)}
 :root[data-theme="dark"] .code .k{color:#FF8FB8}
@@ -389,6 +404,8 @@ button.av{cursor:pointer}
 .lpop button{display:flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:5px;color:var(--blue);font-weight:500}
 .lpop button:hover{background:var(--blueSoft)}
 .ixgo{color:var(--blue);text-decoration:none;font-weight:500}.ixgo:hover{text-decoration:underline}
+.playg{display:flex;align-items:center}.playg .pchev{width:16px;padding:0;margin-left:-4px}
+.hv .d{display:flex;align-items:center;gap:6px}.hva{width:16px;height:16px;border:0;flex:none}.hva img{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -450,7 +467,7 @@ button.av{cursor:pointer}
         <span class="av" style="background:#14AE5C" title="You">Y</span>
       </div>
       <button class="zoomb mz" id="zoomMini" aria-label="Zoom"><span id="zoomPctMini">100%</span><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button>
-      <button class="play" id="presentBtn" aria-label="Present" data-tip="Present  ⌥⌘↵"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button>
+      <span class="playg"><button class="play" id="presentBtn" aria-label="Present" data-tip="Present  ⌥⌘↵"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button><button class="play pchev" id="presentMenu" aria-label="Present options"><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></span>
       <button class="share" id="shareBtn">Share</button>
     </div>
     <div class="rtabs" id="rtabs"></div>
@@ -1101,7 +1118,7 @@ function press(e){
   if(following) stopFollow(true);
   if(popEl&&!popEl.contains(e.target)){
     var ta=popEl.querySelector("textarea"), had=ta&&ta.value.trim();
-    closePop(); if(had) toast("Comment discarded");
+    if(had) draftText=had; closePop(); if(had) toast("Draft saved");
     if(st.tool!=="comment") return;
   }
   if(e.button===1||space||st.tool==="hand"){ drag={x:st.x,y:st.y,cx:e.clientX,cy:e.clientY}; cv.classList.add("drag"); cv.setPointerCapture(e.pointerId); e.preventDefault(); return }
@@ -1222,85 +1239,132 @@ function markTree(reveal){
 
 /* ═══ RIGHT PANEL ═══════════════════════════════════════════════════ */
 function renderTabs(){
-  var zoom='<button class="zoomb" id="zoomBtn"><span id="zoomPct">'+Math.round(st.zoom*100)+'%</span>'+CHEV+'</button>';
-  if(st.rtab==="comments"||st.rtab==="history"){
-    rtabs.innerHTML='<span class="ttl">'+(st.rtab==="comments"?"Comments":"Version history")+'</span><button class="ib" id="rClose" style="margin-left:auto" aria-label="Close">'+XSVG+'</button>';
-    $("#rClose").addEventListener("click",function(){ if(st.rtab==="comments"&&st.tool==="comment") setTool("move"); setRTab("design") });
-    return;
+  var zoom='<button class="zoomb" id="zoomBtn" aria-label="Zoom"><span id="zoomPct">'+Math.round(st.zoom*100)+'%</span>'+CHEV+'</button>';
+  if(st.rtab==="history"){
+    rtabs.innerHTML='<span class="ttl">Version history</span><button class="ib" id="rClose" style="margin-left:auto" aria-label="Close version history" data-tip="Close">'+XSVG+'</button>'+zoom;
+    $("#rClose").addEventListener("click",function(){ setRTab("design") });
+  }else if(st.dev){
+    rtabs.innerHTML='<span class="tab on">Inspect</span>'+zoom;
+  }else{
+    rtabs.innerHTML='<button class="tab'+(st.rtab==="comments"?" on":"")+'" data-rtab="comments">Comment</button><button class="tab'+(st.rtab!=="comments"?" on":"")+'" data-rtab="design">Properties</button>'+zoom;
+    [].forEach.call(rtabs.querySelectorAll("[data-rtab]"),function(b){ b.addEventListener("click",function(){ setTool(b.dataset.rtab==="comments"?"comment":"move") }) });
   }
-  rtabs.innerHTML=st.dev
-    ?'<button class="tab on">Inspect</button>'+zoom
-    :'<button class="tab'+(st.rtab==="design"?" on":"")+'" data-rtab="design">Design</button><button class="tab'+(st.rtab==="prototype"?" on":"")+'" data-rtab="prototype">Prototype</button>'+zoom;
-  [].forEach.call(rtabs.querySelectorAll("[data-rtab]"),function(b){ b.addEventListener("click",function(){ setRTab(b.dataset.rtab) }) });
   $("#zoomBtn").addEventListener("click",zoomMenu);
 }
 function setRTab(t){ st.rtab=t; renderTabs(); renderProps() }
 function fld(icon,val,cls){ return '<div class="fld '+(cls||"")+'"><i>'+icon+'</i><span>'+esc(val)+'</span></div>' }
 function paint(c){ return c?'<div class="paint"><span class="sw"><b style="background:'+c.css+'"></b></span><span class="hx">'+c.hex.slice(1)+'</span><span class="op">'+c.a+' %</span></div>':"" }
 function bh(title,extra){ return '<div class="bh"><span>'+title+'</span><span class="acts">'+(extra||"")+'</span></div>' }
-var ALIGN='<div class="align">'+["M3 2v12","M8 2v12","M13 2v12","M2 3h12","M2 8h12","M2 13h12"].map(function(d){ return '<span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="'+d+'"/><rect x="5" y="5" width="6" height="6" rx="1"/></svg></span>' }).join("")+'</div>';
 function renderProps(){
   if(st.rtab==="comments") return renderComments();
   if(st.rtab==="history") return renderHistory();
   if(st.dev) return renderCode();
-  if(st.rtab==="prototype") return renderProto();
-  var s=st.sel, html="";
-  if(!s){
-    var f0=st.frames[0], bg=f0&&f0.doc?color(win(f0.doc.body).getComputedStyle(f0.doc.body).backgroundColor)||color(win(f0.doc.body).getComputedStyle(f0.doc.documentElement).backgroundColor):null;
-    html+='<div class="blk">'+bh("Page")+(bg?paint(bg):'<p class="note">Loading…</p>')+'</div>';
-    var vl=vars(f0,6); if(vl.indexOf("None in this frame")<0) html+='<div class="blk">'+bh("Variables")+'<div class="vars" id="varList">'+vl+'</div></div>';
-    html+='<div class="blk">'+bh("About this file")+'<p class="note">Click any part of a frame to see how it’s built'+(DECISIONS.length?'. The pins with my photo are the decisions behind it':', or a case study to open it')+'. Everything here is read from the live site.</p></div>';
-    html+='<div class="blk">'+bh("Export",PLUS)+'</div>';
-    props.innerHTML=html;
-    var m=$("#moreVars"); if(m) m.addEventListener("click",function(){ $("#varList").innerHTML=vars(f0,999) });
-    return;
-  }
-  var el=s.el, f=s.f, cs=win(el).getComputedStyle(el), k=kindOf(el,f.root), r=el===f.root?{x:0,y:0,w:f.w,h:f.h}:frameRect(f,el);
+  var s=st.sel;
+  if(!s) return renderPageProps();
+  var el=s.el, f=s.f, cs=win(el).getComputedStyle(el), k=kindOf(el,f.root), root=el===f.root;
+  var r=root?{x:0,y:0,w:f.w,h:f.h}:frameRect(f,el), html="";
   var TYPE={"frame-root":"Frame",frame:"Frame",auto:"Frame",text:"Text",image:"Image",video:"Video",vector:"Vector",instance:"Instance"};
-  html+='<div class="selhead"><span class="ty">'+iconOf(el,k)+' '+TYPE[k]+CHEV+'</span><span class="nm">'+esc(nameOf(el,f))+'</span></div>';
-  html+='<div class="blk">'+bh("Position")+ALIGN+'<div class="grid2">'+fld("X",Math.round(r.x))+fld("Y",Math.round(r.y))+fld("↻","0°")+'</div></div>';
+  html+='<div class="selhead"><span class="ic">'+iconOf(el,k)+'</span><span class="nm">'+esc(nameOf(el,f))+'</span><span class="tx2">'+TYPE[k]+'</span></div>';
+  html+=instanceBlock(el,f);
+  /* position: relative to the parent, as Figma shows it; a frame shows where it sits on the canvas */
+  var pos;
+  if(root) pos={x:f.x,y:f.y};
+  else { var par=layerParent(el,f), pr=par&&par!==f.root?frameRect(f,par):{x:0,y:0}; pos={x:r.x-pr.x,y:r.y-pr.y} }
+  var rot=0, m=cs.transform&&cs.transform!=="none"?cs.transform.match(/matrix\(([^)]+)\)/):null;
+  if(m){ var v=m[1].split(",").map(parseFloat); rot=Math.round(Math.atan2(v[1],v[0])*180/Math.PI) }
+  html+='<div class="blk">'+bh("Position")+'<div class="grid2">'+fld("X",Math.round(pos.x))+fld("Y",Math.round(pos.y))+'</div>'+kv("Rotation",rot+"°")+'</div>';
+  /* layout */
   var auto=/flex|grid/.test(cs.display), grid=cs.display.indexOf("grid")>-1, col=cs.flexDirection.indexOf("column")===0;
-  html+='<div class="blk">'+bh(auto?"Auto layout":"Layout")+'<div class="grid2">'+fld("W",Math.round(r.w))+fld("H",Math.round(r.h))+'</div>';
+  var pcs=!root&&el.parentElement?win(el).getComputedStyle(el.parentElement):null, inFlex=pcs&&/flex/.test(pcs.display);
+  var fillW=inFlex&&parseFloat(cs.flexGrow)>0&&pcs.flexDirection.indexOf("column")<0;
+  html+='<div class="blk">'+bh(auto?"Auto layout":"Layout")+'<div class="grid2">'+fld("W",Math.round(r.w)+(fillW?" · Fill":""))+fld("H",Math.round(r.h))+'</div>';
   if(auto){
-    html+='<div class="sub">Direction</div><div class="grid2"><div class="segc full"><span'+(!grid&&col?' class="on"':'')+'>↓</span><span'+(!grid&&!col?' class="on"':'')+'>→</span><span'+(grid?' class="on"':'')+'>▦</span></div></div>';
+    html+=kv("Direction",grid?"Grid":(col?"Vertical":"Horizontal"));
     var gap=grid?(px(cs.rowGap)+" / "+px(cs.columnGap)):px(col?cs.rowGap:cs.columnGap);
-    html+='<div class="sub">Gap and padding</div><div class="grid2">'+fld("⇥",gap)+fld("▢",px(cs.paddingLeft)+", "+px(cs.paddingTop))+'</div>';
+    html+=kv("Gap",gap);
   }
-  html+='<div class="chk"><b class="'+(/hidden|clip/.test(cs.overflow)?"on":"")+'">'+(/hidden|clip/.test(cs.overflow)?"✓":"")+'</b>Clip content</div></div>';
+  var pd=[px(cs.paddingTop),px(cs.paddingRight),px(cs.paddingBottom),px(cs.paddingLeft)];
+  if(pd.some(function(x){ return x })) html+=kv("Padding",(pd[0]===pd[2]&&pd[1]===pd[3])?(pd[0]===pd[1]?pd[0]:pd[0]+", "+pd[1]):pd.join(", "));
+  if(/hidden|clip/.test(cs.overflow)) html+='<div class="chk"><b class="on">✓</b>Clip content</div>';
+  html+='</div>';
   if(k==="text"){
     var fam=cs.fontFamily.split(",")[0].replace(/["']/g,"").trim();
-    var lh=cs.lineHeight==="normal"?"Auto":px(cs.lineHeight), ls=cs.letterSpacing==="normal"?"0%":px(cs.letterSpacing);
-    html+='<div class="blk">'+bh("Typography")+'<div class="grid2">'+fld("Aa",fam,"full")+fld("",(WEIGHTS[cs.fontWeight]||cs.fontWeight))+fld("",px(cs.fontSize))+fld("↕",lh)+fld("↔",ls)+'</div></div>';
+    var lh=cs.lineHeight==="normal"?"Auto":px(cs.lineHeight), ls=cs.letterSpacing==="normal"?"0":px(cs.letterSpacing);
+    var al={left:"Left",start:"Left",center:"Center",right:"Right",end:"Right",justify:"Justified"}[cs.textAlign]||"Left";
+    html+='<div class="blk">'+bh("Typography")+kv("Font",fam)+kv("Weight",WEIGHTS[cs.fontWeight]||cs.fontWeight)+kv("Size",px(cs.fontSize))+kv("Line height",lh)+kv("Letter spacing",ls)+kv("Align",al)+'</div>';
   }
-  html+='<div class="blk">'+bh("Appearance",ICON.eye)+'<div class="grid2">'+fld("◐",Math.round(parseFloat(cs.opacity)*100)+"%")+fld("◜",px(cs.borderTopLeftRadius))+'</div></div>';
-  var fill=k==="text"?color(cs.color):color(cs.backgroundColor), img=cs.backgroundImage&&cs.backgroundImage!=="none";
-  html+='<div class="blk">'+bh("Fill",PLUS)+(fill?paint(fill):'')+(img?'<div class="paint"><span class="sw"></span><span class="hx" style="text-transform:none">'+(cs.backgroundImage.indexOf("gradient")>-1?"Linear":"Image")+'</span></div>':'')+'</div>';
-  var bw=px(cs.borderTopWidth), bc=bw?color(cs.borderTopColor):null;
-  html+='<div class="blk">'+bh("Stroke",PLUS)+(bc?paint(bc)+'<div class="grid2">'+fld("≡",bw)+'</div>':'')+'</div>';
-  html+='<div class="blk">'+bh("Effects",PLUS)+(cs.boxShadow&&cs.boxShadow!=="none"?'<div class="paint"><span class="tx2">◩</span><span class="hx" style="text-transform:none">Drop shadow</span></div>':'')+'</div>';
+  html+='<div class="blk">'+bh("Appearance")+kv("Opacity",Math.round(parseFloat(cs.opacity)*100)+"%")+(px(cs.borderTopLeftRadius)?kv("Corner radius",px(cs.borderTopLeftRadius)):"")+'</div>';
+  /* fill: an image is its own fill; otherwise the colour, with its variable when it is one */
+  if(k==="image"||k==="video"){
+    var srcu=el.currentSrc||el.src||el.getAttribute("poster")||"", fitm={cover:"Fill",contain:"Fit",fill:"Stretch",none:"Crop","scale-down":"Fit"}[cs.objectFit]||"Fill";
+    html+='<div class="blk">'+bh("Fill")+'<div class="paint"><span class="sw thumb"'+(srcu?' style="background-image:url(\''+esc(srcu)+'\')"':'')+'></span><span class="hx" style="text-transform:none">'+(k==="video"?"Video":"Image")+'</span><span class="tx2" style="margin-left:auto">'+fitm+'</span></div></div>';
+  }else{
+    var fc=root?(color(win(el).getComputedStyle(f.doc.body).backgroundColor)||color(win(el).getComputedStyle(f.doc.documentElement).backgroundColor)):(k==="text"?color(cs.color):color(cs.backgroundColor));
+    var img=!root&&cs.backgroundImage&&cs.backgroundImage!=="none";
+    if(fc||img) html+='<div class="blk">'+bh("Fill")+(fc?paintVar(fc,f):'')+(img?'<div class="paint"><span class="sw"></span><span class="hx" style="text-transform:none">'+(cs.backgroundImage.indexOf("gradient")>-1?"Gradient":"Image")+'</span></div>':'')+'</div>';
+  }
+  var bw=px(cs.borderTopWidth), bc=bw&&cs.borderTopStyle!=="none"?color(cs.borderTopColor):null;
+  if(bc) html+='<div class="blk">'+bh("Stroke")+paintVar(bc,f)+kv("Weight",bw)+'</div>';
+  if(cs.boxShadow&&cs.boxShadow!=="none"){
+    var sh=cs.boxShadow.split(/,(?![^(]*\))/)[0].trim(), sc=(sh.match(/rgba?\([^)]+\)|#[0-9a-f]+/i)||[""])[0], nums=sh.replace(sc,"").trim().split(/\s+/).map(px);
+    html+='<div class="blk">'+bh("Effects")+'<div class="paint"><span class="hx" style="text-transform:none">'+(/inset/.test(sh)?"Inner shadow":"Drop shadow")+'</span></div>'+kv("X",nums[0]||0)+kv("Y",nums[1]||0)+kv("Blur",nums[2]||0)+kv("Spread",nums[3]||0)+(color(sc)?paint(color(sc)):"")+'</div>';
+  }
+  html+=ixBlock(s);
   var dec=decisionsFor(f,el);
   if(dec.length) html+='<div class="blk">'+bh("Decisions")+dec.map(function(d){ return '<div class="ix" style="cursor:pointer" data-dec="'+DECISIONS.indexOf(d)+'"><img src="'+AVATAR+'" alt="" style="width:16px;height:16px;border-radius:50%"><span>'+esc(d.title)+'</span></div>' }).join("")+'</div>';
-  html+='<div class="blk">'+bh("Export",PLUS)+'</div>';
+  if(k==="image"&&srcu) html+='<div class="blk">'+bh("Export")+'<div class="exrow"><span>'+esc(srcu.split("/").pop().split("?")[0])+'</span><a class="exbtn" href="'+esc(srcu)+'" download>Export</a></div></div>';
   props.innerHTML=html;
+  wireIx(s);
   [].forEach.call(props.querySelectorAll("[data-dec]"),function(b){ b.addEventListener("click",function(){ openDecision(+b.dataset.dec) }) });
 }
-function vars(f,limit){
-  if(!f||!f.doc) return '<p class="note">Loading…</p>';
-  var seen={}, list=[], rs=win(f.doc.body).getComputedStyle(f.doc.documentElement);
-  [].forEach.call(f.doc.styleSheets,function(sh){
-    var rules; try{ rules=sh.cssRules }catch(e){ return }
-    [].forEach.call(rules||[],function(r){
-      if(!r.selectorText||r.selectorText.trim()!==":root") return;
-      for(var i=0;i<r.style.length;i++){
-        var n=r.style[i]; if(n.indexOf("--")!==0||seen[n]) continue;
-        var val=rs.getPropertyValue(n).trim(), c=/^(#|rgb|hsl|color\()/i.test(val)?color(val):null;
-        if(!c) continue; seen[n]=1; list.push([n,c]);
-      }
-    });
-  });
-  if(!list.length) return '<p class="note">None in this frame</p>';
-  return list.slice(0,limit).map(function(p){ return '<div class="var"><span class="sw"><b style="background:'+p[1].css+'"></b></span><span class="vn">'+esc(p[0].slice(2))+'</span><span class="vv">'+p[1].hex.slice(1)+(p[1].a<100?" · "+p[1].a+"%":"")+'</span></div>' }).join("")+
-    (list.length>limit?'<div class="more" id="moreVars">Show all '+list.length+'</div>':'');
+function kv(label,val){ return '<div class="kv"><span>'+esc(label)+'</span><b>'+esc(String(val))+'</b></div>' }
+/* a colour that is one of the site's variables shows the variable, as Figma does */
+function varMap(f){
+  if(!f||!f.doc) return {};
+  if(f.vmap) return f.vmap;
+  var map={}, rs=win(f.doc.body).getComputedStyle(f.doc.documentElement);
+  try{ [].forEach.call(f.doc.styleSheets,function(sh){ var rules; try{ rules=sh.cssRules }catch(e){ return }
+    [].forEach.call(rules||[],function(rl){ if(!rl.selectorText||rl.selectorText.trim()!==":root") return;
+      for(var i=0;i<rl.style.length;i++){ var n=rl.style[i]; if(n.indexOf("--")!==0) continue; var c=color(rs.getPropertyValue(n).trim()); if(c&&!map[c.hex+c.a]) map[c.hex+c.a]=n.slice(2) } }) }) }catch(e){}
+  return f.vmap=map;
+}
+function paintVar(c,f){ var n=varMap(f)[c.hex+c.a]; return n?'<div class="paint"><span class="sw"><b style="background:'+c.css+'"></b></span><span class="vpill">'+esc(n)+'</span><span class="tx2" style="margin-left:auto">'+c.hex+'</span></div>':paint(c) }
+/* the four pieces the site really repeats are its components */
+function compOf(el,f){
+  if(!el||!el.matches||f.ifr.hasAttribute("srcdoc")) return null;
+  if(el.matches("#work .workrow")) return {n:"Case card",p:[["Title",(el.querySelector("h3")||{}).textContent||""]]};
+  if(el.matches(".rec-item")) return {n:"Testimonial",p:[["Name",(el.querySelector(".rec-name")||{}).textContent||""]]};
+  if(el.matches(".navlink,.mrow")) return {n:"Nav link",p:[["Label",el.textContent.trim()]]};
+  if(el.matches(".heroask,.btn,.cx-btn")) return {n:"Button",p:[["Label",el.textContent.trim().replace(/\s+/g," ")]]};
+  return null;
+}
+function instanceBlock(el,f){ var c=compOf(el,f); if(!c) return ""; return '<div class="blk">'+bh("Instance")+kv("Component",c.n)+c.p.map(function(x){ return kv(x[0],x[1].trim().slice(0,40)) }).join("")+'</div>' }
+/* Interactions: only what this layer itself does */
+function ixBlock(s){
+  var info=linkInfo(s.el,s.f), ix="";
+  if(info) ix=esc(info.verb)+(info.label?' <a class="ixgo" href="#">'+esc(info.label)+'</a>':'');
+  else { var b=s.el.closest&&s.el.closest("button"), id=b&&b.id||"", nm={padTrigger:"Notes board",heroAsk:"AI twin",askDock:"AI twin",themeToggle:"theme"}[id];
+    if(nm) ix=id==="themeToggle"?"Change variable mode → <b>"+(theme()==="dark"?"Light":"Dark")+"</b>":"Open overlay <b>"+nm+"</b>" }
+  return ix?'<div class="blk">'+bh("Interactions")+'<div class="ix"><span class="tx2">On click</span><span>'+ix+'</span></div></div>':'';
+}
+function wireIx(s){ var go=props.querySelector(".ixgo"), info=linkInfo(s.el,s.f); if(go&&info) go.addEventListener("click",function(e){ e.preventDefault(); info.act() }) }
+/* nothing selected: what Figma shows a viewer for a page */
+var DESC={};
+function pageDesc(f,cb){
+  var P=PAGES[st.page], src=P.kind==="cover"?"./index.html":P.src; if(!src) return cb("");
+  if(DESC[src]!=null) return cb(DESC[src]);
+  var m=f&&f.doc&&!f.ifr.hasAttribute("srcdoc")&&f.doc.querySelector('meta[name="description"]');
+  if(m){ DESC[src]=m.content.replace(/^The short read:\s*/i,""); return cb(DESC[src]) }
+  fetch(src).then(function(r){ return r.text() }).then(function(t){ var mm=t.match(/<meta name="description" content="([^"]*)"/); DESC[src]=mm?mm[1].replace(/^The short read:\s*/i,"").replace(/&amp;/g,"&"):""; cb(DESC[src]) },function(){ cb("") });
+}
+function renderPageProps(){
+  var P=PAGES[st.page], dark=theme()==="dark";
+  var html='<div class="blk">'+bh("Page")+paint(color(dark?"#1E1E1E":"#F5F5F5"))+'</div>';
+  if(P.kind!=="foundations") html+='<div class="blk">'+bh("Flows")+'<button class="flow" type="button" id="flowRow"><span class="dot"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span><span class="fl"><b>'+esc(P.kind==="cover"?"Portfolio":P.name)+'</b><span class="tx2" id="flowDesc"></span></span><span class="fplay" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span></button></div>';
+  if(P.name==="Resume") html+='<div class="blk">'+bh("Export")+'<div class="exrow"><span>resume.pdf</span><a class="exbtn" href="./resume.pdf" download>Export</a></div></div>';
+  props.innerHTML=html;
+  var fr=$("#flowRow"); if(fr){ fr.addEventListener("click",function(){ present(true) });
+    pageDesc(st.frames[0],function(d){ var e=$("#flowDesc"); if(e) e.textContent=d }) }
 }
 function renderCode(){
   var s=st.sel;
@@ -1323,34 +1387,29 @@ function renderCode(){
   props.innerHTML=html;
   $("#copyCss").addEventListener("click",function(){ copy(text,"CSS copied") });
 }
-function renderProto(){
-  var s=st.sel;
-  if(!s){ props.innerHTML='<div class="blk">'+bh("Interactions")+'<p class="note">Select a link or button to see what it does.</p></div>'; return }
-  var info=linkInfo(s.el,s.f), ix="", act=null;
-  if(info){ ix=esc(info.verb)+(info.label?' <a class="ixgo" href="#">'+esc(info.label)+'</a>':''); act=info.act }
-  else { var b=s.el.closest&&s.el.closest("button"), id=b&&b.id||"",
-      nm={padTrigger:"Notes board",heroAsk:"AI twin",askDock:"AI twin",themeToggle:"theme"}[id];
-    if(nm) ix=id==="themeToggle"?"Change variable mode → <b>"+(theme()==="dark"?"Light":"Dark")+"</b>":"Open overlay <b>"+nm+"</b>"; }
-  props.innerHTML='<div class="blk">'+bh("Interactions")+(ix?'<div class="ix"><span class="tx2">On click</span><span>'+ix+'</span></div>':'<p class="note">No interactions on this layer.</p>')+'</div>';
-  var go=props.querySelector(".ixgo"); if(go) go.addEventListener("click",function(e){ e.preventDefault(); act() });
-}
 function renderComments(){
-  var html="";
-  var mine=pins.map(function(p,i){ return '<div class="th" data-mine="'+i+'"><span class="av" style="background:#14AE5C">Y</span><div class="tt"><b>You <span class="tx2" style="font-weight:400">· '+esc(PAGES[p.page]?PAGES[p.page].name:"")+'</span></b><p>'+esc(p.text)+'</p><div class="meta">On '+esc(p.on)+'</div></div></div>' }).join("");
-  html+=DECISIONS.map(function(d,i){
-    return '<div class="th" data-dec="'+i+'"><span class="av"><img src="'+AVATAR+'" alt=""></span><div class="tt"><b>'+esc(d.title)+'</b><p class="tx2">'+esc(d.text.slice(0,90))+'…</p><div class="meta">Lokesh · '+esc(d.page)+' · '+esc(d.dev)+(d.draft?' · <span class="badge draft">Draft</span>':'')+'</div></div></div>';
+  var mine=pins.map(function(p,i){ return {p:p,i:i} }).sort(function(a,b){ return (b.p.t||0)-(a.p.t||0) });
+  var byPage={}, order=[];
+  mine.forEach(function(m){ var k=m.p.slug||""; if(!byPage[k]){ byPage[k]=[]; order.push(k) } byPage[k].push(m) });
+  var nameOfSlug=function(sl){ for(var i=0;i<PAGES.length;i++) if(PAGES[i].name&&pageSlug(i)===sl) return PAGES[i].name; return "" };
+  var when=function(t){ if(!t) return ""; var d=Math.round((Date.now()-t)/60000); return d<1?"Just now":d<60?d+"m ago":d<1440?Math.round(d/60)+"h ago":new Date(t).toLocaleDateString(undefined,{day:"numeric",month:"short"}) };
+  var html=DECISIONS.map(function(d,i){
+    return '<div class="th" data-dec="'+i+'"><span class="av"><img src="'+AVATAR+'" alt=""></span><div class="tt"><b>'+esc(d.title)+'</b><p class="tx2">'+esc(d.text.slice(0,90))+'…</p><div class="meta">Lokesh · '+esc(d.page)+'</div></div></div>';
   }).join("");
-  props.innerHTML='<div class="sub">'+(DECISIONS.length?DECISIONS.length+' design decisions':'Comments')+(pins.length?' · '+pins.length+' from you':'')+'</div>'+mine+html+
-    '<p class="note" style="padding:12px 16px">Click on any frame to add your own comment. It comes straight to me.</p>';
+  order.forEach(function(k){ html+='<div class="sub">'+esc(nameOfSlug(k)||"Page")+'</div>'+byPage[k].map(function(m){
+    return '<div class="th" data-mine="'+m.i+'"><span class="av" style="background:#14AE5C">Y</span><div class="tt"><b>You</b><p>'+esc(m.p.text.split("\n")[0].slice(0,120))+'</p><div class="meta">'+esc(when(m.p.t)||("on "+m.p.on))+(m.p.email?" · reply to "+esc(m.p.email):" · anonymous")+'</div></div></div>' }).join("") });
+  props.innerHTML=html||'<p class="note" style="padding:16px">No comments yet. Press C, then click anywhere to leave Lokesh a note.</p>';
   [].forEach.call(props.querySelectorAll("[data-dec]"),function(b){ b.addEventListener("click",function(){ openDecision(+b.dataset.dec) }) });
-  [].forEach.call(props.querySelectorAll("[data-mine]"),function(b){ b.addEventListener("click",function(){ var p=pins[+b.dataset.mine]; if(p.page!==st.page) loadPage(p.page) }) });
+  [].forEach.call(props.querySelectorAll("[data-mine]"),function(b){ b.addEventListener("click",function(){
+    var p=pins[+b.dataset.mine], pi=-1; for(var i=0;i<PAGES.length;i++) if(PAGES[i].name&&pageSlug(i)===p.slug) pi=i;
+    var show=function(){ var w=Math.max(0,p.wx-200), h=Math.max(0,p.wy-150); st.x=cv.clientWidth/2-p.wx*st.zoom; st.y=cv.clientHeight/2-p.wy*st.zoom; apply(); placePins() };
+    if(pi>-1&&pi!==st.page) loadPage(pi,function(){ setTimeout(show,50) }); else show() }) });
 }
 function renderHistory(){
-  props.innerHTML='<div class="sub">How the site changed, and why</div>'+HISTORY.map(function(h,i){
-    return '<div class="hv'+(i===0?" cur":"")+'"><div class="d">'+esc(h.d)+(i===0?' · Current version':'')+'</div><b>'+esc(h.t)+'</b><p>'+esc(h.p)+'</p></div>';
+  props.innerHTML=HISTORY.map(function(h,i){
+    return '<div class="hv'+(i===0?" cur":"")+'"><div class="d"><span class="av hva"><img src="'+AVATAR+'" alt=""></span>Lokesh Bhatia · '+esc(h.d)+(i===0?' · Current version':'')+'</div><b>'+esc(h.t)+'</b><p>'+esc(h.p)+'</p></div>';
   }).join("");
 }
-
 /* ═══ DESIGN DECISIONS: LOKESH'S COMMENTS ═══════════════════════════ */
 function decisionsFor(f,el){
   if(!f||!f.doc) return [];
@@ -1395,6 +1454,11 @@ function showDecision(i,note){
 /* ═══ PINS: MINE AND YOURS ══════════════════════════════════════════ */
 var PINS_KEY="lb.figma.comments", pins=[];
 try{ pins=JSON.parse(localStorage.getItem(PINS_KEY))||[] }catch(e){ pins=[] }
+/* pins were keyed by page position; key them by page, in the order the list had then */
+(function(){ var OLD=["cover","home","","getbaq","app-merge","rise-portal","web-terminal","","about","resume","","foundations"], ch=false;
+  pins.forEach(function(p){ if(!p.slug&&typeof p.page==="number"){ p.slug=OLD[p.page]||""; ch=true } });
+  if(ch) try{ localStorage.setItem(PINS_KEY,JSON.stringify(pins)) }catch(e){} })();
+var draftText="";
 var popEl=null, draftPin=null;
 function closePop(){ if(popEl){ popEl.remove(); popEl=null } if(draftPin){ draftPin.remove(); draftPin=null } [].forEach.call(ov.querySelectorAll(".pin.open"),function(p){ p.classList.remove("open") }) }
 function placePop(pop,px,py){
@@ -1416,7 +1480,7 @@ function placePins(){
     b.addEventListener("click",function(e){ e.stopPropagation(); if(popEl&&popEl.forDec===i){ closePop(); return } showDecision(i) });
     ov.appendChild(b);
   });
-  pins.filter(function(p){ return p.page===st.page }).forEach(function(p){
+  pins.filter(function(p){ return p.slug===pageSlug() }).forEach(function(p){
     var d=document.createElement("button"); d.className="pin"; d.setAttribute("aria-label","Your comment on "+p.on);
     var px=st.x+p.wx*st.zoom, py=st.y+p.wy*st.zoom;
     d.style.left=px+"px"; d.style.top=py+"px";
@@ -1456,6 +1520,7 @@ function startComment(e){
   ov.appendChild(popEl); placePop(popEl,sx,sy);
   popEl.querySelector(".px").addEventListener("click",closePop);
   var ta=popEl.querySelector("textarea"), send=popEl.querySelector(".send"), mailrow=popEl.querySelector(".mailrow"), em=popEl.querySelector("input"), foot=popEl.querySelector(".anon");
+  if(draftText){ ta.value=draftText; send.disabled=false }
   ta.focus();
   ta.addEventListener("input",function(){ send.disabled=!ta.value.trim(); ta.style.height="auto"; ta.style.height=Math.min(ta.scrollHeight,120)+"px" });
   ta.addEventListener("keydown",function(ev){ if(ev.key==="Enter"&&!ev.shiftKey){ ev.preventDefault(); if(!send.disabled) send.click() } if(ev.key==="Escape") closePop() });
@@ -1473,12 +1538,13 @@ function startComment(e){
     .then(function(r){ if(!r.ok) throw 0 })
     .then(function(){
       T("fv_comment_sent",{page:pageSlug(),withEmail:!!mail});
-      pins.push({page:st.page,wx:w.x,wy:w.y,text:text,on:on,email:mail});
+      draftText="";
+      pins.push({slug:pageSlug(),wx:w.x,wy:w.y,text:text,on:on,email:mail,t:Date.now()});
       try{ localStorage.setItem(PINS_KEY,JSON.stringify(pins)) }catch(e){}
       closePop(); placePins(); if(st.rtab==="comments") renderProps();
       toast(mail?"Sent. I’ll reply to "+mail:"Sent anonymously. Thank you!");
     })
-    .catch(function(){ send.disabled=false; popEl.classList.remove("sending"); toast("Couldn’t send. Try again in a moment.") });
+    .catch(function(){ send.disabled=false; popEl.classList.remove("sending"); toast("Couldn’t send. Try again.") });
   });
 }
 
@@ -1668,6 +1734,9 @@ $("#fileBtn").addEventListener("click",function(e){
   menu(this,[["Show version history","",showHistory]]);
 });
 $("#presentBtn").addEventListener("click",function(){ present(true) });
+$("#presentMenu").addEventListener("click",function(e){ e.stopPropagation();
+  var P=PAGES[st.page], src=P.src||"./index.html";
+  menu(this,[["Present","⌥⌘↵",function(){ present(true) }],["Present in new tab","",function(){ T("fv_follow_link",{from:pageSlug(),to:"new-tab"}); window.open(src,"_blank","noopener") }]]) });
 $("#zoomMini").addEventListener("click",zoomMenu);
 $("#shareBtn").addEventListener("click",function(){ T("fv_share",{page:pageSlug()}); copy(shareURL(),"Link copied to clipboard") });
 function minUI(){ $("#app").classList.toggle("min"); if($("#app").classList.contains("min")) T("fv_minimize"); setTimeout(function(){ draw(); placePins() },30) }
