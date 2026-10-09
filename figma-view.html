@@ -323,7 +323,7 @@ button.av{cursor:pointer}
 .toast{position:absolute;left:50%;bottom:72px;transform:translateX(-50%) translateY(8px);padding:8px 14px;border-radius:8px;
   background:#1E1E1E;color:#fff;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:7;white-space:nowrap}
 .toast.on{opacity:1;transform:translateX(-50%)}
-.menu{position:fixed;z-index:20;min-width:220px;padding:8px 0;border-radius:8px;background:#1E1E1E;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.menu{position:fixed;z-index:35;min-width:220px;padding:8px 0;border-radius:8px;background:#1E1E1E;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .menu button{display:flex;justify-content:space-between;gap:24px;width:100%;height:26px;padding:0 16px 0 24px;align-items:center;cursor:pointer}
 .menu button:hover,.menu button.hl{background:var(--blue)}
 .menu button span{color:#999}
@@ -395,7 +395,7 @@ button.av{cursor:pointer}
   .tb .tl.act span{display:none}
 }
 .scrim{display:none;position:fixed;inset:0;z-index:28;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
-.lp,.rp{z-index:29}
+@media (max-width:767px){.lp,.rp{z-index:29}}   /* drawers over the canvas; on desktop menus and tooltips stay above the panels */
 .dclose{display:none!important;position:absolute;top:10px;right:8px;z-index:2}
 .tb .ponly{display:none}
 /* keyboard focus, always visible */
