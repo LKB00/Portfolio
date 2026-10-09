@@ -372,7 +372,12 @@ button.av{cursor:pointer}
 .pbar .x:hover{background:#383838}
 .pstage{flex:1;display:grid;place-items:center;padding:0 16px 16px;min-height:0}
 .pstage iframe{border:0;background:#fff;width:100%;height:100%;border-radius:4px}
-.pstage.mobile iframe{width:390px;height:min(844px,100%);border-radius:28px;box-shadow:0 0 0 10px #000,0 20px 60px rgba(0,0,0,.5)}
+.pstage.mobile iframe{width:390px;height:min(844px,100%);border-radius:0;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 12px 40px rgba(0,0,0,.5)}
+.plogo{display:flex;align-items:center;margin-right:8px}
+.pfoot{display:flex;align-items:center;justify-content:center;gap:8px;height:48px;flex:none;color:#fff}
+.pnav{width:32px;height:32px;border-radius:6px;display:grid;place-items:center;color:#fff;position:relative}.pnav:hover{background:#383838}.pnav:disabled{opacity:.35}
+.pcount{font-size:11px;color:#B3B3B3;min-width:64px;text-align:center}
+.prest{height:28px;padding:0 10px;border-radius:5px;color:#fff;margin-left:8px}.prest:hover{background:#383838}
 
 /* phones: the canvas, with the panels a tap away */
 @media (max-width:900px){
@@ -512,11 +517,12 @@ button.av{cursor:pointer}
 
 <div class="present" id="present" role="dialog" aria-label="Prototype">
   <div class="pbar">
-    <b id="pTitle">Home</b>
+    <span class="plogo"><svg width="12" height="18" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span><b id="pTitle">Home</b>
     <div class="seg"><button data-dev="desktop" class="on">Desktop</button><button data-dev="mobile">Mobile</button></div>
     <button class="x" id="pClose" aria-label="Close prototype"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
   <div class="pstage" id="pStage"><iframe id="pFrame" title="Prototype"></iframe></div>
+  <div class="pfoot"><button class="pnav" id="pPrev" aria-label="Previous page" data-tip="Previous page  ←"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><span id="pCount" class="pcount"></span><button class="pnav" id="pNext" aria-label="Next page" data-tip="Next page  →"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button><button class="prest" id="pRestart">Restart</button></div>
 </div>
 
 <script>
@@ -1981,11 +1987,38 @@ document.addEventListener("keyup",function(e){ if(e.key===" "){ space=false; cv.
 
 /* ═══ PRESENT: THE REAL SITE, PLAYING ═══════════════════════════════ */
 var pDev="desktop";
-function present(on){
-  var p=$("#present"), P=PAGES[st.page];
-  if(on){ T("fv_present",{page:pageSlug(),device:pDev}); $("#pTitle").textContent=P.name; $("#pFrame").src=P.src||"./index.html"; p.classList.add("on"); paintDev() }
-  else{ p.classList.remove("on"); $("#pFrame").src="about:blank" }
+/* the site's pages, in Pages order: what ← → walk through */
+function sitePages(){ return PAGES.map(function(p,i){ return p.src?i:-1 }).filter(function(i){ return i>-1 }) }
+var pIdx=0;
+function present(on,at){
+  var p=$("#present"), sp=sitePages();
+  if(on){
+    if(at==null) at=PAGES[st.page].src?st.page:pageIndex("Home");   /* Cover and Foundations present Home */
+    pIdx=sp.indexOf(at); if(pIdx<0) pIdx=0;
+    T("fv_present",{page:pageSlug(sp[pIdx]),device:pDev}); showP(); p.classList.add("on"); paintDev();
+  } else { p.classList.remove("on"); $("#pFrame").src="about:blank" }
 }
+function showP(){ var sp=sitePages(), P=PAGES[sp[pIdx]]; $("#pTitle").textContent=P.name; $("#pFrame").src=P.src; $("#pCount").textContent=(pIdx+1)+" of "+sp.length; $("#pPrev").disabled=pIdx===0; $("#pNext").disabled=pIdx===sp.length-1 }
+function pStep(d){ var sp=sitePages(); pIdx=Math.max(0,Math.min(sp.length-1,pIdx+d)); showP() }
+$("#pPrev").addEventListener("click",function(){ pStep(-1) });
+$("#pNext").addEventListener("click",function(){ pStep(1) });
+$("#pRestart").addEventListener("click",function(){ showP() });
+/* keys reach Present even while the page has focus — never while typing in it */
+function pKey(e){
+  if(!$("#present").classList.contains("on")) return;
+  if(e.key==="Escape"){ e.preventDefault(); e.stopImmediatePropagation(); present(false); return }
+  var t=e.target; if(e.defaultPrevented||e.metaKey||e.ctrlKey||e.altKey||(t&&t.closest&&t.closest("input,textarea,select,[contenteditable]"))) return;
+  if(e.key==="ArrowRight"){ e.preventDefault(); e.stopImmediatePropagation(); pStep(1) } else if(e.key==="ArrowLeft"){ e.preventDefault(); e.stopImmediatePropagation(); pStep(-1) } else if(e.key==="r"||e.key==="R"){ e.stopImmediatePropagation(); showP() }
+}
+document.addEventListener("keydown",pKey,true);
+$("#pFrame").addEventListener("load",function(){
+  try{ var d=this.contentDocument; if(!d||d.URL==="about:blank") return;
+    d.addEventListener("keydown",pKey);
+    /* the page's own title, mapped to its page name when it is one */
+    var u=d.location.pathname.split("/").pop()||"index.html", nm=null; PAGES.forEach(function(P,i){ if(P.src&&P.src.replace("./","")===u){ nm=P.name; var k=sitePages().indexOf(i); if(k>-1){ pIdx=k; $("#pCount").textContent=(pIdx+1)+" of "+sitePages().length; $("#pPrev").disabled=pIdx===0; $("#pNext").disabled=pIdx===sitePages().length-1 } } });
+    $("#pTitle").textContent=nm||(d.title||"").split(/ [·|,–—] /)[0];
+  }catch(e){}
+});
 function paintDev(){ $("#pStage").classList.toggle("mobile",pDev==="mobile"); [].forEach.call(document.querySelectorAll("[data-dev]"),function(b){ b.classList.toggle("on",b.dataset.dev===pDev) }) }
 $("#pClose").addEventListener("click",function(){ present(false) });
 [].forEach.call(document.querySelectorAll("[data-dev]"),function(b){ b.addEventListener("click",function(){ pDev=b.dataset.dev; paintDev() }) });
