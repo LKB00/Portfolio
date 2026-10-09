@@ -34,7 +34,14 @@
     catch (e) { return false; }        // Safari private mode throws on access
   }
 
-  var recording = ALLOWED.indexOf(location.hostname) > -1 && !optedOut();
+  // A page shown inside another page (the Figma view's frames, the
+  // Cover's live cards) is not a visit: only the page you opened counts.
+  function framed() {
+    try { return window.top !== window.self; }
+    catch (e) { return true; }         // a cross-origin parent: still framed
+  }
+
+  var recording = ALLOWED.indexOf(location.hostname) > -1 && !optedOut() && !framed();
 
   if (!recording) {
     // Umami cancels the send when before-send returns a falsy value.
@@ -186,6 +193,7 @@
   // stats.js reads the specific names and ignores `outbound`, so nothing is
   // double-counted downstream.
   function specific(href) {
+    if (href.indexOf("figma-view") > -1)  return track("figma-view-open", { from: page });
     // case study cards
     if (href.indexOf("app-merge") > -1)   return track("card-click", { card: "app-merge", from: page });
     if (href.indexOf("rise-portal") > -1) return track("card-click", { card: "rise-portal", from: page });

@@ -510,6 +510,7 @@
     // size from the svg's own box: it sits on the padding box, so the
     // button's border-box size overshoots it and the mask crops the stroke
     var cs = getComputedStyle(ringSvg), w = parseFloat(cs.width), h = parseFloat(cs.height), sw = 1.25;
+    if (!(w > 0 && h > 0)) return; // hidden (display:none reads "auto"): size it once it shows
     Array.prototype.forEach.call(ringRect, function(r){
       r.setAttribute("x", sw / 2); r.setAttribute("y", sw / 2);
       r.setAttribute("width", Math.max(0, w - sw)); r.setAttribute("height", Math.max(0, h - sw));
