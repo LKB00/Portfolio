@@ -3185,6 +3185,64 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .rec-item,.rec-item.is-on{transition:opacity .2s ease,visibility 0s}
   .rec-bar.is-on .rec-ring-fill{animation:none;stroke-dashoffset:0}
 }
+
+/* ══ WHAT THE NOTE IS FOR ════════════════════════════════════════════
+   The board read as an anonymous suggestion box, and the notes that
+   came in were mostly people asking how to reach me: on desktop the
+   homepage never shows an email. So the board now asks what the note
+   is about, and answers the need behind each one on the spot -- an
+   address for work, the AI twin for a question that wants an answer
+   now -- and the send bar carries an optional reply address, so a note
+   is only anonymous when the writer wants it to be. */
+.padhead{position:absolute;left:0;right:0;top:0;z-index:8;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:14px 14px 0;pointer-events:none}
+.padtopics{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;pointer-events:auto}
+.padtopic{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;
+  border:0;border-radius:var(--r-pill);cursor:pointer;
+  background:var(--card);color:var(--ink);font-family:inherit;font-size:12.5px;font-weight:500;
+  box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(16,16,24,.05);
+  transition:background .18s var(--ease),color .18s var(--ease),box-shadow .18s var(--ease),transform .18s var(--ease)}
+.padtopic span{font-size:13px;line-height:1}
+@media (hover:hover){.padtopic:hover{transform:translateY(-1px);box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent),0 4px 10px -6px rgba(16,16,24,.3)}}
+.padtopic[aria-checked="true"]{background:var(--ink);color:var(--bg);box-shadow:0 4px 12px -6px rgba(16,16,24,.45)}
+.padtopic:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.padhead .padinfo{position:static;transform:none;max-width:100%;white-space:normal;
+  font-size:12px;color:var(--muted);pointer-events:auto;text-wrap:balance}
+.padinfo .padlink{all:unset;cursor:pointer;color:var(--ink);font-weight:500;
+  text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 30%,transparent);
+  text-underline-offset:2px}
+@media (hover:hover){.padinfo .padlink:hover{text-decoration-color:var(--ink)}}
+.padinfo .padlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.padboard.is-floating{height:clamp(360px,40vw,420px)}
+/* the header owns the top now, so the acknowledgement rises from the send bar */
+.padhead ~ .padtoast,#padBoard .padtoast{top:auto;bottom:62px}
+
+/* the reply field: part of the bar, the size of its buttons */
+.padreply{display:flex;align-items:center;gap:7px;height:32px;padding:0 10px;margin-right:2px;
+  border-radius:var(--r-pill);background:var(--surface);color:var(--faint);cursor:text;
+  transition:box-shadow .18s var(--ease),color .18s var(--ease)}
+.padreply svg{flex:none}
+.padreply input{width:206px;min-width:0;border:0;outline:0;background:transparent;padding:0;
+  font-family:inherit;font-size:13px;color:var(--ink)}
+.padreply input::placeholder{color:var(--faint)}
+.padreply:focus-within{box-shadow:0 0 0 1.5px var(--accent);color:var(--ink)}
+.padreply.is-wanted{box-shadow:0 0 0 1.5px var(--accent);color:var(--accent)}
+.padreply.is-nudged{animation:padShakeX .42s ease-in-out}
+@keyframes padShakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}
+  40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@media (max-width:560px){
+  .padboard.is-floating{height:clamp(420px,118vw,470px)}
+  .padhead{padding:12px 10px 0;gap:7px}
+  .padtopics{gap:5px;flex-wrap:nowrap}
+  .padtopic{height:28px;padding:0 10px;font-size:12px;gap:5px}
+  .padbar{left:10px;right:10px;transform:none}
+  .padcount,.padbar .padsep{display:none}
+  .padreply{flex:1;min-width:0}
+  .padreply input{width:100%;font-size:16px}
+}
+@media (max-width:400px){.padtopic span{display:none}.padtopic{padding:0 11px}}
+@media (prefers-reduced-motion:reduce){.padtopic,.padreply{transition:none}.padreply.is-nudged{animation:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3436,7 +3494,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="notes" data-section="Notes board">
       <div class="padwrap" data-reveal>
-      <h2 class="sr-only">The floor is yours.</h2>
+      <h2 class="sr-only">Leave me a note</h2>
 
       <div class="notesrow">
       <div class="padstack">
@@ -3445,13 +3503,21 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         </span>
         <span class="padtriggercopy">
-          <span class="padtriggertext">The floor is yours.</span>
-          <span class="padtriggerhint">Leave a note &#8212; anonymous, and I read every one.</span>
+          <span class="padtriggertext">Leave me a note.</span>
+          <span class="padtriggerhint">Feedback, a question, or work. Add your email if you want a reply.</span>
         </span>
       </button>
 
       <div class="padboard" id="padBoard">
-        <p class="padinfo" id="padInfo">It&#8217;s anonymous. Want a reply? Add your email or contact info.</p>
+        <div class="padhead" id="padHead">
+          <div class="padtopics" role="radiogroup" aria-label="What is your note about?">
+            <button type="button" class="padtopic" role="radio" aria-checked="false" data-topic="feedback"><span aria-hidden="true">&#128172;</span>Feedback</button>
+            <button type="button" class="padtopic" role="radio" aria-checked="false" data-topic="question"><span aria-hidden="true">&#10067;</span>Question</button>
+            <button type="button" class="padtopic" role="radio" aria-checked="false" data-topic="work"><span aria-hidden="true">&#128188;</span>Work</button>
+            <button type="button" class="padtopic" role="radio" aria-checked="false" data-topic="hi"><span aria-hidden="true">&#128075;</span>Just hi</button>
+          </div>
+          <p class="padinfo" id="padInfo" aria-live="polite">Anonymous, unless you leave an email when you send.</p>
+        </div>
         <div class="padblank" id="padBlank">
           <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
             <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -3460,7 +3526,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
         <div class="padtoast" id="padToast" role="status" hidden>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.4 6.4 11.6 12.8 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span id="padToastText">Sent. Thank you &#8212; I read every one.</span>
+          <span id="padToastText">Sent. Thank you, I read every one.</span>
         </div>
 
         <div class="padbar" role="toolbar" aria-label="Board tools">
@@ -3468,6 +3534,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
           <span class="padcount" id="padCount" aria-live="polite">1</span>
           <span class="padsep" aria-hidden="true"></span>
+          <label class="padreply"><span class="sr-only" id="padReplyLabel">Email for a reply, optional</span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.6" stroke="currentColor" stroke-width="1.3"/><path d="m2.6 4.4 5.4 4.2 5.4-4.2" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            <input id="padReply" type="text" inputmode="email" autocomplete="email" spellcheck="false" maxlength="120" placeholder="Email for a reply (optional)" aria-labelledby="padReplyLabel"></label>
           <button type="button" class="padtool padtrash" id="padClear" title="Clear the board" aria-label="Clear the board">
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 4.5h9M6.5 4.5V3.2h3v1.3M5 4.5l.6 8h4.8l.6-8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button type="button" class="padsend" id="padSend" title="Send these to me" aria-label="Send these notes to Lokesh">
@@ -3942,7 +4011,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       clearBtn=document.getElementById("padClear"),
       count=document.getElementById("padCount"),
       toast=document.getElementById("padToast"),
-      toastText=document.getElementById("padToastText");
+      toastText=document.getElementById("padToastText"),
+      head=document.getElementById("padHead"),
+      info=document.getElementById("padInfo"),
+      reply=document.getElementById("padReply"),
+      replyBox=reply&&reply.closest(".padreply"),
+      topicBtns=[].slice.call(board.querySelectorAll(".padtopic"));
   if(!addBtn||!blankAdd||!sendBtn||!clearBtn||!count||!toast) return;
 
   /* the board's own spot on the page, so it can be moved back to it on
@@ -3961,6 +4035,46 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      ───────────────────────────────────────────────────────────────── */
   var SHEET_URL = "https://script.google.com/macros/s/AKfycbyK0dI4FgZ6NxfpPcsAoRoccPWE4FRUKQdXlazPBXx8LpXcB3mpcqF-wweGusk9SRDbPA/exec";
   var notes=[], sending=false;
+
+  /* What the note is about decides what the board says back. Each topic
+     answers the need behind it: work gets the address straight away, a
+     question gets the twin that can answer it now, and every one says
+     plainly whether a reply is possible. */
+  var LINKEDIN="https://www.linkedin.com/in/lkb01/";
+  var TOPICS={
+    "":       {label:"Note",      ph:"Type a note…",
+               info:"Anonymous, unless you leave an email when you send."},
+    feedback: {label:"Feedback",  ph:"What worked, what didn’t, what was unclear…",
+               info:"Honest beats kind. It’s anonymous unless you add an email."},
+    question: {label:"Question",  ph:"Ask about the work, the process, or this site…",
+               info:'Want an answer now? <button type="button" class="padlink" data-act="twin">Ask my AI twin</button>. Or leave it here with your email.'},
+    work:     {label:"Work",      ph:"The role, the team, and where you found me…",
+               info:'Reach me at <button type="button" class="padlink" data-act="copy">'+MAIL+'</button> or on <a class="padlink" href="'+LINKEDIN+'" target="_blank" rel="noopener">LinkedIn</a>, or leave your email here.',
+               reply:"Your email, for a reply"},
+    hi:       {label:"Hi",        ph:"Say hi…",
+               info:"Hello to you too. I read every one."}
+  };
+  var META="lb.notes.meta", topic="";
+  function readMeta(){ try{ return JSON.parse(localStorage.getItem(META))||{} }catch(e){ return {} } }
+  function saveMeta(){ try{ localStorage.setItem(META,JSON.stringify({topic:topic,reply:reply?reply.value:""})) }catch(e){} }
+  function setTopic(t){
+    topic=TOPICS[t]?t:"";
+    var T=TOPICS[topic];
+    topicBtns.forEach(function(b){ b.setAttribute("aria-checked",String(b.dataset.topic===topic)) });
+    if(info) info.innerHTML=T.info;
+    var narrow=matchMedia("(max-width:560px)").matches;
+    if(reply) reply.placeholder=narrow?(T.reply?"Your email":"Email (optional)"):(T.reply||"Email for a reply (optional)");
+    if(replyBox) replyBox.classList.toggle("is-wanted",topic==="work"&&!reply.value.trim());
+    [].forEach.call(board.querySelectorAll(".padnote textarea"),function(ta){ ta.placeholder=T.ph });
+    saveMeta(); placeAll();
+  }
+  /* the header's real height, so notes can never be dropped under it */
+  function topSpace(){ return (head?head.offsetHeight:0)+10 }
+  function placeAll(){
+    if(!board.classList.contains("is-floating")) return;
+    var els=board.querySelectorAll(".padnote");
+    notes.forEach(function(n,i){ if(els[i]) settle(els[i],n) });
+  }
 
   function read(){ try{ return JSON.parse(localStorage.getItem(KEY)) }catch(e){ return null } }
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(notes)) }catch(e){} }
@@ -3995,7 +4109,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      shown. The one moment that has to be confirmed was the one moment
      nothing was. So closing waits for the toast to finish; the toast's
      own timer calls sync() again on the way out. */
-  function close(){
+  function close(force){
+    if(force===true) hideToast();
     if(wrap && toast.hidden){
       wrap.classList.remove("is-open");
       if(trigger) trigger.disabled=false;
@@ -4037,7 +4152,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var pad=6,
         maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
         maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
-        minX=pad/bb.width*100, minY=(pad+TOPBAR)/bb.height*100;
+        minX=pad/bb.width*100, minY=(pad+topSpace())/bb.height*100;
     note.x=Math.max(minX,Math.min(note.x,Math.max(minX,maxX)));
     note.y=Math.max(minY,Math.min(note.y,Math.max(minY,maxY)));
     el.style.left=note.x+"%"; el.style.top=note.y+"%";
@@ -4055,7 +4170,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       '<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>'+
       '</svg></button></div>';
     var ta=document.createElement("textarea");
-    ta.placeholder="Type a note…"; ta.value=note.text||"";
+    ta.placeholder=TOPICS[topic].ph; ta.value=note.text||"";
     ta.setAttribute("aria-label","Note text");
     ta.addEventListener("input",function(){ note.text=ta.value; save(); sync() });
     el.appendChild(ta);
@@ -4078,7 +4193,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         var bb=board.getBoundingClientRect(), pad=6,
             maxX=(bb.width-el.offsetWidth-pad)/bb.width*100,
             maxY=(bb.height-el.offsetHeight-pad-BAR)/bb.height*100,
-            minX=pad/bb.width*100, minY=pad/bb.height*100;
+            minX=pad/bb.width*100, minY=(pad+topSpace())/bb.height*100;
         var x=(ev.clientX-bb.left-dx)/bb.width*100,
             y=(ev.clientY-bb.top-dy)/bb.height*100;
         note.x=Math.max(minX,Math.min(x,Math.max(minX,maxX)));
@@ -4184,6 +4299,30 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     add((e.clientX-bb.left-76)/bb.width*100,(e.clientY-bb.top-14)/bb.height*100);
   });
 
+  topicBtns.forEach(function(b){
+    b.addEventListener("click",function(){
+      setTopic(topic===b.dataset.topic?"":b.dataset.topic);
+      var bl=blank(), last=board.querySelector(".padnote:last-of-type textarea");
+      var ta=bl&&bl.el?bl.el.querySelector("textarea"):last;
+      if(ta) ta.focus({preventScroll:true});
+    });
+  });
+  if(info) info.addEventListener("click",function(e){
+    var a=e.target.closest("[data-act]"); if(!a) return;
+    if(a.dataset.act==="copy"){
+      var done=function(){ showToast("Copied "+MAIL) };
+      if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(MAIL).then(done,function(){ window.copyText&&window.copyText(MAIL) });
+      else if(window.copyText) window.copyText(MAIL);
+    }else if(a.dataset.act==="twin"){
+      close(true);
+      var dock=document.getElementById("askDock"); if(dock) dock.click();
+    }
+  });
+  if(reply) reply.addEventListener("input",function(){
+    if(replyBox) replyBox.classList.toggle("is-wanted",topic==="work"&&!reply.value.trim());
+    saveMeta();
+  });
+
   clearBtn.addEventListener("click",function(){
     notes=[];
     [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() });
@@ -4203,7 +4342,19 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   sendBtn.addEventListener("click",function(){
     var lines=written().map(function(n,i){ return (i+1)+". "+n.text.trim() });
     if(!lines.length||sending) return;
-    var bodyText="Notes from your portfolio:\n\n"+lines.join("\n\n");
+    var back=reply?reply.value.trim():"";
+    /* work without any way back is the one note that can't do its job:
+       ask once, then let it go if they still want to send it as is */
+    if(topic==="work" && !back && !/@|linkedin|\+?\d[\d\s-]{7,}/i.test(lines.join(" ")) && !sendBtn.dataset.asked){
+      sendBtn.dataset.asked="1";
+      if(replyBox){ replyBox.classList.remove("is-nudged"); void replyBox.offsetWidth; replyBox.classList.add("is-nudged") }
+      if(reply) reply.focus();
+      showToast("Add an email so I can reply. Or press Send again.");
+      return;
+    }
+    delete sendBtn.dataset.asked;
+    var tag="["+TOPICS[topic].label+(back?" · reply to "+back:" · anonymous")+"] ";
+    var bodyText="Notes from your portfolio ("+TOPICS[topic].label+")"+(back?"\nReply to: "+back:"")+"\n\n"+lines.join("\n\n");
     sending=true; sync();
     var label=sendBtn.querySelector(".sendlabel");
     if(label) label.textContent="Sending…";
@@ -4216,7 +4367,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     fetch(SHEET_URL,{method:"POST",
       headers:{"Content-Type":"text/plain;charset=utf-8"},
       body:JSON.stringify({
-        notes:written().map(function(n){ return n.text.trim() }),
+        notes:written().map(function(n){ return tag+n.text.trim() }),
+        topic:topic||"note",
+        replyTo:back,
         page:location.href,
         sentAt:new Date().toISOString()
       })})
@@ -4226,8 +4379,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       if(label) label.textContent="Send";
       sendBtn.classList.add("is-done");
       setTimeout(function(){ sendBtn.classList.remove("is-done") },2600);
-      showToast("Sent. Thank you — I read every one.");
+      showToast(back?"Sent. I’ll reply to "+back+".":"Sent anonymously. Thank you, I read every one.");
       notes=[]; save();
+      if(reply) reply.value="";
+      setTopic("");
       [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() });
       sync();
     })
@@ -4263,6 +4418,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     scope.style.setProperty("--trig-h",h+"px");
   }
 
+  var meta=readMeta();
+  if(reply&&meta.reply) reply.value=meta.reply;
+  setTopic(meta.topic||"");
   var stored=read();
   if(Array.isArray(stored)&&stored.length){
     notes=stored;
