@@ -36,14 +36,19 @@ addEventListener("storage",function(e){if(e.key==="portfolio-theme")document.doc
   --blue:#0D99FF; --blueSoft:#E5F4FF; --purple:#9747FF; --purpleSoft:#F1E8FF; --green:#14AE5C;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   --lw:240px; --rw:240px;
+  /* Figma's elevations: a hairline edge and a short soft drop, not a glow */
+  --e2:0 0 .5px rgba(0,0,0,.18),0 1px 3px rgba(0,0,0,.08),0 3px 8px rgba(0,0,0,.06);
+  --e4:0 0 .5px rgba(0,0,0,.12),0 2px 5px rgba(0,0,0,.1),0 10px 16px rgba(0,0,0,.1);
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --ui:#2C2C2C; --ui2:#383838; --canvas:#1E1E1E; --line:#444444;
-  --tx:#FFFFFF; --tx2:#B3B3B3; --tx3:#757575; --hover:#383838; --blueSoft:#0C3B5E; --purpleSoft:#3A2A55; color-scheme:dark}}
+  --tx:#FFFFFF; --tx2:#B3B3B3; --tx3:#757575; --hover:#383838; --blueSoft:#0C3B5E; --purpleSoft:#3A2A55; color-scheme:dark;
+  --e2:0 0 0 .5px rgba(255,255,255,.1),0 1px 3px rgba(0,0,0,.3),0 3px 8px rgba(0,0,0,.25); --e4:0 0 0 .5px rgba(255,255,255,.1),0 2px 5px rgba(0,0,0,.35),0 10px 16px rgba(0,0,0,.3)}}
 :root[data-theme="dark"]{
   --ui:#2C2C2C; --ui2:#383838; --canvas:#1E1E1E; --line:#444444;
-  --tx:#FFFFFF; --tx2:#B3B3B3; --tx3:#757575; --hover:#383838; --blueSoft:#0C3B5E; --purpleSoft:#3A2A55; color-scheme:dark}
+  --tx:#FFFFFF; --tx2:#B3B3B3; --tx3:#757575; --hover:#383838; --blueSoft:#0C3B5E; --purpleSoft:#3A2A55; color-scheme:dark;
+  --e2:0 0 0 .5px rgba(255,255,255,.1),0 1px 3px rgba(0,0,0,.3),0 3px 8px rgba(0,0,0,.25); --e4:0 0 0 .5px rgba(255,255,255,.1),0 2px 5px rgba(0,0,0,.35),0 10px 16px rgba(0,0,0,.3)}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;overflow:hidden;background:var(--canvas)}
 body{font-family:Inter,system-ui,sans-serif;font-size:11px;line-height:16px;color:var(--tx);-webkit-font-smoothing:antialiased;user-select:none}
@@ -54,10 +59,10 @@ svg{flex:none}
 .app.min .lp,.app.min .rp{visibility:hidden}
 /* minimized, as in Figma: the panels go, but the file's name and the
    top-right controls stay as two floating pills */
-.app.min .lh,.app.min .rt{visibility:visible;position:fixed;top:12px;z-index:30;height:48px;padding:0 8px;background:var(--ui);border-radius:12px;box-shadow:0 0 0 1px var(--line),0 4px 16px rgba(0,0,0,.18)}
+.app.min .lh,.app.min .rt{visibility:visible;position:fixed;top:12px;z-index:30;height:48px;padding:0 8px;background:var(--ui);border-radius:12px;box-shadow:var(--e2)}
 .app.min .lh{left:12px;gap:4px}.app.min .rt{right:12px;gap:8px}
 .app.min .fname{flex:none;flex-direction:row;align-items:center;gap:8px}
-.app.min .fname span{padding:1px 6px;border-radius:4px;background:var(--ui2);font-size:10px;line-height:16px}
+.app.min .fname span{display:none}   /* Figma's minimised pill: just the file name */
 .rt .mz{display:none}.app.min .rt .mz{display:flex;margin-left:0}
 .tx2{color:var(--tx2)}
 
@@ -65,7 +70,7 @@ svg{flex:none}
 .ib{width:24px;height:24px;border-radius:5px;display:grid;place-items:center;color:var(--tx)}
 .ib:hover{background:var(--hover)}
 .chev{display:inline-block;width:8px;height:8px;color:var(--tx2)}
-.tab{height:24px;padding:0 8px;border-radius:5px;font-weight:500;color:var(--tx2)}
+.tab{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:5px;font-weight:500;color:var(--tx2)}
 .tab.on{background:var(--ui2);color:var(--tx)}
 .tab:not(.on):hover{color:var(--tx)}
 
@@ -270,7 +275,7 @@ button.av{cursor:pointer}
 .pin .bub img{width:24px;height:24px;border-radius:50%;object-fit:cover}
 .pin.draftpin{pointer-events:none;animation:pinIn .2s cubic-bezier(.34,1.56,.64,1)}
 @keyframes pinIn{from{transform:translate(0,-100%) scale(.4)}to{transform:translate(0,-100%) scale(1)}}
-.pop{position:absolute;pointer-events:auto;width:300px;background:var(--ui);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.2),0 0 0 .5px rgba(0,0,0,.1);padding:12px;z-index:4}
+.pop{position:absolute;pointer-events:auto;width:300px;background:var(--ui);border-radius:12px;box-shadow:var(--e4);padding:12px;z-index:4}
 .pop .phd{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:11px;color:var(--tx2)}
 .pop .phd b{color:var(--tx);font-weight:600}
 .pop .phd .px{margin-left:auto;width:22px;height:22px;border-radius:5px;display:grid;place-items:center;color:var(--tx2);cursor:pointer;flex:none}
@@ -299,7 +304,7 @@ button.av{cursor:pointer}
 
 /* floating toolbar: what a viewer of a Figma file gets */
 .tb{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:2px;padding:4px;
-  background:var(--ui);border-radius:13px;box-shadow:0 2px 12px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.12);z-index:6}
+  background:var(--ui);border-radius:13px;box-shadow:var(--e2);z-index:6}
 .tl{position:relative;height:32px;min-width:32px;padding:0 8px;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:4px;color:var(--tx)}
 .tl:hover{background:var(--hover)}
 .tl.on{background:var(--blue);color:#fff}
@@ -313,17 +318,16 @@ button.av{cursor:pointer}
 .mode .sw2::after{content:"";position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .15s}
 .mode.on .sw2{background:var(--green)}
 .mode.on .sw2::after{transform:translateX(10px)}
-[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
-  padding:4px 8px;border-radius:5px;background:#1E1E1E;color:#fff;white-space:nowrap;font-size:11px;font-weight:400;pointer-events:none;z-index:9}
-.rt [data-tip]:hover::after{bottom:auto;top:calc(100% + 6px)}
-.rt [data-tip]{position:relative}
-.ib,.mode,.tb [data-tip]{position:relative}
-.lh [data-tip]:hover::after,.ltabs [data-tip]:hover::after{bottom:auto;top:calc(100% + 6px);left:0;transform:none}
+.ib,.mode,.tb [data-tip],.rt [data-tip]{position:relative}
+/* tooltips: one bubble on the page, placed by script, so a panel's edge never crops it */
+.tipx{position:fixed;left:0;top:0;z-index:60;display:none;align-items:center;gap:8px;height:24px;padding:0 8px;border-radius:5px;background:#1E1E1E;color:#fff;
+  font-size:11px;white-space:nowrap;pointer-events:none;box-shadow:var(--e2)}
+.tipx.on{display:flex}.tipx kbd{font:inherit;color:rgba(255,255,255,.55)}
 
 .toast{position:absolute;left:50%;bottom:72px;transform:translateX(-50%) translateY(8px);padding:8px 14px;border-radius:8px;
   background:#1E1E1E;color:#fff;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:7;white-space:nowrap}
 .toast.on{opacity:1;transform:translateX(-50%)}
-.menu{position:fixed;z-index:20;min-width:220px;padding:8px 0;border-radius:8px;background:#1E1E1E;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.menu{position:fixed;z-index:35;min-width:220px;padding:8px 0;border-radius:8px;background:#1E1E1E;color:#fff;box-shadow:var(--e4)}
 .menu button{display:flex;justify-content:space-between;gap:24px;width:100%;height:26px;padding:0 16px 0 24px;align-items:center;cursor:pointer}
 .menu button:hover,.menu button.hl{background:var(--blue)}
 .menu button span{color:#999}
@@ -347,7 +351,7 @@ button.av{cursor:pointer}
 /* first visit: one line at the top, not a card over the Cover */
 .intro{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:10px;
   max-width:calc(100% - 24px);padding:6px 6px 6px 8px;border-radius:12px;background:var(--ui);
-  box-shadow:0 2px 12px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.12);font-size:12px;line-height:16px}
+  box-shadow:var(--e2);font-size:12px;line-height:16px}
 .intro[hidden]{display:none}
 .intro img{width:26px;height:26px;border-radius:50%;flex:none}
 .intro .it{min-width:0}
@@ -395,13 +399,13 @@ button.av{cursor:pointer}
   .tb .tl.act span{display:none}
 }
 .scrim{display:none;position:fixed;inset:0;z-index:28;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
-.lp,.rp{z-index:29}
+@media (max-width:767px){.lp,.rp{z-index:29}}   /* drawers over the canvas; on desktop menus and tooltips stay above the panels */
 .dclose{display:none!important;position:absolute;top:10px;right:8px;z-index:2}
 .tb .ponly{display:none}
 /* keyboard focus, always visible */
 button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:2px solid #0D99FF;outline-offset:1px}
 .mob{display:none;position:absolute;top:10px;left:10px;right:10px;justify-content:space-between;z-index:6;pointer-events:none}
-.mob button{pointer-events:auto;height:32px;padding:0 12px;border-radius:8px;background:var(--ui);box-shadow:0 2px 8px rgba(0,0,0,.12);font-weight:500}
+.mob button{pointer-events:auto;height:32px;padding:0 12px;border-radius:8px;background:var(--ui);box-shadow:var(--e2);font-weight:500}
 
 .pop .tnote{margin:-2px 0 10px;padding:6px 10px;border-radius:8px;background:var(--purpleSoft);color:var(--purple);font-size:12px;line-height:17px}
 
@@ -427,14 +431,14 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visibl
 @media (prefers-reduced-motion:reduce){.frame.loading::before{animation:none}}
 /* Figma's hyperlink popover: shown above a link you click on the canvas */
 .lpop{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;height:32px;padding:0 6px 0 10px;border-radius:8px;background:var(--ui);color:var(--tx);
-  box-shadow:0 0 .5px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.14);font-size:11px;white-space:nowrap;transform:translate(-50%,calc(-100% - 8px));pointer-events:auto;cursor:default}
+  box-shadow:var(--e4);font-size:11px;white-space:nowrap;transform:translate(-50%,calc(-100% - 8px));pointer-events:auto;cursor:default}
 .lpop .lp-t{color:var(--tx2);max-width:220px;overflow:hidden;text-overflow:ellipsis}
 .lpop button{display:flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:5px;color:var(--blue);font-weight:500}
 .lpop button:hover{background:var(--blueSoft)}
 .ixgo{color:var(--blue);text-decoration:none;font-weight:500}.ixgo:hover{text-decoration:underline}
 .playg{display:flex;align-items:center}.playg .pchev{width:16px;padding:0;margin-left:-4px}
 .hv .d{display:flex;align-items:center;gap:6px}.hva{width:16px;height:16px;border:0;flex:none}.hva img{width:100%;height:100%;object-fit:cover}
-.kbd{position:absolute;left:12px;right:12px;bottom:12px;z-index:12;max-height:46%;overflow:auto;border-radius:13px;background:var(--ui);color:var(--tx);box-shadow:0 0 .5px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.18)}
+.kbd{position:absolute;left:12px;right:12px;bottom:12px;z-index:12;max-height:46%;overflow:auto;border-radius:13px;background:var(--ui);color:var(--tx);box-shadow:var(--e4)}
 .kbd[hidden]{display:none}
 .kbd .kh{display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 8px 0 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ui)}
 .kbd .kh .ib{font-size:16px}
@@ -445,7 +449,7 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visibl
 /* Hide UI: only the canvas; minimise peek: the properties panel back while something is selected */
 .app.hideui .lp,.app.hideui .rp,.app.hideui .tb,.app.hideui .intro{display:none!important}
 .app.hideui{grid-template-columns:0 1fr 0}
-.app.min.peek .rp{visibility:visible;position:fixed;right:12px;top:72px;bottom:72px;width:240px;z-index:25;border-radius:13px;border:0;box-shadow:0 0 .5px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.2);overflow:auto}
+.app.min.peek .rp{visibility:visible;position:fixed;right:12px;top:72px;bottom:72px;width:240px;z-index:25;border-radius:13px;border:0;box-shadow:var(--e4);overflow:auto}
 .app.min.peek .rp .rt{display:none}
 .bm{padding:4px 16px 8px;font-size:10px;color:var(--tx2)}
 .bm div{position:relative;padding:16px 22px;border:1px dashed var(--line);border-radius:3px;text-align:center}
@@ -469,7 +473,7 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visibl
         <svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
       <button class="fname" id="fileBtn"><b>Portfolio <i class="beta">Beta</i><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></b><span>Lokesh Bhatia · View only</span></button>
-      <button class="ib" id="minBtn" aria-label="Minimize UI" data-tip="Minimize UI  ⇧\"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+      <button class="ib" id="minBtn" aria-label="Minimize UI" data-tip="Minimize UI  ⌘⇧\"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
     </div>
     <div class="ltabs"><span class="tab on" aria-current="page">File</span>
       <button class="ib" id="searchBtn" aria-label="Find pages and layers" data-tip="Find  ⌘F"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button></div>
@@ -2093,6 +2097,33 @@ addEventListener("resize",function(){ draw(); placePins() });
 })();
 T("fv_open",{entry:(location.search.match(/[?&]entry=(pill|link)/)||[])[1]||(EMBED?"pill":"direct"),page:pageSlug()});
 
+})();
+
+/* ── tooltips: Figma's dark bubble with the shortcut in grey. Below a
+   control near the top of the window, above it everywhere else, kept
+   8px inside the window; shown after a short hover, gone on press. */
+(function(){
+  var tip=document.createElement("div"); tip.className="tipx"; tip.setAttribute("aria-hidden","true"); document.body.appendChild(tip);
+  var cur=null, t=0;
+  function hide(){ clearTimeout(t); cur=null; tip.classList.remove("on") }
+  function show(el){
+    var txt=el.getAttribute("data-tip"); if(!txt) return;
+    var bits=txt.split(/\s{2,}/);
+    tip.textContent=bits[0]; if(bits[1]){ var k=document.createElement("kbd"); k.textContent=bits[1]; tip.appendChild(k) }
+    tip.classList.add("on");
+    var r=el.getBoundingClientRect(), w=tip.offsetWidth, h=tip.offsetHeight;
+    var below=r.top<120, y=below?r.bottom+6:r.top-h-6;
+    var x=Math.max(8,Math.min(innerWidth-w-8,r.left+r.width/2-w/2));
+    tip.style.transform="translate("+Math.round(x)+"px,"+Math.round(y)+"px)";
+  }
+  document.addEventListener("pointerover",function(e){
+    var el=e.target.closest&&e.target.closest("[data-tip]");
+    if(el===cur) return; hide(); if(!el||e.pointerType==="touch") return;
+    cur=el; t=setTimeout(function(){ if(cur===el&&el.isConnected) show(el) },400);
+  });
+  document.addEventListener("pointerdown",hide,true);
+  document.addEventListener("keydown",hide,true);
+  addEventListener("blur",hide);
 })();
 </script>
 </body>
