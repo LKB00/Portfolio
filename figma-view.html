@@ -489,7 +489,7 @@ button.av{cursor:pointer}
     <div class="kbd" id="kbd" hidden role="dialog" aria-label="Keyboard shortcuts"><div class="kh"><b>Keyboard shortcuts</b><button class="ib" id="kbdX" aria-label="Close keyboard shortcuts" data-tip="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div class="kg" id="kbdBody"></div></div>
     <div class="intro" id="intro" hidden>
       <img src="./assets/avatar-96.webp" alt="">
-      <span class="it"><b>My portfolio, as a Figma file.</b> <span class="tx2">Click any part to see how it’s built, or a case study to open it.</span></span>
+      <span class="it"><b>My portfolio, as a Figma file.</b> <span class="tx2">Click anything to inspect it, or press ▶ to use the site.</span></span>
       <button class="pri" id="introTour">Take the 1-minute tour</button>
       <button class="ib" id="introOk" aria-label="Dismiss"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
@@ -601,7 +601,7 @@ var st={page:1,zoom:.5,x:0,y:0,tool:"move",dev:false,rtab:"design",frames:[],sel
 /* opened over the homepage (in its layer) rather than as its own page */
 var EMBED=false; try{ EMBED=window.top!==window.self&&!!parent.document.querySelector(".fvlay") }catch(e){}
 function home(){ T("fv_back",{page:pageSlug(),secondsOpen:Math.round((Date.now()-T0)/1000)}); if(EMBED) parent.postMessage({fvClose:1},location.origin); else location.href="./index.html" }
-function shareURL(){ try{ if(EMBED) return parent.location.href.split("#")[0]+"#figma" }catch(e){} return location.href.split("#")[0] }
+function shareURL(){ var sl=pageSlug(); try{ if(EMBED) return parent.location.href.split("#")[0]+"#figma/"+sl }catch(e){} return location.href.split("#")[0]+"#"+sl }
 var toldReady=false;
 /* usage: what visitors do in the file, never what they type */
 var T0=Date.now(), seenSel={};
@@ -610,7 +610,7 @@ function pageSlug(i){ var p=PAGES[i==null?st.page:i]; return p&&p.name?p.name.to
 
 function applyTheme(t){
   t=t==="dark"?"dark":"light"; document.documentElement.setAttribute("data-theme",t);
-  st.frames.forEach(function(f){
+  allFrames().forEach(function(f){
     if(f.ifr.hasAttribute("srcdoc")){ f.ready=false; f.doc=null; f.ifr.srcdoc=f.name==="Cover"?coverHTML():(SITE?foundationsHTML(SITE):f.ifr.srcdoc) }
     else if(f.doc){ f.doc.documentElement.setAttribute("data-theme",t); f.doc.documentElement.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA" }
   });
@@ -987,7 +987,7 @@ function addFrame(name,w,h,x,src,srcdoc){
   fr.appendChild(ifr);
   fr.classList.add("loading"); fr.dataset.loading="Loading "+name.split(" — ").pop()+"…";
   var lab=document.createElement("div"); lab.className="flabel"; lab.textContent=name;
-  world.appendChild(lab); world.appendChild(fr);
+  curWrap.appendChild(lab); curWrap.appendChild(fr);
   var f={name:name,dev:{key:name.split(" — ")[0]},x:x,y:0,w:w,h:h,el:fr,ifr:ifr,label:lab,doc:null,root:null,waits:[]};
   st.frames.push(f);
   lab.addEventListener("pointerdown",function(e){ e.stopPropagation(); if(f.root) select(f,f.root,f.root) });
@@ -1006,11 +1006,30 @@ function watch(f){
     f.el.classList.remove("loading"); f.el.appendChild(m);
   },12000);
 }
+var curWrap=null, CACHE={}, CACHE_ORDER=[];
+function allFrames(){ var a=st.frames.slice(); Object.keys(CACHE).forEach(function(k){ a=a.concat(CACHE[k].frames) }); return a }
+/* the address names the page you're on, so a link opens right here */
+function setPageURL(){ var sl=pageSlug();
+  try{ if(EMBED) parent.history.replaceState(parent.history.state,"",parent.location.pathname+parent.location.search+"#figma/"+sl);
+    else history.replaceState(null,"",location.pathname+location.search+"#"+sl) }catch(e){} }
 function loadPage(i,cb){
   if(PAGES[i].group) return;
-  findIdx=null; closeLinkPop();
-  st.page=i; T("fv_page",{page:pageSlug(i)}); st.sel=null; st.hov=null; st.ctx=null;
-  world.innerHTML=""; st.frames=[]; closePop();
+  findIdx=null; closeLinkPop(); if(curWrap) closeIntro();
+  /* the page you leave stays loaded (the last three), with its camera */
+  if(curWrap&&st.frames.length){ CACHE[st.page]={wrap:curWrap,frames:st.frames,x:st.x,y:st.y,zoom:st.zoom}; curWrap.style.display="none";
+    CACHE_ORDER=CACHE_ORDER.filter(function(k){ return k!==st.page }); CACHE_ORDER.push(st.page);
+    while(CACHE_ORDER.length>3){ var old=CACHE_ORDER.shift(); if(old!==i&&CACHE[old]){ CACHE[old].wrap.remove(); delete CACHE[old] } } }
+  st.page=i; T("fv_page",{page:pageSlug(i)}); st.sel=null; st.hov=null; st.ctx=null; closePop();
+  try{ localStorage.setItem("lb.figma.page",pageSlug(i)) }catch(e){}
+  setPageURL();
+  var C=CACHE[i];
+  if(C){ delete CACHE[i]; CACHE_ORDER=CACHE_ORDER.filter(function(k){ return k!==i });
+    curWrap=C.wrap; curWrap.style.display=""; st.frames=C.frames; st.zoom=C.zoom; st.x=C.x; st.y=C.y;
+    renderPages(); renderTree(); renderTabs(); renderProps(); paintLabels(); apply(); placePins();
+    if(cb) whenReady(st.frames[0],cb);
+    return;
+  }
+  curWrap=document.createElement("div"); curWrap.className="pwrap"; world.appendChild(curWrap); st.frames=[];
   var P=PAGES[i];
   var narrow=cv.clientWidth<600;
   if(P.kind==="cover") addFrame("Cover",narrow?390:1440,narrow?1400:900,0,null,coverHTML());
@@ -1080,7 +1099,7 @@ function zoomAt(z,cx,cy){ z=Math.max(.02,Math.min(4,z)); st.x=cx-(cx-st.x)*z/st.
 function fit(top){
   var W=cv.clientWidth,H=cv.clientHeight; if(!W) return;
   var last=st.frames[st.frames.length-1], tw=last?last.x+last.w:1440, f0=st.frames[0], fh=f0?f0.h:900, fw=f0?f0.w:1440;
-  var head=($("#intro")&&!$("#intro").hidden?86:56)+(W<600?24:0), side=W<700?32:96;
+  var head=56+(W<600?24:0), side=W<700?32:96;
   var z=Math.min(1,(W-side)/tw), x;
   /* desktop and phone side by side only while both stay readable;
      otherwise open on the desktop frame, the phone a pan away */
@@ -1910,7 +1929,7 @@ $("#presentMenu").addEventListener("click",function(e){ e.stopPropagation();
   var P=PAGES[st.page], src=P.src||"./index.html";
   menu(this,[["Present","⌥⌘↵",function(){ present(true) }],["Present in new tab","",function(){ T("fv_follow_link",{from:pageSlug(),to:"new-tab"}); window.open(src,"_blank","noopener") }]]) });
 $("#zoomMini").addEventListener("click",zoomMenu);
-$("#shareBtn").addEventListener("click",function(){ T("fv_share",{page:pageSlug()}); copy(shareURL(),"Link copied to clipboard") });
+$("#shareBtn").addEventListener("click",function(){ T("fv_share",{page:pageSlug()}); copy(shareURL(),"Link to "+PAGES[st.page].name+" copied") });
 function minUI(){ $("#app").classList.toggle("min"); $("#app").classList.remove("peek"); if($("#app").classList.contains("min")) T("fv_minimize"); setTimeout(function(){ draw(); placePins() },30) }
 $("#minBtn").addEventListener("click",minUI);
 $("#kbdX").addEventListener("click",hideKeys);
@@ -1972,11 +1991,11 @@ $("#pClose").addEventListener("click",function(){ present(false) });
 [].forEach.call(document.querySelectorAll("[data-dev]"),function(b){ b.addEventListener("click",function(){ pDev=b.dataset.dev; paintDev() }) });
 
 /* ═══ FIRST VISIT ═══════════════════════════════════════════════════ */
-function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ localStorage.setItem("lb.figma.intro","2") }catch(e){} } }
+function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ localStorage.setItem("lb.figma.intro","3") }catch(e){} } }
 (function(){
-  var seen=false; try{ seen=localStorage.getItem("lb.figma.intro")==="2" }catch(e){}
+  var seen=false; try{ seen=localStorage.getItem("lb.figma.intro")==="3" }catch(e){}
   if(!seen) $("#intro").hidden=false;
-  $("#introOk").addEventListener("click",function(){ closeIntro(); fit(true) });
+  $("#introOk").addEventListener("click",function(){ closeIntro() });
   if(TOUR_ON) $("#introTour").addEventListener("click",startFollow); else $("#introTour").remove();
   cv.addEventListener("pointerdown",function(e){ if(!e.target.closest(".intro")) closeIntro() },true);
   document.querySelector(".tb").addEventListener("click",closeIntro);
@@ -1997,8 +2016,14 @@ cv.addEventListener("touchmove",function(e){
 cv.addEventListener("touchend",function(){ touches={} });
 
 addEventListener("resize",function(){ draw(); placePins() });
-/* the file opens on its Cover */
-loadPage(0);
+/* the file opens on the page its link names, else where you left it, else the Cover */
+(function(){
+  var want=(location.search.match(/[?&]page=([a-z0-9-]+)/)||[])[1]||(location.hash.replace(/^#/,"")||""), from=want?"link":"";
+  if(!want){ try{ want=localStorage.getItem("lb.figma.page")||"" }catch(e){} }
+  var idx=0; for(var i=0;i<PAGES.length;i++) if(PAGES[i].name&&pageSlug(i)===want) idx=i;
+  loadPage(idx);
+  if(from&&idx===0&&want!=="cover") toast("That page isn’t in the file, so here’s the Cover");
+})();
 T("fv_open",{entry:(location.search.match(/[?&]entry=(pill|link)/)||[])[1]||(EMBED?"pill":"direct"),page:pageSlug()});
 
 })();

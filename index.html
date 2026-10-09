@@ -5097,7 +5097,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var my=++opening, t0=Date.now();
     lay=document.createElement("div"); lay.className="fvlay"; lay.setAttribute("role","dialog"); lay.setAttribute("aria-label","Portfolio as a Figma file");
     lay.innerHTML='<div class="fvlay-load" aria-hidden="true"><svg width="30" height="45" viewBox="0 0 38 57">'+SHAPES+'</svg><p>Opening Portfolio…</p></div>';
-    var f=document.createElement("iframe"); f.title="Portfolio as a Figma file"; f.src="./figma-view.html?theme="+(document.documentElement.getAttribute("data-theme")==="dark"?"dark":"light")+"&entry="+(push?"pill":"link");   /* the theme on screen, not a saved one */
+    var f=document.createElement("iframe"); f.title="Portfolio as a Figma file"; f.allow="clipboard-write";   /* Share, Copy email */ var pg=(location.hash.match(/^#figma\/([a-z0-9-]+)$/)||[])[1];
+    f.src="./figma-view.html?theme="+(document.documentElement.getAttribute("data-theme")==="dark"?"dark":"light")+"&entry="+(push?"pill":"link")+(pg?"&page="+pg:"");   /* the theme on screen, not a saved one */
     lay.appendChild(f); document.body.appendChild(lay);
     document.documentElement.classList.add("fv-open");
     requestAnimationFrame(function(){ requestAnimationFrame(function(){ lay&&lay.classList.add("on") }) });
@@ -5133,8 +5134,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     if(e.data.fvReady&&lay&&lay.show) lay.show();
     if(e.data.fvClose) leave();
   });
-  addEventListener("popstate",function(){ if(location.hash==="#figma") open(false); else { pushed=false; close() } });
-  if(location.hash==="#figma") open(false);
+  /* #figma, or #figma/<page> to open on that page */
+  var FV=/^#figma(\/[a-z0-9-]+)?$/;
+  addEventListener("popstate",function(){ if(FV.test(location.hash)) open(false); else { pushed=false; close() } });
+  if(FV.test(location.hash)) open(false);
 })();
 </script>
 
