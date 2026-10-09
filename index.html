@@ -636,12 +636,12 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   color:var(--ink);transition:background .18s var(--ease),color .18s var(--ease)}
 @media (hover:hover){.padtool:hover{background:var(--surface)}}
 .padtool[disabled]{color:var(--faint);opacity:.5;background:transparent}
-.padtrash{color:var(--muted)}
-@media (hover:hover){.padtrash:hover{color:var(--ink)}}
+
+
 .padcount{min-width:16px;padding:0 2px;text-align:center;
   font-family:var(--mono);font-size:11px;font-weight:500;color:var(--faint);
   font-variant-numeric:tabular-nums}
-.padsep{width:1px;height:18px;margin:0 3px;background:var(--line)}
+
 .padsend{display:inline-flex;align-items:center;gap:6px;height:32px;
   padding:0 13px;border:0;border-radius:var(--r-pill);cursor:pointer;
   background:var(--ink);color:var(--bg);font-family:inherit;font-size:13px;
@@ -659,16 +659,9 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
   background:var(--card);color:var(--muted);box-shadow:var(--shadow-float);
   font-size:12.5px;line-height:1.35}
 .padtoast svg{flex:0 0 auto;color:var(--accent)}
-/* ── the always-on notice, pinned to the top of the board ──
-   Unlike .padblank (only visible with zero notes, which the trigger
-   button never actually leaves the board in — it opens and adds a
-   note in the same click), this sits above the canvas at all times
-   so the anonymity/reply line is never state-dependent. */
-.padinfo{position:absolute;left:50%;top:14px;transform:translateX(-50%);
-  z-index:8;max-width:calc(100% - 28px);margin:0;padding:0;
-  color:var(--faint);font-size:12px;line-height:1.35;
-  text-align:center;white-space:nowrap;pointer-events:none}
-@media (max-width:560px){.padinfo{font-size:11.5px;white-space:normal}}
+
+
+
 /* scoped to the board itself, not .padwrap: the board is a direct
    child of <body> while it floats open, outside .padwrap entirely */
 #padBoard [hidden]{display:none}
@@ -3189,68 +3182,44 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .rec-bar.is-on .rec-ring-fill{animation:none;stroke-dashoffset:0}
 }
 
-/* ══ WHAT THE NOTE IS FOR ════════════════════════════════════════════
-   The board read as an anonymous suggestion box, and the notes that
-   came in were mostly people asking how to reach me: on desktop the
-   homepage never shows an email. So the board now asks what the note
-   is about, and answers the need behind each one on the spot -- an
-   address for work, the AI twin for a question that wants an answer
-   now -- and the send bar carries an optional reply address, so a note
-   is only anonymous when the writer wants it to be. */
-.padhead{position:absolute;left:0;right:0;top:0;z-index:8;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  padding:14px 14px 0;pointer-events:none}
-/* One control, not four tags: a segmented switch in the same floating
-   material as the tool pill at the bottom, so the board has a bar at
-   the top and a bar at the bottom and nothing else competing. The thumb
-   slides to the chosen segment. */
-.padtopics{position:relative;display:flex;gap:2px;padding:4px;pointer-events:auto;
-  border-radius:var(--r-pill);background:var(--card);box-shadow:var(--shadow-float)}
-.padthumb{position:absolute;top:4px;bottom:4px;left:0;width:0;border-radius:var(--r-pill);
-  background:var(--ink);opacity:0;
-  transition:transform .32s cubic-bezier(.3,.9,.3,1),width .32s cubic-bezier(.3,.9,.3,1),opacity .18s var(--ease)}
-.padtopics.has-pick .padthumb{opacity:1}
-.padtopic{position:relative;z-index:1;height:30px;padding:0 14px;border:0;
-  border-radius:var(--r-pill);cursor:pointer;background:transparent;
-  color:var(--muted);font-family:inherit;font-size:13px;font-weight:500;white-space:nowrap;
-  transition:color .2s var(--ease),background .18s var(--ease)}
-@media (hover:hover){.padtopic:not([aria-checked="true"]):hover{color:var(--ink);background:var(--surface)}}
-.padtopic[aria-checked="true"]{color:var(--bg)}
-.padtopic:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.padhead .padinfo{position:static;transform:none;max-width:100%;white-space:normal;
-  font-size:12px;color:var(--muted);pointer-events:auto;text-wrap:balance}
-.padinfo .padlink,.padstatus .padlink{all:unset;cursor:pointer;color:var(--ink);font-weight:500;
-  text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 30%,transparent);
-  text-underline-offset:2px}
-@media (hover:hover){.padinfo .padlink:hover,.padstatus .padlink:hover{text-decoration-color:var(--ink)}}
-.padinfo .padlink:focus-visible,.padstatus .padlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .padboard.is-floating{height:clamp(420px,44vw,452px)}
-/* the header owns the top now, so the acknowledgement rises from the send bar */
+
 .padhead ~ .padtoast,#padBoard .padtoast{top:auto;bottom:62px}
 
-/* the reply field: part of the bar, the size of its buttons */
-.padreply{display:flex;align-items:center;gap:7px;height:32px;padding:0 10px;margin-right:2px;
-  border-radius:var(--r-pill);background:var(--surface);color:var(--faint);cursor:text;
-  transition:box-shadow .18s var(--ease),color .18s var(--ease)}
-.padreply svg{flex:none}
-.padreply input{width:206px;min-width:0;border:0;outline:0;background:transparent;padding:0;
-  font-family:inherit;font-size:13px;color:var(--ink)}
-.padreply input::placeholder{color:var(--faint)}
-.padreply:focus-within{box-shadow:0 0 0 1.5px var(--accent);color:var(--ink)}
-.padreply.is-wanted{box-shadow:0 0 0 1.5px var(--accent);color:var(--accent)}
-.padreply.is-nudged{animation:padShakeX .42s ease-in-out}
+
+
+
+
+
+
+
+
 @keyframes padShakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}
   40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
 @media (max-width:560px){
   .padboard.is-floating{height:clamp(420px,118vw,470px)}
-  .padhead{padding:12px 10px 0;gap:7px}
-  .padtopic{height:30px;padding:0 11px;font-size:12.5px}
+  
+  
   .padbar{left:10px;right:10px;transform:none}
-  .padreply{flex:1;min-width:0}
-  .padreply input{width:100%;font-size:16px}
+  
+  
 }
-@media (max-width:370px){.padtopic{padding:0 9px}}
-@media (prefers-reduced-motion:reduce){.padtopic,.padreply,.padthumb{transition:none}.padreply.is-nudged{animation:none}}
+
+
 
 /* ── the send bar, redrawn ──
    Lucide icons (ISC licence) at one stroke weight, the same set the AI
@@ -3261,67 +3230,52 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    than one, so it rides on the plus as a badge. */
 .padbar{gap:2px;padding:6px;height:auto}
 .padbar .padtool{width:36px;height:36px;color:var(--ink)}
-.padbar .padtrash{color:var(--muted)}
+
 .padadd{position:relative}
 .padadd .padcount{position:absolute;top:-1px;right:-3px;min-width:15px;height:15px;padding:0 4px;
   border-radius:var(--r-pill);background:var(--ink);color:var(--bg);
   font-family:var(--sans,inherit);font-size:10px;font-weight:600;line-height:15px;text-align:center;
   box-shadow:0 0 0 2px var(--card);transform:scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
 .padbar.multi .padadd .padcount{transform:scale(1)}
-.padbar .padreply{height:36px;margin:0 4px;padding:0 14px;gap:9px;background:transparent;border-radius:0;
-  box-shadow:-1px 0 0 var(--line),1px 0 0 var(--line);color:var(--faint)}
-.padbar .padreply input{font-size:13.5px}
-.padbar .padreply:focus-within{box-shadow:-1px 0 0 var(--line),1px 0 0 var(--line);color:var(--ink)}
-.padbar .padreply:focus-within input::placeholder{color:color-mix(in srgb,var(--faint) 60%,transparent)}
-.padbar .padreply.is-wanted{color:var(--accent);box-shadow:-1px 0 0 var(--line),1px 0 0 var(--line),inset 0 -2px 0 var(--accent)}
+
+
+
+
+
 .padbar .padsend{height:36px;padding:0 14px 0 16px;gap:8px;font-size:13.5px;white-space:nowrap;flex:none}
-.padbar .padreply input{width:176px}
+
 .padbar .padsend svg{transition:transform .2s var(--ease)}
 @media (hover:hover){.padbar .padsend:not([disabled]):hover svg.ico-send{transform:translate(2px,-2px)}}
 @media (max-width:560px){
-  .padbar .padreply{flex:1;min-width:0;padding:0 10px;margin:0 2px}
-  .padbar .padreply input{font-size:16px}
+  
+  
   .padbar .padsend{padding:0 12px 0 14px}
 }
 @media (prefers-reduced-motion:reduce){.padadd .padcount,.padbar .padsend svg{transition:none}}
 
-/* ── who this comes from ──
-   Visitors wrote notes expecting a reply, without realising they could
-   not get one. So the line right above Send says it, in the state it is
-   in: anonymous and unanswerable, or known by the address they typed --
-   and the button itself says "Send anonymously" until there is one. */
-.padstatus{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);z-index:6;
-  display:flex;align-items:center;gap:7px;max-width:calc(100% - 28px);margin:0;
-  padding:6px 12px;border-radius:var(--r-pill);
-  background:color-mix(in srgb,var(--card) 88%,transparent);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  color:var(--muted);font-size:12px;line-height:1.35;white-space:nowrap}
-.padstatus span{overflow:hidden;text-overflow:ellipsis}
-.padstatus svg{flex:none}
-.padstatus .ico-known,.padstatus.is-known .ico-anon{display:none}
-.padstatus.is-known .ico-known{display:block;color:var(--accent)}
-.padstatus.is-known{color:var(--ink)}
-.padboard:not(.has-text) .padstatus{display:none}
-#padBoard .padtoast{bottom:100px}
-@media (max-width:560px){.padstatus{left:50%;right:auto;transform:translateX(-50%);width:max-content;max-width:calc(100% - 20px);font-size:12px;bottom:66px}
-  .padbar .padreply input{width:100%}}
 
-/* the one place anonymity is stated: visible from the moment the board
-   opens, sitting where the send bar will be, and lifting above it once
-   there is something to send */
-.padstatus{gap:8px;padding:4px 14px 4px 4px;box-shadow:0 0 0 1px var(--line),0 6px 18px -12px rgba(16,16,24,.35);
-  transition:bottom .32s cubic-bezier(.3,.9,.3,1),color .2s var(--ease)}
-.padboard:not(.has-text) .padstatus{display:flex;bottom:18px}
-.padwho{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;flex:none;
-  background:var(--surface);color:var(--muted);transition:background .2s var(--ease),color .2s var(--ease)}
-.padstatus.is-known .padwho{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
-.padstatus.is-known .ico-known{color:inherit}
-.padstatus b{font-weight:500;color:var(--ink)}
-.padstatus .padlink{white-space:nowrap}
-.padhead .padinfo{min-height:16px}
-#padBoard .padhead .padinfo[hidden]{display:block;visibility:hidden}
-@media (max-width:560px){.padboard:not(.has-text) .padstatus{bottom:14px}}
-@media (prefers-reduced-motion:reduce){.padstatus,.padwho{transition:none}}
+
+
+
+
+
+
+
+#padBoard .padtoast{bottom:100px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* a note being written comes forward with a deeper shadow, not a hard
    outline: the ring read as a second, darker card behind the first */
@@ -3334,54 +3288,46 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .padnote textarea{height:86px}
 }
 
-/* ── the email line at the foot of a note ──
-   Notes keep one height with or without it -- the text area gives up
-   the room -- so turning the email on never moves anything on the board. */
+
 .padnote{display:flex;flex-direction:column;height:112px}
 .padnote textarea{flex:1;height:auto;min-height:0}
-.padsig{flex:none;display:flex;align-items:center;gap:6px;height:26px;margin:0 6px 6px;padding:0 3px 0 8px;
-  border-radius:4px;color:rgba(20,20,20,.5);animation:padSigIn .22s var(--ease)}
-.padsig.is-on{background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px rgba(20,20,20,.08)}
-.padsig.is-on:focus-within{background:rgba(255,255,255,.85);box-shadow:inset 0 0 0 1px rgba(20,20,20,.22);color:#1B1B1B}
-.padsig svg{flex:none}
-.padsig input{flex:1;min-width:0;height:100%;padding:0;border:0;outline:0;background:transparent;
-  font-family:inherit;font-size:11.5px;color:#1B1B1B}
-.padsig input::placeholder{color:rgba(20,20,20,.38)}
-.padsig-x{display:grid;place-items:center;flex:none;width:20px;height:20px;padding:0;border:0;border-radius:3px;
-  background:transparent;color:rgba(20,20,20,.42);cursor:pointer}
-@media (hover:hover){.padsig-x:hover{color:rgba(20,20,20,.85);background:rgba(20,20,20,.06)}}
-.padsig.is-add{padding:0 2px}
-.padsig-add{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 6px;border:0;border-radius:3px;
-  background:transparent;color:rgba(20,20,20,.48);font-family:inherit;font-size:11.5px;cursor:pointer}
-@media (hover:hover){.padsig-add:hover{color:rgba(20,20,20,.85);background:rgba(20,20,20,.05)}}
-.padsig-x:focus-visible,.padsig-add:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+
+
+
+
+
+
+
+
+
+
+
 @keyframes padSigIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 @media (max-width:560px){
   .padnote{height:118px}
   /* 16px or iOS zooms on focus; drawn at 12px so the address fits */
-  .padsig input{font-size:16px;transform:scale(.75);transform-origin:0 50%;flex:none;width:calc((100% - 44px) / .75);margin-right:calc((100% - 44px) / .75 * -.25)}
+  
   .padbar{left:50%;right:auto;transform:translateX(-50%)}
 }
-@media (prefers-reduced-motion:reduce){.padsig{animation:none}}
 
-/* very quiet: a sign-off, not a field. No fill, no box; a hairline
-   above it, the address in small grey type, the × only on hover */
-.padsig{height:22px;margin:0 10px 6px;padding:0;border-radius:0;gap:5px;
-  border-top:1px solid rgba(20,20,20,.07);color:rgba(20,20,20,.32)}
-.padsig.is-on,.padsig.is-on:focus-within{background:transparent;box-shadow:none}
-.padsig.is-on:focus-within{border-top-color:rgba(20,20,20,.18);color:rgba(20,20,20,.5)}
-.padsig svg{width:10px;height:10px}
-.padsig input{font-size:11px;color:rgba(20,20,20,.5)}
-.padsig input:focus{color:#1B1B1B}
-.padsig input::placeholder{color:rgba(20,20,20,.28)}
-.padsig-x{width:16px;height:16px;opacity:0;transition:opacity .15s var(--ease);color:rgba(20,20,20,.4)}
-.padsig-x svg{width:8px;height:8px}
-.padnote:hover .padsig-x,.padsig:focus-within .padsig-x,.padsig-x:focus-visible{opacity:1}
-@media (hover:none){.padsig-x{opacity:.7}}
-.padsig.is-add{border-top-color:transparent}
-.padsig-add{height:20px;padding:0;font-size:11px;color:rgba(20,20,20,.3);background:transparent}
-@media (hover:hover){.padsig-add:hover{background:transparent;color:rgba(20,20,20,.6)}}
-@media (max-width:560px){.padsig{height:24px}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* how many notes Send will send, on the button that sends them */
 .padbar .padsend .padcount{position:static;display:none;min-width:18px;height:18px;padding:0 5px;margin-left:-2px;
@@ -3392,6 +3338,66 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @keyframes padCountIn{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
 .padsend[disabled] .padcount{display:none!important}
 @media (prefers-reduced-motion:reduce){.padbar.multi .padsend .padcount{animation:none}}
+
+/* ══ THE BOARD, SIMPLIFIED ═══════════════════════════════════════════
+   Notes, and one bar: add · who it's from · send. Nothing above the
+   notes -- the row that opened the board already said what it is for.
+   The bar is there from the first moment, because the chip in it is
+   also the promise about anonymity. */
+.padboard:not(.has-text) .padbar{display:flex}
+.padnote{display:flex;flex-direction:column;height:104px}
+.padnote textarea{flex:1;height:auto;min-height:0}
+@media (max-width:560px){.padnote{height:110px}}
+.padboard.is-floating{height:clamp(380px,40vw,412px)}
+@media (max-width:560px){.padboard.is-floating{height:clamp(380px,108vw,430px)}}
+
+/* who it's from: one chip that states it and changes it */
+.padme{display:flex;align-items:center;min-width:0}
+.padme-anon,.padme-mail{display:flex;align-items:center;gap:7px;height:36px;padding:0 12px;
+  border-radius:var(--r-pill);font-family:inherit;font-size:13px;white-space:nowrap}
+.padme-anon{border:0;cursor:pointer;background:transparent;color:var(--muted);
+  transition:background .18s var(--ease),color .18s var(--ease)}
+.padme-anon svg,.padme-mail svg{flex:none}
+.padme-dot{color:var(--faint)}
+.padme-cta{color:var(--ink);font-weight:500}
+@media (hover:hover){.padme-anon:hover{background:var(--surface)}}
+.padme-anon:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.padme-mail{background:var(--surface);color:var(--muted);padding:0 4px 0 12px;cursor:text;animation:padMeIn .22s var(--ease)}
+.padme-mail input{width:170px;min-width:0;padding:0;border:0;outline:0;background:transparent;
+  font-family:inherit;font-size:13px;color:var(--ink)}
+.padme-mail input::placeholder{color:var(--faint)}
+.padme-mail:focus-within{box-shadow:0 0 0 1.5px var(--accent)}
+.padme.is-known .padme-mail{color:var(--ink)}
+.padme-x{display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:50%;
+  background:transparent;color:var(--faint);cursor:pointer}
+@media (hover:hover){.padme-x:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}}
+.padme-x:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@keyframes padMeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.padbar{gap:4px}
+
+/* the one contextual line, above the bar, only when it helps */
+.padhint{position:absolute;left:50%;bottom:66px;transform:translateX(-50%);z-index:6;
+  display:flex;align-items:center;gap:8px;max-width:calc(100% - 28px);width:max-content;margin:0;
+  padding:6px 13px;border-radius:var(--r-pill);background:var(--card);
+  box-shadow:0 0 0 1px var(--line),0 6px 18px -12px rgba(16,16,24,.35);
+  color:var(--muted);font-size:12px;line-height:1.35;animation:padMeIn .22s var(--ease)}
+.padhint svg{flex:none;color:var(--ink)}
+.padhint .padlink{all:unset;cursor:pointer;color:var(--ink);font-weight:500;white-space:nowrap;
+  text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ink) 30%,transparent);text-underline-offset:2px}
+@media (hover:hover){.padhint .padlink:hover{text-decoration-color:var(--ink)}}
+.padhint .padlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+#padBoard .padtoast{bottom:110px}
+
+@media (max-width:560px){
+  .padbar{left:50%;right:auto;transform:translateX(-50%);max-width:calc(100% - 20px)}
+  .padme{flex:1;min-width:0}
+  .padme-anon{padding:0 8px;gap:5px;font-size:12px}
+  .padme-mail{flex:1;min-width:0}
+  .padme-mail input{width:100%;font-size:16px}
+  .padhint{font-size:11.5px;white-space:normal}
+}
+@media (max-width:370px){.padme-anon svg{display:none}}
+@media (prefers-reduced-motion:reduce){.padme-mail,.padhint{animation:none}.padme-anon{transition:none}}
 </style>
 <script defer src="./analytics.js?v=3"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3653,20 +3659,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         </span>
         <span class="padtriggercopy">
           <span class="padtriggertext">Leave me a note.</span>
-          <span class="padtriggerhint">Feedback, a question, or work. Notes are anonymous unless you add your email.</span>
+          <span class="padtriggerhint">Feedback, a question, or just hi. Anonymous unless you add your email.</span>
         </span>
       </button>
 
       <div class="padboard" id="padBoard">
-        <div class="padhead" id="padHead">
-          <div class="padtopics" role="radiogroup" aria-label="What is your note about?"><span class="padthumb" aria-hidden="true"></span>
-            <button type="button" class="padtopic" role="radio" aria-checked="false" data-topic="feedback">Feedback</button>
-            <button type="button" class="padtopic" role="radio" aria-checked="false" data-topic="question">Question</button>
-            <button type="button" class="padtopic" role="radio" aria-checked="false" data-topic="work">Work</button>
-            <button type="button" class="padtopic" role="radio" aria-checked="false" data-topic="hi">Just hi</button>
-          </div>
-          <p class="padinfo" id="padInfo" aria-live="polite" hidden></p>
-        </div>
         <div class="padblank" id="padBlank">
           <button type="button" class="padblankadd" id="padBlankAdd" aria-label="Add the first note">
             <svg width="22" height="22" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -3678,15 +3675,20 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           <span id="padToastText">Sent. Thank you, I read every one.</span>
         </div>
 
-        <p class="padstatus" id="padStatus" aria-live="polite">
-          <span class="padwho" aria-hidden="true"><svg class="ico-anon" width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
-          <svg class="ico-known" width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="m16 19 2 2 4-4"/></svg></span>
-          <span id="padStatusText"></span></p>
+        <p class="padhint" id="padHint" aria-live="polite" hidden></p>
         <div class="padbar" role="toolbar" aria-label="Board tools">
           <button type="button" class="padtool padadd" id="padAdd" title="Add a note" aria-label="Add a note">
             <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
-          <button type="button" class="padtool padtrash" id="padClear" title="Clear the board" aria-label="Clear the board">
-            <svg width="17" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></button>
+          <div class="padme" id="padWho">
+            <button type="button" class="padme-anon" id="padWhoAdd" aria-label="Anonymous. Add your email to get a reply">
+              <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
+              <span class="padme-t">Anonymous</span><span class="padme-dot" aria-hidden="true">&#183;</span><span class="padme-cta">Add email</span></button>
+            <label class="padme-mail" id="padWhoMail" hidden>
+              <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input id="padEmail" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="120" placeholder="your@email.com" aria-label="Your email, so I can reply">
+              <button type="button" class="padme-x" id="padWhoX" aria-label="Remove email and send anonymously"><svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+            </label>
+          </div>
           <button type="button" class="padsend" id="padSend" title="Send these to me" aria-label="Send these notes to Lokesh">
             <span class="sendlabel">Send</span>
             <span class="padcount" id="padCount" aria-hidden="true">1</span>
@@ -4157,14 +4159,16 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       addBtn=document.getElementById("padAdd"),
       blankAdd=document.getElementById("padBlankAdd"),
       sendBtn=document.getElementById("padSend"),
-      clearBtn=document.getElementById("padClear"),
       count=document.getElementById("padCount"),
       toast=document.getElementById("padToast"),
       toastText=document.getElementById("padToastText"),
-      head=document.getElementById("padHead"),
-      info=document.getElementById("padInfo"),
-      topicBtns=[].slice.call(board.querySelectorAll(".padtopic"));
-  if(!addBtn||!blankAdd||!sendBtn||!clearBtn||!count||!toast) return;
+      hint=document.getElementById("padHint"),
+      who=document.getElementById("padWho"),
+      whoAdd=document.getElementById("padWhoAdd"),
+      whoMail=document.getElementById("padWhoMail"),
+      emailIn=document.getElementById("padEmail"),
+      whoX=document.getElementById("padWhoX");
+  if(!addBtn||!blankAdd||!sendBtn||!count||!toast) return;
 
   /* the board's own spot on the page, so it can be moved back to it on
      close — it floats as a direct child of <body> while open, which is
@@ -4183,122 +4187,83 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   var SHEET_URL = "https://script.google.com/macros/s/AKfycbyK0dI4FgZ6NxfpPcsAoRoccPWE4FRUKQdXlazPBXx8LpXcB3mpcqF-wweGusk9SRDbPA/exec";
   var notes=[], sending=false;
 
-  /* What the note is about decides what the board says back. Each topic
-     answers the need behind it: work gets the address straight away, a
-     question gets the twin that can answer it now, and every one says
-     plainly whether a reply is possible. */
+  /* ── one bar: add, who it's from, send ──
+     The visitor is never asked to sort their note. What it is about is
+     read from the words, and only two cases change anything on screen:
+     a note about work gets my address and LinkedIn, a question gets the
+     AI twin that can answer it now. The sheet still gets a label. */
   var LINKEDIN="https://www.linkedin.com/in/lkb01/";
-  var TOPICS={
-    "":       {label:"Note",      ph:"Type a note…",
-               info:""},
-    feedback: {label:"Feedback",  ph:"What worked, what didn’t, what was unclear…",
-               info:"Honest beats kind."},
-    question: {label:"Question",  ph:"Ask about the work, the process, or this site…",
-               info:'Want an answer now? <button type="button" class="padlink" data-act="twin">Ask my AI twin</button>.'},
-    work:     {label:"Work",      ph:"The role, the team, and where you found me…",
-               info:'Reach me at <button type="button" class="padlink" data-act="copy">'+MAIL+'</button> or on <a class="padlink" href="'+LINKEDIN+'" target="_blank" rel="noopener">LinkedIn</a>.',
-               reply:"Your email, for a reply"},
-    hi:       {label:"Hi",        ph:"Say hi…",
-               info:"Hello to you too."}
-  };
-  var META="lb.notes.meta", topic="", email="", emailOn=false;
+  var LABEL={feedback:"Feedback",question:"Question",work:"Work",hi:"Hi"};
+  function guess(t){
+    t=(t||"").trim();
+    if(/\b(hir(e|ing)|role|position|opening|job|freelance|contract|recruit|opportunit|collab|work with|join (us|our)|interview|portfolio review)\b/i.test(t)) return "work";
+    if(/\?\s*$/.test(t)||/^(how|what|why|when|where|who|which|can|could|do|did|does|is|are|would|will)\b/i.test(t)) return "question";
+    if(/^(hi|hey|hello|hii+|yo|namaste)\b/i.test(t)&&t.length<60) return "hi";
+    return "feedback";
+  }
+  var META="lb.notes.meta", email="", editing=false;
   function readMeta(){ try{ return JSON.parse(localStorage.getItem(META))||{} }catch(e){ return {} } }
-  function saveMeta(){ try{ localStorage.setItem(META,JSON.stringify({topic:topic,email:email,emailOn:emailOn})) }catch(e){} }
-  function setTopic(t){
-    topic=TOPICS[t]?t:"";
-    var T=TOPICS[topic];
-    topicBtns.forEach(function(b){ b.setAttribute("aria-checked",String(b.dataset.topic===topic)) });
-    moveThumb();
-    if(info){ info.innerHTML=T.info; info.hidden=!T.info }
-    [].forEach.call(board.querySelectorAll(".padnote textarea"),function(ta){ ta.placeholder=T.ph });
-    saveMeta(); placeAll(); syncWho();
+  function saveMeta(){ try{ localStorage.setItem(META,JSON.stringify({email:email})) }catch(e){} }
+  function known(){ return email.trim() }
+
+  /* the chip is the anonymity line and the email field in one control */
+  function paintWho(){
+    var on=editing||!!known();
+    if(whoAdd) whoAdd.hidden=on;
+    if(whoMail) whoMail.hidden=!on;
+    if(who) who.classList.toggle("is-known",!!known());
+    if(emailIn && document.activeElement!==emailIn) emailIn.value=email;
+    var w=written().length;
+    sendBtn.setAttribute("aria-label",(w>1?"Send "+w+" notes":"Send")+(known()?" to Lokesh, from "+known():" to Lokesh anonymously"));
   }
-  function moveThumb(){
-    var bar=head&&head.querySelector(".padtopics"), th=bar&&bar.querySelector(".padthumb");
-    if(!th) return;
-    var on=topicBtns.filter(function(b){ return b.dataset.topic===topic })[0];
-    bar.classList.toggle("has-pick",!!on);
-    if(on&&on.offsetWidth){ th.style.width=on.offsetWidth+"px"; th.style.transform="translateX("+on.offsetLeft+"px)" }
+  function openEmail(){
+    editing=true; paintWho();
+    if(emailIn){ emailIn.focus({preventScroll:true}) }
   }
-  var statusEl=document.getElementById("padStatus"), statusText=document.getElementById("padStatusText"),
-      sendLabel=sendBtn.querySelector(".sendlabel");
-  /* A note carries the email when the email is on, filled in, and the
-     writer has not taken it off that particular note. */
-  function signed(n){ return emailOn && !!email.trim() && !n.noEmail }
-  function syncWho(){
-    var narrow=matchMedia("(max-width:560px)").matches,
-        w=written(), k=w.filter(signed).length, who=email.trim();
-    if(statusEl) statusEl.classList.toggle("is-known",k>0);
-    if(statusText){
-      if(k>0 && k===w.length)
-        statusText.innerHTML=narrow?"I’ll know it’s you, and reply.":"I’ll know it’s you, and reply to <b></b>.";
-      else if(k>0)
-        statusText.innerHTML="<b></b> is on "+k+" of "+w.length+" notes. The rest are anonymous.";
-      else
-        statusText.innerHTML=(narrow?"Anonymous. ":"Anonymous: I won’t know it’s you. ")+(board.classList.contains("has-text")
-          ? '<button type="button" class="padlink" data-act="email">Add your email</button>'
-          : 'Add your email')+" to get a reply.";
-      var b=statusText.querySelector("b"); if(b) b.textContent=who;
-    }
-    if(sendLabel && !sending) sendLabel.textContent=(k>0||narrow)?"Send":"Send anonymously";
-    var what=w.length>1?"Send "+w.length+" notes":"Send";
-    sendBtn.setAttribute("aria-label",what+(k>0?" to Lokesh, with your email":" to Lokesh anonymously"));
+  if(whoAdd) whoAdd.addEventListener("click",openEmail);
+  if(emailIn){
+    emailIn.addEventListener("input",function(){ email=emailIn.value; saveMeta(); paintWho() });
+    emailIn.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); emailIn.blur() } });
+    emailIn.addEventListener("blur",function(){ editing=false; email=emailIn.value.trim(); saveMeta(); paintWho() });
+  }
+  if(whoX) whoX.addEventListener("click",function(){
+    email=""; editing=false; if(emailIn) emailIn.value=""; saveMeta(); paintWho();
+    if(whoAdd) whoAdd.focus({preventScroll:true});
+  });
+
+  /* the one contextual line, only when it helps */
+  var BRIEF='<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>',
+      SPARK='<svg width="13" height="13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>';
+  var hintKind="";
+  function paintHint(){
+    if(!hint) return;
+    var kinds=written().map(function(n){ return guess(n.text) }),
+        k=kinds.indexOf("work")>-1?"work":(kinds.indexOf("question")>-1?"question":"");
+    if(k===hintKind) return;
+    hintKind=k;
+    if(!k){ hint.hidden=true; hint.innerHTML=""; return }
+    hint.innerHTML=k==="work"
+      ? BRIEF+'<span>Hiring? Reach me at <button type="button" class="padlink" data-act="copy">'+MAIL+'</button> or <a class="padlink" href="'+LINKEDIN+'" target="_blank" rel="noopener">LinkedIn</a></span>'
+      : SPARK+'<span>Want an answer now? <button type="button" class="padlink" data-act="twin">Ask my AI twin</button></span>';
+    hint.hidden=false;
+  }
+  if(hint){
+    hint.addEventListener("pointerdown",function(e){ if(e.target.closest("[data-act]")) e.preventDefault() });
+    hint.addEventListener("click",function(e){
+      var a=e.target.closest("[data-act]"); if(!a) return;
+      if(a.dataset.act==="copy"){
+        var done=function(){ showToast("Copied "+MAIL) };
+        if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(MAIL).then(done,function(){ window.copyText&&window.copyText(MAIL) });
+        else if(window.copyText) window.copyText(MAIL);
+      }else if(a.dataset.act==="twin"){
+        close(true);
+        var dock=document.getElementById("askDock"); if(dock) dock.click();
+      }
+    });
   }
 
-  /* ── the email, inside the notes ──
-     "Add your email" puts a line at the foot of every note. Whatever is
-     typed into one is the address on all of them; the × takes it off
-     that note alone, which then offers to put it back. */
-  var ENV='<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
-  function paintSig(note,el){
-    el=el||ELS.get(note); if(!el) return;
-    var mode=!emailOn?"off":(note.noEmail?"add":"on"),
-        sig=el.querySelector(".padsig");
-    if(el.dataset.sig===mode){
-      var inp=sig&&sig.querySelector("input");
-      if(inp && document.activeElement!==inp) inp.value=email;
-      return;
-    }
-    el.dataset.sig=mode;
-    if(sig) sig.remove();
-    el.classList.toggle("has-sig",mode!=="off");
-    if(mode==="off") return;
-    sig=document.createElement("div");
-    sig.className="padsig is-"+mode;
-    if(mode==="on"){
-      sig.innerHTML=ENV+'<input type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="120" placeholder="your@email.com" aria-label="Your email, for a reply">'+
-        '<button type="button" class="padsig-x" aria-label="Send this note without your email" title="Send this one anonymously">'+
-        '<svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>';
-      var inp=sig.querySelector("input"); inp.value=email;
-      inp.addEventListener("input",function(){
-        email=inp.value; saveMeta();
-        notes.forEach(function(n){ if(n!==note) paintSig(n) });
-        syncWho();
-      });
-      inp.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); inp.blur() } });
-      sig.querySelector(".padsig-x").addEventListener("click",function(){
-        note.noEmail=true; save(); paintSig(note,el); syncWho();
-        var add=el.querySelector(".padsig-add"); if(add) add.focus({preventScroll:true});
-      });
-    }else{
-      sig.innerHTML='<button type="button" class="padsig-add">'+ENV+'<span>Add my email</span></button>';
-      sig.querySelector(".padsig-add").addEventListener("click",function(){
-        note.noEmail=false; save(); paintSig(note,el); syncWho();
-        var i=el.querySelector(".padsig input"); if(i) i.focus({preventScroll:true});
-      });
-    }
-    el.appendChild(sig);
-  }
-  function emailOnAll(){
-    emailOn=true; saveMeta();
-    notes.forEach(function(n){ paintSig(n) });
-    syncWho();
-    var act=document.activeElement, from=act&&act.closest&&act.closest(".padnote"),
-        target=(from&&from.querySelector(".padsig input"))||board.querySelector(".padsig input");
-    if(target) target.focus({preventScroll:true});
-  }
   /* the header's real height, so notes can never be dropped under it */
-  function topSpace(){ return (head?head.offsetHeight:0)+10 }
+  function topSpace(){ return 16 }
   function placeAll(){
     if(!board.classList.contains("is-floating")) return;
     notes.forEach(function(n){ var el=ELS.get(n); if(el) settle(el,n) });
@@ -4403,8 +4368,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
        closed board that had no real size yet — re-clamp them now that
        the board has one */
     placeAll(); untangle();
-    var th=board.querySelector(".padthumb");
-    if(th){ th.style.transition="none"; moveThumb(); void th.offsetWidth; th.style.transition="" }
   }
   /* A successful send empties the board, and sync() closes an empty
      board — which used to hide the thank-you in the same tick it was
@@ -4433,8 +4396,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     board.classList.toggle("has-notes",n>0);   /* hides the empty state */
     var hadText=board.classList.contains("has-text");
     board.classList.toggle("has-text",w>0);    /* brings up the toolbar */
-    if(hadText!==(w>0)) syncWho();             /* "Add your email" becomes a link */
-    else sendBtn.setAttribute("aria-label",(w>1?"Send "+w+" notes":"Send")+(written().some(signed)?" to Lokesh, with your email":" to Lokesh anonymously"));
+    paintHint(); paintWho();
     /* the count is of what will be sent, so it lives on Send and counts
        only notes with words in them */
     count.textContent=String(w);
@@ -4445,7 +4407,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
        which note, instead of a dead button that says nothing. */
     addBtn.disabled = n>=MAX;
     sendBtn.disabled = w===0 || sending;
-    clearBtn.disabled = n===0;
   }
 
   function nudge(){
@@ -4478,11 +4439,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       '<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>'+
       '</svg></button></div>';
     var ta=document.createElement("textarea");
-    ta.placeholder=TOPICS[topic].ph; ta.value=note.text||"";
+    ta.placeholder="Feedback, a question, or just hi…"; ta.value=note.text||"";
     ta.setAttribute("aria-label","Note text");
     ta.addEventListener("input",function(){ note.text=ta.value; save(); sync() });
     el.appendChild(ta);
-    paintSig(note,el);
 
     el.querySelector(".padkill").addEventListener("click",function(){
       notes.splice(notes.indexOf(note),1); ELS.delete(note); el.remove(); save(); sync();
@@ -4618,42 +4578,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     add((e.clientX-bb.left-76)/bb.width*100,(e.clientY-bb.top-14)/bb.height*100);
   });
 
-  topicBtns.forEach(function(b){
-    b.addEventListener("click",function(){
-      setTopic(b.dataset.topic);
-      var bl=blank(), last=board.querySelector(".padnote:last-of-type textarea");
-      var ta=bl&&bl.el?bl.el.querySelector("textarea"):last;
-      if(ta) ta.focus({preventScroll:true});
-    });
-  });
-  if(info) info.addEventListener("click",function(e){
-    var a=e.target.closest("[data-act]"); if(!a) return;
-    if(a.dataset.act==="copy"){
-      var done=function(){ showToast("Copied "+MAIL) };
-      if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(MAIL).then(done,function(){ window.copyText&&window.copyText(MAIL) });
-      else if(window.copyText) window.copyText(MAIL);
-    }else if(a.dataset.act==="twin"){
-      close(true);
-      var dock=document.getElementById("askDock"); if(dock) dock.click();
-    }
-  });
-  if(statusEl){
-    /* pressing the link moves focus off the note being written; remember
-       which note that was, so its email line is the one that takes focus */
-    statusEl.addEventListener("pointerdown",function(e){ if(e.target.closest('[data-act="email"]')) e.preventDefault() });
-    statusEl.addEventListener("click",function(e){
-      if(!e.target.closest('[data-act="email"]')) return;
-      if(emailOn){ notes.forEach(function(n){ n.noEmail=false }); save() }
-      emailOnAll();
-    });
-  }
-
-  clearBtn.addEventListener("click",function(){
-    notes=[];
-    [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() }); ELS.clear();
-    hideToast(); save(); sync();
-  });
-
   /* It carries no decision, so it needs no dismiss: it says its piece
      and goes. 4.2s is a short sentence read once, unhurried. */
   var toastTimer=null;
@@ -4667,17 +4591,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   sendBtn.addEventListener("click",function(){
     var lines=written().map(function(n,i){ return (i+1)+". "+n.text.trim() });
     if(!lines.length||sending) return;
-    var back=email.trim(), anySigned=written().some(signed);
+    var back=known(), anySigned=!!back;
     /* work without any way back is the one note that can't do its job:
        ask once, then let it go if they still want to send it as is */
-    if(topic==="work" && !anySigned && !/@|linkedin|\+?\d[\d\s-]{7,}/i.test(lines.join(" ")) && !sendBtn.dataset.asked){
+    if(!back && written().some(function(n){ return guess(n.text)==="work" }) && !/@|linkedin|\+?\d[\d\s-]{7,}/i.test(lines.join(" ")) && !sendBtn.dataset.asked){
       sendBtn.dataset.asked="1";
-      emailOnAll();
+      openEmail();
       showToast("Add your email so I can reply. Or press Send again.");
       return;
     }
     delete sendBtn.dataset.asked;
-    function tagOf(n){ return "["+TOPICS[topic].label+(signed(n)?" · reply to "+back:" · anonymous")+"] " }
+    function tagOf(n){ return "["+LABEL[guess(n.text)]+(back?" · reply to "+back:" · anonymous")+"] " }
     var tagged=written().map(function(n){ return tagOf(n)+n.text.trim() });
     var bodyText="Notes from your portfolio\n\n"+tagged.map(function(t,i){ return (i+1)+". "+t }).join("\n\n");
     sending=true; sync();
@@ -4693,7 +4617,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       headers:{"Content-Type":"text/plain;charset=utf-8"},
       body:JSON.stringify({
         notes:tagged,
-        topic:topic||"note",
+        topic:guess(written()[0].text),
         replyTo:anySigned?back:"",
         page:location.href,
         sentAt:new Date().toISOString()
@@ -4701,12 +4625,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     .then(function(r){ if(!r.ok) throw 0; return r.text() })
     .then(function(){
       sending=false;
-      if(label) label.textContent="Send"; syncWho();
+      if(label) label.textContent="Send";
       sendBtn.classList.add("is-done");
       setTimeout(function(){ sendBtn.classList.remove("is-done") },2600);
       showToast(anySigned?"Sent. I’ll reply to "+back+".":"Sent anonymously. Thank you, I read every one.");
       notes=[]; save();
-      setTopic("feedback");
       [].forEach.call(board.querySelectorAll(".padnote"),function(el){ el.remove() }); ELS.clear();
       sync();
     })
@@ -4716,7 +4639,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
        cannot be reached, hand the notes to their own mail app. */
     function handOff(text,msg){
       sending=false;
-      if(label) label.textContent="Send"; syncWho();
+      if(label) label.textContent="Send";
       sync();
       showToast(msg);
       window.location.href="mailto:"+MAIL+
@@ -4743,8 +4666,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
 
   var meta=readMeta();
-  email=meta.email||""; emailOn=!!meta.emailOn;
-  setTopic(meta.topic||"feedback");
+  email=meta.email||"";
   var stored=read();
   if(Array.isArray(stored)&&stored.length){
     notes=stored;
