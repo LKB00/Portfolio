@@ -206,6 +206,40 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:defa
 }
 .mob{display:none;position:absolute;top:10px;left:10px;right:10px;justify-content:space-between;z-index:6;pointer-events:none}
 .mob button{pointer-events:auto;height:32px;padding:0 12px;border-radius:8px;background:var(--ui);box-shadow:0 2px 8px rgba(0,0,0,.12);font-weight:500}
+
+/* ── comments, Figma-style: a pin, and a bubble beside it ── */
+.pin{padding:0;border:0;background:none;cursor:pointer}
+.pin.draft{pointer-events:none;animation:pinIn .2s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pinIn{from{transform:translate(0,-100%) scale(.4)}to{transform:translate(0,-100%) scale(1)}}
+.pop{width:280px;padding:10px 10px 8px;border-radius:12px}
+.pop .phd{display:flex;align-items:center;gap:6px;margin:0 2px 8px;font-size:11px;color:var(--tx2)}
+.pop .phd b{color:var(--tx);font-weight:600}
+.pop .crow{display:flex;align-items:flex-end;gap:6px;padding:6px 6px 6px 10px;border-radius:8px;box-shadow:inset 0 0 0 1px var(--line)}
+.pop .crow:focus-within{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.pop textarea{height:20px;min-height:20px;padding:2px 0;line-height:16px}
+.pop .send{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;cursor:pointer}
+.pop .send[disabled]{background:var(--ui2);color:var(--tx3);cursor:default}
+.pop .mailrow{margin-top:6px;padding:4px 10px;border-radius:8px;box-shadow:inset 0 0 0 1px var(--line)}
+.pop .mailrow:focus-within{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.pop .mailrow input{border:0;margin:0;height:22px}
+.pop .mailrow input.bad{color:#E5484D}
+.pop .pfoot{margin:7px 2px 0;font-size:11px;color:var(--tx2)}
+.pop .lnk{color:var(--blue);font-weight:500;cursor:pointer}
+.pop .lnk:hover{text-decoration:underline}
+.pop.sending{opacity:.6;pointer-events:none}
+.pop.read p{margin:0 2px 6px;font-size:12px;line-height:18px}
+.pop.read .ctx{margin:0 2px;font-size:11px;color:var(--tx2)}
+.av.sm{width:18px;height:18px;border:0;font-size:9px}
+
+/* ── first visit: how this file works ── */
+.intro{position:absolute;left:16px;top:16px;z-index:6;width:280px;padding:14px 14px 12px;border-radius:12px;
+  background:var(--ui);box-shadow:0 2px 12px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.12)}
+.intro b{display:block;font-size:12px;margin-bottom:6px}
+.intro ul{margin:0 0 10px;padding:0;list-style:none}
+.intro li{display:flex;gap:8px;padding:3px 0;color:var(--tx2)}
+.intro kbd{flex:none;min-width:64px;font:inherit;font-weight:500;color:var(--tx)}
+.intro button{height:26px;padding:0 12px;border-radius:6px;background:var(--blue);color:#fff;font-weight:500;cursor:pointer}
+@media (max-width:900px){.intro{left:10px;right:10px;width:auto;top:52px}}
 </style>
 </head>
 <body>
@@ -248,6 +282,16 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:defa
       <button class="tl dev" id="devBtn" data-tip="Dev Mode  ⇧D" aria-label="Dev Mode"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></button>
     </div>
     <div class="toast" id="toast" role="status"></div>
+    <div class="intro" id="intro" hidden>
+      <b>This is my portfolio, opened as a Figma file</b>
+      <ul>
+        <li><kbd>Click</kbd>Select a section and see how it’s built</li>
+        <li><kbd>Double-click</kbd>Go inside it · Esc to come back out</li>
+        <li><kbd>▶ Present</kbd>Use the real website</li>
+        <li><kbd>C</kbd>Leave me a comment anywhere</li>
+      </ul>
+      <button id="introOk">Got it</button>
+    </div>
   </main>
 
   <aside class="rp" aria-label="Properties">
@@ -899,49 +943,87 @@ function placeCursor(){
 /* ── comments, into the same inbox as the notes board ── */
 var PINS_KEY="lb.figma.comments", pins=[];
 try{ pins=JSON.parse(localStorage.getItem(PINS_KEY))||[] }catch(e){ pins=[] }
-var popEl=null;
-function closePop(){ if(popEl){ popEl.remove(); popEl=null } }
+var popEl=null, draftPin=null;
+function closePop(){ if(popEl){ popEl.remove(); popEl=null } if(draftPin){ draftPin.remove(); draftPin=null } }
+var EMAIL_RE=/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i;
+/* comments are filed under the section they sit on: Hero, Selected work… */
+function sectionOf(h){
+  if(!h.f) return "the canvas";
+  var top=kids(h.f.root), t=h.t;
+  for(var i=0;i<top.length;i++) if(top[i]===t||top[i].contains(t)) return nameOf(top[i],h.f);
+  /* in a section's side margin: the section at that height */
+  var y=h.wy-h.f.y;
+  for(var j=0;j<top.length;j++){ var r=top[j].getBoundingClientRect(); if(y>=r.top&&y<=r.bottom&&top[j].id!=="siteHeader") return nameOf(top[j],h.f) }
+  return h.f.name;
+}
+/* the bubble sits beside its pin, on whichever side has room */
+function placePop(pop,px,py){
+  var W=cv.clientWidth,H=cv.clientHeight,w=pop.offsetWidth,hh=pop.offsetHeight;
+  var x=px+40; if(x+w>W-12) x=px-w-12; x=Math.max(12,x);
+  var y=Math.max(12,Math.min(py-36,H-hh-80));
+  pop.style.left=x+"px"; pop.style.top=y+"px";
+}
+function pinEl(label,cls){
+  var d=document.createElement("button"); d.className="pin"+(cls?" "+cls:"");
+  d.innerHTML='<span class="bub"><span>'+label+'</span></span>'; return d;
+}
 function placePins(){
-  [].forEach.call(ov.querySelectorAll(".pin"),function(p){ p.remove() });
+  [].forEach.call(ov.querySelectorAll(".pin:not(.draft)"),function(p){ p.remove() });
   pins.filter(function(p){ return p.page===st.page }).forEach(function(p){
-    var d=document.createElement("button"); d.className="pin"; d.setAttribute("aria-label","Your comment");
-    d.style.left=(st.x+p.wx*st.zoom)+"px"; d.style.top=(st.y+p.wy*st.zoom)+"px";
-    d.innerHTML='<span class="bub"><span>Y</span></span>';
+    var d=pinEl("Y"); d.setAttribute("aria-label","Your comment on "+p.on);
+    var px=st.x+p.wx*st.zoom, py=st.y+p.wy*st.zoom;
+    d.style.left=px+"px"; d.style.top=py+"px";
     d.addEventListener("click",function(e){ e.stopPropagation(); closePop();
-      popEl=document.createElement("div"); popEl.className="pop";
-      popEl.innerHTML='<p>'+esc(p.text)+'</p><div class="ctx">On '+esc(p.on)+(p.email?" · reply to "+esc(p.email):" · anonymous")+'</div>';
-      popEl.style.left=(st.x+p.wx*st.zoom+34)+"px"; popEl.style.top=(st.y+p.wy*st.zoom-30)+"px"; ov.appendChild(popEl);
+      popEl=document.createElement("div"); popEl.className="pop read";
+      popEl.innerHTML='<div class="phd"><span class="av sm" style="background:#14AE5C">Y</span><b>You</b><span class="tx2">on '+esc(p.on)+'</span></div><p>'+esc(p.text)+'</p><div class="ctx">'+(p.email?"Sent · I’ll reply to "+esc(p.email):"Sent anonymously")+'</div>';
+      ov.appendChild(popEl); placePop(popEl,px,py);
+      popEl.addEventListener("pointerdown",function(ev){ ev.stopPropagation() });
     });
+    d.addEventListener("pointerdown",function(e){ e.stopPropagation() });
     ov.appendChild(d);
   });
+  if(draftPin&&draftPin.w){ draftPin.style.left=(st.x+draftPin.w.x*st.zoom)+"px"; draftPin.style.top=(st.y+draftPin.w.y*st.zoom)+"px"; if(popEl) placePop(popEl,st.x+draftPin.w.x*st.zoom,st.y+draftPin.w.y*st.zoom) }
 }
 function startComment(e){
   closePop();
-  var h=hit(e), on=h.f?nameOf((pick(h.t,h.f.root,h.f)||{el:h.f.root}).el,h.f)+" · "+h.f.dev.key:"Canvas";
+  var h=hit(e), on=sectionOf(h);
   var b=cv.getBoundingClientRect(), sx=e.clientX-b.left, sy=e.clientY-b.top;
+  /* 1. the pin drops where you clicked */
+  draftPin=pinEl("Y","draft"); draftPin.w={x:(sx-st.x)/st.zoom,y:(sy-st.y)/st.zoom};
+  draftPin.style.left=sx+"px"; draftPin.style.top=sy+"px"; ov.appendChild(draftPin);
+  /* 2. the composer opens beside it, saying exactly where this goes */
   popEl=document.createElement("div"); popEl.className="pop";
-  popEl.innerHTML='<textarea placeholder="Add a comment" aria-label="Comment"></textarea><input type="email" placeholder="Your email, for a reply (optional)" aria-label="Your email"><div class="pb"><span class="ctx">On '+esc(on)+'</span><button class="post" disabled>Post</button></div>';
-  popEl.style.left=Math.min(sx+12,cv.clientWidth-272)+"px"; popEl.style.top=Math.min(sy-10,cv.clientHeight-160)+"px";
-  ov.appendChild(popEl);
-  var ta=popEl.querySelector("textarea"), em=popEl.querySelector("input"), post=popEl.querySelector(".post");
+  popEl.innerHTML=
+    '<div class="phd"><span class="tx2">Comment to Lokesh · on <b>'+esc(on)+'</b></span></div>'+
+    '<div class="crow"><textarea rows="1" placeholder="Add a comment…" aria-label="Comment"></textarea>'+
+    '<button class="send" disabled aria-label="Post comment"><svg width="14" height="14" '+'xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'+'><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button></div>'+
+    '<div class="mailrow" hidden><input type="email" placeholder="you@email.com" aria-label="Your email, for a reply"></div>'+
+    '<div class="pfoot"><span class="anon">Anonymous · <button class="lnk" type="button">Add email</button> to get a reply</span></div>';
+  ov.appendChild(popEl); placePop(popEl,sx,sy);
+  var ta=popEl.querySelector("textarea"), send=popEl.querySelector(".send"),
+      mailrow=popEl.querySelector(".mailrow"), em=popEl.querySelector("input"), foot=popEl.querySelector(".anon");
   ta.focus();
-  ta.addEventListener("input",function(){ post.disabled=!ta.value.trim() });
-  ta.addEventListener("keydown",function(ev){ if(ev.key==="Enter"&&(ev.metaKey||ev.ctrlKey)&&!post.disabled) post.click(); if(ev.key==="Escape") closePop() });
+  function grow(){ ta.style.height="auto"; ta.style.height=Math.min(ta.scrollHeight,120)+"px" }
+  ta.addEventListener("input",function(){ send.disabled=!ta.value.trim(); grow() });
+  ta.addEventListener("keydown",function(ev){ if(ev.key==="Enter"&&!ev.shiftKey){ ev.preventDefault(); if(!send.disabled) send.click() } if(ev.key==="Escape") closePop() });
+  popEl.querySelector(".lnk").addEventListener("click",function(){ mailrow.hidden=false; foot.textContent="I’ll reply to this email"; em.focus() });
+  em.addEventListener("keydown",function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); if(!send.disabled) send.click(); else ta.focus() } if(ev.key==="Escape") closePop() });
+  em.addEventListener("input",function(){ em.classList.remove("bad") });
   popEl.addEventListener("pointerdown",function(ev){ ev.stopPropagation() });
-  post.addEventListener("click",function(){
+  send.addEventListener("click",function(){
     var text=ta.value.trim(), mail=em.value.trim();
-    if(mail&&!/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i.test(mail)){ em.focus(); toast("That doesn’t look like an email"); return }
-    post.disabled=true; post.textContent="Posting…";
+    if(mail&&!EMAIL_RE.test(mail)){ em.classList.add("bad"); em.focus(); foot.textContent="That doesn’t look like an email"; return }
+    send.disabled=true; popEl.classList.add("sending");
     fetch(SHEET_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},
       body:JSON.stringify({notes:["[Comment on "+on+(mail?" · reply to "+mail:" · anonymous")+"] "+text],topic:"comment",replyTo:mail,page:location.href,sentAt:new Date().toISOString()})})
     .then(function(r){ if(!r.ok) throw 0 })
     .then(function(){
-      pins.push({page:st.page,wx:(sx-st.x)/st.zoom,wy:(sy-st.y)/st.zoom,text:text,on:on,email:mail});
+      pins.push({page:st.page,wx:draftPin.w.x,wy:draftPin.w.y,text:text,on:on,email:mail});
       try{ localStorage.setItem(PINS_KEY,JSON.stringify(pins)) }catch(e){}
       closePop(); placePins(); setTool("move");
-      toast(mail?"Comment sent. I’ll reply to "+mail:"Comment sent anonymously. Thank you!");
+      toast(mail?"Sent. I’ll reply to "+mail:"Sent anonymously. Thank you!");
     })
-    .catch(function(){ post.disabled=false; post.textContent="Post"; toast("Couldn’t send. Try again in a moment.") });
+    .catch(function(){ send.disabled=false; popEl.classList.remove("sending"); toast("Couldn’t send. Try again in a moment.") });
   });
 }
 
@@ -962,6 +1044,17 @@ cv.addEventListener("touchmove",function(e){
 cv.addEventListener("touchend",function(){ touches={} });
 
 addEventListener("resize",function(){ draw(); placePins() });
+/* first visit: say what this is and how it works, once */
+(function(){
+  var seen=false; try{ seen=localStorage.getItem("lb.figma.intro")==="1" }catch(e){}
+  var box=$("#intro"); if(!box||seen) return;
+  box.hidden=false;
+  function done(){ box.hidden=true; try{ localStorage.setItem("lb.figma.intro","1") }catch(e){} }
+  $("#introOk").addEventListener("click",done);
+  /* it steps aside the moment someone starts using the file */
+  cv.addEventListener("pointerdown",function(e){ if(!box.contains(e.target)) done() },true);
+  document.querySelector(".tb").addEventListener("click",done);
+})();
 loadPage(0);
 })();
 </script>
