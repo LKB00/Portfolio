@@ -273,7 +273,9 @@ button.av{cursor:pointer}
 .pin .bub{width:30px;height:30px;border-radius:50% 50% 50% 0;background:var(--ui);box-shadow:var(--e2);display:grid;place-items:center;overflow:hidden}
 .pin .bub span{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center;overflow:hidden}
 .pin .bub img{width:24px;height:24px;border-radius:50%;object-fit:cover}
-.pin.draftpin{pointer-events:none;animation:pinIn .2s cubic-bezier(.34,1.56,.64,1)}
+.pin.draftpin{animation:pinIn .2s cubic-bezier(.34,1.56,.64,1)}
+.pin.mine,.pin.draftpin{cursor:grab}.pin.dragging{cursor:grabbing;z-index:5}
+.pin.dragging .bub{box-shadow:var(--e4)}
 @keyframes pinIn{from{transform:translate(0,-100%) scale(.4)}to{transform:translate(0,-100%) scale(1)}}
 .pop{position:absolute;pointer-events:auto;width:300px;background:var(--ui);border-radius:12px;box-shadow:var(--e4);padding:12px;z-index:4}
 .pop .phd{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:11px;color:var(--tx2)}
@@ -1675,14 +1677,40 @@ function placePins(){
     var px=st.x+p.wx*st.zoom, py=st.y+p.wy*st.zoom;
     d.style.left=px+"px"; d.style.top=py+"px";
     d.innerHTML='<span class="bub"><span>Y</span></span>';
-    d.addEventListener("pointerdown",function(e){ e.stopPropagation() });
+    d.classList.add("mine");
     if(popEl&&popEl.forPin===p) d.classList.add("open");
-    d.addEventListener("click",function(e){ e.stopPropagation(); var was=popEl&&popEl.forPin===p; closePop(); if(!was) openPin(p) });
+    dragPin(d,{x:p.wx,y:p.wy},function(w){ p.wx=w.x; p.wy=w.y; if(popEl&&popEl.forPin===p) popEl.anchor={x:w.x,y:w.y} },
+      function(){ try{ localStorage.setItem(PINS_KEY,JSON.stringify(pins)) }catch(e){} },
+      function(){ var was=popEl&&popEl.forPin===p; closePop(); if(!was) openPin(p) });
     ov.appendChild(d);
   });
   if(draftPin&&draftPin.w){ draftPin.style.left=(st.x+draftPin.w.x*st.zoom)+"px"; draftPin.style.top=(st.y+draftPin.w.y*st.zoom)+"px" }
   if(popEl&&popEl.anchor) placePop(popEl,st.x+popEl.anchor.x*st.zoom,st.y+popEl.anchor.y*st.zoom);
   if(popEl&&popEl.forDec!=null){ var a=decAnchor(DECISIONS[popEl.forDec]); if(a) placePop(popEl,st.x+a.wx*st.zoom,st.y+a.wy*st.zoom) }
+}
+/* your pins move as in Figma: drag one and it follows, its card with it;
+   a press that doesn't travel is a click */
+function dragPin(el,w0,move,done,click){
+  el.addEventListener("pointerdown",function(e){
+    e.stopPropagation(); if(e.button!==0) return;
+    var sx=e.clientX, sy=e.clientY, b={x:w0.x,y:w0.y}, w=b, moved=false;
+    el.setPointerCapture(e.pointerId);
+    function mv(ev){
+      var dx=ev.clientX-sx, dy=ev.clientY-sy;
+      if(!moved&&Math.abs(dx)+Math.abs(dy)<4) return;
+      moved=true; el.classList.add("dragging");
+      var nw={x:b.x+dx/st.zoom,y:b.y+dy/st.zoom}; w=nw;
+      el.style.left=(st.x+nw.x*st.zoom)+"px"; el.style.top=(st.y+nw.y*st.zoom)+"px";
+      move(nw); if(popEl&&popEl.anchor) placePop(popEl,st.x+popEl.anchor.x*st.zoom,st.y+popEl.anchor.y*st.zoom);
+    }
+    function up(){
+      el.removeEventListener("pointermove",mv); el.removeEventListener("pointerup",up); el.removeEventListener("pointercancel",up);
+      el.classList.remove("dragging");
+      if(moved){ w0.x=w.x; w0.y=w.y; done&&done() } else click&&click();
+    }
+    el.addEventListener("pointermove",mv); el.addEventListener("pointerup",up); el.addEventListener("pointercancel",up);
+  });
+  el.addEventListener("click",function(e){ e.stopPropagation() });
 }
 function ago(t){ if(!t) return ""; var d=Math.round((Date.now()-t)/60000); return d<1?"Just now":d<60?d+"m ago":d<1440?Math.round(d/60)+"h ago":new Date(t).toLocaleDateString(undefined,{day:"numeric",month:"short"}) }
 function openPin(p){
@@ -1706,6 +1734,8 @@ function startComment(e){
   var h=hit(e), on=sectionOf(h), b=cv.getBoundingClientRect(), sx=e.clientX-b.left, sy=e.clientY-b.top;
   draftPin=document.createElement("button"); draftPin.className="pin draftpin"; draftPin.innerHTML='<span class="bub"><span>Y</span></span>';
   draftPin.w={x:(sx-st.x)/st.zoom,y:(sy-st.y)/st.zoom}; draftPin.style.left=sx+"px"; draftPin.style.top=sy+"px"; ov.appendChild(draftPin);
+  draftPin.setAttribute("aria-label","Your new comment’s pin; drag to move it");
+  dragPin(draftPin,draftPin.w,function(nw){ draftPin.w.x=nw.x; draftPin.w.y=nw.y },function(){ var t=popEl&&popEl.querySelector("textarea"); if(t) t.focus() },function(){ var t=popEl&&popEl.querySelector("textarea"); if(t) t.focus() });
   popEl=document.createElement("div"); popEl.className="pop compose"; popEl.anchor=draftPin.w;
   popEl.setAttribute("role","dialog"); popEl.setAttribute("aria-label","Comment to Lokesh");
   popEl.innerHTML=
