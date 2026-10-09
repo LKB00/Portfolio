@@ -4415,6 +4415,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       top.classList.toggle("is-known",!!me);
       top.classList.toggle("is-bad",isBad);
       if(isBad) topText.textContent=narrow?"That doesn’t look like an email.":"That doesn’t look like an email. Fix it, or remove it to stay anonymous.";
+      else if(me&&narrow) topText.textContent="I’ll know it’s you, and reply.";
       else if(me){ topText.innerHTML="I’ll know it’s you, and reply to <b></b>."; topText.querySelector("b").textContent=me }
       else if(editing) topText.textContent=narrow?"Add your email to get a reply.":"Add your email below and I’ll reply to it.";
       else topText.innerHTML=(narrow?"Anonymous. ":"Anonymous: I won’t know it’s you. ")+(board.classList.contains("has-text")
@@ -4520,7 +4521,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var A=area(); if(!A.w) return {x:8,y:20};
     var w=el.offsetWidth,h=el.offsetHeight,
         W=A.right-A.left, H=A.bottom-A.top,
-        sx=w-OVER_X, sy=h-OVER_Y,
+        /* a phone's board is too narrow to overlap notes without
+           hiding their words, so there they sit with a small gap */
+        tight=A.w<420, sx=w-(tight?-6:OVER_X), sy=h-(tight?-6:OVER_Y),
         cols=Math.max(1,Math.floor((W-w)/sx)+1),
         rows=Math.max(1,Math.floor((H-h)/sy)+1),
         ox=A.left+(W-(w+(cols-1)*sx))/2,
