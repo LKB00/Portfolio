@@ -11,7 +11,7 @@ if(!t){try{if(window.top!==window.self)t=parent.document.documentElement.getAttr
 if(!t){try{t=localStorage.getItem("portfolio-theme")}catch(e){}}
 document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light");
 addEventListener("storage",function(e){if(e.key==="portfolio-theme")document.documentElement.setAttribute("data-theme",e.newValue==="dark"?"dark":"light")})})();</script>
-<script defer src="./analytics.js?v=4"></script>
+<script defer src="./analytics.js?v=5"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <link rel="icon" href="./assets/lokesh-face.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,13 +94,18 @@ svg{flex:none}
 .pg .cnt{margin-left:auto;display:flex;align-items:center;gap:3px;color:var(--purple);font-weight:500}
 .psep{height:1px;margin:6px 16px;background:var(--line)}
 .lfind{padding:8px;border-bottom:1px solid var(--line);flex:none}.lfind[hidden]{display:none}
-.lfind input{display:block;width:100%;height:28px;padding:0 10px;border-radius:6px;border:0;outline:0;background:#383838;color:#fff;font:12px Inter,sans-serif}
+.lfind input{display:block;width:100%;height:28px;padding:0 10px;border-radius:6px;border:0;outline:0;background:#F5F5F5;color:rgba(0,0,0,.9);font:12px Inter,sans-serif}
+:root[data-theme="dark"] .lfind input{background:#383838;color:#fff}
 .lp.finding .pages,.lp.finding .layers{display:none}
 .fres{flex:1;min-height:0;overflow:auto;padding:4px 0 16px}.fres[hidden]{display:none}
 .fres .sh{height:28px}.fres .fr{display:flex;align-items:center;gap:6px;height:28px;margin:0 8px;padding:0 8px;border-radius:5px;width:calc(100% - 16px);text-align:left;white-space:nowrap;overflow:hidden}
 .fres .fr:hover{background:var(--hover,rgba(255,255,255,.06))}.fres .fr .ic{flex:none;display:grid;place-items:center;width:16px;color:var(--tx3)}
 .fres .fr .nm{overflow:hidden;text-overflow:ellipsis}.fres .fr small{margin-left:auto;padding-left:8px;color:var(--tx3);font-size:10px}
+.fres .fr.hl{background:var(--blueSoft)}
 .fres .none{padding:8px 16px;color:var(--tx3)}
+.row.kfocus{box-shadow:inset 0 0 0 1px var(--blue)}
+#tree:focus{outline:none}
+.pdiv{height:1px;margin:6px 16px;background:var(--line)}
 .plabel{padding:4px 16px 2px;color:var(--tx3);font-size:10px;letter-spacing:.02em;text-transform:uppercase}
 .layers{flex:1;min-height:0;display:flex;flex-direction:column}
 .tree{flex:1;overflow:auto;padding:0 8px 16px;overscroll-behavior:contain}
@@ -175,8 +180,23 @@ button.av{cursor:pointer}
 .var .vv{color:var(--tx2);font-variant-numeric:tabular-nums;text-transform:uppercase}
 .more{margin:2px 16px 0;color:var(--blue);font-weight:500;cursor:pointer}
 .selhead{display:flex;align-items:center;gap:6px;height:40px;padding:0 8px 0 16px;border-bottom:1px solid var(--line)}
-.selhead .ty{display:flex;align-items:center;gap:4px;font-weight:600}
-.selhead .nm{color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.selhead .ic{display:grid;place-items:center;color:var(--tx2)}
+.selhead .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.selhead .tx2{margin-left:auto;padding-right:8px;flex:none}
+/* a labelled value row: Figma's property rows, with words for labels */
+.kv{display:flex;align-items:center;justify-content:space-between;gap:8px;height:24px;padding:0 16px;font-size:11px}
+.kv span{color:var(--tx2)}.kv b{font-weight:400;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%;text-align:right}
+.vpill{display:inline-flex;align-items:center;height:18px;padding:0 6px;border-radius:4px;background:var(--ui2);color:var(--tx);font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sw.thumb{background-size:cover;background-position:center}
+.flow{display:flex;align-items:flex-start;gap:8px;width:calc(100% - 16px);margin:0 8px;padding:6px 8px;border-radius:5px;text-align:left}
+.flow:hover{background:var(--hover)}
+.flow .dot{margin-top:2px}.flow .fl{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.flow .fl b{font-weight:500}.flow .fl .tx2{line-height:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.flow .fplay{opacity:0;color:var(--tx2);font-size:9px;margin-top:3px}.flow:hover .fplay{opacity:1}
+.exrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 16px 4px;font-size:11px}
+.exrow span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.exbtn{height:24px;padding:0 10px;border-radius:5px;display:inline-flex;align-items:center;background:var(--ui2);color:var(--tx);text-decoration:none;font-weight:500}
+.exbtn:hover{background:var(--hover)}
 .code{margin:0 16px;padding:10px 12px;border-radius:6px;background:var(--ui2);font:11px/18px var(--mono);white-space:pre-wrap;word-break:break-word;user-select:text;color:var(--tx)}
 .code .k{color:#C2185B}.code .v{color:var(--blue)}
 :root[data-theme="dark"] .code .k{color:#FF8FB8}
@@ -212,12 +232,20 @@ button.av{cursor:pointer}
 .cv.comment{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M3 21V12a9 9 0 1 1 9 9z' fill='%23fff' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") 2 22,crosshair}
 .cv.follow{box-shadow:inset 0 0 0 3px var(--purple)}
 .world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
-.frame{position:absolute;background:#fff}
-.frame iframe{display:block;border:0;pointer-events:none;background:#fff}
+.frame{position:absolute;background:var(--page,#FAFAFA)}
+.frame iframe{display:block;border:0;pointer-events:none;background:var(--page,#FAFAFA)}
+:root{--page:#FAFAFA}:root[data-theme="dark"]{--page:#0F0F0F}
+/* a frame that didn't load says so, and offers to try again */
+.frame .ferr{position:absolute;left:50%;top:calc(120px / var(--z,1));transform:translateX(-50%) scale(calc(1 / var(--z,1)));transform-origin:top center;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--tx2);font-size:13px;white-space:nowrap}
+.frame .ferr button{height:28px;padding:0 12px;border-radius:5px;background:var(--blue);color:#fff;font-weight:500;cursor:pointer}
 .flabel{position:absolute;transform-origin:0 100%;white-space:nowrap;font-size:11px;color:var(--tx2);padding-bottom:4px}
 .flabel.sel{color:var(--blue)}
 .ov{position:absolute;inset:0;pointer-events:none}
 .box{position:absolute;box-shadow:0 0 0 1px var(--blue);display:none}
+.meas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:4}
+.meas line{stroke:#F24822;stroke-width:1}.meas .mb{fill:#F24822}.meas text{fill:#fff;font:600 10px Inter,sans-serif}
+/* Dev Mode: Figma's dev green */
+.app.dev .box{--blue:#14AE5C}.app.dev .box.hov{box-shadow:0 0 0 1.5px #14AE5C}
 .box.hov{box-shadow:0 0 0 1.5px var(--blue)}
 .box.sel i{position:absolute;width:7px;height:7px;background:#fff;box-shadow:0 0 0 1px var(--blue)}
 .box.sel i:nth-child(1){left:-4px;top:-4px}.box.sel i:nth-child(2){right:-4px;top:-4px}
@@ -276,6 +304,7 @@ button.av{cursor:pointer}
 .tl:hover{background:var(--hover)}
 .tl.on{background:var(--blue);color:#fff}
 .tl .chev{color:inherit;opacity:.7}
+.tlg{display:flex;align-items:center}.tlg .tchev{min-width:16px;width:16px;padding:0;margin-left:-2px}
 .tl.act{gap:6px;font-weight:500}
 .tsep{width:1px;height:20px;background:var(--line);margin:0 4px}
 .mode{display:flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 10px;border-radius:8px;font-weight:500}
@@ -288,6 +317,8 @@ button.av{cursor:pointer}
   padding:4px 8px;border-radius:5px;background:#1E1E1E;color:#fff;white-space:nowrap;font-size:11px;font-weight:400;pointer-events:none;z-index:9}
 .rt [data-tip]:hover::after{bottom:auto;top:calc(100% + 6px)}
 .rt [data-tip]{position:relative}
+.ib,.mode,.tb [data-tip]{position:relative}
+.lh [data-tip]:hover::after,.ltabs [data-tip]:hover::after{bottom:auto;top:calc(100% + 6px);left:0;transform:none}
 
 .toast{position:absolute;left:50%;bottom:72px;transform:translateX(-50%) translateY(8px);padding:8px 14px;border-radius:8px;
   background:#1E1E1E;color:#fff;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:7;white-space:nowrap}
@@ -299,6 +330,9 @@ button.av{cursor:pointer}
 .menu button:hover span,.menu button.hl span{color:#fff}
 .menu hr{border:0;height:1px;background:#383838;margin:6px 0}
 .menu .q{display:block;width:calc(100% - 16px);margin:0 8px 6px;height:28px;padding:0 10px;border-radius:6px;border:0;outline:0;background:#383838;color:#fff;font:12px Inter,sans-serif}
+.menu .ck{width:12px;margin-left:-16px;display:grid;place-items:center;flex:none}
+.menu .lb{flex:1;text-align:left;white-space:nowrap}.menu .lb i{font-style:normal;color:#999}
+.menu button:hover .lb i,.menu button.hl .lb i{color:#fff}
 .menu .mh{padding:4px 24px 2px;color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
 
 /* following someone: Figma's spotlight bar */
@@ -338,11 +372,21 @@ button.av{cursor:pointer}
 .pbar .x:hover{background:#383838}
 .pstage{flex:1;display:grid;place-items:center;padding:0 16px 16px;min-height:0}
 .pstage iframe{border:0;background:#fff;width:100%;height:100%;border-radius:4px}
-.pstage.mobile iframe{width:390px;height:min(844px,100%);border-radius:28px;box-shadow:0 0 0 10px #000,0 20px 60px rgba(0,0,0,.5)}
+.pstage.mobile iframe{width:390px;height:min(844px,100%);border-radius:0;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 12px 40px rgba(0,0,0,.5)}
+.plogo{display:flex;align-items:center;margin-right:8px}
+.pfoot{display:flex;align-items:center;justify-content:center;gap:8px;height:48px;flex:none;color:#fff}
+.pnav{width:32px;height:32px;border-radius:6px;display:grid;place-items:center;color:#fff;position:relative}.pnav:hover{background:#383838}.pnav:disabled{opacity:.35}
+.pcount{font-size:11px;color:#B3B3B3;min-width:64px;text-align:center}
+.prest{height:28px;padding:0 10px;border-radius:5px;color:#fff;margin-left:8px}.prest:hover{background:#383838}
 
 /* phones: the canvas, with the panels a tap away */
-@media (max-width:900px){
+@media (max-width:767px){
   .app{grid-template-columns:1fr}
+  .scrim{display:block}.app.show-l .scrim,.app.show-r .scrim{opacity:1;pointer-events:auto}
+  .dclose{display:grid!important}
+  .lp,.rp{padding-top:44px}
+  .tb #actBtn,.tb #devBtn,.tb .tsep,.tb #mvMenu{display:none}
+  .tb .tl.ponly{display:flex}
   .lp,.rp{position:fixed;top:0;bottom:0;width:min(300px,86vw);box-shadow:0 0 40px rgba(0,0,0,.2);transition:transform .25s}
   .lp{left:0;transform:translateX(-105%)}.rp{right:0;transform:translateX(105%)}
   .app.show-l .lp,.app.show-r .rp{transform:none}
@@ -350,6 +394,12 @@ button.av{cursor:pointer}
   .intro{top:52px}
   .tb .tl.act span{display:none}
 }
+.scrim{display:none;position:fixed;inset:0;z-index:28;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s}
+.lp,.rp{z-index:29}
+.dclose{display:none!important;position:absolute;top:10px;right:8px;z-index:2}
+.tb .ponly{display:none}
+/* keyboard focus, always visible */
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:2px solid #0D99FF;outline-offset:1px}
 .mob{display:none;position:absolute;top:10px;left:10px;right:10px;justify-content:space-between;z-index:6;pointer-events:none}
 .mob button{pointer-events:auto;height:32px;padding:0 12px;border-radius:8px;background:var(--ui);box-shadow:0 2px 8px rgba(0,0,0,.12);font-weight:500}
 
@@ -375,12 +425,44 @@ button.av{cursor:pointer}
   font-size:calc(13px / var(--z,1));color:var(--tx2);white-space:nowrap}
 @keyframes shimmer{from{background-position:150% 0}to{background-position:-50% 0}}
 @media (prefers-reduced-motion:reduce){.frame.loading::before{animation:none}}
+/* Figma's hyperlink popover: shown above a link you click on the canvas */
+.lpop{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;height:32px;padding:0 6px 0 10px;border-radius:8px;background:var(--ui);color:var(--tx);
+  box-shadow:0 0 .5px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.14);font-size:11px;white-space:nowrap;transform:translate(-50%,calc(-100% - 8px));pointer-events:auto;cursor:default}
+.lpop .lp-t{color:var(--tx2);max-width:220px;overflow:hidden;text-overflow:ellipsis}
+.lpop button{display:flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:5px;color:var(--blue);font-weight:500}
+.lpop button:hover{background:var(--blueSoft)}
+.ixgo{color:var(--blue);text-decoration:none;font-weight:500}.ixgo:hover{text-decoration:underline}
+.playg{display:flex;align-items:center}.playg .pchev{width:16px;padding:0;margin-left:-4px}
+.hv .d{display:flex;align-items:center;gap:6px}.hva{width:16px;height:16px;border:0;flex:none}.hva img{width:100%;height:100%;object-fit:cover}
+.kbd{position:absolute;left:12px;right:12px;bottom:12px;z-index:12;max-height:46%;overflow:auto;border-radius:13px;background:var(--ui);color:var(--tx);box-shadow:0 0 .5px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.18)}
+.kbd[hidden]{display:none}
+.kbd .kh{display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 8px 0 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ui)}
+.kbd .kh .ib{font-size:16px}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 24px;padding:12px 16px 16px}
+.kg h4{margin:8px 0 4px;font-size:11px;font-weight:600}
+.kg div{display:flex;justify-content:space-between;gap:12px;height:24px;align-items:center;font-size:11px;color:var(--tx2)}
+.kg kbd{font:11px Inter,sans-serif;color:var(--tx)}
+/* Hide UI: only the canvas; minimise peek: the properties panel back while something is selected */
+.app.hideui .lp,.app.hideui .rp,.app.hideui .tb,.app.hideui .intro{display:none!important}
+.app.hideui{grid-template-columns:0 1fr 0}
+.app.min.peek .rp{visibility:visible;position:fixed;right:12px;top:72px;bottom:72px;width:240px;z-index:25;border-radius:13px;border:0;box-shadow:0 0 .5px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.2);overflow:auto}
+.app.min.peek .rp .rt{display:none}
+.bm{padding:4px 16px 8px;font-size:10px;color:var(--tx2)}
+.bm div{position:relative;padding:16px 22px;border:1px dashed var(--line);border-radius:3px;text-align:center}
+.bm-m{background:color-mix(in srgb,#F5A623 10%,transparent)}.bm-b{background:var(--ui)}.bm-p{background:color-mix(in srgb,#14AE5C 10%,transparent)}
+.bm-c{border-style:solid!important;background:color-mix(in srgb,#0D99FF 12%,transparent);color:var(--tx);padding:6px!important}
+.bm i{position:absolute;left:4px;top:2px;font-style:normal;font-size:9px}.bm b{position:absolute;font-weight:400}
+.bm b.t{top:2px;left:50%;transform:translateX(-50%)}.bm b.b{bottom:2px;left:50%;transform:translateX(-50%)}.bm b.l{left:6px;top:50%;transform:translateY(-50%)}.bm b.r{right:6px;top:50%;transform:translateY(-50%)}
+.dvrow{display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:0 8px;height:28px;padding:0 8px;border-radius:5px;font-size:11px;text-align:left;cursor:pointer}
+.dvrow:hover{background:var(--hover)}.dvrow .tx2{margin-left:auto}
+.mono{font-family:var(--mono);font-size:10px}
 </style>
 </head>
 <body>
 <div class="app" id="app">
 
   <aside class="lp" aria-label="Navigation">
+    <button class="ib dclose" id="lpX" aria-label="Close pages and layers"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <div class="lh">
       <button class="logo" id="logoBtn" aria-label="Main menu">
         <svg width="12" height="18" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>
@@ -389,9 +471,9 @@ button.av{cursor:pointer}
       <button class="fname" id="fileBtn"><b>Portfolio <i class="beta">Beta</i><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></b><span>Lokesh Bhatia · View only</span></button>
       <button class="ib" id="minBtn" aria-label="Minimize UI" data-tip="Minimize UI  ⇧\"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
     </div>
-    <div class="ltabs"><button class="tab on">File</button><button class="tab" id="assetsTab">Assets</button>
+    <div class="ltabs"><span class="tab on" aria-current="page">File</span>
       <button class="ib" id="searchBtn" aria-label="Find pages and layers" data-tip="Find  ⌘F"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button></div>
-    <div class="lfind" id="lfind" hidden><input id="findQ" type="search" placeholder="Find pages and layers…" aria-label="Find pages and layers"></div>
+    <div class="lfind" id="lfind" hidden><input id="findQ" type="search" placeholder="Find pages and layers" aria-label="Find pages and layers"></div>
     <div class="fres" id="fres" hidden></div>
     <div class="pages">
       <div class="sh">Pages</div>
@@ -406,37 +488,41 @@ button.av{cursor:pointer}
   <main class="cv" id="cv" aria-label="Canvas">
     <div class="world" id="world"></div>
     <div class="ov" id="ov">
+      <svg class="meas" id="meas" aria-hidden="true"></svg>
       <div class="box hov" id="hovBox"></div>
       <div class="box sel" id="selBox"><i></i><i></i><i></i><i></i><span class="dim" id="selDim"></span></div>
     </div>
     <div class="fbar" id="fbar"><img src="./assets/avatar-96.webp" alt=""><span>Following Lokesh</span><span class="st" id="fstep"></span><button id="fnext">Next</button><button id="fstop">Stop</button></div>
-    <div class="mob"><button id="mobL">Pages &amp; layers</button><button id="mobR">Design</button></div>
+    <div class="mob"><button id="mobL" aria-label="Open pages and layers">Pages</button><button id="mobR" aria-label="Open properties">Properties</button></div>
+    <div class="scrim" id="scrim" aria-hidden="true"></div>
     <div class="tb" role="toolbar" aria-label="Tools">
-      <button class="tl on" data-tool="move" data-tip="Move  V" aria-label="Move"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button>
-      <button class="tl" data-tool="hand" data-tip="Hand tool  H" aria-label="Hand tool"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></button>
+      <span class="tlg"><button class="tl on" id="mvBtn" data-tool="move" data-tip="Move  V" aria-label="Move"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg></button><button class="tl tchev" id="mvMenu" aria-label="Move and hand tools"><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></span>
       <button class="tl" data-tool="comment" data-tip="Comment  C" aria-label="Comment"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 21V12a9 9 0 1 1 9 9z"/></svg></button>
+      <button class="tl ponly" id="presentTb" aria-label="Present" data-tip="Present"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button>
       <span class="tsep" aria-hidden="true"></span>
       <button class="tl act" id="actBtn" data-tip="Actions  ⌘K" aria-label="Actions"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M9.9 15.5A2 2 0 0 0 8.5 14l-6.1-1.6a.5.5 0 0 1 0-1L8.5 10a2 2 0 0 0 1.4-1.4l1.6-6.1a.5.5 0 0 1 1 0L14 8.5A2 2 0 0 0 15.5 10l6.1 1.6a.5.5 0 0 1 0 1L15.5 14a2 2 0 0 0-1.4 1.4l-1.6 6.1a.5.5 0 0 1-1 0z"/></svg><span>Actions</span></button>
       <span class="tsep" aria-hidden="true"></span>
       <button class="mode" id="devBtn" data-tip="Dev Mode  ⇧D" aria-label="Dev Mode" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg><span class="sw2"></span></button>
     </div>
     <div class="toast" id="toast" role="status"></div>
+    <div class="kbd" id="kbd" hidden role="dialog" aria-label="Keyboard shortcuts"><div class="kh"><b>Keyboard shortcuts</b><button class="ib" id="kbdX" aria-label="Close keyboard shortcuts" data-tip="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div class="kg" id="kbdBody"></div></div>
     <div class="intro" id="intro" hidden>
       <img src="./assets/avatar-96.webp" alt="">
-      <span class="it"><b>My portfolio, as a Figma file.</b> <span class="tx2">Click any part to see how it’s built, or a case study to open it.</span></span>
+      <span class="it"><b>My portfolio, as a Figma file.</b> <span class="tx2">Click anything to inspect it, or press ▶ to use the site.</span></span>
       <button class="pri" id="introTour">Take the 1-minute tour</button>
       <button class="ib" id="introOk" aria-label="Dismiss"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
   </main>
 
   <aside class="rp" aria-label="Properties">
+    <button class="ib dclose" id="rpX" aria-label="Close properties"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <div class="rt">
       <div class="avs">
         <button class="av me" id="lkAv" style="background:#9747FF" data-tip="Follow Lokesh’s tour" aria-label="Follow Lokesh’s 1-minute tour"><img src="./assets/avatar-96.webp" alt=""></button>
         <span class="av" style="background:#14AE5C" title="You">Y</span>
       </div>
       <button class="zoomb mz" id="zoomMini" aria-label="Zoom"><span id="zoomPctMini">100%</span><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button>
-      <button class="play" id="presentBtn" aria-label="Present" data-tip="Present  ⌥⌘↵"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button>
+      <span class="playg"><button class="play" id="presentBtn" aria-label="Present" data-tip="Present  ⌥⌘↵"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button><button class="play pchev" id="presentMenu" aria-label="Present options"><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></button></span>
       <button class="share" id="shareBtn">Share</button>
     </div>
     <div class="rtabs" id="rtabs"></div>
@@ -446,11 +532,12 @@ button.av{cursor:pointer}
 
 <div class="present" id="present" role="dialog" aria-label="Prototype">
   <div class="pbar">
-    <b id="pTitle">Home</b>
+    <span class="plogo"><svg width="12" height="18" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span><b id="pTitle">Home</b>
     <div class="seg"><button data-dev="desktop" class="on">Desktop</button><button data-dev="mobile">Mobile</button></div>
     <button class="x" id="pClose" aria-label="Close prototype"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
   <div class="pstage" id="pStage"><iframe id="pFrame" title="Prototype"></iframe></div>
+  <div class="pfoot"><button class="pnav" id="pPrev" aria-label="Previous page" data-tip="Previous page  ←"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><span id="pCount" class="pcount"></span><button class="pnav" id="pNext" aria-label="Next page" data-tip="Next page  →"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button><button class="prest" id="pRestart">Restart</button></div>
 </div>
 
 <script>
@@ -505,7 +592,7 @@ var DECISIONS=ALL_DECISIONS.filter(function(d){ return !d.draft });
 
 /* how the site changed, in my words; dates from the repository */
 var HISTORY=[
-  {d:"9 Oct 2026",t:"Figma view, in beta",p:"The portfolio as a view-only design file: the live pages as frames, inspectable, with a one-minute tour."},
+  {d:"9 Oct 2026",t:"Figma view, in beta",p:"The portfolio as a view-only design file: the live pages as frames, inspectable."},
   {d:"9 Oct 2026",t:"Notes board rebuilt",p:"Visitors were asking an anonymous box for my contact details. It now says it’s anonymous, and you can sign a note with your email."},
   {d:"30 Sep 2026",t:"One visual system across the portfolio",p:"Every case study on the same layout; Getbaq restructured from problem to proof."},
   {d:"28 Sep 2026",t:"Screenshots became prototypes",p:"The web terminal case study now shows the live prototype instead of static screens."},
@@ -534,11 +621,23 @@ var st={page:1,zoom:.5,x:0,y:0,tool:"move",dev:false,rtab:"design",frames:[],sel
 
 /* opened over the homepage (in its layer) rather than as its own page */
 var EMBED=false; try{ EMBED=window.top!==window.self&&!!parent.document.querySelector(".fvlay") }catch(e){}
-function home(){ if(EMBED) parent.postMessage({fvClose:1},location.origin); else location.href="./index.html" }
-function shareURL(){ try{ if(EMBED) return parent.location.href.split("#")[0]+"#figma" }catch(e){} return location.href.split("#")[0] }
+function home(){ T("fv_back",{page:pageSlug(),secondsOpen:Math.round((Date.now()-T0)/1000)}); if(EMBED) parent.postMessage({fvClose:1},location.origin); else location.href="./index.html" }
+function shareURL(){ var sl=pageSlug(); try{ if(EMBED) return parent.location.href.split("#")[0]+"#figma/"+sl }catch(e){} return location.href.split("#")[0]+"#"+sl }
 var toldReady=false;
+/* usage: what visitors do in the file, never what they type */
+var T0=Date.now(), seenSel={};
+function T(name,data){ try{ if(window.pfTrack) window.pfTrack(name,data) }catch(e){} }
+function pageSlug(i){ var p=PAGES[i==null?st.page:i]; return p&&p.name?p.name.toLowerCase().replace(/[^a-z0-9]+/g,"-"):"" }
 
-addEventListener("storage",function(e){ if(e.key==="portfolio-theme"&&!EMBED&&st.frames.length) setTimeout(function(){ loadPage(st.page) },0) });
+function applyTheme(t){
+  t=t==="dark"?"dark":"light"; document.documentElement.setAttribute("data-theme",t);
+  allFrames().forEach(function(f){
+    if(f.ifr.hasAttribute("srcdoc")){ f.ready=false; f.doc=null; f.ifr.srcdoc=f.name==="Cover"?coverHTML():(SITE?foundationsHTML(SITE):f.ifr.srcdoc) }
+    else if(f.doc){ f.doc.documentElement.setAttribute("data-theme",t); f.doc.documentElement.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA" }
+  });
+  renderProps();
+}
+addEventListener("storage",function(e){ if(e.key==="portfolio-theme") applyTheme(e.newValue) });
 
 /* ═══ HELPERS ═══════════════════════════════════════════════════════ */
 function toast(msg){ toastEl.textContent=msg; toastEl.classList.add("on"); clearTimeout(toast.t); toast.t=setTimeout(function(){toastEl.classList.remove("on")},2400) }
@@ -569,6 +668,39 @@ function pageOfLink(t){
   for(var i=0;i<PAGES.length;i++) if(PAGES[i].src&&PAGES[i].src.replace("./","")===path) return i;
   return -1;
 }
+/* Where a link goes, from the element's own attributes only. Used by the
+   canvas popover and by Interactions, so both always say the same. */
+function linkInfo(el,f){
+  if(!el||!el.closest) return null;
+  var a=el.closest("a[href],[data-go],[data-href],[data-copy],[data-home]"); if(!a) return null;
+  if(a.dataset&&a.dataset.home) return {a:a,kind:"home",verb:"Back to the website",label:"",act:home};
+  if(a.dataset&&a.dataset.go){ var gi=pageIndex(a.dataset.go); return {a:a,kind:"page",verb:"Navigate to",label:a.dataset.go,act:function(){ T("fv_follow_link",{from:pageSlug(),to:pageSlug(gi)}); loadPage(gi) }} }
+  if(a.dataset&&a.dataset.copy) return {a:a,kind:"copy",verb:"Copy",label:a.dataset.copy,act:function(){ copy(a.dataset.copy,"Copied "+a.dataset.copy) }};
+  if(a.dataset&&a.dataset.href) return {a:a,kind:"url",verb:"Open link",label:a.dataset.href.replace(/^https?:\/\//,"").replace(/\/$/,""),act:function(){ T("fv_follow_link",{from:pageSlug(),to:"external"}); window.open(a.dataset.href,"_blank","noopener") }};
+  var href=a.getAttribute("href")||"";
+  if(/^mailto:/i.test(href)){ var m=href.replace(/^mailto:/i,"").split("?")[0]; return {a:a,kind:"copy",verb:"Copy",label:m,act:function(){ copy(m,"Copied "+m) }} }
+  var pi=pageOfLink(a);
+  if(pi>-1&&pi!==st.page) return {a:a,kind:"page",verb:"Navigate to",label:PAGES[pi].name,act:function(){ T("fv_follow_link",{from:pageSlug(),to:pageSlug(pi)}); loadPage(pi) }};
+  var hash=href.indexOf("#")>-1?href.slice(href.indexOf("#")+1):"";
+  if((pi===st.page||href.charAt(0)==="#")&&hash){ var t=a.ownerDocument.getElementById(hash), nm=t&&f?nameOf(t,f):hash;
+    return {a:a,kind:"scroll",verb:"Scroll to",label:nm,act:function(){ if(t&&f){ select(f,t,layerParent(t,f)); reveal(f,t) } }} }
+  if(/^https?:/i.test(href)) return {a:a,kind:"url",verb:"Open link",label:href.replace(/^https?:\/\/(www\.)?/,"").replace(/\/$/,""),act:function(){ T("fv_follow_link",{from:pageSlug(),to:"external"}); window.open(a.href,"_blank","noopener") }};
+  if(/\.pdf($|\?)/i.test(href)) return {a:a,kind:"url",verb:"Open link",label:href.replace(/^\.\//,""),act:function(){ window.open(a.href,"_blank","noopener") }};
+  return null;
+}
+/* the popover: above the link you clicked, following the canvas as it moves */
+var lpop=null;
+function closeLinkPop(){ if(lpop){ lpop.el.remove(); lpop=null } }
+function showLinkPop(f,info){
+  closeLinkPop();
+  var r=frameRect(f,info.a), el=document.createElement("div"); el.className="lpop"; el.setAttribute("role","dialog");
+  var ext=info.kind==="url"?' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>':"";
+  el.innerHTML=(info.label&&info.kind!=="page"?'<span class="lp-t">'+esc(info.label)+'</span>':'')+'<button type="button">'+esc(info.kind==="page"?"Go to "+info.label:info.kind==="copy"?"Copy":info.kind==="scroll"?"Scroll to "+info.label:"Open")+ext+'</button>';
+  el.addEventListener("pointerdown",function(e){ e.stopPropagation() });
+  el.querySelector("button").addEventListener("click",function(){ var a=info.act; closeLinkPop(); a() });
+  ov.appendChild(el); lpop={el:el,f:f,w:{x:f.x+r.x+r.w/2,y:f.y+r.y}}; placeLinkPop();
+}
+function placeLinkPop(){ if(lpop){ lpop.el.style.left=(st.x+lpop.w.x*st.zoom)+"px"; lpop.el.style.top=(st.y+lpop.w.y*st.zoom)+"px" } }
 function copy(text,msg){ (navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(function(){ toast(msg||"Copied") },function(){ toast(text) }) }
 var CHEV='<svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>';
 var XSVG='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
@@ -592,7 +724,7 @@ var CARET='<svg width="8" height="8" viewBox="0 0 8 8"><path d="M2.5 1.5 5.5 4l-
 /* ═══ READING THE REAL PAGES AS LAYERS ══════════════════════════════ */
 var SKIP={SCRIPT:1,STYLE:1,LINK:1,META:1,NOSCRIPT:1,TEMPLATE:1,BR:1,HEAD:1,TITLE:1};
 var INLINE={SPAN:1,B:1,I:1,EM:1,STRONG:1,A:1,SUP:1,SUB:1,SMALL:1,MARK:1,CODE:1,BR:1,ABBR:1,TIME:1,KBD:1};
-var NAMES={top:"Hero",work:"Selected work",words:"What people said",notes:"Notes",contact:"Footer",siteHeader:"Navigation",totop:"Back to top",askDock:"Ask my AI twin",padTrigger:"Note trigger",heroAsk:"Ask my AI twin"};
+var NAMES={next:"Next case study",experience:"Experience",loader:"Intro loader",palette:"Command palette",mobileNav:"Mobile menu",aiChat:"AI twin chat",toast:"Toast",top:"Hero",work:"Selected work",words:"What people said",notes:"Notes",contact:"Footer",siteHeader:"Navigation",totop:"Back to top",askDock:"Ask my AI twin",padTrigger:"Note trigger",heroAsk:"Ask my AI twin"};
 function win(el){ return el.ownerDocument.defaultView }
 function visible(el){
   if(SKIP[el.tagName]) return false;
@@ -607,14 +739,14 @@ function isText(el){
   for(var i=0;i<el.children.length;i++){ var c=el.children[i]; if(!INLINE[c.tagName]||c.querySelector("img,svg,video")) return false }
   return true;
 }
-function kids(el){
+function kids(el,withHidden){
   if(isText(el)||el.tagName.toLowerCase()==="svg") return [];
   var out=[];
   for(var i=0;i<el.children.length;i++){
     var c=el.children[i];
-    if(SKIP[c.tagName]) continue;
-    if(c.tagName==="MAIN"||(c.classList.contains("wrap")&&c.parentElement===c.ownerDocument.body)){ out=out.concat(kids(c)); continue }
-    if(visible(c)||st.hidden.has(c)) out.push(c);
+    if(SKIP[c.tagName]||c.hasAttribute("data-fvskip")) continue;
+    if(c.tagName==="MAIN"||((c.classList.contains("wrap")||c.classList.contains("shell"))&&c.parentElement===c.ownerDocument.body)){ out=out.concat(kids(c,withHidden)); continue }
+    if(visible(c)||(withHidden&&c.tagName.toUpperCase()!=="SVG"&&(c.children.length||c.textContent.trim()))) out.push(c);
   }
   return out;
 }
@@ -624,7 +756,7 @@ function kindOf(el,root){
   if(t==="IMG"||t==="PICTURE"||t==="CANVAS") return "image";
   if(t==="VIDEO") return "video";
   if(t==="SVG") return "vector";
-  if(t==="A"||t==="BUTTON"||el.hasAttribute("data-go")) return "instance";
+  if(compOf(el)) return "instance";
   if(isText(el)) return "text";
   var d=win(el).getComputedStyle(el).display;
   if(/flex|grid/.test(d)) return "auto";
@@ -635,35 +767,50 @@ function iconOf(el,k){
   if(k==="auto"){ var cs=win(el).getComputedStyle(el); return cs.display.indexOf("flex")>-1&&cs.flexDirection.indexOf("row")===0?ICON.autoH:ICON.auto }
   return ICON[k]||ICON.frame;
 }
-function human(s){
-  s=s.replace(/[-_]+/g," ").replace(/([a-z])([A-Z])/g,"$1 $2").toLowerCase().split(" ").filter(function(w,i,a){ return w.length>1||a.length===1 }).join(" ").trim()||s;
-  return s.charAt(0).toUpperCase()+s.slice(1);
-}
+function clip(x,n){ x=x.replace(/\s+/g," ").trim(); return x.length>n?x.slice(0,n)+"…":x }
 function nameOf(el,f){
   if(f&&el===f.root) return f.name;
   if(el.dataset&&el.dataset.layer) return el.dataset.layer;
   if(el.id&&NAMES[el.id]) return NAMES[el.id];
   if(el.dataset&&el.dataset.section) return el.dataset.section;
-  var t=el.tagName.toUpperCase();
-  if(isText(el)){ var s=el.textContent.replace(/\s+/g," ").trim(); return s.length>40?s.slice(0,40)+"…":s }
-  if(t==="IMG"){ var a=el.getAttribute("alt"); if(a) return a.length>40?a.slice(0,40)+"…":a; return (el.getAttribute("src")||"Image").split("/").pop().replace(/\.\w+$/,"") }
-  if(t==="VIDEO") return "Video";
+  var t=el.tagName.toUpperCase(), c=compOf(el);
+  if(c&&c.n==="Case card"&&c.p[0][1].trim()) return clip(c.p[0][1],40);
+  if(c) return c.n;
+  /* a navigation or landmark with a label goes by its label, even if it's all links */
+  var lab=el.getAttribute("aria-label");
+  if(lab&&/^(NAV|HEADER|FOOTER|SECTION|ASIDE|DIV|UL|OL)$/.test(t)) return clip(lab,40);
+  if(isText(el)) return clip(el.textContent,40)||"Text";
+  if(t==="IMG"){ var a=el.getAttribute("alt"); return a?clip(a,40):"Image" }
+  if(t==="VIDEO") return el.getAttribute("aria-label")?clip(el.getAttribute("aria-label"),40):"Video";
   if(t==="CANVAS") return "Canvas";
   if(t==="SVG") return el.getAttribute("aria-label")||"Vector";
-  var al=el.getAttribute("aria-label"); if(al) return al;
+  var al=el.getAttribute("aria-label"); if(al) return clip(al,40);
   if(t==="A"||t==="BUTTON"){
-    var hd=el.querySelector("h1,h2,h3,h4,[class*=title]");
-    if(hd&&hd.textContent.trim()){ var ht=hd.textContent.replace(/\s+/g," ").trim(); return ht.length>36?ht.slice(0,36)+"…":ht }
-    var x=el.textContent.replace(/\s+/g," ").trim(); return x?(x.length>32?x.slice(0,32)+"…":x):(t==="A"?"Link":"Button");
+    var hd=el.querySelector("h1,h2,h3,h4");
+    if(hd&&hd.textContent.trim()) return clip(hd.textContent,36);
+    var x=el.textContent; return x.trim()?clip(x,32):(t==="A"?"Link":"Button");
   }
-  if(el.classList.length) return human(el.classList[0]);
-  if(el.id) return human(el.id);
-  return t==="DIV"?"Frame":human(t.toLowerCase());
+  /* a section is called by its heading, as a designer would name it */
+  if(/^(SECTION|ARTICLE|HEADER|FOOTER|ASIDE|FIGURE|NAV)$/.test(t)){
+    var h=el.querySelector("h1,h2");
+    if(h&&h.textContent.trim()) return clip(h.textContent,40);
+    /* or by the short label it opens with ('Experience', 'Education') */
+    var first=el.firstElementChild;
+    if(first&&isText(first)&&first.textContent.trim().length<=30) return clip(first.textContent,30);
+    h=el.querySelector("h3"); if(h&&h.textContent.trim()) return clip(h.textContent,40);
+    if(t==="FIGURE"){ var fc=el.querySelector("figcaption"); if(fc&&fc.textContent.trim()) return clip(fc.textContent,40) }
+    return {SECTION:"Section",ARTICLE:"Article",HEADER:"Header",FOOTER:"Footer",ASIDE:"Aside",FIGURE:"Figure",NAV:"Navigation"}[t];
+  }
+  /* a block holding the page's title is named by it */
+  if(t==="DIV"){ var hh=el.querySelector(":scope > h1, :scope > h2, :scope > * > h1"); if(hh&&hh.textContent.trim()) return clip(hh.textContent,40) }
+  return {UL:"List",OL:"List",LI:"List item",DL:"List",FORM:"Form",TABLE:"Table",DETAILS:"Details"}[t]||"Frame";
 }
 function layerParent(el,f){
   if(el===f.root) return null;
   var p=el.parentElement;
-  while(p&&p!==f.root&&kids(p).indexOf(el)<0) p=p.parentElement;
+  /* MAIN and the page wrapper are flattened in the tree, so they're never a parent */
+  function flat(n){ return n.tagName==="MAIN"||(n.classList&&(n.classList.contains("wrap")||n.classList.contains("shell"))&&n.parentElement===n.ownerDocument.body) }
+  while(p&&p!==f.root&&(kids(p).indexOf(el)<0||flat(p))) p=p.parentElement;
   return p||f.root;
 }
 function pick(target,ctx,f){
@@ -748,8 +895,8 @@ function coverHTML(){
      return '<div class="card" data-go="'+c.go+'" data-layer="'+c.go+'"><div class="shot"><img src="'+c.img+'" alt="" style="object-position:'+c.pos+'"></div><h3>'+c.t+'</h3><p>'+c.m+'</p><span class="go">Open page →</span></div>';
    }).join("")+'</div>'+
    '<div class="foot" data-step="contact" data-layer="Contact">'+
-     '<div class="links"><a class="dark" data-copy="'+MAIL+'" data-layer="Email">'+MAIL+'</a><a data-href="'+LINKEDIN+'" data-layer="LinkedIn">LinkedIn ↗</a><a data-go="Resume" data-layer="Resume">Résumé</a><a data-href="./index.html" data-layer="Website">The website ↗</a></div>'+
-     '<div class="legend" data-layer="How to read this file">'+(DECISIONS.length?'<span><i class="dotp"><img src="'+AVATAR+'" alt=""></i>Pins are my design decisions</span>':'')+'<span>Click to inspect · ▶ to use the site · C to comment</span></div>'+
+     '<div class="links"><a class="dark" data-copy="'+MAIL+'" data-layer="Email">'+MAIL+'</a><a data-href="'+LINKEDIN+'" data-layer="LinkedIn">LinkedIn ↗</a><a data-go="Resume" data-layer="Resume">Résumé</a><a data-home="1" data-layer="Back to the website">Back to the website</a></div>'+
+     '<div class="legend" data-layer="How to read this file">'+(DECISIONS.length?'<span><i class="dotp"><img src="'+AVATAR+'" alt=""></i>Pins are my design decisions</span>':'')+'<span>Click to inspect · ▶ Present to use the site · C to comment</span></div>'+
    '</div><script>('+coverLive.toString()+')()<\/script></body></html>';
 }
 /* runs inside the Cover: keep only the homepage's work grid, four across, light */
@@ -774,7 +921,7 @@ function coverLive(){
       band.classList.add("ok");
       /* the tour and the layers point at whichever set of cards is showing */
       var cards=band.nextElementSibling;
-      if(innerWidth>600&&cards){ band.setAttribute("data-step","work"); cards.removeAttribute("data-step"); cards.removeAttribute("data-layer") }
+      if(innerWidth>600&&cards){ band.setAttribute("data-step","work"); cards.removeAttribute("data-step"); cards.removeAttribute("data-layer"); cards.setAttribute("data-fvskip","") }
       else band.removeAttribute("data-layer");
       try{ parent.postMessage({fvCoverLive:1},location.origin) }catch(e){}
     }catch(e){}
@@ -783,26 +930,33 @@ function coverLive(){
 
 /* Foundations: the system, read from the live homepage, not retyped */
 var SITE=null;
+var SITE_READING=false, SITE_WAIT=[];
 function readSite(cb){
   if(SITE) return cb(SITE);
+  SITE_WAIT.push(cb); if(SITE_READING) return; SITE_READING=true; cb=function(x){ var w=SITE_WAIT; SITE_WAIT=[]; SITE_READING=false; w.forEach(function(c){ c(x) }) };
   var ifr=document.createElement("iframe");
   ifr.style.cssText="position:fixed;left:-3000px;top:0;width:1440px;height:900px;visibility:hidden";
   ifr.src="./index.html?figma=1";
   ifr.onload=function(){
     setTimeout(function(){
       var d=ifr.contentDocument, w=d.defaultView, rs=w.getComputedStyle(d.documentElement), out={colours:[],type:[],tokens:[]};
-      var seen={};
+      var seen={}, names=[];
       [].forEach.call(d.styleSheets,function(sh){
         var rules; try{ rules=sh.cssRules }catch(e){ return }
         [].forEach.call(rules||[],function(r){
           if(!r.selectorText||r.selectorText.trim()!==":root") return;
-          for(var i=0;i<r.style.length;i++){
-            var n=r.style[i]; if(n.indexOf("--")!==0||seen[n]) continue; seen[n]=1;
-            var val=rs.getPropertyValue(n).trim();
-            if(/^(#|rgb|hsl|color\()/i.test(val)){ var c=color(val); if(c) out.colours.push({n:n,hex:c.hex,a:c.a,css:val}) }
-            else if(/^--(t|r|s)-/.test(n)||n==="--shadow-float") out.tokens.push({n:n,v:val});
-          }
+          for(var i=0;i<r.style.length;i++){ var n=r.style[i]; if(n.indexOf("--")===0&&!seen[n]){ seen[n]=1; names.push(n) } }
         });
+      });
+      /* each variable in both of the site's modes: the theme switched, the values read */
+      var root=d.documentElement, was=root.getAttribute("data-theme");
+      root.setAttribute("data-theme","light"); var LV={}; names.forEach(function(n){ LV[n]=w.getComputedStyle(root).getPropertyValue(n).trim() });
+      root.setAttribute("data-theme","dark"); var DV={}; names.forEach(function(n){ DV[n]=w.getComputedStyle(root).getPropertyValue(n).trim() });
+      root.setAttribute("data-theme",was||"light");
+      names.forEach(function(n){
+        var val=LV[n];
+        if(/^(#|rgb|hsl|color\()/i.test(val)){ var c=color(val), c2=color(DV[n])||c; if(c) out.colours.push({n:n,hex:c.hex,a:c.a,css:val,dhex:c2.hex,da:c2.a,dcss:DV[n]||val}) }
+        else if(/^--(t|r|s)-/.test(n)||n==="--shadow-float") out.tokens.push({n:n,v:val});
       });
       [["Display · hero","#top h1"],["Body · hero line","#top .hero-sub, #top p"],["Card title",".worktext h3"],["Quote","#words blockquote, #words .rec p"],["Note title",".padtriggertext"],["Caption",".padtriggerhint"],["Navigation",".navlink"],["Mono label",".num, .mono"]].forEach(function(t){
         var el=d.querySelector(t[1]); if(!el) return; var cs=w.getComputedStyle(el);
@@ -829,13 +983,19 @@ function foundationsHTML(s){
    '.tr{display:grid;grid-template-columns:200px 1fr 280px;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(36,32,32,.1)}'+
    '.tr .l{font-size:13px;color:#7A7676}.tr .m{font-family:"Geist Mono",monospace;font-size:11px;color:#7A7676;line-height:1.6}'+
    '.tok{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}'+
+   '.vt{border-top:1px solid rgba(36,32,32,.1)}.vh,.vr{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(36,32,32,.1);font-size:13px}'+
+   '.vh{font-family:"Geist Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#7A7676}'+
+   '.vc{display:flex;align-items:center;gap:10px;font-family:"Geist Mono",monospace;font-size:12px}.vc i{position:relative;width:24px;height:24px;border-radius:6px;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(36,32,32,.12);background-image:linear-gradient(45deg,#eee 25%,transparent 25%),linear-gradient(-45deg,#eee 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#eee 75%),linear-gradient(-45deg,transparent 75%,#eee 75%);background-size:8px 8px;background-position:0 0,0 4px,4px -4px,-4px 0}.vc i b{position:absolute;inset:0}'+
+   '[data-theme=dark] .vt,[data-theme=dark] .vh,[data-theme=dark] .vr{border-color:rgba(255,255,255,.1)}[data-theme=dark] .vh{color:#A69E9E}'+
    '@media (max-width:600px){body{width:390px;padding:40px 20px}h1{font-size:36px}.sw{grid-template-columns:repeat(2,1fr)}.tr{grid-template-columns:1fr;gap:6px}.tok{grid-template-columns:1fr 1fr}}'+
    '.t{padding:14px 16px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px rgba(36,32,32,.08);font-family:"Geist Mono",monospace;font-size:12px}.t span{display:block;color:#7A7676;margin-top:4px}'+
    '</style></head><body>'+
    '<h1 class="serif" data-layer="Title">Foundations</h1>'+
    '<p class="lede" data-layer="Note">The system the portfolio is built on. Nothing here is retyped: every value is read from the live homepage when this page opens.</p>'+
-   '<section data-step="colour" data-layer="Colour"><h2>Colour · '+cols.length+' variables</h2><div class="sw">'+cols.map(function(c){
-     return '<div class="c" data-layer="'+esc(c.n.slice(2))+'"><i><b style="background:'+esc(c.css)+'"></b></i><div>'+esc(c.n.slice(2))+'<span>'+c.hex+(c.a<100?' · '+c.a+'%':'')+'</span></div></div>';
+   /* Figma's variables table: one collection, a column per mode */
+   '<section data-step="colour" data-layer="Colour"><h2>Colour · '+cols.length+' variables · 2 modes</h2><div class="vt" data-layer="Colour collection"><div class="vh"><span>Name</span><span>Light</span><span>Dark</span></div>'+cols.map(function(c){
+     var cell=function(css,hex,a){ return '<span class="vc"><i><b style="background:'+esc(css)+'"></b></i>'+hex+(a<100?' · '+a+'%':'')+'</span>' };
+     return '<div class="vr" data-layer="'+esc(c.n.slice(2))+'"><span class="vn">'+esc(c.n.slice(2))+'</span>'+cell(c.css,c.hex,c.a)+cell(c.dcss||c.css,c.dhex||c.hex,c.da==null?c.a:c.da)+'</div>';
    }).join("")+'</div></section>'+
    '<section data-layer="Type"><h2>Type · as used on the homepage</h2><div class="ty">'+s.type.map(function(t){
      var f=famCSS[t.fam]||t.fam;
@@ -859,24 +1019,62 @@ function addFrame(name,w,h,x,src,srcdoc){
   fr.appendChild(ifr);
   fr.classList.add("loading"); fr.dataset.loading="Loading "+name.split(" — ").pop()+"…";
   var lab=document.createElement("div"); lab.className="flabel"; lab.textContent=name;
-  world.appendChild(lab); world.appendChild(fr);
+  curWrap.appendChild(lab); curWrap.appendChild(fr);
   var f={name:name,dev:{key:name.split(" — ")[0]},x:x,y:0,w:w,h:h,el:fr,ifr:ifr,label:lab,doc:null,root:null,waits:[]};
   st.frames.push(f);
   lab.addEventListener("pointerdown",function(e){ e.stopPropagation(); if(f.root) select(f,f.root,f.root) });
   ifr.addEventListener("load",function(){ ready(f) });
+  watch(f);
   return f;
 }
+function watch(f){
+  clearTimeout(f.wd);
+  f.wd=setTimeout(function(){
+    if(f.ready||st.frames.indexOf(f)<0) return;
+    var page=f.name.split(" — ").pop(), m=document.createElement("div"); m.className="ferr";
+    m.innerHTML='<span>'+esc(page)+' didn’t load.</span><button type="button">Try again</button>';
+    m.querySelector("button").addEventListener("pointerdown",function(e){ e.stopPropagation() });
+    m.querySelector("button").addEventListener("click",function(){ m.remove(); f.el.classList.add("loading"); var src=f.ifr.getAttribute("src"); if(src){ f.ifr.src=src } else { f.ifr.srcdoc=f.ifr.srcdoc } watch(f) });
+    f.el.classList.remove("loading"); f.el.appendChild(m);
+  },12000);
+}
+var curWrap=null, CACHE={}, CACHE_ORDER=[];
+function allFrames(){ var a=st.frames.slice(); Object.keys(CACHE).forEach(function(k){ a=a.concat(CACHE[k].frames) }); return a }
+/* the address names the page you're on, so a link opens right here */
+function setPageURL(){ var sl=pageSlug();
+  try{ if(EMBED) parent.history.replaceState(parent.history.state,"",parent.location.pathname+parent.location.search+"#figma/"+sl);
+    else history.replaceState(null,"",location.pathname+location.search+"#"+sl) }catch(e){} }
 function loadPage(i,cb){
   if(PAGES[i].group) return;
-  findIdx=null;
-  st.page=i; st.sel=null; st.hov=null; st.ctx=null;
-  world.innerHTML=""; st.frames=[]; closePop();
+  findIdx=null; closeLinkPop(); if(curWrap) closeIntro();
+  /* the page you leave stays loaded (the last three), with its camera */
+  if(curWrap&&st.frames.length){ CACHE[st.page]={wrap:curWrap,frames:st.frames,x:st.x,y:st.y,zoom:st.zoom}; curWrap.style.display="none";
+    CACHE_ORDER=CACHE_ORDER.filter(function(k){ return k!==st.page }); CACHE_ORDER.push(st.page);
+    while(CACHE_ORDER.length>3){ var old=CACHE_ORDER.shift(); if(old!==i&&CACHE[old]){ CACHE[old].wrap.remove(); delete CACHE[old] } } }
+  st.page=i; T("fv_page",{page:pageSlug(i)}); st.sel=null; st.hov=null; st.ctx=null; closePop();
+  try{ localStorage.setItem("lb.figma.page",pageSlug(i)) }catch(e){}
+  setPageURL();
+  var C=CACHE[i];
+  if(C){ delete CACHE[i]; CACHE_ORDER=CACHE_ORDER.filter(function(k){ return k!==i });
+    curWrap=C.wrap; curWrap.style.display=""; st.frames=C.frames; st.zoom=C.zoom; st.x=C.x; st.y=C.y;
+    renderPages(); renderTree(); renderTabs(); renderProps(); paintLabels(); apply(); placePins();
+    if(cb) whenReady(st.frames[0],cb);
+    return;
+  }
+  curWrap=document.createElement("div"); curWrap.className="pwrap"; world.appendChild(curWrap); st.frames=[];
   var P=PAGES[i];
   var narrow=cv.clientWidth<600;
   if(P.kind==="cover") addFrame("Cover",narrow?390:1440,narrow?1400:900,0,null,coverHTML());
   else if(P.kind==="foundations"){
-    var f=addFrame("Foundations",narrow?390:1440,1200,0,null,'<!doctype html><html><body style="margin:0;font:14px Inter,sans-serif;color:#999;padding:80px">Reading the live site…</body></html>');
-    readSite(function(s){ if(st.frames[0]===f){ f.doc=null; f.ifr.srcdoc=foundationsHTML(s) } });
+    var wait=function(msg,retry){ return docHead()+'</head><body style="padding:80px;font-size:14px"><p class="mono" style="text-transform:none;font-size:14px">'+msg+'</p>'+(retry?'<p><a data-retry="1" style="color:#0D99FF;cursor:pointer">Try again</a></p>':'')+'</body></html>' };
+    var f=addFrame("Foundations",narrow?390:1440,1200,0,null,wait("Reading the live site…"));
+    var tryRead=function(){
+      var done=false;
+      readSite(function(s){ done=true; if(st.frames[0]===f){ f.doc=null; f.ifr.srcdoc=foundationsHTML(s) } });
+      /* the live site couldn't be read: say so, and offer to try again */
+      setTimeout(function(){ if(!done&&st.frames[0]===f){ SITE_READING=false; f.doc=null; f.ifr.srcdoc=wait("Couldn’t read the live site.",true) } },12000);
+    };
+    f.retry=tryRead; tryRead();
   }else{
     var x=0; DEVICES.forEach(function(d){ addFrame(d.key+" — "+P.name,d.w,d.h,x,P.src); x+=d.w+160 });
   }
@@ -909,6 +1107,8 @@ function ready(f){
   size(); setTimeout(size,600); setTimeout(size,1800); setTimeout(size,4000);
   try{ new (win(doc.body).ResizeObserver)(function(){ size() }).observe(doc.body) }catch(e){}
   renderTree(); renderProps();
+  /* pages animate their entrance; once it has settled, redraw the layers so nothing mid-fade reads as hidden */
+  setTimeout(function(){ if(st.frames.indexOf(f)>-1&&!st.sel) renderTree() },1800);
   setTimeout(function(){ f.ready=true; f.el.classList.remove("loading"); if(EMBED&&!toldReady){ toldReady=true; parent.postMessage({fvReady:1},location.origin) } placePins(); var w=f.waits; f.waits=[]; w.forEach(function(cb){ cb() }) },350);
 }
 
@@ -931,14 +1131,14 @@ function zoomAt(z,cx,cy){ z=Math.max(.02,Math.min(4,z)); st.x=cx-(cx-st.x)*z/st.
 function fit(top){
   var W=cv.clientWidth,H=cv.clientHeight; if(!W) return;
   var last=st.frames[st.frames.length-1], tw=last?last.x+last.w:1440, f0=st.frames[0], fh=f0?f0.h:900, fw=f0?f0.w:1440;
-  var head=($("#intro")&&!$("#intro").hidden?86:56)+(W<600?24:0), side=W<700?32:96;
+  var head=56+(W<600?24:0), side=W<700?32:96;
   var z=Math.min(1,(W-side)/tw), x;
   /* desktop and phone side by side only while both stay readable;
      otherwise open on the desktop frame, the phone a pan away */
   if(st.frames.length>1&&z<.32&&top){ z=Math.min(1,(W-side)/fw); x=side/2 }
   /* on a phone, open on the phone-sized frame */
   var mob=st.frames.filter(function(fr){ return fr.dev.key==="Mobile" })[0];
-  if(mob&&W<600&&top){ z=Math.min(1,(W-side)/mob.w); x=side/2-mob.x*z }
+  if(mob&&W<768&&top){ z=Math.min(1,(W-side)/mob.w); x=side/2-mob.x*z }
   if(st.frames.length===1&&fh<=1000) z=Math.min(z,(H-head-90)/fh);
   if(x===undefined) x=(W-tw*z)/2;
   st.zoom=z; st.x=x; st.y=top&&fh*z>H-head-60?head:Math.max(head,(H-fh*z)/2); apply();
@@ -981,9 +1181,8 @@ function hover(e){
   if(drag||st.tool!=="move"){ st.hov=null; draw(); return }
   var h=hit(e);
   if(!h.f){ st.hov=null; draw(); cv.style.cursor=""; return }
-  var link=h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy]");
-  var toPage=!(e.metaKey||e.ctrlKey)&&pageOfLink(h.t);
-  cv.style.cursor=(link||(toPage>-1&&toPage!==st.page))?"pointer":"";
+  var link=!(e.metaKey||e.ctrlKey)&&h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy],[data-home]");
+  cv.style.cursor=link?"pointer":"";
   var ctx=(st.ctx&&st.sel&&st.sel.f===h.f)?st.ctx:h.f.root;
   var p=(e.metaKey||e.ctrlKey)?{el:deepest(h.t,h.f)}:pick(h.t,ctx,h.f);
   st.hov=p&&p.el?{f:h.f,el:p.el}:null; draw();
@@ -1015,29 +1214,29 @@ cv.addEventListener("pointerup",function(e){
 });
 cv.addEventListener("pointercancel",function(){ tap=null });
 function press(e){
+  if(innerWidth<768&&($("#app").classList.contains("show-l")||$("#app").classList.contains("show-r"))){ closeDrawers(); return }
   if(e.target.closest(".tb,.pop,.pin,.mob,.fbar,.intro")) return;
   closeMenus();
   if(following) stopFollow(true);
   if(popEl&&!popEl.contains(e.target)){
     var ta=popEl.querySelector("textarea"), had=ta&&ta.value.trim();
-    closePop(); if(had) toast("Comment discarded");
+    if(had) draftText=had; closePop(); if(had) toast("Draft saved");
     if(st.tool!=="comment") return;
   }
   if(e.button===1||space||st.tool==="hand"){ drag={x:st.x,y:st.y,cx:e.clientX,cy:e.clientY}; cv.classList.add("drag"); cv.setPointerCapture(e.pointerId); e.preventDefault(); return }
   if(st.tool==="comment"){ startComment(e); return }
   var h=hit(e);
   if(!h.f){ select(null); return }
-  /* the Cover's cards and links work like links: they take you somewhere */
-  var link=h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy]");
-  if(link){
-    if(link.dataset.go){ var gi=pageIndex(link.dataset.go); if(gi>-1) loadPage(gi) }
-    else if(link.dataset.href) window.open(link.dataset.href,"_blank","noopener");
-    else if(link.dataset.copy) copy(link.dataset.copy,"Email copied: "+link.dataset.copy);
-    return;
-  }
-  /* so do the site's own links to other pages, as they would on the site;
-     ⌘/Ctrl-click still selects the layer instead */
-  if(!(e.metaKey||e.ctrlKey)){ var pi=pageOfLink(h.t); if(pi>-1&&pi!==st.page){ loadPage(pi); return } }
+  closeLinkPop();
+  /* the Cover is the file's index: its cards and links act on one click
+     (the one deviation from Figma). ⌘/Ctrl-click still selects them. */
+  if(h.t.closest&&h.t.closest("[data-retry]")&&h.f.retry){ h.f.ifr.srcdoc=docHead()+'</head><body style="padding:80px"><p class="mono" style="text-transform:none;font-size:14px">Reading the live site…</p></body></html>'; h.f.doc=null; h.f.retry(); return }
+  var link=!(e.metaKey||e.ctrlKey)&&h.t.closest&&h.t.closest("[data-go],[data-href],[data-copy],[data-home]");
+  if(link){ var li=linkInfo(link,h.f); if(li) li.act(); return }
+  /* everywhere else a click selects, as in Figma; a link under the pointer
+     also gets Figma's link popover, so following it is one more click */
+  var under=linkInfo(h.t,h.f);
+  if(under&&under.kind!=="home") setTimeout(function(){ showLinkPop(h.f,under) },0);
   var now=Date.now(), dbl=lastDown&&now-lastDown.t<400&&Math.abs(e.clientX-lastDown.x)<6&&Math.abs(e.clientY-lastDown.y)<6;
   lastDown=dbl?null:{t:now,x:e.clientX,y:e.clientY};
   if(dbl&&st.sel&&st.sel.f===h.f&&st.sel.el!==h.t&&st.sel.el.contains(h.t)&&kids(st.sel.el).length){
@@ -1051,10 +1250,13 @@ cv.addEventListener("pointerup",function(){ if(drag){ drag=null; cv.classList.re
 
 /* ═══ SELECTION ═════════════════════════════════════════════════════ */
 function select(f,el,ctx){
+  if(!f) closeLinkPop();
   /* choosing something yourself ends following, as in Figma */
   if(following) stopFollow(true);
   if(f&&st.rtab==="history"){ st.rtab="design"; renderTabs() }
+  if(f&&el){ var sk=pageSlug()+":"+kindOf(el,f.root); if(!seenSel[sk]){ seenSel[sk]=1; T("fv_select",{page:pageSlug(),kind:kindOf(el,f.root)}) } }
   if(!f){ st.sel=null; st.ctx=null } else { st.sel={f:f,el:el}; st.ctx=ctx||f.root }
+  $("#app").classList.toggle("peek",!!f&&$("#app").classList.contains("min"));
   draw(); paintLabels(); renderProps(); markTree(true);
 }
 function box(node,f,el){
@@ -1071,6 +1273,32 @@ function draw(){
   var r=box(selBox,s&&s.f,s&&s.el);
   if(r) selDim.textContent=Math.round(r.w)+" × "+Math.round(r.h);
   if(h&&!(s&&s.el===h.el)) box(hovBox,h.f,h.el); else hovBox.style.display="none";
+  placeLinkPop(); measure();
+}
+var altDown=false;
+addEventListener("keydown",function(e){ if(e.key==="Alt"&&!altDown){ altDown=true; measure() } });
+addEventListener("keyup",function(e){ if(e.key==="Alt"){ altDown=false; measure() } });
+addEventListener("blur",function(){ altDown=false; measure() });
+function measure(){
+  var svg=$("#meas"); if(!svg) return; svg.innerHTML="";
+  var s=st.sel, h=st.hov;
+  if(!(altDown||st.dev)||!s||!h||s.f!==h.f||s.el===h.el) return;
+  var f=s.f, A=s.el===f.root?{x:0,y:0,w:f.w,h:f.h}:frameRect(f,s.el), B=h.el===f.root?{x:0,y:0,w:f.w,h:f.h}:frameRect(f,h.el);
+  var sx=function(x){ return st.x+(f.x+x)*st.zoom }, sy=function(y){ return st.y+(f.y+y)*st.zoom }, out="";
+  function seg(x1,y1,x2,y2,val){ if(val<=0) return; val=Math.round(val);
+    out+='<line x1="'+sx(x1)+'" y1="'+sy(y1)+'" x2="'+sx(x2)+'" y2="'+sy(y2)+'"/>';
+    var mx=(sx(x1)+sx(x2))/2, my=(sy(y1)+sy(y2))/2, w=String(val).length*6+10;
+    out+='<rect class="mb" x="'+(mx-w/2)+'" y="'+(my-8)+'" width="'+w+'" height="16" rx="3"/><text x="'+mx+'" y="'+(my+3.5)+'" text-anchor="middle">'+val+'</text>' }
+  var inside=B.x<=A.x&&B.y<=A.y&&B.x+B.w>=A.x+A.w&&B.y+B.h>=A.y+A.h, cx=A.x+A.w/2, cy=A.y+A.h/2;
+  if(inside){ /* to the edges of what it sits in */
+    seg(cx,B.y,cx,A.y,A.y-B.y); seg(cx,A.y+A.h,cx,B.y+B.h,B.y+B.h-A.y-A.h); seg(B.x,cy,A.x,cy,A.x-B.x); seg(A.x+A.w,cy,B.x+B.w,cy,B.x+B.w-A.x-A.w);
+  }else{
+    var oy=Math.max(A.y,B.y), oy2=Math.min(A.y+A.h,B.y+B.h), my=oy<oy2?(oy+oy2)/2:cy;
+    var ox=Math.max(A.x,B.x), ox2=Math.min(A.x+A.w,B.x+B.w), mx=ox<ox2?(ox+ox2)/2:cx;
+    if(B.x>=A.x+A.w) seg(A.x+A.w,my,B.x,my,B.x-A.x-A.w); else if(B.x+B.w<=A.x) seg(B.x+B.w,my,A.x,my,A.x-B.x-B.w);
+    if(B.y>=A.y+A.h) seg(mx,A.y+A.h,mx,B.y,B.y-A.y-A.h); else if(B.y+B.h<=A.y) seg(mx,B.y+B.h,mx,A.y,A.y-B.y-B.h);
+  }
+  svg.innerHTML=out;
 }
 
 /* ═══ LEFT PANEL ════════════════════════════════════════════════════ */
@@ -1078,7 +1306,7 @@ var rowOf=new WeakMap(), openSet=new WeakSet();
 function renderPages(){
   var el=$("#pages"); el.innerHTML="";
   PAGES.forEach(function(p,i){
-    if(p.group){ var g=document.createElement("div"); g.className="plabel"; g.textContent=p.group; el.appendChild(g); return }
+    if(p.group){ var g=document.createElement("div"); g.className="pdiv"; g.setAttribute("role","separator"); g.setAttribute("aria-label",p.group); el.appendChild(g); return }
     var n=DECISIONS.filter(function(d){ return d.page===p.name }).length;
     var b=document.createElement("button"); b.className="pg"+(i===st.page?" on":"");
     b.innerHTML='<i>✓</i>'+esc(p.name)+(n?'<span class="cnt" title="'+n+' design decisions on this page"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 21V12a9 9 0 1 1 9 9z"/></svg>'+n+'</span>':'');
@@ -1100,29 +1328,22 @@ function renderTree(){
 function node(f,el,depth){
   var wrapEl=document.createElement("div");
   var row=document.createElement("div"), k=kindOf(el,f.root), ch=kids(el);
-  row.className="row k-"+k+(openSet.has(el)?" open":"")+(st.hidden.has(el)?" hid":""); row.setAttribute("role","treeitem");
+  var hiddenByPage=el!==f.root&&!visible(el);
+  row.className="row k-"+k+(openSet.has(el)?" open":"")+(hiddenByPage?" hid":""); row.setAttribute("role","treeitem");
   row.style.paddingLeft=(depth*16)+"px";
   row.innerHTML='<span class="car'+(ch.length?"":" none")+'">'+CARET+'</span><span class="ic">'+iconOf(el,k)+'</span><span class="nm">'+esc(nameOf(el,f))+'</span>'+
-    (el===f.root?'':'<span class="ra"><button class="lk" aria-label="Lock">'+ICON.lock+'</button><button class="vis" aria-label="Hide layer">'+(st.hidden.has(el)?ICON.eyeOff:ICON.eye)+'</button></span>');
+    (hiddenByPage?'<span class="ra on" title="Hidden on the page">'+ICON.eyeOff+'</span>':'');
   wrapEl.appendChild(row); rowOf.set(el,row);
   var bx=document.createElement("div"); wrapEl.appendChild(bx);
-  function fill(){ bx.innerHTML=""; if(openSet.has(el)) kids(el).forEach(function(c){ bx.appendChild(node(f,c,depth+1)) }) }
+  function fill(){ bx.innerHTML=""; if(openSet.has(el)) kids(el,true).forEach(function(c){ bx.appendChild(node(f,c,depth+1)) }) }
   fill();
   row.querySelector(".car").addEventListener("click",function(e){
     e.stopPropagation(); if(!ch.length) return;
     if(openSet.has(el)) openSet.delete(el); else openSet.add(el);
     row.classList.toggle("open",openSet.has(el)); fill(); markTree(false);
   });
-  var vis=row.querySelector(".vis");
-  /* the eye really hides the layer in the frame, as in Figma */
-  if(vis) vis.addEventListener("click",function(e){
-    e.stopPropagation();
-    if(st.hidden.has(el)){ st.hidden.delete(el); el.style.visibility="" } else { st.hidden.add(el); el.style.visibility="hidden" }
-    row.classList.toggle("hid",st.hidden.has(el)); vis.innerHTML=st.hidden.has(el)?ICON.eyeOff:ICON.eye;
-  });
-  var lk=row.querySelector(".lk");
-  if(lk) lk.addEventListener("click",function(e){ e.stopPropagation(); toast("It’s a view-only file, so everything is locked anyway 🙂") });
   row.addEventListener("click",function(){
+    if(innerWidth<768) setTimeout(closeDrawers,120);
     select(f,el,layerParent(el,f)||f.root);
     var r=el===f.root?{x:0,y:0,w:f.w,h:Math.min(f.h,900)}:frameRect(f,el); ensureVisible(f,r);
   });
@@ -1144,144 +1365,230 @@ function markTree(reveal){
   row.classList.add("sel");
   if(reveal) row.scrollIntoView({block:"nearest"});
 }
+/* the tree by keyboard: ↑↓ move, → opens, ← closes or goes up, Enter selects */
+tree.setAttribute("tabindex","0");
+tree.addEventListener("keydown",function(e){
+  var rows=[].slice.call(tree.querySelectorAll(".row")), cur=tree.querySelector(".row.kfocus")||tree.querySelector(".row.sel"), i=rows.indexOf(cur);
+  function go(n){ if(!rows.length) return; n=Math.max(0,Math.min(rows.length-1,n)); if(cur) cur.classList.remove("kfocus"); rows[n].classList.add("kfocus"); rows[n].scrollIntoView({block:"nearest"}) }
+  if(e.key==="ArrowDown"){ e.preventDefault(); go(i+1) }
+  else if(e.key==="ArrowUp"){ e.preventDefault(); go(i<0?0:i-1) }
+  else if(e.key==="ArrowRight"&&cur){ e.preventDefault(); if(!cur.classList.contains("open")){ var c=cur.querySelector(".car:not(.none)"); if(c){ c.click(); setTimeout(function(){ var r2=[].slice.call(tree.querySelectorAll(".row")); r2[i].classList.add("kfocus") },0) } } else go(i+1) }
+  else if(e.key==="ArrowLeft"&&cur){ e.preventDefault(); if(cur.classList.contains("open")){ cur.querySelector(".car").click(); setTimeout(function(){ var r2=[].slice.call(tree.querySelectorAll(".row")); r2[i].classList.add("kfocus") },0) } else { var pad=parseFloat(cur.style.paddingLeft)||0; for(var k=i-1;k>=0;k--) if((parseFloat(rows[k].style.paddingLeft)||0)<pad){ go(k); break } } }
+  else if(e.key==="Enter"&&cur){ e.preventDefault(); e.stopPropagation(); cur.click() }
+});
 
 /* ═══ RIGHT PANEL ═══════════════════════════════════════════════════ */
 function renderTabs(){
-  var zoom='<button class="zoomb" id="zoomBtn"><span id="zoomPct">'+Math.round(st.zoom*100)+'%</span>'+CHEV+'</button>';
-  if(st.rtab==="comments"||st.rtab==="history"){
-    rtabs.innerHTML='<span class="ttl">'+(st.rtab==="comments"?"Comments":"Version history")+'</span><button class="ib" id="rClose" style="margin-left:auto" aria-label="Close">'+XSVG+'</button>';
-    $("#rClose").addEventListener("click",function(){ if(st.rtab==="comments"&&st.tool==="comment") setTool("move"); setRTab("design") });
-    return;
+  var zoom='<button class="zoomb" id="zoomBtn" aria-label="Zoom"><span id="zoomPct">'+Math.round(st.zoom*100)+'%</span>'+CHEV+'</button>';
+  if(st.rtab==="history"){
+    rtabs.innerHTML='<span class="ttl">Version history</span><button class="ib" id="rClose" style="margin-left:auto" aria-label="Close version history" data-tip="Close">'+XSVG+'</button>'+zoom;
+    $("#rClose").addEventListener("click",function(){ setRTab("design") });
+  }else if(st.dev){
+    rtabs.innerHTML='<span class="tab on">Inspect</span>'+zoom;
+  }else{
+    rtabs.innerHTML='<button class="tab'+(st.rtab==="comments"?" on":"")+'" data-rtab="comments">Comment</button><button class="tab'+(st.rtab!=="comments"?" on":"")+'" data-rtab="design">Properties</button>'+zoom;
+    [].forEach.call(rtabs.querySelectorAll("[data-rtab]"),function(b){ b.addEventListener("click",function(){ setTool(b.dataset.rtab==="comments"?"comment":"move") }) });
   }
-  rtabs.innerHTML=st.dev
-    ?'<button class="tab on">Inspect</button>'+zoom
-    :'<button class="tab'+(st.rtab==="design"?" on":"")+'" data-rtab="design">Design</button><button class="tab'+(st.rtab==="prototype"?" on":"")+'" data-rtab="prototype">Prototype</button>'+zoom;
-  [].forEach.call(rtabs.querySelectorAll("[data-rtab]"),function(b){ b.addEventListener("click",function(){ setRTab(b.dataset.rtab) }) });
   $("#zoomBtn").addEventListener("click",zoomMenu);
 }
-function setRTab(t){ st.rtab=t; renderTabs(); renderProps(); $("#app").classList.add("show-r-ok") }
+function setRTab(t){ st.rtab=t; renderTabs(); renderProps() }
 function fld(icon,val,cls){ return '<div class="fld '+(cls||"")+'"><i>'+icon+'</i><span>'+esc(val)+'</span></div>' }
 function paint(c){ return c?'<div class="paint"><span class="sw"><b style="background:'+c.css+'"></b></span><span class="hx">'+c.hex.slice(1)+'</span><span class="op">'+c.a+' %</span></div>':"" }
 function bh(title,extra){ return '<div class="bh"><span>'+title+'</span><span class="acts">'+(extra||"")+'</span></div>' }
-var ALIGN='<div class="align">'+["M3 2v12","M8 2v12","M13 2v12","M2 3h12","M2 8h12","M2 13h12"].map(function(d){ return '<span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="'+d+'"/><rect x="5" y="5" width="6" height="6" rx="1"/></svg></span>' }).join("")+'</div>';
 function renderProps(){
   if(st.rtab==="comments") return renderComments();
   if(st.rtab==="history") return renderHistory();
   if(st.dev) return renderCode();
-  if(st.rtab==="prototype") return renderProto();
-  var s=st.sel, html="";
-  if(!s){
-    var f0=st.frames[0], bg=f0&&f0.doc?color(win(f0.doc.body).getComputedStyle(f0.doc.body).backgroundColor)||color(win(f0.doc.body).getComputedStyle(f0.doc.documentElement).backgroundColor):null;
-    html+='<div class="blk">'+bh("Page")+(bg?paint(bg):'<p class="note">Loading…</p>')+'</div>';
-    var vl=vars(f0,6); if(vl.indexOf("None in this frame")<0) html+='<div class="blk">'+bh("Variables")+'<div class="vars" id="varList">'+vl+'</div></div>';
-    html+='<div class="blk">'+bh("About this file")+'<p class="note">Click any part of a frame to see how it’s built'+(DECISIONS.length?'. The pins with my photo are the decisions behind it':', or a case study to open it')+'. Everything here is read from the live site.</p></div>';
-    html+='<div class="blk">'+bh("Export",PLUS)+'</div>';
-    props.innerHTML=html;
-    var m=$("#moreVars"); if(m) m.addEventListener("click",function(){ $("#varList").innerHTML=vars(f0,999) });
-    return;
-  }
-  var el=s.el, f=s.f, cs=win(el).getComputedStyle(el), k=kindOf(el,f.root), r=el===f.root?{x:0,y:0,w:f.w,h:f.h}:frameRect(f,el);
+  var s=st.sel;
+  if(!s) return renderPageProps();
+  var el=s.el, f=s.f, cs=win(el).getComputedStyle(el), k=kindOf(el,f.root), root=el===f.root;
+  var r=root?{x:0,y:0,w:f.w,h:f.h}:frameRect(f,el), html="";
   var TYPE={"frame-root":"Frame",frame:"Frame",auto:"Frame",text:"Text",image:"Image",video:"Video",vector:"Vector",instance:"Instance"};
-  html+='<div class="selhead"><span class="ty">'+iconOf(el,k)+' '+TYPE[k]+CHEV+'</span><span class="nm">'+esc(nameOf(el,f))+'</span></div>';
-  html+='<div class="blk">'+bh("Position")+ALIGN+'<div class="grid2">'+fld("X",Math.round(r.x))+fld("Y",Math.round(r.y))+fld("↻","0°")+'</div></div>';
+  html+='<div class="selhead"><span class="ic">'+iconOf(el,k)+'</span><span class="nm">'+esc(nameOf(el,f))+'</span><span class="tx2">'+TYPE[k]+'</span></div>';
+  html+=instanceBlock(el,f);
+  /* position: relative to the parent, as Figma shows it; a frame shows where it sits on the canvas */
+  var pos;
+  if(root) pos={x:f.x,y:f.y};
+  else { var par=layerParent(el,f), pr=par&&par!==f.root?frameRect(f,par):{x:0,y:0}; pos={x:r.x-pr.x,y:r.y-pr.y} }
+  var rot=0, m=cs.transform&&cs.transform!=="none"?cs.transform.match(/matrix\(([^)]+)\)/):null;
+  if(m){ var v=m[1].split(",").map(parseFloat); rot=Math.round(Math.atan2(v[1],v[0])*180/Math.PI) }
+  html+='<div class="blk">'+bh("Position")+'<div class="grid2">'+fld("X",Math.round(pos.x))+fld("Y",Math.round(pos.y))+'</div>'+kv("Rotation",rot+"°")+'</div>';
+  /* layout */
   var auto=/flex|grid/.test(cs.display), grid=cs.display.indexOf("grid")>-1, col=cs.flexDirection.indexOf("column")===0;
-  html+='<div class="blk">'+bh(auto?"Auto layout":"Layout")+'<div class="grid2">'+fld("W",Math.round(r.w))+fld("H",Math.round(r.h))+'</div>';
+  var pcs=!root&&el.parentElement?win(el).getComputedStyle(el.parentElement):null, inFlex=pcs&&/flex/.test(pcs.display);
+  var fillW=inFlex&&parseFloat(cs.flexGrow)>0&&pcs.flexDirection.indexOf("column")<0;
+  html+='<div class="blk">'+bh(auto?"Auto layout":"Layout")+'<div class="grid2">'+fld("W",Math.round(r.w)+(fillW?" · Fill":""))+fld("H",Math.round(r.h))+'</div>';
   if(auto){
-    html+='<div class="sub">Direction</div><div class="grid2"><div class="segc full"><span'+(!grid&&col?' class="on"':'')+'>↓</span><span'+(!grid&&!col?' class="on"':'')+'>→</span><span'+(grid?' class="on"':'')+'>▦</span></div></div>';
+    html+=kv("Direction",grid?"Grid":(col?"Vertical":"Horizontal"));
     var gap=grid?(px(cs.rowGap)+" / "+px(cs.columnGap)):px(col?cs.rowGap:cs.columnGap);
-    html+='<div class="sub">Gap and padding</div><div class="grid2">'+fld("⇥",gap)+fld("▢",px(cs.paddingLeft)+", "+px(cs.paddingTop))+'</div>';
+    html+=kv("Gap",gap);
   }
-  html+='<div class="chk"><b class="'+(/hidden|clip/.test(cs.overflow)?"on":"")+'">'+(/hidden|clip/.test(cs.overflow)?"✓":"")+'</b>Clip content</div></div>';
+  var pd=[px(cs.paddingTop),px(cs.paddingRight),px(cs.paddingBottom),px(cs.paddingLeft)];
+  if(pd.some(function(x){ return x })) html+=kv("Padding",(pd[0]===pd[2]&&pd[1]===pd[3])?(pd[0]===pd[1]?pd[0]:pd[0]+", "+pd[1]):pd.join(", "));
+  if(/hidden|clip/.test(cs.overflow)) html+='<div class="chk"><b class="on">✓</b>Clip content</div>';
+  html+='</div>';
   if(k==="text"){
     var fam=cs.fontFamily.split(",")[0].replace(/["']/g,"").trim();
-    var lh=cs.lineHeight==="normal"?"Auto":px(cs.lineHeight), ls=cs.letterSpacing==="normal"?"0%":px(cs.letterSpacing);
-    html+='<div class="blk">'+bh("Typography")+'<div class="grid2">'+fld("Aa",fam,"full")+fld("",(WEIGHTS[cs.fontWeight]||cs.fontWeight))+fld("",px(cs.fontSize))+fld("↕",lh)+fld("↔",ls)+'</div></div>';
+    var lh=cs.lineHeight==="normal"?"Auto":px(cs.lineHeight), ls=cs.letterSpacing==="normal"?"0":px(cs.letterSpacing);
+    var al={left:"Left",start:"Left",center:"Center",right:"Right",end:"Right",justify:"Justified"}[cs.textAlign]||"Left";
+    html+='<div class="blk">'+bh("Typography")+kv("Font",fam)+kv("Weight",WEIGHTS[cs.fontWeight]||cs.fontWeight)+kv("Size",px(cs.fontSize))+kv("Line height",lh)+kv("Letter spacing",ls)+kv("Align",al)+'</div>';
   }
-  html+='<div class="blk">'+bh("Appearance",ICON.eye)+'<div class="grid2">'+fld("◐",Math.round(parseFloat(cs.opacity)*100)+"%")+fld("◜",px(cs.borderTopLeftRadius))+'</div></div>';
-  var fill=k==="text"?color(cs.color):color(cs.backgroundColor), img=cs.backgroundImage&&cs.backgroundImage!=="none";
-  html+='<div class="blk">'+bh("Fill",PLUS)+(fill?paint(fill):'')+(img?'<div class="paint"><span class="sw"></span><span class="hx" style="text-transform:none">'+(cs.backgroundImage.indexOf("gradient")>-1?"Linear":"Image")+'</span></div>':'')+'</div>';
-  var bw=px(cs.borderTopWidth), bc=bw?color(cs.borderTopColor):null;
-  html+='<div class="blk">'+bh("Stroke",PLUS)+(bc?paint(bc)+'<div class="grid2">'+fld("≡",bw)+'</div>':'')+'</div>';
-  html+='<div class="blk">'+bh("Effects",PLUS)+(cs.boxShadow&&cs.boxShadow!=="none"?'<div class="paint"><span class="tx2">◩</span><span class="hx" style="text-transform:none">Drop shadow</span></div>':'')+'</div>';
+  html+='<div class="blk">'+bh("Appearance")+kv("Opacity",Math.round(parseFloat(cs.opacity)*100)+"%")+(px(cs.borderTopLeftRadius)?kv("Corner radius",px(cs.borderTopLeftRadius)):"")+'</div>';
+  /* fill: an image is its own fill; otherwise the colour, with its variable when it is one */
+  if(k==="image"||k==="video"){
+    var srcu=el.currentSrc||el.src||el.getAttribute("poster")||"", fitm={cover:"Fill",contain:"Fit",fill:"Stretch",none:"Crop","scale-down":"Fit"}[cs.objectFit]||"Fill";
+    html+='<div class="blk">'+bh("Fill")+'<div class="paint"><span class="sw thumb"'+(srcu?' style="background-image:url(\''+esc(srcu)+'\')"':'')+'></span><span class="hx" style="text-transform:none">'+(k==="video"?"Video":"Image")+'</span><span class="tx2" style="margin-left:auto">'+fitm+'</span></div></div>';
+  }else{
+    var fc=root?(color(win(el).getComputedStyle(f.doc.body).backgroundColor)||color(win(el).getComputedStyle(f.doc.documentElement).backgroundColor)):(k==="text"?color(cs.color):color(cs.backgroundColor));
+    var img=!root&&cs.backgroundImage&&cs.backgroundImage!=="none";
+    if(fc||img) html+='<div class="blk">'+bh("Fill")+(fc?paintVar(fc,f):'')+(img?'<div class="paint"><span class="sw"></span><span class="hx" style="text-transform:none">'+(cs.backgroundImage.indexOf("gradient")>-1?"Gradient":"Image")+'</span></div>':'')+'</div>';
+  }
+  var bw=px(cs.borderTopWidth), bc=bw&&cs.borderTopStyle!=="none"?color(cs.borderTopColor):null;
+  if(bc) html+='<div class="blk">'+bh("Stroke")+paintVar(bc,f)+kv("Weight",bw)+'</div>';
+  if(cs.boxShadow&&cs.boxShadow!=="none"){
+    var sh=cs.boxShadow.split(/,(?![^(]*\))/)[0].trim(), sc=(sh.match(/rgba?\([^)]+\)|#[0-9a-f]+/i)||[""])[0], nums=sh.replace(sc,"").trim().split(/\s+/).map(px);
+    html+='<div class="blk">'+bh("Effects")+'<div class="paint"><span class="hx" style="text-transform:none">'+(/inset/.test(sh)?"Inner shadow":"Drop shadow")+'</span></div>'+kv("X",nums[0]||0)+kv("Y",nums[1]||0)+kv("Blur",nums[2]||0)+kv("Spread",nums[3]||0)+(color(sc)?paint(color(sc)):"")+'</div>';
+  }
+  html+=ixBlock(s);
   var dec=decisionsFor(f,el);
   if(dec.length) html+='<div class="blk">'+bh("Decisions")+dec.map(function(d){ return '<div class="ix" style="cursor:pointer" data-dec="'+DECISIONS.indexOf(d)+'"><img src="'+AVATAR+'" alt="" style="width:16px;height:16px;border-radius:50%"><span>'+esc(d.title)+'</span></div>' }).join("")+'</div>';
-  html+='<div class="blk">'+bh("Export",PLUS)+'</div>';
+  if(k==="image"&&srcu) html+='<div class="blk">'+bh("Export")+'<div class="exrow"><span>'+esc(srcu.split("/").pop().split("?")[0])+'</span><a class="exbtn" href="'+esc(srcu)+'" download>Export</a></div></div>';
   props.innerHTML=html;
+  wireIx(s);
   [].forEach.call(props.querySelectorAll("[data-dec]"),function(b){ b.addEventListener("click",function(){ openDecision(+b.dataset.dec) }) });
 }
-function vars(f,limit){
-  if(!f||!f.doc) return '<p class="note">Loading…</p>';
-  var seen={}, list=[], rs=win(f.doc.body).getComputedStyle(f.doc.documentElement);
-  [].forEach.call(f.doc.styleSheets,function(sh){
-    var rules; try{ rules=sh.cssRules }catch(e){ return }
-    [].forEach.call(rules||[],function(r){
-      if(!r.selectorText||r.selectorText.trim()!==":root") return;
-      for(var i=0;i<r.style.length;i++){
-        var n=r.style[i]; if(n.indexOf("--")!==0||seen[n]) continue;
-        var val=rs.getPropertyValue(n).trim(), c=/^(#|rgb|hsl|color\()/i.test(val)?color(val):null;
-        if(!c) continue; seen[n]=1; list.push([n,c]);
-      }
-    });
-  });
-  if(!list.length) return '<p class="note">None in this frame</p>';
-  return list.slice(0,limit).map(function(p){ return '<div class="var"><span class="sw"><b style="background:'+p[1].css+'"></b></span><span class="vn">'+esc(p[0].slice(2))+'</span><span class="vv">'+p[1].hex.slice(1)+(p[1].a<100?" · "+p[1].a+"%":"")+'</span></div>' }).join("")+
-    (list.length>limit?'<div class="more" id="moreVars">Show all '+list.length+'</div>':'');
+function kv(label,val){ return '<div class="kv"><span>'+esc(label)+'</span><b>'+esc(String(val))+'</b></div>' }
+/* a colour that is one of the site's variables shows the variable, as Figma does */
+function varMap(f){
+  if(!f||!f.doc) return {};
+  if(f.vmap) return f.vmap;
+  var map={}, rs=win(f.doc.body).getComputedStyle(f.doc.documentElement);
+  try{ [].forEach.call(f.doc.styleSheets,function(sh){ var rules; try{ rules=sh.cssRules }catch(e){ return }
+    [].forEach.call(rules||[],function(rl){ if(!rl.selectorText||rl.selectorText.trim()!==":root") return;
+      for(var i=0;i<rl.style.length;i++){ var n=rl.style[i]; if(n.indexOf("--")!==0) continue; var c=color(rs.getPropertyValue(n).trim()); if(c&&!map[c.hex+c.a]) map[c.hex+c.a]=n.slice(2) } }) }) }catch(e){}
+  return f.vmap=map;
+}
+function paintVar(c,f){ var n=varMap(f)[c.hex+c.a]; return n?'<div class="paint"><span class="sw"><b style="background:'+c.css+'"></b></span><span class="vpill">'+esc(n)+'</span><span class="tx2" style="margin-left:auto">'+c.hex+'</span></div>':paint(c) }
+/* the four pieces the site really repeats are its components */
+function compOf(el,f){
+  if(!el||!el.matches) return null;
+  if(el.matches("#work .workrow")) return {n:"Case card",p:[["Title",(el.querySelector("h3")||{}).textContent||""]]};
+  if(el.matches(".rec-item")) return {n:"Testimonial",p:[["Name",(el.querySelector(".rec-name")||{}).textContent||""]]};
+  if(el.matches(".navlink,.mrow")) return {n:"Nav link",p:[["Label",el.textContent.trim()]]};
+  if(el.matches(".heroask,.btn,.cx-btn")) return {n:"Button",p:[["Label",el.textContent.trim().replace(/\s+/g," ")]]};
+  return null;
+}
+function instanceBlock(el,f){ var c=compOf(el,f); if(!c) return ""; return '<div class="blk">'+bh("Instance")+kv("Component",c.n)+c.p.map(function(x){ return kv(x[0],x[1].trim().slice(0,40)) }).join("")+'</div>' }
+/* Interactions: only what this layer itself does */
+function ixBlock(s){
+  var info=linkInfo(s.el,s.f), ix="";
+  if(info) ix=esc(info.verb)+(info.label?' <a class="ixgo" href="#">'+esc(info.label)+'</a>':'');
+  else { var b=s.el.closest&&s.el.closest("button"), id=b&&b.id||"", nm={padTrigger:"Notes board",heroAsk:"AI twin",askDock:"AI twin",themeToggle:"theme"}[id];
+    if(nm) ix=id==="themeToggle"?"Change variable mode → <b>"+(theme()==="dark"?"Light":"Dark")+"</b>":"Open overlay <b>"+nm+"</b>" }
+  return ix?'<div class="blk">'+bh("Interactions")+'<div class="ix"><span class="tx2">On click</span><span>'+ix+'</span></div></div>':'';
+}
+function wireIx(s){ var go=props.querySelector(".ixgo"), info=linkInfo(s.el,s.f); if(go&&info) go.addEventListener("click",function(e){ e.preventDefault(); info.act() }) }
+/* nothing selected: what Figma shows a viewer for a page */
+var DESC={};
+function pageDesc(f,cb){
+  var P=PAGES[st.page], src=P.kind==="cover"?"./index.html":P.src; if(!src) return cb("");
+  if(DESC[src]!=null) return cb(DESC[src]);
+  var m=f&&f.doc&&!f.ifr.hasAttribute("srcdoc")&&f.doc.querySelector('meta[name="description"]');
+  if(m){ DESC[src]=m.content.replace(/^The short read:\s*/i,""); return cb(DESC[src]) }
+  fetch(src).then(function(r){ return r.text() }).then(function(t){ var mm=t.match(/<meta name="description" content="([^"]*)"/); DESC[src]=mm?mm[1].replace(/^The short read:\s*/i,"").replace(/&amp;/g,"&"):""; cb(DESC[src]) },function(){ cb("") });
+}
+function renderPageProps(){
+  var P=PAGES[st.page], dark=theme()==="dark";
+  var html='<div class="blk">'+bh("Page")+paint(color(dark?"#1E1E1E":"#F5F5F5"))+'</div>';
+  if(P.kind!=="foundations") html+='<div class="blk">'+bh("Flows")+'<button class="flow" type="button" id="flowRow"><span class="dot"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span><span class="fl"><b>'+esc(P.kind==="cover"?"Portfolio":P.name)+'</b><span class="tx2" id="flowDesc"></span></span><span class="fplay" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span></button></div>';
+  if(P.name==="Resume") html+='<div class="blk">'+bh("Export")+'<div class="exrow"><span>resume.pdf</span><a class="exbtn" href="./resume.pdf" download>Export</a></div></div>';
+  props.innerHTML=html;
+  var fr=$("#flowRow"); if(fr){ fr.addEventListener("click",function(){ present(true) });
+    pageDesc(st.frames[0],function(d){ var e=$("#flowDesc"); if(e) e.textContent=d }) }
+}
+/* the declarations the page itself writes for an element (rules that match it, then its style attribute) */
+function authored(el){
+  var out={}, w=win(el);
+  function take(st){ for(var i=0;i<st.length;i++){ var n=st[i]; out[n]=st.getPropertyValue(n).trim() } }
+  function walk(rules){ [].forEach.call(rules||[],function(r){
+    if(r.type===4){ if(r.media&&w.matchMedia(r.media.mediaText).matches) walk(r.cssRules) }
+    else if(r.type===1&&r.selectorText){ try{ if(el.matches(r.selectorText)) take(r.style) }catch(e){} }
+  }) }
+  [].forEach.call(el.ownerDocument.styleSheets,function(sh){ var rs; try{ rs=sh.cssRules }catch(e){ return } walk(rs) });
+  if(el.style) take(el.style);
+  return out;
 }
 function renderCode(){
   var s=st.sel;
-  if(!s){ props.innerHTML='<div class="blk">'+bh('Dev Mode')+'<p class="note" style="margin-bottom:8px"><span class="rdy">● Ready for dev</span></p><p class="note">Select any layer to inspect its CSS, as an engineer would in a handoff.</p></div>'; return }
-  var el=s.el, cs=win(el).getComputedStyle(el), r=el===s.f.root?{w:s.f.w,h:s.f.h}:frameRect(s.f,el), L=[];
-  function add(k,v){ if(v!==undefined&&v!==""&&v!=="none"&&v!=="normal"&&v!=="0px"&&v!=="rgba(0, 0, 0, 0)") L.push([k,v]) }
-  add("width",Math.round(r.w)+"px"); add("height",Math.round(r.h)+"px");
-  if(/flex|grid/.test(cs.display)){ add("display",cs.display); if(cs.display.indexOf("flex")>-1) add("flex-direction",cs.flexDirection); add("gap",cs.gap); add("align-items",cs.alignItems); add("justify-content",cs.justifyContent) }
-  if(px(cs.paddingTop)||px(cs.paddingRight)||px(cs.paddingBottom)||px(cs.paddingLeft)) add("padding",[cs.paddingTop,cs.paddingRight,cs.paddingBottom,cs.paddingLeft].join(" "));
-  var bg=color(cs.backgroundColor); if(bg) add("background",bg.a<100?cs.backgroundColor:bg.hex);
-  add("border-radius",cs.borderRadius);
-  if(px(cs.borderTopWidth)) add("border",cs.borderTopWidth+" "+cs.borderTopStyle+" "+cs.borderTopColor);
-  if(isText(el)){ add("font-family",cs.fontFamily.split(",")[0]); add("font-size",cs.fontSize); add("font-weight",cs.fontWeight); add("line-height",cs.lineHeight); add("letter-spacing",cs.letterSpacing); var c=color(cs.color); if(c) add("color",c.hex) }
-  if(cs.boxShadow!=="none") add("box-shadow",cs.boxShadow);
+  if(!s){ props.innerHTML='<p class="note" style="padding:16px">Select a layer to inspect its code.</p>'; return }
+  var el=s.el, f=s.f, cs=win(el).getComputedStyle(el), au=authored(el), root=el.ownerDocument.documentElement, rs=win(el).getComputedStyle(root);
+  var k=kindOf(el,f.root), L=[];
+  /* a value as written when it says more than the number (a variable, %, auto); resolved after it */
+  function val(n,computed){ var a=au[n]; if(a&&/var\(|%|auto|calc|clamp|min\(|max\(/.test(a)){ var res=a.replace(/var\((--[\w-]+)[^)]*\)/g,function(m,v){ return rs.getPropertyValue(v).trim()||m }); return a+(res!==a&&/var\(/.test(a)?' /* '+res+' */':'') } return computed }
+  function add(n,v){ if(v!==undefined&&v!==""&&v!=="none"&&v!=="normal"&&v!=="0px"&&v!=="rgba(0, 0, 0, 0)") L.push([n,v]) }
+  add("display",cs.display==="block"||cs.display==="inline"?"":cs.display);
+  if(cs.position!=="static") add("position",cs.position);
+  add("width",val("width",Math.round(el===f.root?f.w:frameRect(f,el).w)+"px"));
+  add("height",val("height",Math.round(el===f.root?f.h:frameRect(f,el).h)+"px"));
+  if(/flex/.test(cs.display)){ add("flex-direction",cs.flexDirection==="row"?"":cs.flexDirection); add("align-items",cs.alignItems==="normal"?"":cs.alignItems); add("justify-content",cs.justifyContent==="normal"?"":cs.justifyContent) }
+  if(/grid/.test(cs.display)) add("grid-template-columns",val("grid-template-columns",cs.gridTemplateColumns));
+  if(/flex|grid/.test(cs.display)) add("gap",val("gap",cs.gap));
+  var mg=[cs.marginTop,cs.marginRight,cs.marginBottom,cs.marginLeft], pd=[cs.paddingTop,cs.paddingRight,cs.paddingBottom,cs.paddingLeft];
+  function sh(a){ return a[0]===a[2]&&a[1]===a[3]?(a[0]===a[1]?a[0]:a[0]+" "+a[1]):a.join(" ") }
+  if(mg.some(function(x){ return px(x) })) add("margin",val("margin",sh(mg)));
+  if(pd.some(function(x){ return px(x) })) add("padding",val("padding",sh(pd)));
+  if(k==="text"){ add("font",cs.fontWeight+" "+cs.fontSize+"/"+cs.lineHeight+" "+cs.fontFamily.split(",")[0].trim()); if(cs.letterSpacing!=="normal") add("letter-spacing",val("letter-spacing",cs.letterSpacing)) }
+  var c=color(cs.color); if(k==="text"&&c) add("color",val("color",c.hex));
+  var bg=color(cs.backgroundColor); if(bg) add("background",val("background",val("background-color",bg.a<100?cs.backgroundColor:bg.hex)));
+  if(px(cs.borderTopWidth)&&cs.borderTopStyle!=="none") add("border",val("border",cs.borderTopWidth+" "+cs.borderTopStyle+" "+(color(cs.borderTopColor)||{hex:cs.borderTopColor}).hex));
+  if(px(cs.borderTopLeftRadius)) add("border-radius",val("border-radius",cs.borderRadius));
+  if(cs.boxShadow!=="none") add("box-shadow",val("box-shadow",cs.boxShadow));
+  if(parseFloat(cs.opacity)<1) add("opacity",cs.opacity);
   var text=L.map(function(p){ return p[0]+": "+p[1]+";" }).join("\n");
-  var tag=el.tagName.toLowerCase(), cn=(typeof el.className==="string"?el.className:"").split(/\s+/).filter(function(c){ return c&&c!=="shown"&&!/^is-/.test(c) }).join(" ");
-  var html='<div class="selhead"><span class="ty">'+esc(nameOf(el,s.f))+'</span></div>';
-  html+='<div class="blk">'+bh('Code <span class="tx2" style="font-weight:400">CSS</span>')+'<pre class="code">'+L.map(function(p){ return '<span class="k">'+p[0]+'</span>: <span class="v">'+esc(p[1])+'</span>;' }).join("\n")+'</pre><button class="copy" id="copyCss">Copy</button></div>';
-  html+='<div class="blk">'+bh("Element")+'<pre class="code">&lt;'+esc(tag+(cn?' class="'+cn+'"':""))+'&gt;</pre></div>';
+  var tag=el.tagName.toLowerCase(), cn=(typeof el.className==="string"?el.className:"").split(/\s+/).filter(function(x){ return x&&x!=="shown"&&!/^is-/.test(x) }).slice(0,2).join(".");
+  var html='<div class="selhead"><span class="ic">'+iconOf(el,k)+'</span><span class="nm">'+esc(nameOf(el,f))+'</span><span class="tx2 mono">&lt;'+esc(tag+(cn?"."+cn:""))+'&gt;</span></div>';
+  html+='<div class="blk">'+bh('Code <span class="tx2" style="font-weight:400">CSS</span>')+'<pre class="code">'+L.map(function(p){ return '<span class="k">'+p[0]+'</span>: <span class="v">'+esc(p[1])+'</span>;' }).join("\n")+'</pre><button class="copy" id="copyCss" type="button">Copy</button></div>';
+  /* box model */
+  var b4=function(pre){ return [cs[pre+"Top"],cs[pre+"Right"],cs[pre+"Bottom"],cs[pre+"Left"]].map(px) }, M=b4("margin"), P=b4("padding"), B=[px(cs.borderTopWidth),px(cs.borderRightWidth),px(cs.borderBottomWidth),px(cs.borderLeftWidth)];
+  var cr=el===f.root?{w:f.w,h:f.h}:frameRect(f,el);
+  html+='<div class="blk">'+bh("Box model")+'<div class="bm"><div class="bm-m"><i>margin</i><b class="t">'+M[0]+'</b><b class="r">'+M[1]+'</b><b class="b">'+M[2]+'</b><b class="l">'+M[3]+'</b>'+
+    '<div class="bm-b"><i>border</i><b class="t">'+B[0]+'</b><b class="r">'+B[1]+'</b><b class="b">'+B[2]+'</b><b class="l">'+B[3]+'</b>'+
+    '<div class="bm-p"><i>padding</i><b class="t">'+P[0]+'</b><b class="r">'+P[1]+'</b><b class="b">'+P[2]+'</b><b class="l">'+P[3]+'</b>'+
+    '<div class="bm-c">'+Math.round(cr.w-P[1]-P[3]-B[1]-B[3])+' × '+Math.round(cr.h-P[0]-P[2]-B[0]-B[2])+'</div></div></div></div></div></div>';
+  /* colours and type, each copyable */
+  var vm=varMap(f), cols=[];
+  [["Text",k==="text"?cs.color:null],["Background",cs.backgroundColor],["Border",px(cs.borderTopWidth)?cs.borderTopColor:null]].forEach(function(x){ var cc=x[1]&&color(x[1]); if(cc) cols.push([x[0],cc,vm[cc.hex+cc.a]]) });
+  if(cols.length) html+='<div class="blk">'+bh("Colors")+cols.map(function(x){ return '<button class="dvrow" type="button" data-copy="'+esc(x[2]?"var(--"+x[2]+")":x[1].hex)+'"><span class="sw"><b style="background:'+x[1].css+'"></b></span><span>'+esc(x[2]||x[1].hex)+'</span><span class="tx2">'+x[0]+'</span></button>' }).join("")+'</div>';
+  if(k==="text"){ var fam=cs.fontFamily.split(",")[0].replace(/["']/g,"").trim();
+    html+='<div class="blk">'+bh("Typography")+'<button class="dvrow" type="button" data-copy="'+esc("font: "+cs.fontWeight+" "+cs.fontSize+"/"+cs.lineHeight+" "+cs.fontFamily+";")+'"><span>'+esc(fam)+' · '+esc(WEIGHTS[cs.fontWeight]||cs.fontWeight)+'</span><span class="tx2">'+px(cs.fontSize)+'/'+(cs.lineHeight==="normal"?"Auto":px(cs.lineHeight))+'</span></button></div>' }
+  if(k==="image"){ var su=el.currentSrc||el.src; if(su) html+='<div class="blk">'+bh("Assets")+'<div class="exrow"><span>'+esc(su.split("/").pop().split("?")[0])+'</span><a class="exbtn" href="'+esc(su)+'" download>Download</a></div></div>' }
   props.innerHTML=html;
   $("#copyCss").addEventListener("click",function(){ copy(text,"CSS copied") });
-}
-function renderProto(){
-  var s=st.sel, html='<div class="blk">'+bh("Flow starting point")+'<div class="ix"><span class="dot"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span><span>'+esc(PAGES[st.page].name)+' flow</span></div></div>';
-  if(!s){ props.innerHTML=html+'<div class="blk">'+bh("Interactions")+'<p class="note">Select a link or button to see where it goes.</p></div>'; return }
-  var el=s.el, a=el.closest&&el.closest("a,button,[data-go],[data-href],[data-copy]"), ix="";
-  if(!a&&el.querySelector) a=el.querySelector("a[href],button,[data-go]");
-  if(a&&a.dataset&&a.dataset.go) ix="Navigate to <b>"+esc(a.dataset.go)+"</b>";
-  else if(a&&a.dataset&&a.dataset.copy) ix="Copy <b>"+esc(a.dataset.copy)+"</b>";
-  else if(a&&a.dataset&&a.dataset.href) ix="Open link <b>"+esc(a.dataset.href.replace(/^https?:\/\//,"").slice(0,30))+"</b>";
-  else if(a&&a.tagName==="A"&&a.getAttribute("href")){
-    var href=a.getAttribute("href"), page=PAGES.filter(function(p){ return p.src&&p.src.replace("./","")===href.replace("./","").split("#")[0] })[0];
-    ix=page?"Navigate to <b>"+esc(page.name)+"</b>":(/^https?:/.test(href)?"Open link <b>"+esc(href.replace(/^https?:\/\//,"").slice(0,30))+"</b>":(/^mailto:/.test(href)?"Send email":"Scroll to <b>"+esc(href)+"</b>"));
-  }else if(a&&a.tagName==="BUTTON"){
-    var id=a.id||"", nm={padTrigger:"Notes board",heroAsk:"AI twin",askDock:"AI twin",burgerBtn:"Menu",themeToggle:"theme",totop:"top"}[id];
-    ix=nm?(id==="themeToggle"?"Change variable mode: <b>light / dark</b>":(id==="totop"?"Scroll to <b>top</b>":"Open overlay <b>"+nm+"</b>")):"Open <b>"+esc(nameOf(a,s.f))+"</b>";
-  }
-  props.innerHTML=html+'<div class="blk">'+bh("Interactions",PLUS)+(ix?'<div class="ix"><span class="tx2">On click</span><span>'+ix+'</span></div>':'<p class="note">No interactions on this layer.</p>')+'</div>';
+  [].forEach.call(props.querySelectorAll(".dvrow"),function(b){ b.addEventListener("click",function(){ copy(b.dataset.copy,"Copied "+b.dataset.copy) }) });
 }
 function renderComments(){
-  var html="";
-  var mine=pins.map(function(p,i){ return '<div class="th" data-mine="'+i+'"><span class="av" style="background:#14AE5C">Y</span><div class="tt"><b>You <span class="tx2" style="font-weight:400">· '+esc(PAGES[p.page]?PAGES[p.page].name:"")+'</span></b><p>'+esc(p.text)+'</p><div class="meta">On '+esc(p.on)+'</div></div></div>' }).join("");
-  html+=DECISIONS.map(function(d,i){
-    return '<div class="th" data-dec="'+i+'"><span class="av"><img src="'+AVATAR+'" alt=""></span><div class="tt"><b>'+esc(d.title)+'</b><p class="tx2">'+esc(d.text.slice(0,90))+'…</p><div class="meta">Lokesh · '+esc(d.page)+' · '+esc(d.dev)+(d.draft?' · <span class="badge draft">Draft</span>':'')+'</div></div></div>';
+  var mine=pins.map(function(p,i){ return {p:p,i:i} }).sort(function(a,b){ return (b.p.t||0)-(a.p.t||0) });
+  var byPage={}, order=[];
+  mine.forEach(function(m){ var k=m.p.slug||""; if(!byPage[k]){ byPage[k]=[]; order.push(k) } byPage[k].push(m) });
+  var nameOfSlug=function(sl){ for(var i=0;i<PAGES.length;i++) if(PAGES[i].name&&pageSlug(i)===sl) return PAGES[i].name; return "" };
+  var when=function(t){ if(!t) return ""; var d=Math.round((Date.now()-t)/60000); return d<1?"Just now":d<60?d+"m ago":d<1440?Math.round(d/60)+"h ago":new Date(t).toLocaleDateString(undefined,{day:"numeric",month:"short"}) };
+  var html=DECISIONS.map(function(d,i){
+    return '<div class="th" data-dec="'+i+'"><span class="av"><img src="'+AVATAR+'" alt=""></span><div class="tt"><b>'+esc(d.title)+'</b><p class="tx2">'+esc(d.text.slice(0,90))+'…</p><div class="meta">Lokesh · '+esc(d.page)+'</div></div></div>';
   }).join("");
-  props.innerHTML='<div class="sub">'+(DECISIONS.length?DECISIONS.length+' design decisions':'Comments')+(pins.length?' · '+pins.length+' from you':'')+'</div>'+mine+html+
-    '<p class="note" style="padding:12px 16px">Click on any frame to add your own comment. It comes straight to me.</p>';
+  order.forEach(function(k){ html+='<div class="sub">'+esc(nameOfSlug(k)||"Page")+'</div>'+byPage[k].map(function(m){
+    return '<div class="th" data-mine="'+m.i+'"><span class="av" style="background:#14AE5C">Y</span><div class="tt"><b>You</b><p>'+esc(m.p.text.split("\n")[0].slice(0,120))+'</p><div class="meta">'+esc(when(m.p.t)||("on "+m.p.on))+(m.p.email?" · reply to "+esc(m.p.email):" · anonymous")+'</div></div></div>' }).join("") });
+  props.innerHTML=html||'<p class="note" style="padding:16px">No comments yet. Press C, then click anywhere to leave Lokesh a note.</p>';
   [].forEach.call(props.querySelectorAll("[data-dec]"),function(b){ b.addEventListener("click",function(){ openDecision(+b.dataset.dec) }) });
-  [].forEach.call(props.querySelectorAll("[data-mine]"),function(b){ b.addEventListener("click",function(){ var p=pins[+b.dataset.mine]; if(p.page!==st.page) loadPage(p.page) }) });
+  [].forEach.call(props.querySelectorAll("[data-mine]"),function(b){ b.addEventListener("click",function(){
+    var p=pins[+b.dataset.mine], pi=-1; for(var i=0;i<PAGES.length;i++) if(PAGES[i].name&&pageSlug(i)===p.slug) pi=i;
+    var show=function(){ var w=Math.max(0,p.wx-200), h=Math.max(0,p.wy-150); st.x=cv.clientWidth/2-p.wx*st.zoom; st.y=cv.clientHeight/2-p.wy*st.zoom; apply(); placePins() };
+    if(pi>-1&&pi!==st.page) loadPage(pi,function(){ setTimeout(show,50) }); else show() }) });
 }
 function renderHistory(){
-  props.innerHTML='<div class="sub">How the site changed, and why</div>'+HISTORY.map(function(h,i){
-    return '<div class="hv'+(i===0?" cur":"")+'"><div class="d">'+esc(h.d)+(i===0?' · Current version':'')+'</div><b>'+esc(h.t)+'</b><p>'+esc(h.p)+'</p></div>';
+  props.innerHTML=HISTORY.map(function(h,i){
+    return '<div class="hv'+(i===0?" cur":"")+'"><div class="d"><span class="av hva"><img src="'+AVATAR+'" alt=""></span>Lokesh Bhatia · '+esc(h.d)+(i===0?' · Current version':'')+'</div><b>'+esc(h.t)+'</b><p>'+esc(h.p)+'</p></div>';
   }).join("");
 }
-
 /* ═══ DESIGN DECISIONS: LOKESH'S COMMENTS ═══════════════════════════ */
 function decisionsFor(f,el){
   if(!f||!f.doc) return [];
@@ -1326,6 +1633,11 @@ function showDecision(i,note){
 /* ═══ PINS: MINE AND YOURS ══════════════════════════════════════════ */
 var PINS_KEY="lb.figma.comments", pins=[];
 try{ pins=JSON.parse(localStorage.getItem(PINS_KEY))||[] }catch(e){ pins=[] }
+/* pins were keyed by page position; key them by page, in the order the list had then */
+(function(){ var OLD=["cover","home","","getbaq","app-merge","rise-portal","web-terminal","","about","resume","","foundations"], ch=false;
+  pins.forEach(function(p){ if(!p.slug&&typeof p.page==="number"){ p.slug=OLD[p.page]||""; ch=true } });
+  if(ch) try{ localStorage.setItem(PINS_KEY,JSON.stringify(pins)) }catch(e){} })();
+var draftText="";
 var popEl=null, draftPin=null;
 function closePop(){ if(popEl){ popEl.remove(); popEl=null } if(draftPin){ draftPin.remove(); draftPin=null } [].forEach.call(ov.querySelectorAll(".pin.open"),function(p){ p.classList.remove("open") }) }
 function placePop(pop,px,py){
@@ -1347,7 +1659,7 @@ function placePins(){
     b.addEventListener("click",function(e){ e.stopPropagation(); if(popEl&&popEl.forDec===i){ closePop(); return } showDecision(i) });
     ov.appendChild(b);
   });
-  pins.filter(function(p){ return p.page===st.page }).forEach(function(p){
+  if(!st.pinsOff) pins.filter(function(p){ return p.slug===pageSlug() }).forEach(function(p){
     var d=document.createElement("button"); d.className="pin"; d.setAttribute("aria-label","Your comment on "+p.on);
     var px=st.x+p.wx*st.zoom, py=st.y+p.wy*st.zoom;
     d.style.left=px+"px"; d.style.top=py+"px";
@@ -1387,6 +1699,7 @@ function startComment(e){
   ov.appendChild(popEl); placePop(popEl,sx,sy);
   popEl.querySelector(".px").addEventListener("click",closePop);
   var ta=popEl.querySelector("textarea"), send=popEl.querySelector(".send"), mailrow=popEl.querySelector(".mailrow"), em=popEl.querySelector("input"), foot=popEl.querySelector(".anon");
+  if(draftText){ ta.value=draftText; send.disabled=false }
   ta.focus();
   ta.addEventListener("input",function(){ send.disabled=!ta.value.trim(); ta.style.height="auto"; ta.style.height=Math.min(ta.scrollHeight,120)+"px" });
   ta.addEventListener("keydown",function(ev){ if(ev.key==="Enter"&&!ev.shiftKey){ ev.preventDefault(); if(!send.disabled) send.click() } if(ev.key==="Escape") closePop() });
@@ -1403,12 +1716,14 @@ function startComment(e){
       body:JSON.stringify({notes:["[Comment on "+PAGES[st.page].name+" · "+on+(mail?" · reply to "+mail:" · anonymous")+"] "+text],topic:"comment",replyTo:mail,page:location.href,sentAt:new Date().toISOString()})})
     .then(function(r){ if(!r.ok) throw 0 })
     .then(function(){
-      pins.push({page:st.page,wx:w.x,wy:w.y,text:text,on:on,email:mail});
+      T("fv_comment_sent",{page:pageSlug(),withEmail:!!mail});
+      draftText="";
+      pins.push({slug:pageSlug(),wx:w.x,wy:w.y,text:text,on:on,email:mail,t:Date.now()});
       try{ localStorage.setItem(PINS_KEY,JSON.stringify(pins)) }catch(e){}
       closePop(); placePins(); if(st.rtab==="comments") renderProps();
       toast(mail?"Sent. I’ll reply to "+mail:"Sent anonymously. Thank you!");
     })
-    .catch(function(){ send.disabled=false; popEl.classList.remove("sending"); toast("Couldn’t send. Try again in a moment.") });
+    .catch(function(){ send.disabled=false; popEl.classList.remove("sending"); toast("Couldn’t send. Try again.") });
   });
 }
 
@@ -1423,11 +1738,11 @@ function cursorEl(){
 function placeCursor(){ if(mc&&mc.w) mc.style.transform="translate("+(st.x+mc.w.x*st.zoom)+"px,"+(st.y+mc.w.y*st.zoom)+"px)" }
 function startFollow(){
   closeIntro(); closePop(); setTool("move");
-  following=true; step=0; cv.classList.add("follow"); $("#fbar").classList.add("on"); $("#lkAv").classList.add("on");
+  following=true; step=0; cv.classList.add("follow"); $("#fbar").classList.add("on"); if($("#lkAv")) $("#lkAv").classList.add("on");
   cursorEl().classList.add("on"); runStep();
 }
 function stopFollow(silent){
-  following=false; clearTimeout(stepT); cv.classList.remove("follow"); $("#fbar").classList.remove("on"); $("#lkAv").classList.remove("on");
+  following=false; clearTimeout(stepT); cv.classList.remove("follow"); $("#fbar").classList.remove("on"); if($("#lkAv")) $("#lkAv").classList.remove("on");
   if(mc){ mc.classList.remove("on"); var m=$("#mcMsg"); if(m) m.textContent="" }
   if(!silent) toast("Stopped following Lokesh");
 }
@@ -1461,68 +1776,106 @@ function runStep(){
 $("#fnext").addEventListener("click",function(){ step++; closePop(); runStep() });
 $("#fstop").addEventListener("click",function(){ stopFollow() });
 if(TOUR_ON) $("#lkAv").addEventListener("click",function(){ following?stopFollow():startFollow() });
-else { var lk=$("#lkAv"); lk.setAttribute("data-tip","Lokesh Bhatia"); lk.setAttribute("aria-label","Lokesh Bhatia, owner"); lk.style.cursor="default" }
+else { var lk=$("#lkAv"); if(lk) lk.remove() }
 
 /* ═══ TOOLS, MENUS, KEYS ════════════════════════════════════════════ */
+var ICON_MOVE='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19z"/></svg>', ICON_HAND='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>';
 function setTool(t){
   st.tool=t;
+  var mv=$("#mvBtn"); if(mv){ var hand=t==="hand"; mv.innerHTML=hand?ICON_HAND:ICON_MOVE; mv.dataset.tool=hand?"hand":"move"; mv.setAttribute("data-tip",hand?"Hand tool  H":"Move  V"); mv.setAttribute("aria-label",hand?"Hand tool":"Move"); mv.classList.toggle("on",t==="move"||t==="hand") }
   [].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.classList.toggle("on",b.dataset.tool===t) });
   cv.classList.toggle("hand",t==="hand"); cv.classList.toggle("comment",t==="comment");
   if(t!=="move"){ st.hov=null; draw() }
   if(t==="comment"){ st.rtab="comments"; renderTabs(); renderProps() }
   else if(st.rtab==="comments"){ st.rtab="design"; renderTabs(); renderProps() }
 }
-[].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.addEventListener("click",function(){ setTool(b.dataset.tool===st.tool&&b.dataset.tool!=="move"?"move":b.dataset.tool) }) });
-function setDev(on){ st.dev=on; var b=$("#devBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); if(st.rtab!=="design"&&st.rtab!=="prototype") st.rtab="design"; renderTabs(); renderProps(); toast(on?"Dev Mode: inspect any layer’s CSS":"Design mode") }
+[].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.addEventListener("click",function(){ var t=b.dataset.tool; setTool(t===st.tool&&t==="comment"?"move":t) }) });
+$("#mvMenu").addEventListener("click",function(e){ e.stopPropagation(); menu(this,[["Move","V",function(){ setTool("move") },false,{check:st.tool==="move"}],["Hand tool","H",function(){ setTool("hand") },false,{check:st.tool==="hand"}]],false,true) });
+function setDev(on){ st.dev=on; var mr=$("#mobR"); if(mr) mr.textContent=on?"Inspect":"Properties"; $("#app").classList.toggle("dev",on); T("fv_devmode",{on:on}); var b=$("#devBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); if(st.rtab!=="design"&&st.rtab!=="prototype") st.rtab="design"; renderTabs(); renderProps(); toast(on?"Dev Mode: inspect any layer’s CSS":"Design mode") }
 $("#devBtn").addEventListener("click",function(){ setDev(!st.dev) });
-$("#assetsTab").addEventListener("click",function(){ loadPage(pageIndex("Foundations")); toast("The system lives on the Foundations page") });
 
 var menuEl=null;
-function closeMenus(){ if(menuEl){ menuEl.remove(); menuEl=null } }
-function menu(anchor,items,search,up){
-  closeMenus();
-  var m=document.createElement("div"); m.className="menu";
+function closeMenus(){ if(subEl){ subEl.remove(); subEl=null } if(menuEl){ menuEl.remove(); menuEl=null } }
+/* items: [label, shortcut, fn, searchOnly, {sub, hint, syn, check}] · "-" divider · "Heading" */
+function menu(anchor,items,search,up,side){
+  if(!side) closeMenus(); else if(subEl){ subEl.remove(); subEl=null }
+  var m=document.createElement("div"); m.className="menu"; m.setAttribute("role","menu");
   var list=document.createElement("div");
   function paintList(q){
     list.innerHTML=""; var first=true, pendH=null, pendHr=false, any=false;
-    /* headings and dividers appear only above a group that has something in it */
     items.forEach(function(it){
       if(it==="-"){ if(!q&&any) pendHr=true; return }
       if(typeof it==="string"){ if(!q) pendH=it; return }
-      /* a 4th field marks an action that has a home elsewhere: it shows only when searched */
+      var o=it[4]||{};
       if(!q&&it[3]) return;
-      if(q&&it[0].toLowerCase().indexOf(q)<0) return;
+      if(q&&(it[0]+" "+(o.syn||"")).toLowerCase().indexOf(q)<0) return;
+      if(q&&o.sub) return;
       if(pendHr){ list.appendChild(document.createElement("hr")); pendHr=false }
       if(pendH){ var h=document.createElement("div"); h.className="mh"; h.textContent=pendH; list.appendChild(h); pendH=null }
       any=true;
-      var b=document.createElement("button"); b.innerHTML=esc(it[0])+'<span>'+esc(it[1]||"")+'</span>';
+      var b=document.createElement("button"); b.setAttribute("role","menuitem"); b.type="button";
+      b.innerHTML='<em class="ck">'+(o.check?'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>':'')+'</em>'+
+        '<span class="lb">'+esc(it[0])+(o.hint?' <i>'+esc(o.hint)+'</i>':'')+'</span><span>'+(o.sub?'<svg width="8" height="8" viewBox="0 0 8 8"><path d="M2.5 1.5 5.5 4l-3 2.5" fill="currentColor"/></svg>':esc(it[1]||""))+'</span>';
       if(q&&first){ b.classList.add("hl"); first=false }
-      b.addEventListener("click",function(){ closeMenus(); it[2]() }); list.appendChild(b);
+      if(o.sub){ b.dataset.sub="1"; var open=function(){ hlOnly(b); menu(b,o.sub,false,false,true) }; b.addEventListener("mouseenter",open); b.addEventListener("click",open) }
+      else { b.addEventListener("mouseenter",function(){ hlOnly(b); if(!side&&subEl){ subEl.remove(); subEl=null } });
+        b.addEventListener("click",function(){ closeMenus(); if(search) T("fv_action",{label:it[0]}); it[2]() }) }
+      list.appendChild(b);
     });
+    if(q&&!any){ var n=document.createElement("div"); n.className="mh"; n.style.textTransform="none"; n.textContent="No actions match"; list.appendChild(n) }
   }
+  function hlOnly(b){ [].forEach.call(list.querySelectorAll("button.hl"),function(x){ x.classList.remove("hl") }); if(b) b.classList.add("hl") }
+  m.move=function(d){ var bs=[].slice.call(list.querySelectorAll("button")); if(!bs.length) return; var i=bs.indexOf(list.querySelector("button.hl")); hlOnly(bs[(i+d+bs.length)%bs.length]); bs[(i+d+bs.length)%bs.length].scrollIntoView({block:"nearest"}) };
+  m.enter=function(){ var b=list.querySelector("button.hl"); if(b) b.click() };
+  m.right=function(){ var b=list.querySelector("button.hl"); if(b&&b.dataset.sub) b.click() };
   if(search){
-    var q=document.createElement("input"); q.className="q"; q.placeholder="Search all actions…"; m.appendChild(q);
+    var q=document.createElement("input"); q.className="q"; q.placeholder="Search all actions…"; q.setAttribute("aria-label","Search actions"); m.appendChild(q);
     q.addEventListener("input",function(){ paintList(q.value.trim().toLowerCase()) });
-    q.addEventListener("keydown",function(e){ if(e.key==="Enter"){ var hl=list.querySelector("button.hl")||list.querySelector("button"); if(hl) hl.click() } if(e.key==="Escape") closeMenus() });
+    q.addEventListener("keydown",function(e){
+      if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); m.move(e.key==="ArrowDown"?1:-1) }
+      else if(e.key==="Enter"){ e.preventDefault(); if(!list.querySelector("button.hl")) m.move(1); m.enter() }
+      else if(e.key==="Escape"){ e.stopPropagation(); closeMenus() } });
     setTimeout(function(){ q.focus() },0);
   }
   m.appendChild(list); paintList("");
   document.body.appendChild(m);
   var r=anchor.getBoundingClientRect();
-  m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+"px";
-  m.style.top=(up?Math.max(8,r.top-m.offsetHeight-8):r.bottom+4)+"px";
+  if(side){ m.style.left=Math.min(r.right+2,innerWidth-m.offsetWidth-8)+"px"; m.style.top=Math.max(8,r.top-8)+"px"; subEl=m }
+  else { m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+"px";
+    m.style.top=(up?Math.max(8,r.top-m.offsetHeight-8):r.bottom+4)+"px"; menuEl=m }
   m.addEventListener("pointerdown",function(e){ e.stopPropagation() });
-  menuEl=m;
 }
-document.addEventListener("pointerdown",function(e){ if(menuEl&&!menuEl.contains(e.target)) closeMenus() });
+var subEl=null;
+/* ↑↓ move, Enter chooses, → opens a submenu, ← closes it, Esc closes */
+document.addEventListener("keydown",function(e){
+  if(!menuEl||(e.target.closest&&e.target.closest("input,textarea"))) return;
+  var m=subEl||menuEl;
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); e.stopImmediatePropagation(); m.move(e.key==="ArrowDown"?1:-1) }
+  else if(e.key==="Enter"){ e.preventDefault(); e.stopImmediatePropagation(); m.enter() }
+  else if(e.key==="ArrowRight"&&!subEl){ e.preventDefault(); e.stopImmediatePropagation(); menuEl.right() }
+  else if(e.key==="ArrowLeft"&&subEl){ e.preventDefault(); e.stopImmediatePropagation(); subEl.remove(); subEl=null }
+  else if(e.key==="Escape"){ e.preventDefault(); e.stopImmediatePropagation(); if(subEl){ subEl.remove(); subEl=null } else closeMenus() }
+},true);
+document.addEventListener("pointerdown",function(e){ if(menuEl&&!menuEl.contains(e.target)&&!(subEl&&subEl.contains(e.target))) closeMenus() });
 function center(){ return {x:cv.clientWidth/2,y:cv.clientHeight/2} }
 function zoomSel(){ if(!st.sel) return fit(false); var s=st.sel, r=s.el===s.f.root?{x:0,y:0,w:s.f.w,h:s.f.h}:frameRect(s.f,s.el); zoomTo(s.f,r) }
 function zoomMenu(e){
   if(e) e.stopPropagation(); var c=center();
   menu((e&&e.currentTarget&&e.currentTarget.id==="zoomMini")?$("#zoomMini"):$("#zoomBtn"),[["Zoom in","⌘+",function(){ zoomAt(st.zoom*1.5,c.x,c.y) }],["Zoom out","⌘−",function(){ zoomAt(st.zoom/1.5,c.x,c.y) }],
     ["Zoom to fit","⇧1",function(){ fit(false) }],["Zoom to selection","⇧2",function(){ zoomSel() }],"-",
-    ["Zoom to 50%","",function(){ zoomAt(.5,c.x,c.y) }],["Zoom to 100%","⇧0",function(){ zoomAt(1,c.x,c.y) }],["Zoom to 200%","",function(){ zoomAt(2,c.x,c.y) }]]);
+    ["Zoom to 50%","",function(){ zoomAt(.5,c.x,c.y) }],["Zoom to 100%","⇧0",function(){ zoomAt(1,c.x,c.y) }],["Zoom to 200%","",function(){ zoomAt(2,c.x,c.y) }],"-",
+    ["Comments","⇧C",togglePins,false,{check:!st.pinsOff}]]);
 }
+var KEYS=[["Tools",[["Move","V"],["Hand tool","H"],["Pan","Space + drag"],["Comment","C"],["Dev Mode","⇧D"]]],
+  ["View",[["Zoom to fit","⇧1"],["Zoom to selection","⇧2"],["Zoom to 100%","⇧0"],["Zoom in / out","⌘+ / ⌘−"],["Minimize UI","⌘⇧\\"],["Hide UI","⌘\\"],["Show/hide comments","⇧C"]]],
+  ["Selection",[["Select child","Enter"],["Select parent","⇧Enter"],["Next / previous sibling","Tab / ⇧Tab"],["Deep select","⌘ + click"],["Up a level, then deselect","Esc"]]],
+  ["Navigate",[["Next / previous frame","N / ⇧N"],["Find pages and layers","⌘F"],["Actions","⌘K"]]],
+  ["Present",[["Present","⌥⌘↵"],["Next / previous page","→ / ←"],["Restart","R"],["Close","Esc"]]]];
+function showKeys(){ $("#kbdBody").innerHTML=KEYS.map(function(g){ return '<section><h4>'+g[0]+'</h4>'+g[1].map(function(k){ return '<div><span>'+esc(k[0])+'</span><kbd>'+esc(k[1])+'</kbd></div>' }).join("")+'</section>' }).join(""); $("#kbd").hidden=false }
+function hideKeys(){ $("#kbd").hidden=true }
+function showIntro(){ $("#intro").hidden=false }
+function hideUI(){ $("#app").classList.toggle("hideui"); setTimeout(function(){ draw(); placePins() },30) }
+function togglePins(){ st.pinsOff=!st.pinsOff; placePins(); toast(st.pinsOff?"Comments hidden":"Comments shown") }
 function showHistory(){ st.rtab="history"; renderTabs(); renderProps(); $("#app").classList.add("show-r") }
 function showComments(){ setTool("comment"); $("#app").classList.add("show-r") }
 /* Where each thing lives, so menus don't repeat each other:
@@ -1532,22 +1885,23 @@ function showComments(){ setTool("comment"); $("#app").classList.add("show-r") }
    everything else when you search, as Figma's Actions does. */
 var SEARCH_ONLY=true;
 var ACTIONS=[
-  "Get to know me",
-  ["Follow Lokesh’s 1-minute tour","",startFollow],
-  ["Show design decisions","",showComments],
-  ["Go to Cover","",function(){ loadPage(0) },SEARCH_ONLY],
-  ["Show version history","⌥⌘H",showHistory,SEARCH_ONLY],
-  "-","Reach me",
-  ["Copy my email","",function(){ copy(MAIL,"Email copied: "+MAIL) }],
-  ["Open LinkedIn","",function(){ window.open(LINKEDIN,"_blank","noopener") }],
-  ["Open résumé","",function(){ loadPage(pageIndex("Resume")) },SEARCH_ONLY],
-  "-","View",
-  ["Minimize UI","⇧\\",function(){ minUI() }],
-  ["Present the real site","⌥⌘↵",function(){ present(true) },SEARCH_ONLY],
-  ["Dev Mode","⇧D",function(){ setDev(!st.dev) },SEARCH_ONLY],
+  "Reach Lokesh",
+  ["Copy email","",function(){ copy(MAIL,"Email copied: "+MAIL) },false,{hint:MAIL,syn:"contact hire mail"}],
+  ["Open LinkedIn ↗","",function(){ window.open(LINKEDIN,"_blank","noopener") },false,{syn:"contact hire linkedin"}],
+  "-"
+].concat(PAGES.filter(function(p){ return p.name }).map(function(p){ return ["Go to "+p.name,"",function(){ loadPage(pageIndex(p.name)) },SEARCH_ONLY,{syn:p.name==="Resume"?"cv résumé":p.name==="Foundations"?"design system tokens colours type":""}] }),[
+  ["Present","⌥⌘↵",function(){ present(true) },SEARCH_ONLY,{syn:"play prototype"}],
+  ["Present in new tab","",function(){ window.open(PAGES[st.page].src||"./index.html","_blank","noopener") },SEARCH_ONLY,{syn:"open website"}],
+  ["Show version history","",showHistory,SEARCH_ONLY,{syn:"changelog"}],
+  ["Dev Mode","⇧D",function(){ setDev(!st.dev) },SEARCH_ONLY,{syn:"inspect code css"}],
   ["Zoom to fit","⇧1",function(){ fit(false) },SEARCH_ONLY],
-  ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") },SEARCH_ONLY]
-];
+  ["Zoom to selection","⇧2",function(){ zoomSel() },SEARCH_ONLY],
+  ["Minimize UI","⌘⇧\\",function(){ minUI() },SEARCH_ONLY],
+  ["Hide UI","⌘\\",function(){ hideUI() },SEARCH_ONLY],
+  ["Show/hide comments","⇧C",togglePins,SEARCH_ONLY],
+  ["Keyboard shortcuts","⌃⇧?",showKeys,SEARCH_ONLY,{syn:"help keys"}],
+  ["Back to the website","",home,SEARCH_ONLY,{syn:"exit close leave"}]
+]);
 if(!TOUR_ON) ACTIONS=ACTIONS.filter(function(it){ return !(it&&it[0]==="Follow Lokesh’s 1-minute tour") });
 if(!DECISIONS.length) ACTIONS=ACTIONS.filter(function(it){ return !(it&&it[0]==="Show design decisions") });
 $("#actBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(this,ACTIONS,true,true) });
@@ -1555,7 +1909,7 @@ $("#actBtn").addEventListener("click",function(e){ e.stopPropagation(); menu(thi
    (commands are Actions, ⌘K) */
 var findIdx=null;
 function openFind(){ var lf=$("#lfind"); lf.hidden=false; findIdx=null; $("#app").classList.add("show-l"); setTimeout(function(){ $("#findQ").focus(); $("#findQ").select() },0) }
-function closeFind(){ $("#lfind").hidden=true; $("#findQ").value=""; $("#fres").hidden=true; $(".lp").classList.remove("finding"); findIdx=null }
+function closeFind(){ if($("#findQ").value.trim()) T("fv_find",{results:$("#fres").querySelectorAll(".fr").length}); $("#lfind").hidden=true; $("#findQ").value=""; $("#fres").hidden=true; $(".lp").classList.remove("finding"); findIdx=null }
 function layerIndex(){
   if(findIdx) return findIdx;
   var out=[];
@@ -1575,9 +1929,11 @@ function runFind(){
   var ly=layerIndex().filter(function(x){ return (x.nm||"").toLowerCase().indexOf(q)>-1 }).slice(0,40);
   function head(t){ var h=document.createElement("div"); h.className="sh"; h.textContent=t; box.appendChild(h) }
   function row(icon,name,note,go){ var b=document.createElement("button"); b.className="fr"; b.innerHTML='<span class="ic">'+icon+'</span><span class="nm">'+esc(name)+'</span>'+(note?'<small>'+esc(note)+'</small>':''); b.addEventListener("click",go); box.appendChild(b) }
-  if(pg.length){ head("Pages"); pg.forEach(function(i){ row("",PAGES[i].name,"",function(){ closeFind(); if(i!==st.page) loadPage(i) }) }) }
-  if(ly.length){ head("Layers on "+PAGES[st.page].name); ly.forEach(function(x){ row(iconOf(x.el,kindOf(x.el,x.f.root)),x.nm,x.f.name.split(" — ")[0],function(){ select(x.f,x.el); reveal(x.f,x.el) }) }) }
-  if(!pg.length&&!ly.length){ var n=document.createElement("div"); n.className="none"; n.textContent="Nothing called “"+$("#findQ").value.trim()+"” here. Commands are in Actions, ⌘K."; box.appendChild(n) }
+  if(pg.length){ head("Pages"); pg.forEach(function(i){ row(ICON.page||"",PAGES[i].name,"",function(){ closeFind(); if(i!==st.page) loadPage(i) }) }) }
+  /* layers, each with its type and where it sits */
+  if(ly.length){ head("On this page"); ly.forEach(function(x){ var par=layerParent(x.el,x.f); row(iconOf(x.el,kindOf(x.el,x.f.root)),x.nm,par&&par!==x.f.root?nameOf(par,x.f):x.f.name.split(" — ")[0],function(){ select(x.f,x.el); reveal(x.f,x.el) }) }) }
+  if(!pg.length&&!ly.length){ var n=document.createElement("div"); n.className="none"; n.textContent="No results for “"+$("#findQ").value.trim()+"”"; box.appendChild(n) }
+  var f1=box.querySelector(".fr"); if(f1) f1.classList.add("hl");
 }
 /* keep the zoom; only pan if the layer is off-screen, centring it */
 function reveal(f,el){
@@ -1588,21 +1944,29 @@ function reveal(f,el){
 }
 $("#searchBtn").addEventListener("click",function(e){ e.stopPropagation(); if($("#lfind").hidden) openFind(); else closeFind() });
 $("#findQ").addEventListener("input",runFind);
-$("#findQ").addEventListener("keydown",function(e){ if(e.key==="Escape"){ e.stopPropagation(); closeFind() } if(e.key==="Enter"){ var b=$("#fres .fr"); if(b) b.click() } });
+$("#findQ").addEventListener("keydown",function(e){
+  var rs=[].slice.call(document.querySelectorAll("#fres .fr")), cur=document.querySelector("#fres .fr.hl"), i=rs.indexOf(cur);
+  if(e.key==="Escape"){ e.stopPropagation(); closeFind() }
+  else if((e.key==="ArrowDown"||e.key==="ArrowUp")&&rs.length){ e.preventDefault(); if(cur) cur.classList.remove("hl"); var n=rs[(i+(e.key==="ArrowDown"?1:-1)+rs.length)%rs.length]; n.classList.add("hl"); n.scrollIntoView({block:"nearest"}) }
+  else if(e.key==="Enter"){ e.preventDefault(); var b=cur||rs[0]; if(b) b.click() } });
 $("#logoBtn").addEventListener("click",function(e){
   e.stopPropagation();
-  menu(this,[["Back to the website","",home],["Actions…","⌘K",function(){ menu($("#actBtn"),ACTIONS,true,true) }],"-",
-    ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") }]]);
+  menu(this,[["Back to the website","",home],"-",
+    ["Help and account","",null,false,{sub:[["Keyboard shortcuts","⌃⇧?",showKeys],["How to use this file","",showIntro]]}]]);
 });
 $("#fileBtn").addEventListener("click",function(e){
   e.stopPropagation();
-  menu(this,[["Show version history","⌥⌘H",showHistory],["Open this page on the website","",function(){ var p=PAGES[st.page]; window.open(p.src||"./index.html","_blank","noopener") }]]);
+  menu(this,[["Show version history","",showHistory]]);
 });
 $("#presentBtn").addEventListener("click",function(){ present(true) });
+$("#presentMenu").addEventListener("click",function(e){ e.stopPropagation();
+  var P=PAGES[st.page], src=P.src||"./index.html";
+  menu(this,[["Present","⌥⌘↵",function(){ present(true) }],["Present in new tab","",function(){ T("fv_follow_link",{from:pageSlug(),to:"new-tab"}); window.open(src,"_blank","noopener") }]]) });
 $("#zoomMini").addEventListener("click",zoomMenu);
-$("#shareBtn").addEventListener("click",function(){ copy(shareURL(),"Link copied to clipboard") });
-function minUI(){ $("#app").classList.toggle("min"); setTimeout(function(){ draw(); placePins() },30) }
+$("#shareBtn").addEventListener("click",function(){ T("fv_share",{page:pageSlug()}); copy(shareURL(),"Link to "+PAGES[st.page].name+" copied") });
+function minUI(){ $("#app").classList.toggle("min"); $("#app").classList.remove("peek"); if($("#app").classList.contains("min")) T("fv_minimize"); setTimeout(function(){ draw(); placePins() },30) }
 $("#minBtn").addEventListener("click",minUI);
+$("#kbdX").addEventListener("click",hideKeys);
 
 document.addEventListener("keydown",function(e){
   if(e.target.closest&&e.target.closest("textarea,input")) return;
@@ -1613,46 +1977,86 @@ document.addEventListener("keydown",function(e){
   if((e.metaKey||e.ctrlKey)&&(k==="f"||k==="F")){ e.preventDefault(); openFind(); return }
   if((e.metaKey||e.ctrlKey)&&(k==="k"||k==="/")){ e.preventDefault(); menu($("#actBtn"),ACTIONS,true,true); return }
   if((e.metaKey||e.ctrlKey)&&e.altKey&&k==="Enter"){ e.preventDefault(); present(true); return }
+  if((e.metaKey||e.ctrlKey)&&e.code==="Backslash"){ e.preventDefault(); if(e.shiftKey) minUI(); else hideUI(); return }
+  if(e.ctrlKey&&e.shiftKey&&(k==="?"||e.code==="Slash")){ e.preventDefault(); showKeys(); return }
   if(e.metaKey||e.ctrlKey||e.altKey) return;
   if(e.shiftKey&&(k==="|"||e.code==="Backslash")){ minUI(); return }
   if(e.shiftKey&&(k==="!"||e.code==="Digit1")){ fit(false); return }
   if(e.shiftKey&&(k==="@"||e.code==="Digit2")){ zoomSel(); return }
   if(e.shiftKey&&(k===")"||e.code==="Digit0")){ zoomAt(1,c.x,c.y); return }
   if(e.shiftKey&&(k==="D"||k==="d")){ setDev(!st.dev); return }
+  if(e.shiftKey&&(k==="C"||k==="c")){ togglePins(); return }
   if(k==="v"||k==="V") setTool("move");
   else if(k==="h"||k==="H") setTool("hand");
   else if(k==="c"||k==="C") setTool("comment");
   else if(k==="Escape"){
     closeMenus();
+    if(!$("#kbd").hidden) return hideKeys();
+    if($("#app").classList.contains("hideui")) return hideUI();
     if($("#present").classList.contains("on")) return present(false);
     if(following) return stopFollow();
     if(popEl) return closePop();
+    if(lpop) return closeLinkPop();
     if(st.tool!=="move") return setTool("move");
     if(!st.sel) return;
     if(st.sel.el===st.sel.f.root) return select(null);
     var p=layerParent(st.sel.el,st.sel.f); select(st.sel.f,p,p===st.sel.f.root?p:layerParent(p,st.sel.f));
   }
+  else if(k==="Enter"&&e.shiftKey&&st.sel){ if(st.sel.el!==st.sel.f.root){ var pp=layerParent(st.sel.el,st.sel.f); select(st.sel.f,pp,pp===st.sel.f.root?pp:layerParent(pp,st.sel.f)) } }
   else if(k==="Enter"&&st.sel){ var ch=kids(st.sel.el); if(ch.length) select(st.sel.f,ch[0],st.sel.el) }
+  else if(k==="Tab"&&st.sel&&st.sel.el!==st.sel.f.root){ e.preventDefault();
+    var par=layerParent(st.sel.el,st.sel.f), sib=kids(par), ix=sib.indexOf(st.sel.el);
+    if(sib.length>1&&ix>-1){ var nx=sib[(ix+(e.shiftKey?-1:1)+sib.length)%sib.length]; select(st.sel.f,nx,par); reveal(st.sel.f,nx) } }
+  else if((k==="n"||k==="N")&&st.frames.length){
+    var fi=st.sel?st.frames.indexOf(st.sel.f):-1, nf=st.frames[(fi+(e.shiftKey?-1:1)+st.frames.length)%st.frames.length];
+    if(nf&&nf.root){ select(nf,nf.root,nf.root); zoomTo(nf,{x:0,y:0,w:nf.w,h:Math.min(nf.h,nf.w*1.4)}) } }
 });
 document.addEventListener("keyup",function(e){ if(e.key===" "){ space=false; cv.classList.toggle("hand",st.tool==="hand") } });
 
 /* ═══ PRESENT: THE REAL SITE, PLAYING ═══════════════════════════════ */
 var pDev="desktop";
-function present(on){
-  var p=$("#present"), P=PAGES[st.page];
-  if(on){ $("#pTitle").textContent=P.name; $("#pFrame").src=P.src||"./index.html"; p.classList.add("on"); paintDev() }
-  else{ p.classList.remove("on"); $("#pFrame").src="about:blank" }
+/* the site's pages, in Pages order: what ← → walk through */
+function sitePages(){ return PAGES.map(function(p,i){ return p.src?i:-1 }).filter(function(i){ return i>-1 }) }
+var pIdx=0;
+function present(on,at){
+  var p=$("#present"), sp=sitePages();
+  if(on){
+    if(at==null) at=PAGES[st.page].src?st.page:pageIndex("Home");   /* Cover and Foundations present Home */
+    pIdx=sp.indexOf(at); if(pIdx<0) pIdx=0;
+    T("fv_present",{page:pageSlug(sp[pIdx]),device:pDev}); showP(); p.classList.add("on"); paintDev();
+  } else { p.classList.remove("on"); $("#pFrame").src="about:blank" }
 }
+function showP(){ var sp=sitePages(), P=PAGES[sp[pIdx]]; $("#pTitle").textContent=P.name; $("#pFrame").src=P.src; $("#pCount").textContent=(pIdx+1)+" of "+sp.length; $("#pPrev").disabled=pIdx===0; $("#pNext").disabled=pIdx===sp.length-1 }
+function pStep(d){ var sp=sitePages(); pIdx=Math.max(0,Math.min(sp.length-1,pIdx+d)); showP() }
+$("#pPrev").addEventListener("click",function(){ pStep(-1) });
+$("#pNext").addEventListener("click",function(){ pStep(1) });
+$("#pRestart").addEventListener("click",function(){ showP() });
+/* keys reach Present even while the page has focus — never while typing in it */
+function pKey(e){
+  if(!$("#present").classList.contains("on")) return;
+  if(e.key==="Escape"){ e.preventDefault(); e.stopImmediatePropagation(); present(false); return }
+  var t=e.target; if(e.defaultPrevented||e.metaKey||e.ctrlKey||e.altKey||(t&&t.closest&&t.closest("input,textarea,select,[contenteditable]"))) return;
+  if(e.key==="ArrowRight"){ e.preventDefault(); e.stopImmediatePropagation(); pStep(1) } else if(e.key==="ArrowLeft"){ e.preventDefault(); e.stopImmediatePropagation(); pStep(-1) } else if(e.key==="r"||e.key==="R"){ e.stopImmediatePropagation(); showP() }
+}
+document.addEventListener("keydown",pKey,true);
+$("#pFrame").addEventListener("load",function(){
+  try{ var d=this.contentDocument; if(!d||d.URL==="about:blank") return;
+    d.addEventListener("keydown",pKey);
+    /* the page's own title, mapped to its page name when it is one */
+    var u=d.location.pathname.split("/").pop()||"index.html", nm=null; PAGES.forEach(function(P,i){ if(P.src&&P.src.replace("./","")===u){ nm=P.name; var k=sitePages().indexOf(i); if(k>-1){ pIdx=k; $("#pCount").textContent=(pIdx+1)+" of "+sitePages().length; $("#pPrev").disabled=pIdx===0; $("#pNext").disabled=pIdx===sitePages().length-1 } } });
+    $("#pTitle").textContent=nm||(d.title||"").split(/ [·|,–—] /)[0];
+  }catch(e){}
+});
 function paintDev(){ $("#pStage").classList.toggle("mobile",pDev==="mobile"); [].forEach.call(document.querySelectorAll("[data-dev]"),function(b){ b.classList.toggle("on",b.dataset.dev===pDev) }) }
 $("#pClose").addEventListener("click",function(){ present(false) });
 [].forEach.call(document.querySelectorAll("[data-dev]"),function(b){ b.addEventListener("click",function(){ pDev=b.dataset.dev; paintDev() }) });
 
 /* ═══ FIRST VISIT ═══════════════════════════════════════════════════ */
-function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ localStorage.setItem("lb.figma.intro","2") }catch(e){} } }
+function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ localStorage.setItem("lb.figma.intro","3") }catch(e){} } }
 (function(){
-  var seen=false; try{ seen=localStorage.getItem("lb.figma.intro")==="2" }catch(e){}
+  var seen=false; try{ seen=localStorage.getItem("lb.figma.intro")==="3" }catch(e){}
   if(!seen) $("#intro").hidden=false;
-  $("#introOk").addEventListener("click",function(){ closeIntro(); fit(true) });
+  $("#introOk").addEventListener("click",function(){ closeIntro() });
   if(TOUR_ON) $("#introTour").addEventListener("click",startFollow); else $("#introTour").remove();
   cv.addEventListener("pointerdown",function(e){ if(!e.target.closest(".intro")) closeIntro() },true);
   document.querySelector(".tb").addEventListener("click",closeIntro);
@@ -1661,6 +2065,12 @@ function closeIntro(){ var b=$("#intro"); if(b&&!b.hidden){ b.hidden=true; try{ 
 /* ═══ PHONES ════════════════════════════════════════════════════════ */
 $("#mobL").addEventListener("click",function(){ $("#app").classList.toggle("show-l"); $("#app").classList.remove("show-r") });
 $("#mobR").addEventListener("click",function(){ $("#app").classList.toggle("show-r"); $("#app").classList.remove("show-l") });
+function closeDrawers(){ $("#app").classList.remove("show-l","show-r") }
+$("#scrim").addEventListener("click",closeDrawers);
+$("#lpX").addEventListener("click",closeDrawers); $("#rpX").addEventListener("click",closeDrawers);
+$("#presentTb").addEventListener("click",function(){ present(true) });
+/* a tablet opens with Figma's minimised UI; selecting brings properties back */
+if(innerWidth>=768&&innerWidth<1024&&!$("#app").classList.contains("min")) minUI();
 var touches={};
 cv.addEventListener("touchstart",function(e){ if(e.touches.length===2){ tap=null; var a=e.touches[0],b=e.touches[1]; touches={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),z:st.zoom,mx:(a.clientX+b.clientX)/2,my:(a.clientY+b.clientY)/2,x:st.x,y:st.y} } },{passive:true});
 cv.addEventListener("touchmove",function(e){
@@ -1673,11 +2083,16 @@ cv.addEventListener("touchmove",function(e){
 cv.addEventListener("touchend",function(){ touches={} });
 
 addEventListener("resize",function(){ draw(); placePins() });
-/* the file opens on its Cover */
-loadPage(0);
-/* read the live site for Foundations while the visitor looks at the
-   Cover, so that page (and its tour step) opens instantly */
-setTimeout(function(){ readSite(function(){}) },2500);
+/* the file opens on the page its link names, else where you left it, else the Cover */
+(function(){
+  var want=(location.search.match(/[?&]page=([a-z0-9-]+)/)||[])[1]||(location.hash.replace(/^#/,"")||""), from=want?"link":"";
+  if(!want){ try{ want=localStorage.getItem("lb.figma.page")||"" }catch(e){} }
+  var idx=0; for(var i=0;i<PAGES.length;i++) if(PAGES[i].name&&pageSlug(i)===want) idx=i;
+  loadPage(idx);
+  if(from&&idx===0&&want!=="cover") toast("That page isn’t in the file, so here’s the Cover");
+})();
+T("fv_open",{entry:(location.search.match(/[?&]entry=(pill|link)/)||[])[1]||(EMBED?"pill":"direct"),page:pageSlug()});
+
 })();
 </script>
 </body>
