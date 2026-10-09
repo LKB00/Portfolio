@@ -288,6 +288,8 @@ button.av{cursor:pointer}
   padding:4px 8px;border-radius:5px;background:#1E1E1E;color:#fff;white-space:nowrap;font-size:11px;font-weight:400;pointer-events:none;z-index:9}
 .rt [data-tip]:hover::after{bottom:auto;top:calc(100% + 6px)}
 .rt [data-tip]{position:relative}
+.ib,.mode,.tb [data-tip]{position:relative}
+.lh [data-tip]:hover::after,.ltabs [data-tip]:hover::after{bottom:auto;top:calc(100% + 6px);left:0;transform:none}
 
 .toast{position:absolute;left:50%;bottom:72px;transform:translateX(-50%) translateY(8px);padding:8px 14px;border-radius:8px;
   background:#1E1E1E;color:#fff;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:7;white-space:nowrap}
@@ -396,7 +398,7 @@ button.av{cursor:pointer}
       <button class="fname" id="fileBtn"><b>Portfolio <i class="beta">Beta</i><svg class="chev" viewBox="0 0 8 8"><path d="M1.5 3 4 5.5 6.5 3" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></b><span>Lokesh Bhatia · View only</span></button>
       <button class="ib" id="minBtn" aria-label="Minimize UI" data-tip="Minimize UI  ⇧\"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
     </div>
-    <div class="ltabs"><button class="tab on">File</button><button class="tab" id="assetsTab">Assets</button>
+    <div class="ltabs"><span class="tab on" aria-current="page">File</span>
       <button class="ib" id="searchBtn" aria-label="Find pages and layers" data-tip="Find  ⌘F"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button></div>
     <div class="lfind" id="lfind" hidden><input id="findQ" type="search" placeholder="Find pages and layers…" aria-label="Find pages and layers"></div>
     <div class="fres" id="fres" hidden></div>
@@ -512,7 +514,7 @@ var DECISIONS=ALL_DECISIONS.filter(function(d){ return !d.draft });
 
 /* how the site changed, in my words; dates from the repository */
 var HISTORY=[
-  {d:"9 Oct 2026",t:"Figma view, in beta",p:"The portfolio as a view-only design file: the live pages as frames, inspectable, with a one-minute tour."},
+  {d:"9 Oct 2026",t:"Figma view, in beta",p:"The portfolio as a view-only design file: the live pages as frames, inspectable."},
   {d:"9 Oct 2026",t:"Notes board rebuilt",p:"Visitors were asking an anonymous box for my contact details. It now says it’s anonymous, and you can sign a note with your email."},
   {d:"30 Sep 2026",t:"One visual system across the portfolio",p:"Every case study on the same layout; Getbaq restructured from problem to proof."},
   {d:"28 Sep 2026",t:"Screenshots became prototypes",p:"The web terminal case study now shows the live prototype instead of static screens."},
@@ -651,14 +653,14 @@ function isText(el){
   for(var i=0;i<el.children.length;i++){ var c=el.children[i]; if(!INLINE[c.tagName]||c.querySelector("img,svg,video")) return false }
   return true;
 }
-function kids(el){
+function kids(el,withHidden){
   if(isText(el)||el.tagName.toLowerCase()==="svg") return [];
   var out=[];
   for(var i=0;i<el.children.length;i++){
     var c=el.children[i];
     if(SKIP[c.tagName]) continue;
     if(c.tagName==="MAIN"||(c.classList.contains("wrap")&&c.parentElement===c.ownerDocument.body)){ out=out.concat(kids(c)); continue }
-    if(visible(c)||st.hidden.has(c)) out.push(c);
+    if(visible(c)||(withHidden&&(c.children.length||c.textContent.trim()))) out.push(c);
   }
   return out;
 }
@@ -1146,28 +1148,20 @@ function renderTree(){
 function node(f,el,depth){
   var wrapEl=document.createElement("div");
   var row=document.createElement("div"), k=kindOf(el,f.root), ch=kids(el);
-  row.className="row k-"+k+(openSet.has(el)?" open":"")+(st.hidden.has(el)?" hid":""); row.setAttribute("role","treeitem");
+  var hiddenByPage=el!==f.root&&!visible(el);
+  row.className="row k-"+k+(openSet.has(el)?" open":"")+(hiddenByPage?" hid":""); row.setAttribute("role","treeitem");
   row.style.paddingLeft=(depth*16)+"px";
   row.innerHTML='<span class="car'+(ch.length?"":" none")+'">'+CARET+'</span><span class="ic">'+iconOf(el,k)+'</span><span class="nm">'+esc(nameOf(el,f))+'</span>'+
-    (el===f.root?'':'<span class="ra"><button class="lk" aria-label="Lock">'+ICON.lock+'</button><button class="vis" aria-label="Hide layer">'+(st.hidden.has(el)?ICON.eyeOff:ICON.eye)+'</button></span>');
+    (hiddenByPage?'<span class="ra on" title="Hidden on the page">'+ICON.eyeOff+'</span>':'');
   wrapEl.appendChild(row); rowOf.set(el,row);
   var bx=document.createElement("div"); wrapEl.appendChild(bx);
-  function fill(){ bx.innerHTML=""; if(openSet.has(el)) kids(el).forEach(function(c){ bx.appendChild(node(f,c,depth+1)) }) }
+  function fill(){ bx.innerHTML=""; if(openSet.has(el)) kids(el,true).forEach(function(c){ bx.appendChild(node(f,c,depth+1)) }) }
   fill();
   row.querySelector(".car").addEventListener("click",function(e){
     e.stopPropagation(); if(!ch.length) return;
     if(openSet.has(el)) openSet.delete(el); else openSet.add(el);
     row.classList.toggle("open",openSet.has(el)); fill(); markTree(false);
   });
-  var vis=row.querySelector(".vis");
-  /* the eye really hides the layer in the frame, as in Figma */
-  if(vis) vis.addEventListener("click",function(e){
-    e.stopPropagation();
-    if(st.hidden.has(el)){ st.hidden.delete(el); el.style.visibility="" } else { st.hidden.add(el); el.style.visibility="hidden" }
-    row.classList.toggle("hid",st.hidden.has(el)); vis.innerHTML=st.hidden.has(el)?ICON.eyeOff:ICON.eye;
-  });
-  var lk=row.querySelector(".lk");
-  if(lk) lk.addEventListener("click",function(e){ e.stopPropagation(); toast("It’s a view-only file, so everything is locked anyway 🙂") });
   row.addEventListener("click",function(){
     select(f,el,layerParent(el,f)||f.root);
     var r=el===f.root?{x:0,y:0,w:f.w,h:Math.min(f.h,900)}:frameRect(f,el); ensureVisible(f,r);
@@ -1205,7 +1199,7 @@ function renderTabs(){
   [].forEach.call(rtabs.querySelectorAll("[data-rtab]"),function(b){ b.addEventListener("click",function(){ setRTab(b.dataset.rtab) }) });
   $("#zoomBtn").addEventListener("click",zoomMenu);
 }
-function setRTab(t){ st.rtab=t; renderTabs(); renderProps(); $("#app").classList.add("show-r-ok") }
+function setRTab(t){ st.rtab=t; renderTabs(); renderProps() }
 function fld(icon,val,cls){ return '<div class="fld '+(cls||"")+'"><i>'+icon+'</i><span>'+esc(val)+'</span></div>' }
 function paint(c){ return c?'<div class="paint"><span class="sw"><b style="background:'+c.css+'"></b></span><span class="hx">'+c.hex.slice(1)+'</span><span class="op">'+c.a+' %</span></div>':"" }
 function bh(title,extra){ return '<div class="bh"><span>'+title+'</span><span class="acts">'+(extra||"")+'</span></div>' }
@@ -1275,7 +1269,7 @@ function vars(f,limit){
 }
 function renderCode(){
   var s=st.sel;
-  if(!s){ props.innerHTML='<div class="blk">'+bh('Dev Mode')+'<p class="note" style="margin-bottom:8px"><span class="rdy">● Ready for dev</span></p><p class="note">Select any layer to inspect its CSS, as an engineer would in a handoff.</p></div>'; return }
+  if(!s){ props.innerHTML='<div class="blk">'+bh('Dev Mode')+'<p class="note">Select any layer to inspect its CSS, as an engineer would in a handoff.</p></div>'; return }
   var el=s.el, cs=win(el).getComputedStyle(el), r=el===s.f.root?{w:s.f.w,h:s.f.h}:frameRect(s.f,el), L=[];
   function add(k,v){ if(v!==undefined&&v!==""&&v!=="none"&&v!=="normal"&&v!=="0px"&&v!=="rgba(0, 0, 0, 0)") L.push([k,v]) }
   add("width",Math.round(r.w)+"px"); add("height",Math.round(r.h)+"px");
@@ -1464,11 +1458,11 @@ function cursorEl(){
 function placeCursor(){ if(mc&&mc.w) mc.style.transform="translate("+(st.x+mc.w.x*st.zoom)+"px,"+(st.y+mc.w.y*st.zoom)+"px)" }
 function startFollow(){
   closeIntro(); closePop(); setTool("move");
-  following=true; step=0; cv.classList.add("follow"); $("#fbar").classList.add("on"); $("#lkAv").classList.add("on");
+  following=true; step=0; cv.classList.add("follow"); $("#fbar").classList.add("on"); if($("#lkAv")) $("#lkAv").classList.add("on");
   cursorEl().classList.add("on"); runStep();
 }
 function stopFollow(silent){
-  following=false; clearTimeout(stepT); cv.classList.remove("follow"); $("#fbar").classList.remove("on"); $("#lkAv").classList.remove("on");
+  following=false; clearTimeout(stepT); cv.classList.remove("follow"); $("#fbar").classList.remove("on"); if($("#lkAv")) $("#lkAv").classList.remove("on");
   if(mc){ mc.classList.remove("on"); var m=$("#mcMsg"); if(m) m.textContent="" }
   if(!silent) toast("Stopped following Lokesh");
 }
@@ -1502,7 +1496,7 @@ function runStep(){
 $("#fnext").addEventListener("click",function(){ step++; closePop(); runStep() });
 $("#fstop").addEventListener("click",function(){ stopFollow() });
 if(TOUR_ON) $("#lkAv").addEventListener("click",function(){ following?stopFollow():startFollow() });
-else { var lk=$("#lkAv"); lk.setAttribute("data-tip","Lokesh Bhatia"); lk.setAttribute("aria-label","Lokesh Bhatia, owner"); lk.style.cursor="default" }
+else { var lk=$("#lkAv"); if(lk) lk.remove() }
 
 /* ═══ TOOLS, MENUS, KEYS ════════════════════════════════════════════ */
 function setTool(t){
@@ -1516,7 +1510,6 @@ function setTool(t){
 [].forEach.call(document.querySelectorAll(".tl[data-tool]"),function(b){ b.addEventListener("click",function(){ setTool(b.dataset.tool===st.tool&&b.dataset.tool!=="move"?"move":b.dataset.tool) }) });
 function setDev(on){ st.dev=on; T("fv_devmode",{on:on}); var b=$("#devBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); if(st.rtab!=="design"&&st.rtab!=="prototype") st.rtab="design"; renderTabs(); renderProps(); toast(on?"Dev Mode: inspect any layer’s CSS":"Design mode") }
 $("#devBtn").addEventListener("click",function(){ setDev(!st.dev) });
-$("#assetsTab").addEventListener("click",function(){ loadPage(pageIndex("Foundations")); toast("The system lives on the Foundations page") });
 
 var menuEl=null;
 function closeMenus(){ if(menuEl){ menuEl.remove(); menuEl=null } }
@@ -1577,13 +1570,13 @@ var ACTIONS=[
   ["Follow Lokesh’s 1-minute tour","",startFollow],
   ["Show design decisions","",showComments],
   ["Go to Cover","",function(){ loadPage(0) },SEARCH_ONLY],
-  ["Show version history","⌥⌘H",showHistory,SEARCH_ONLY],
+  ["Show version history","",showHistory,SEARCH_ONLY],
   "-","Reach me",
   ["Copy my email","",function(){ copy(MAIL,"Email copied: "+MAIL) }],
   ["Open LinkedIn","",function(){ window.open(LINKEDIN,"_blank","noopener") }],
   ["Open résumé","",function(){ loadPage(pageIndex("Resume")) },SEARCH_ONLY],
   "-","View",
-  ["Minimize UI","⇧\\",function(){ minUI() }],
+  ["Minimize UI","⇧\\",function(){ minUI() },SEARCH_ONLY],
   ["Present the real site","⌥⌘↵",function(){ present(true) },SEARCH_ONLY],
   ["Dev Mode","⇧D",function(){ setDev(!st.dev) },SEARCH_ONLY],
   ["Zoom to fit","⇧1",function(){ fit(false) },SEARCH_ONLY],
@@ -1632,12 +1625,12 @@ $("#findQ").addEventListener("input",runFind);
 $("#findQ").addEventListener("keydown",function(e){ if(e.key==="Escape"){ e.stopPropagation(); closeFind() } if(e.key==="Enter"){ var b=$("#fres .fr"); if(b) b.click() } });
 $("#logoBtn").addEventListener("click",function(e){
   e.stopPropagation();
-  menu(this,[["Back to the website","",home],["Actions…","⌘K",function(){ menu($("#actBtn"),ACTIONS,true,true) }],"-",
+  menu(this,[["Back to the website","",home],"-",
     ["Keyboard shortcuts","",function(){ toast("V move · H hand · C comment · ⇧1 fit · ⇧2 selection · ⇧D dev · ⇧\\ minimize · Esc up") }]]);
 });
 $("#fileBtn").addEventListener("click",function(e){
   e.stopPropagation();
-  menu(this,[["Show version history","⌥⌘H",showHistory],["Open this page on the website","",function(){ var p=PAGES[st.page]; window.open(p.src||"./index.html","_blank","noopener") }]]);
+  menu(this,[["Show version history","",showHistory]]);
 });
 $("#presentBtn").addEventListener("click",function(){ present(true) });
 $("#zoomMini").addEventListener("click",zoomMenu);
