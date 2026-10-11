@@ -3630,6 +3630,55 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* the empty state sits in the true centre of the board */
 #padBoard .padblank{inset:0;padding:0}
+/* ── Experiments: its own section, not a case study ── */
+#experiments{max-width:792px;margin:0 auto;padding:clamp(40px,6vw,64px) 0 clamp(24px,4vw,40px)}
+.exp-head{margin:0 0 clamp(20px,3vw,28px)}
+.exp-title{margin:0;font-family:var(--serif,'STIX Two Text'),Georgia,serif;font-weight:400;font-size:clamp(26px,3.2vw,32px);line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+.exp-lede{margin:8px 0 0;max-width:560px;font-size:15px;line-height:1.5;color:var(--muted,#7A7676)}
+.exp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.exp-card{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:16px;border:0;font:inherit;border-radius:16px;background:var(--card,#fff);
+  box-shadow:0 0 0 1px var(--line);text-align:left;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.exp-card:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--line),0 10px 24px -14px rgba(36,32,32,.35)}
+.exp-card:active{transform:scale(.99)}
+.exp-card:focus-visible{outline:2px solid #0D99FF;outline-offset:3px}
+.exp-tile{display:grid;place-items:center;width:52px;height:52px;margin-bottom:10px;border-radius:14px;font-size:26px;background:#FFF1E4;transition:transform .35s var(--ease)}
+.exp-card:nth-child(2) .exp-tile{background:#E6F5EC}
+.exp-card:nth-child(3) .exp-tile{background:#ECE7FF}
+.exp-card:hover .exp-tile{transform:rotate(-6deg) scale(1.04)}
+.exp-name{font-size:16px;font-weight:500;line-height:1.3;color:var(--ink)}
+.exp-line{font-size:14px;line-height:1.45;color:var(--muted,#7A7676)}
+[data-theme="dark"] .exp-tile{background:#3A2E22}
+[data-theme="dark"] .exp-card:nth-child(2) .exp-tile{background:#22352A}
+[data-theme="dark"] .exp-card:nth-child(3) .exp-tile{background:#2C2740}
+.exp-ov{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(15,15,15,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  opacity:0;transition:opacity .22s var(--ease)}
+.exp-ov.on{opacity:1}
+.exp-ov[hidden]{display:none}
+.exp-dlg{position:relative;width:min(420px,100%);padding:24px;border-radius:20px;background:var(--card,#fff);color:var(--ink);
+  box-shadow:0 0 0 1px var(--line),0 24px 60px -20px rgba(0,0,0,.4);transform:translateY(10px) scale(.98);transition:transform .3s var(--ease)}
+.exp-ov.on .exp-dlg{transform:none}
+.exp-dlg:focus{outline:none}
+.exp-x{position:absolute;top:14px;right:14px;border:0;padding:0;background:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:var(--muted,#7A7676)}
+.exp-x:hover{background:var(--surface,#F2F3F5);color:var(--ink)}
+.exp-dtile{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;font-size:28px;background:#FFF1E4}
+.exp-dtitle{margin:14px 0 6px;font-size:20px;font-weight:500;line-height:1.25;letter-spacing:-.01em}
+.exp-dtext{margin:0;font-size:15px;line-height:1.55;color:var(--ink)}
+.exp-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.exp-live,.exp-gh{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none}
+.exp-live{background:var(--ink);color:var(--bg,#FAFAFA)}
+.exp-gh{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.exp-live:hover,.exp-gh:hover{opacity:.85}
+.exp-live:focus-visible,.exp-gh:focus-visible,.exp-x:focus-visible{outline:2px solid #0D99FF;outline-offset:2px}
+@media (max-width:684px){
+  .exp-grid{grid-template-columns:1fr;gap:12px}
+  .exp-card{flex-direction:row;align-items:center;gap:14px;padding:14px}
+  .exp-tile{margin:0;width:46px;height:46px;font-size:22px;flex:none}
+  .exp-card .exp-name{display:block}
+  .exp-ov{place-items:end center;padding:0}
+  .exp-dlg{width:100%;border-radius:20px 20px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom))}
+}
+@media (prefers-reduced-motion:reduce){.exp-card,.exp-tile,.exp-ov,.exp-dlg{transition:none!important}}
+
 </style>
 <script defer src="./analytics.js?v=5"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3859,6 +3908,43 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
     </div>
   </section>
+
+  <section id="experiments" data-section="Experiments" aria-labelledby="expHead">
+    <div class="exp-head" data-reveal>
+      <h2 id="expHead" class="exp-title">Experiments</h2>
+      <p class="exp-lede">Side projects I built to try an idea. They are not case studies. Open one to see what it is and play with it live.</p>
+    </div>
+    <div class="exp-grid">
+      <button type="button" class="exp-card" data-exp="chunav" data-reveal aria-haspopup="dialog">
+        <span class="exp-tile" aria-hidden="true">🗳️</span>
+        <span class="exp-name">Chunav</span>
+        <span class="exp-line">Quick polls for friends, shared as a link</span>
+      </button>
+      <button type="button" class="exp-card" data-exp="gb3" data-reveal aria-haspopup="dialog">
+        <span class="exp-tile" aria-hidden="true">🤖</span>
+        <span class="exp-name">Good Bot, Bad Bot</span>
+        <span class="exp-line">A playground for spotting good AI design</span>
+      </button>
+      <button type="button" class="exp-card" data-exp="tattva" data-reveal aria-haspopup="dialog">
+        <span class="exp-tile" aria-hidden="true">🧩</span>
+        <span class="exp-name">Tattva</span>
+        <span class="exp-line">A design system for AI products</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="exp-ov" id="expOv" hidden>
+    <div class="exp-dlg" role="dialog" aria-modal="true" aria-labelledby="expDlgTitle" tabindex="-1">
+      <button type="button" class="exp-x" id="expX" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <span class="exp-dtile" id="expTile" aria-hidden="true"></span>
+      <h3 id="expDlgTitle" class="exp-dtitle"></h3>
+      <p class="exp-dtext" id="expText"></p>
+      <div class="exp-acts">
+        <a class="exp-live" id="expLive" href="#" target="_blank" rel="noopener">View it live <span aria-hidden="true">↗</span></a>
+        <a class="exp-gh" id="expGh" href="#" target="_blank" rel="noopener">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
 
   <section id="words" data-section="What people said" aria-label="What people said">
     <div class="rec" data-reveal>
@@ -5391,6 +5477,46 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   new IntersectionObserver(function(es){
     if(f.contentWindow) f.contentWindow.postMessage({type:'rupeezy-play',on:es[0].isIntersecting},'*');
   },{threshold:.2}).observe(f);
+})();
+</script>
+<script>
+/* Experiments: a card opens its overlay; the text and links live here, once */
+(function(){
+  var P={
+    chunav:{tile:"🗳️",tint:"#FFF1E4",name:"Chunav",text:"Make a quick poll between two or more choices (Virat · Rohit · Dhoni, pizza · biryani), share the link, and watch the votes. Just for fun, not an official or legal election.",live:"https://election-lkb2.vercel.app",repo:"https://github.com/LKB00/election"},
+    gb3:{tile:"🤖",tint:"#E6F5EC",name:"Good Bot, Bad Bot",text:"A playground for AI interaction design. Quick games and instant wins: a daily challenge, This or That, Spot the flaw, and 37 pattern cards to collect. Can you spot good AI design?",live:"https://lkb00.github.io/gb3/",repo:"https://github.com/LKB00/gb3"},
+    tattva:{tile:"🧩",tint:"#ECE7FF",name:"Tattva",text:"The React component library for AI products: parts and patterns for assistants that answer, act and create, with trust built in (sources, confidence, approvals, undo). Checked against WCAG 2.2 AA in every theme.",live:"https://lkb00.github.io/tattva/",repo:"https://github.com/LKB00/tattva"}
+  };
+  var ov=document.getElementById("expOv"), dlg=ov.querySelector(".exp-dlg"), back=null;
+  function open(btn){
+    var d=P[btn.dataset.exp]; if(!d) return; back=btn;
+    document.getElementById("expTile").textContent=d.tile; document.getElementById("expTile").style.background=d.tint;
+    document.getElementById("expDlgTitle").textContent=d.name;
+    document.getElementById("expText").textContent=d.text;
+    var l=document.getElementById("expLive"), g=document.getElementById("expGh");
+    l.href=d.live; l.setAttribute("aria-label",d.name+" (opens in a new tab)");
+    g.href=d.repo; g.setAttribute("aria-label",d.name+" source on GitHub (opens in a new tab)");
+    ov.hidden=false; requestAnimationFrame(function(){ ov.classList.add("on"); dlg.focus({preventScroll:true}) });
+    document.documentElement.style.overflow="hidden";
+  }
+  function close(){
+    if(ov.hidden) return;
+    ov.classList.remove("on"); document.documentElement.style.overflow="";
+    setTimeout(function(){ ov.hidden=true }, 220);
+    if(back) back.focus({preventScroll:true}); back=null;
+  }
+  document.querySelectorAll(".exp-card").forEach(function(b){ b.addEventListener("click",function(){ open(b) }) });
+  document.getElementById("expX").addEventListener("click",close);
+  ov.addEventListener("click",function(e){ if(e.target===ov) close() });
+  document.addEventListener("keydown",function(e){
+    if(ov.hidden) return;
+    if(e.key==="Escape"){ e.preventDefault(); close(); return }
+    if(e.key==="Tab"){   /* keep focus inside the dialog while it is open */
+      var f=[].slice.call(dlg.querySelectorAll("a[href],button")), first=f[0], last=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus() }
+      else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus() }
+    }
+  });
 })();
 </script>
 </body>
