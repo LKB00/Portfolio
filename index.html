@@ -3646,6 +3646,99 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-head{margin:0 0 clamp(20px,3vw,28px)}
 
 /* each card plays a real recording of the live project, in the site's own light or dark mode */
+/* ── the two web experiments, told in their own language ──
+   Real pieces captured from the live products (light and dark), set loose on
+   the tint and choreographed. Good Bot is a game, so its card is a hand of
+   two cards: a tap picks the better one, it lifts and straightens with its
+   real verdict, the other drops back. Tattva is a kit of parts, so its card
+   is an exploded sheet of its real components that assemble, get approved,
+   and pull apart on hover. Each loop runs only while the card is on screen. */
+.exp-comp{position:absolute;inset:0;overflow:hidden}
+.exp-comp .pc{position:absolute;display:block;transition:transform .5s var(--ease)}
+.exp-comp .pcin{display:block;position:relative}
+.exp-comp img{display:block;width:100%;height:auto}
+.exp-comp .dk{display:none}
+:root[data-theme="dark"] .exp-comp .lt{display:none}:root[data-theme="dark"] .exp-comp .dk{display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme]) .exp-comp .lt{display:none}:root:not([data-theme]) .exp-comp .dk{display:block}}
+.exp-comp:not(.is-on) *{animation-play-state:paused!important}
+/* a fingertip, not a blob: a soft translucent dot with a white rim, and one ring on the press */
+.xtap{position:absolute;width:4.2%;aspect-ratio:1;margin:-2.1% 0 0 -2.1%;pointer-events:none;opacity:0;z-index:9}
+.xtap i{position:absolute;inset:0;border-radius:50%}
+.xtap i:first-child{background:rgba(23,23,23,.26);box-shadow:0 0 0 1.5px rgba(255,255,255,.95),0 1px 4px rgba(0,0,0,.12)}
+.xtap i:last-child{border:1.5px solid rgba(23,23,23,.35);opacity:0}
+:root[data-theme="dark"] .xtap i:first-child{background:rgba(255,255,255,.3);box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
+:root[data-theme="dark"] .xtap i:last-child{border-color:rgba(255,255,255,.5)}
+
+/* Good Bot: a hand of two */
+.gbc .gb-q{left:8%;top:8%;width:84%}
+.gbc .gb-a{left:4%;top:26%;width:50%;z-index:3;transform:rotate(-6deg)}
+.gbc .gb-b{left:46%;top:28%;width:50%;z-index:2;transform:rotate(5deg)}
+.gbc .gb-v{left:8%;top:76%;width:84%;z-index:4}
+.gbc .sw{display:block}
+.gbc .sw.post{position:absolute;left:0;right:0;bottom:0;opacity:0}
+.gbc .gb-tap{left:29%;top:47%}
+.gbc .gb-a .pcin{animation:gbA 7s var(--ease) infinite}
+.gbc .gb-b .pcin{animation:gbB 7s var(--ease) infinite}
+.gbc .sw.post{animation:gbPost 7s var(--ease) infinite}
+.gbc .sw.pre{animation:gbPre 7s var(--ease) infinite}
+.gbc .gb-v .pcin{animation:gbV 7s var(--ease) infinite}
+.gbc .gb-tap{animation:xTap 7s var(--ease) infinite;--t0:20%}
+.gbc .gb-tap i:last-child{animation:xRing 7s ease-out infinite}
+@keyframes gbA{0%,100%{transform:none}10%{transform:translateY(-3%)}20%{transform:none}27%{transform:scale(.96)}34%,84%{transform:translate(5%,-9%) rotate(6deg) scale(1.12)}93%{transform:none}}
+@keyframes gbB{0%,100%{transform:none;opacity:1}12%{transform:translateY(3%);opacity:1}22%,28%{transform:none;opacity:1}34%,84%{transform:translate(9%,9%) rotate(5deg) scale(.9);opacity:.45}93%{transform:none;opacity:1}}
+@keyframes gbPost{0%,30%{opacity:0}36%,86%{opacity:1}92%,100%{opacity:0}}
+@keyframes gbPre{0%,30%{opacity:1}36%,86%{opacity:0}92%,100%{opacity:1}}
+@keyframes gbV{0%,38%{opacity:0;transform:translateY(40%)}46%,84%{opacity:1;transform:none}92%,100%{opacity:0;transform:translateY(40%)}}
+@keyframes xTap{0%,16%{opacity:0;transform:scale(1.5)}22%{opacity:1;transform:scale(1)}27%{transform:scale(.78)}31%{opacity:1;transform:scale(1)}36%,100%{opacity:0;transform:scale(1)}}
+@keyframes xRing{0%,26%{opacity:0;transform:scale(1)}28%{opacity:.9}38%,100%{opacity:0;transform:scale(2.6)}}
+@media (hover:hover){
+  .exp-card:hover .gbc .gb-a{transform:rotate(-9deg) translateX(-3%)}
+  .exp-card:hover .gbc .gb-b{transform:rotate(8deg) translateX(3%)}
+}
+
+/* Tattva: an exploded kit of parts */
+.tvc .tv-plan{left:5%;top:9%;width:52%;transform:rotate(-3deg);z-index:1}
+.tvc .tv-conf{left:61%;top:11%;width:29%;transform:rotate(5deg);z-index:3}
+.tvc .tv-src{left:52%;top:23%;width:44%;transform:rotate(-2deg);z-index:2}
+.tvc .tv-appr{left:28%;top:52%;width:66%;transform:rotate(2deg);z-index:4}
+.tvc .tv-tool{left:5%;top:82%;width:52%;transform:rotate(-1.5deg);z-index:3}
+.tvc .tv-ok{left:58%;top:78%;width:38%;z-index:5}
+.tvc .tv-tap{left:34.5%;top:69%}
+.tvc .tv-plan .pcin{animation:tvP 8s var(--ease) infinite}
+.tvc .tv-src .pcin{animation:tvS 8s var(--ease) infinite}
+.tvc .tv-conf .pcin{animation:tvC 8s var(--ease) infinite}
+.tvc .tv-tool .pcin{animation:tvT 8s var(--ease) infinite}
+.tvc .tv-appr .pcin{animation:tvA 8s var(--ease) infinite}
+.tvc .tv-ok .pcin{animation:tvO 8s var(--ease) infinite}
+.tvc .tv-tap{animation:tvTap 8s var(--ease) infinite}
+.tvc .tv-tap i:last-child{animation:tvRing 8s ease-out infinite}
+@keyframes tvP{0%{opacity:0;transform:translateY(8%) scale(.94)}7%,88%{opacity:1;transform:none}96%,100%{opacity:0;transform:translateY(-4%) scale(.97)}}
+@keyframes tvS{0%,6%{opacity:0;transform:translateY(16%) scale(.92)}13%,88%{opacity:1;transform:none}96%,100%{opacity:0;transform:translateY(-6%)}}
+@keyframes tvC{0%,12%{opacity:0;transform:scale(.6)}17%{opacity:1;transform:scale(1.08)}20%,88%{opacity:1;transform:none}96%,100%{opacity:0}}
+@keyframes tvT{0%,18%{opacity:0;transform:translateX(-10%)}25%,88%{opacity:1;transform:none}96%,100%{opacity:0}}
+@keyframes tvA{0%,24%{opacity:0;transform:translateY(18%) scale(.94)}31%,44%{opacity:1;transform:none}48%{transform:scale(.97)}52%,88%{opacity:.6;transform:none}96%,100%{opacity:0}}
+@keyframes tvO{0%,47%{opacity:0;transform:translateX(-14%)}54%,88%{opacity:1;transform:none}96%,100%{opacity:0}}
+@keyframes tvTap{0%,36%{opacity:0;transform:scale(1.5)}42%{opacity:1;transform:scale(1)}46%{transform:scale(.78)}49%{opacity:1;transform:scale(1)}53%,100%{opacity:0}}
+@keyframes tvRing{0%,45%{opacity:0;transform:scale(1)}47%{opacity:.9}57%,100%{opacity:0;transform:scale(2.6)}}
+@media (hover:hover){
+  .exp-card:hover .tvc .tv-plan{transform:translate(-4%,-4%) rotate(-5deg)}
+  .exp-card:hover .tvc .tv-conf{transform:translate(5%,-6%) rotate(9deg)}
+  .exp-card:hover .tvc .tv-src{transform:translate(6%,-2%) rotate(-4deg)}
+  .exp-card:hover .tvc .tv-appr{transform:translate(3%,5%) rotate(4deg)}
+  .exp-card:hover .tvc .tv-tool{transform:translate(-5%,6%) rotate(-3deg)}
+  .exp-card:hover .tvc .tv-ok{transform:translate(4%,7%)}
+}
+/* motion off: the finished state, still */
+@media (prefers-reduced-motion:reduce){
+  .exp-comp *{animation:none!important}
+  .gbc .sw.pre{opacity:0}.gbc .sw.post{opacity:1}
+  .gbc .gb-a .pcin{transform:translate(5%,-9%) rotate(6deg) scale(1.12)}
+  .gbc .gb-b .pcin{transform:translate(9%,9%) rotate(5deg) scale(.9);opacity:.45}
+  .tvc .tv-appr .pcin{opacity:.6}
+}
+/* in the dialog, the same composition as a square in the middle of the media box */
+.exp-compslot{position:absolute;top:0;bottom:0;left:50%;aspect-ratio:1;transform:translateX(-50%)}
+.exp-media[data-dev="phone"] .exp-compslot,.exp-media[data-dev="comp"] .exp-fit{display:none}
 /* device frames, flat on the tint like the case-study cards — no shadow.
    phone: the App merge iPhone mockup, its screen inset at the exact
    percentages of its transparent hole.
@@ -3678,8 +3771,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-dlg:focus{outline:none}
 .exp-media{position:relative;aspect-ratio:16/11;margin:8px 8px 0;border-radius:14px;overflow:hidden;background:var(--surface)}
 .exp-media .exp-fit{inset:14px}
-.exp-media .exp-mac{left:7%;width:86%}
-.exp-media[data-dev="web"] .exp-fit,.exp-media[data-dev="phone"] .exp-mac{display:none}
+
 .exp-x{position:absolute;top:18px;right:18px;z-index:2;border:0;padding:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
   background:rgba(255,255,255,.86);color:#242020;box-shadow:0 0 0 1px rgba(36,32,32,.08),0 2px 8px rgba(0,0,0,.12);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .exp-x:hover{background:#fff}
@@ -3948,11 +4040,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         <span class="worktext"><span class="exp-name">Chunav</span><span class="desc exp-line">Quick polls for friends, shared as a link</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="gb3" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><span class="macframe exp-mac"><video class="macshot exp-vid" data-clip="gb3" muted loop playsinline preload="none" width="1280" height="828" poster="./assets/exp/gb3-light.webp"></video><img class="macdevice" src="./assets/macbook-mockup.webp" width="800" height="489" alt="" loading="lazy" decoding="async"></span></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-comp gbc"><span class="pc gb-q"><span class="pcin"><img class="lt" src="./assets/exp/gb-q-light.webp" width="1496" height="168" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/gb-q-dark.webp" width="1496" height="168" alt="" loading="lazy" decoding="async"></span></span><span class="pc gb-b"><span class="pcin"><span class="sw pre"><img class="lt" src="./assets/exp/gb-pre-b-light.webp" width="732" height="484" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/gb-pre-b-dark.webp" width="732" height="484" alt="" loading="lazy" decoding="async"></span><span class="sw post"><img class="lt" src="./assets/exp/gb-post-b-light.webp" width="732" height="532" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/gb-post-b-dark.webp" width="732" height="532" alt="" loading="lazy" decoding="async"></span></span></span><span class="pc gb-a"><span class="pcin"><span class="sw pre"><img class="lt" src="./assets/exp/gb-pre-a-light.webp" width="732" height="484" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/gb-pre-a-dark.webp" width="732" height="484" alt="" loading="lazy" decoding="async"></span><span class="sw post"><img class="lt" src="./assets/exp/gb-post-a-light.webp" width="732" height="532" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/gb-post-a-dark.webp" width="732" height="532" alt="" loading="lazy" decoding="async"></span></span></span><span class="pc gb-v"><span class="pcin"><img class="lt" src="./assets/exp/gb-verdict-light.webp" width="1496" height="88" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/gb-verdict-dark.webp" width="1496" height="88" alt="" loading="lazy" decoding="async"></span></span><span class="xtap gb-tap"><i></i><i></i></span></span></span>
         <span class="worktext"><span class="exp-name">Good Bot, Bad Bot</span><span class="desc exp-line">A playground for spotting good AI design</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="tattva" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><span class="macframe exp-mac"><video class="macshot exp-vid" data-clip="tattva" muted loop playsinline preload="none" width="1280" height="828" poster="./assets/exp/tattva-light.webp"></video><img class="macdevice" src="./assets/macbook-mockup.webp" width="800" height="489" alt="" loading="lazy" decoding="async"></span></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-comp tvc"><span class="pc tv-plan"><span class="pcin"><img class="lt" src="./assets/exp/tv-plan-light.webp" width="726" height="620" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/tv-plan-dark.webp" width="726" height="620" alt="" loading="lazy" decoding="async"></span></span><span class="pc tv-src"><span class="pcin"><img class="lt" src="./assets/exp/tv-source0-light.webp" width="568" height="196" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/tv-source0-dark.webp" width="568" height="196" alt="" loading="lazy" decoding="async"></span></span><span class="pc tv-conf"><span class="pcin"><img class="lt" src="./assets/exp/tv-conf2-light.webp" width="252" height="44" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/tv-conf2-dark.webp" width="252" height="44" alt="" loading="lazy" decoding="async"></span></span><span class="pc tv-tool"><span class="pcin"><img class="lt" src="./assets/exp/tv-tool1-light.webp" width="896" height="124" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/tv-tool1-dark.webp" width="896" height="124" alt="" loading="lazy" decoding="async"></span></span><span class="pc tv-appr"><span class="pcin"><img class="lt" src="./assets/exp/tv-approve-light.webp" width="750" height="256" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/tv-approve-dark.webp" width="750" height="256" alt="" loading="lazy" decoding="async"></span></span><span class="pc tv-ok"><span class="pcin"><img class="lt" src="./assets/exp/tv-approved0-light.webp" width="328" height="32" alt="" loading="lazy" decoding="async"><img class="dk" src="./assets/exp/tv-approved0-dark.webp" width="328" height="32" alt="" loading="lazy" decoding="async"></span></span><span class="xtap tv-tap"><i></i><i></i></span></span></span>
         <span class="worktext"><span class="exp-name">Tattva</span><span class="desc exp-line">A design system for AI products</span></span>
       </button>
     </div>
@@ -5495,8 +5587,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     <div class="exp-dlg" role="dialog" aria-modal="true" aria-labelledby="expDlgTitle" tabindex="-1">
       <button type="button" class="exp-x" id="expX" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
       <div class="exp-media" id="expMedia" data-dev="web" aria-hidden="true">
-        <span class="exp-fit" data-dev="phone"><span class="exp-rig"><span class="exp-screen" id="expPhoneScreen"></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span>
-        <span class="macframe exp-mac" id="expMac"><video id="expVid" class="macshot" muted loop playsinline preload="none" width="1280" height="828"></video><img class="macdevice" src="./assets/macbook-mockup.webp" width="800" height="489" alt="" loading="lazy" decoding="async"></span>
+        <span class="exp-fit" data-dev="phone"><span class="exp-rig"><span class="exp-screen" id="expPhoneScreen"><video id="expVid" muted loop playsinline preload="none" width="442" height="962"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span>
+        <span class="exp-compslot" id="expComp"></span>
       </div>
       <div class="exp-body">
         <p class="exp-kick" id="expKick"></p>
@@ -5533,9 +5625,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   /* recordings: the clip that matches the site's theme, playing only while on screen */
   var vids=[].slice.call(document.querySelectorAll(".exp-vid")), still=matchMedia("(prefers-reduced-motion: reduce)");
   function mode(){ var t=document.documentElement.getAttribute("data-theme"); return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light" }
-  var DIM={"chunav-light":[442,962],"chunav-dark":[442,962],"gb3-light":[1280,828],"gb3-dark":[1280,828],"tattva-light":[1280,828],"tattva-dark":[1280,828]};
-  function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } if(v.id==="expVid"){ var ph=k.indexOf("chunav")===0, md=document.getElementById("expMedia"); md.dataset.dev=ph?"phone":"web";
-      var home=ph?document.getElementById("expPhoneScreen"):document.getElementById("expMac"); if(v.parentNode!==home) home.insertBefore(v,home.firstChild) } }
+  var DIM={"chunav-light":[442,962],"chunav-dark":[442,962],"x":[0,0]};
+  function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } }
   function load(v){ var m=mode(), c=v.dataset.clip; if(v.dataset.mode===m) return; v.dataset.mode=m; size(v,c+"-"+m);
     v.poster="./assets/exp/"+c+"-"+m+".webp";
     if(still.matches) return;
@@ -5547,15 +5638,20 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       if(e.isIntersecting){ v.dataset.on="1"; if(!still.matches) v.play().catch(function(){}) }
       else { delete v.dataset.on; v.pause() } }) },{threshold:.35});
     vids.forEach(function(v){ io.observe(v) });
+    var io2=new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle("is-on",e.isIntersecting) }) },{threshold:.25});
+    document.querySelectorAll(".exp-card .exp-comp").forEach(function(c){ io2.observe(c) });
   }
   /* a tab that comes back into view picks up where it was */
   document.addEventListener("visibilitychange",function(){ if(!document.hidden&&!still.matches) vids.forEach(function(v){ if(v.dataset.on) v.play().catch(function(){}) }) });
   var ov=document.getElementById("expOv"), dlg=ov.querySelector(".exp-dlg"), back=null;
   function open(btn){
     var d=P[btn.dataset.exp]; if(!d) return; back=btn;
-    var key=btn.dataset.exp, m=mode(), v=document.getElementById("expVid");
-    v.poster="./assets/exp/"+key+"-"+m+".webp"; size(v,key+"-"+m);
-    if(!still.matches){ v.src="./assets/exp/"+key+"-"+m+".mp4"; v.currentTime=0 } else v.removeAttribute("src");
+    var key=btn.dataset.exp, m=mode(), v=document.getElementById("expVid"), md=document.getElementById("expMedia"), slot=document.getElementById("expComp");
+    var comp=btn.querySelector(".exp-comp");
+    slot.innerHTML="";
+    if(comp){ md.dataset.dev="comp"; v.pause(); v.removeAttribute("src"); var c=comp.cloneNode(true); c.classList.add("is-on"); slot.appendChild(c) }
+    else{ md.dataset.dev="phone"; v.poster="./assets/exp/"+key+"-"+m+".webp"; size(v,key+"-"+m);
+      if(!still.matches){ v.src="./assets/exp/"+key+"-"+m+".mp4"; v.currentTime=0 } else v.removeAttribute("src") }
     document.getElementById("expKick").textContent=d.kind;
     document.getElementById("expDlgTitle").textContent=d.name;
     document.getElementById("expTag").textContent=d.tag;
@@ -5564,7 +5660,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var l=document.getElementById("expLive"), g=document.getElementById("expGh");
     l.href=d.live; l.setAttribute("aria-label",d.name+" (opens in a new tab)");
     g.href=d.repo; g.setAttribute("aria-label",d.name+" source on GitHub (opens in a new tab)");
-    ov.hidden=false; requestAnimationFrame(function(){ ov.classList.add("on"); dlg.focus({preventScroll:true}); if(!still.matches) v.play().catch(function(){}) });
+    ov.hidden=false; requestAnimationFrame(function(){ ov.classList.add("on"); dlg.focus({preventScroll:true}); if(!still.matches&&v.getAttribute("src")) v.play().catch(function(){}) });
     document.documentElement.style.overflow="hidden";
   }
   function close(){
