@@ -3652,16 +3652,24 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   opacity:0;transition:opacity .22s var(--ease)}
 .exp-ov.on{opacity:1}
 .exp-ov[hidden]{display:none}
-.exp-dlg{position:relative;width:min(420px,100%);padding:24px;border-radius:20px;background:var(--card,#fff);color:var(--ink);
+.exp-dlg{position:relative;width:min(520px,100%);max-height:calc(100vh - 40px);overflow:auto;padding:0;border-radius:20px;background:var(--card,#fff);color:var(--ink);
   box-shadow:0 0 0 1px var(--line),0 24px 60px -20px rgba(0,0,0,.4);transform:translateY(10px) scale(.98);transition:transform .3s var(--ease)}
 .exp-ov.on .exp-dlg{transform:none}
 .exp-dlg:focus{outline:none}
-.exp-x{position:absolute;top:14px;right:14px;border:0;padding:0;background:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:var(--muted,#7A7676)}
-.exp-x:hover{background:var(--surface,#F2F3F5);color:var(--ink)}
-.exp-dtile{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;font-size:28px;background:#FFF1E4}
-.exp-dtitle{margin:14px 0 6px;font-size:20px;font-weight:500;line-height:1.25;letter-spacing:-.01em}
-.exp-dtext{margin:0;font-size:15px;line-height:1.55;color:var(--ink)}
-.exp-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.exp-media{position:relative;aspect-ratio:16/10;margin:8px 8px 0;border-radius:14px;overflow:hidden;background:var(--surface)}
+.exp-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.exp-x{position:absolute;top:18px;right:18px;z-index:2;border:0;padding:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.86);color:#242020;box-shadow:0 0 0 1px rgba(36,32,32,.08),0 2px 8px rgba(0,0,0,.12);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.exp-x:hover{background:#fff}
+.exp-body{padding:20px 24px 24px}
+.exp-kick{margin:0;font-family:var(--mono,'Geist Mono'),ui-monospace,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted,#7A7676)}
+.exp-dtitle{margin:6px 0 0;font-family:var(--serif,'STIX Two Text'),Georgia,serif;font-size:26px;font-weight:400;line-height:1.15;letter-spacing:-.01em}
+.exp-tag{margin:6px 0 0;font-size:16px;line-height:1.45;color:var(--ink)}
+.exp-dtext{margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--muted,#7A7676)}
+.exp-facts{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;padding:0}
+.exp-facts li{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;background:var(--surface);font-size:12px;color:var(--ink)}
+.exp-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+#expOv .exp-gh,#expOv .exp-gh:visited{color:var(--ink)}#expOv .exp-live,#expOv .exp-live:visited{color:var(--bg,#FAFAFA)}
 .exp-live,.exp-gh{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none}
 .exp-live{background:var(--ink);color:var(--bg,#FAFAFA)}
 .exp-gh{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
@@ -3670,7 +3678,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (max-width:684px){
   .exp-grid{grid-template-columns:1fr;gap:28px}
   .exp-ov{place-items:end center;padding:0}
-  .exp-dlg{width:100%;border-radius:20px 20px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom))}
+  .exp-dlg{width:100%;max-height:92vh;border-radius:20px 20px 0 0}
+  .exp-body{padding:18px 20px calc(22px + env(safe-area-inset-bottom))}
+  .exp-dtitle{font-size:24px}
+  .exp-acts a{flex:1;justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){.exp-card .exp-frame,.exp-ov,.exp-dlg{transition:none!important}}
 
@@ -5461,12 +5472,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   <div class="exp-ov" id="expOv" hidden>
     <div class="exp-dlg" role="dialog" aria-modal="true" aria-labelledby="expDlgTitle" tabindex="-1">
       <button type="button" class="exp-x" id="expX" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-      <span class="exp-dtile" id="expTile" aria-hidden="true"></span>
-      <h3 id="expDlgTitle" class="exp-dtitle"></h3>
-      <p class="exp-dtext" id="expText"></p>
-      <div class="exp-acts">
+      <div class="exp-media" aria-hidden="true"><video id="expVid" muted loop playsinline preload="none" width="720" height="720"></video></div>
+      <div class="exp-body">
+        <p class="exp-kick" id="expKick"></p>
+        <h3 id="expDlgTitle" class="exp-dtitle"></h3>
+        <p class="exp-tag" id="expTag"></p>
+        <p class="exp-dtext" id="expText"></p>
+        <ul class="exp-facts" id="expFacts"></ul>
+        <div class="exp-acts">
         <a class="exp-live" id="expLive" href="#" target="_blank" rel="noopener">View it live <span aria-hidden="true">↗</span></a>
         <a class="exp-gh" id="expGh" href="#" target="_blank" rel="noopener">Source on GitHub</a>
+        </div>
       </div>
     </div>
   </div>
@@ -5475,9 +5491,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* Experiments: a card opens its overlay; the text and links live here, once */
 (function(){
   var P={
-    chunav:{tile:"🗳️",tint:"#FFF1E4",name:"Chunav",text:"Make a quick poll between two or more choices (Virat · Rohit · Dhoni, pizza · biryani), share the link, and watch the votes. Just for fun, not an official or legal election.",live:"https://election-lkb2.vercel.app",repo:"https://github.com/LKB00/election"},
-    gb3:{tile:"🤖",tint:"#E6F5EC",name:"Good Bot, Bad Bot",text:"A playground for AI interaction design. Quick games and instant wins: a daily challenge, This or That, Spot the flaw, and 37 pattern cards to collect. Can you spot good AI design?",live:"https://lkb00.github.io/gb3/",repo:"https://github.com/LKB00/gb3"},
-    tattva:{tile:"🧩",tint:"#ECE7FF",name:"Tattva",text:"The React component library for AI products: parts and patterns for assistants that answer, act and create, with trust built in (sources, confidence, approvals, undo). Checked against WCAG 2.2 AA in every theme.",live:"https://lkb00.github.io/tattva/",repo:"https://github.com/LKB00/tattva"}
+    chunav:{name:"Chunav",kind:"Experiment · Web app",tag:"Quick polls for friends, shared as a link.",
+      text:"Make a poll between two or more choices (Virat · Rohit · Dhoni, pizza · biryani), send it on WhatsApp, and watch the votes. Just for fun, not an official or legal election.",
+      facts:["English, हिंदी, Hinglish","No sign-up to vote","Results open after you vote"],pos:"50% 58%",
+      live:"https://election-lkb2.vercel.app",repo:"https://github.com/LKB00/election"},
+    gb3:{name:"Good Bot, Bad Bot",kind:"Experiment · Learning game",tag:"Can you spot good AI design?",
+      text:"A playground for AI interaction design. Quick games and instant wins: a daily challenge, This or That, Spot the flaw, and pattern cards to collect.",
+      facts:["37 pattern cards","Daily challenge","XP and levels"],pos:"50% 30%",
+      live:"https://lkb00.github.io/gb3/",repo:"https://github.com/LKB00/gb3"},
+    tattva:{name:"Tattva",kind:"Experiment · Design system",tag:"React components for AI products people trust.",
+      text:"Parts and patterns for assistants that answer, act and create, with trust built in: sources, confidence, approvals and undo.",
+      facts:["211 parts, 15 patterns","WCAG 2.2 AA in every theme","Light and dark"],pos:"50% 0%",
+      live:"https://lkb00.github.io/tattva/",repo:"https://github.com/LKB00/tattva"}
   };
 
   /* recordings: the clip that matches the site's theme, playing only while on screen */
@@ -5500,18 +5525,24 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   var ov=document.getElementById("expOv"), dlg=ov.querySelector(".exp-dlg"), back=null;
   function open(btn){
     var d=P[btn.dataset.exp]; if(!d) return; back=btn;
-    document.getElementById("expTile").textContent=d.tile; document.getElementById("expTile").style.background=d.tint;
+    var key=btn.dataset.exp, m=mode(), v=document.getElementById("expVid");
+    v.poster="./assets/exp/"+key+"-"+m+".webp";
+    v.style.objectPosition=d.pos;
+    if(!still.matches){ v.src="./assets/exp/"+key+"-"+m+".mp4"; v.currentTime=0 } else v.removeAttribute("src");
+    document.getElementById("expKick").textContent=d.kind;
     document.getElementById("expDlgTitle").textContent=d.name;
+    document.getElementById("expTag").textContent=d.tag;
     document.getElementById("expText").textContent=d.text;
+    document.getElementById("expFacts").innerHTML=d.facts.map(function(f){ return "<li>"+f+"</li>" }).join("");
     var l=document.getElementById("expLive"), g=document.getElementById("expGh");
     l.href=d.live; l.setAttribute("aria-label",d.name+" (opens in a new tab)");
     g.href=d.repo; g.setAttribute("aria-label",d.name+" source on GitHub (opens in a new tab)");
-    ov.hidden=false; requestAnimationFrame(function(){ ov.classList.add("on"); dlg.focus({preventScroll:true}) });
+    ov.hidden=false; requestAnimationFrame(function(){ ov.classList.add("on"); dlg.focus({preventScroll:true}); if(!still.matches) v.play().catch(function(){}) });
     document.documentElement.style.overflow="hidden";
   }
   function close(){
     if(ov.hidden) return;
-    ov.classList.remove("on"); document.documentElement.style.overflow="";
+    ov.classList.remove("on"); document.documentElement.style.overflow=""; document.getElementById("expVid").pause();
     setTimeout(function(){ ov.hidden=true }, 220);
     if(back) back.focus({preventScroll:true}); back=null;
   }
