@@ -3645,9 +3645,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-lede{margin:8px 0 0;max-width:560px;font-size:15px;line-height:1.5;color:var(--muted,#7A7676)}
 .exp-head{margin:0 0 clamp(20px,3vw,28px)}
 
-/* the real screens, cropped square, framed as the work cards are */
-.exp-card .exp-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s var(--ease)}
-@media (hover:hover){.exp-card:hover .exp-frame img{transform:scale(1.03)}}
+/* each card plays a real recording of the live project, in the site's own light or dark mode */
+.exp-card .exp-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s var(--ease)}
+@media (hover:hover){.exp-card:hover .exp-vid{transform:scale(1.03)}}
 .exp-ov{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(15,15,15,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
   opacity:0;transition:opacity .22s var(--ease)}
 .exp-ov.on{opacity:1}
@@ -3911,15 +3911,15 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     </div>
     <div class="exp-grid">
       <button type="button" class="exp-card" data-exp="chunav" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><img src="./assets/exp/chunav.webp" width="800" height="800" loading="lazy" decoding="async" alt=""></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="720" height="720" poster="./assets/exp/chunav-light.webp"></video></span>
         <span class="worktext"><span class="exp-name">Chunav</span><span class="desc exp-line">Quick polls for friends, shared as a link</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="gb3" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><img src="./assets/exp/gb3.webp" width="800" height="800" loading="lazy" decoding="async" alt=""></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><video class="exp-vid" data-clip="gb3" muted loop playsinline preload="none" width="720" height="720" poster="./assets/exp/gb3-light.webp"></video></span>
         <span class="worktext"><span class="exp-name">Good Bot, Bad Bot</span><span class="desc exp-line">A playground for spotting good AI design</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="tattva" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><img src="./assets/exp/tattva.webp" width="800" height="800" loading="lazy" decoding="async" alt=""></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><video class="exp-vid" data-clip="tattva" muted loop playsinline preload="none" width="720" height="720" poster="./assets/exp/tattva-light.webp"></video></span>
         <span class="worktext"><span class="exp-name">Tattva</span><span class="desc exp-line">A design system for AI products</span></span>
       </button>
     </div>
@@ -5479,6 +5479,24 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     gb3:{tile:"🤖",tint:"#E6F5EC",name:"Good Bot, Bad Bot",text:"A playground for AI interaction design. Quick games and instant wins: a daily challenge, This or That, Spot the flaw, and 37 pattern cards to collect. Can you spot good AI design?",live:"https://lkb00.github.io/gb3/",repo:"https://github.com/LKB00/gb3"},
     tattva:{tile:"🧩",tint:"#ECE7FF",name:"Tattva",text:"The React component library for AI products: parts and patterns for assistants that answer, act and create, with trust built in (sources, confidence, approvals, undo). Checked against WCAG 2.2 AA in every theme.",live:"https://lkb00.github.io/tattva/",repo:"https://github.com/LKB00/tattva"}
   };
+
+  /* recordings: the clip that matches the site's theme, playing only while on screen */
+  var vids=[].slice.call(document.querySelectorAll(".exp-vid")), still=matchMedia("(prefers-reduced-motion: reduce)");
+  function mode(){ var t=document.documentElement.getAttribute("data-theme"); return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light" }
+  function load(v){ var m=mode(), c=v.dataset.clip; if(v.dataset.mode===m) return; v.dataset.mode=m;
+    v.poster="./assets/exp/"+c+"-"+m+".webp";
+    if(still.matches) return;
+    v.src="./assets/exp/"+c+"-"+m+".mp4"; if(v.dataset.on) v.play().catch(function(){}) }
+  vids.forEach(load);
+  new MutationObserver(function(){ vids.forEach(load) }).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ var v=e.target;
+      if(e.isIntersecting){ v.dataset.on="1"; if(!still.matches) v.play().catch(function(){}) }
+      else { delete v.dataset.on; v.pause() } }) },{threshold:.35});
+    vids.forEach(function(v){ io.observe(v) });
+  }
+  /* a tab that comes back into view picks up where it was */
+  document.addEventListener("visibilitychange",function(){ if(!document.hidden&&!still.matches) vids.forEach(function(v){ if(v.dataset.on) v.play().catch(function(){}) }) });
   var ov=document.getElementById("expOv"), dlg=ov.querySelector(".exp-dlg"), back=null;
   function open(btn){
     var d=P[btn.dataset.exp]; if(!d) return; back=btn;
