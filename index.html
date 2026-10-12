@@ -3646,22 +3646,31 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-head{margin:0 0 clamp(20px,3vw,28px)}
 
 /* each card plays a real recording of the live project, in the site's own light or dark mode */
-.exp-fit{position:absolute;inset:7%;display:flex;align-items:center;justify-content:center}
-.exp-fit video{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px;background:var(--card,#fff);
-  box-shadow:0 0 0 1px var(--line),0 12px 28px -16px rgba(36,32,32,.4);transition:transform .6s var(--ease)}
-/* phone clips sit in the same iPhone mockup as the App merge case study: the
-   rig keeps the device image's own ratio, the screen is inset at the exact
-   percentages of its transparent hole, and the frame is laid on top */
-.exp-rig{display:contents}
-.exp-screen{display:contents}
-.exp-device{display:none}
-.exp-card[data-exp="chunav"] .exp-rig,.exp-media.is-phone .exp-rig{display:block;position:relative;height:100%;aspect-ratio:1608/3316;max-width:100%;transition:transform .6s var(--ease)}
-.exp-card[data-exp="chunav"] .exp-screen,.exp-media.is-phone .exp-screen{display:block;position:absolute;left:4.29%;top:1.78%;right:4.35%;bottom:1.81%;border-radius:12.3%/5.7%;overflow:hidden;background:#000}
-.exp-card[data-exp="chunav"] .exp-screen video,.exp-media.is-phone .exp-screen video{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;border-radius:0;box-shadow:none;transform:none!important}
-.exp-card[data-exp="chunav"] .exp-device,.exp-media.is-phone .exp-device{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;z-index:2}
-.exp-card[data-exp="chunav"] .exp-fit{inset:5% 7%;filter:drop-shadow(0 14px 22px rgba(36,32,32,.18))}
-.exp-media.is-phone .exp-fit{inset:14px}
-@media (hover:hover){.exp-card[data-exp="chunav"]:hover .exp-rig{transform:scale(1.03)}}
+/* device frames, no elevation. Corners belong to the device:
+   phone — the App merge iPhone mockup, its screen inset at the exact
+   percentages of its transparent hole; web — a Safari window in the About
+   page's grammar (own toolbar tone, hairline edge, real traffic-light hexes)
+   whose corner is macOS's 10pt window radius, scaled with the window. */
+.exp-fit{position:absolute;inset:7%;display:flex;align-items:center;justify-content:center;container-type:size}
+.exp-rig{position:relative;transition:transform .6s var(--ease)}
+.exp-screen{display:block;position:relative;overflow:hidden}
+.exp-screen video{display:block;width:100%;height:100%;object-fit:cover}
+.exp-device,.sfw-bar{display:none}
+@media (hover:hover){.exp-card:hover .exp-rig{transform:scale(1.03)}}
+[data-dev="phone"] .exp-rig{height:100%;aspect-ratio:1608/3316;max-width:100%}
+[data-dev="phone"] .exp-screen{position:absolute;left:4.29%;top:1.78%;right:4.35%;bottom:1.81%;border-radius:12.3%/5.7%;background:#000}
+[data-dev="phone"] .exp-device{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;z-index:2}
+[data-dev="web"]{--frameBar:#EDEDEB;--frameEdge:#D3D3CF}
+:root[data-theme="dark"] [data-dev="web"]{--frameBar:#2C2C2E;--frameEdge:#1E1E20}
+[data-dev="web"] .exp-rig{width:min(100cqw,calc(100cqh * 1000 / 752));container-type:inline-size;border-radius:1%/1.33%;overflow:hidden;box-shadow:0 0 0 .5px var(--frameEdge);background:var(--frameBar)}
+[data-dev="web"] .sfw-bar{display:flex;position:relative;align-items:center;aspect-ratio:1000/52;padding:0 1.6cqw;background:var(--frameBar);border-bottom:.5px solid var(--frameEdge)}
+.sfw-lights{display:flex;gap:.8cqw}
+.sfw-lights i{width:1.2cqw;height:1.2cqw;border-radius:50%}
+.sfw-lights i:nth-child(1){background:#FF5F57}.sfw-lights i:nth-child(2){background:#FEBC2E}.sfw-lights i:nth-child(3){background:#28C840}
+.sfw-url{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:42cqw;height:58%;border-radius:.8cqw;background:rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center}
+:root[data-theme="dark"] .sfw-url{background:rgba(255,255,255,.08)}
+.sfw-urltext{font-family:var(--sans,'Geist'),system-ui,sans-serif;font-size:1.3cqw;line-height:1;color:var(--muted,#7A7676);white-space:nowrap}
+[data-dev="web"] .exp-screen{aspect-ratio:1000/700}
 @media (hover:hover){.exp-card:hover .exp-fit video{transform:scale(1.03)}}
 .exp-ov{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(15,15,15,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
   opacity:0;transition:opacity .22s var(--ease)}
@@ -3673,6 +3682,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-dlg:focus{outline:none}
 .exp-media{position:relative;aspect-ratio:16/11;margin:8px 8px 0;border-radius:14px;overflow:hidden;background:var(--surface)}
 .exp-media .exp-fit{inset:20px}
+.exp-media .exp-fit[data-dev="phone"]{inset:14px}
 .exp-x{position:absolute;top:18px;right:18px;z-index:2;border:0;padding:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
   background:rgba(255,255,255,.86);color:#242020;box-shadow:0 0 0 1px rgba(36,32,32,.08),0 2px 8px rgba(0,0,0,.12);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .exp-x:hover{background:#fff}
@@ -3937,15 +3947,15 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     </div>
     <div class="exp-grid">
       <button type="button" class="exp-card" data-exp="chunav" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit"><span class="exp-rig"><span class="exp-screen"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="442" height="962" poster="./assets/exp/chunav-light.webp"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit" data-dev="phone"><span class="exp-rig"><span class="exp-screen"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="442" height="962" poster="./assets/exp/chunav-light.webp"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span></span>
         <span class="worktext"><span class="exp-name">Chunav</span><span class="desc exp-line">Quick polls for friends, shared as a link</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="gb3" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit"><video class="exp-vid" data-clip="gb3" muted loop playsinline preload="none" width="960" height="888" poster="./assets/exp/gb3-light.webp"></video></span></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit" data-dev="web"><span class="exp-rig"><span class="sfw-bar"><span class="sfw-lights"><i></i><i></i><i></i></span><span class="sfw-url"><span class="sfw-urltext">lkb00.github.io/gb3</span></span></span><span class="exp-screen"><video class="exp-vid" data-clip="gb3" muted loop playsinline preload="none" width="1000" height="700" poster="./assets/exp/gb3-light.webp"></video></span></span></span></span>
         <span class="worktext"><span class="exp-name">Good Bot, Bad Bot</span><span class="desc exp-line">A playground for spotting good AI design</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="tattva" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit"><video class="exp-vid" data-clip="tattva" muted loop playsinline preload="none" width="960" height="836" poster="./assets/exp/tattva-light.webp"></video></span></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit" data-dev="web"><span class="exp-rig"><span class="sfw-bar"><span class="sfw-lights"><i></i><i></i><i></i></span><span class="sfw-url"><span class="sfw-urltext">lkb00.github.io/tattva</span></span></span><span class="exp-screen"><video class="exp-vid" data-clip="tattva" muted loop playsinline preload="none" width="1000" height="700" poster="./assets/exp/tattva-light.webp"></video></span></span></span></span>
         <span class="worktext"><span class="exp-name">Tattva</span><span class="desc exp-line">A design system for AI products</span></span>
       </button>
     </div>
@@ -5487,7 +5497,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   <div class="exp-ov" id="expOv" hidden>
     <div class="exp-dlg" role="dialog" aria-modal="true" aria-labelledby="expDlgTitle" tabindex="-1">
       <button type="button" class="exp-x" id="expX" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-      <div class="exp-media" aria-hidden="true"><span class="exp-fit"><span class="exp-rig"><span class="exp-screen"><video id="expVid" muted loop playsinline preload="none" width="960" height="836"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span></div>
+      <div class="exp-media" aria-hidden="true"><span class="exp-fit" id="expFit" data-dev="web"><span class="exp-rig"><span class="sfw-bar"><span class="sfw-lights"><i></i><i></i><i></i></span><span class="sfw-url"><span class="sfw-urltext"></span></span></span><span class="exp-screen"><video id="expVid" muted loop playsinline preload="none" width="1000" height="700"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span></div>
       <div class="exp-body">
         <p class="exp-kick" id="expKick"></p>
         <h3 id="expDlgTitle" class="exp-dtitle"></h3>
@@ -5523,8 +5533,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   /* recordings: the clip that matches the site's theme, playing only while on screen */
   var vids=[].slice.call(document.querySelectorAll(".exp-vid")), still=matchMedia("(prefers-reduced-motion: reduce)");
   function mode(){ var t=document.documentElement.getAttribute("data-theme"); return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light" }
-  var DIM={"chunav-light":[442,962],"chunav-dark":[442,962],"gb3-light":[960,888],"gb3-dark":[960,816],"tattva-light":[960,836],"tattva-dark":[960,836]};
-  function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } var m=v.closest(".exp-media"); if(m) m.classList.toggle("is-phone",k.indexOf("chunav")===0) }
+  var DIM={"chunav-light":[442,962],"chunav-dark":[442,962],"gb3-light":[1000,700],"gb3-dark":[1000,700],"tattva-light":[1000,700],"tattva-dark":[1000,700]};
+  function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } var f=v.closest("#expFit"); if(f){ var ph=k.indexOf("chunav")===0; f.dataset.dev=ph?"phone":"web"; var u=f.querySelector(".sfw-urltext"); if(u) u.textContent=ph?"":(k.indexOf("gb3")===0?"lkb00.github.io/gb3":"lkb00.github.io/tattva") } }
   function load(v){ var m=mode(), c=v.dataset.clip; if(v.dataset.mode===m) return; v.dataset.mode=m; size(v,c+"-"+m);
     v.poster="./assets/exp/"+c+"-"+m+".webp";
     if(still.matches) return;
