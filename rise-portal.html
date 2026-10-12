@@ -2,22 +2,22 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rise Portal: Making partner earnings and referrals visible | Case study</title>
+<title>Rise Portal: Make partner growth visible | Case study</title>
 <script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
-<meta name="description" content="A 0→1 B2B portal for Rupeezy’s digital partners, bringing referral progress, earnings, payout history, and eligibility into one self-serve experience.">
+<meta name="description" content="A 0→1 B2B portal for Rupeezy’s digital partners: referral progress, client status, earnings and payout eligibility in one self-serve place, so partners can see how referrals turn into earnings.">
 <link rel="canonical" href="https://www.lokeshbhatia.com/rise-portal.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
-<meta property="og:title" content="Rise Portal: Making partner earnings and referrals visible | Case study">
-<meta property="og:description" content="A 0→1 B2B portal for Rupeezy’s digital partners, bringing referral progress, earnings, payout history, and eligibility into one self-serve experience.">
+<meta property="og:title" content="Rise Portal: Make partner growth visible | Case study">
+<meta property="og:description" content="A 0→1 B2B portal for Rupeezy’s digital partners: referral progress, client status, earnings and payout eligibility in one self-serve place, so partners can see how referrals turn into earnings.">
 <meta property="og:url" content="https://www.lokeshbhatia.com/rise-portal.html">
 <meta property="og:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
-<meta name="twitter:title" content="Rise Portal: Making partner earnings and referrals visible | Case study">
-<meta name="twitter:description" content="A 0→1 B2B portal for Rupeezy’s digital partners, bringing referral progress, earnings, payout history, and eligibility into one self-serve experience.">
+<meta name="twitter:title" content="Rise Portal: Make partner growth visible | Case study">
+<meta name="twitter:description" content="A 0→1 B2B portal for Rupeezy’s digital partners: referral progress, client status, earnings and payout eligibility in one self-serve place, so partners can see how referrals turn into earnings.">
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -412,6 +412,11 @@ h3.say.sub{margin-top:var(--s4)}
   display:flex;flex-direction:column;aspect-ratio:1}
 .stickynote h4{font-family:var(--serif);font-weight:400;font-size:18px;line-height:1.3;color:#000;margin:0 0 6px}
 .stickynote .sn-body{font-family:var(--sans);font-size:14px;line-height:1.6;color:#000;margin:0}
+/* the goal and structure notes carry a sentence each: let them grow instead of staying square, and stack on a phone */
+#s4 .stickynote,#sia .stickynote{aspect-ratio:auto;justify-content:space-between;min-height:170px}
+.stickynote .sn-sig{align-self:flex-end;margin:14px 0 0;font-family:var(--sans);font-size:13px;color:#6B86A3}
+.shot.card .stickynotes{margin-top:0}
+@media(max-width:700px){#s3 .stickynotes,#s4 .stickynotes,#sia .stickynotes{flex-direction:column;align-items:stretch;gap:var(--s3)}#s3 .stickynote,#s4 .stickynote,#sia .stickynote{flex:0 0 auto;aspect-ratio:auto;min-height:0}}
 
 @media(max-width:860px){
   :root{--s5:64px;--s4:44px}
@@ -516,6 +521,13 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
 .toc a{font-size:14.5px;line-height:20px}
 .toc .cx-rail-back{margin-bottom:34px;font:500 11px/20px var(--mono);letter-spacing:.09em;text-transform:uppercase}
 .toc .cx-rail-back:before{content:"\2190";margin-right:8px;font-family:var(--sans)}
+.keys{list-style:none;margin:var(--s3) 0 var(--s3);padding:0;display:grid;gap:var(--s2)}
+.keys li{display:flex;gap:10px}
+.keys i{font-style:normal;font-family:var(--sans);color:var(--accent);font-weight:600;min-width:15px;font-size:14px}
+.keys p{margin:0;font-family:var(--sans);font-size:16px;font-weight:400;color:var(--muted);line-height:1.6}
+.statement{margin-top:var(--s4);font:400 clamp(24px,3vw,32px)/1.25 var(--serif);letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
+.statement span{display:block}
+.statement span:first-child{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -562,58 +574,55 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
 
 <div class="shell">
   <nav class="toc" aria-label="Sections"><a class="cx-rail-back" href="./index.html#work">Back</a>
-    <a href="#s1">Background</a>
-    <a href="#s2">Discovery</a>
-    <a href="#s3">The problem</a>
+    <a href="#s1">Context</a>
+    <a href="#s3">Before</a>
     <a href="#s4">Goals</a>
-    <a href="#s5">Principle</a>
-    <a href="#s6">Constraints</a>
-    <a href="#s7">The screens</a>
-    <a href="#s8">The bet</a>
+    <a href="#s2">Evidence</a>
+    <a href="#sia">Structure</a>
+    <a href="#s5">Dashboard</a>
+    <a href="#s7">Clients and earnings</a>
+    <a href="#s6">Eligibility</a>
+    <a href="#smob">Mobile</a>
+    <a href="#s8">Outcomes</a>
   </nav>
 
   <div class="wide beat" data-reveal>
     <div class="shot card c-sky">
       <img width="1200" height="777" src="./assets/rp-hero-nochrome.webp" alt="The Rise Portal dashboard on desktop, showing earnings across three periods, a daily chart, and the lead funnel below." loading="eager" decoding="async">
     </div>
-    <p class="cap">Four views built around two questions: where are my referrals, and what will I earn?</p>
+    <p class="cap">The dashboard: earnings trend, lead funnel and payout status in one view.</p>
   </div>
 
   <div class="col beat" data-reveal>
     <p class="eyebrow" style="margin-top:0">Case study &middot; Rise Portal</p>
-    <h1 style="margin-top:var(--s2)">The first product Rupeezy&rsquo;s partners ever had</h1>
+    <h1 style="margin-top:var(--s2)">Make partner growth visible.</h1>
   </div>
 
   <div class="col" data-reveal>
-    <p class="dek">Around 100 digital partners brought in roughly 35% of Rupeezy&rsquo;s revenue, but they had no self-serve way to track referrals or understand their payouts. I designed Rise Portal, the first product built for them, to make referral progress, client activity, earnings and payout eligibility visible in one place.</p>
+    <p class="dek">Rise Portal is a B2B portal for Rupeezy&rsquo;s digital partners. <b>Partners were helping grow the business, but they couldn&rsquo;t independently see how referrals translated into conversions and earnings.</b> I designed the portal to make that visible.</p>
     <dl class="meta">
-      <div><dt>Timeline</dt><dd>2024</dd></div>
       <div><dt>Role</dt><dd>Sole designer</dd></div>
       <div><dt>Team</dt><dd>1 PM</dd></div>
+      <div><dt>Platform</dt><dd>Web and mobile</dd></div>
+      <div><dt>Scope</dt><dd>0 to 1</dd></div>
     </dl>
-    <div class="figrow">
-      <div><div class="flabel">What it replaced</div><div class="fnum">0&#8594;1</div><div class="fnote">Spreadsheets and phone calls. No product existed.</div></div>
-      <div><div class="flabel">Conversion</div><div class="fnum">2.4&#215;</div><div class="fnote">lead-to-client, two months after launch (reported by the business team)</div></div>
-      <div><div class="flabel">Support</div><div class="fnum">48%</div><div class="fnote">fewer partner support tickets (reported by support teams)</div></div>
-    </div>
     <p class="cap">Rupeezy was called AsthaTrade until the rebrand, so the old domain appears in these screens.</p>
   </div>
 
   <div class="col beat">
-    <p class="body">Partners referred traders and earned a share of the brokerage those traders generated. But the information that explained each payout lived in spreadsheets, and partners had to contact Rupeezy to understand what had changed.</p>
-    <p class="body">I set out to replace that monthly information gap with a self-serve view of their own business: who had signed up, who was active, where a referral was stuck, and how those details connected to earnings.</p>
-    <p class="body">I was the only designer on it. I also made a bet about what partners would do once they could see their own numbers.</p>
+    <p class="body">Partners referred traders and earned a share of the brokerage those traders generated. The information that explained each payout sat in spreadsheets, so partners had to call, raise a ticket or ask their relationship manager to understand what had changed.</p>
+    <p class="body">I designed a self-serve view of their own business: who had signed up, who was trading, where a referral was stuck, and how that connected to earnings and payout.</p>
   </div>
 
   <!-- ============ 01 BACKGROUND ============ -->
   <section id="s1" data-section="Revenue they couldn't see" class="col" data-reveal>
-    <p class="eyebrow">Background</p>
+    <p class="eyebrow">Context</p>
     <h2 class="say">Partners drove revenue, but could not see how they earned it</h2>
     <p class="body">A digital partner shared a referral link. Someone signed up, completed KYC, became a client and started trading. The partner earned a share of the brokerage generated by that activity.</p>
-    <p class="body">Around 100 partners contributed roughly 35% of company revenue, but the steps between referral and payout were mostly invisible to them.</p>
+    <p class="body">Rupeezy worked with around 100 digital partners, and roughly 35% of company revenue came through this channel. That is company context, not something the design caused. The steps between referral and payout were mostly invisible to them.</p>
     <div class="figrow beat" style="--cols:2">
       <div><div class="flabel">Partners</div><div class="fnum">~100</div><div class="fnote">Referring daily</div></div>
-      <div><div class="flabel">Revenue</div><div class="fnum">~35%</div><div class="fnote">Of company revenue flowed through them</div></div>
+      <div><div class="flabel">Revenue</div><div class="fnum">~35%</div><div class="fnote">Of company revenue came through them. Company context, not design impact</div></div>
     </div>
     <div class="beat flow-card">
       <p class="flow-note">The partner started the journey and received the payout, but could not see what happened in between</p>
@@ -626,12 +635,69 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
       </div>
       <p class="flow-note" style="margin:var(--s2) 0 0">And the share itself varied by period, from 10% to 60%.</p>
     </div>
-    <p class="beat body">The amount depended on more than the number of referrals: KYC completion, client activity, trading volume and the applicable share all mattered. Without those details, a payout total could not explain why earnings changed.</p>
+    <p class="beat body">Earnings depended on more than the number of referrals: how many leads converted, how many clients actually traded, and how much they traded. Without those details, a payout total could not explain why earnings changed.</p>
+  </section>
+
+  <!-- ============ 03 THE PROBLEM ============ -->
+  <section id="s3" data-section="Before Rise Portal" class="col" data-reveal>
+    <p class="eyebrow">Before Rise Portal</p>
+    <h2 class="say">The total arrived monthly. The explanation did not.</h2>
+    <p class="body">Partners relied on phone calls, spreadsheets and support tickets to answer routine questions:</p>
+    <ul class="keys" style="grid-template-columns:1fr">
+      <li><i>&bull;</i><p>How many of my leads converted into clients?</p></li>
+      <li><i>&bull;</i><p>How much am I expected to earn this month?</p></li>
+      <li><i>&bull;</i><p>Why are my earnings different from last month?</p></li>
+      <li><i>&bull;</i><p>When will my earnings be released?</p></li>
+    </ul>
+    <p class="body">There was no single self-serve place to see progress, client status, earnings and payout eligibility.</p>
+    <div class="quote beat">
+      <p>&ldquo;Last month I referred 100 people and earned X. This month I referred 200 and earned less. Why?&rdquo;</p>
+      <p class="cite">A question the support team heard often, relayed by them. Not an interview quote.</p>
+    </div>
+    <p class="beat" style="font-weight:500;color:var(--ink)">What the payout depended on</p>
+    <div style="background:#F2F3F5;border-radius:8px;padding:var(--s3);margin-top:var(--s2)">
+      <div class="stickynotes" style="margin-top:0">
+        <div class="stickynote">
+          <h4>Leads</h4>
+          <p class="sn-body">People who signed up</p>
+        </div>
+        <div class="stickynote">
+          <h4>Clients</h4>
+          <p class="sn-body">Leads with KYC done</p>
+        </div>
+        <div class="stickynote">
+          <h4>Volume</h4>
+          <p class="sn-body">How much they traded</p>
+        </div>
+        <div class="stickynote">
+          <h4>Rate</h4>
+          <p class="sn-body">Share for that period</p>
+        </div>
+      </div>
+    </div>
+    <p class="beat body">The partner saw none of this. Only the total, once a month, on the 15th.</p>
+    <h3 class="say sub">Why it mattered</h3>
+    <p class="body">Referring more people did not necessarily mean earning more. Without seeing conversions, client trading and volume, a change in earnings could feel arbitrary, and that risked weakening trust. The same routine questions also came back to Rupeezy as repeat support work.</p>
+    <p class="statement"><span>Partners were helping grow the business,</span> <span>but they couldn&rsquo;t independently see how referrals translated into conversions and earnings.</span></p>
+  </section>
+
+  <!-- ============ 04 GOALS ============ -->
+  <section id="s4" data-section="Business goals" class="col" data-reveal>
+    <p class="eyebrow">Business goals</p>
+    <h2 class="say">Three goals for the business</h2>
+    <div class="shot card beat">
+      <div class="stickynotes">
+        <div class="stickynote"><div><h4>Improve transparency</h4><p class="sn-body">Show the lead-to-client journey and the factors that shape earnings.</p></div><p class="sn-sig">01</p></div>
+        <div class="stickynote"><div><h4>Reduce routine support</h4><p class="sn-body">Let partners check their own progress instead of calling or raising tickets for routine updates.</p></div><p class="sn-sig">02</p></div>
+        <div class="stickynote"><div><h4>Strengthen the partner proposition</h4><p class="sn-body">Give existing partners a tangible product, and give Rupeezy something real to show prospective partners.</p></div><p class="sn-sig">03</p></div>
+      </div>
+    </div>
+    <p class="cap">These were objectives, not proof that each one was achieved.</p>
   </section>
 
   <!-- ============ 02 DISCOVERY ============ -->
-  <section id="s2" data-section="Who I was working with" class="col" data-reveal>
-    <p class="eyebrow">Discovery</p>
+  <section id="s2" data-section="Evidence and constraints" class="col" data-reveal>
+    <p class="eyebrow">Evidence and constraints</p>
     <h2 class="say">I learned the brokerage model through the signals I could access</h2>
     <p class="body">This was my first project at Rupeezy, and I had never worked in broking. The PRD included terms I needed to understand before I could design anything, so I learned the business before I opened Figma.</p>
     <dl class="glossary">
@@ -658,70 +724,32 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
         <p>First project at Rupeezy. Responsive web, desktop and mobile, end to end.</p>
       </div>
     </div>
-    <p class="chain-foot"><b>Also in reach:</b> Kunal, the PM, who mapped where the money moved. The business team, who owned the payout model.</p>
+    <p class="chain-foot"><b>Also in reach:</b> Kunal, the PM, who mapped where the money moved; the business team, who owned the payout model; and the partner relationship managers.</p>
     <h3 class="say sub">How I learned what I knew</h3>
-    <p class="body">Working sessions with Kunal to map the referral-to-payout journey. Time with the support desk, going through the questions partners called about most. That was the discovery, and all of it was second-hand.</p>
+    <p class="body">Recurring support questions, and input from the product manager, the business team, the support team and the partner relationship managers. All of it was second-hand: indirect signals, not research.</p>
     <div class="quote beat">
       <p>&ldquo;I onboard 15&ndash;20 users every week, but I have no idea how they&rsquo;re performing.&rdquo;</p>
-      <p class="cite">A partner, relayed by the support team.</p>
+      <p class="cite">A partner&rsquo;s words, relayed by the support team. Not an interview quote.</p>
     </div>
-    <p class="beat body">I did not speak directly with a partner before launch. I had the people who answered their calls: an indirect view, not a substitute for research. Good proxies, still proxies.</p>
+    <p class="beat body"><b>There were no direct partner interviews.</b> I had the people who answered partners&rsquo; calls: good proxies, still proxies.</p>
   </section>
 
-  <!-- ============ 03 THE PROBLEM ============ -->
-  <section id="s3" data-section="Refer more, earn less" class="col" data-reveal>
-    <p class="eyebrow">The problem</p>
-    <h2 class="say">The total arrived monthly. The explanation did not.</h2>
-    <p class="body">A partner who wanted to know how their leads had converted rang their relationship manager, who opened a spreadsheet and read the numbers back.</p>
-    <p class="body">Partners could see the final payout, but not the chain of events that produced it. A change in KYC completion, active clients, trading volume or the applicable share could change earnings without making the reason obvious.</p>
-    <div class="quote beat">
-      <p>&ldquo;Last month I referred 100 people and earned X. This month I referred 200 and earned less. Why?&rdquo;</p>
-      <p class="cite">The call the support team took most.</p>
-    </div>
-    <p class="beat" style="font-weight:500;color:var(--ink)">What the payout depended on</p>
-    <div style="background:#F2F3F5;border-radius:8px;padding:var(--s3);margin-top:var(--s2)">
-      <div class="stickynotes" style="margin-top:0">
-        <div class="stickynote">
-          <h4>Leads</h4>
-          <p class="sn-body">People who signed up</p>
-        </div>
-        <div class="stickynote">
-          <h4>Clients</h4>
-          <p class="sn-body">Leads with KYC done</p>
-        </div>
-        <div class="stickynote">
-          <h4>Volume</h4>
-          <p class="sn-body">How much they traded</p>
-        </div>
-        <div class="stickynote">
-          <h4>Rate</h4>
-          <p class="sn-body">Share for that period</p>
-        </div>
+  <!-- ============ STRUCTURE ============ -->
+  <section id="sia" data-section="Three partner questions" class="col" data-reveal>
+    <p class="eyebrow">Information architecture</p>
+    <h2 class="say">Three questions, three places to answer them</h2>
+    <div class="shot card beat">
+      <div class="stickynotes">
+        <div class="stickynote"><div><h4>Progress</h4><p class="sn-body">Where are my referrals in the journey?</p></div><p class="sn-sig">Dashboard</p></div>
+        <div class="stickynote"><div><h4>Clients</h4><p class="sn-body">Which clients are active, and who needs follow-up?</p></div><p class="sn-sig">My Clients</p></div>
+        <div class="stickynote"><div><h4>Earnings</h4><p class="sn-body">How much have I earned, and why?</p></div><p class="sn-sig">My Earnings</p></div>
       </div>
     </div>
-    <p class="beat body">The partner saw none of this. Only the total, once a month, on the 15th.</p>
-    <p class="beat body">The portal needed to show enough of the calculation for a partner to understand the result without contacting support each month.</p>
-  </section>
-
-  <!-- ============ 04 GOALS ============ -->
-  <section id="s4" data-section="Two questions" class="col" data-reveal>
-    <p class="eyebrow">Goals</p>
-    <h2 class="say">Two questions the portal had to answer without a phone call</h2>
-    <p class="body">The recurring support questions pointed to two jobs the product needed to do well.</p>
-    <div class="pair">
-      <div><p class="cap"><b>Question one</b></p><p class="body" style="margin-top:6px">&ldquo;How many of my leads converted?&rdquo;</p></div>
-      <div><p class="cap"><b>Question two</b></p><p class="body" style="margin-top:6px">&ldquo;How much will I earn this cycle?&rdquo;</p></div>
-    </div>
-    <div class="pair">
-      <div><p class="cap"><b>For the business</b></p><p class="body" style="margin-top:6px">Give partners visibility into referral progress and payout logic, while reducing avoidable questions to the support team.</p></div>
-      <div><p class="cap"><b>For the partner</b></p><p class="body" style="margin-top:6px">See which referrals had converted, where a client was stuck, and how client activity related to earnings, so they could decide what to follow up on.</p></div>
-    </div>
-    <p class="beat body">Those two questions shaped the information hierarchy: make earnings easy to check, and make the referral funnel useful enough to act on.</p>
   </section>
 
   <!-- ============ 05 PRINCIPLE ============ -->
-  <section id="s5" data-section="Show the calculation" class="col" data-reveal>
-    <p class="eyebrow">Principle</p>
+  <section id="s5" data-section="Dashboard" class="col" data-reveal>
+    <p class="eyebrow">Dashboard</p>
     <h2 class="say">Show the calculation, not just the total</h2>
     <p class="body">A total tells a partner what they earned. The calculation helps explain why.</p>
     <p class="body">I designed the same core sections for desktop and mobile, adapting the charts, tables and navigation to narrower screens.</p>
@@ -731,30 +759,60 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
       </div>
     </div>
     <h3 class="say sub">The dashboard</h3>
-    <p class="body">The dashboard brought current-cycle earnings, the previous payout and all-time earnings into one view, alongside a daily trend. Below that, the referral funnel showed the stages between a lead and an active client.</p>
+    <p class="body">The dashboard brought the earnings trend, the lead funnel and payout status into one view. The funnel showed the stages between a lead and a trading client: Account Processing, Account Opened and Account Traded.</p>
     <div class="beat">
       <div class="shot card c-sky">
-        <img width="610" height="185" src="./assets/rp-hero-funnel-crop.webp" alt="The lead funnel on the Rise Portal dashboard, showing total leads and the three states a lead can be in." loading="lazy" decoding="async">
+        <img width="610" height="185" src="./assets/rp-hero-funnel-crop.webp" alt="The lead funnel on the Rise Portal dashboard: total leads, then Account Processing, Account Opened and Account Traded." loading="lazy" decoding="async">
       </div>
       <p class="cap">The funnel made the drop-off visible: partners could see which referrals had progressed and where the journey had stalled.</p>
     </div>
     <p class="body beat">The funnel was designed to support action, not only reporting. If a partner recognised a referral stuck in account processing, they could follow up directly instead of waiting for Rupeezy&rsquo;s support team to contact them.</p>
-    <p class="body">That was the bet: clearer information could help partners do more of their own follow-up.</p>
-    <p class="beat body">It was a design hypothesis, and I had not tested it with partners before launch.</p>
+    <p class="body">That was the bet: clearer information could help partners do more of their own follow-up. It was a design hypothesis, not something I tested with partners.</p>
+  </section>
+
+  <!-- ============ 07 THE SCREENS ============ -->
+  <section id="s7" data-section="Clients and earnings" class="col" data-reveal>
+    <p class="eyebrow">Clients and earnings</p>
+    <h2 class="say">A client list built for follow-up, and earnings you can trace</h2>
+    <h3 class="say sub">Clients</h3>
+    <p class="body">My Clients tracked each referral through three states: Account Processing, Account Opened and Account Traded. Opened is not the same as an active trading client, so the list was organised around activity, with last-traded date and active or inactive status, to show who might need a follow-up.</p>
+    <div class="beat">
+      <div class="shot card c-lav">
+        <img width="1200" height="750" src="./assets/rp-funnel.webp" alt="The Rise Portal Clients page, every client listed by last-traded date and split into active and inactive." loading="lazy" decoding="async">
+      </div>
+      <p class="cap">Sorted by activity, the list shows at a glance who might need a follow-up.</p>
+    </div>
+    <h3 class="say sub">Phone numbers stay masked</h3>
+    <p class="body">The portal could not expose full client phone numbers. But most partners already collected contact details on their own forms, so what they needed from the portal was never the number. It was the match.</p>
+    <div class="beat">
+      <div class="shot card c-mint">
+        <img width="915" height="270" src="./assets/rp-masked-number-crop.webp" alt="The Clients screen with the phone number column masked, showing only the last four digits." loading="lazy" decoding="async">
+      </div>
+      <p class="cap"><span style="font-family:var(--sans);color:var(--value)">XXXXXX7890</span> is enough to find a record you already hold, and nothing on its own.</p>
+    </div>
+    <p class="body beat">The design showed a client&rsquo;s name, masked number, status and last activity&mdash;enough to match the portal record with information the partner already held.</p>
+    <p class="body">This protected client information, but it also limited partners who had not kept their own referral records. They could see a stalled lead but might not have enough information to contact that person.</p>
+    <h3 class="say sub">Earnings</h3>
+    <p class="body">My Earnings showed current earnings, pending earnings, the last payout and total earnings, with trends over time and client-level detail. Payout history listed the cycle, amount, deductions, bank details and date.</p>
+    <div class="beat">
+      <div class="shot card c-peach">
+        <img width="1200" height="750" src="./assets/rp-earnings.webp" alt="The Rise Portal Earnings page, earnings plotted against clients with a payout history table below." loading="lazy" decoding="async">
+      </div>
+      <p class="cap">Deductions appear as their own line item, which makes the final amount easier to trace.</p>
+    </div>
+    <p class="body beat">The daily chart gave partners another way to inspect activity over time and decide where follow-up might be useful.</p>
   </section>
 
   <!-- ============ 06 CONSTRAINTS ============ -->
-  <section id="s6" data-section="The eligibility rule" class="col" data-reveal>
-    <p class="eyebrow">Constraints</p>
-    <h2 class="say">A rule I could not change and a number I could not show</h2>
-    <p class="body">Two constraints shaped the design: the payout rule had to stay intact, and full client phone numbers could not appear in the portal.</p>
-    <h3 class="say sub">The rule</h3>
-    <p class="body">Partners were not paid automatically every cycle. Payout eligibility required at least 10 active clients, plus either 30% of all clients active or five new clients during that cycle. The business rule was fixed. The design challenge was to make the AND/OR conditions understandable, and to show partners how far they were from qualifying.</p>
+  <section id="s6" data-section="Payout eligibility" class="col" data-reveal>
+    <p class="eyebrow">Payout eligibility</p>
+    <h2 class="say">A rule I could not change, made readable</h2>
+    <p class="body">Partners were not paid automatically every cycle. The fixed business rule was: <b>at least 10 active clients AND (30% active clients OR 5 new clients onboarded).</b> The design job was to show progress towards each condition, and say plainly why a partner was not yet eligible.</p>
     <div class="beat">
       <div class="shot card c-sand">
         <img width="604" height="327" src="./assets/rp-eligibility.webp" alt="The payout eligibility card, each condition shown as a fraction with the AND/OR relationship made visible." loading="lazy" decoding="async">
       </div>
-      <p class="cap">Each condition is shown separately, with the AND/OR relationship visible, so a partner can see which threshold they still need to meet.</p>
+      <p class="cap">In this example the partner has 7 of 10 active clients, 25% of the 30% active-client share, and 3 of 5 new clients, so they are not yet eligible.</p>
     </div>
     <div class="quote beat">
       <p>&ldquo;A message saying only &lsquo;you&rsquo;re not eligible for payout&rsquo; would produce exactly the phone call the whole product was built to remove.&rdquo;</p>
@@ -767,41 +825,12 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
       <div><dt>Cost</dt><dd>Partners unfamiliar with the rule may need to scroll to find it.</dd></div>
     </dl>
     <p class="body beat">I also considered hiding the card once a partner qualified, and rejected it. A dashboard that rearranges itself by state is harder to learn than one that stays still.</p>
-    <h3 class="say sub">The number</h3>
-    <p class="body">The portal could not expose full client phone numbers. But most partners already collected contact details on their own forms, so what they needed from the portal was never the number. It was the match.</p>
-    <div class="beat">
-      <div class="shot card c-mint">
-        <img width="915" height="270" src="./assets/rp-masked-number-crop.webp" alt="The Clients screen with the phone number column masked, showing only the last four digits." loading="lazy" decoding="async">
-      </div>
-      <p class="cap"><span style="font-family:var(--sans);color:var(--value)">XXXXXX7890</span> is enough to find a record you already hold, and nothing on its own.</p>
-    </div>
-    <p class="body beat">The design showed a client&rsquo;s name, masked number, status and last activity&mdash;enough to match the portal record with information the partner already held.</p>
-    <p class="body">This protected client information, but it also limited partners who had not kept their own referral records. They could see a stalled lead but might not have enough information to contact that person.</p>
   </section>
 
-  <!-- ============ 07 THE SCREENS ============ -->
-  <section id="s7" data-section="Built for follow-up" class="col" data-reveal>
-    <p class="eyebrow">The screens</p>
-    <h2 class="say">Earnings, client activity, and a list built for follow-up</h2>
-    <p class="body">The portal brought earnings history, referral progress and client activity into a small set of connected views, with a mobile version for partners checking in on the move.</p>
-    <h3 class="say sub">Earnings</h3>
-    <p class="body">The earnings view compared earnings with client and trading activity, then listed payout history with the cycle, amount, deductions, bank details and date.</p>
-    <div class="beat">
-      <div class="shot card c-peach">
-        <img width="1200" height="750" src="./assets/rp-earnings.webp" alt="The Rise Portal Earnings page, earnings plotted against clients with a payout history table below." loading="lazy" decoding="async">
-      </div>
-      <p class="cap">Deductions appear as their own line item, which makes the final amount easier to trace.</p>
-    </div>
-    <p class="body beat">The daily chart gave partners another way to inspect activity over time and decide where follow-up might be useful.</p>
-    <h3 class="say sub">Clients</h3>
-    <p class="body">The client list was organised around activity: last-traded date and active/inactive status, rather than signup date alone. That helped partners identify who might need a follow-up.</p>
-    <div class="beat">
-      <div class="shot card c-lav">
-        <img width="1200" height="750" src="./assets/rp-funnel.webp" alt="The Rise Portal Clients page, every client listed by last-traded date and split into active and inactive." loading="lazy" decoding="async">
-      </div>
-      <p class="cap">Sorted by activity, the list shows at a glance who might need a follow-up.</p>
-    </div>
-    <h3 class="say sub">Mobile</h3>
+  <!-- ============ MOBILE ============ -->
+  <section id="smob" data-section="Mobile" class="col" data-reveal>
+    <p class="eyebrow">Mobile</p>
+    <h2 class="say">The same three areas on a phone</h2>
     <div class="pcrow">
       <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-3.webp" alt="Rise Portal on mobile: Dashboard"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">Dashboard</p></div>
       <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-4.webp" alt="Rise Portal on mobile: Earnings"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">Earnings</p></div>
@@ -815,25 +844,21 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
     <p class="beat body">On both screen sizes, what partners check most often comes first. Information they need less often, like eligibility, sits lower.</p>
   </section>
 
-  <!-- ============ 08 THE BET ============ -->
-  <section id="s8" data-section="What changed" class="col" data-reveal>
-    <p class="eyebrow">The bet</p>
-    <h2 class="say">The bet: make partner follow-up part of the workflow</h2>
-    <p class="body">I designed the funnel so partners could see where a referral had stalled and decide whether to follow up themselves. The hypothesis was that people with a direct stake in the outcome would act on that information without routing every question through support.</p>
-    <p class="body">Two months after launch, the business team reported that partners were following up with referrals stuck at account processing and nudging inactive clients. That was consistent with the behaviour the design aimed to support, though I had not tested the hypothesis directly with partners before launch.</p>
-    <p class="beat body">Partners had the most reason to follow up. The portal gave them the information to do it.</p>
-    <h3 class="say sub">A tangible way to explain the partner programme</h3>
-    <p class="body">The portal also gave the business team something concrete to show prospective partners. The pitch could include the experience and visibility they would get, not only the commission rate.</p>
-    <div class="notecard">
-      <p class="lbl">What I would do differently</p>
-      <p>I did not speak directly with partners before launch, so I designed from the PRD and support questions rather than first-hand observation. I also did not agree success metrics with the team at the start; the 2.4&#215; and the 48% exist because I asked the business and support teams afterwards. A few partner conversations and a shared measurement plan would have helped test the assumptions and make the outcome easier to evaluate.</p>
+  <!-- ============ 08 OUTCOMES ============ -->
+  <section id="s8" data-section="Reported outcomes" class="col" data-reveal>
+    <p class="eyebrow">Reported outcomes</p>
+    <h2 class="say">What the teams reported after launch</h2>
+    <div class="figrow" style="--cols:2;margin-top:var(--s3)">
+      <div><div class="flabel">Conversion</div><div class="fnum">2.4&#215;</div><div class="fnote">Lead-to-client conversion. Reported by the business team, over two months.</div></div>
+      <div><div class="flabel">Support</div><div class="fnum">48%</div><div class="fnote">Fewer partner support tickets. Reported by the support team.</div></div>
     </div>
-    <p class="colhead beat">What the teams reported</p>
-    <div class="figrow" style="--cols:2;border-top:0;padding-top:0;margin-top:var(--s2)">
-      <div><div class="flabel">Conversion</div><div class="fnum">2.4&#215;</div><div class="fnote">Lead-to-client conversion, two months after launch; reported by the business team</div></div>
-      <div><div class="flabel">Support</div><div class="fnum">48%</div><div class="fnote">Fewer partner support tickets; reported by support and partner relationship teams</div></div>
+    <p class="cap">Reported outcomes, not independently measured design impact. I can&rsquo;t say the portal alone caused them.</p>
+
+    <div class="notecard beat">
+      <p class="lbl">What I&rsquo;d do differently</p>
+      <p>Talk to three to five partners before locking the information model: learn how they read earnings, which data they trust, and what they do when a lead gets stuck. And agree on success measures before launch.</p>
     </div>
-    <p class="cap">The commission structure did not change during this period, but I did not own the analytics and no baseline success metrics had been agreed before launch. These are outcomes reported by the teams closest to the data; I cannot attribute either change to the portal alone.</p>
+    <p class="statement beat"><span>A dashboard isn&rsquo;t the same as solving a visibility problem.</span> <span>The product is useful when it reduces uncertainty and helps partners decide what to do next.</span></p>
   </section>
 
   <section id="next" data-reveal>
