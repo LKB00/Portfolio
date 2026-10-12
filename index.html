@@ -3652,11 +3652,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    page's grammar (own toolbar tone, hairline edge, real traffic-light hexes)
    whose corner is macOS's 10pt window radius, scaled with the window. */
 .exp-fit{position:absolute;inset:7%;display:flex;align-items:center;justify-content:center;container-type:size}
-.exp-rig{position:relative;transition:transform .6s var(--ease)}
+.exp-rig{position:relative;transition:transform .6s var(--ease);will-change:transform;transform:translateZ(0);backface-visibility:hidden}   /* its own layer: the hover zoom scales a finished image, so the clip and its hairline don't shimmer */
 .exp-screen{display:block;position:relative;overflow:hidden}
 .exp-screen video{display:block;width:100%;height:100%;object-fit:cover}
 .exp-device,.sfw-bar{display:none}
-@media (hover:hover){.exp-card:hover .exp-rig{transform:scale(1.03)}}
+@media (hover:hover){.exp-card:hover .exp-rig{transform:translateZ(0) scale(1.03)}}
 [data-dev="phone"] .exp-rig{height:100%;aspect-ratio:1608/3316;max-width:100%}
 [data-dev="phone"] .exp-screen{position:absolute;left:4.29%;top:1.78%;right:4.35%;bottom:1.81%;border-radius:12.3%/5.7%;background:#000}
 [data-dev="phone"] .exp-device{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;z-index:2}
