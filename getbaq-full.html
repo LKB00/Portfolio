@@ -1783,6 +1783,40 @@ figure.gb-ex.gb-ex-hero{margin-top:var(--s2)}
 .toc a{font-size:14.5px;line-height:20px}
 .toc .cx-rail-back{margin-bottom:34px;font:500 11px/20px var(--mono);letter-spacing:.09em;text-transform:uppercase}
 .toc .cx-rail-back:before{content:"\2190";margin-right:8px;font-family:var(--sans)}
+/* ── Getbaq brief refinements: status chips, evidence table, agent trace ── */
+.rc-illus{margin-top:var(--sp-16);font:400 var(--fs-small)/1.5 var(--sans);color:var(--c-ink-2)}
+.rc-illus b{font-weight:500;color:var(--c-ink)}
+.cx-chip-s{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:99px;font:500 10.5px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;background:var(--c-card);color:var(--c-ink-2);box-shadow:inset 0 0 0 1px var(--c-line)}
+.cx-chip-s:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c-ok);flex:none}
+.cx-chip-s.is-sim:before{background:var(--c-warn)}
+.cx-chip-s.is-plan:before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c-ink-3)}
+.gb-ev{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:var(--sp-32);align-items:start}
+.gb-ev .cx-pv{margin:0}
+.gb-ev-t{list-style:none;margin:0;padding:0;border-top:1px solid var(--c-line)}
+.gb-ev-t li{display:grid;gap:8px;padding:var(--sp-16) 0;border-bottom:1px solid var(--c-line)}
+.gb-ev-t p{margin:0}
+.gb-ev-t .ev-claim{font:500 16px/1.35 var(--sans);color:var(--c-ink)}
+.gb-ev-t .ev-src{font:400 var(--fs-small)/1.5 var(--sans);color:var(--c-ink-2)}
+.gb-ev-t .ev-st{display:flex;flex-wrap:wrap;gap:6px}
+.gb-trace{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-16)}
+.gb-trace li{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:var(--sp-16) var(--sp-16) 18px;border-radius:12px;background:var(--c-card);box-shadow:inset 0 0 0 1px var(--c-line)}
+.gb-trace li:not(:nth-child(4n)):after{content:"\2192";position:absolute;right:-14px;top:18px;color:var(--c-faint);font:400 14px/1 var(--sans)}
+.gb-trace .t-n{margin:0;font:500 11px/1 var(--mono);letter-spacing:.08em;color:var(--c-ink-3)}
+.gb-trace b{font:400 22px/1.15 var(--serif);letter-spacing:-.015em;color:var(--c-ink)}
+.gb-trace .t-ex{margin:0;font:400 13px/1.45 var(--mono);color:var(--c-ink-2)}
+.gb-trace .t-st{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.gb-trace-n{margin-top:var(--sp-24);font:400 var(--fs-small)/1.55 var(--sans);color:var(--c-ink-2)}
+.gb-trace-n b{font-weight:500;color:var(--c-ink)}
+@media (max-width:900px){
+  .gb-ev{grid-template-columns:1fr}
+  .gb-trace{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gb-trace li:after{display:none!important}
+  .gb-trace li:nth-child(odd):not(:last-child):after{display:block!important;content:"\2192";position:absolute;right:-14px;top:18px;color:var(--c-faint)}
+}
+@media (max-width:560px){
+  .gb-trace{grid-template-columns:1fr}
+  .gb-trace li:after,.gb-trace li:nth-child(odd):not(:last-child):after{display:none!important}
+}
 </style><script defer src="./analytics.js?v=5"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
@@ -1851,6 +1885,7 @@ addEventListener("pagereveal",function(e){
 <a href="#control">The user’s control</a>
 <a href="#wrong">Being wrong</a>
 <a href="#craft">The craft</a>
+<a href="#trace">Agent trace</a>
 <a href="#close">Looking back</a>
 </nav>
 <!-- ================= OVERVIEW ================= -->
@@ -1889,11 +1924,12 @@ addEventListener("pagereveal",function(e){
 </figure>
 <ol class="cx-w cx-flow3 cx-foot cx-bleed" data-reveal="" aria-label="What the product does"><li><b>Messy input</b><span>Screenshots, chats, typed words</span></li><li><b>Verified case</b><span>Facts confirmed, rule sourced, deadline calculated</span></li><li><b>Approved action</b><span>Nothing is sent until the user approves</span></li></ol><div class="col beat gb-hero" data-reveal="">
 <h1>Designing an AI agent that fights for your <em>refund</em></h1>
-<p class="dek">A customer has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed Getbaq to turn that stalled conversation into a rule-backed next step: it reads the evidence, finds the rule, calculates the deadline and prepares the complaint. Nothing is sent without their approval.</p>
+<p class="dek"><b>Cases, not conversations.</b> Getbaq explores an AI agent that moves a refund or complaint case from messy evidence toward a next action, while keeping consequential decisions under the user’s control.</p>
+<p class="dek">In the illustrative case I built the prototype around, a customer has ₹3,499 stuck with Flipkart and a bot that keeps saying “5 to 7 working days”. I designed Getbaq to turn that stalled conversation into a rule-backed next step: it reads the evidence, finds the rule, calculates the deadline and prepares the complaint. Nothing is sent without their approval.</p>
 <a class="gb-proto" data-proto="/" href="#" rel="noopener" target="_blank"><span class="gb-proto-icon"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect fill="#24282c" width="24" height="24" rx="5.3"/><g transform="translate(12 12) scale(.86) translate(-11.6 -12)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11.5" cy="9.3" r="4.5" stroke="#f7f6f0"/><path d="M16 4.8v10" stroke="#f7f6f0"/><path d="M16 14.8a4.5 4.5 0 0 1-8.93 0.78" stroke="#c2ef72"/><path d="M5.4 17.4 7.07 15.58 8.95 17.1" stroke="#c2ef72"/></g></svg></span><span class="gb-proto-text"><b>Getbaq</b><span>Live prototype<i class="gb-proto-url"> · getbaq.vercel.app</i></span></span><span class="gb-proto-go">Try it live<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
 </div>
 <dl class="meta col" data-reveal="">
-<div><dt>Type</dt><dd>Self-initiated, not client work. Not shipped to real users.</dd></div>
+<div><dt>Type</dt><dd>Self-initiated, not client work. A working prototype, not shipped to real users. The Flipkart, ₹3,499 case is an illustrative prototype scenario, not a real recovery.</dd></div>
 <div><dt>Timeline</dt><dd>Sep 2026 · about 2 weeks, full-time</dd></div>
 <div><dt>Role</dt><dd>Solo product designer: research, strategy, interaction and trust design, prompts, and the evaluation plan. Built with an AI coding assistant; the product and trust decisions are mine.</dd></div>
 <div><dt>For</dt><dd>Young Indians, 20–30, with ₹500–₹20,000 stuck with a company</dd></div>
@@ -2670,6 +2706,22 @@ addEventListener("pagereveal",function(e){
 </div>
 </section>
 <!-- ================= LOOKING BACK ================= -->
+<section class="gb-chapter" id="trace" data-section="Agent trace">
+<div class="col"><p class="eyebrow">Agent trace</p><h2 class="say">From a messy message to the next action</h2><p class="dek">Every case moves through the same eight stages. The trace shows who does each one, and which stages exist in the prototype today.</p></div>
+<section class="gb-sec" data-reveal="">
+<ol class="cx-w cx-vis gb-trace" aria-label="The agent trace: Input, Understand, Verify, Calculate, Draft, Approve, Track, Escalate">
+<li class="t-you"><p class="t-n">01</p><span class="cx-own o-you"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</span><b>Input</b><p class="t-ex">&ldquo;flipkart rejected my replacement, jar has rust&rdquo;</p><div class="t-st"><span class="cx-chip-s">Built</span></div></li>
+<li class="t-ai"><p class="t-n">02</p><span class="cx-own o-ai"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</span><b>Understand</b><p class="t-ex">Flipkart &middot; &#8377;3,499 &middot; paid 2 Aug</p><div class="t-st"><span class="cx-chip-s">Built</span></div></li>
+<li class="t-code"><p class="t-n">03</p><span class="cx-own o-code"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</span><b>Verify</b><p class="t-ex">Rule 4(4) is on the verified rule sheet</p><div class="t-st"><span class="cx-chip-s">Built</span></div></li>
+<li class="t-code"><p class="t-n">04</p><span class="cx-own o-code"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</span><b>Calculate</b><p class="t-ex">4 Aug + 30 days = 3 Sep 2026</p><div class="t-st"><span class="cx-chip-s">Built</span></div></li>
+<li class="t-ai"><p class="t-n">05</p><span class="cx-own o-ai"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1.5 8.4 5.6 12.5 7 8.4 8.4 7 12.5 5.6 8.4 1.5 7l4.1-1.4z"/><path d="M12.5 10.5v4M10.5 12.5h4"/></svg>AI</span><b>Draft</b><p class="t-ex">A letter to Flipkart&rsquo;s grievance officer</p><div class="t-st"><span class="cx-chip-s">Built</span></div></li>
+<li class="t-you"><p class="t-n">06</p><span class="cx-own o-you"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</span><b>Approve</b><p class="t-ex">Nothing is sent until they tap</p><div class="t-st"><span class="cx-chip-s">Built</span><span class="cx-chip-s is-sim">Sending simulated</span></div></li>
+<li class="t-code"><p class="t-n">07</p><span class="cx-own o-code"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>Code</span><b>Track</b><p class="t-ex">Company must reply by 3 Sep</p><div class="t-st"><span class="cx-chip-s is-plan">Planned</span></div></li>
+<li class="t-you"><p class="t-n">08</p><span class="cx-own o-you"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>You</span><b>Escalate</b><p class="t-ex">The 1915 complaint, ready for their tap</p><div class="t-st"><span class="cx-chip-s is-plan">Planned</span></div></li>
+</ol>
+<p class="cx-w gb-trace-n"><b>Illustrative prototype case</b>, not a real recovery. <b>Built</b> means it works in the prototype. <b>Simulated</b> means it is shown but not wired to the real world. <b>Planned</b> means designed, not built: follow-ups while the app is closed, escalation workflows and real-world integrations.</p>
+</section>
+</section>
 <section class="gb-chapter" id="close" data-section="Looking back">
 <div class="col"><h2 class="say">Looking back</h2></div>
 <section class="gb-sec" data-reveal="" id="learned">
