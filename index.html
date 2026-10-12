@@ -3646,8 +3646,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-head{margin:0 0 clamp(20px,3vw,28px)}
 
 /* each card plays a real recording of the live project, in the site's own light or dark mode */
-.exp-card .exp-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s var(--ease)}
-@media (hover:hover){.exp-card:hover .exp-vid{transform:scale(1.03)}}
+.exp-fit{position:absolute;inset:7%;display:flex;align-items:center;justify-content:center}
+.exp-fit video{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px;background:var(--card,#fff);
+  box-shadow:0 0 0 1px var(--line),0 12px 28px -16px rgba(36,32,32,.4);transition:transform .6s var(--ease)}
+.exp-fit video[data-clip="chunav"],.exp-fit video.is-phone{border-radius:20px}
+@media (hover:hover){.exp-card:hover .exp-fit video{transform:scale(1.03)}}
 .exp-ov{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(15,15,15,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
   opacity:0;transition:opacity .22s var(--ease)}
 .exp-ov.on{opacity:1}
@@ -3656,8 +3659,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   box-shadow:0 0 0 1px var(--line),0 24px 60px -20px rgba(0,0,0,.4);transform:translateY(10px) scale(.98);transition:transform .3s var(--ease)}
 .exp-ov.on .exp-dlg{transform:none}
 .exp-dlg:focus{outline:none}
-.exp-media{position:relative;aspect-ratio:16/10;margin:8px 8px 0;border-radius:14px;overflow:hidden;background:var(--surface)}
-.exp-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.exp-media{position:relative;aspect-ratio:16/11;margin:8px 8px 0;border-radius:14px;overflow:hidden;background:var(--surface)}
+.exp-media .exp-fit{inset:20px}
 .exp-x{position:absolute;top:18px;right:18px;z-index:2;border:0;padding:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
   background:rgba(255,255,255,.86);color:#242020;box-shadow:0 0 0 1px rgba(36,32,32,.08),0 2px 8px rgba(0,0,0,.12);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .exp-x:hover{background:#fff}
@@ -3922,15 +3925,15 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     </div>
     <div class="exp-grid">
       <button type="button" class="exp-card" data-exp="chunav" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="720" height="720" poster="./assets/exp/chunav-light.webp"></video></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="444" height="960" poster="./assets/exp/chunav-light.webp"></video></span></span>
         <span class="worktext"><span class="exp-name">Chunav</span><span class="desc exp-line">Quick polls for friends, shared as a link</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="gb3" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><video class="exp-vid" data-clip="gb3" muted loop playsinline preload="none" width="720" height="720" poster="./assets/exp/gb3-light.webp"></video></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit"><video class="exp-vid" data-clip="gb3" muted loop playsinline preload="none" width="960" height="888" poster="./assets/exp/gb3-light.webp"></video></span></span>
         <span class="worktext"><span class="exp-name">Good Bot, Bad Bot</span><span class="desc exp-line">A playground for spotting good AI design</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="tattva" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><video class="exp-vid" data-clip="tattva" muted loop playsinline preload="none" width="720" height="720" poster="./assets/exp/tattva-light.webp"></video></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit"><video class="exp-vid" data-clip="tattva" muted loop playsinline preload="none" width="960" height="836" poster="./assets/exp/tattva-light.webp"></video></span></span>
         <span class="worktext"><span class="exp-name">Tattva</span><span class="desc exp-line">A design system for AI products</span></span>
       </button>
     </div>
@@ -5472,7 +5475,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   <div class="exp-ov" id="expOv" hidden>
     <div class="exp-dlg" role="dialog" aria-modal="true" aria-labelledby="expDlgTitle" tabindex="-1">
       <button type="button" class="exp-x" id="expX" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-      <div class="exp-media" aria-hidden="true"><video id="expVid" muted loop playsinline preload="none" width="720" height="720"></video></div>
+      <div class="exp-media" aria-hidden="true"><span class="exp-fit"><video id="expVid" muted loop playsinline preload="none" width="960" height="836"></video></span></div>
       <div class="exp-body">
         <p class="exp-kick" id="expKick"></p>
         <h3 id="expDlgTitle" class="exp-dtitle"></h3>
@@ -5508,7 +5511,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   /* recordings: the clip that matches the site's theme, playing only while on screen */
   var vids=[].slice.call(document.querySelectorAll(".exp-vid")), still=matchMedia("(prefers-reduced-motion: reduce)");
   function mode(){ var t=document.documentElement.getAttribute("data-theme"); return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light" }
-  function load(v){ var m=mode(), c=v.dataset.clip; if(v.dataset.mode===m) return; v.dataset.mode=m;
+  var DIM={"chunav-light":[444,960],"chunav-dark":[444,960],"gb3-light":[960,888],"gb3-dark":[960,816],"tattva-light":[960,836],"tattva-dark":[960,836]};
+  function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } v.classList.toggle("is-phone",k.indexOf("chunav")===0) }
+  function load(v){ var m=mode(), c=v.dataset.clip; if(v.dataset.mode===m) return; v.dataset.mode=m; size(v,c+"-"+m);
     v.poster="./assets/exp/"+c+"-"+m+".webp";
     if(still.matches) return;
     v.src="./assets/exp/"+c+"-"+m+".mp4"; if(v.dataset.on) v.play().catch(function(){}) }
@@ -5526,8 +5531,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   function open(btn){
     var d=P[btn.dataset.exp]; if(!d) return; back=btn;
     var key=btn.dataset.exp, m=mode(), v=document.getElementById("expVid");
-    v.poster="./assets/exp/"+key+"-"+m+".webp";
-    v.style.objectPosition=d.pos;
+    v.poster="./assets/exp/"+key+"-"+m+".webp"; size(v,key+"-"+m);
     if(!still.matches){ v.src="./assets/exp/"+key+"-"+m+".mp4"; v.currentTime=0 } else v.removeAttribute("src");
     document.getElementById("expKick").textContent=d.kind;
     document.getElementById("expDlgTitle").textContent=d.name;
