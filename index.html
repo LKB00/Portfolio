@@ -3649,7 +3649,19 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-fit{position:absolute;inset:7%;display:flex;align-items:center;justify-content:center}
 .exp-fit video{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px;background:var(--card,#fff);
   box-shadow:0 0 0 1px var(--line),0 12px 28px -16px rgba(36,32,32,.4);transition:transform .6s var(--ease)}
-.exp-fit video[data-clip="chunav"],.exp-fit video.is-phone{border-radius:20px}
+/* phone clips sit in the same iPhone mockup as the App merge case study: the
+   rig keeps the device image's own ratio, the screen is inset at the exact
+   percentages of its transparent hole, and the frame is laid on top */
+.exp-rig{display:contents}
+.exp-screen{display:contents}
+.exp-device{display:none}
+.exp-card[data-exp="chunav"] .exp-rig,.exp-media.is-phone .exp-rig{display:block;position:relative;height:100%;aspect-ratio:1608/3316;max-width:100%;transition:transform .6s var(--ease)}
+.exp-card[data-exp="chunav"] .exp-screen,.exp-media.is-phone .exp-screen{display:block;position:absolute;left:4.29%;top:1.78%;right:4.35%;bottom:1.81%;border-radius:12.3%/5.7%;overflow:hidden;background:#000}
+.exp-card[data-exp="chunav"] .exp-screen video,.exp-media.is-phone .exp-screen video{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;border-radius:0;box-shadow:none;transform:none!important}
+.exp-card[data-exp="chunav"] .exp-device,.exp-media.is-phone .exp-device{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;z-index:2}
+.exp-card[data-exp="chunav"] .exp-fit{inset:5% 7%;filter:drop-shadow(0 14px 22px rgba(36,32,32,.18))}
+.exp-media.is-phone .exp-fit{inset:14px}
+@media (hover:hover){.exp-card[data-exp="chunav"]:hover .exp-rig{transform:scale(1.03)}}
 @media (hover:hover){.exp-card:hover .exp-fit video{transform:scale(1.03)}}
 .exp-ov{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(15,15,15,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
   opacity:0;transition:opacity .22s var(--ease)}
@@ -3925,7 +3937,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     </div>
     <div class="exp-grid">
       <button type="button" class="exp-card" data-exp="chunav" data-reveal aria-haspopup="dialog">
-        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="444" height="960" poster="./assets/exp/chunav-light.webp"></video></span></span>
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit"><span class="exp-rig"><span class="exp-screen"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="442" height="962" poster="./assets/exp/chunav-light.webp"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span></span>
         <span class="worktext"><span class="exp-name">Chunav</span><span class="desc exp-line">Quick polls for friends, shared as a link</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="gb3" data-reveal aria-haspopup="dialog">
@@ -5475,7 +5487,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   <div class="exp-ov" id="expOv" hidden>
     <div class="exp-dlg" role="dialog" aria-modal="true" aria-labelledby="expDlgTitle" tabindex="-1">
       <button type="button" class="exp-x" id="expX" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-      <div class="exp-media" aria-hidden="true"><span class="exp-fit"><video id="expVid" muted loop playsinline preload="none" width="960" height="836"></video></span></div>
+      <div class="exp-media" aria-hidden="true"><span class="exp-fit"><span class="exp-rig"><span class="exp-screen"><video id="expVid" muted loop playsinline preload="none" width="960" height="836"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span></div>
       <div class="exp-body">
         <p class="exp-kick" id="expKick"></p>
         <h3 id="expDlgTitle" class="exp-dtitle"></h3>
@@ -5511,8 +5523,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   /* recordings: the clip that matches the site's theme, playing only while on screen */
   var vids=[].slice.call(document.querySelectorAll(".exp-vid")), still=matchMedia("(prefers-reduced-motion: reduce)");
   function mode(){ var t=document.documentElement.getAttribute("data-theme"); return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light" }
-  var DIM={"chunav-light":[444,960],"chunav-dark":[444,960],"gb3-light":[960,888],"gb3-dark":[960,816],"tattva-light":[960,836],"tattva-dark":[960,836]};
-  function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } v.classList.toggle("is-phone",k.indexOf("chunav")===0) }
+  var DIM={"chunav-light":[442,962],"chunav-dark":[442,962],"gb3-light":[960,888],"gb3-dark":[960,816],"tattva-light":[960,836],"tattva-dark":[960,836]};
+  function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } var m=v.closest(".exp-media"); if(m) m.classList.toggle("is-phone",k.indexOf("chunav")===0) }
   function load(v){ var m=mode(), c=v.dataset.clip; if(v.dataset.mode===m) return; v.dataset.mode=m; size(v,c+"-"+m);
     v.poster="./assets/exp/"+c+"-"+m+".webp";
     if(still.matches) return;
