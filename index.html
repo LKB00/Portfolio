@@ -3630,6 +3630,178 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* the empty state sits in the true centre of the board */
 #padBoard .padblank{inset:0;padding:0}
+/* ── Experiments: its own section, not a case study ── */
+#experiments{max-width:792px;margin:0 auto;padding:clamp(40px,6vw,64px) 0 clamp(24px,4vw,40px)}
+.exp-head{margin:0 0 clamp(20px,3vw,28px)}
+.exp-title{margin:0;font-family:var(--serif,'STIX Two Text'),Georgia,serif;font-weight:400;font-size:clamp(26px,3.2vw,32px);line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+.exp-lede{margin:8px 0 0;max-width:560px;font-size:15px;line-height:1.5;color:var(--muted,#7A7676)}
+.exp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,32px) clamp(16px,2.4vw,24px)}
+.exp-card{display:block;width:100%;padding:0;border:0;font:inherit;background:none;text-align:left;cursor:pointer;color:inherit}
+.exp-card:focus-visible{outline:2px solid #0D99FF;outline-offset:4px;border-radius:8px}
+.exp-card .exp-frame{position:relative;display:block;aspect-ratio:1/1;padding:0;background:var(--surface)!important}
+[data-theme="dark"] [data-theme="dark"] [data-theme="dark"] .exp-card .worktext h3,.exp-name{margin:0;font-size:var(--t-title);font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
+.exp-card .desc{display:block;margin-top:5px;font-size:var(--t-meta);font-weight:400;line-height:1.45;color:var(--faint)}
+.exp-title{margin:0;font-family:var(--serif,'STIX Two Text'),Georgia,serif;font-weight:400;font-size:clamp(26px,3.2vw,32px);line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+.exp-lede{margin:8px 0 0;max-width:560px;font-size:15px;line-height:1.5;color:var(--muted,#7A7676)}
+.exp-head{margin:0 0 clamp(20px,3vw,28px)}
+
+/* each card plays a real recording of the live project, in the site's own light or dark mode */
+/* ── the two web experiments, told in their own language ──
+   Real pieces captured from the live products (light and dark), set loose on
+   the tint and choreographed. Good Bot is a game, so its card is a hand of
+   two cards: a tap picks the better one, it lifts and straightens with its
+   real verdict, the other drops back. Tattva is a kit of parts, so its card
+   is an exploded sheet of its real components that assemble, get approved,
+   and pull apart on hover. Each loop runs only while the card is on screen. */
+.exp-comp{position:absolute;inset:0;overflow:hidden}
+.exp-comp .pc{position:absolute;display:block;transition:transform .5s var(--ease)}
+.exp-comp .pcin{display:block;position:relative}
+.exp-comp img{display:block;width:100%;height:auto}
+.exp-comp .dk{display:none}
+:root[data-theme="dark"] .exp-comp .lt{display:none}:root[data-theme="dark"] .exp-comp .dk{display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme]) .exp-comp .lt{display:none}:root:not([data-theme]) .exp-comp .dk{display:block}}
+.exp-comp:not(.is-on) *{animation-play-state:paused!important}
+/* a fingertip, not a blob: a soft translucent dot with a white rim, and one ring on the press */
+.xtap{position:absolute;width:4.2%;aspect-ratio:1;margin:-2.1% 0 0 -2.1%;pointer-events:none;opacity:0;z-index:9}
+.xtap i{position:absolute;inset:0;border-radius:50%}
+.xtap i:first-child{background:rgba(23,23,23,.26);box-shadow:0 0 0 1.5px rgba(255,255,255,.95),0 1px 4px rgba(0,0,0,.12)}
+.xtap i:last-child{border:1.5px solid rgba(23,23,23,.35);opacity:0}
+:root[data-theme="dark"] .xtap i:first-child{background:rgba(255,255,255,.3);box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
+:root[data-theme="dark"] .xtap i:last-child{border-color:rgba(255,255,255,.5)}
+
+/* Good Bot: one real round, calm. Screen A above, screen B below; a fingertip
+   picks B, both screens turn to their real verdicts, the winner rises a little,
+   the other steps back, and the game's own line appears. Then it resets. */
+.gbc{--gbT:9s;--gbE:cubic-bezier(.22,1,.36,1)}
+.gbc .gb-slot{position:absolute;left:12%;width:76%;aspect-ratio:900/386}
+.gbc .gb-top{top:8%}.gbc .gb-bot{top:43.6%}
+.gbc .gb-card{position:absolute;inset:0;display:block;will-change:transform,opacity}
+.gbc .gb-pre,.gbc .gb-post{position:absolute;top:0;left:0;right:0;display:block;will-change:opacity}
+.gbc .gb-slot img{border-radius:0}
+.gbc .gb-card{transform-origin:50% 40%}
+.gbc .gb-pre{animation:gbPre var(--gbT) var(--gbE) infinite}
+.gbc .gb-post{opacity:0;animation:gbPost var(--gbT) var(--gbE) infinite}
+.gbc .gb-bot .gb-card{animation:gbWin var(--gbT) var(--gbE) infinite}
+.gbc .gb-top .gb-card{animation:gbLose var(--gbT) var(--gbE) infinite}
+.gbc .gb-bot .gb-card{filter:drop-shadow(0 0 0 rgba(20,24,20,0))}
+.gbc .gb-line{position:absolute;left:12%;top:80.6%;width:54%;opacity:0;animation:gbLine var(--gbT) var(--gbE) infinite}
+.gbc .gb-tap{left:70%;top:58%;animation:gbTap var(--gbT) var(--gbE) infinite}
+.gbc .gb-tap i:last-child{animation:gbRing var(--gbT) ease-out infinite}
+@keyframes gbPre{0%,20%{opacity:1}27%,84%{opacity:0}92%,100%{opacity:1}}
+@keyframes gbPost{0%,20%{opacity:0}27%,84%{opacity:1}92%,100%{opacity:0}}
+@keyframes gbWin{0%,20%{transform:none}30%,84%{transform:translateY(-3%) scale(1.02)}93%,100%{transform:none}}
+@keyframes gbLose{0%,20%{transform:none;opacity:1}30%,84%{transform:scale(.97);opacity:.5}93%,100%{transform:none;opacity:1}}
+@keyframes gbLine{0%,30%{opacity:0;transform:translateY(40%)}38%,82%{opacity:1;transform:none}90%,100%{opacity:0;transform:none}}
+@keyframes gbTap{0%,8%{opacity:0;transform:scale(1.25)}13%{opacity:1;transform:scale(1)}17%{opacity:1;transform:scale(.82)}21%{opacity:1;transform:scale(1)}27%,100%{opacity:0;transform:scale(1)}}
+@keyframes gbRing{0%,16%{opacity:0;transform:scale(1)}18%{opacity:.8}30%,100%{opacity:0;transform:scale(2.4)}}
+
+/* Good Bot: the game's own promo animation (Lottie), letterboxed on its paper colour */
+.exp-comp.gbl{background:#FAFAF7;display:flex;align-items:center}
+.gbl-box{display:block;width:100%;aspect-ratio:16/9}
+.gbl-box svg{display:block;overflow:visible}
+.exp-media:has(.gbl){background:#FAFAF7}
+.exp-compslot:has(.gbl){left:0;right:0;width:auto;aspect-ratio:auto;transform:none}
+.exp-compslot .exp-comp.gbl{inset:0}
+.exp-comp.gbl.tvl{background:#FAFAFA}
+.exp-media:has(.tvl){background:#FAFAFA}
+/* Tattva: one real component, one design system. The same ApprovalPrompt
+   re-themes through Tattva's own tokens: colour theme and corner style change,
+   the content never does. Captured from the live docs in each theme. */
+.tvc{--tvT:10s}
+.tvc .tv-tag{position:absolute;left:8%;top:22%;margin:0;font:400 11px/1.4 var(--mono,ui-monospace,Menlo,monospace);color:var(--faint);letter-spacing:0}
+.tvc .tv-stage{position:absolute;left:8%;width:84%;top:31%;aspect-ratio:900/227}
+.tvc .tv-stage>span{position:absolute;inset:0;display:block;opacity:0;will-change:opacity;animation:tvShow var(--tvT) linear infinite}
+.tvc .tv-meta{position:absolute;left:8%;right:8%;top:60%;display:flex;align-items:center;gap:12px}
+.tvc .tv-dots{display:flex;gap:6px}
+.tvc .tv-dots i{width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 0 transparent;animation:tvDot var(--tvT) linear infinite}
+.tvc .tv-names{position:relative;flex:1;height:16px}
+.tvc .tv-names b{position:absolute;inset:0;font:400 11px/16px var(--sans,inherit);color:var(--muted,#7A7676);white-space:nowrap;opacity:0;animation:tvShow var(--tvT) linear infinite}
+.tvc .s1{animation-delay:0s!important}.tvc .s2{animation-delay:-7.5s!important}.tvc .s3{animation-delay:-5s!important}.tvc .s4{animation-delay:-2.5s!important}
+@keyframes tvShow{0%{opacity:0}5%,24%{opacity:1}29%,100%{opacity:0}}
+@keyframes tvDot{0%{box-shadow:0 0 0 0 transparent}5%,24%{box-shadow:0 0 0 2px var(--bg,#fff),0 0 0 3.5px var(--ink,#171717)}29%,100%{box-shadow:0 0 0 0 transparent}}
+.tvc .d1{background:#4A41C8}.tvc .d2{background:#2F6B1A}.tvc .d3{background:#8B2A70}.tvc .d4{background:#0B6464}
+:root[data-theme="dark"] .tvc .d1{background:#6159E0}:root[data-theme="dark"] .tvc .d2{background:#3D7F22}:root[data-theme="dark"] .tvc .d3{background:#AD3F8D}:root[data-theme="dark"] .tvc .d4{background:#157878}
+/* motion off: one finished, still frame */
+@media (prefers-reduced-motion:reduce){
+  .exp-comp *{animation:none!important}
+  .gbc .gb-pre{opacity:0}.gbc .gb-post,.gbc .gb-line{opacity:1}
+  .gbc .gb-top .gb-card{opacity:.5;transform:scale(.97)}.gbc .gb-bot .gb-card{transform:translateY(-3%) scale(1.02)}
+  .tvc .tv-stage .s1,.tvc .tv-names .s1{opacity:1}.tvc .d1{box-shadow:0 0 0 2px var(--bg,#fff),0 0 0 3.5px var(--ink,#171717)}
+}
+/* in the dialog, the same composition as a square in the middle of the media box */
+.exp-compslot{position:absolute;top:0;bottom:0;left:50%;aspect-ratio:1;transform:translateX(-50%)}
+.exp-media[data-dev="phone"] .exp-compslot,.exp-media[data-dev="comp"] .exp-fit{display:none}
+/* device frames, flat on the tint like the case-study cards — no shadow.
+   phone: the App merge iPhone mockup, its screen inset at the exact
+   percentages of its transparent hole.
+   web: the Web terminal card's MacBook (.macframe/.macshot/.macdevice, its
+   screen cut-out measured from the PNG's alpha), recorded at 1280×828 so the
+   page fills that screen exactly. In a square frame it sits centred.
+   hover: the device lifts 8px as one piece, as the work cards do. */
+.exp-fit{position:absolute;inset:7%;display:flex;align-items:center;justify-content:center;container-type:size}
+.exp-rig{position:relative;transition:transform .4s var(--ease)}
+.exp-screen{display:block;position:relative;overflow:hidden}
+.exp-screen video{display:block;width:100%;height:100%;object-fit:cover}
+.exp-device{display:none}
+[data-dev="phone"] .exp-rig{height:100%;aspect-ratio:1608/3316;max-width:100%}
+[data-dev="phone"] .exp-screen{position:absolute;left:4.29%;top:1.78%;right:4.35%;bottom:1.81%;border-radius:12.3%/5.7%;background:#000}
+[data-dev="phone"] .exp-device{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;z-index:2}
+.exp-mac{left:5%;width:90%;top:50%;bottom:auto;transform:translateY(-50%)}
+.exp-mac .macshot{background:var(--card,#fff)}
+@media (hover:hover){
+  .exp-card:hover .exp-rig{transform:translateY(-8px)}
+  .exp-card:hover .exp-mac{transform:translateY(calc(-50% - 8px))}
+}
+@media (hover:hover){.exp-card:hover .exp-fit video{transform:scale(1.03)}}
+.exp-ov{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(15,15,15,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  opacity:0;transition:opacity .22s var(--ease)}
+.exp-ov.on{opacity:1}
+.exp-ov[hidden]{display:none}
+.exp-dlg{position:relative;width:min(520px,100%);max-height:calc(100vh - 40px);overflow:auto;padding:0;border-radius:20px;background:var(--card,#fff);color:var(--ink);
+  box-shadow:0 0 0 1px var(--line),0 24px 60px -20px rgba(0,0,0,.4);transform:translateY(10px) scale(.98);transition:transform .3s var(--ease)}
+.exp-ov.on .exp-dlg{transform:none}
+.exp-dlg:focus{outline:none}
+.exp-media{position:relative;aspect-ratio:16/11;margin:8px 8px 0;border-radius:14px;overflow:hidden;background:var(--surface)}
+.exp-media .exp-fit{inset:14px}
+
+.exp-x{position:absolute;top:18px;right:18px;z-index:2;border:0;padding:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.86);color:#242020;box-shadow:0 0 0 1px rgba(36,32,32,.08),0 2px 8px rgba(0,0,0,.12);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.exp-x:hover{background:#fff}
+.exp-body{padding:20px 24px 24px}
+.exp-kick{margin:0;font-size:13px;line-height:1.5;color:var(--faint,#A8A3A3)}
+.exp-dtitle{margin:6px 0 0;font-family:var(--serif,'STIX Two Text'),Georgia,serif;font-size:26px;font-weight:400;line-height:1.15;letter-spacing:-.01em}
+.exp-tag{margin:6px 0 0;font-size:16px;line-height:1.45;color:var(--ink)}
+.exp-dtext{margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--muted,#7A7676)}
+.exp-facts{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;padding:0}
+.exp-facts li{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:2px;background:var(--surface);font-size:12px;color:var(--ink)}
+.exp-acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;margin-top:22px}
+.exp-credit{margin:0;display:inline-flex;align-items:center;gap:5px;font-size:13px;line-height:1.5;color:var(--muted,#7A7676)}
+.exp-credit .fmark{width:20px;height:20px;flex:none;margin:0}
+#expOv .exp-gh,#expOv .exp-gh:visited{color:var(--ink)}#expOv .exp-live,#expOv .exp-live:visited{color:var(--bg,#FAFAFA)}
+.exp-live,.exp-gh{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none}
+.exp-live{background:var(--ink);color:var(--bg,#FAFAFA)}
+.exp-gh{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.exp-live:hover,.exp-gh:hover{opacity:.85}
+.exp-live:focus-visible,.exp-gh:focus-visible,.exp-x:focus-visible{outline:2px solid #0D99FF;outline-offset:2px}
+@media (max-width:684px){
+  .exp-grid{grid-template-columns:1fr;gap:28px}
+  .exp-ov{place-items:end center;padding:0}
+  .exp-dlg{width:100%;max-height:92vh;border-radius:20px 20px 0 0}
+  .exp-body{padding:18px 20px calc(22px + env(safe-area-inset-bottom))}
+  .exp-dtitle{font-size:24px}
+  .exp-acts{flex-direction:column;align-items:stretch}
+  .exp-acts a{justify-content:center;white-space:nowrap}
+  .exp-credit{justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){.exp-card .exp-frame,.exp-ov,.exp-dlg{transition:none!important}}
+
+/* home rhythm: one visible gap between every section, the same as Hero → Work (130 + 8 desktop, 90 + 8 phone) */
+#experiments{max-width:var(--col);padding-top:8px;padding-bottom:calc(clamp(90px,12vw,130px) + 8px)}
+#words{padding-bottom:calc(clamp(90px,12vw,130px) - 3px)}
+
+/* footer: the same space above the credit line as on the case studies (62 desktop, 58 phone) */
+#notes{padding-bottom:48px!important}
+@media(max-width:860px){#notes{padding-bottom:49px!important}}
 </style>
 <script defer src="./analytics.js?v=5"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -3683,9 +3855,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </nav>
       <div class="mcases">
         <p class="mgroup">Case studies</p>
-        <a class="mcase" href="./getbaq.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Designing an AI agent that fights for your refund</span><span class="mcase-m">Getbaq &#183; AI agent</span></span></a>
-        <a class="mcase" href="./app-merge.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">Unifying the investing journey in one app</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
-        <a class="mcase" href="./rise-portal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">The first product Rupeezy&#8217;s partners ever had</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span></a>
+        <a class="mcase" href="./getbaq.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Designing an AI agent that follows through on refunds</span><span class="mcase-m">Getbaq &#183; AI agent</span></span></a>
+        <a class="mcase" href="./app-merge.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">Unifying two investing apps without disrupting familiar workflows</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
+        <a class="mcase" href="./rise-portal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">Making partner progress and earnings visible in one place</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span></a>
         <a class="mcase" href="./web-terminal.html"><span class="mcase-num">04</span><span class="mcase-x"><span class="mcase-t">Designing the desktop trading experience</span><span class="mcase-m">Rupeezy &#183; Web trading terminal</span></span></a>
       </div>
       <div class="mfoot">
@@ -3816,7 +3988,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           </div>
         </div>
         <div class="worktext">
-          <h3>Designing an AI agent that fights for your refund</h3>
+          <h3>Designing an AI agent that follows through on refunds</h3>
         </div>
       </a>
 
@@ -3827,7 +3999,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           </div>
         </div>
         <div class="worktext">
-          <h3>Unifying the investing journey in one app</h3>
+          <h3>Unifying two investing apps without disrupting familiar workflows</h3>
         </div>
       </a>
 
@@ -3838,7 +4010,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
           </div>
         </div>
         <div class="worktext">
-          <h3>The first product Rupeezy’s partners ever had</h3>
+          <h3>Making partner progress and earnings visible in one place</h3>
         </div>
       </a>
 
@@ -3857,6 +4029,27 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         </div>
       </a>
 
+    </div>
+  </section>
+
+  <section id="experiments" data-section="Experiments" aria-labelledby="expHead">
+    <div class="exp-head" data-reveal>
+      <h2 id="expHead" class="exp-title">Experiments</h2>
+      <p class="exp-lede">Side projects I built to try an idea. They are not case studies. Open one to see what it is and play with it live.</p>
+    </div>
+    <div class="exp-grid">
+      <button type="button" class="exp-card" data-exp="chunav" data-reveal aria-haspopup="dialog">
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit" data-dev="phone"><span class="exp-rig"><span class="exp-screen"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="442" height="962" poster="./assets/exp/chunav-light.webp"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span></span>
+        <span class="worktext"><span class="exp-name">Chunav</span><span class="desc exp-line">Quick polls for friends, shared as a link</span></span>
+      </button>
+      <button type="button" class="exp-card" data-exp="gb3" data-reveal aria-haspopup="dialog">
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-comp gbl"><span class="gbl-box"></span></span></span>
+        <span class="worktext"><span class="exp-name">Good Bot, Bad Bot</span><span class="desc exp-line">A playground for spotting good AI design</span></span>
+      </button>
+      <button type="button" class="exp-card" data-exp="tattva" data-reveal aria-haspopup="dialog">
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-comp gbl tvl"><span class="gbl-box" data-src="./assets/exp/tattva-showreel.json"></span></span></span>
+        <span class="worktext"><span class="exp-name">Tattva</span><span class="desc exp-line">A design system for AI products</span></span>
+      </button>
     </div>
   </section>
 
@@ -5391,6 +5584,127 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   new IntersectionObserver(function(es){
     if(f.contentWindow) f.contentWindow.postMessage({type:'rupeezy-play',on:es[0].isIntersecting},'*');
   },{threshold:.2}).observe(f);
+})();
+</script>
+  <div class="exp-ov" id="expOv" hidden>
+    <div class="exp-dlg" role="dialog" aria-modal="true" aria-labelledby="expDlgTitle" tabindex="-1">
+      <button type="button" class="exp-x" id="expX" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <div class="exp-media" id="expMedia" data-dev="web" aria-hidden="true">
+        <span class="exp-fit" data-dev="phone"><span class="exp-rig"><span class="exp-screen" id="expPhoneScreen"><video id="expVid" muted loop playsinline preload="none" width="442" height="962"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span>
+        <span class="exp-compslot" id="expComp"></span>
+      </div>
+      <div class="exp-body">
+        <p class="exp-kick" id="expKick"></p>
+        <h3 id="expDlgTitle" class="exp-dtitle"></h3>
+        <p class="exp-tag" id="expTag"></p>
+        <p class="exp-dtext" id="expText"></p>
+        <ul class="exp-facts" id="expFacts"></ul>
+        <div class="exp-acts">
+        <a class="exp-live" id="expLive" href="#" target="_blank" rel="noopener">View it live <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* Experiments: a card opens its overlay; the text and links live here, once */
+(function(){
+  var P={
+    chunav:{name:"Chunav",kind:"Side project \u00b7 Web app",tag:"Quick polls you share as a link.",
+      text:"Start a poll between two or more choices, like Virat, Rohit or Dhoni, or pizza or biryani. Send it on WhatsApp and watch the votes come in. Made for fun among friends, not for real elections.",
+      facts:["English, \u0939\u093f\u0902\u0926\u0940, Hinglish","No sign-up to vote","Results open after you vote"],pos:"50% 58%",
+      live:"https://election-lkb2.vercel.app"},
+    gb3:{name:"Good Bot, Bad Bot",kind:"Side project \u00b7 Learning game",tag:"Can you spot good AI design?",
+      text:"Short games about the patterns behind ChatGPT, Copilot and Perplexity. Pick the better screen, find the flaw, and collect a card for every pattern you learn.",
+      facts:["37 pattern cards","A daily challenge","XP and levels"],pos:"50% 30%",
+      live:"https://lkb00.github.io/gb3/"},
+    tattva:{name:"Tattva",kind:"Side project \u00b7 Design system",tag:"React parts for AI products people can trust.",
+      text:"Components and patterns for assistants that answer, act and create, with trust built in: sources, confidence, approvals and undo.",
+      facts:["211 parts, 15 patterns","WCAG 2.2 AA in every theme","7 themes, light and dark"],pos:"50% 0%",
+      live:"https://lkb00.github.io/tattva/"}
+  };
+
+  /* recordings: the clip that matches the site's theme, playing only while on screen */
+  var vids=[].slice.call(document.querySelectorAll(".exp-vid")), still=matchMedia("(prefers-reduced-motion: reduce)");
+  function mode(){ var t=document.documentElement.getAttribute("data-theme"); return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light" }
+  var DIM={"chunav-light":[442,962],"chunav-dark":[442,962],"x":[0,0]};
+  function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } }
+  function load(v){ var m=mode(), c=v.dataset.clip; if(v.dataset.mode===m) return; v.dataset.mode=m; size(v,c+"-"+m);
+    v.poster="./assets/exp/"+c+"-"+m+".webp";
+    if(still.matches) return;
+    v.src="./assets/exp/"+c+"-"+m+".mp4"; if(v.dataset.on) v.play().catch(function(){}) }
+  vids.forEach(load);
+  new MutationObserver(function(){ vids.forEach(load) }).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ var v=e.target;
+      if(e.isIntersecting){ v.dataset.on="1"; if(!still.matches) v.play().catch(function(){}) }
+      else { delete v.dataset.on; v.pause() } }) },{threshold:.35});
+    vids.forEach(function(v){ io.observe(v) });
+    var io2=new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle("is-on",e.isIntersecting) }) },{threshold:.25});
+    document.querySelectorAll(".exp-card .exp-comp").forEach(function(c){ io2.observe(c) });
+  }
+  /* a tab that comes back into view picks up where it was */
+  document.addEventListener("visibilitychange",function(){ if(!document.hidden&&!still.matches) vids.forEach(function(v){ if(v.dataset.on) v.play().catch(function(){}) }) });
+  var ov=document.getElementById("expOv"), dlg=ov.querySelector(".exp-dlg"), back=null;
+  function open(btn){
+    var d=P[btn.dataset.exp]; if(!d) return; back=btn;
+    var key=btn.dataset.exp, m=mode(), v=document.getElementById("expVid"), md=document.getElementById("expMedia"), slot=document.getElementById("expComp");
+    var comp=btn.querySelector(".exp-comp");
+    slot.innerHTML="";
+    if(comp){ md.dataset.dev="comp"; v.pause(); v.removeAttribute("src"); var c=comp.cloneNode(true); c.classList.add("is-on"); slot.appendChild(c) }
+    else{ md.dataset.dev="phone"; v.poster="./assets/exp/"+key+"-"+m+".webp"; size(v,key+"-"+m);
+      if(!still.matches){ v.src="./assets/exp/"+key+"-"+m+".mp4"; v.currentTime=0 } else v.removeAttribute("src") }
+    document.getElementById("expKick").textContent=d.kind;
+    document.getElementById("expDlgTitle").textContent=d.name;
+    document.getElementById("expTag").textContent=d.tag;
+    document.getElementById("expText").textContent=d.text;
+    document.getElementById("expFacts").innerHTML=d.facts.map(function(f){ return "<li>"+f+"</li>" }).join("");
+    var l=document.getElementById("expLive");
+    l.href=d.live; l.setAttribute("aria-label",d.name+" (opens in a new tab)");
+    ov.hidden=false; requestAnimationFrame(function(){ ov.classList.add("on"); dlg.focus({preventScroll:true}); if(!still.matches&&v.getAttribute("src")) v.play().catch(function(){}) });
+    document.documentElement.style.overflow="hidden";
+  }
+  function close(){
+    if(ov.hidden) return;
+    ov.classList.remove("on"); document.documentElement.style.overflow=""; document.getElementById("expVid").pause();
+    setTimeout(function(){ ov.hidden=true }, 220);
+    if(back) back.focus({preventScroll:true}); back=null;
+  }
+  document.querySelectorAll(".exp-card").forEach(function(b){ b.addEventListener("click",function(){ open(b) }) });
+  document.getElementById("expX").addEventListener("click",close);
+  ov.addEventListener("click",function(e){ if(e.target===ov) close() });
+  document.addEventListener("keydown",function(e){
+    if(ov.hidden) return;
+    if(e.key==="Escape"){ e.preventDefault(); close(); return }
+    if(e.key==="Tab"){   /* keep focus inside the dialog while it is open */
+      var f=[].slice.call(dlg.querySelectorAll("a[href],button")), first=f[0], last=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus() }
+      else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus() }
+    }
+  });
+})();
+</script>
+<script>
+/* Good Bot and Tattva cards: load lottie-web and each promo only when a card is near view; play only while visible */
+(function(){
+  var SRC="./assets/exp/gb3-promo.json", LIB="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie_light.min.js";
+  var still=matchMedia("(prefers-reduced-motion: reduce)"), libP=null, dataP=null;
+  function lib(){ return libP||(libP=new Promise(function(r,j){ var t=document.createElement("script"); t.src=LIB; t.onload=r; t.onerror=j; document.head.appendChild(t) })) }
+  var dataC={};
+  function data(src){ return dataC[src]||(dataC[src]=fetch(src).then(function(r){return r.json()})) }
+  function init(box){
+    if(box.dataset.on) return; box.dataset.on="1";
+    Promise.all([lib(),data(box.dataset.src||SRC)]).then(function(v){
+      var a=lottie.loadAnimation({container:box,renderer:"svg",loop:true,autoplay:false,animationData:v[1],rendererSettings:{preserveAspectRatio:"xMidYMid meet"}});
+      box._a=a; a.addEventListener("DOMLoaded",function(){ var sv=box.querySelector("svg"); if(sv){ sv.style.overflow="visible"; [].forEach.call(sv.querySelectorAll(":scope > g[clip-path]"),function(g){g.removeAttribute("clip-path")}) } }); if(still.matches){ a.goToAndStop(440,true); return }
+      var comp=box.closest(".exp-comp"); if(!comp||comp.classList.contains("is-on")) a.play();
+      if(comp) new MutationObserver(function(){ comp.classList.contains("is-on")?a.play():a.pause() }).observe(comp,{attributes:true,attributeFilter:["class"]});
+    }).catch(function(){ box.dataset.on="" });
+  }
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ init(e.target); io.unobserve(e.target) } }) },{rootMargin:"300px"});
+  document.querySelectorAll(".gbl-box").forEach(function(b){ io.observe(b) });
+  var slot=document.getElementById("expComp");
+  if(slot) new MutationObserver(function(){ slot.querySelectorAll(".gbl-box").forEach(function(b){ b.dataset.on=""; b.innerHTML=""; init(b) }) }).observe(slot,{childList:true});
 })();
 </script>
 </body>

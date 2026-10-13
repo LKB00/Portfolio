@@ -615,9 +615,9 @@
   // a lead line, figures {{n|label}}, a "Label: value" facts list,
   // labelled steps, a quote, and [case:id] cards. Re-run on every token.
   var CASES = {
-    "getbaq":       { n: "01", t: "Designing an AI agent that fights for your refund", m: "Getbaq \u00b7 AI agent", href: "./getbaq.html" },
-    "app-merge":    { n: "02", t: "Unifying the investing journey in one app", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
-    "rise-portal":  { n: "03", t: "The first product Rupeezy\u2019s partners ever had", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
+    "getbaq":       { n: "01", t: "Designing an AI agent that follows through on refunds", m: "Getbaq \u00b7 AI agent", href: "./getbaq.html" },
+    "app-merge":    { n: "02", t: "Unifying two investing apps without disrupting familiar workflows", m: "Rupeezy \u00b7 Consumer app", href: "./app-merge.html" },
+    "rise-portal":  { n: "03", t: "Making partner progress and earnings visible in one place", m: "Rupeezy \u00b7 B2B platform", href: "./rise-portal.html" },
     "web-terminal": { n: "04", t: "Designing the desktop trading experience", m: "Rupeezy \u00b7 Web trading terminal", href: "./web-terminal.html" },
     "resume":       { t: "My r\u00e9sum\u00e9", k: "R\u00e9sum\u00e9", m: "Roles, dates and tools", href: "./resume.html" }
   };
