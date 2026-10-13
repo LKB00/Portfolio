@@ -3701,6 +3701,21 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @keyframes expShine{0%{background-position:100% 0}70%,100%{background-position:0% 0}}
 .exp-caret{background:linear-gradient(180deg,#B17CFF,#FF86B7)}
 @media(prefers-reduced-motion:reduce){.exp-typed{animation:none;background-position:50% 0}}
+
+/* feedback note: the email line sits inside the note, under the words */
+.padnote.with-mail{height:auto}
+.padnote.with-mail textarea{flex:none;height:72px}
+.padmail{display:none;margin:0 7px 8px;padding:5px 7px;border-radius:6px;background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px rgba(20,20,20,.10);cursor:text;transition:background .15s ease,box-shadow .15s ease}
+.padmail:focus-within{background:#fff;box-shadow:inset 0 0 0 1px rgba(20,20,20,.28)}
+.padmail.is-bad{box-shadow:inset 0 0 0 1px #C64B6E}
+.padnote.with-mail .padmail{display:block;animation:padMailIn .25s ease}
+@keyframes padMailIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+.padmail input{display:block;width:100%;padding:0;border:0;outline:0;background:transparent;font-family:var(--display);font-size:11px;line-height:1.5;color:#1B1B1B;text-overflow:ellipsis}
+.padmail input::placeholder{color:rgba(20,20,20,.42)}
+.padmail.is-bad input{color:#C64B6E}
+.padmail.is-nudged{animation:padShakeX .42s ease-in-out}
+@media (max-width:560px),(hover:none){.padmail input{font-size:16px}.padnote.with-mail textarea{height:80px}}
+@media (prefers-reduced-motion:reduce){.padnote.with-mail .padmail,.padmail.is-nudged{animation:none}}
 </style>
 <script defer src="./analytics.js?v=5"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -4540,8 +4555,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      asks for it (the link in the line at the top), and stays while it
      holds an address. */
   function paintWho(){
-    var on=editing||!!email.trim();
-    if(whoMail) whoMail.hidden=!on;
+    if(whoMail) whoMail.hidden=true;   /* the address now lives in the note */
+    [].forEach.call(board.querySelectorAll(".padnote"),function(el){
+      var t=el.querySelector("textarea"), m=el.querySelector(".padmail input");
+      el.classList.toggle("with-mail",!!((t&&t.value.trim())||email.trim()));
+      if(m){ if(document.activeElement!==m) m.value=email; m.setAttribute("aria-invalid",flagged&&bad()?"true":"false"); m.parentNode.classList.toggle("is-bad",flagged&&bad()) }
+    });
     var isBad=flagged&&bad();
     if(whoMail) whoMail.classList.toggle("is-bad",isBad);
     if(emailIn) emailIn.setAttribute("aria-invalid",isBad?"true":"false");
@@ -4556,17 +4575,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       if(isBad) topText.textContent=narrow?"That doesn’t look like an email.":"That doesn’t look like an email. Fix it, or remove it to stay anonymous.";
       else if(me&&narrow) topText.textContent="I’ll know it’s you, and reply.";
       else if(me){ topText.innerHTML="I’ll know it’s you, and reply to <b></b>."; topText.querySelector("b").textContent=me }
-      else if(editing) topText.textContent=narrow?"Add your email to get a reply.":"Add your email below and I’ll reply to it.";
-      else topText.innerHTML=(narrow?"Anonymous. ":"Anonymous: I won’t know it’s you. ")+(board.classList.contains("has-text")
-        ? '<button type="button" class="padlink" data-act="email">Add your email</button>'
-        : "Add your email")+" to get a reply.";
+      else topText.textContent=narrow?"Anonymous unless you add your email.":"Anonymous: I won’t know it’s you unless you add your email.";
     }
     var w=written().length;
     sendBtn.setAttribute("aria-label",(w>1?"Send "+w+" notes":"Send")+(known()?" to Lokesh, from "+known():" to Lokesh anonymously"));
   }
+  function noteMail(){
+    var w=written(), el=w.length&&ELS.get(w[0]);
+    return el?el.querySelector(".padmail input"):null;
+  }
   function openEmail(){
-    editing=true; paintWho();
-    if(emailIn){ emailIn.focus({preventScroll:true}) }
+    paintWho();
+    var m=noteMail(); if(m) m.focus({preventScroll:true});
   }
   if(top){
     top.addEventListener("pointerdown",function(e){ if(e.target.closest('[data-act="email"]')) e.preventDefault() });
@@ -4819,6 +4839,18 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     ta.setAttribute("aria-label","Note text");
     ta.addEventListener("input",function(){ note.text=ta.value; save(); sync() });
     el.appendChild(ta);
+    /* the way back, inside the note: one quiet line under the words, shown
+       once there is something written. It is the same address for every
+       note on the board. */
+    var ml=document.createElement("label"); ml.className="padmail";
+    var mi=document.createElement("input");
+    mi.type="email"; mi.inputMode="email"; mi.autocomplete="email"; mi.spellcheck=false; mi.maxLength=120;
+    mi.placeholder=matchMedia("(max-width:560px),(hover:none)").matches?"Email for a reply":"Add email to get a reply"; mi.setAttribute("aria-label","Your email, so I can reply");
+    mi.value=email;
+    mi.addEventListener("input",function(){ email=mi.value; if(flagged&&!bad()) flagged=false; saveMeta(); paintWho() });
+    mi.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); mi.blur() } });
+    mi.addEventListener("blur",function(){ email=mi.value.trim(); flagged=bad(); saveMeta(); paintWho() });
+    ml.appendChild(mi); el.appendChild(ml);
 
     el.querySelector(".padkill").addEventListener("click",function(){
       notes.splice(notes.indexOf(note),1); ELS.delete(note); el.remove(); save(); sync();
@@ -4975,9 +5007,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var lines=written().map(function(n,i){ return (i+1)+". "+n.text.trim() });
     if(!lines.length||sending) return;
     if(bad()){
-      flagged=true; editing=true; paintWho();
-      if(whoMail){ whoMail.classList.remove("is-nudged"); void whoMail.offsetWidth; whoMail.classList.add("is-nudged") }
-      if(emailIn) emailIn.focus({preventScroll:true});
+      flagged=true; paintWho();
+      var m=noteMail(); if(m){ var l=m.parentNode; l.classList.remove("is-nudged"); void l.offsetWidth; l.classList.add("is-nudged"); m.focus({preventScroll:true}) }
       return;
     }
     var back=known(), anySigned=!!back;
