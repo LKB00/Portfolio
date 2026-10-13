@@ -3802,6 +3802,12 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* footer: the same space above the credit line as on the case studies (62 desktop, 58 phone) */
 #notes{padding-bottom:48px!important}
 @media(max-width:860px){#notes{padding-bottom:49px!important}}
+
+/* touch: bigger tap areas on phones, nothing moves (the pseudo-element only widens the hit box) */
+@media (hover:none),(max-width:860px){
+  .navlinks .navlink,.navlinks #navAsk{position:relative}
+  .navlinks .navlink::after,.navlinks #navAsk::after,.navlinks #themeToggle::after{content:"";position:absolute;inset:-7px -4px}
+}
 </style>
 <script defer src="./analytics.js?v=5"></script>
 <script defer src="./readpill.js?v=11"></script>
