@@ -3688,6 +3688,19 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @keyframes expCaret{0%,40%{opacity:1}55%,90%{opacity:0}100%{opacity:1}}
 .vh-exp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(prefers-reduced-motion:reduce){.exp-mark,.exp-caret{animation:none}.exp-caret{display:none}}
+
+/* testimonial: a little more compact */
+.rec{padding:clamp(26px,4vw,40px) clamp(22px,5vw,56px)}
+.rec-who:before{margin-bottom:10px}
+.rec-nav{margin-top:clamp(16px,2.4vw,20px)}
+
+/* the typed verb carries the AI twin's colours: a soft sweep of the hand's blue, violet, pink and amber passes through the ink */
+.exp-typed{background-image:linear-gradient(100deg,var(--ink) 0%,var(--ink) 34%,#6C9BFF 42%,#B17CFF 48%,#FF86B7 54%,#FFB070 60%,var(--ink) 68%,var(--ink) 100%);
+  background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  animation:expShine 2.8s cubic-bezier(.45,0,.25,1) infinite}
+@keyframes expShine{0%{background-position:100% 0}70%,100%{background-position:0% 0}}
+.exp-caret{background:linear-gradient(180deg,#B17CFF,#FF86B7)}
+@media(prefers-reduced-motion:reduce){.exp-typed{animation:none;background-position:50% 0}}
 </style>
 <script defer src="./analytics.js?v=5"></script>
 <script defer src="./readpill.js?v=11"></script>
@@ -5097,8 +5110,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   // the stage fits the longest quote plus the footer row, so nothing moves
   function fit(){
     var q = 0, by = 0, phone = window.innerWidth <= 576;
-    items.forEach(function(el){ q = Math.max(q, el.querySelector(".rec-q").offsetHeight); by = Math.max(by, el.querySelector(".rec-by").offsetHeight); });
-    stage.style.height = (q + (phone ? 24 : 32) + by) + "px";
+    items.forEach(function(el){ var qe = el.querySelector(".rec-q"); qe.style.marginTop = ""; q = Math.max(q, qe.offsetHeight); by = Math.max(by, el.querySelector(".rec-by").offsetHeight); });
+    // a shorter quote sits in the middle of the space, not stuck to the top
+    items.forEach(function(el){ var qe = el.querySelector(".rec-q"); qe.style.marginTop = Math.round((q - qe.offsetHeight) / 2) + "px"; });
+    stage.style.height = (q + (phone ? 20 : 24) + by) + "px";
   }
   // the quote is said word by word: each word gets its place in the line,
   // and the name follows once most of the words have landed
