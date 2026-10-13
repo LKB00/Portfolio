@@ -69,22 +69,44 @@ Contact: hi.lokeshux@gmail.com · LinkedIn: linkedin.com/in/lkb01
 ---
 MY BIGGEST PROJECT: Rupeezy App Merge
 
-Rupeezy had two separate apps: one for trading, and Investeezy, our own mutual
-fund app. In October 2024, SEBI announced new rules for derivatives. By March
-2025 our trading revenue had fallen about 75%. I checked that number myself in
-Firebase. The company needed both products in one app, fast.
+Rupeezy had two separate apps: Trade, for stocks and F&O, and Investeezy, for
+mutual funds. Trade accounted for about 97% of company revenue at the time. That
+is business context, not something design caused.
 
-The plan was a simple switch between the two, like Swiggy's mode switch. I
-agreed with it and built it. It shipped on 15 January 2025, in six weeks.
+The business wanted one app for three reasons: cross-selling between the two
+product areas, less duplicate feature, compliance and marketing work across two
+apps, and less maintenance overhead. The team reported that maintenance went from
+four engineers to three. That is team-reported, I don't claim design alone did
+it, and there is no cost-saving number. Cross-selling improvement was not
+established, so never claim a lift.
 
-But while building it, I saw its limit: a switch only works for two things, and
-more products were coming. So without being asked, I designed a better model
-that could hold any number of products. I showed it to the design team, then to
-a VP of Product and a Director. It was paused because every team was busy with
-SEBI compliance work. It was built after I left, and it is live in the app today.
+What customers needed: reach both product areas from one app, keep the tasks they
+already knew, and understand their combined portfolio.
 
-Why I'm proud of it: I shipped what was agreed, kept building the version I
-believed in, won the argument, and the design outlived my time there.
+VERSION 1 (shipped): senior stakeholders chose a switch in a meeting, because the
+team had six weeks and wanted to change as little of the existing code as
+possible rather than rebuild both experiences. I designed that switch. It shipped
+on 15 January 2025.
+
+VERSION 2 (a concept, NOT shipped): while designing Version 1 I saw a limit. A
+switch adds another mode with every new product. So I initiated a two-layer
+navigation: one layer to pick the product (Stocks, F&O, Funds), and one for the
+common tasks (Home, Explore, Tools, Orders, Portfolio). I explored it in a
+clickable prototype. What I showed the design team and stakeholders were static
+screens, not a clickable demo. They understood it and supported further design
+work, but implementation was deferred. Never say it was built, never say it is
+live, and never give a reason for the deferral.
+
+The migration: KYC was already shared, in-app banners explained the move, some
+customers were unsure which app to use, so the messaging was improved before the
+rollout widened, and the old app was later removed from the app stores. What
+shipped: Trade and Invest in one app, one login, and a combined portfolio total.
+
+Evidence: Play Store reviews, in-app feedback, Firebase behaviour data and
+competitor apps. No direct user interviews. These were signals, not proof.
+
+Why I'm proud of it: I designed the switch that shipped, and I spotted its limit
+and proposed a structure that could grow, even though it wasn't built.
 
 ---
 MY AI AGENT PROJECT: Getbaq (a self-initiated case study, NOT shipped)
@@ -162,11 +184,27 @@ designing, write the marketing from the code, and question "no accounts"
 earlier.
 
 ---
-PARTNER PLATFORM NUMBERS (always say the source)
+RISE PORTAL (the partner platform): always say the source, and always say these are
+reported outcomes
 
-Rise Portal served about 100 partners who drove 35% of company revenue. After
-launch, lead-to-client conversion rose 2.4x and partner support tickets fell 48%.
-Source for both: the support team.
+Rupeezy worked with about 100 digital partners, and roughly 35% of company revenue
+came through that channel. That is company context, not an impact of the design.
+
+The problem: partners were helping grow the business, but they couldn't
+independently see how referrals turned into conversions and earnings. They relied
+on phone calls, spreadsheets and support tickets for routine questions, which
+could make earnings changes feel arbitrary and created repeat support work.
+
+What I designed: a portal around three partner questions (progress, clients,
+earnings), with a dashboard, My Clients, My Earnings, payout eligibility and a
+mobile version. Evidence came from recurring support questions and from the PM,
+business, support and partner relationship teams. There were NO direct partner
+interviews.
+
+Reported outcomes, not independently measured design impact: lead-to-client
+conversion of 2.4x, reported by the business team over two months; and 48% fewer
+partner support tickets, reported by the support team. I can't say the portal
+alone caused them, and I don't claim partner acquisition improved.
 
 ---
 WHY I LEFT RUNABLE
@@ -235,8 +273,8 @@ Sep 2025 – Nov 2025: Runable AI, Founding Product Designer. Only designer,
 no PM. AI agent platform from concept to public launch.
 
 Feb 2024 – Aug 2025: Rupeezy (stockbroker), Product Designer. Owned the
-trading app end to end: 200,000+ registered users, 97% of the company's
-revenue ran through it. Also built the partner/referral platform and the
+trading app end to end: 200,000+ registered users. The product brought in about
+97% of company revenue at the time. Also built the partner/referral platform and the
 design system.
 
 Apr 2023 – Jan 2024: Sustainability Economics.ai, UI/UX Designer. Sole
