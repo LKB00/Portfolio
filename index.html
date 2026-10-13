@@ -669,9 +669,8 @@ html.fv-open,html.fv-open body{overflow:hidden}
   letter-spacing:-.005em;color:#1B1B1B}
 .padnote textarea::placeholder{color:rgba(20,20,20,.42)}
 .padnote.t0{background:#FDF0B7}
-.padnote.t1{background:#FBDDE4}
+
 .padnote.t2{background:#D9E9FB}
-.padnote.t3{background:#DAF0DE}
 
 /* ── the tool pill, floating on the canvas ── */
 .padbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
@@ -683,7 +682,6 @@ html.fv-open,html.fv-open body{overflow:hidden}
   color:var(--ink);transition:background .18s var(--ease),color .18s var(--ease)}
 @media (hover:hover){.padtool:hover{background:var(--surface)}}
 .padtool[disabled]{color:var(--faint);opacity:.5;background:transparent}
-
 
 .padcount{min-width:16px;padding:0 2px;text-align:center;
   font-family:var(--mono);font-size:11px;font-weight:500;color:var(--faint);
@@ -706,8 +704,6 @@ html.fv-open,html.fv-open body{overflow:hidden}
   background:var(--card);color:var(--muted);box-shadow:var(--shadow-float);
   font-size:12.5px;line-height:1.35}
 .padtoast svg{flex:0 0 auto;color:var(--accent)}
-
-
 
 /* scoped to the board itself, not .padwrap: the board is a direct
    child of <body> while it floats open, outside .padwrap entirely */
@@ -1326,9 +1322,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   font-family:inherit;color:var(--ink);
   transition:border-color .3s var(--ease),background-color .2s var(--ease),
     opacity .18s linear,visibility 0s linear .18s}
-.padtriggerplus{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;
-  border-radius:50%;background:var(--accent);color:var(--onAccent);
-  transform:scale(1)}
+
 /* the heading and its supporting line, one container, always stacked —
    this no longer depends on viewport width the way it used to */
 .padtriggercopy{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -1347,8 +1341,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   .padwrap:not(.is-open) .padtrigger:hover{
     border-color:var(--accent);
     background:color-mix(in srgb,var(--accent) 6%,transparent)}
-  .padwrap:not(.is-open) .padtrigger:hover .padtriggerplus{
-    transform:scale(1.08)}
+  
   /* the lift lives on .padstack, not .padtrigger: .padstack clips its
      own contents (needed so the board's height animation doesn't spill
      over before it's grown), and any transform on the trigger inside
@@ -1453,8 +1446,6 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    for the same reason. */
 .padwrap.is-open .padtrigger{cursor:default}
 .padtrigger:disabled{opacity:1;color:var(--ink)}
-.padtriggerplus{transition:opacity .2s var(--ease),width .3s var(--ease),
-  margin-right .3s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1)}
 
 /* the first paint must not animate: a visitor returning to saved notes
    would watch the board unfold for no reason */
@@ -1713,7 +1704,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
    advance, so 1,284 came out as "1 , 284". Tabular figures give the even
    columns -- the pill keeps its width as the count gains a digit --
    without breaking the number in half. */
-#notes .rp-n{font-variant-numeric:tabular-nums}
+
 /* Visible by default. If the observer never fires — a background tab, a
    browser without it, a reader who lands at the footer already — the pill is
    still finished, and the animation is the thing that is missing rather than
@@ -1742,8 +1733,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
 @keyframes rpPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
 /* while the digits are moving they are the only thing on the pill
    that is, so they get the weight; it comes back off when it lands */
-#notes .rp-n{display:inline-block;transition:transform .3s var(--ease)}
-#notes .readpill.is-rolling .rp-n{transform:scale(1.06)}
+
 #notes .rp-txt{display:flex;flex-direction:column;gap:1px;min-width:0}
 #notes .rp-txt b{font-size:var(--t-mono-lg);font-weight:500;letter-spacing:var(--tr-body);white-space:nowrap}
 #notes .rp-sub{display:grid;
@@ -1769,7 +1759,7 @@ body:not(.arriving) .hp-frame img{will-change:auto}
   #notes .rp-faces i,
   #notes .readpill.is-in .rp-faces i,
   #notes .readpill.is-in .rp-faces i.rp-me{animation:none}
-  #notes .rp-n{transition:none;transform:none}
+  
 }
 @media (max-width:400px){
   #notes .readpill{gap:var(--s-3);padding:7px 20px}
@@ -3229,31 +3219,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .rec-bar.is-on .rec-ring-fill{animation:none;stroke-dashoffset:0}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .padboard.is-floating{height:clamp(420px,44vw,452px)}
 
-.padhead ~ .padtoast,#padBoard .padtoast{top:auto;bottom:62px}
-
-
-
-
-
-
-
-
+#padBoard .padtoast{top:auto;bottom:62px}
 
 @keyframes padShakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}
   40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
@@ -3265,8 +3233,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   
   
 }
-
-
 
 /* ── the send bar, redrawn ──
    Lucide icons (ISC licence) at one stroke weight, the same set the AI
@@ -3285,10 +3251,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   box-shadow:0 0 0 2px var(--card);transform:scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
 .padbar.multi .padadd .padcount{transform:scale(1)}
 
-
-
-
-
 .padbar .padsend{height:36px;padding:0 14px 0 16px;gap:8px;font-size:13.5px;white-space:nowrap;flex:none}
 
 .padbar .padsend svg{transition:transform .2s var(--ease)}
@@ -3300,29 +3262,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 }
 @media (prefers-reduced-motion:reduce){.padadd .padcount,.padbar .padsend svg{transition:none}}
 
-
-
-
-
-
-
-
-
 #padBoard .padtoast{bottom:100px}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* a note being written comes forward with a deeper shadow, not a hard
    outline: the ring read as a second, darker card behind the first */
@@ -3335,46 +3275,15 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .padnote textarea{height:86px}
 }
 
-
 .padnote{display:flex;flex-direction:column;height:112px}
 .padnote textarea{flex:1;height:auto;min-height:0}
 
-
-
-
-
-
-
-
-
-
-
-
-@keyframes padSigIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 @media (max-width:560px){
   .padnote{height:118px}
   /* 16px or iOS zooms on focus; drawn at 12px so the address fits */
   
   .padbar{left:50%;right:auto;transform:translateX(-50%)}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* how many notes Send will send, on the button that sends them */
 .padbar .padsend .padcount{position:static;display:none;min-width:18px;height:18px;padding:0 5px;margin-left:-2px;
@@ -3400,15 +3309,11 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* who it's from: one chip that states it and changes it */
 .padme{display:flex;align-items:center;min-width:0}
-.padme-anon,.padme-mail{display:flex;align-items:center;gap:7px;height:36px;padding:0 12px;
+.padme-mail{display:flex;align-items:center;gap:7px;height:36px;padding:0 12px;
   border-radius:var(--r-pill);font-family:inherit;font-size:13px;white-space:nowrap}
-.padme-anon{border:0;cursor:pointer;background:transparent;color:var(--muted);
-  transition:background .18s var(--ease),color .18s var(--ease)}
-.padme-anon svg,.padme-mail svg{flex:none}
-.padme-dot{color:var(--faint)}
-.padme-cta{color:var(--ink);font-weight:500}
-@media (hover:hover){.padme-anon:hover{background:var(--surface)}}
-.padme-anon:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+.padme-mail svg{flex:none}
+
 .padme-mail{background:var(--surface);color:var(--muted);padding:0 4px 0 12px;cursor:text;animation:padMeIn .22s var(--ease)}
 .padme-mail input{width:170px;min-width:0;padding:0;border:0;outline:0;background:transparent;
   font-family:inherit;font-size:13px;color:var(--ink)}
@@ -3438,13 +3343,13 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (max-width:560px){
   .padbar{left:50%;right:auto;transform:translateX(-50%);max-width:calc(100% - 20px)}
   .padme{flex:1;min-width:0}
-  .padme-anon{padding:0 8px;gap:5px;font-size:12px}
+  
   .padme-mail{flex:1;min-width:0}
   .padme-mail input{width:100%;font-size:16px}
   .padhint{font-size:11.5px;white-space:normal}
 }
-@media (max-width:370px){.padme-anon svg{display:none}}
-@media (prefers-reduced-motion:reduce){.padme-mail,.padhint{animation:none}.padme-anon{transition:none}}
+
+@media (prefers-reduced-motion:reduce){.padme-mail,.padhint{animation:none}}
 
 /* text wraps clear of the strip a neighbour may overlap */
 .padnote textarea{padding-right:18px}
@@ -3633,16 +3538,14 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* ── Experiments: its own section, not a case study ── */
 #experiments{max-width:792px;margin:0 auto;padding:clamp(40px,6vw,64px) 0 clamp(24px,4vw,40px)}
 .exp-head{margin:0 0 clamp(20px,3vw,28px)}
-.exp-title{margin:0;font-family:var(--serif,'STIX Two Text'),Georgia,serif;font-weight:400;font-size:clamp(26px,3.2vw,32px);line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
-.exp-lede{margin:8px 0 0;max-width:560px;font-size:15px;line-height:1.5;color:var(--muted,#7A7676)}
+
 .exp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,32px) clamp(16px,2.4vw,24px)}
 .exp-card{display:block;width:100%;padding:0;border:0;font:inherit;background:none;text-align:left;cursor:pointer;color:inherit}
 .exp-card:focus-visible{outline:2px solid #0D99FF;outline-offset:4px;border-radius:8px}
 .exp-card .exp-frame{position:relative;display:block;aspect-ratio:1/1;padding:0;background:var(--surface)!important}
 [data-theme="dark"] [data-theme="dark"] [data-theme="dark"] .exp-card .worktext h3,.exp-name{margin:0;font-size:var(--t-title);font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink)}
 .exp-card .desc{display:block;margin-top:5px;font-size:var(--t-meta);font-weight:400;line-height:1.45;color:var(--faint)}
-.exp-title{margin:0;font-family:var(--serif,'STIX Two Text'),Georgia,serif;font-weight:400;font-size:clamp(26px,3.2vw,32px);line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
-.exp-lede{margin:8px 0 0;max-width:560px;font-size:15px;line-height:1.5;color:var(--muted,#7A7676)}
+
 .exp-head{margin:0 0 clamp(20px,3vw,28px)}
 
 /* each card plays a real recording of the live project, in the site's own light or dark mode */
@@ -3655,45 +3558,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
    and pull apart on hover. Each loop runs only while the card is on screen. */
 .exp-comp{position:absolute;inset:0;overflow:hidden}
 .exp-comp .pc{position:absolute;display:block;transition:transform .5s var(--ease)}
-.exp-comp .pcin{display:block;position:relative}
+
 .exp-comp img{display:block;width:100%;height:auto}
 .exp-comp .dk{display:none}
 :root[data-theme="dark"] .exp-comp .lt{display:none}:root[data-theme="dark"] .exp-comp .dk{display:block}
 @media (prefers-color-scheme:dark){:root:not([data-theme]) .exp-comp .lt{display:none}:root:not([data-theme]) .exp-comp .dk{display:block}}
 .exp-comp:not(.is-on) *{animation-play-state:paused!important}
 /* a fingertip, not a blob: a soft translucent dot with a white rim, and one ring on the press */
-.xtap{position:absolute;width:4.2%;aspect-ratio:1;margin:-2.1% 0 0 -2.1%;pointer-events:none;opacity:0;z-index:9}
-.xtap i{position:absolute;inset:0;border-radius:50%}
-.xtap i:first-child{background:rgba(23,23,23,.26);box-shadow:0 0 0 1.5px rgba(255,255,255,.95),0 1px 4px rgba(0,0,0,.12)}
-.xtap i:last-child{border:1.5px solid rgba(23,23,23,.35);opacity:0}
-:root[data-theme="dark"] .xtap i:first-child{background:rgba(255,255,255,.3);box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
-:root[data-theme="dark"] .xtap i:last-child{border-color:rgba(255,255,255,.5)}
 
 /* Good Bot: one real round, calm. Screen A above, screen B below; a fingertip
    picks B, both screens turn to their real verdicts, the winner rises a little,
    the other steps back, and the game's own line appears. Then it resets. */
-.gbc{--gbT:9s;--gbE:cubic-bezier(.22,1,.36,1)}
-.gbc .gb-slot{position:absolute;left:12%;width:76%;aspect-ratio:900/386}
-.gbc .gb-top{top:8%}.gbc .gb-bot{top:43.6%}
-.gbc .gb-card{position:absolute;inset:0;display:block;will-change:transform,opacity}
-.gbc .gb-pre,.gbc .gb-post{position:absolute;top:0;left:0;right:0;display:block;will-change:opacity}
-.gbc .gb-slot img{border-radius:0}
-.gbc .gb-card{transform-origin:50% 40%}
-.gbc .gb-pre{animation:gbPre var(--gbT) var(--gbE) infinite}
-.gbc .gb-post{opacity:0;animation:gbPost var(--gbT) var(--gbE) infinite}
-.gbc .gb-bot .gb-card{animation:gbWin var(--gbT) var(--gbE) infinite}
-.gbc .gb-top .gb-card{animation:gbLose var(--gbT) var(--gbE) infinite}
-.gbc .gb-bot .gb-card{filter:drop-shadow(0 0 0 rgba(20,24,20,0))}
-.gbc .gb-line{position:absolute;left:12%;top:80.6%;width:54%;opacity:0;animation:gbLine var(--gbT) var(--gbE) infinite}
-.gbc .gb-tap{left:70%;top:58%;animation:gbTap var(--gbT) var(--gbE) infinite}
-.gbc .gb-tap i:last-child{animation:gbRing var(--gbT) ease-out infinite}
-@keyframes gbPre{0%,20%{opacity:1}27%,84%{opacity:0}92%,100%{opacity:1}}
-@keyframes gbPost{0%,20%{opacity:0}27%,84%{opacity:1}92%,100%{opacity:0}}
-@keyframes gbWin{0%,20%{transform:none}30%,84%{transform:translateY(-3%) scale(1.02)}93%,100%{transform:none}}
-@keyframes gbLose{0%,20%{transform:none;opacity:1}30%,84%{transform:scale(.97);opacity:.5}93%,100%{transform:none;opacity:1}}
-@keyframes gbLine{0%,30%{opacity:0;transform:translateY(40%)}38%,82%{opacity:1;transform:none}90%,100%{opacity:0;transform:none}}
-@keyframes gbTap{0%,8%{opacity:0;transform:scale(1.25)}13%{opacity:1;transform:scale(1)}17%{opacity:1;transform:scale(.82)}21%{opacity:1;transform:scale(1)}27%,100%{opacity:0;transform:scale(1)}}
-@keyframes gbRing{0%,16%{opacity:0;transform:scale(1)}18%{opacity:.8}30%,100%{opacity:0;transform:scale(2.4)}}
 
 /* Good Bot: the game's own promo animation (Lottie), letterboxed on its paper colour */
 .exp-comp.gbl{background:#FAFAF7;display:flex;align-items:center}
@@ -3707,26 +3582,13 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* Tattva: one real component, one design system. The same ApprovalPrompt
    re-themes through Tattva's own tokens: colour theme and corner style change,
    the content never does. Captured from the live docs in each theme. */
-.tvc{--tvT:10s}
-.tvc .tv-tag{position:absolute;left:8%;top:22%;margin:0;font:400 11px/1.4 var(--mono,ui-monospace,Menlo,monospace);color:var(--faint);letter-spacing:0}
-.tvc .tv-stage{position:absolute;left:8%;width:84%;top:31%;aspect-ratio:900/227}
-.tvc .tv-stage>span{position:absolute;inset:0;display:block;opacity:0;will-change:opacity;animation:tvShow var(--tvT) linear infinite}
-.tvc .tv-meta{position:absolute;left:8%;right:8%;top:60%;display:flex;align-items:center;gap:12px}
-.tvc .tv-dots{display:flex;gap:6px}
-.tvc .tv-dots i{width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 0 transparent;animation:tvDot var(--tvT) linear infinite}
-.tvc .tv-names{position:relative;flex:1;height:16px}
-.tvc .tv-names b{position:absolute;inset:0;font:400 11px/16px var(--sans,inherit);color:var(--muted,#7A7676);white-space:nowrap;opacity:0;animation:tvShow var(--tvT) linear infinite}
-.tvc .s1{animation-delay:0s!important}.tvc .s2{animation-delay:-7.5s!important}.tvc .s3{animation-delay:-5s!important}.tvc .s4{animation-delay:-2.5s!important}
-@keyframes tvShow{0%{opacity:0}5%,24%{opacity:1}29%,100%{opacity:0}}
-@keyframes tvDot{0%{box-shadow:0 0 0 0 transparent}5%,24%{box-shadow:0 0 0 2px var(--bg,#fff),0 0 0 3.5px var(--ink,#171717)}29%,100%{box-shadow:0 0 0 0 transparent}}
-.tvc .d1{background:#4A41C8}.tvc .d2{background:#2F6B1A}.tvc .d3{background:#8B2A70}.tvc .d4{background:#0B6464}
-:root[data-theme="dark"] .tvc .d1{background:#6159E0}:root[data-theme="dark"] .tvc .d2{background:#3D7F22}:root[data-theme="dark"] .tvc .d3{background:#AD3F8D}:root[data-theme="dark"] .tvc .d4{background:#157878}
+
 /* motion off: one finished, still frame */
 @media (prefers-reduced-motion:reduce){
   .exp-comp *{animation:none!important}
-  .gbc .gb-pre{opacity:0}.gbc .gb-post,.gbc .gb-line{opacity:1}
-  .gbc .gb-top .gb-card{opacity:.5;transform:scale(.97)}.gbc .gb-bot .gb-card{transform:translateY(-3%) scale(1.02)}
-  .tvc .tv-stage .s1,.tvc .tv-names .s1{opacity:1}.tvc .d1{box-shadow:0 0 0 2px var(--bg,#fff),0 0 0 3.5px var(--ink,#171717)}
+  
+  
+  
 }
 /* in the dialog, the same composition as a square in the middle of the media box */
 .exp-compslot{position:absolute;top:0;bottom:0;left:50%;aspect-ratio:1;transform:translateX(-50%)}
@@ -3746,11 +3608,10 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 [data-dev="phone"] .exp-rig{height:100%;aspect-ratio:1608/3316;max-width:100%}
 [data-dev="phone"] .exp-screen{position:absolute;left:4.29%;top:1.78%;right:4.35%;bottom:1.81%;border-radius:12.3%/5.7%;background:#000}
 [data-dev="phone"] .exp-device{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;z-index:2}
-.exp-mac{left:5%;width:90%;top:50%;bottom:auto;transform:translateY(-50%)}
-.exp-mac .macshot{background:var(--card,#fff)}
+
 @media (hover:hover){
   .exp-card:hover .exp-rig{transform:translateY(-8px)}
-  .exp-card:hover .exp-mac{transform:translateY(calc(-50% - 8px))}
+  
 }
 @media (hover:hover){.exp-card:hover .exp-fit video{transform:scale(1.03)}}
 .exp-ov{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(15,15,15,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
@@ -3775,14 +3636,13 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-facts{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;padding:0}
 .exp-facts li{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:2px;background:var(--surface);font-size:12px;color:var(--ink)}
 .exp-acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;margin-top:22px}
-.exp-credit{margin:0;display:inline-flex;align-items:center;gap:5px;font-size:13px;line-height:1.5;color:var(--muted,#7A7676)}
-.exp-credit .fmark{width:20px;height:20px;flex:none;margin:0}
-#expOv .exp-gh,#expOv .exp-gh:visited{color:var(--ink)}#expOv .exp-live,#expOv .exp-live:visited{color:var(--bg,#FAFAFA)}
-.exp-live,.exp-gh{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none}
+
+#expOv .exp-live,#expOv .exp-live:visited{color:var(--bg,#FAFAFA)}
+.exp-live{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none}
 .exp-live{background:var(--ink);color:var(--bg,#FAFAFA)}
-.exp-gh{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
-.exp-live:hover,.exp-gh:hover{opacity:.85}
-.exp-live:focus-visible,.exp-gh:focus-visible,.exp-x:focus-visible{outline:2px solid #0D99FF;outline-offset:2px}
+
+.exp-live:hover{opacity:.85}
+.exp-live:focus-visible,.exp-x:focus-visible{outline:2px solid #0D99FF;outline-offset:2px}
 @media (max-width:684px){
   .exp-grid{grid-template-columns:1fr;gap:28px}
   .exp-ov{place-items:end center;padding:0}
@@ -3791,7 +3651,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .exp-dtitle{font-size:24px}
   .exp-acts{flex-direction:column;align-items:stretch}
   .exp-acts a{justify-content:center;white-space:nowrap}
-  .exp-credit{justify-content:center}
+  
 }
 @media (prefers-reduced-motion:reduce){.exp-card .exp-frame,.exp-ov,.exp-dlg{transition:none!important}}
 

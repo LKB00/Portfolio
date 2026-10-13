@@ -464,10 +464,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    in the card, built up into its own panel rather than a thin strip,
    and the sentence that used to carry the whole card is now one short
    line underneath it -- caption, not copy. */
-.aiproof{margin-top:16px;padding:16px 16px;border-radius:var(--r-sm);
-  background:var(--card);display:flex;align-items:center;gap:10px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.01em;color:var(--muted)}
-.aiproof b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
 
 /* Built with it -- takes from two places already on this site rather
    than inventing a third language:
@@ -485,36 +481,11 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    delta, so the same slot carries a live badge instead, in var(--live) --
    the colour this page already uses once for exactly this meaning, on
    the "since then" dot below. */
-.aiproof-live{--frameBar:#EDEDEB;--frameEdge:#D3D3CF;
-  flex-direction:column;align-items:stretch;padding:0;gap:0;overflow:hidden}
-:root[data-theme="dark"] .aiproof-live{--frameBar:#2C2C2E;--frameEdge:#1E1E20}
-.aiproof-bar{display:flex;align-items:center;gap:8px;padding:8px 11px;
-  background:var(--frameBar);border-bottom:.5px solid var(--frameEdge)}
-.aiproof-lights{display:flex;gap:8px;flex:0 0 auto}
-.aiproof-lights i{width:7px;height:7px;border-radius:50%}
-.aiproof-lights i:nth-child(1){background:#FF5F57}
-.aiproof-lights i:nth-child(2){background:#FEBC2E}
-.aiproof-lights i:nth-child(3){background:#28C840}
-.aiproof-url{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  font-family:var(--mono);font-size:10px;letter-spacing:.02em;color:var(--faint)}
 
-.aiproof-body{padding:16px 16px 16px;display:flex;flex-direction:column;gap:8px}
-.aiproof-lab{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.09em;
-  text-transform:uppercase;color:var(--faint)}
-.aiproof-row{display:flex;align-items:baseline;gap:8px}
-.aiproof-row b{font-size:clamp(28px,5.4vw,36px);font-weight:600;letter-spacing:-.03em;
-  line-height:1;color:var(--ink)}
-.aiproof-live-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
-  font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--live)}
 /* Was a ring expanding out from the dot -- at scale(1.9) on a 14px box
    that's nearly a 27px circle, which had nowhere to go but over "92" on
    one side and "Live" on the other in a badge this size. A blink stays
    inside the 6px dot it belongs to. */
-.aiproof-live-badge .aiproof-dot{width:6px;height:6px;flex:0 0 auto;
-  border-radius:50%;background:var(--live);
-  animation:aiBlink 1.8s ease-in-out infinite}
-@keyframes aiBlink{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* Designed for it -- two mockups, not a progress bar: a sketch (dashed
    outline, tilted like a rough pass, grey content lines) and a shipped
@@ -527,12 +498,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    flush against the card's left edge the way the rest of the page does,
    and this was the one still centred, which is what actually read as
    inconsistent rather than "different enough to be its own thing." */
-.aiproof-path{flex-direction:column;align-items:flex-start;gap:16px}
-.aiproof-frames{display:flex;align-items:center;gap:16px}
-.aiproof-frame{width:46px;height:34px;border-radius:6px;padding:8px 7px;
-  flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:5px}
-.aiproof-frame.is-sketch{border:1.5px dashed var(--line);transform:rotate(-3deg)}
-.aiproof-frame.is-sketch .aiproof-frame-line{background:var(--line)}
+
 /* Yellow -- var(--yellow)/var(--onYellow), the pair this site already
    uses for its one highlight colour (the hero's marked phrase, the
    dashboard's yellow card), not a fixed hex the way the traffic-light
@@ -551,17 +517,6 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    for the caption on the light surface, --yellow (bright) on the dark
    one -- because yellow itself only reads as text once there's a dark
    background under it. */
-.aiproof-frame.is-shipped{background:var(--yellow);box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
-.aiproof-frame.is-shipped .aiproof-frame-line{background:var(--onYellow)}
-.aiproof-frame-line{height:3px;border-radius:2px;width:100%}
-.aiproof-frame-line.short{width:55%}
-.aiproof-arrow{flex:0 0 auto;width:20px;height:9px;color:var(--faint)}
-.aiproof-frame-labels{display:flex;align-items:center;gap:16px;font-family:var(--mono);
-  font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
-.aiproof-frame-labels span{width:46px;text-align:center}
-.aiproof-frame-labels .aiproof-arrow-spacer{width:20px;flex:0 0 auto}
-.aiproof-frame-labels .is-hi{color:var(--onYellow);font-weight:500}
-:root[data-theme="dark"] .aiproof-frame-labels .is-hi{color:var(--yellow)}
 
 /* Don't use it for -- the one claim a reader can actually go test. It
    always answers the same way, which is the whole point of it. Sized up
@@ -576,18 +531,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    from the row's shared 12px base rather than inherited from nowhere,
    since this line is this card's one piece of content the way the
    number and the two frames are theirs. */
-.aiproof-toggle{cursor:pointer;width:100%;border:0;text-align:left;
-  font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
-.aiproof-toggle .aiproof-track{position:relative;flex:0 0 auto;min-width:0;
-  width:38px;height:21px;border-radius:1000px;background:var(--line);
-  transition:background-color .2s var(--ease)}
-.aiproof-toggle .aiproof-knob{position:absolute;top:2px;left:2px;width:17px;height:17px;
-  border-radius:50%;background:var(--bg);box-shadow:0 1px 2px rgba(0,0,0,.16);
-  transition:transform .2s var(--ease)}
-.aiproof-toggle.is-on .aiproof-track{background:var(--neg)}
-.aiproof-toggle.is-on .aiproof-knob{transform:translateX(17px)}
-.aiproof-toggle.is-snap .aiproof-track{animation:aiShake .4s var(--ease)}
-@keyframes aiShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
+
 /* :not(.is-on):not(.is-snap) isn't decoration -- .aiproof-toggle:hover
    .aiproof-track and .aiproof-toggle.is-on .aiproof-track carry the same
    specificity (two class-level selectors deep), and hover comes later in
@@ -596,12 +540,7 @@ nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:
    when the track was supposed to turn red. The switch was flipping and
    the copy was changing while the track itself just kept its hover tint,
    which is the "states conflicting" the mismatch actually was. */
-@media (hover:hover){.aiproof-toggle:hover:not(.is-on):not(.is-snap) .aiproof-track{background:color-mix(in srgb,var(--line) 60%,var(--faint))}}
-@media (prefers-reduced-motion:reduce){
-  .aiproof-toggle .aiproof-knob{transition:none}
-  .aiproof-live-badge .aiproof-dot{animation:none}
-  .aiproof-toggle.is-snap .aiproof-track{animation:none}
-}
+
 /* ══ ABOUT ═══════════════════════════════════════════════════════════
    The page had no visible headline at all — the only h1 was .sr-only,
    so a reader landed on a badge and then four paragraphs of grey prose.
