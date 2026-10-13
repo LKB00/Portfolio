@@ -869,7 +869,6 @@ h3.np-t{margin:0 0 20px;font:400 20px/1.35 var(--serif);letter-spacing:-.01em;co
   filter:drop-shadow(-14px 22px 26px rgba(18,18,22,.24));
   transition:transform .45s var(--ease)}
 
-
 @media (prefers-reduced-motion:reduce){
   .cardframe.merge2 .mgphone-wrap{transition:none}
 }
@@ -1100,7 +1099,6 @@ html{scroll-padding-top:90px}
 .hnotes li{display:flex;align-items:flex-start;gap:10px;padding-left:0}
 .hnotes li:before{content:none}
 .hnotes li img{flex:none;width:22px;height:22px;border-radius:50%;margin-top:0}
-
 
 .hba2 .hring{position:absolute;border:2px solid var(--ink);border-radius:10px;pointer-events:none}
 .hba2 .hring.c{border-radius:50%}
@@ -1346,6 +1344,30 @@ ol.flowd.vplan{margin-top:32px}
 @media(max-width:640px){.hmw{padding:28px 20px}.hmw-q{font-size:22px}.hmw-3{grid-template-columns:1fr}}
 /* full concept screen set on black, like the slider's concept side */
 .media.cscr{background:#15140E!important}
+/* small screens: a number rail in the left margin; hover or tap shows every section */
+.srail{display:none}
+@media(max-width:980px){
+  .srail{display:block;position:fixed;left:10px;top:50%;transform:translateY(-50%);z-index:40;font-family:var(--sans)}
+  .srail-t{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 2px;border:0;background:none;cursor:pointer;font:400 12px/1.5 var(--sans);color:var(--faint)}
+  .srail-c{color:var(--ink)}
+  .srail-p,.srail-x{min-height:18px}
+  .srail-t:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:4px}
+  .srail-l{list-style:none;position:absolute;left:0;top:50%;transform:translateY(-50%);margin:0;padding:6px;width:236px;max-height:80vh;overflow:auto;border-radius:12px;background:var(--bg);box-shadow:0 0 0 1px var(--line),0 16px 40px -12px rgba(20,24,40,.25);opacity:0;visibility:hidden;transition:opacity .15s,visibility 0s linear .15s}
+  .srail:hover .srail-l,.srail.open .srail-l,.srail:focus-within .srail-l{opacity:1;visibility:visible;transition:opacity .15s}
+  .srail-l a{display:flex;gap:10px;padding:8px 10px;border-radius:8px;font-size:14px;line-height:1.5;color:var(--muted);text-decoration:none}
+  .srail-l a span{min-width:18px;font-size:12px;color:var(--faint)}
+  .srail-l a:hover{background:var(--l-panel);color:var(--ink)}
+  .srail-l a[aria-current]{color:var(--ink);background:var(--l-panel)}
+}
+@media(max-width:640px){.shell{padding-left:40px!important}.srail{left:6px}}
+@media(prefers-reduced-motion:reduce){.srail-l{transition:none!important}}
+
+/* nested chapter links under The solution */
+.toc .toc-subs{display:flex;flex-direction:column;gap:6px;margin:-2px 0 2px 22px}
+.toc a.toc-sub{font-size:12.5px!important;line-height:18px!important;color:var(--faint)}
+.toc a.toc-sub.active{color:var(--ink)}
+.srail-l ul{list-style:none;margin:0 0 4px;padding:0 0 0 28px}
+.srail-l a.sub{padding:6px 10px;font-size:13px}
 </style><script defer src="./analytics.js?v=5"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -1394,17 +1416,19 @@ ol.flowd.vplan{margin-top:32px}
 <div class="shell">
   <nav class="toc" aria-label="On this page"><a class="cx-rail-back" href="./index.html#work">Back</a>
     <p class="toc-lbl">On this page</p>
-    <a href="#journeys"><span class="toc-n">01</span>Two journeys</a>
-    <a href="#why"><span class="toc-n">02</span>Why merge?</a>
-    <a href="#before"><span class="toc-n">03</span>Before &amp; evidence</a>
-    <a href="#frame"><span class="toc-n">04</span>Frame the problem</a>
-    <a href="#v1"><span class="toc-n">05</span>Options &amp; Version 1</a>
-    <a href="#limit"><span class="toc-n">06</span>The limit of the switch</a>
-    <a href="#model"><span class="toc-n">07</span>Two layers, one model</a>
-    <a href="#proto"><span class="toc-n">08</span>Prototype &amp; open questions</a>
-    <a href="#migration"><span class="toc-n">09</span>Migration</a>
-    <a href="#outcome"><span class="toc-n">10</span>Outcomes &amp; reflection</a>
+    <a href="#context"><span class="toc-n">01</span>Context</a>
+    <a href="#challenge"><span class="toc-n">02</span>The challenge</a>
+    <a href="#evidence"><span class="toc-n">03</span>Evidence</a>
+    <a href="#v1"><span class="toc-n">04</span>Shipping Version 1</a>
+    <a href="#limit"><span class="toc-n">05</span>Where V1 could fall short</a>
+    <a href="#model"><span class="toc-n">06</span>Exploring a two-layer model</a>
+    <div class="toc-subs"><a class="toc-sub" href="#model">Two layers</a><a class="toc-sub" href="#m-tasks">Ten tabs into five</a><a class="toc-sub" href="#m-home">Home</a><a class="toc-sub" href="#m-proto">Prototype</a><a class="toc-sub" href="#m-default">Default product</a></div>
+    <a href="#migration"><span class="toc-n">07</span>Migration &amp; rollout</a>
+    <a href="#outcome"><span class="toc-n">08</span>Outcomes</a>
+    <a href="#validate"><span class="toc-n">09</span>What I&rsquo;d validate next</a>
+    <a href="#reflection"><span class="toc-n">10</span>Reflection</a>
   </nav>
+  <nav class="srail" id="srail" aria-label="Sections"><button type="button" class="srail-t" id="srailT" aria-expanded="false" aria-controls="srailL"><span class="srail-p" id="srailP"></span><span class="srail-c" id="srailC">01</span><span class="srail-x" id="srailX">02</span><span class="vh">Show all sections</span></button><ol class="srail-l" id="srailL"><li><a href="#context"><span>01</span>Context</a></li><li><a href="#challenge"><span>02</span>The challenge</a></li><li><a href="#evidence"><span>03</span>Evidence</a></li><li><a href="#v1"><span>04</span>Shipping Version 1</a></li><li><a href="#limit"><span>05</span>Where V1 could fall short</a></li><li><a href="#model"><span>06</span>Exploring a two-layer model</a><ul><li><a class="sub" href="#model">Two layers</a></li><li><a class="sub" href="#m-tasks">Ten tabs into five</a></li><li><a class="sub" href="#m-home">Home</a></li><li><a class="sub" href="#m-proto">Prototype</a></li><li><a class="sub" href="#m-default">Default product</a></li></ul></li><li><a href="#migration"><span>07</span>Migration &amp; rollout</a></li><li><a href="#outcome"><span>08</span>Outcomes</a></li><li><a href="#validate"><span>09</span>What I&rsquo;d validate next</a></li><li><a href="#reflection"><span>10</span>Reflection</a></li></ol></nav>
 
   <!-- 01 TWO JOURNEYS -->
   <section id="journeys" data-section="Two journeys" class="hero-sec" data-reveal>
@@ -1432,13 +1456,11 @@ ol.flowd.vplan{margin-top:32px}
         <div><dt>First release</dt><dd>15 January 2025</dd></div>
         <div><dt>Status</dt><dd>Switch shipped; two-layer navigation stayed a concept</dd></div>
       </dl>
-      <nav class="mtoc" aria-label="On this page (mobile)"><p>On this page</p><div><a href="#journeys">Two journeys</a><a href="#why">Why merge?</a><a href="#before">Before &amp; evidence</a><a href="#frame">Frame the problem</a><a href="#v1">Options &amp; Version 1</a><a href="#limit">The limit of the switch</a><a href="#model">Two layers, one model</a><a href="#proto">Prototype &amp; open questions</a><a href="#migration">Migration</a><a href="#outcome">Outcomes &amp; reflection</a></div></nav>
     </div>
   </section>
 
-  <!-- 02 WHY MERGE -->
-  <section id="why" data-section="Why merge" class="col" data-reveal>
-    <p class="eyebrow">Why merge?</p>
+  <section id="context" data-section="Context" class="col" data-reveal>
+    <p class="eyebrow">Context</p>
     <h2 class="say">One business. Two investment journeys.</h2>
     <p class="body">Rupeezy Trade served stock and F&amp;O investors. Rupeezy Invest, the Investeezy app, served mutual-fund investors. Each had its own product experience and navigation.</p>
     <div class="duo apps2">
@@ -1450,45 +1472,8 @@ ol.flowd.vplan{margin-top:32px}
     <p class="tx-info"><b>Business context.</b> Around 97% of company revenue came from Trade at the time.</p>
   </section>
 
-  <!-- 03 BEFORE & EVIDENCE -->
-  <section id="before" data-section="Before and evidence" class="col" data-reveal>
-    <p class="eyebrow">Before &amp; evidence</p>
-    <h2 class="say">Two apps. Two ways of organising things.</h2>
-    <p class="body">Trade and Invest each had five bottom-navigation destinations, but they differed. Bringing them together meant deciding <b>which tasks should share a home</b> and which product-specific differences needed to stay clear.</p>
-    <div class="media pad" id="slots">
-      <svg viewBox="0 0 900 398" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Rupeezy Trade and Investeezy each had five tabs; Home, Explore, Tools, Orders and Portfolio survived the merge, and Profile had no slot so it moved to the header." style="display:block">
-              <text x="82.5" y="12" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" font-weight="400" fill="#6B6B6B">Rupeezy Trade</text>
-              <text x="280.5" y="12" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" font-weight="400" fill="#6B6B6B">Investeezy</text>
-              <text x="486" y="12" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#1E1E1E">Merged</text>
-              <g opacity="1"><rect x="0" y="48" width="165" height="38" rx="4" fill="#E8EDF8"></rect><g opacity="0.55" transform="translate(12 60)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 6.4 7 2.3l4.8 4.1V12a.6.6 0 0 1-.6.6H2.8A.6.6 0 0 1 2.2 12z"></path></g><text opacity="0.55" x="34" y="71" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#064AD3">Home</text><text opacity="0.55" x="181.5" y="71" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="48" width="165" height="38" rx="4" fill="#EDEBF6"></rect><g opacity="0.55" transform="translate(210 60)" fill="none" stroke="#6A5CC4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 6.4 7 2.3l4.8 4.1V12a.6.6 0 0 1-.6.6H2.8A.6.6 0 0 1 2.2 12z"></path></g><text opacity="0.55" x="232" y="71" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#3F349B">Home</text><text opacity="0.55" x="379.5" y="72" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="48" width="180" height="38" rx="4" fill="#E7F1EA"></rect><g opacity="0.55" transform="translate(408 60)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 6.4 7 2.3l4.8 4.1V12a.6.6 0 0 1-.6.6H2.8A.6.6 0 0 1 2.2 12z"></path></g><text opacity="0.55" x="430" y="71" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#1F5B33">Home</text><text opacity="0.55" x="612" y="57" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">rebuilt as the</text><text opacity="0.55" x="612" y="81" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">cross-sell surface</text></g>
-              <g opacity="1"><rect x="0" y="110" width="165" height="38" rx="4" fill="#DDE6FB"></rect><g transform="translate(12 122)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 2.2h6.8v9.6L7 9.3l-3.4 2.5z"></path></g><text x="34" y="133" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#064AD3">Watchlist</text><text x="181.5" y="133" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="110" width="165" height="38" rx="4" fill="#E7E3F7"></rect><g transform="translate(210 122)" fill="none" stroke="#6A5CC4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.3" cy="6.3" r="3.6"></circle><path d="M9.1 9.1l2.6 2.6"></path></g><text x="232" y="133" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#3F349B">Explore</text><text x="379.5" y="134" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="110" width="180" height="38" rx="4" fill="#DCEDE1"></rect><g transform="translate(408 122)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.3" cy="6.3" r="3.6"></circle><path d="M9.1 9.1l2.6 2.6"></path></g><text x="430" y="133" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#1F5B33">Explore</text><text x="612" y="119" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">search + watchlist in</text><text x="612" y="143" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">one place</text></g>
-              <g opacity="1"><rect x="0" y="172" width="165" height="38" rx="4" fill="#DDE6FB"></rect><g transform="translate(12 184)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 2.2a2.5 2.5 0 0 0 3.2 3.2l.6 1.4-1.4 1.4-1.4-.6a2.5 2.5 0 0 1-3.2-3.2l1.4-1.4z"></path><path d="M7 6.9l-4 4a1.2 1.2 0 0 0 1.7 1.7l4-4"></path></g><text x="34" y="195" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#064AD3">Tools</text><text x="181.5" y="195" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="172" width="165" height="38" rx="4" fill="#E7E3F7"></rect><g transform="translate(210 184)" fill="none" stroke="#6A5CC4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.2h6"></path><path d="M5.7 2.2v3.1L2.9 10.9a.7.7 0 0 0 .6 1h7a.7.7 0 0 0 .6-1L8.3 5.3V2.2"></path><path d="M4.3 8.6h5.4"></path></g><text x="232" y="195" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#3F349B">MF Lab</text><text x="379.5" y="196" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="172" width="180" height="38" rx="4" fill="#DCEDE1"></rect><g transform="translate(408 184)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 2.2a2.5 2.5 0 0 0 3.2 3.2l.6 1.4-1.4 1.4-1.4-.6a2.5 2.5 0 0 1-3.2-3.2l1.4-1.4z"></path><path d="M7 6.9l-4 4a1.2 1.2 0 0 0 1.7 1.7l4-4"></path></g><text x="430" y="195" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#1F5B33">Tools</text><text x="612" y="181" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">became a tool,</text><text x="612" y="205" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">not a tab</text></g>
-              <g opacity="1"><rect x="0" y="234" width="165" height="38" rx="4" fill="#DDE6FB"></rect><g transform="translate(12 246)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 4h8.8M2.6 7h8.8M2.6 10h5.6"></path></g><text x="34" y="257" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#064AD3">Order</text><text x="181.5" y="257" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="234" width="165" height="38" rx="4" fill="none" stroke="#B3B3B3" stroke-width="1" stroke-dasharray="4 4"></rect><g transform="translate(209 246)" fill="none" stroke="#9B9B9B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.2"></circle><path d="M3.1 11.7a3.9 3.9 0 0 1 7.8 0"></path></g><text x="231" y="257" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#8A8A8A">Profile</text><text x="379.5" y="258" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="234" width="180" height="38" rx="4" fill="#DCEDE1"></rect><g transform="translate(408 246)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 4h8.8M2.6 7h8.8M2.6 10h5.6"></path></g><text x="430" y="257" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#1F5B33">Orders</text><text x="612" y="243" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">Profile lost its slot,</text><text x="612" y="267" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">moved to the header</text></g>
-              <g opacity="1"><rect x="0" y="296" width="165" height="38" rx="4" fill="#E8EDF8"></rect><g opacity="0.55" transform="translate(12 308)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.6"></circle><path d="M7 2.4V7l3.4 2.4"></path></g><text opacity="0.55" x="34" y="319" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#064AD3">Portfolio</text><text opacity="0.55" x="181.5" y="319" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="296" width="165" height="38" rx="4" fill="#EDEBF6"></rect><g opacity="0.55" transform="translate(210 308)" fill="none" stroke="#6A5CC4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.6"></circle><path d="M7 2.4V7l3.4 2.4"></path></g><text opacity="0.55" x="232" y="319" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#3F349B">Portfolio</text><text opacity="0.55" x="379.5" y="320" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="296" width="180" height="38" rx="4" fill="#E7F1EA"></rect><g opacity="0.55" transform="translate(408 308)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.6"></circle><path d="M7 2.4V7l3.4 2.4"></path></g><text opacity="0.55" x="430" y="319" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#1F5B33">Portfolio</text><text opacity="0.55" x="612" y="305" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">same name,</text><text opacity="0.55" x="612" y="329" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">now one number</text></g>
-              <text x="0" y="378" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#8A8A8A">The only item with nowhere to go was Profile, so it left the bar entirely.</text>
-            </svg>
-    </div>
-    <p class="capb">The real tab labels from both apps, mapped to five shared destinations.</p>
-    <h3 class="np-t" style="margin-top:56px;font-size:20px">Mapping every feature, not just the tabs</h3>
-    <p class="body">To decide where things would live, I mapped every feature of both apps, tab by tab, against a combined structure.</p>
-    <div class="media bleed fmap"><img src="./assets/am/feature-map.webp" width="1600" height="539" alt="My feature-mapping board: every top-nav item and feature of Rupeezy Trade, of Rupeezy Invest, and of the combined app, grouped by Home, Explore, Tools, Orders and Portfolio" loading="lazy" decoding="async"></div>
-    <p class="capb">My original mapping board, from the earlier version of this case study.</p>
-    <h3 class="np-t" style="margin-top:56px;font-size:20px">What I had to go on</h3>
-    <p class="body">I worked from Play Store reviews, in-app feedback, Firebase behaviour data and competitor apps, and used them to find <b>where the experience broke down.</b></p>
-    <div class="evmap" role="group" aria-label="Four sources, what each showed and what it could not show, and the one thing none of them could tell me.">
-      <div class="evc"><p class="t">Play Store reviews</p><p class="y">Reviewers asking <b>why Rupeezy needed two apps</b></p><p class="x">How common that view is</p></div>
-      <div class="evc"><p class="t">In-app feedback</p><p class="y">Problems people raise while using the app</p><p class="x">Why they happen, or how many share them</p></div>
-      <div class="evc"><p class="t">Firebase behaviour</p><p class="y">Which screens people use, and how often</p><p class="x">What they were trying to do</p></div>
-      <div class="evc"><p class="t">Competitor apps</p><p class="y">Groww, Angel One, Upstox and Paytm Money: <b>everything in one app</b></p><p class="x">Whether that suits Rupeezy&rsquo;s customers</p></div>
-      <div class="evb" aria-hidden="true"><span></span><i></i></div>
-      <p class="evg"><small>None of them could tell me</small>what customers actually expected</p>
-      <p class="evk" aria-hidden="true"><span class="ky">Showed</span><span class="kx">Couldn&rsquo;t show</span></p>
-    </div>
-  </section>
-
-  <!-- 04 FRAME THE PROBLEM -->
-  <section id="frame" data-section="Frame the problem" class="col" data-reveal>
-    <p class="eyebrow">Frame the problem</p>
+  <section id="challenge" data-section="The challenge" class="col" data-reveal>
+    <p class="eyebrow">The challenge</p>
     <h2 class="say">One app needed to stay familiar and still grow.</h2>
     <p class="body">The challenge was to bring two product experiences into one app without making familiar tasks harder to find. We also had six weeks for the first release, and wanted to avoid major changes to the existing code.</p>
     <div class="hmw">
@@ -1503,9 +1488,23 @@ ol.flowd.vplan{margin-top:32px}
     <p class="capb">The constraints that shaped the navigation decision.</p>
   </section>
 
-  <!-- 05 OPTIONS & VERSION 1 -->
-  <section id="v1" data-section="Options and Version 1" class="col" data-reveal>
-    <p class="eyebrow">Options &amp; Version 1 &middot; shipped</p>
+  <section id="evidence" data-section="Evidence" class="col" data-reveal>
+    <p class="eyebrow">Evidence</p>
+    <h2 class="say">What I had to go on.</h2>
+    <p class="body">I worked from Play Store reviews, in-app feedback, Firebase behaviour data and competitor apps, and used them to find <b>where the experience broke down.</b></p>
+    <div class="evmap" role="group" aria-label="Four sources, what each showed and what it could not show, and the one thing none of them could tell me.">
+      <div class="evc"><p class="t">Play Store reviews</p><p class="y">Reviewers asking <b>why Rupeezy needed two apps</b></p><p class="x">How common that view is</p></div>
+      <div class="evc"><p class="t">In-app feedback</p><p class="y">Problems people raise while using the app</p><p class="x">Why they happen, or how many share them</p></div>
+      <div class="evc"><p class="t">Firebase behaviour</p><p class="y">Which screens people use, and how often</p><p class="x">What they were trying to do</p></div>
+      <div class="evc"><p class="t">Competitor apps</p><p class="y">Groww, Angel One, Upstox and Paytm Money: <b>everything in one app</b></p><p class="x">Whether that suits Rupeezy&rsquo;s customers</p></div>
+      <div class="evb" aria-hidden="true"><span></span><i></i></div>
+      <p class="evg"><small>None of them could tell me</small>what customers actually expected</p>
+      <p class="evk" aria-hidden="true"><span class="ky">Showed</span><span class="kx">Couldn&rsquo;t show</span></p>
+    </div>
+  </section>
+
+  <section id="v1" data-section="Shipping Version 1" class="col" data-reveal>
+    <p class="eyebrow">Shipping Version 1</p>
     <h2 class="say">The practical first step was a switch.</h2>
     <p class="body">The first direction came from senior stakeholders. With six weeks and a preference for minimal code change, the team chose a simple switch between Trade and Invest rather than rebuilding both experiences. <b>I designed the agreed switch-based solution</b>, a pragmatic way to bring both products into one app while keeping the first release focused.</p>
     <h2 class="say more">How the directions compared</h2>
@@ -1546,11 +1545,10 @@ ol.flowd.vplan{margin-top:32px}
         <p class="pl3-d">On every screen, so customers could <b>switch from anywhere.</b></p>
       </div>
     </figure>
-</section>
+  </section>
 
-  <!-- 06 THE LIMIT OF THE SWITCH -->
-  <section id="limit" data-section="The limit of the switch" class="col" data-reveal>
-    <p class="eyebrow">The limit of the switch</p>
+  <section id="limit" data-section="Where V1 could fall short" class="col" data-reveal>
+    <p class="eyebrow">Where V1 could fall short</p>
     <h2 class="say">A switch works for two. What happens if there are more?</h2>
     <p class="body">While designing Version 1, I began questioning how the switch would behave if Rupeezy grew beyond Trade and Invest. Each new product could become <b>another mode to switch into.</b> I saw an opportunity to separate product selection from the tasks people came to complete.</p>
     <div class="lim">
@@ -1570,9 +1568,8 @@ ol.flowd.vplan{margin-top:32px}
     <p class="tx-info"><b>Design hypothesis.</b> A concern I raised while designing Version 1.</p>
   </section>
 
-  <!-- 07 TWO LAYERS, ONE MODEL -->
-  <section id="model" data-section="Two layers, one model" class="col" data-reveal>
-    <p class="eyebrow">Two layers, one model &middot; concept</p>
+  <section id="model" data-section="Exploring a two-layer model" class="col" data-reveal>
+    <p class="eyebrow">Exploring a two-layer model &middot; concept</p>
     <h2 class="say">Separate the product from the task.</h2>
     <p class="body">I proposed a two-layer navigation. The first layer chooses a product: Stocks, F&amp;O or Funds. The second keeps Home, Explore, Tools, Orders and Portfolio <b>in the same places.</b> Product content changes; the task navigation doesn&rsquo;t.</p>
     <div class="media pad" style="margin-top:32px">
@@ -1593,7 +1590,27 @@ ol.flowd.vplan{margin-top:32px}
         </div>
     </div>
     <p class="capb">An interactive recreation built for this page: tap either layer and the other stays put.</p>
-    <h3 class="np-t" style="margin-top:56px;font-size:20px">Home, before and in the concept</h3>
+    <h2 class="say more" id="m-tasks">From ten destinations to five shared tasks</h2>
+    <p class="body">Trade and Invest each had five bottom-navigation destinations, but they differed. Bringing them together meant deciding <b>which tasks should share a home</b> and which product-specific differences needed to stay clear.</p>
+    <div class="media pad" id="slots">
+      <svg viewBox="0 0 900 398" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Rupeezy Trade and Investeezy each had five tabs; Home, Explore, Tools, Orders and Portfolio survived the merge, and Profile had no slot so it moved to the header." style="display:block">
+              <text x="82.5" y="12" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" font-weight="400" fill="#6B6B6B">Rupeezy Trade</text>
+              <text x="280.5" y="12" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" font-weight="400" fill="#6B6B6B">Investeezy</text>
+              <text x="486" y="12" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#1E1E1E">Merged</text>
+              <g opacity="1"><rect x="0" y="48" width="165" height="38" rx="4" fill="#E8EDF8"></rect><g opacity="0.55" transform="translate(12 60)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 6.4 7 2.3l4.8 4.1V12a.6.6 0 0 1-.6.6H2.8A.6.6 0 0 1 2.2 12z"></path></g><text opacity="0.55" x="34" y="71" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#064AD3">Home</text><text opacity="0.55" x="181.5" y="71" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="48" width="165" height="38" rx="4" fill="#EDEBF6"></rect><g opacity="0.55" transform="translate(210 60)" fill="none" stroke="#6A5CC4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 6.4 7 2.3l4.8 4.1V12a.6.6 0 0 1-.6.6H2.8A.6.6 0 0 1 2.2 12z"></path></g><text opacity="0.55" x="232" y="71" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#3F349B">Home</text><text opacity="0.55" x="379.5" y="72" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="48" width="180" height="38" rx="4" fill="#E7F1EA"></rect><g opacity="0.55" transform="translate(408 60)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 6.4 7 2.3l4.8 4.1V12a.6.6 0 0 1-.6.6H2.8A.6.6 0 0 1 2.2 12z"></path></g><text opacity="0.55" x="430" y="71" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#1F5B33">Home</text><text opacity="0.55" x="612" y="57" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">rebuilt as the</text><text opacity="0.55" x="612" y="81" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">cross-sell surface</text></g>
+              <g opacity="1"><rect x="0" y="110" width="165" height="38" rx="4" fill="#DDE6FB"></rect><g transform="translate(12 122)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 2.2h6.8v9.6L7 9.3l-3.4 2.5z"></path></g><text x="34" y="133" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#064AD3">Watchlist</text><text x="181.5" y="133" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="110" width="165" height="38" rx="4" fill="#E7E3F7"></rect><g transform="translate(210 122)" fill="none" stroke="#6A5CC4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.3" cy="6.3" r="3.6"></circle><path d="M9.1 9.1l2.6 2.6"></path></g><text x="232" y="133" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#3F349B">Explore</text><text x="379.5" y="134" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="110" width="180" height="38" rx="4" fill="#DCEDE1"></rect><g transform="translate(408 122)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.3" cy="6.3" r="3.6"></circle><path d="M9.1 9.1l2.6 2.6"></path></g><text x="430" y="133" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#1F5B33">Explore</text><text x="612" y="119" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">search + watchlist in</text><text x="612" y="143" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">one place</text></g>
+              <g opacity="1"><rect x="0" y="172" width="165" height="38" rx="4" fill="#DDE6FB"></rect><g transform="translate(12 184)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 2.2a2.5 2.5 0 0 0 3.2 3.2l.6 1.4-1.4 1.4-1.4-.6a2.5 2.5 0 0 1-3.2-3.2l1.4-1.4z"></path><path d="M7 6.9l-4 4a1.2 1.2 0 0 0 1.7 1.7l4-4"></path></g><text x="34" y="195" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#064AD3">Tools</text><text x="181.5" y="195" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="172" width="165" height="38" rx="4" fill="#E7E3F7"></rect><g transform="translate(210 184)" fill="none" stroke="#6A5CC4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.2h6"></path><path d="M5.7 2.2v3.1L2.9 10.9a.7.7 0 0 0 .6 1h7a.7.7 0 0 0 .6-1L8.3 5.3V2.2"></path><path d="M4.3 8.6h5.4"></path></g><text x="232" y="195" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#3F349B">MF Lab</text><text x="379.5" y="196" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="172" width="180" height="38" rx="4" fill="#DCEDE1"></rect><g transform="translate(408 184)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 2.2a2.5 2.5 0 0 0 3.2 3.2l.6 1.4-1.4 1.4-1.4-.6a2.5 2.5 0 0 1-3.2-3.2l1.4-1.4z"></path><path d="M7 6.9l-4 4a1.2 1.2 0 0 0 1.7 1.7l4-4"></path></g><text x="430" y="195" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#1F5B33">Tools</text><text x="612" y="181" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">became a tool,</text><text x="612" y="205" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">not a tab</text></g>
+              <g opacity="1"><rect x="0" y="234" width="165" height="38" rx="4" fill="#DDE6FB"></rect><g transform="translate(12 246)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 4h8.8M2.6 7h8.8M2.6 10h5.6"></path></g><text x="34" y="257" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#064AD3">Order</text><text x="181.5" y="257" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="234" width="165" height="38" rx="4" fill="none" stroke="#B3B3B3" stroke-width="1" stroke-dasharray="4 4"></rect><g transform="translate(209 246)" fill="none" stroke="#9B9B9B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.2"></circle><path d="M3.1 11.7a3.9 3.9 0 0 1 7.8 0"></path></g><text x="231" y="257" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#8A8A8A">Profile</text><text x="379.5" y="258" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="234" width="180" height="38" rx="4" fill="#DCEDE1"></rect><g transform="translate(408 246)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 4h8.8M2.6 7h8.8M2.6 10h5.6"></path></g><text x="430" y="257" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="500" fill="#1F5B33">Orders</text><text x="612" y="243" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">Profile lost its slot,</text><text x="612" y="267" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">moved to the header</text></g>
+              <g opacity="1"><rect x="0" y="296" width="165" height="38" rx="4" fill="#E8EDF8"></rect><g opacity="0.55" transform="translate(12 308)" fill="none" stroke="#2E62DA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.6"></circle><path d="M7 2.4V7l3.4 2.4"></path></g><text opacity="0.55" x="34" y="319" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#064AD3">Portfolio</text><text opacity="0.55" x="181.5" y="319" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">+</text><rect x="198" y="296" width="165" height="38" rx="4" fill="#EDEBF6"></rect><g opacity="0.55" transform="translate(210 308)" fill="none" stroke="#6A5CC4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.6"></circle><path d="M7 2.4V7l3.4 2.4"></path></g><text opacity="0.55" x="232" y="319" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#3F349B">Portfolio</text><text opacity="0.55" x="379.5" y="320" text-anchor="middle" font-family="Geist,Helvetica,Arial,sans-serif" font-size="19" fill="#9B9B9B">→</text><rect x="396" y="296" width="180" height="38" rx="4" fill="#E7F1EA"></rect><g opacity="0.55" transform="translate(408 308)" fill="none" stroke="#3E8558" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.6"></circle><path d="M7 2.4V7l3.4 2.4"></path></g><text opacity="0.55" x="430" y="319" font-family="Geist,Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#1F5B33">Portfolio</text><text opacity="0.55" x="612" y="305" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">same name,</text><text opacity="0.55" x="612" y="329" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#6B6B6B">now one number</text></g>
+              <text x="0" y="378" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" fill="#8A8A8A">The only item with nowhere to go was Profile, so it left the bar entirely.</text>
+            </svg>
+    </div>
+    <p class="capb">The real tab labels from both apps, mapped to five shared destinations.</p>
+    <h3 class="np-t" style="margin-top:56px;font-size:20px">Mapping every feature, not just the tabs</h3>
+    <p class="body">To decide where things would live, I mapped every feature of both apps, tab by tab, against a combined structure.</p>
+    <div class="media bleed fmap"><img src="./assets/am/feature-map.webp" width="1600" height="539" alt="My feature-mapping board: every top-nav item and feature of Rupeezy Trade, of Rupeezy Invest, and of the combined app, grouped by Home, Explore, Tools, Orders and Portfolio" loading="lazy" decoding="async"></div>
+    <p class="capb">My original mapping board, from the earlier version of this case study.</p>
+    <h2 class="say more" id="m-home">Home, before and in the concept</h2>
     <p class="body">The concept&rsquo;s Home answered a question the old one never did: <b>what do I own, across everything?</b></p>
     <div class="duo apps2 hba2">
       <div><p class="ctop">Before</p><div class="card img t-blue"><img src="./assets/am/trade-home.webp" width="760" height="1566" alt="The Rupeezy Trade home screen before the merge: indices at the top, a Buy Stocks card, Expert Picks, and a banner for the separate mutual fund app" loading="lazy" decoding="async"></div></div>
@@ -1606,16 +1623,11 @@ ol.flowd.vplan{margin-top:32px}
       <li><img src="./assets/am/ic/portfolio.png" alt=""><span><b>One portfolio total</b> anchors the screen, across every product.</span></li>
     </ul>
     <p class="capb">Rebuilt from my original annotated before and after.</p>
-  </section>
-
-  <!-- 08 PROTOTYPE & OPEN QUESTIONS -->
-  <section id="proto" data-section="Prototype and open questions" class="col" data-reveal>
-    <p class="eyebrow">Prototype &amp; open questions</p>
-    <h2 class="say">The idea was hard to picture. I made it tangible.</h2>
+    <h2 class="say more" id="m-proto">The idea was hard to picture. I made it tangible.</h2>
     <p class="body">Explaining the alternative verbally didn&rsquo;t land. I built a clickable prototype to explore the interaction, then presented <b>static screens</b> to the design team and stakeholders. They saw value and supported further exploration, but implementation was deferred for engineering bandwidth and priorities.</p>
     <div class="media bleed cscr"><img src="./assets/am/concept-screens-all.webp" width="1960" height="624" alt="My full concept screen set: Home, Explore and Mutual Funds by product, profile, watchlists, orders, portfolio and account screens" loading="lazy" decoding="async"></div>
     <p class="capb">From my original concept screen set.</p>
-    <h2 class="say more">Which product should open first?</h2>
+    <h2 class="say more" id="m-default">Which product should open first?</h2>
     <p class="body">Most users were traders, so Stocks was a familiar default. But the business wanted funds to grow, and always opening on Stocks could keep Funds out of sight. <b>I had no evidence for either</b>, so I&rsquo;d test the trade-off rather than assume an answer.</p>
     <div class="duo apps2">
       <div><p class="ctop">Stocks selected</p><div class="card img"><img src="./assets/AM-B-1.svg" alt="Concept screen, not shipped: Explore with Stocks selected in the product layer and the five-task bar at the bottom" loading="lazy" decoding="async"></div></div>
@@ -1624,9 +1636,8 @@ ol.flowd.vplan{margin-top:32px}
     <p class="capb">Neither default was chosen. Testing it is part of the plan in Outcomes &amp; reflection.</p>
   </section>
 
-  <!-- 09 MIGRATION -->
-  <section id="migration" data-section="Migration" class="col" data-reveal>
-    <p class="eyebrow">Migration</p>
+  <section id="migration" data-section="Migration and rollout" class="col" data-reveal>
+    <p class="eyebrow">Migration &amp; rollout</p>
     <h2 class="say">A new app also needs a clear way in.</h2>
     <p class="body">The merge affected existing Invest users too. Shared KYC meant nobody verified again. Banners announced the move, but some users weren&rsquo;t sure which app they were in or which to use, so <b>we improved the messaging before widening the rollout.</b> The old app was later removed from the stores.</p>
     <div class="trio">
@@ -1636,16 +1647,19 @@ ol.flowd.vplan{margin-top:32px}
     </div>
   </section>
 
-  <!-- 10 OUTCOMES & REFLECTION -->
-  <section id="outcome" data-section="Outcomes and reflection" class="col" data-reveal>
-    <p class="eyebrow">Outcomes &amp; reflection</p>
+  <section id="outcome" data-section="Outcomes" class="col" data-reveal>
+    <p class="eyebrow">Outcomes</p>
     <h2 class="say">The merge shipped. The larger navigation did not.</h2>
     <div class="trio">
       <div><p class="ctop">Shipped</p><div class="card t-peach"><p>Trade and Invest in one app.</p><p>One login.</p><p>One combined portfolio total.</p><p>Switch-based release, 15 January 2025.</p></div></div>
       <div><p class="ctop">Team-reported</p><div class="card"><p class="big">4 &rarr; 3</p><p>Engineers on maintenance.</p></div></div>
       <div><p class="ctop">Next to measure</p><div class="card"><p>Cross-selling between Trade and Invest.</p><p>Maintenance savings.</p><p>Findability, completion and satisfaction with two layers.</p></div></div>
     </div>
-    <h2 class="say more">What I would validate next</h2>
+  </section>
+
+  <section id="validate" data-section="What I would validate next" class="col" data-reveal>
+    <p class="eyebrow">What I&rsquo;d validate next</p>
+    <h2 class="say">Test the two-layer model before building it.</h2>
     <p class="body">The project showed the difference between a practical first release and a longer-term architecture question. Next, I&rsquo;d validate the two-layer model with traders and fund investors, and <b>agree success measures before implementation.</b></p>
     <ol class="flowd vplan">
       <li><p class="vt">Hypothesis</p><p class="vd">People can tell the product they&rsquo;re in apart from the common tasks, and predict where a task lives.</p></li>
@@ -1655,7 +1669,11 @@ ol.flowd.vplan{margin-top:32px}
       <li><p class="vt">Iterate</p><p class="vd">Revise the hierarchy and labels based on what we observe.</p></li>
     </ol>
     <p class="tx-info"><b>Next step.</b> How I&rsquo;d validate the two-layer model.</p>
-    <h2 class="say more">Merging two products is an information-architecture problem.</h2>
+  </section>
+
+  <section id="reflection" data-section="Reflection" class="col" data-reveal>
+    <p class="eyebrow">Reflection</p>
+    <h2 class="say">Merging two products is an information-architecture problem.</h2>
     <p class="body">The first release brought Trade and Invest together. Designing it also exposed how navigation should work when one app serves several investment products. My contribution wasn&rsquo;t shipping the alternative: it was <b>spotting the concern, making the concept tangible</b>, and keeping it distinct from what the team actually delivered.</p>
   </section>
 
@@ -2107,17 +2125,33 @@ ol.flowd.vplan{margin-top:32px}
 <script>
 /* rail: the active entry is the last section whose top has passed a third of the way down */
 (function(){
-  var links=[].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var links=[].slice.call(document.querySelectorAll('.toc > a[href^="#"]'));var subl=[].slice.call(document.querySelectorAll('.toc a.toc-sub'));var subs=subl.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
   var secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
   var t=false;
   function f(){ t=false; var line=innerHeight*0.35, k=0;
     secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top<=line) k=i; });
     if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) k=secs.length-1;
-    links.forEach(function(a,i){ a.classList.toggle('active',i===k); if(i===k) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
+    links.forEach(function(a,i){ a.classList.toggle('active',i===k); if(i===k) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); }); var j=-1; subs.forEach(function(x,i){ if(x && x.getBoundingClientRect().top<=line) j=i; }); var inM=links[k]&&links[k].getAttribute('href')==='#model'; subl.forEach(function(a,i){ a.classList.toggle('active',inM&&i===j); });
   }
   addEventListener('scroll',f,{passive:true});
   addEventListener('resize',f); f();
 })();
 </script>
 <script src="./aitwin.js?v=8" defer></script>
+<script>
+(function(){var r=document.getElementById('srail');if(!r)return;var t=document.getElementById('srailT'),P=document.getElementById('srailP'),C=document.getElementById('srailC'),X=document.getElementById('srailX');
+var links=[].slice.call(r.querySelectorAll('a:not(.sub)'));var subs=[].slice.call(r.querySelectorAll('a.sub'));var secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))});
+function pad(i){return ('0'+i).slice(-2)}
+function f(){var line=innerHeight*0.35,k=0;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<=line)k=i});
+if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)k=secs.length-1;
+P.textContent=k>0?pad(k):'';C.textContent=pad(k+1);X.textContent=k<secs.length-1?pad(k+2):'';
+links.forEach(function(a,i){if(i===k)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})}
+function open(v){r.classList.toggle('open',v);t.setAttribute('aria-expanded',v?'true':'false')}
+t.addEventListener('click',function(e){e.stopPropagation();open(!r.classList.contains('open'))});
+links.concat(subs).forEach(function(a){a.addEventListener('click',function(){open(false)})});
+document.addEventListener('click',function(e){if(!r.contains(e.target))open(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&r.classList.contains('open')){open(false);t.focus()}});
+addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
+})();
+</script>
 </body></html>

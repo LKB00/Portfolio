@@ -2,57 +2,58 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rise Portal: Make partner growth visible | Case study</title>
-<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0F0F0F":"#FAFAFA";})();</script>
-<meta name="description" content="A 0→1 B2B portal for Rupeezy’s digital partners: referral progress, client status, earnings and payout eligibility in one self-serve place, so partners can see how referrals turn into earnings.">
+<title>Making partner progress and earnings visible in one place | Rise Portal case study</title>
+<script>(function(){var d=document.documentElement;var t="light";try{t=localStorage.getItem("portfolio-theme")||"light"}catch(e){}d.setAttribute("data-theme",t);d.style.backgroundColor=t==="dark"?"#0E1013":"#FBFCFD";})();</script>
+<meta name="description" content="A Rupeezy case study: designing Rise Portal from 0 to 1, a self-serve web and mobile portal where digital partners track lead status, understand earnings and check payout eligibility.">
 <link rel="canonical" href="https://www.lokeshbhatia.com/rise-portal.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lokesh Bhatia">
-<meta property="og:title" content="Rise Portal: Make partner growth visible | Case study">
-<meta property="og:description" content="A 0→1 B2B portal for Rupeezy’s digital partners: referral progress, client status, earnings and payout eligibility in one self-serve place, so partners can see how referrals turn into earnings.">
+<meta property="og:title" content="Making partner progress and earnings visible in one place | Rise Portal case study">
+<meta property="og:description" content="A Rupeezy case study: designing Rise Portal from 0 to 1, a self-serve web and mobile portal where digital partners track lead status, understand earnings and check payout eligibility.">
 <meta property="og:url" content="https://www.lokeshbhatia.com/rise-portal.html">
 <meta property="og:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.lokeshbhatia.com/og-image-v3.png">
-<meta name="twitter:title" content="Rise Portal: Make partner growth visible | Case study">
-<meta name="twitter:description" content="A 0→1 B2B portal for Rupeezy’s digital partners: referral progress, client status, earnings and payout eligibility in one self-serve place, so partners can see how referrals turn into earnings.">
+<meta name="twitter:title" content="Making partner progress and earnings visible in one place | Rise Portal case study">
+<meta name="twitter:description" content="A Rupeezy case study: designing Rise Portal from 0 to 1, a self-serve web and mobile portal where digital partners track lead status, understand earnings and check payout eligibility.">
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="manifest" href="./site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Hind:wght@500&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
-   TOKENS — same reference system as app-merge-v2: warm off-white
-   ground, serif headings, Geist sans body, near-flat neutral
-   surfaces. Ported wholesale so the two case studies read as one
-   portfolio instead of two different design languages.
+   TOKENS — lifted from a reference case-study page: warm off-white
+   ground, serif headings, Geist sans body, coral progress dot,
+   near-flat neutral surfaces. No blue, no bold-black UI chrome.
    ================================================================ */
 :root{
    --s2:16px; --s3:32px; --s4:56px; --s5:96px;
 
   --t-body:16px;
 
-  --bg:#FAFAFA; --ink:#242020;  --muted:#7A7676;  --faint:#B0ACAC;
-  --line:rgba(36,32,32,.10); --surface:#F2F3F5;
-  --accent:#171717;
+  --bg:#FBFCFD; --ink:#1E2229;  --muted:#6C727C;  --faint:#A8AEB7;
+  --line:rgba(30,34,41,.10); --surface:#F2F4F7;
+  --accent:#171717; --neg:#C64B3D;
 
-  --lav:#DFD6ED; --sky:#D2E3F3; --peach:#F3DAB2; --mint:#D7E8DC; --sand:#F0DFC2;
+  /* pastel panels behind mockups and cards, same trick as the reference:
+     each screenshot sits in a flat colour block rather than plain gray */
+   --sky:#D2E3F3;  --mint:#D7E8DC;
 
   --serif:'STIX Two Text','STIX Two Math',Georgia,serif;
   --sans:'Geist','Inter',system-ui,sans-serif;
   --ease:cubic-bezier(.4,0,.2,1);
 }
 :root[data-theme="dark"]{
-  --bg:#0F0F0F; --ink:#F3EEEE; --body:#EDEDED; --muted:#A69E9E; --value:#C9C2C2; --faint:#6E6666;
-  --line:rgba(255,255,255,.10); --surface:#1A1A1A;
-  --accent:#EDEDED;
+  --bg:#0E1013; --ink:#EEF1F5; --body:#EDEDED; --muted:#9AA1AB; --value:#C2C8D0; --faint:#646B75;
+  --line:rgba(255,255,255,.10); --surface:#171A1E;
+  --accent:#EDEDED; --neg:#E0665A;
 
-  --lav:#332D4A; --sky:#233042; --peach:#4A3A22; --mint:#25352B; --sand:#3E3323;
+   --sky:#233042;  --mint:#25352B;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -83,6 +84,10 @@ header,header.scrolled{position:fixed;top:24px;left:0;right:0;width:100%;max-wid
   background:color-mix(in srgb,var(--surface) 85%,transparent);
   backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4);
   transition:background .2s var(--ease),box-shadow .2s var(--ease)}
+/* once scrolled, the pill sits over the reading column instead of the hero,
+   so it goes fully opaque instead of glassy — a blurred/translucent pill
+   over moving body text reads as broken (letters distort under the blur),
+   while a solid one is just an ordinary header text scrolls behind */
 header.scrolled .navpill{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;
   box-shadow:0 2px 10px -4px rgba(0,0,0,.16),0 0 50px -1px rgba(0,0,0,.08)}
 nav.navlinks{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:500}
@@ -233,7 +238,7 @@ body.menu-open header{z-index:70}
 @media(min-width:981px){.wide{margin-left:250px;margin-right:0}}
 
 /* ---------------- HERO ---------------- */
-
+.hero-shot{border-radius:8px;overflow:hidden}
 h1{font-family:var(--serif);
   color:var(--ink);margin:var(--s4) 0 0}
 .dek{font-family:var(--sans);font-weight:400;font-size:var(--t-body);line-height:1.6;
@@ -243,15 +248,6 @@ h1{font-family:var(--serif);
   padding-top:var(--s3);border-top:1px solid var(--line);max-width:none}
 .meta dt{font-size:16px;font-weight:400;color:var(--faint);margin-bottom:6px}
 .meta dd{margin:0;font-size:16px;font-weight:400;line-height:1.6;}
-
-/* three big-number callouts under the hero meta */
-.figrow{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:var(--s3);margin-top:var(--s4);
-  padding-top:var(--s3);border-top:1px solid var(--line);max-width:none}
-.figrow > div{padding:clamp(18px,2.6vw,28px);border-radius:8px;background:var(--surface)}
-.figrow .flabel{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--faint);margin-bottom:8px}
-.figrow .fnum{font-family:var(--serif);font-size:clamp(24px,3.4vw,34px);line-height:1;letter-spacing:-.02em;color:var(--ink)}
-.figrow .fnote{margin-top:8px;font-family:var(--sans);font-size:13px;line-height:1.5;color:var(--muted)}
-@media(max-width:600px){.figrow{grid-template-columns:1fr}}
 
 /* ---------------- SECTION RHYTHM ---------------- */
 section{margin-top:var(--s5)}
@@ -265,83 +261,180 @@ p.body + p.body{margin-top:var(--s2)}
 p.body b{color:var(--ink);font-weight:400}
 .beat{margin-top:var(--s4)}
 .sub{margin-top:var(--s4)}
+/* h3.say (element+class) outranks a bare .sub by specificity, so .sub's
+   margin-top was silently losing to h3.say's margin:0 shorthand on every
+   sub-heading on the page — this compound selector is specific enough to win. */
 h3.say.sub{margin-top:var(--s4)}
+/* .quote and .two each set their own margin-top for when they appear alone;
+   .beat means "extra room before this," so it must win whenever both are
+   present. A compound selector beats either single-class rule regardless
+   of source order, so this can't be silently re-broken by future reordering. */
+.quote.beat,.two.beat{margin-top:var(--s4)}
 
 /* ---------------- QUOTE / CALLOUT BOX ---------------- */
-.quote{background:rgba(210,227,243,.3);border-radius:0 2px 2px 0;padding:20px 28px 20px 24px;margin-top:var(--s3)}
-.quote p:not(.cite){font-family:var(--sans);font-size:var(--t-body);font-weight:400;color:var(--value);line-height:1.6}
+.quote{background:rgba(243,218,178,.3);border-radius:0 2px 2px 0;padding:20px 28px 20px 24px;margin-top:var(--s3)}
+.quote p{font-family:var(--sans);font-size:var(--t-body);font-weight:400;color:var(--value);line-height:1.6}
 .quote p b{color:var(--ink);font-weight:400}
 .cite{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--faint);margin-top:10px}
 
-/* labeled surface card, reused for the vocabulary/decision/notecard blocks */
+/* ---------------- IMAGE PANELS ---------------- */
+.shot{border-radius:8px;overflow:hidden;background:var(--surface);position:relative;line-height:0}
+.shot img{width:100%;height:auto;display:block}
+
+/* a mockup on a card, the reference's pattern: padding so the colour frames
+   the screenshot instead of being hidden edge-to-edge behind it */
+/* a soft top-left highlight, like a glossy surface catching light, so the
+   pastel cards read as a lit surface rather than a flat, matte colour fill */
+.shot.card{padding:clamp(20px,3vw,32px);line-height:0;
+  background-image:linear-gradient(155deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%)}
+.shot.card img{border-radius:6px}
+:root[data-theme="dark"] .shot.card{background-image:linear-gradient(155deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,0) 50%)}
+/* no fixed height: the card hugs whatever height the screenshot naturally
+   wants at the column's own width, so there is never a letterbox gap to
+   fight with a crop. 462px is only a ceiling, for the rare screenshot
+   whose natural height at this width would otherwise run taller than any
+   other card on the page — past that point it shrinks (object-fit:contain,
+   never crops) and centers, instead of growing the card to match it. */
+.shot.phone{width:100%;margin:0 auto;display:flex;justify-content:center;align-items:center}
+.shot.phone img{width:100%;height:auto;max-height:462px;object-fit:contain;display:block}
+
+.shot.c-sky{background-color:var(--sky)}
+
+.pin{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--ink);
+  color:var(--bg);font-family:var(--sans);font-size:11px;font-weight:600;line-height:1;
+  display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);
+  box-shadow:0 0 0 3px var(--bg)}
+.cap{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--faint);margin-top:10px}
+
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin-top:var(--s2)}
 @media(max-width:600px){.pair{grid-template-columns:1fr}}
 .pair>div{background:var(--surface);border-radius:8px;padding:clamp(18px,2.6vw,28px)}
 .pair .cap{margin-top:0}
 .pair .cap b{color:var(--faint)}
-.cap{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--faint);margin-top:10px}
+.pair .keys{margin-top:var(--s2);grid-template-columns:1fr}
+.smallpair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin-top:var(--s3)}
+.smallpair p.cap{grid-column:1/-1}
+@media(max-width:600px){.smallpair{grid-template-columns:1fr}}
 
-/* ---------------- IMAGE PANELS ---------------- */
-.shot{border-radius:8px;overflow:hidden;background:var(--surface);position:relative;line-height:0}
-.shot img{width:100%;height:auto;display:block}
-.shot.card{padding:clamp(20px,3vw,32px);line-height:0;
+.keys{list-style:none;margin:var(--s3) 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s2) var(--s4)}
+.keys li{display:flex;gap:10px}
+.keys i{font-style:normal;font-family:var(--sans);color:var(--accent);font-weight:600;min-width:15px;font-size:14px}
+.keys p{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--muted);line-height:1.6}
+
+/* ---------------- NUMBERED SUB-POINTS (the reference's 01./02./03.) ---------------- */
+.point{margin-top:var(--s4)}
+.point .n{font-family:var(--sans);font-size:14px;color:var(--faint);margin-bottom:6px}
+.point h4{font-family:var(--serif);font-weight:400;font-size:18px;color:var(--ink);margin:0 0 6px}
+.point p.body{margin:0}
+.side{display:grid;grid-template-columns:minmax(190px,230px) 1fr;gap:var(--s4);align-items:start}
+@media(max-width:700px){.side{grid-template-columns:1fr}}
+
+/* ---------------- STICKY NOTES (sampled from the reference's own uberxshare.webp:
+   #FFD8B0 card, pure #000 ink, #B08C68 signature, sharp corners, a soft drop
+   shadow, and the middle note taller and set lower than the two flanking it) ---------------- */
+.stickynotes{display:flex;align-items:flex-start;gap:var(--s2);margin-top:var(--s4);line-height:1.4}
+/* nested in a .shot card (the same grey container used around screenshots),
+   the card's own padding already stands in for this top margin */
+.shot.card .stickynotes{margin-top:0}
+.stickynote{flex:1 1 0;min-width:0;background:#FFD8B0;border-radius:3px;
+  padding:18px 20px 16px;box-shadow:0 10px 24px -6px rgba(0,0,0,.16),0 3px 8px rgba(0,0,0,.06);
+  display:flex;flex-direction:column;justify-content:space-between;min-height:172px}
+.stickynote:nth-child(2){margin-top:32px;min-height:200px;flex-grow:1.08}
+.stickynote h4{font-family:var(--serif);font-weight:400;font-size:18px;line-height:1.3;color:#000;margin:0 0 6px}
+.stickynote .sn-body{font-family:var(--sans);font-size:14px;line-height:1.6;color:#000;margin:0}
+.stickynote .sn-sig{align-self:flex-end;margin:14px 0 0;font-family:var(--sans);font-size:13px;color:#B08C68}
+@media(max-width:700px){
+  .stickynotes{flex-direction:column;gap:var(--s3)}
+  .stickynote:nth-child(2){margin-top:0}
+}
+/* verdict notes: white paper, the tag alone reads the outcome, red for rejected, green for chosen */
+.stickynote .sn-tag{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;margin:0 0 7px}
+.stickynote.sn-no,.stickynote.sn-yes{background:#FFFFFF}
+.stickynote.sn-no .sn-tag{color:var(--neg)}
+.stickynote.sn-yes .sn-tag{color:#2F8F4E}
+
+/* ---------------- BEFORE/AFTER SLIDER (kept, restyled to match) ---------------- */
+.balabels{display:inline-flex;gap:2px;padding:4px;border-radius:999px;background:var(--surface)}
+.balabels button{font:400 13px/1 var(--sans);padding:9px 16px;border:0;border-radius:999px;
+  background:transparent;color:var(--muted);cursor:pointer;transition:all .2s var(--ease)}
+.balabels button[aria-pressed="true"]{background:var(--bg);color:var(--ink)}
+.ba{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:8px;
+  background:var(--surface);touch-action:pan-y;user-select:none;cursor:ew-resize;margin-top:var(--s2)}
+.ba-before,.ba-after{position:absolute;inset:0}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.ba-handle{position:absolute;top:0;bottom:0;left:42%;z-index:4;width:0;pointer-events:none}
+.ba-handle:before{content:"";position:absolute;top:0;bottom:0;left:-1.5px;width:3px;background:#fff;
+  box-shadow:0 0 0 1px rgba(0,0,0,.08),0 0 20px rgba(0,0,0,.24)}
+.ba-handle span{position:absolute;top:50%;left:0;display:grid;place-items:center;width:48px;height:34px;
+  border-radius:999px;background:#fff;color:#1E2229;transform:translate(-50%,-50%);font-size:15px;
+  box-shadow:0 4px 14px rgba(0,0,0,.16)}
+.ba-hint{margin-top:var(--s2);font-family:var(--sans);font-size:14px;color:var(--faint)}
+
+/* ---------------- TWO-AXIS DEMO — ported verbatim from the live
+   app-merge.html .axisdemo component, literal colours and all, rather
+   than redrawn to match this page's own palette ---------------- */
+.axisdemo-wrap{margin:var(--s4) 0 0}
+.shotcard{position:relative;display:flex;justify-content:center;align-items:center;
+  padding:clamp(20px,3vw,32px);border-radius:8px;background-color:var(--surface);
   background-image:linear-gradient(155deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%)}
-.shot.card img{border-radius:6px}
-:root[data-theme="dark"] .shot.card{background-image:linear-gradient(155deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,0) 50%)}
-.shot.c-lav{background-color:var(--lav)}
-.shot.c-sky{background-color:var(--sky)}
-.shot.c-peach{background-color:var(--peach)}
-.shot.c-mint{background-color:var(--mint)}
-.shot.c-sand{background-color:var(--sand)}
+:root[data-theme="dark"] .shotcard{background-image:linear-gradient(155deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 50%)}
+/* this diagram's colours are literal (ported from the live app-merge.html
+   figure), so its card stays light regardless of page theme, same as there */
+#slots .shotcard{background-color:#F2F4F7;background-image:none}
+:root[data-theme="dark"] #slots .shotcard{background-color:#EAEAEA;background-image:none}
+.mockuprow{position:relative;display:flex;justify-content:center;gap:clamp(18px,3vw,44px)}
+/* the real iPhone mockup PNG — its screen area is genuinely transparent,
+   not filled white, so it sits as a foreground overlay: .ad-rig is sized
+   to the full device image's own canvas ratio, .axisdemo is inset inside
+   it at the exact percentages of that canvas where the transparent screen
+   hole sits (sampled pixel-by-pixel from the asset), and the frame image
+   is layered on top with pointer-events:none so taps still reach the
+   buttons underneath */
+.ad-rig{position:relative;width:240px;aspect-ratio:1608/3316}
+.ad-frame{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none;z-index:2}
+.axisdemo{position:absolute;left:4.29%;top:1.78%;right:4.35%;bottom:1.81%;
+  display:flex;flex-direction:column;background:#FFFFFF;border-radius:12.3%/5.7%;overflow:hidden;font-family:var(--sans)}
+.axisdemo-inner{display:flex;justify-content:center}
+.ad-topbar{display:block;width:100%}
+.ad-tabs{display:flex;gap:10px;padding:0 13px;border-bottom:1px solid #E8EAEE;overflow-x:auto}
+.ad-tabs::-webkit-scrollbar{display:none}
+.ad-tabs button{position:relative;border:0;background:none;padding:5px 0 8px;font-family:inherit;font-size:11px;cursor:pointer;color:#94A3B8;white-space:nowrap}
+.ad-tabs button:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1.5px;border-radius:1.5px;background:transparent}
+.ad-tabs button[aria-selected="true"]{color:#0F172A;font-weight:600}
+.ad-tabs button[aria-selected="true"]:after{background:#0F172A}
+.ad-stage{flex:1;min-height:0;padding:33px 14px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#FAFBFC}
+.ad-stage .ad-coord{margin:0;font-family:var(--sans);font-size:15px;font-weight:600;line-height:1.25;color:#14161C;max-width:none}
+.ad-coord-sep{color:#94A3B8;font-weight:400}
+.ad-help{margin:10px 0 0;font-family:var(--sans);font-size:12px;font-weight:400;line-height:1.5;color:#94A3B8;max-width:26ch}
+.ad-nav{display:flex;justify-content:space-between;border-top:1px solid #E8EAEE;padding:7px 4px 0}
+.ad-nav button{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:none;padding:4px 2px;font-family:inherit;font-size:10px;font-weight:400;cursor:pointer;color:#94A3B8}
+.ad-nav button svg{color:#94A3B8}
+.ad-nav button[aria-selected="true"] svg{color:#0F172A}
+.ad-nav button[aria-selected="true"] span{color:#0F172A}
+.ad-nav svg{display:block}
+.ad-home{width:110px;height:4px;border-radius:99px;background:#14161C;margin:7px auto 8px}
 
-/* ---------------- GLOSSARY (small term grid) ---------------- */
-.glossary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--s2);margin-top:var(--s3)}
-.glossary div{padding:clamp(14px,2.2vw,18px);border-radius:8px;background:var(--surface)}
-.glossary dt{margin:0 0 4px;font-family:var(--sans);font-size:15px;font-weight:500;color:var(--ink)}
-.glossary dd{margin:0;font-family:var(--sans);font-size:13px;line-height:1.5;color:var(--muted)}
+/* ---------------- MIGRATION STAGES ---------------- */
+.stages{display:grid;gap:var(--s3);margin-top:var(--s3);align-items:start;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.stages .ph{height:calc(462px + clamp(40px,6vw,64px));width:100%;max-width:100%;margin:0 auto;
+  border-radius:8px;background-color:var(--mint);box-sizing:border-box;
+  background-image:linear-gradient(155deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%)}
+:root[data-theme="dark"] .stages .ph{background-image:linear-gradient(155deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,0) 50%)}
 
-/* ---------------- CHAIN OF ACCESS ---------------- */
-.chain{display:flex;flex-direction:column;margin-top:var(--s4)}
-.chain-step{position:relative;padding:0 0 var(--s4) var(--s4);border-left:1.5px solid var(--line)}
-.chain-step:last-child{border-left-color:transparent;padding-bottom:0}
-.chain-step:before{content:"";position:absolute;left:-4.5px;top:2px;width:8px;height:8px;border-radius:50%;background:var(--bg);box-shadow:0 0 0 1.5px var(--faint)}
-.chain-tag{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0 0 6px}
-.chain-step b{display:block;font-family:var(--serif);font-size:19px;color:var(--ink);margin:0 0 6px}
-.chain-step p:not(.chain-tag){margin:0;font-family:var(--sans);font-size:15px;line-height:1.6;color:var(--muted)}
-.chain-foot{margin-top:var(--s3);font-family:var(--sans);font-size:14px;color:var(--muted);line-height:1.6}
-.chain-foot b{font-weight:400;color:var(--ink)}
-
-/* ---------------- REFERRAL FLOW ---------------- */
-.flow-card{padding:clamp(18px,2.6vw,26px);border-radius:8px;background:var(--surface)}
-.flow-note{margin:0 0 var(--s2);font-family:var(--sans);font-size:13px;color:var(--faint);text-align:center}
-.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px}
-.flow-step{padding:10px 14px;border-radius:6px;background:var(--bg);font-family:var(--sans);font-size:13px;color:var(--muted);white-space:nowrap}
-.flow-step.on-a{background:var(--sky);color:var(--ink)}
-.flow-step.on-b{background:var(--peach);color:var(--ink)}
-.flow-arrow{color:var(--faint);font-size:12px}
-
-/* ---------------- DECISION LIST ---------------- */
-.decision{margin-top:var(--s3);display:flex;flex-direction:column;gap:var(--s3)}
-.decision dt{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
-.decision dd{margin:0;font-family:var(--sans);font-size:15px;line-height:1.6;color:var(--muted)}
-.decision dd.chose{color:var(--ink)}
-
-/* ---------------- NOTECARD (what I did not have) ---------------- */
-.notecard{margin-top:var(--s4);padding:clamp(20px,3vw,28px);border-radius:8px;background:var(--surface)}
-.notecard .lbl{margin:0 0 10px;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.notecard p{margin:0;font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--muted)}
-
-/* ---------------- MOBILE PHONE ROW ---------------- */
-.pcrow{display:flex;gap:clamp(10px,2vw,16px);overflow-x:auto;-webkit-overflow-scrolling:touch;
-  padding:clamp(20px,3vw,32px);border-radius:8px;background:var(--surface);margin-top:var(--s3)}
-.pcitem{flex:0 0 auto;width:clamp(84px,11vw,124px);display:flex;flex-direction:column;align-items:center;gap:var(--s2)}
-.pcframe{position:relative;width:100%;aspect-ratio:388/800}
-.pcframe img.pcframe-screen{position:absolute;left:4.12%;right:4.12%;top:1.625%;bottom:1.625%;width:91.75%;height:96.75%;border-radius:15.7%/7.2%;object-fit:cover;object-position:top;z-index:1}
-.pcframe img.pcframe-bg{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
-.pclabel{margin:0;font-family:var(--sans);font-size:12px;color:var(--faint);text-align:center;white-space:nowrap}
+/* ---------------- HINGE ---------------- */
+.hinge{margin-top:var(--s5);padding:var(--s4) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hinge p{font-family:var(--serif);color:var(--ink)}
+.hinge p + p{margin-top:var(--s2);font-family:var(--sans);color:var(--muted)}
 
 /* ---------------- CLOSE ---------------- */
-.colhead{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--faint);margin-bottom:var(--s2)}
+.two{display:grid;gap:var(--s3);grid-template-columns:1fr 1fr;margin-top:var(--s3)}
+.three{display:grid;gap:var(--s3);grid-template-columns:1fr 1fr 1fr;margin-top:var(--s3)}
+@media(max-width:700px){.three{grid-template-columns:1fr}}
+@media(max-width:600px){.two{grid-template-columns:1fr}}
+.colhead{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--faint);}
 
 /* ══ NEXT ═══════════════════════════════════════════════════════════ */
 #next{margin-top:var(--s5);padding:0;max-width:684px;margin-left:auto;margin-right:auto}
@@ -405,19 +498,6 @@ h3.say.sub{margin-top:var(--s4)}
   overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
   white-space:nowrap;border:0}
 
-/* ════ STICKY NOTES ════ */
-.stickynotes{display:flex;align-items:flex-start;gap:var(--s2);margin-top:var(--s4);line-height:1.4}
-.stickynote{flex:1 1 0;min-width:0;background:#D2E3F3;border-radius:3px;
-  padding:18px 20px 16px;box-shadow:0 10px 24px -6px rgba(0,0,0,.16),0 3px 8px rgba(0,0,0,.06);
-  display:flex;flex-direction:column;aspect-ratio:1}
-.stickynote h4{font-family:var(--serif);font-weight:400;font-size:18px;line-height:1.3;color:#000;margin:0 0 6px}
-.stickynote .sn-body{font-family:var(--sans);font-size:14px;line-height:1.6;color:#000;margin:0}
-/* the goal and structure notes carry a sentence each: let them grow instead of staying square, and stack on a phone */
-#s4 .stickynote,#sia .stickynote{aspect-ratio:auto;justify-content:space-between;min-height:170px}
-.stickynote .sn-sig{align-self:flex-end;margin:14px 0 0;font-family:var(--sans);font-size:13px;color:#6B86A3}
-.shot.card .stickynotes{margin-top:0}
-@media(max-width:700px){#s3 .stickynotes,#s4 .stickynotes,#sia .stickynotes{flex-direction:column;align-items:stretch;gap:var(--s3)}#s3 .stickynote,#s4 .stickynote,#sia .stickynote{flex:0 0 auto;aspect-ratio:auto;min-height:0}}
-
 @media(max-width:860px){
   :root{--s5:64px;--s4:44px}
 }
@@ -425,40 +505,39 @@ h3.say.sub{margin-top:var(--s4)}
 /* phones: the nav lives at the bottom of the screen, so the top no
    longer needs a bar's worth of clearance; the page starts close to the
    top edge, clear of the notch */
-@media (max-width:576px){ .shell{padding-top:calc(40px + env(safe-area-inset-top))} .shell > .wide:first-child,.shell > .toc + .wide{margin-top:0} }
+@media (max-width:576px){ .shell{padding-top:calc(40px + env(safe-area-inset-top))} }
 
 /* ===== TYPE & SPACING PASS =====
-   Same short list as the homepage, About and App Merge. Serif heads at
-   500 and 1.3, sized like the homepage (the title was 40px on a phone).
-   Every label (eyebrows, Timeline/Role/Team, the figure labels, chain
-   tags, decision terms, screen labels, Question one/two, "What I did not
-   have", "Next case study") in one mono 11px; they were set four ways.
-   Running text at 16px/1.6 (the chain and decision copy was 15), captions
-   and notes 13px muted at one 12px gap (they were 14px faint, 10-16px),
-   emphasis at 500, two off-palette greys retired. */
+   The homepage and About now share one short list; this page had its
+   own. Serif heads at weight 500 and line-height 1.3, sized to match
+   (the title was 40px even on a phone, where the homepage headline is
+   26). Every label (section eyebrows, Timeline/Role/Team, Before/After,
+   column heads, card tags, "Next case study") in the same mono 11px
+   the other pages use for dates and eyebrows. Captions were 14px in the
+   faint grey, which is too pale for a sentence: now 13px muted, 12px
+   under their image everywhere (they ranged 10 to 16). Emphasis at 500
+   like the homepage, one body tracking, two off-palette greys retired. */
 :root{--mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;--body:var(--ink);--value:var(--muted)}
 h1{font-size:clamp(26px,3.6vw,36px);font-weight:500;line-height:1.3;letter-spacing:-.02em}
 h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-spacing:-.018em}
 h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter-spacing:-.012em}
+.hinge p{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.35;letter-spacing:-.018em}
+.hinge p + p{font-size:var(--t-body);font-weight:400;line-height:1.6;letter-spacing:-.01em}
 .nextlink .nexttitle{font-weight:500}
-.figrow .fnum{font-weight:500}
-.chain-step b{font-weight:500;line-height:1.3}
-.dek,p.body,.quote p,.meta dd,.chain-step p:not(.chain-tag),.decision dd{letter-spacing:-.01em}
-.chain-step p:not(.chain-tag),.decision dd{font-size:var(--t-body);line-height:1.6}
-.dek b,p.body b,.quote p b,.chain-foot b{font-weight:500;color:var(--ink)}
+.dek,p.body,.quote p,.meta dd{letter-spacing:-.01em}
+.dek b,p.body b,.quote p b{font-weight:500;color:var(--ink)}
 .meta dd{color:var(--ink)}
-.eyebrow,.meta dt,.colhead,.pair .cap b,.nextlink .nextlbl,.figrow .flabel,.chain-tag,
-.decision dt,.notecard .lbl,.pclabel{
+.eyebrow,.meta dt,.colhead,.point .n,.pair .cap b,.stickynote .sn-tag,.nextlink .nextlbl{
   font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase}
 .eyebrow{margin-bottom:12px}
-.colhead,.notecard .lbl{margin-bottom:12px}
-.pair .cap b{display:block}
-.cap,.cite,.flow-note,.chain-foot{font-size:13px;line-height:1.55;letter-spacing:-.01em;color:var(--muted)}
-.cap,.cite{margin-top:12px}
+.meta dt,.point .n{margin-bottom:6px}
+.colhead{margin-bottom:12px}
+.pair .cap b{display:block;margin-bottom:4px}
+.cap,.cite,.ba-hint,figcaption{font-size:13px;line-height:1.55;letter-spacing:-.01em;color:var(--muted);margin-top:12px}
 .cap b{color:var(--ink);font-weight:500}
 #contact .footcredit{font-size:13px;line-height:1.55;letter-spacing:-.01em}
 @media (max-width:400px){#contact .footcredit{font-size:12px}}
-@media (max-width:340px){#contact .footcredit{font-size:12px;white-space:normal}}
+/* on a phone the three facts sit on one line each, not broken mid-date */
 @media (max-width:576px){
   .meta{grid-template-columns:repeat(3,auto);justify-content:space-between;gap:var(--s2)}
   .meta dd{font-size:13px;white-space:nowrap}
@@ -515,20 +594,868 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
   .totop{left:calc(50% + var(--navpill-w,216px) / 2 - 18px);transform:scale(.86)}
   .totop.show{transform:scale(1)}
 }
+/* a turn in the story, set as type rather than a box: the setup quiet, the point in ink */
+.statement{margin-top:var(--s4);font:400 clamp(26px,3.2vw,34px)/1.25 var(--serif);letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
+.statement span{display:block}
+.statement span:first-child{color:var(--muted)}
 
 /* case-study rail, the Getbaq design: BACK in mono capitals, then quiet section names, the current one in ink */
 .toc{left:24px;top:112px;gap:6px}
 .toc a{font-size:14.5px;line-height:20px}
 .toc .cx-rail-back{margin-bottom:34px;font:500 11px/20px var(--mono);letter-spacing:.09em;text-transform:uppercase}
 .toc .cx-rail-back:before{content:"\2190";margin-right:8px;font-family:var(--sans)}
-.keys{list-style:none;margin:var(--s3) 0 var(--s3);padding:0;display:grid;gap:var(--s2)}
-.keys li{display:flex;gap:10px}
-.keys i{font-style:normal;font-family:var(--sans);color:var(--accent);font-weight:600;min-width:15px;font-size:14px}
-.keys p{margin:0;font-family:var(--sans);font-size:16px;font-weight:400;color:var(--muted);line-height:1.6}
-.statement{margin-top:var(--s4);font:400 clamp(24px,3vw,32px)/1.25 var(--serif);letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
-.statement span{display:block}
-.statement span:first-child{color:var(--muted)}
-</style>
+
+/* ---------------- DIAGRAMS ADDED IN THE REBUILD, drawn in this page's own card language ---------------- */
+.lbl{font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.heroph{gap:7%;align-items:flex-start}
+.heroph img{width:40%;max-width:230px;height:auto}
+.heroph img + img{margin-top:24px}
+.shot .pin{z-index:2}
+
+/* revenue share */
+.rev{display:flex;height:40px;border-radius:4px;overflow:hidden}
+.rev i{display:block}
+.rev i:first-child{flex:97;background:var(--ink)}
+.rev i:last-child{flex:3;min-width:9px;background:repeating-linear-gradient(135deg,var(--muted) 0 2px,transparent 2px 6px)}
+.revl{display:flex;justify-content:space-between;gap:16px;margin-top:12px;line-height:1.5}
+.revl p{font-family:var(--sans);font-size:14px;color:var(--muted);margin:0}
+.revl b{color:var(--ink);font-weight:500}
+
+/* four needs in tension */
+.cross{width:100%;line-height:1.5}
+.cross p{margin:0;font-family:var(--sans);font-size:14px;color:var(--ink)}
+.cross p .lbl{display:block;margin-bottom:2px}
+.cross .n,.cross .s{max-width:300px;margin:0 auto;text-align:center}
+.cross .n:after,.cross .s:before{content:"";display:block;width:1px;height:24px;margin:12px auto;background:var(--faint)}
+.cross .mid{display:flex;align-items:center;gap:14px}
+.cross .mid > i{flex:1;min-width:20px;height:1px;background:var(--faint)}
+.cross .w,.cross .e{flex:0 1 210px}
+.cross .e{text-align:right}
+.cross .c{flex:none;padding:7px 12px;border-radius:999px;background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+@media(max-width:600px){
+  .cross .mid{flex-direction:column;align-items:stretch;gap:0}
+  .cross .mid > i{flex:none;width:1px;min-width:0;height:22px;margin:12px auto}
+  .cross .w,.cross .e{flex:none;text-align:center;max-width:300px;margin:0 auto}
+  .cross .c{align-self:center}
+}
+
+/* three structures, as outline schematics */
+.schrow{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);width:100%;line-height:1.5}
+.schrow > div{display:flex;flex-direction:column;align-items:center;gap:14px}
+.sch{display:flex;justify-content:center;align-items:flex-end;gap:10px;height:124px}
+.sch .ph{position:relative;width:56px;height:112px;border:1.5px solid var(--ink);border-radius:12px;background:var(--bg)}
+.sch .ph.ghost{opacity:.4;margin-right:-36px;transform:translate(-14px,-9px)}
+.sch .ph > em{position:absolute;left:0;right:0;top:11px;text-align:center;font-family:var(--mono);font-size:8px;letter-spacing:.05em;text-transform:uppercase;font-style:normal;color:var(--muted)}
+.sch .ph.ghost > em{text-align:left;padding-left:6px}
+.sch .bar{position:absolute;left:6px;right:6px;bottom:9px;display:flex;gap:3px}
+.sch .bar i{flex:1;height:4px;border-radius:2px;background:var(--muted)}
+.sch .bar i.sw{flex:1.6;background:var(--ink)}
+.sch .top{position:absolute;left:6px;right:6px;top:24px;display:flex;gap:3px}
+.sch .top i{flex:1;height:6px;border-radius:2px;background:var(--faint)}
+.sch .top i:first-child{background:var(--ink)}
+@media(max-width:600px){.schrow{gap:8px}.sch{transform:scale(.85)}}
+
+/* adding products under each model */
+.grow{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:0 18px;line-height:1.5}
+.grow > .lbl{grid-column:1/-1;padding:18px 0 10px;border-top:1px solid var(--line)}
+.grow > .lbl:first-child{padding-top:0;border-top:0}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg i{padding:5px 8px;border-radius:999px;background:var(--bg);font-family:var(--sans);font-size:11px;font-style:normal;color:var(--ink);white-space:nowrap}
+.seg i.on{background:var(--ink);color:var(--bg)}
+.seg i.h{background:transparent;box-shadow:inset 0 0 0 1px var(--faint);color:var(--muted);font-style:italic}
+.seg.tabs{gap:0;flex-wrap:nowrap;border-bottom:1px solid var(--line)}
+.seg.tabs i{border-radius:0;background:none;padding:5px 4px 7px;font-size:10.5px}
+.seg.tabs i.on{color:var(--ink);box-shadow:inset 0 -2px 0 var(--ink)}
+.seg.tabs i.h{box-shadow:none}
+.tbars{display:grid;gap:4px;margin-top:12px}
+.tbars span{display:flex;gap:3px;padding:5px;border-radius:4px;background:var(--bg)}
+.tbars span i{flex:1;height:4px;border-radius:2px;background:var(--muted)}
+.tbars span.h{background:transparent;box-shadow:inset 0 0 0 1px var(--faint)}
+.tbars span.h i{background:var(--faint)}
+.grow .n{margin:8px 0 18px;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+@media(max-width:600px){.grow{gap:0 8px}.seg i{padding:4px 5px;font-size:10px}.seg.tabs i{padding:4px 2px 6px;font-size:9.5px}}
+
+/* the two-layer grid */
+.ia{width:100%;display:grid;grid-template-columns:84px repeat(3,minmax(0,1fr));gap:5px;line-height:1.3}
+.ia .ph{padding:10px 6px;border-radius:4px;background:var(--ink);color:var(--bg);text-align:center;font-family:var(--sans);font-size:13px;font-weight:500}
+.ia .tk{display:flex;align-items:center;font-family:var(--sans);font-size:13px;color:var(--ink)}
+.ia .cx{padding:10px 6px;border-radius:4px;background:var(--bg);text-align:center;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+.ia .cx.home{grid-column:span 3;color:var(--ink)}
+.ia .cx.sel{box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink);font-weight:500}
+.ia .lbl{align-self:center;font-size:10px}
+@media(max-width:600px){.ia{grid-template-columns:62px repeat(3,minmax(0,1fr));gap:3px}.ia .ph,.ia .cx{padding:9px 3px;font-size:11px}.ia .tk{font-size:11.5px}}
+
+/* hero: the two real apps, upright, at a size where their tab bars can be read */
+.shot.card.heroapps{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,5vw,56px);padding:clamp(28px,5vw,48px) clamp(20px,6vw,64px) clamp(18px,3vw,28px);line-height:1.4}
+.heroapps figure{margin:0}
+.heroapps img{display:block;width:100%;max-width:250px;height:auto;margin:0 auto;border-radius:0}
+.heroapps figcaption{margin-top:14px;text-align:center;font-family:var(--sans);font-size:13px;color:var(--muted)}
+.heroapps figcaption b{display:block;font-weight:500;color:var(--ink)}
+
+/* spacing pass: every block that follows text or a caption sits one beat (56px) below it */
+.three.beat,.stages.beat{margin-top:var(--s4)}
+
+/* ================================================================
+   LUMA PASS — type and rhythm matched to the reference case study
+   (fionafang.ca/projects/luma): warm white ground; plain grey labels,
+   not mono capitals; regular-weight serif heads (40 / 26 / 20);
+   emphasis by colour, not weight; label 20 heading 20 text 32 media,
+   80 before a sub-head, 120 between sections; 14px captions in ink.
+   ================================================================ */
+:root:not([data-theme="dark"]){--bg:#FBFCFD}
+:root{--s4:32px;--s5:120px}
+@media(max-width:860px){:root{--s4:28px;--s5:88px}}
+h1{font-family:var(--serif);font-size:clamp(30px,4vw,40px);font-weight:400;line-height:1.2;letter-spacing:-.02em;color:var(--ink)}
+h2.say{font-size:clamp(22px,2.6vw,26px);font-weight:400;line-height:1.3;letter-spacing:-.01em;color:var(--ink);margin:0 0 20px}
+h3.say.sub{font-size:20px;font-weight:400;line-height:1.35;letter-spacing:-.01em;margin:80px 0 20px}
+@media(max-width:860px){h3.say.sub{margin-top:56px}}
+.eyebrow,.meta dt,.colhead,.point .n,.chain-tag,.decision dt{font-family:var(--sans);font-size:16px;font-weight:400;line-height:1.5;letter-spacing:0;text-transform:none;color:var(--faint)}
+.eyebrow{margin:0 0 20px}
+.colhead,.point .n,.decision dt,.chain-tag{margin-bottom:8px}
+.meta dt{margin-bottom:12px}
+.meta dd{color:var(--value)}
+.notecard .lbl,.figrow .flabel,.pclabel,.stickynote .sn-tag,.lbl,.tag,.evm th,.nextlink .nextlbl{font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:0;text-transform:none}
+.dek,p.body,.keys p,.decision dd,.chain-step p:not(.chain-tag){line-height:1.5}
+.dek b,p.body b,.keys p b,.decision dd b,.quote p b{font-weight:400;color:var(--ink)}
+.point h4,.chain-step b,.stickynote h4{font-weight:400}
+.cap,figcaption,.ba-hint{font-size:14px;line-height:1.5;letter-spacing:0;color:var(--ink);margin-top:16px}
+.statement{font-weight:400}
+/* the reading column sits centred in the window, as on the reference, once there is room beside the rail */
+@media(min-width:1140px){.col,.wide,#next,#contact{margin-left:auto;margin-right:auto}}
+/* rail, as on the reference: 16px grey names, the current one in ink with a small coral dot; Back in the same plain voice */
+.toc{left:48px;gap:6px}
+.toc a{font-size:16px;line-height:23px;color:var(--faint)}
+.toc a.active{color:var(--ink)}
+.toc a.active:before{content:"";position:absolute;left:-14px;top:9px;width:5px;height:5px;border-radius:50%;background:#FD8E87}
+.toc .cx-rail-back{margin-bottom:40px;font:400 16px/23px var(--sans);letter-spacing:0;text-transform:none}
+.toc .cx-rail-back:before{content:none}
+
+/* ================================================================
+   LUMA COMPONENTS — the reference page's whole vocabulary, nothing
+   else: grey label, 26px serif head, grey body with black emphasis;
+   "how might we" callout; full-width media panel; three cards with a
+   label above; side-by-side pair with captions; numbered points
+   (01. + 20px serif); chip diagrams in a warm panel; sticky notes.
+   Colours sampled from fionafang.ca/projects/luma.
+   ================================================================ */
+:root{--l-panel:#F3F5F8;--l-callout:#F4F6F9;--l-chip:#E3E7ED;--l-peach:#FFDBAC;--l-blue:#B4DAEB;--l-lav:#D7D1E7;--l-val:#4B515A}
+:root[data-theme="dark"]{--l-panel:#181B1F;--l-callout:#1B1E23;--l-chip:#272B32;--l-peach:#4D3B22;--l-blue:#1F3440;--l-lav:#2B2738;--l-val:#C2C8D0}
+
+/* hero: image, title, meta, as on the reference */
+.hero-media{border-radius:8px;overflow:hidden;line-height:0}
+h1.lt{margin:36px 0 0}
+.meta{border-top:0;padding-top:0;margin-top:28px}
+.meta dd{color:var(--l-val)}
+.lead{margin-top:32px}
+
+/* sections */
+h2.say.more{margin-top:80px}
+.body b,.callout b,.card p b{font-weight:400;color:var(--ink)}
+.callout{margin:32px 0 0;padding:20px 28px 20px 24px;border-radius:0 2px 2px 0;background:var(--l-callout);font:400 16px/1.5 var(--sans);color:var(--l-val)}
+
+/* media panel */
+.media{margin-top:32px;border-radius:8px;overflow:hidden;background:var(--l-panel);line-height:0;position:relative}
+.media.pad{padding:clamp(20px,4vw,40px);display:flex;justify-content:center;align-items:center;gap:clamp(16px,5vw,56px)}
+.media.t-blue{background:var(--l-blue)}.media.t-lav{background:var(--l-lav)}.media.t-peach{background:var(--l-peach)}
+.media img{display:block;max-width:100%;height:auto}
+.media.phone img{width:auto;max-width:100%;max-height:440px}
+.media.bleed img{width:100%}
+
+/* three cards, label above each */
+.trio,.duo{display:grid;gap:12px;margin-top:32px}
+.trio{grid-template-columns:repeat(3,minmax(0,1fr))}
+.duo{grid-template-columns:repeat(2,minmax(0,1fr))}
+.trio > div,.duo > div{min-width:0}
+.ctop{margin:0 0 8px;font:400 14px/1.5 var(--sans);color:var(--ink)}
+.card{border-radius:8px;background:var(--l-panel);padding:18px 18px 20px;line-height:1.5}
+.card.t-blue{background:var(--l-blue)}.card.t-lav{background:var(--l-lav)}.card.t-peach{background:var(--l-peach)}
+.card p{margin:0;font:400 14px/1.5 var(--sans);color:var(--l-val)}
+.card p + p{margin-top:10px}
+.card .big{font:400 clamp(28px,3.4vw,36px)/1.1 var(--serif);letter-spacing:-.02em;color:var(--ink);margin-bottom:10px}
+.card.img{padding:clamp(14px,2.4vw,22px);display:flex;justify-content:center;align-items:flex-end;line-height:0}
+.card.img img{display:block;width:100%;max-width:220px;height:auto}
+.capb{margin:24px 0 0;text-align:center;font:400 14px/1.5 var(--sans);color:var(--ink)}
+@media(max-width:640px){.trio{grid-template-columns:1fr}.duo{grid-template-columns:1fr}}
+
+/* numbered points */
+.np{margin-top:56px}
+.np-n{margin:0 0 20px;font:400 16px/1.5 var(--sans);color:var(--faint)}
+h3.np-t{margin:0 0 20px;font:400 20px/1.35 var(--serif);letter-spacing:-.01em;color:var(--ink)}
+
+/* chip diagrams in a warm panel */
+.flowd{margin-top:32px;padding:clamp(22px,4vw,40px);border-radius:8px;background:var(--l-panel);font-family:var(--sans)}
+.flowd .fl{margin:0 0 14px;font-size:14px;color:var(--ink)}
+.flowd .fl + .row{margin-top:0}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.row + .fl{margin-top:26px}
+.chip{display:inline-block;padding:8px 13px;border-radius:2px;background:var(--l-chip);font-size:13.5px;line-height:1.3;color:var(--ink);white-space:nowrap}
+.chip.hot{background:var(--l-peach)}
+.chip.ghost{background:transparent;box-shadow:inset 0 0 0 1px var(--l-chip);color:var(--faint)}
+.arr{font-size:12px;color:var(--muted)}
+.fnote{margin:16px 0 0;font-size:14px;line-height:1.5;color:var(--ink)}
+.fnote.c{text-align:center}
+
+/* sticky notes on a warm panel, as the reference does it */
+.notes{margin-top:32px;padding:clamp(20px,3vw,32px);border-radius:8px;background:var(--l-panel)}
+.notes .stickynotes{margin-top:0}
+.notes .stickynote{background:var(--l-peach);box-shadow:0 6px 14px -6px rgba(0,0,0,.18)}
+:root[data-theme="dark"] .notes .stickynote{background:#FFDBAC}
+.notes .stickynote .sn-sig{color:#8C7A62}
+
+/* App Merge pieces inside the reference's panels */
+.media.heroapps{display:flex;justify-content:center;align-items:flex-start;gap:6%;padding:44px 6% 0}
+.media.heroapps img{width:min(40%,250px);border-radius:0;margin-bottom:-2px}
+.flowd .rev{display:flex;height:36px;border-radius:2px;overflow:hidden}
+.flowd .rev i:first-child{flex:97;background:var(--l-peach)}
+.flowd .rev i:last-child{flex:3;min-width:9px;background:var(--l-chip)}
+.flowd .revl{display:flex;justify-content:space-between;margin-top:12px}
+.flowd .revl p{margin:0;font-size:14px;color:var(--l-val)}
+.flowd .revl b{font-weight:400;color:var(--ink)}
+.flowd .cross p{font-size:14px;color:var(--ink)}
+.flowd .cross .c{background:var(--l-peach);color:var(--ink);border-radius:2px;font:400 13.5px/1 var(--sans);letter-spacing:0;text-transform:none;padding:9px 13px}
+.flowd .lbl{font-size:14px;color:var(--faint)}
+.flowd .seg i{background:var(--l-chip);border-radius:2px}
+.flowd .seg i.on{background:var(--l-peach);color:var(--ink)}
+.flowd .seg.tabs i,.flowd .seg.tabs i.on{background:none}
+.flowd .seg.tabs i.on{box-shadow:inset 0 -2px 0 var(--ink)}
+.flowd .tbars span{background:var(--l-chip);border-radius:2px}
+.flowd .tbars span.h{background:transparent;box-shadow:inset 0 0 0 1px var(--l-chip)}
+.flowd .grow > .lbl{border-top-color:var(--l-chip)}
+.flowd .ia .ph{background:var(--l-peach);color:var(--ink);border-radius:2px;font-weight:400}
+.flowd .ia .cx{background:var(--l-chip);border-radius:2px;color:var(--l-val)}
+.flowd .ia .cx.home{color:var(--ink)}
+.flowd .ia .cx.sel{background:var(--l-peach);box-shadow:none;color:var(--ink);font-weight:400}
+.card .sch{height:118px;margin:4px 0 16px;justify-content:flex-start}
+.card .sch .ph{background:transparent}
+.media .mockuprow{width:100%}
+#slots.media{background:#F3F5F8}
+#slots svg{display:block;width:100%;height:auto}
+.media.slider{background:none;border-radius:0;overflow:visible}
+.media.slider .ba{margin-top:12px}
+.media.slider .balabels button[aria-pressed="true"]{background:var(--bg)}
+.row .u{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+
+/* cards side by side share one height, with generous inner space as on the reference */
+.trio > div,.duo > div{display:flex;flex-direction:column}
+.trio .card,.duo .card{flex:1}
+.card{padding:28px 32px 30px}
+.card.img{padding:24px}
+.notes{padding:clamp(28px,5vw,48px)}
+.notes .stickynotes{align-items:stretch}
+.notes .stickynote,.notes .stickynote:nth-child(2){margin-top:0;min-height:0;flex:1 1 0;padding:22px 24px 18px}
+@media(max-width:640px){.card{padding:22px 24px 24px}.notes .stickynote{flex:0 0 auto}}
+
+/* hero: the same App Merge card as the homepage, ported as-is */
+.cardframe{position:relative;width:100%;border-radius:8px;background:var(--surface);overflow:hidden}
+.cardframe.merge2{overflow:hidden;aspect-ratio:100/77}
+
+.cardframe.merge2 .mgphone-wrap{position:absolute;top:15.3%;left:11.75%;width:76.5%;container-type:inline-size}
+/* the value is live text laid over the one in the picture: a patch of the
+   card's own colour hides the baked-in digits, and Hind (the app's face)
+   draws the number so it can count up. Box = the digits' bounds in the
+   1600x3299 image, padded a little. */
+.mgval{position:absolute;left:67.8%;width:22.5%;top:20.0%;height:2.37%;background:#F9FBFC;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:.5%;box-sizing:border-box;pointer-events:none}
+.mgval-n{font-size:4.85cqw;font-family:'Hind',var(--sans,'Geist'),sans-serif;font-weight:500;color:#2C333E;line-height:1.1;white-space:nowrap;letter-spacing:0;display:inline-flex;align-items:flex-start}
+.mgval-n .od-d{position:relative;display:inline-block;height:1.1em;overflow:hidden;vertical-align:top}
+/* the column is as wide as its own final digit (proportional, like the
+   app); the strip rides centred over it */
+.mgval-n .od-sz{display:block;visibility:hidden;line-height:1.1}
+.mgval-n .od-strip{position:absolute;top:0;left:50%;margin-left:-1em;width:2em;display:flex;flex-direction:column;will-change:transform}
+.mgval-n .od-strip > span{display:block;height:1.1em;line-height:1.1;text-align:center}
+.mgval-n .od-s{display:inline-block;height:1.1em;line-height:1.1}
+.cardframe.merge2 .mgphone-single{
+  position:relative;display:block;width:100%;height:auto;
+  filter:drop-shadow(-14px 22px 26px rgba(18,18,22,.24));
+  transition:transform .45s var(--ease)}
+
+
+@media (prefers-reduced-motion:reduce){
+  .cardframe.merge2 .mgphone-wrap{transition:none}
+}
+/* fluid mode (JS): one continuous motion instead of a hover jump. The
+   phone rises into the frame the first time the card is seen, drifts
+   gently with the scroll, and on hover lifts and leans toward the
+   cursor. Every value eases toward its target each frame, so nothing
+   snaps: moving the mouse away lets it settle back like it has weight. */
+.cardframe.merge2.is-fluid{perspective:1400px}
+.cardframe.merge2.is-fluid .mgphone-wrap{transition:none!important;will-change:transform,opacity;transform-origin:50% 40%;backface-visibility:hidden}
+
+/* Context: the two apps as a pair, phones rising from the bottom of their panels */
+.apps2 .card.img{padding:36px 28px;align-items:center}
+.apps2 .card.img img{max-width:240px;filter:drop-shadow(0 18px 24px rgba(20,24,60,.18))}
+.apps2 .capb{margin-top:16px}
+@media(max-width:640px){.apps2 .card.img{padding:28px 24px}.apps2 .card.img img{max-width:220px}}
+
+/* the homepage card, set into Context on the reference's warm panel */
+.cardframe.hero{background:var(--l-panel)}
+
+/* ══ TEXT TYPES — one shape per kind of text (from text-types.html) ══
+   question: centred serif on pale peach · quote: hanging italic, no box ·
+   problem: warm card, peach pill · solution: cool card, blue pill ·
+   information: small grey text under a hairline */
+:root{--tx-peach-l:#FFF1DE;--tx-blue-l:#E6F2F8;--tx-peach:#FFDBAC;--tx-blue:#B4DAEB;--tx-warm:#F4F6F9}
+:root[data-theme="dark"]{--tx-peach-l:#2A2218;--tx-blue-l:#17242C;--tx-peach:#4D3B22;--tx-blue:#1F3440;--tx-warm:#1B1E23}
+.tx-q{margin-top:32px;padding:36px clamp(20px,6vw,56px);border-radius:8px;background:var(--l-panel);text-align:center}
+.tx-q .tag{margin:0 0 12px;font:400 14px/1.5 var(--sans);color:var(--muted)}
+.tx-q .t{margin:0;font:400 clamp(20px,2.6vw,24px)/1.35 var(--serif);letter-spacing:-.01em;color:var(--ink);text-wrap:balance}
+.tx-q + .tx-q{margin-top:12px}
+.tx-quote{position:relative;margin-top:40px;padding:4px 0 0 44px}
+.tx-quote:before{content:"\201C";position:absolute;left:0;top:-14px;font:400 72px/1 var(--serif);color:var(--faint)}
+.tx-quote .t{margin:0;font:italic 400 clamp(19px,2.2vw,22px)/1.45 var(--serif);color:var(--ink)}
+.tx-quote .by{display:flex;align-items:center;gap:10px;margin:14px 0 0;font:400 14px/1.5 var(--sans);color:var(--muted)}
+.tx-quote .by:before{content:"";width:20px;height:1px;background:var(--muted)}
+.tx-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+.tx-prob,.tx-sol{display:flex;flex-direction:column;padding:22px 24px 24px;border-radius:8px}
+.tx-prob{background:var(--tx-warm)}.tx-sol{background:var(--tx-blue-l)}
+.tx-pill{align-self:flex-start;margin-bottom:12px;padding:3px 10px;border-radius:999px;font:400 13px/1.5 var(--sans);color:var(--ink)}
+.tx-prob .tx-pill{background:var(--tx-peach)}.tx-sol .tx-pill{background:var(--tx-blue)}
+.tx-prob .t,.tx-sol .t{margin:0;font:400 20px/1.35 var(--serif);color:var(--ink)}
+.tx-prob .s,.tx-sol .s{margin:8px 0 0;font:400 16px/1.5 var(--sans);color:var(--l-val,#4B515A)}
+@media(max-width:600px){.tx-pair{grid-template-columns:1fr}}
+.tx-info{margin-top:32px;padding-top:12px;border-top:1px solid var(--line);font:400 14px/1.6 var(--sans);color:var(--muted)}
+.tx-info b{font-weight:400;color:var(--ink)}
+
+/* goals: woven into one sentence, each owner highlighted in its colour
+   (business peach, user mint, team lavender) */
+:root{--gl-b:#FFDBAC;--gl-u:#D3EBDC;--gl-t:#DED8F0}
+:root[data-theme="dark"]{--gl-b:#4D3B22;--gl-u:#1F3A2A;--gl-t:#2E2840}
+.tx-goals{margin-top:32px;padding:36px clamp(20px,5vw,48px);border-radius:8px;background:var(--l-panel,#F3F5F8);font:400 clamp(22px,2.8vw,28px)/1.45 var(--serif);letter-spacing:-.01em;color:var(--muted)}
+.tx-goals mark{color:var(--ink);padding:0 .15em;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.tx-goals mark.b{background:var(--gl-b)}.tx-goals mark.u{background:var(--gl-u)}.tx-goals mark.t{background:var(--gl-t)}
+.tx-goals-key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font:400 14px/1.5 var(--sans);color:var(--muted)}
+.tx-goals-key span{display:inline-flex;align-items:center;gap:7px}
+.tx-goals-key i{width:12px;height:12px;border-radius:3px}
+
+/* evidence: every source feeds one bracket, ending in what none of them could tell me */
+.ev-gap{margin-top:32px;padding:32px clamp(20px,5vw,40px);border-radius:8px;background:var(--l-panel,#F3F5F8)}
+.ev-gap .src{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ev-gap .src div{padding:12px;border-radius:4px;background:var(--l-chip,#E3E7ED);font:400 13.5px/1.35 var(--sans);color:var(--ink);text-align:center}
+.ev-gap .src small{display:block;margin-top:4px;font-size:12px;color:var(--muted)}
+.ev-gap .brk{height:14px;margin:12px 12% 0;border:1px solid var(--muted);border-top:0}
+.ev-gap .stem{width:1px;height:16px;margin:0 auto;background:var(--muted)}
+.ev-gap .gap{margin:0 auto;max-width:440px;padding:12px 16px;border-radius:4px;background:var(--l-peach,#FFDBAC);text-align:center;font:400 17px/1.4 var(--serif);color:var(--ink)}
+.ev-gap .gap small{display:block;margin-bottom:2px;font:400 12.5px/1.4 var(--sans);color:rgba(0,0,0,.55)}
+:root[data-theme="dark"] .ev-gap .gap small{color:rgba(255,255,255,.6)}
+@media(max-width:640px){.ev-gap .src{grid-template-columns:1fr 1fr}.ev-gap .brk{margin:12px 6% 0}}
+
+/* evidence map: each source shows what it revealed and what it couldn't; all four feed the gap */
+.evmap{margin-top:32px;padding:clamp(22px,4vw,36px);border-radius:8px;background:var(--l-panel);display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.evc{padding:16px 18px 18px;border-radius:6px;background:var(--bg)}
+.evc .n{margin:0;font:400 13px/1.4 var(--sans);color:var(--faint)}
+.evc .t{margin:0 0 12px;font:400 19px/1.3 var(--serif);color:var(--ink)}
+.evc .y{margin:0;padding:8px 10px;border-radius:4px;background:var(--gl-u,#D3EBDC);font:400 14px/1.45 var(--sans);color:var(--ink)}
+.evc .y b{font-weight:400}
+.evc .x{margin:6px 0 0;padding:8px 10px;font:400 14px/1.45 var(--sans);color:var(--muted);text-decoration:line-through;text-decoration-color:var(--faint)}
+.evb{grid-column:1/-1;position:relative;height:30px}
+.evb span{position:absolute;left:25%;right:25%;top:0;height:14px;border:1px solid var(--muted);border-top:0}
+.evb i{position:absolute;left:50%;top:14px;width:1px;height:16px;background:var(--muted)}
+.evg{grid-column:1/-1;justify-self:center;margin:0;max-width:440px;padding:12px 20px;border-radius:4px;background:var(--gl-b,#FFDBAC);text-align:center;font:400 18px/1.4 var(--serif);color:var(--ink)}
+.evg small{display:block;margin-bottom:2px;font:400 12.5px/1.4 var(--sans);color:var(--val,#4B515A)}
+.evk{grid-column:1/-1;display:flex;justify-content:center;gap:18px;margin:6px 0 0;font:400 12.5px/1.4 var(--sans);color:var(--muted)}
+.evk span:before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:2px;vertical-align:-1px}
+.evk .ky:before{background:var(--gl-u,#D3EBDC)}
+.evk .kx{text-decoration:line-through;text-decoration-color:var(--faint)}
+.evk .kx:before{box-shadow:inset 0 0 0 1px var(--faint)}
+@media(max-width:600px){.evmap{grid-template-columns:1fr}.evb span{left:50%;right:auto;width:0;border-left:0;border-right:0}}
+
+/* switch placement: each verdict sits under its own screen; the chosen one lifts, the rejected fade */
+.place{margin:32px 0 0;border-radius:8px;overflow:hidden;background:var(--l-panel)}
+.place-img{line-height:0}
+.place-img img{display:block;width:100%;height:auto}
+.place-v{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 9% clamp(14px,2.4vw,22px)}
+@media(max-width:600px){.place-v{padding:0 14px 14px}}
+.place-v > div{padding:16px 16px 18px;border-radius:6px}
+.place-v .tag{display:inline-block;margin:0 0 10px;padding:2px 9px;border-radius:999px;font:400 12.5px/1.5 var(--sans)}
+.place-v .t{margin:0;font:400 18px/1.3 var(--serif);color:var(--ink)}
+.place-v .s{margin:6px 0 0;font:400 14px/1.5 var(--sans);color:var(--muted)}
+.place-v .s b{font-weight:400;color:var(--ink)}
+.place-v .no{opacity:.62}
+.place-v .no .tag{box-shadow:inset 0 0 0 1px var(--faint);color:var(--muted)}
+.place-v .no .t{text-decoration:line-through;text-decoration-color:var(--faint);text-decoration-thickness:1px}
+.place-v .yes{background:var(--bg)}
+.place-v .yes .tag{background:var(--gl-u,#D3EBDC);color:var(--ink)}
+@media(max-width:600px){.place-v{grid-template-columns:1fr}}
+
+/* three directions: schematics head the columns; rows compare them on the same four questions */
+.dirs{margin-top:32px;padding:clamp(18px,3.4vw,30px);border-radius:8px;background:var(--l-panel)}
+.dh,.dr{display:grid;grid-template-columns:118px repeat(3,minmax(0,1fr));gap:8px;align-items:stretch}
+.dh{align-items:end;margin-bottom:6px}
+.dsch .sch{height:118px;margin:0;justify-content:center;transform:scale(.92);transform-origin:bottom center}
+.dsch .sch .ph{background:transparent}
+.dt{margin:8px 0 0;text-align:center;font:400 17px/1.3 var(--serif);color:var(--ink)}
+.dtag{display:inline-block;margin-left:4px;padding:1px 8px;border-radius:999px;background:var(--gl-u,#D3EBDC);font:400 11.5px/1.6 var(--sans);vertical-align:2px;color:var(--ink)}
+.dtag.c{background:transparent;box-shadow:inset 0 0 0 1px var(--faint);color:var(--muted)}
+.dr{margin-top:8px}
+.dl{margin:0;align-self:center;font:400 13.5px/1.35 var(--sans);color:var(--muted)}
+.dc{display:flex;align-items:center;padding:10px 12px;border-radius:4px;font:400 14px/1.4 var(--sans);color:var(--ink);background:var(--bg)}
+.dc.g{background:var(--gl-u,#D3EBDC)}
+.dc.b{background:transparent;box-shadow:inset 0 0 0 1px var(--l-chip,#E3E7ED);color:var(--muted)}
+.dk{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 16px;margin:14px 0 0;font:400 12.5px/1.4 var(--sans);color:var(--muted)}
+.dk span:before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:2px;vertical-align:-1px}
+.dk .g:before{background:var(--gl-u,#D3EBDC)}.dk .n:before{background:var(--bg)}.dk .b:before{box-shadow:inset 0 0 0 1px var(--faint)}
+@media(max-width:640px){
+  .dh,.dr{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .dh > span{display:none}
+  .dl{grid-column:1/-1;margin-top:10px}
+  .dc{padding:8px 8px;font-size:12.5px}
+  .dt{font-size:14px}.dtag{display:block;width:max-content;margin:4px auto 0}
+  .dsch .sch{transform:scale(.7)}
+}
+
+/* three directions, simply: sketch, name, what a new product adds */
+.dir3{margin-top:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.dir3 > div{padding:24px 16px 22px;border-radius:8px;background:var(--l-panel);text-align:center}
+.dir3 .dn{margin:8px 0 0;font:400 14.5px/1.45 var(--sans);color:var(--muted)}
+.dir3 .dn b{font-weight:400;color:var(--ink)}
+@media(max-width:600px){.dir3{grid-template-columns:1fr}}
+
+/* brief rebuild: five-item meta, the layer diagram */
+.meta.meta5{grid-template-columns:repeat(3,1fr);row-gap:20px}
+.flowd.layers .lstem{display:flex;align-items:center;gap:10px;margin:10px 0 14px 14px;font:400 13px/1.4 var(--sans);color:var(--muted)}
+.flowd.layers .lstem i{width:1px;height:26px;background:var(--muted)}
+@media(max-width:576px){.meta.meta5{grid-template-columns:1fr 1fr}.meta.meta5 dd{white-space:normal}}
+
+/* v2 brief: business stakes, option comparison, fact strip */
+.biz{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:28px;align-items:start;margin-top:32px}
+.biz-fig{padding:26px 24px;border-radius:8px;background:var(--l-panel)}
+.biz-fig .n{margin:0;font:400 56px/1 var(--serif);letter-spacing:-.03em;color:var(--ink)}
+.biz-fig .l{margin:10px 0 0;font:400 15px/1.45 var(--sans);color:var(--ink)}
+.biz-fig .q{margin:10px 0 0;font:400 13px/1.45 var(--sans);color:var(--muted)}
+.biz-goals{list-style:none;margin:0;padding:0}
+.biz-goals li{padding:14px 0;border-top:1px solid var(--line);font:400 15.5px/1.5 var(--sans);color:var(--muted)}
+.biz-goals li:first-child{border-top:0;padding-top:4px}
+.biz-goals b{font-weight:400;color:var(--ink)}
+.opt-wrap{margin-top:32px;overflow-x:auto}
+.opt{width:100%;min-width:520px;border-collapse:collapse;font:400 14px/1.4 var(--sans)}
+.opt th,.opt td{padding:12px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.opt thead th{font:400 15px/1.3 var(--serif);color:var(--ink);border-bottom:1px solid var(--ink)}
+.opt thead small{display:block;margin-top:3px;font:400 12px/1.3 var(--sans);color:var(--muted)}
+.opt tbody th{font-weight:400;color:var(--muted);width:22%}
+.opt td{color:var(--ink)}
+.opt .v1{background:var(--l-panel)}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+.facts span{padding:6px 12px;border-radius:999px;background:var(--l-panel);font:400 13.5px/1.4 var(--sans);color:var(--ink)}
+@media(max-width:640px){.biz{grid-template-columns:1fr;gap:20px}}
+@media(max-width:640px){
+  .opt{min-width:0}.opt thead{display:none}
+  .opt,.opt tbody,.opt tr,.opt th,.opt td{display:block;width:auto!important}
+  .opt tr{padding:12px 0;border-bottom:1px solid var(--line)}
+  .opt th,.opt td{border:0;padding:3px 0}
+  .opt tbody th{font:400 15px/1.3 var(--serif);color:var(--ink);margin-bottom:4px}
+  .opt td:before{content:attr(data-l);display:block;font-size:12px;color:var(--muted)}
+  .opt td.v1{padding:6px 8px;border-radius:4px}
+}
+
+/* rail: "On this page", ten numbered entries */
+.toc .toc-lbl{margin:0 0 10px;font:400 13px/1.4 var(--sans);color:var(--faint)}
+.toc .toc-n{display:inline-block;width:24px;font:400 12px/23px var(--sans);color:var(--faint);font-variant-numeric:tabular-nums}
+.toc a.active .toc-n{color:var(--ink)}
+.toc{width:240px}
+.toc a{white-space:nowrap}
+
+/* rail: smaller type, no dot */
+.toc a{font-size:13.5px;line-height:20px}
+.toc .cx-rail-back{font-size:13.5px;line-height:20px;margin-bottom:32px}
+.toc .toc-lbl{font-size:12px}
+.toc .toc-n{width:22px;font-size:11px;line-height:20px}
+.toc a.active:before{content:none}
+
+/* hero: a narrower phone in the card */
+.cardframe.hero .mgphone-wrap{left:22%;width:56%;top:12%}
+.cardframe.hero .mgphone-single{filter:none}
+.cardframe.hero{background:var(--l-blue,#B4DAEB)!important}
+.cardframe.merge2.hero{aspect-ratio:16/10}
+.cardframe.hero .mgphone-wrap{top:14%}
+
+/* v3: hero as section 1, recovered artifacts, mobile index */
+section.hero-sec{margin-top:0}
+.media.fmap,.media.hba,.media.cscr{background:#fff;padding:clamp(10px,2vw,18px);margin-top:20px}
+.media.fmap img,.media.hba img,.media.cscr img{width:100%}
+:root[data-theme="dark"] .media.fmap,:root[data-theme="dark"] .media.hba,:root[data-theme="dark"] .media.cscr{background:#EEF1F5}
+html{scroll-padding-top:90px}
+.toc a:focus-visible,.mtoc a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
+.mtoc{display:none}
+@media(max-width:980px){
+  .mtoc{display:block;margin-top:28px}
+  .mtoc p{margin:0 0 8px;font:400 12px/1.4 var(--sans);color:var(--faint)}
+  .mtoc div{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .mtoc div::-webkit-scrollbar{display:none}
+  .mtoc a{flex:none;padding:6px 11px;border-radius:999px;background:var(--l-panel);font:400 13px/1.3 var(--sans);color:var(--ink);text-decoration:none;white-space:nowrap}
+}
+
+/* Home before/after, built from our own screens */
+.hba2 .card.img{padding:28px 24px}
+.hba2 .pinwrap{position:relative;line-height:0;width:100%;max-width:240px;margin:0 auto}
+.hba2 .pinwrap img{width:100%;max-width:none}
+.hnotes{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;counter-reset:h}
+.hnotes li{position:relative;padding-left:30px;font:400 14.5px/1.5 var(--sans);color:var(--muted);counter-increment:h}
+.hnotes li:before{content:counter(h);position:absolute;left:0;top:1px;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--bg);font:600 10.5px/1 var(--sans)}
+.hnotes b{font-weight:400;color:var(--ink)}
+@media(max-width:600px){.hnotes{grid-template-columns:1fr}}
+
+/* Home before/after: the app's own icons mark each change, on the screen and in the notes */
+.hba2 .ipin{width:28px;height:28px;background:#fff;box-shadow:0 0 0 2px var(--ink),0 2px 6px rgba(0,0,0,.18);padding:0;overflow:hidden}
+.hba2 .ipin img{width:18px!important;height:18px;max-width:none;border-radius:50%}
+.hnotes li{display:flex;align-items:flex-start;gap:10px;padding-left:0}
+.hnotes li:before{content:none}
+.hnotes li img{flex:none;width:22px;height:22px;border-radius:50%;margin-top:0}
+
+
+.hba2 .hring{position:absolute;border:2px solid var(--ink);border-radius:10px;pointer-events:none}
+.hba2 .hring.c{border-radius:50%}
+
+/* ══ CONSISTENCY PASS — one type scale, one rhythm ══
+   serif 40 / 26 / 20 / 18 · sans 16 body / 14 small / 13 diagram / 12 micro
+   line-height 1.5 · emphasis by colour, never weight · captions left, 24px under their figure */
+/* serif: section sub-heads 20, card and figure titles 18 */
+h3.np-t,.np-t{font-size:20px!important;line-height:1.35}
+.evc .t,.place-v .t,.dir3 .dt,.evg,.dt{font-size:18px!important;line-height:1.35}
+.opt thead th{font-size:18px}
+/* sans 16: anything that reads as body copy in the column */
+.biz-goals li{font-size:16px;line-height:1.5}
+.meta dd{line-height:1.5}
+/* sans 14: notes, cards, captions, table cells */
+.biz-fig .l,.hnotes li,.evc .y,.evc .x,.place-v .s,.dir3 .dn,.card p,.tx-info,.capb,.fnote,.flowd .fl,.opt td,.opt tbody th,.ctop{font-size:14px!important;line-height:1.5!important}
+/* sans 13: inside diagrams */
+.chip,.flowd .cross p,.row .arr,.revl p,.lstem{font-size:13px!important}
+/* sans 12: micro labels */
+.biz-fig .q,.evg small,.evk,.tx-q .tag,.opt thead small,.place-v .tag,.lbl,.grow .n,.seg i,.seg.tabs i,.dtag,.toc .toc-lbl{font-size:12px!important}
+/* emphasis by colour, never weight */
+.capb b,.tx-info b,.hnotes b,.biz-goals b,.evc b,.place-v b,.dir3 b,.card b{font-weight:400!important;color:var(--ink)}
+.capb{color:var(--muted)}
+/* captions: always left, always 24px under the figure */
+.capb{text-align:left!important;margin-top:24px!important}
+/* figures: always 32px after the text they illustrate */
+.media.fmap,.media.cscr,.media.hba{margin-top:32px}
+.hnotes{margin-top:24px}
+.cross .c,.facts span{font-size:13px!important}
+.card p.big{font-size:36px!important;line-height:1.1!important}
+
+/* BALANCE: side-by-side cells share grid rows, so labels, panels, titles and captions line up across a row */
+.duo,.trio{grid-template-rows:auto 1fr auto;row-gap:0}
+.duo > div,.trio > div{display:grid;grid-row:span 3;grid-template-rows:subgrid}
+.duo > div > .ctop{grid-row:1}
+.duo > div > .card,.trio > div > .card{grid-row:2;flex:none}
+.duo > div > .capb,.trio > div > .capb{grid-row:3}
+.duo > div:not(:has(.ctop)) > .card,.trio > div:not(:has(.ctop)) > .card{grid-row:1 / 3}
+.apps2 .card.img{align-items:flex-start}
+.place-v{grid-template-rows:auto auto 1fr}
+.place-v > div{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0}
+.place-v .tag{justify-self:start}
+.biz{align-items:stretch}
+@media(max-width:640px){
+  .duo,.trio,.place-v{grid-template-rows:none;row-gap:28px}
+  .duo > div,.trio > div,.place-v > div{grid-row:auto;grid-template-rows:none}
+  .duo > div > *,.trio > div > *{grid-row:auto!important}
+}
+
+/* one inset for every phone panel in a pair */
+.hba2 .card.img{padding:36px 24px}
+/* ══ DECISION VISUALS — A duplicated work, B trade-offs, C before / V1 / V2, D validation plan ══ */
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+figure.flowd{margin-left:0;margin-right:0;margin-bottom:0}
+ul.row,ol.vplan{list-style:none;margin:0}
+ul.row{padding:0}
+/* status labels: text carries the meaning, fill only reinforces it */
+.st{display:inline-block;padding:3px 8px;border-radius:2px;background:var(--l-chip);font:400 12px/1.4 var(--sans);color:var(--ink);white-space:nowrap}
+.st.ship{background:var(--l-peach)}
+.st.con{background:transparent;box-shadow:inset 0 0 0 1px var(--faint);color:var(--l-val)}
+/* A */
+.flowd.dup{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1.25fr) 28px minmax(0,1fr);align-items:stretch}
+.dup .nd{margin:0;padding:14px 16px;border-radius:2px;background:var(--l-chip);font:400 14px/1.5 var(--sans);color:var(--l-val)}
+.dup .nd b{display:block;font-weight:400;color:var(--ink)}
+.dup .nd.t-blue{background:var(--l-blue)}.dup .nd.t-lav{background:var(--l-lav)}
+.dup .nd.goal{align-self:center;background:var(--l-peach);color:var(--ink)}
+.dup .nd.goal b{margin-bottom:4px;font-size:12px;color:var(--l-val)}
+.dup-src{display:grid;gap:8px;grid-auto-rows:1fr}
+.dup .nd{display:flex;flex-direction:column;justify-content:center}
+.dup .nd.goal{align-self:stretch}
+.dup-ar{position:relative;align-self:center;height:1px;margin:0 4px;background:var(--muted)}
+.dup-ar:after{content:"";position:absolute;right:0;top:-3px;border:3.5px solid transparent;border-left:5px solid var(--muted);border-right:0}
+.dup-work{display:flex;flex-direction:column;justify-content:center;padding:14px 16px;border-radius:2px;box-shadow:inset 0 0 0 1px var(--l-chip)}
+.dup-work .dwl{margin:0 0 6px;font:400 12px/1.5 var(--sans);color:var(--l-val)}
+.dup-work ul{list-style:none;margin:0;padding:0}
+.dup-work li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--l-chip);font:400 14px/1.5 var(--sans);color:var(--ink)}
+.dup-work li:first-child{border-top:0}
+.dup-work .tw{display:flex;gap:3px;flex:none}
+.dup-work .tw i{width:14px;height:8px;border-radius:1px}
+.dup-work .tw i.t-blue{background:var(--l-blue)}.dup-work .tw i.t-lav{background:var(--l-lav)}
+#why .tx-info{margin-top:32px}
+/* B */
+.opt thead th .st{display:block;width:fit-content;margin-top:8px}
+.opt thead th{vertical-align:bottom}
+.optc{display:none}
+/* C */
+.iaseq .ias + .ias{margin-top:28px;padding-top:28px;border-top:1px solid var(--l-chip)}
+.ias-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:0 0 20px;font:400 18px/1.35 var(--serif);color:var(--ink)}
+.ias-two{display:grid;grid-template-columns:1fr;gap:18px}
+.iaseq .fl{margin:0 0 10px;font-size:14px;color:var(--l-val)}
+.iaseq .row + .fl{margin-top:0}
+.iaseq .lstem{display:flex;align-items:center;gap:10px;margin:10px 0 12px 14px;font:400 13px/1.4 var(--sans);color:var(--muted)}
+.iaseq .lstem i{width:1px;height:24px;background:var(--muted)}
+.iaseq .lstem + .fl{margin-top:0}
+.v1bars{display:grid;gap:6px;max-width:420px}
+.v1bars p{display:grid;grid-template-columns:56px 1fr;align-items:center;gap:10px;margin:0;font:400 13px/1.4 var(--sans);color:var(--l-val)}
+.v1bars b{display:flex;gap:4px;padding:7px;border-radius:2px;background:var(--l-chip)}
+.v1bars b i{flex:1;height:5px;border-radius:2px;background:var(--faint)}
+.iaseq .fnote{margin-top:14px;color:var(--l-val)}
+/* D */
+ol.vplan{padding:clamp(22px,4vw,40px);counter-reset:vp}
+.vplan li{position:relative;display:grid;grid-template-columns:28px minmax(0,190px) minmax(0,1fr);column-gap:16px;align-items:baseline;padding:16px 0;border-top:1px solid var(--l-chip);counter-increment:vp}
+.vplan li:first-child{border-top:0;padding-top:0}
+.vplan li:last-child{padding-bottom:0}
+.vplan li:before{content:counter(vp,decimal-leading-zero);font:400 12px/1.5 var(--sans);color:var(--muted)}
+.vplan .vt{margin:0;font:400 18px/1.35 var(--serif);color:var(--ink)}
+.vplan .vd{margin:0;font:400 14px/1.5 var(--sans);color:var(--l-val)}
+@media(max-width:640px){
+  .flowd.dup{grid-template-columns:1fr;row-gap:0}
+  .dup-ar{justify-self:center;width:1px;height:24px;margin:4px 0}
+  .dup-ar:after{right:-3px;top:auto;bottom:0;border:3.5px solid transparent;border-top:5px solid var(--muted);border-bottom:0}
+  .opt{display:none}
+  .grow{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .seg.tabs{flex-wrap:wrap}
+  .optc{display:grid;gap:12px}
+  .optc > div{padding:16px;border-radius:4px;box-shadow:inset 0 0 0 1px var(--line)}
+  .optc > div.v1{background:var(--l-panel);box-shadow:none}
+  .optc .t{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 10px;font:400 18px/1.35 var(--serif);color:var(--ink)}
+  .optc dl{margin:0;display:grid;grid-template-columns:1fr;gap:0}
+  .optc dt{margin-top:10px;font:400 12px/1.5 var(--sans);color:var(--muted)}
+  .optc dd{margin:0;font:400 14px/1.5 var(--sans);color:var(--ink)}
+  .vplan li{grid-template-columns:28px minmax(0,1fr)}
+  .vplan .vd{grid-column:2;margin-top:4px}
+}
+/* ══ NO HORIZONTAL RULES — separation by space and fill only ══ */
+.tx-info{border-top:0!important;padding:12px 16px!important;border-radius:4px;background:var(--l-callout)}
+.grow > .lbl,.flowd .grow > .lbl{border-top:0!important;padding-top:28px}
+.grow > .lbl:first-child{padding-top:0}
+.seg.tabs{border-bottom:0!important}
+.dup-work li{border-top:0!important;padding:5px 0}
+.dup-work .dwl{margin-bottom:8px}
+.flowd.iaseq{padding:0;background:none;display:grid;gap:12px}
+.iaseq .ias{padding:clamp(22px,4vw,32px);border-radius:8px;background:var(--l-panel)}
+.iaseq .ias + .ias{margin-top:0!important;padding-top:clamp(22px,4vw,32px)!important;border-top:0!important}
+.vplan li{border-top:0!important;padding:0!important}
+.vplan li + li{margin-top:24px}
+/* C · Before / V1 / V2 from real navigation strips */
+.iareal{margin:32px 0 0;display:grid;gap:12px}
+.iar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:24px;align-items:center;padding:28px;border-radius:8px}
+.iar.t-blue{background:var(--l-blue)}.iar.t-peach{background:var(--l-peach)}.iar.t-lav{background:var(--l-lav)}
+.iar .st{background:var(--bg);box-shadow:none}
+.iar .st.con{box-shadow:none}
+.iar-t{margin:12px 0 0;font:400 18px/1.35 var(--serif);color:var(--ink)}
+.iar-n{margin:8px 0 0;font:400 14px/1.5 var(--sans);color:var(--l-val)}
+.iar-s{display:grid;gap:8px}
+.iar-l{margin:0;font:400 12px/1.5 var(--sans);color:var(--l-val)}
+.iar-l + .strip + .iar-l{margin-top:8px}
+.iar .strip{display:block;width:100%;height:auto;border-radius:10px;background:#fff}
+@media(max-width:640px){.iar{grid-template-columns:1fr;padding:22px}}
+/* ══ COLOUR WITH ONE MEANING EACH: blue = Trade, lavender = Invest, peach = shipped, green = evidence / decision / goal, grey = everything else ══ */
+.tx-goals mark.n{background:var(--l-chip)}
+.evg{background:var(--l-chip)!important}
+.flowd .cross .c{background:var(--l-chip)!important}
+.flowd .seg i.on{background:var(--l-chip);box-shadow:inset 0 0 0 1px var(--ink)}
+.iar{background:var(--l-panel)}
+.iar.t-peach{background:var(--l-peach)}
+/* B · directions compared: a screen panel with a question and its answer beside it */
+.dfx-set{margin-top:32px}
+.dfx{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;align-items:end}
+.dfx + .dfx{margin-top:48px}
+.dfx-p{display:flex;justify-content:center;align-items:center;padding:44px 24px;border-radius:8px;background:var(--l-panel)}
+.dfx-p img{display:block;height:340px;width:auto}
+.dfx-p img + img{margin-left:-56px}
+.dfx-k{margin:0 0 12px;font:400 12px/1.5 var(--sans);color:var(--muted)}
+.dfx-t{margin:0;font:400 24px/1.3 var(--serif);letter-spacing:-.01em;color:var(--ink)}
+.dfx-v{margin:12px 0 0;font:400 16px/1.5 var(--sans);color:var(--muted)}
+.dfx-v b{font-weight:400;color:var(--ink)}
+@media(max-width:640px){
+  .dfx{grid-template-columns:1fr;gap:20px}
+  .dfx-p{padding:32px 16px}
+  .dfx-p img{height:300px}
+  .dfx-t{font-size:22px}
+}
+/* limit of the switch: two close-ups from the real screens */
+.lim{margin-top:32px}
+.lim-i + .lim-i{margin-top:56px}
+.lim-p{padding:48px 40px;border-radius:8px;background:var(--l-panel)}
+.lim-p img{display:block;width:100%;height:auto;border-radius:12px}
+.lim-k{margin:24px 0 0;font:400 12px/1.5 var(--sans);color:var(--muted)}
+.lim-t{margin:8px 0 0;font:400 20px/1.35 var(--serif);color:var(--ink);text-wrap:balance}
+.lim-v{margin:8px 0 0;font:400 16px/1.5 var(--sans);color:var(--muted)}
+@media(max-width:640px){.lim-p{padding:28px 16px}}
+/* two-layer anatomy: the real concept screen, each layer explained level with its row */
+.anat{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;margin:32px 0 0}
+.anat-p{display:flex;justify-content:center;padding:44px 24px;border-radius:8px;background:var(--l-panel)}
+.anat-p img{display:block;height:480px;width:auto}
+.anat-x{position:relative}
+.anat-a{position:absolute;left:0;right:0}
+.anat-a.top{top:85px}
+.anat-a.bot{bottom:17px}
+.anat-k{margin:0;font:400 12px/1.5 var(--sans);color:var(--muted)}
+.anat-t{margin:6px 0 0;font:400 20px/1.35 var(--serif);color:var(--ink)}
+.anat-v{margin:6px 0 0;font:400 16px/1.5 var(--sans);color:var(--muted)}
+@media(max-width:640px){
+  .anat{grid-template-columns:1fr;gap:24px}
+  .anat-p img{height:400px}
+  .anat-a{position:static}
+  .anat-a + .anat-a{margin-top:24px}
+}
+/* ══ PIXEL PASS 2 — one scale, one rhythm ══
+   serif: 40 title · 26 section · 24 design question / woven sentence · 20 item title · 18 small title
+   sans:  16 body · 14 panel text · 13 diagram text · 12 labels; line-height 1.5 throughout */
+.tx-goals{font-size:24px!important;line-height:1.45!important}
+.dfx-t{font-size:20px!important;line-height:1.35!important}
+.tx-q .t{line-height:1.35!important}
+.evg small,.evk span,.flowd .lbl,.cross p .lbl{line-height:1.5!important}
+.facts span{line-height:1.5!important}
+.vplan .vd{color:var(--muted)}
+ol.flowd.vplan{margin-top:32px}
+.dfx-k{margin-bottom:8px!important}
+.dfx-v{margin-top:8px!important}
+.dfx-p{padding:40px 24px!important}
+.lim-p{padding:40px!important}
+@media(max-width:640px){.dfx-p{padding:32px 16px!important}.lim-p{padding:28px 16px!important}}
+.card p{color:var(--muted)}
+/* tab mapping: a whiteboard canvas (FigJam / Miro dot grid) behind the board */
+#slots.media{background-color:#F5F5F4;background-image:radial-gradient(circle at 1px 1px,#E0E1E3 .8px,transparent 1.2px);background-size:28px 28px;background-position:14px 14px}
+:root[data-theme="dark"] #slots.media{background-color:#1A1C1F;background-image:radial-gradient(circle at 1px 1px,#2C3036 .8px,transparent 1.2px);background-size:28px 28px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #slots.media{background-color:#1A1C1F;background-image:radial-gradient(circle at 1px 1px,#2C3036 .8px,transparent 1.2px);background-size:28px 28px}}
+/* switch placements: three explorations, each phone with its verdict directly beneath */
+.pl3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto auto 1fr;column-gap:12px;margin:32px 0 0}
+.pl3-c{display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:0}
+.pl3-p{display:flex;justify-content:center;padding:32px 0;border-radius:8px;background:var(--l-panel)}
+.pl3-p img{display:block;width:auto;height:300px}
+.pl3-tag{justify-self:start;margin:20px 0 0;padding:2px 9px;border-radius:2px;font:400 12px/1.5 var(--sans);color:var(--muted);background:color-mix(in srgb,var(--l-chip) 50%,transparent)}
+.pl3-c.yes .pl3-tag{background:var(--gl-u,#D3EBDC);box-shadow:none;color:var(--ink)}
+.pl3-t{margin:10px 0 0;font:400 18px/1.35 var(--serif);color:var(--ink)}
+.pl3-d{margin:6px 0 0;font:400 14px/1.5 var(--sans);color:var(--muted)}
+.pl3-d b{font-weight:400;color:var(--ink)}
+@media(max-width:640px){
+  .pl3{grid-template-columns:1fr;grid-template-rows:none;row-gap:40px}
+  .pl3-c{grid-row:auto;grid-template-rows:none}
+  .pl3-p img{height:340px}
+}
+/* frame the problem: the question, then the three pressures on the answer */
+.hmw{margin-top:32px;padding:40px;border-radius:8px;background:var(--l-panel)}
+.hmw-k{margin:0;font:400 12px/1.5 var(--sans);color:var(--muted)}
+.hmw-q{margin:8px 0 0;max-width:none;font:400 24px/1.35 var(--serif);letter-spacing:-.01em;color:var(--ink);text-wrap:balance}
+.hmw-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:40px}
+.hmw-3 > div{padding:20px;border-radius:6px;background:var(--bg)}
+.hmw-t{margin:6px 0 0;font:400 20px/1.35 var(--serif);color:var(--ink)}
+.hmw-d{margin:6px 0 0;font:400 14px/1.5 var(--sans);color:var(--muted)}
+@media(max-width:640px){.hmw{padding:28px 20px}.hmw-q{font-size:22px}.hmw-3{grid-template-columns:1fr}}
+/* full concept screen set on black, like the slider's concept side */
+.media.cscr{background:#15140E!important}
+
+/* ══ RISE PORTAL — page components on the shared scale (serif 40/26/24/20/18 · sans 16/14/13/12) ══ */
+.rp-hero{position:relative;margin:0;padding:40px 40px 0;border-radius:8px;background:var(--l-panel);overflow:hidden;line-height:0}
+.rp-hero-d{display:block;width:84%;height:auto;border-radius:8px 8px 0 0}
+.rp-hero-m{position:absolute;right:40px;bottom:-1px;width:22%;height:auto;border-radius:18px 18px 0 0}
+@media(max-width:640px){.rp-hero{padding:20px 20px 0}.rp-hero-d{width:100%}.rp-hero-m{display:none}}
+
+.rp-n{margin:0;font:400 56px/1 var(--serif);letter-spacing:-.03em;color:var(--ink)}
+.rp-l{margin:10px 0 0;font:400 16px/1.5 var(--sans);color:var(--ink)}
+.rp-ctx{margin-top:32px;padding:40px;border-radius:8px;background:var(--l-panel)}
+.rp-ctx-k{margin:0 0 20px;font:400 12px/1.5 var(--sans);color:var(--muted)}
+.rp-ctx-g{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+
+.rp-q{margin:32px 0 0;padding:40px;border-radius:8px;background:var(--l-panel)}
+.rp-q blockquote{margin:0}
+.rp-q blockquote p{margin:0;font:400 24px/1.45 var(--serif);letter-spacing:-.01em;color:var(--ink);text-wrap:balance}
+.rp-q figcaption{margin-top:16px;font:400 12px/1.5 var(--sans);color:var(--muted)}
+#problem .rp-q + .body{margin-top:32px}
+
+.rp-jobs{margin:32px 0 0;padding:40px;border-radius:8px;background:var(--l-panel);display:grid;gap:28px}
+.rp-job{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:baseline}
+.rp-job-q{margin:0;font:400 20px/1.35 var(--serif);color:var(--ink)}
+.rp-job-a{margin:0;font:400 12px/1.5 var(--sans);color:var(--muted)}
+.rp-job-d{margin:2px 0 0;font:400 14px/1.5 var(--sans);color:var(--ink)}
+
+.rp-ia{display:grid;grid-template-columns:auto minmax(0,1fr);gap:32px;align-items:center;margin:32px 0 0}
+.rp-ia-p{padding:32px 40px;border-radius:8px;background:var(--l-panel);line-height:0}
+.rp-ia-p img{display:block;width:150px;height:auto;border-radius:6px}
+.rp-ia-x{display:grid;gap:20px}
+.rp-ia-t{margin:0;font:400 20px/1.35 var(--serif);color:var(--ink)}
+.rp-ia-d{margin:4px 0 0;font:400 14px/1.5 var(--sans);color:var(--muted)}
+.rp-ia-n{margin:0;font:400 14px/1.5 var(--sans);color:var(--muted)}
+
+.rp-rows{display:grid;gap:12px;margin-top:32px}
+.rp-row{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:32px;align-items:center}
+.rp-row-p{padding:24px;border-radius:8px;background:var(--l-panel);line-height:0}
+.rp-row-p img{display:block;width:100%;height:auto;border-radius:6px}
+.rp-row-t{margin:0;font:400 18px/1.35 var(--serif);color:var(--ink)}
+.rp-row-d{margin:6px 0 0;font:400 14px/1.5 var(--sans);color:var(--muted)}
+.rp-shot img{display:block;width:100%;height:auto;border-radius:6px}
+
+.rp-earn{display:grid;grid-template-columns:auto minmax(0,1fr);gap:32px;margin:56px 0 0}
+.rp-earn-p{padding:32px 40px;border-radius:8px;background:var(--l-panel);line-height:0}
+.rp-earn-p img{display:block;height:420px;width:auto;border-radius:6px}
+.rp-earn-x{position:relative;margin:32px 0}
+.rp-earn-x > div{position:absolute;left:0;right:0;transform:translateY(-50%)}
+
+.rp-logic{display:grid;grid-template-columns:1fr;gap:12px;justify-items:stretch;margin:32px 0 0;padding:40px;border-radius:8px;background:var(--l-panel)}
+.rp-c{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 20px;border-radius:6px;background:var(--bg)}
+.rp-c > div{min-width:0}
+.rp-c-k{margin:0 0 4px;font:400 12px/1.5 var(--sans);color:var(--muted)}
+.rp-c-t{margin:0;font:400 18px/1.35 var(--serif);color:var(--ink)}
+.rp-c-v{margin:0;flex:none;font:400 14px/1.5 var(--sans);color:var(--muted)}
+.rp-op{margin:0;font:400 12px/1.5 var(--sans);color:var(--ink);text-transform:uppercase;letter-spacing:.08em;text-align:center;align-self:center}
+.rp-grp{padding:16px;border-radius:6px;background:var(--l-chip)}
+.rp-grp-k{margin:0 0 12px;font:400 12px/1.5 var(--sans);color:var(--l-val)}
+.rp-grp-g{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center}
+
+.rp-mob .pl3-p img{height:340px}
+.rp-mob .pl3-t{margin-top:20px}
+.rp-mob{grid-template-rows:auto auto 1fr}
+.rp-mob .pl3-c{grid-row:span 3}
+
+.rp-out{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+.rp-out > div{padding:40px;border-radius:8px;background:var(--l-panel)}
+.rp-out-s{margin:12px 0 0;font:400 14px/1.5 var(--sans);color:var(--muted)}
+
+.rp-refl .hmw-3 .hmw-d{margin-top:6px;color:var(--ink);font-size:16px}
+
+@media(max-width:640px){
+  .rp-ctx,.rp-q,.rp-jobs,.rp-logic{padding:28px 20px}
+  .rp-ctx-g,.rp-out{grid-template-columns:1fr}
+  .rp-n{font-size:44px}
+  .rp-job,.rp-row,.rp-ia{grid-template-columns:1fr;gap:16px}
+  .rp-ia-p{justify-self:start}
+  .rp-earn{grid-template-columns:1fr}
+  .rp-earn-p{justify-self:start}
+  .rp-earn-x{position:static;margin:0;display:grid;gap:16px}
+  .rp-earn-x > div{position:static;transform:none}
+  .rp-grp-g{grid-template-columns:1fr}
+  .rp-c{flex-direction:column;gap:6px}
+  .rp-mob .pl3-p img{height:380px}
+}
+
+/* small screens: a number rail in the left margin; hover or tap shows every section */
+.srail{display:none}
+@media(max-width:980px){
+  .srail{display:block;position:fixed;left:10px;top:50%;transform:translateY(-50%);z-index:40;font-family:var(--sans)}
+  .srail-t{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 2px;border:0;background:none;cursor:pointer;font:400 12px/1.5 var(--sans);color:var(--faint)}
+  .srail-c{color:var(--ink)}
+  .srail-p,.srail-x{min-height:18px}
+  .srail-t:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:4px}
+  .srail-l{list-style:none;position:absolute;left:0;top:50%;transform:translateY(-50%);margin:0;padding:6px;width:236px;max-height:80vh;overflow:auto;border-radius:12px;background:var(--bg);box-shadow:0 0 0 1px var(--line),0 16px 40px -12px rgba(20,24,40,.25);opacity:0;visibility:hidden;transition:opacity .15s,visibility 0s linear .15s}
+  .srail:hover .srail-l,.srail.open .srail-l,.srail:focus-within .srail-l{opacity:1;visibility:visible;transition:opacity .15s}
+  .srail-l a{display:flex;gap:10px;padding:8px 10px;border-radius:8px;font-size:14px;line-height:1.5;color:var(--muted);text-decoration:none}
+  .srail-l a span{min-width:18px;font-size:12px;color:var(--faint)}
+  .srail-l a:hover{background:var(--l-panel);color:var(--ink)}
+  .srail-l a[aria-current]{color:var(--ink);background:var(--l-panel)}
+}
+@media(max-width:640px){.shell{padding-left:40px!important}.srail{left:6px}}
+@media(prefers-reduced-motion:reduce){.srail-l{transition:none!important}}
+
+/* nested chapter links under The solution */
+.toc .toc-subs{display:flex;flex-direction:column;gap:6px;margin:-2px 0 2px 22px}
+.toc a.toc-sub{font-size:12.5px!important;line-height:18px!important;color:var(--faint)}
+.toc a.toc-sub.active{color:var(--ink)}
+.srail-l ul{list-style:none;margin:0 0 4px;padding:0 0 0 28px}
+.srail-l a.sub{padding:6px 10px;font-size:13px}
+</style><script defer src="./analytics.js?v=5"></script>
+<script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
 <body>
 
@@ -573,292 +1500,206 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
 <div class="toast" id="toast" role="status" aria-live="polite"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color:var(--accent)"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Copied to clipboard</span></div>
 
 <div class="shell">
-  <nav class="toc" aria-label="Sections"><a class="cx-rail-back" href="./index.html#work">Back</a>
-    <a href="#s1">Context</a>
-    <a href="#s3">Before</a>
-    <a href="#s4">Goals</a>
-    <a href="#s2">Evidence</a>
-    <a href="#sia">Structure</a>
-    <a href="#s5">Dashboard</a>
-    <a href="#s7">Clients and earnings</a>
-    <a href="#s6">Eligibility</a>
-    <a href="#smob">Mobile</a>
-    <a href="#s8">Outcomes</a>
+  <nav class="toc" aria-label="On this page"><a class="cx-rail-back" href="./index.html#work">Back</a>
+    <p class="toc-lbl">On this page</p>
+    <a href="#context"><span class="toc-n">01</span>Context</a>
+    <a href="#problem"><span class="toc-n">02</span>The problem</a>
+    <a href="#evidence"><span class="toc-n">03</span>Evidence &amp; insights</a>
+    <a href="#approach"><span class="toc-n">04</span>Design approach</a>
+    <a href="#solution"><span class="toc-n">05</span>The solution</a>
+    <div class="toc-subs"><a class="toc-sub" href="#sol-dashboard">Dashboard</a><a class="toc-sub" href="#sol-clients">Client tracking</a><a class="toc-sub" href="#sol-earnings">Earnings &amp; eligibility</a><a class="toc-sub" href="#sol-mobile">Mobile</a></div>
+    <a href="#outcomes"><span class="toc-n">06</span>Outcomes</a>
+    <a href="#reflection"><span class="toc-n">07</span>Reflection &amp; next steps</a>
   </nav>
+  <nav class="srail" id="srail" aria-label="Sections"><button type="button" class="srail-t" id="srailT" aria-expanded="false" aria-controls="srailL"><span class="srail-p" id="srailP"></span><span class="srail-c" id="srailC">01</span><span class="srail-x" id="srailX">02</span><span class="vh">Show all sections</span></button><ol class="srail-l" id="srailL"><li><a href="#context"><span>01</span>Context</a></li><li><a href="#problem"><span>02</span>The problem</a></li><li><a href="#evidence"><span>03</span>Evidence &amp; insights</a></li><li><a href="#approach"><span>04</span>Design approach</a></li><li><a href="#solution"><span>05</span>The solution</a><ul><li><a class="sub" href="#sol-dashboard">Dashboard</a></li><li><a class="sub" href="#sol-clients">Client tracking</a></li><li><a class="sub" href="#sol-earnings">Earnings &amp; eligibility</a></li><li><a class="sub" href="#sol-mobile">Mobile</a></li></ul></li><li><a href="#outcomes"><span>06</span>Outcomes</a></li><li><a href="#reflection"><span>07</span>Reflection &amp; next steps</a></li></ol></nav>
 
-  <div class="wide beat" data-reveal>
-    <div class="shot card c-sky">
-      <img width="1200" height="777" src="./assets/rp-hero-nochrome.webp" alt="The Rise Portal dashboard on desktop, showing earnings across three periods, a daily chart, and the lead funnel below." loading="eager" decoding="async">
+  <section id="overview" data-section="Overview" class="hero-sec" data-reveal>
+    <div class="wide">
+      <figure class="rp-hero">
+        <img class="rp-hero-d" src="./assets/rp-hero-nochrome.webp" width="1200" height="777" alt="The Rise Portal dashboard on desktop: earnings with a seven-day chart, total clients, a referral card, total leads split into Account Processing, Account Opened and Account Traded, and the payout eligibility criteria" loading="eager" decoding="async">
+        <img class="rp-hero-m" src="./assets/rp-screen-3.webp" width="1500" height="3248" alt="The Rise Portal dashboard on mobile: earnings overview, the earnings chart and a bottom tab bar" loading="eager" decoding="async">
+      </figure>
     </div>
-    <p class="cap">The dashboard: earnings trend, lead funnel and payout status in one view.</p>
-  </div>
+    <div class="col">
+      <p class="eyebrow" style="margin:32px 0 0">Rupeezy &middot; Product design case study</p>
+      <h1 class="lt" style="margin-top:12px">Making partner progress and earnings visible in one place</h1>
+      <p class="body lead">I designed Rise Portal from 0 to 1 so Rupeezy&rsquo;s digital partners could track lead status, understand earnings and check payout eligibility without relying on routine updates from the team.</p>
+      <dl class="meta meta5">
+        <div><dt>Role</dt><dd>Product designer, sole designer</dd></div>
+        <div><dt>Scope</dt><dd>0 to 1, web and mobile</dd></div>
+        <div><dt>Team</dt><dd>1 product manager, with business, support and partner stakeholders</dd></div>
+        <div><dt>Product</dt><dd>Rise Portal by Rupeezy</dd></div>
+        <div><dt>Status</dt><dd>Launched; outcomes reported by internal teams</dd></div>
+      </dl>
+    </div>
+  </section>
 
-  <div class="col beat" data-reveal>
-    <p class="eyebrow" style="margin-top:0">Case study &middot; Rise Portal</p>
-    <h1 style="margin-top:var(--s2)">Make partner growth visible.</h1>
-  </div>
-
-  <div class="col" data-reveal>
-    <p class="dek">Rise Portal is a B2B portal for Rupeezy&rsquo;s digital partners. <b>Partners were helping grow the business, but they couldn&rsquo;t independently see how referrals translated into conversions and earnings.</b> I designed the portal to make that visible.</p>
-    <dl class="meta">
-      <div><dt>Role</dt><dd>Sole designer</dd></div>
-      <div><dt>Team</dt><dd>1 PM</dd></div>
-      <div><dt>Platform</dt><dd>Web and mobile</dd></div>
-      <div><dt>Scope</dt><dd>0 to 1</dd></div>
-    </dl>
-    <p class="cap">Rupeezy was called AsthaTrade until the rebrand, so the old domain appears in these screens.</p>
-  </div>
-
-  <div class="col beat">
-    <p class="body">Partners referred traders and earned a share of the brokerage those traders generated. The information that explained each payout sat in spreadsheets, so partners had to call, raise a ticket or ask their relationship manager to understand what had changed.</p>
-    <p class="body">I designed a self-serve view of their own business: who had signed up, who was trading, where a referral was stuck, and how that connected to earnings and payout.</p>
-  </div>
-
-  <!-- ============ 01 BACKGROUND ============ -->
-  <section id="s1" data-section="Revenue they couldn't see" class="col" data-reveal>
+  <section id="context" data-section="Context" class="col" data-reveal>
     <p class="eyebrow">Context</p>
-    <h2 class="say">Partners drove revenue, but could not see how they earned it</h2>
-    <p class="body">A digital partner shared a referral link. Someone signed up, completed KYC, became a client and started trading. The partner earned a share of the brokerage generated by that activity.</p>
-    <p class="body">Rupeezy worked with around 100 digital partners, and roughly 35% of company revenue came through this channel. That is company context, not something the design caused. The steps between referral and payout were mostly invisible to them.</p>
-    <div class="figrow beat" style="--cols:2">
-      <div><div class="flabel">Partners</div><div class="fnum">~100</div><div class="fnote">Referring daily</div></div>
-      <div><div class="flabel">Revenue</div><div class="fnum">~35%</div><div class="fnote">Of company revenue came through them. Company context, not design impact</div></div>
-    </div>
-    <div class="beat flow-card">
-      <p class="flow-note">The partner started the journey and received the payout, but could not see what happened in between</p>
-      <div class="flow">
-        <span class="flow-step on-a">Link shared</span><span class="flow-arrow">&rarr;</span>
-        <span class="flow-step">Lead</span><span class="flow-arrow">&rarr;</span>
-        <span class="flow-step">KYC done, client</span><span class="flow-arrow">&rarr;</span>
-        <span class="flow-step">Client trades</span><span class="flow-arrow">&rarr;</span>
-        <span class="flow-step on-b">Partner paid</span>
+    <h2 class="say">An important channel, without a self-serve product.</h2>
+    <p class="body">Digital partners referred prospective clients to Rupeezy and could earn a share of the brokerage from their clients&rsquo; trading. <b>A small group drove a large share of the business.</b></p>
+    <div class="rp-ctx">
+      <p class="rp-ctx-k">Company context</p>
+      <div class="rp-ctx-g">
+        <div><p class="rp-n">~100</p><p class="rp-l">digital partners</p></div>
+        <div><p class="rp-n">~35%</p><p class="rp-l">of company revenue came through them</p></div>
       </div>
-      <p class="flow-note" style="margin:var(--s2) 0 0">And the share itself varied by period, from 10% to 60%.</p>
     </div>
-    <p class="beat body">Earnings depended on more than the number of referrals: how many leads converted, how many clients actually traded, and how much they traded. Without those details, a payout total could not explain why earnings changed.</p>
   </section>
 
-  <!-- ============ 03 THE PROBLEM ============ -->
-  <section id="s3" data-section="Before Rise Portal" class="col" data-reveal>
-    <p class="eyebrow">Before Rise Portal</p>
-    <h2 class="say">The total arrived monthly. The explanation did not.</h2>
-    <p class="body">Partners relied on phone calls, spreadsheets and support tickets to answer routine questions:</p>
-    <ul class="keys" style="grid-template-columns:1fr">
-      <li><i>&bull;</i><p>How many of my leads converted into clients?</p></li>
-      <li><i>&bull;</i><p>How much am I expected to earn this month?</p></li>
-      <li><i>&bull;</i><p>Why are my earnings different from last month?</p></li>
-      <li><i>&bull;</i><p>When will my earnings be released?</p></li>
-    </ul>
-    <p class="body">There was no single self-serve place to see progress, client status, earnings and payout eligibility.</p>
-    <div class="quote beat">
-      <p>&ldquo;Last month I referred 100 people and earned X. This month I referred 200 and earned less. Why?&rdquo;</p>
-      <p class="cite">A question the support team heard often, relayed by them. Not an interview quote.</p>
+  <section id="problem" data-section="The problem" class="col" data-reveal>
+    <p class="eyebrow">The problem</p>
+    <h2 class="say">The question wasn&rsquo;t only &ldquo;How much did I earn?&rdquo;</h2>
+    <p class="body">Yet partners had no portal where they could follow lead progress or understand earnings on their own. <b>Routine questions went to the internal team</b>, and some were harder than they looked.</p>
+    <figure class="rp-q">
+      <blockquote><p>&ldquo;Last month I referred 100 people and earned X. This month I referred 200 and earned less. Why?&rdquo;</p></blockquote>
+      <figcaption>A partner question, relayed by Support</figcaption>
+    </figure>
+    <p class="body">A total couldn&rsquo;t answer it. The partner needed to see <b>where referrals were in the journey, how client activity related to earnings, and whether payout conditions were met.</b></p>
+  </section>
+
+  <section id="evidence" data-section="Evidence and insights" class="col" data-reveal>
+    <p class="eyebrow">Evidence &amp; insights</p>
+    <h2 class="say">Useful internal signals. No direct partner interviews.</h2>
+    <p class="body">I worked from recurring support questions and from the product manager, the business team, Support and the partner relationship managers. I didn&rsquo;t interview partners before launch, so I treated these as <b>indirect evidence</b> and matched my claims to it.</p>
+    <div class="evmap" role="group" aria-label="Four sources, what each could show, what it could not, and the gap none of them covered.">
+      <div class="evc"><p class="t">Support questions</p><p class="y">Where partners got confused, and which updates they asked for again and again</p><p class="x">How often each issue came up</p></div>
+      <div class="evc"><p class="t">PM and business</p><p class="y">Product goals, the payout rules and how the channel worked</p><p class="x">How partners think about their earnings</p></div>
+      <div class="evc"><p class="t">Support team</p><p class="y">Which questions reached the team, and what information was missing</p><p class="x">Questions partners never raised</p></div>
+      <div class="evc"><p class="t">Relationship managers</p><p class="y">Common partner concerns and how partners worked day to day</p><p class="x">Partners completing tasks themselves</p></div>
+      <div class="evb" aria-hidden="true"><span></span><i></i></div>
+      <p class="evg"><small>None of them could show me</small>partners working through the tasks themselves</p>
+      <p class="evk" aria-hidden="true"><span class="ky">Showed</span><span class="kx">Couldn&rsquo;t show</span></p>
     </div>
-    <p class="beat" style="font-weight:500;color:var(--ink)">What the payout depended on</p>
-    <div style="background:#F2F3F5;border-radius:8px;padding:var(--s3);margin-top:var(--s2)">
-      <div class="stickynotes" style="margin-top:0">
-        <div class="stickynote">
-          <h4>Leads</h4>
-          <p class="sn-body">People who signed up</p>
+    <h2 class="say more">Three jobs sat behind the routine questions.</h2>
+    <p class="body">I organised the problem around what a partner needed to do, not around Rupeezy&rsquo;s internal teams: understand overall progress, see where each client stands, and make sense of earnings and eligibility.</p>
+    <figure class="rp-jobs">
+      <div class="rp-job"><p class="rp-job-q">&ldquo;How is my partner business doing?&rdquo;</p><div><p class="rp-job-a">Dashboard</p><p class="rp-job-d">Earnings, an earnings trend, the lead funnel and payout eligibility.</p></div></div>
+      <div class="rp-job"><p class="rp-job-q">&ldquo;Where is each lead in the journey?&rdquo;</p><div><p class="rp-job-a">Clients</p><p class="rp-job-d">Scannable lead and client statuses, with contact details kept private.</p></div></div>
+      <div class="rp-job"><p class="rp-job-q">&ldquo;How much have I earned, and why?&rdquo;</p><div><p class="rp-job-a">Earnings</p><p class="rp-job-d">Current, pending, last payout and total earnings, with history.</p></div></div>
+    </figure>
+    <p class="capb">The three questions, mapped to the structure that shipped.</p>
+  </section>
+
+  <section id="approach" data-section="Design approach" class="col" data-reveal>
+    <p class="eyebrow">Design approach</p>
+    <h2 class="say">The goal wasn&rsquo;t another report. It was a usable next step.</h2>
+    <p class="body">A portal can show plenty of data and still leave partners unsure what it means. Each screen had to answer the immediate question, give enough context to trust the answer, and point to what to check or follow up next.</p>
+    <div class="hmw">
+      <p class="hmw-k">How might we</p>
+      <p class="hmw-q">help partners see how their business is progressing, understand what their earnings mean, and know what to do next, all in one place?</p>
+      <div class="hmw-3">
+        <div><p class="hmw-k">Dashboard &middot; Clients</p><p class="hmw-t">Visibility</p><p class="hmw-d">Make status and earnings easy to find.</p></div>
+        <div><p class="hmw-k">Earnings &middot; Eligibility</p><p class="hmw-t">Interpretation</p><p class="hmw-d">Explain what the values and the payout rule mean.</p></div>
+        <div><p class="hmw-k">Clients</p><p class="hmw-t">Action</p><p class="hmw-d">Show which leads might need a partner&rsquo;s follow-up.</p></div>
+      </div>
+    </div>
+    <h2 class="say more">Make it easy to scan before making it detailed.</h2>
+    <p class="body">I built the portal around three connected areas. Each starts with a summary and lets a partner go deeper when they need to. Status names and criteria are always on screen, so <b>nobody has to remember a phone call</b> or rebuild a calculation.</p>
+    <figure class="rp-ia">
+      <div class="rp-ia-p"><img src="./assets/rp/nav.webp" width="192" height="317" alt="The Rise Portal sidebar: Dashboard, Earning, Client, Partners and Updates, with Dashboard selected" loading="lazy" decoding="async"></div>
+      <div class="rp-ia-x">
+        <div><p class="rp-ia-t">Dashboard</p><p class="rp-ia-d">Earnings summary, earnings trend, the lead funnel and payout eligibility.</p></div>
+        <div><p class="rp-ia-t">Clients</p><p class="rp-ia-d">Client overview, lead statuses and the client list, with phone numbers masked.</p></div>
+        <div><p class="rp-ia-t">Earnings</p><p class="rp-ia-d">Earnings trend, client earnings, payout history and four earnings totals.</p></div>
+        <p class="rp-ia-n">Partners and Updates sat alongside, for referring other partners and for messages such as payout notices.</p>
+      </div>
+    </figure>
+  </section>
+
+  <section id="solution" data-section="The solution" class="col" data-reveal>
+    <p class="eyebrow">The solution</p>
+    <h2 class="say">Four areas, each answering a partner question.</h2>
+    <p class="body">The dashboard gives the overview. Client tracking and earnings carry the same questions into detail, and the mobile app keeps all three within reach.</p>
+    <h2 class="say more" id="sol-dashboard">Show the trend, the funnel and the payout status.</h2>
+    <p class="body">The dashboard brought several questions into one view. Instead of a single headline total, it paired earnings with a trend over time and the state of every referral.</p>
+    <div class="rp-rows">
+      <div class="rp-row"><div class="rp-row-p"><img src="./assets/rp/dash-summary.webp" width="590" height="140" alt="Earnings summary cards: Current Earning, Last Payout Earning and Total Earning" loading="lazy" decoding="async"></div><div class="rp-row-x"><p class="rp-row-t">Earnings at a glance</p><p class="rp-row-d">This cycle, the last payout and the running total, side by side.</p></div></div>
+      <div class="rp-row"><div class="rp-row-p"><img src="./assets/rp/dash-trend.webp" width="590" height="269" alt="An earnings bar chart over seven days with 7D, 15D and 30D range options and a tooltip for one day" loading="lazy" decoding="async"></div><div class="rp-row-x"><p class="rp-row-t">The trend behind the total</p><p class="rp-row-d">Seven, 15 or 30 days, so a change has a shape and a date.</p></div></div>
+      <div class="rp-row"><div class="rp-row-p"><img src="./assets/rp-hero-funnel-crop.webp" width="610" height="185" alt="Total Leads card split into Account Processing, Account Opened and Account Traded" loading="lazy" decoding="async"></div><div class="rp-row-x"><p class="rp-row-t">Where every referral is</p><p class="rp-row-d">Leads split by stage, so a partner can spot one that hasn&rsquo;t moved.</p></div></div>
+    </div>
+    <p class="capb">Detail from the desktop dashboard. Payout eligibility sits below these, covered further down.</p>
+    <h2 class="say more" id="sol-clients">Make lead status visible, and the limits of it too.</h2>
+    <p class="body">The client view showed each lead&rsquo;s stage, so a partner could tell an account that had opened from one that had started trading. <b>Opened wasn&rsquo;t the same as active or trading.</b></p>
+    <div class="media pad rp-shot"><img src="./assets/rp-funnel.webp" width="1200" height="750" alt="My Clients on desktop: a client overview chart, Total Leads by stage, and a client list with Active Clients, Inactive Clients and Leads tabs" loading="lazy" decoding="async"></div>
+    <p class="capb">My Clients on desktop.</p>
+    <div class="rp-rows" style="margin-top:56px">
+      <div class="rp-row"><div class="rp-row-p"><img src="./assets/rp-masked-number-crop.webp" width="915" height="270" alt="The client list with phone numbers masked as XXXXXX7890" loading="lazy" decoding="async"></div><div class="rp-row-x"><p class="rp-row-t">Phone numbers stayed masked</p><p class="rp-row-d">Privacy came first. The trade-off: a partner who hadn&rsquo;t kept a lead&rsquo;s details had no number to follow up with.</p></div></div>
+    </div>
+    <h2 class="say more" id="sol-earnings">Show more than one earnings number.</h2>
+    <p class="body">One total couldn&rsquo;t answer every earnings question. The earnings area paired a trend and client-level earnings with payout history, and separated <b>four totals</b> that a single number would have blurred together.</p>
+    <div class="media pad rp-shot"><img src="./assets/rp-earnings.webp" width="1200" height="750" alt="My Earnings on desktop: an earnings chart against total or traded clients, a Client Earnings and Payout History table, and the Earning Overview" loading="lazy" decoding="async"></div>
+    <p class="capb">My Earnings on desktop.</p>
+    <figure class="rp-earn">
+      <div class="rp-earn-p"><img src="./assets/rp/earn-overview.webp" width="264" height="545" alt="Earning Overview: Current Earnings, Pending Earnings, Last Payout Earnings and Total Earning" loading="lazy" decoding="async"></div>
+      <div class="rp-earn-x">
+        <div style="top:20.6%"><p class="rp-row-t">Current Earnings</p><p class="rp-row-d">This cycle so far, with an as-of date.</p></div>
+        <div style="top:44.4%"><p class="rp-row-t">Pending Earnings</p><p class="rp-row-d">Earned, not yet paid out.</p></div>
+        <div style="top:68.3%"><p class="rp-row-t">Last Payout Earnings</p><p class="rp-row-d">What the most recent payout contained.</p></div>
+        <div style="top:90.6%"><p class="rp-row-t">Total Earning</p><p class="rp-row-d">Everything earned to date.</p></div>
+      </div>
+    </figure>
+    <h2 class="say more">Show progress toward each condition, not just a verdict.</h2>
+    <p class="body">Eligibility depended on more than one threshold. The business defined the rule; <b>I designed how it reads</b>: progress against each condition, and a plain message when a partner didn&rsquo;t yet qualify.</p>
+    <figure class="rp-logic" aria-label="Payout rule: 10 or more active clients, AND either 30% or more of total clients active OR 5 or more new clients in the cycle.">
+      <div class="rp-c req"><div><p class="rp-c-k">Required</p><p class="rp-c-t">10+ active clients</p></div><p class="rp-c-v">7 / 10</p></div>
+      <p class="rp-op">and</p>
+      <div class="rp-grp">
+        <p class="rp-grp-k">Either one of</p>
+        <div class="rp-grp-g">
+          <div class="rp-c"><p class="rp-c-t">30%+ of clients active</p><p class="rp-c-v">25% / 30%</p></div>
+          <p class="rp-op">or</p>
+          <div class="rp-c"><p class="rp-c-t">5+ new clients this cycle</p><p class="rp-c-v">3 / 5</p></div>
         </div>
-        <div class="stickynote">
-          <h4>Clients</h4>
-          <p class="sn-body">Leads with KYC done</p>
-        </div>
-        <div class="stickynote">
-          <h4>Volume</h4>
-          <p class="sn-body">How much they traded</p>
-        </div>
-        <div class="stickynote">
-          <h4>Rate</h4>
-          <p class="sn-body">Share for that period</p>
-        </div>
       </div>
+    </figure>
+    <p class="capb">The rule: 10+ active clients AND (30%+ of clients active OR 5+ new clients in the cycle). Progress values are example data from the interface.</p>
+    <div class="rp-rows" style="margin-top:56px">
+      <div class="rp-row"><div class="rp-row-p"><img src="./assets/rp-eligibility.webp" width="604" height="327" alt="Payout Eligibility Criteria panel: 7 of 10 minimum active clients, and 25% of 30% active clients or 3 of 5 new clients onboarded, with the message Currently, you're not eligible for payout" loading="lazy" decoding="async"></div><div class="rp-row-x"><p class="rp-row-t">The grouping is in the layout</p><p class="rp-row-d">The required condition stands alone. The two alternatives share one tinted block, and the message names the outcome.</p></div></div>
     </div>
-    <p class="beat body">The partner saw none of this. Only the total, once a month, on the 15th.</p>
-    <h3 class="say sub">Why it mattered</h3>
-    <p class="body">Referring more people did not necessarily mean earning more. Without seeing conversions, client trading and volume, a change in earnings could feel arbitrary, and that risked weakening trust. The same routine questions also came back to Rupeezy as repeat support work.</p>
-    <p class="statement"><span>Partners were helping grow the business,</span> <span>but they couldn&rsquo;t independently see how referrals translated into conversions and earnings.</span></p>
+    <p class="body" style="margin-top:56px">On the dashboard, eligibility sat below earnings and clients, which partners checked more often. The cost of that choice: a partner who didn&rsquo;t know the rule had to scroll to find it.</p>
+    <h2 class="say more" id="sol-mobile">The same three jobs, on a phone.</h2>
+    <p class="body">Progress, clients and earnings carried over to mobile. A bottom tab bar replaced the sidebar, summary cards stacked, and the 7D, 15D and 30D ranges stayed one tap away.</p>
+    <figure class="pl3 rp-mob">
+      <div class="pl3-c"><div class="pl3-p"><img src="./assets/rp-screen-3.webp" width="1500" height="3248" alt="Mobile dashboard: earnings overview and earnings chart" loading="lazy" decoding="async"></div><p class="pl3-t">Progress</p><p class="pl3-d">Dashboard, with earnings first.</p></div>
+      <div class="pl3-c"><div class="pl3-p"><img src="./assets/rp-screen-5.webp" width="1500" height="3248" alt="Mobile My Clients: client overview chart and total leads" loading="lazy" decoding="async"></div><p class="pl3-t">Clients</p><p class="pl3-d">Client overview and leads.</p></div>
+      <div class="pl3-c"><div class="pl3-p"><img src="./assets/rp-screen-4.webp" width="1500" height="3248" alt="Mobile Earnings: earnings against total clients and the earning overview" loading="lazy" decoding="async"></div><p class="pl3-t">Earnings</p><p class="pl3-d">Trend, then the earning overview.</p></div>
+    </figure>
   </section>
 
-  <!-- ============ 04 GOALS ============ -->
-  <section id="s4" data-section="Business goals" class="col" data-reveal>
-    <p class="eyebrow">Business goals</p>
-    <h2 class="say">Three goals for the business</h2>
-    <div class="shot card beat">
-      <div class="stickynotes">
-        <div class="stickynote"><div><h4>Improve transparency</h4><p class="sn-body">Show the lead-to-client journey and the factors that shape earnings.</p></div><p class="sn-sig">01</p></div>
-        <div class="stickynote"><div><h4>Reduce routine support</h4><p class="sn-body">Let partners check their own progress instead of calling or raising tickets for routine updates.</p></div><p class="sn-sig">02</p></div>
-        <div class="stickynote"><div><h4>Strengthen the partner proposition</h4><p class="sn-body">Give existing partners a tangible product, and give Rupeezy something real to show prospective partners.</p></div><p class="sn-sig">03</p></div>
-      </div>
+  <section id="outcomes" data-section="Outcomes" class="col" data-reveal>
+    <p class="eyebrow">Outcomes</p>
+    <h2 class="say">The teams reported positive changes after launch.</h2>
+    <div class="rp-out">
+      <div><p class="rp-n">2.4&times;</p><p class="rp-l">lead-to-client conversion</p><p class="rp-out-s">Reported by the business team, over two months</p></div>
+      <div><p class="rp-n">48%</p><p class="rp-l">fewer partner support tickets</p><p class="rp-out-s">Reported by Support</p></div>
     </div>
-    <p class="cap">These were objectives, not proof that each one was achieved.</p>
+    <p class="tx-info"><b>Team-reported.</b> I didn&rsquo;t measure these myself, and the portal was one of several factors behind them.</p>
   </section>
 
-  <!-- ============ 02 DISCOVERY ============ -->
-  <section id="s2" data-section="Evidence and constraints" class="col" data-reveal>
-    <p class="eyebrow">Evidence and constraints</p>
-    <h2 class="say">I learned the brokerage model through the signals I could access</h2>
-    <p class="body">This was my first project at Rupeezy, and I had never worked in broking. The PRD included terms I needed to understand before I could design anything, so I learned the business before I opened Figma.</p>
-    <dl class="glossary">
-      <div><dt>Brokerage share</dt><dd>the portion of brokerage the partner earns</dd></div>
-      <div><dt>Payout cycle</dt><dd>monthly, paid on the 15th</dd></div>
-      <div><dt>Lead vs client</dt><dd>a referral vs someone who completed KYC</dd></div>
-      <div><dt>Active client</dt><dd>a client who traded in the relevant period</dd></div>
-    </dl>
-    <p class="cap">The business vocabulary I needed before I could shape the portal.</p>
-    <div class="chain">
-      <div class="chain-step">
-        <p class="chain-tag">User</p>
-        <b>~100 partners</b>
-        <p>Traders with a following. They refer, their referrals trade, they earn a share of the brokerage.</p>
-      </div>
-      <div class="chain-step">
-        <p class="chain-tag">Calls, daily &middot; proxy</p>
-        <b>The support desk</b>
-        <p>Took partner calls every day, so recurring questions reached them first.</p>
-      </div>
-      <div class="chain-step">
-        <p class="chain-tag">Relayed</p>
-        <b>Me, sole designer</b>
-        <p>First project at Rupeezy. Responsive web, desktop and mobile, end to end.</p>
+  <section id="reflection" data-section="Reflection" class="col" data-reveal>
+    <p class="eyebrow">Reflection</p>
+    <h2 class="say">A dashboard isn&rsquo;t the same as solving a visibility problem.</h2>
+    <p class="body">Rise Portal gave partners one place to check progress, client status, earnings and payout eligibility. Watching partners use it would separate what&rsquo;s visible from what&rsquo;s <b>understood and acted on</b>, especially the payout rule and a stuck lead.</p>
+    <div class="hmw rp-refl">
+      <p class="hmw-k">Next time</p>
+      <p class="hmw-q">I&rsquo;d involve partners earlier, and agree how success is measured before launch.</p>
+      <div class="hmw-3">
+        <div><p class="hmw-k">Question 1</p><p class="hmw-d">How do partners interpret their earnings?</p></div>
+        <div><p class="hmw-k">Question 2</p><p class="hmw-d">Which information do they trust, and how do they check it?</p></div>
+        <div><p class="hmw-k">Question 3</p><p class="hmw-d">What do they do when a lead is stuck and the number is masked?</p></div>
       </div>
     </div>
-    <p class="chain-foot"><b>Also in reach:</b> Kunal, the PM, who mapped where the money moved; the business team, who owned the payout model; and the partner relationship managers.</p>
-    <h3 class="say sub">How I learned what I knew</h3>
-    <p class="body">Recurring support questions, and input from the product manager, the business team, the support team and the partner relationship managers. All of it was second-hand: indirect signals, not research.</p>
-    <div class="quote beat">
-      <p>&ldquo;I onboard 15&ndash;20 users every week, but I have no idea how they&rsquo;re performing.&rdquo;</p>
-      <p class="cite">A partner&rsquo;s words, relayed by the support team. Not an interview quote.</p>
-    </div>
-    <p class="beat body"><b>There were no direct partner interviews.</b> I had the people who answered partners&rsquo; calls: good proxies, still proxies.</p>
-  </section>
-
-  <!-- ============ STRUCTURE ============ -->
-  <section id="sia" data-section="Three partner questions" class="col" data-reveal>
-    <p class="eyebrow">Information architecture</p>
-    <h2 class="say">Three questions, three places to answer them</h2>
-    <div class="shot card beat">
-      <div class="stickynotes">
-        <div class="stickynote"><div><h4>Progress</h4><p class="sn-body">Where are my referrals in the journey?</p></div><p class="sn-sig">Dashboard</p></div>
-        <div class="stickynote"><div><h4>Clients</h4><p class="sn-body">Which clients are active, and who needs follow-up?</p></div><p class="sn-sig">My Clients</p></div>
-        <div class="stickynote"><div><h4>Earnings</h4><p class="sn-body">How much have I earned, and why?</p></div><p class="sn-sig">My Earnings</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 05 PRINCIPLE ============ -->
-  <section id="s5" data-section="Dashboard" class="col" data-reveal>
-    <p class="eyebrow">Dashboard</p>
-    <h2 class="say">Show the calculation, not just the total</h2>
-    <p class="body">A total tells a partner what they earned. The calculation helps explain why.</p>
-    <p class="body">I designed the same core sections for desktop and mobile, adapting the charts, tables and navigation to narrower screens.</p>
-    <div class="beat">
-      <div class="shot card">
-        <img width="1601" height="1102" src="./assets/rise-dashboard.svg" alt="Rise Portal dashboard interface" loading="lazy" decoding="async">
-      </div>
-    </div>
-    <h3 class="say sub">The dashboard</h3>
-    <p class="body">The dashboard brought the earnings trend, the lead funnel and payout status into one view. The funnel showed the stages between a lead and a trading client: Account Processing, Account Opened and Account Traded.</p>
-    <div class="beat">
-      <div class="shot card c-sky">
-        <img width="610" height="185" src="./assets/rp-hero-funnel-crop.webp" alt="The lead funnel on the Rise Portal dashboard: total leads, then Account Processing, Account Opened and Account Traded." loading="lazy" decoding="async">
-      </div>
-      <p class="cap">The funnel made the drop-off visible: partners could see which referrals had progressed and where the journey had stalled.</p>
-    </div>
-    <p class="body beat">The funnel was designed to support action, not only reporting. If a partner recognised a referral stuck in account processing, they could follow up directly instead of waiting for Rupeezy&rsquo;s support team to contact them.</p>
-    <p class="body">That was the bet: clearer information could help partners do more of their own follow-up. It was a design hypothesis, not something I tested with partners.</p>
-  </section>
-
-  <!-- ============ 07 THE SCREENS ============ -->
-  <section id="s7" data-section="Clients and earnings" class="col" data-reveal>
-    <p class="eyebrow">Clients and earnings</p>
-    <h2 class="say">A client list built for follow-up, and earnings you can trace</h2>
-    <h3 class="say sub">Clients</h3>
-    <p class="body">My Clients tracked each referral through three states: Account Processing, Account Opened and Account Traded. Opened is not the same as an active trading client, so the list was organised around activity, with last-traded date and active or inactive status, to show who might need a follow-up.</p>
-    <div class="beat">
-      <div class="shot card c-lav">
-        <img width="1200" height="750" src="./assets/rp-funnel.webp" alt="The Rise Portal Clients page, every client listed by last-traded date and split into active and inactive." loading="lazy" decoding="async">
-      </div>
-      <p class="cap">Sorted by activity, the list shows at a glance who might need a follow-up.</p>
-    </div>
-    <h3 class="say sub">Phone numbers stay masked</h3>
-    <p class="body">The portal could not expose full client phone numbers. But most partners already collected contact details on their own forms, so what they needed from the portal was never the number. It was the match.</p>
-    <div class="beat">
-      <div class="shot card c-mint">
-        <img width="915" height="270" src="./assets/rp-masked-number-crop.webp" alt="The Clients screen with the phone number column masked, showing only the last four digits." loading="lazy" decoding="async">
-      </div>
-      <p class="cap"><span style="font-family:var(--sans);color:var(--value)">XXXXXX7890</span> is enough to find a record you already hold, and nothing on its own.</p>
-    </div>
-    <p class="body beat">The design showed a client&rsquo;s name, masked number, status and last activity&mdash;enough to match the portal record with information the partner already held.</p>
-    <p class="body">This protected client information, but it also limited partners who had not kept their own referral records. They could see a stalled lead but might not have enough information to contact that person.</p>
-    <h3 class="say sub">Earnings</h3>
-    <p class="body">My Earnings showed current earnings, pending earnings, the last payout and total earnings, with trends over time and client-level detail. Payout history listed the cycle, amount, deductions, bank details and date.</p>
-    <div class="beat">
-      <div class="shot card c-peach">
-        <img width="1200" height="750" src="./assets/rp-earnings.webp" alt="The Rise Portal Earnings page, earnings plotted against clients with a payout history table below." loading="lazy" decoding="async">
-      </div>
-      <p class="cap">Deductions appear as their own line item, which makes the final amount easier to trace.</p>
-    </div>
-    <p class="body beat">The daily chart gave partners another way to inspect activity over time and decide where follow-up might be useful.</p>
-  </section>
-
-  <!-- ============ 06 CONSTRAINTS ============ -->
-  <section id="s6" data-section="Payout eligibility" class="col" data-reveal>
-    <p class="eyebrow">Payout eligibility</p>
-    <h2 class="say">A rule I could not change, made readable</h2>
-    <p class="body">Partners were not paid automatically every cycle. The fixed business rule was: <b>at least 10 active clients AND (30% active clients OR 5 new clients onboarded).</b> The design job was to show progress towards each condition, and say plainly why a partner was not yet eligible.</p>
-    <div class="beat">
-      <div class="shot card c-sand">
-        <img width="604" height="327" src="./assets/rp-eligibility.webp" alt="The payout eligibility card, each condition shown as a fraction with the AND/OR relationship made visible." loading="lazy" decoding="async">
-      </div>
-      <p class="cap">In this example the partner has 7 of 10 active clients, 25% of the 30% active-client share, and 3 of 5 new clients, so they are not yet eligible.</p>
-    </div>
-    <div class="quote beat">
-      <p>&ldquo;A message saying only &lsquo;you&rsquo;re not eligible for payout&rsquo; would produce exactly the phone call the whole product was built to remove.&rdquo;</p>
-      <p class="cite">Kunal, Product Manager</p>
-    </div>
-    <dl class="decision">
-      <div><dt>The call</dt><dd>Where should payout eligibility appear on the dashboard?</dd></div>
-      <div><dt>Considered</dt><dd>Place it at the top, because payout eligibility determines whether a partner receives a payout.</dd></div>
-      <div><dt>Chose</dt><dd class="chose">Place it lower on the page, bottom right. Earnings and client activity are checked repeatedly; eligibility matters most while a partner is working toward the threshold.</dd></div>
-      <div><dt>Cost</dt><dd>Partners unfamiliar with the rule may need to scroll to find it.</dd></div>
-    </dl>
-    <p class="body beat">I also considered hiding the card once a partner qualified, and rejected it. A dashboard that rearranges itself by state is harder to learn than one that stays still.</p>
-  </section>
-
-  <!-- ============ MOBILE ============ -->
-  <section id="smob" data-section="Mobile" class="col" data-reveal>
-    <p class="eyebrow">Mobile</p>
-    <h2 class="say">The same three areas on a phone</h2>
-    <div class="pcrow">
-      <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-3.webp" alt="Rise Portal on mobile: Dashboard"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">Dashboard</p></div>
-      <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-4.webp" alt="Rise Portal on mobile: Earnings"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">Earnings</p></div>
-      <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-5.webp" alt="Rise Portal on mobile: My Clients"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">My Clients</p></div>
-      <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-6.webp" alt="Rise Portal on mobile: Updates"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">Updates</p></div>
-      <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-1.webp" alt="Rise Portal on mobile: Refer and Earn"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">Refer and Earn</p></div>
-      <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-2.webp" alt="Rise Portal on mobile: Contact Us"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">Contact Us</p></div>
-      <div class="pcitem"><div class="pcframe"><img class="pcframe-screen" width="1500" height="3248" loading="lazy" decoding="async" src="./assets/rp-screen-7.webp" alt="Rise Portal on mobile: My Partner, referring a sub-partner"><img class="pcframe-bg" width="388" height="800" loading="lazy" decoding="async" src="./assets/rp-phone-frame.webp" alt=""></div><p class="pclabel">My Partner</p></div>
-    </div>
-    <p class="cap">The same core information, adapted for a narrower screen.</p>
-    <p class="beat body">On both screen sizes, what partners check most often comes first. Information they need less often, like eligibility, sits lower.</p>
-  </section>
-
-  <!-- ============ 08 OUTCOMES ============ -->
-  <section id="s8" data-section="Reported outcomes" class="col" data-reveal>
-    <p class="eyebrow">Reported outcomes</p>
-    <h2 class="say">What the teams reported after launch</h2>
-    <div class="figrow" style="--cols:2;margin-top:var(--s3)">
-      <div><div class="flabel">Conversion</div><div class="fnum">2.4&#215;</div><div class="fnote">Lead-to-client conversion. Reported by the business team, over two months.</div></div>
-      <div><div class="flabel">Support</div><div class="fnum">48%</div><div class="fnote">Fewer partner support tickets. Reported by the support team.</div></div>
-    </div>
-    <p class="cap">Reported outcomes, not independently measured design impact. I can&rsquo;t say the portal alone caused them.</p>
-
-    <div class="notecard beat">
-      <p class="lbl">What I&rsquo;d do differently</p>
-      <p>Talk to three to five partners before locking the information model: learn how they read earnings, which data they trust, and what they do when a lead gets stuck. And agree on success measures before launch.</p>
-    </div>
-    <p class="statement beat"><span>A dashboard isn&rsquo;t the same as solving a visibility problem.</span> <span>The product is useful when it reduces uncertainty and helps partners decide what to do next.</span></p>
+    <h2 class="say more">Can partners explain the numbers, and act on them?</h2>
+    <p class="body">I&rsquo;d start with three to five partners and the tasks that motivated the portal, watching where it&rsquo;s clear, where they assume wrongly, and what still sends them back to the team.</p>
+    <ol class="flowd vplan">
+      <li><p class="vt">Explain the eligibility panel</p><p class="vd">Do they read the AND / OR rule correctly, condition by condition?</p></li>
+      <li><p class="vt">Find a client who needs attention</p><p class="vd">Do the status labels point to a useful next step, and are the contact details enough?</p></li>
+      <li><p class="vt">Explain the four earnings totals</p><p class="vd">Can they tell current, pending, last payout and total apart?</p></li>
+      <li><p class="vt">Find a payout&rsquo;s details</p><p class="vd">Task completion and time to the right field.</p></li>
+      <li><p class="vt">Decide what to do about a stuck lead</p><p class="vd">The action they choose, and what extra information they ask for.</p></li>
+    </ol>
+    <p class="body" style="margin-top:32px">Before claiming impact, I&rsquo;d agree definitions, a baseline and a time window for <b>support requests per active partner and lead-to-client conversion</b>, alongside task success and eligibility-reading accuracy.</p>
   </section>
 
   <section id="next" data-reveal>
@@ -876,8 +1717,6 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
   </section>
 </div>
 
-<script defer src="./analytics.js?v=5"></script>
-<script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 <script>
 (function(){
   var doc=document.documentElement, tb=document.getElementById('themeToggle');
@@ -1032,8 +1871,140 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
     btn.addEventListener('click',function(){ copyText('hi.lokeshux@gmail.com'); });
   });
 
+  // before/after hero slider
+  var slider=document.getElementById('baSlider'), after=document.getElementById('baAfter'),
+    handle=document.getElementById('baHandle');
+  if(slider){
+    var REST=42, cur=REST, target=REST, raf=null, dragging=false, touched=false;
+    var fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+    function paint(p){
+      after.style.clipPath='inset(0 0 0 '+p+'%)';
+      handle.style.left=p+'%';
+      slider.setAttribute('aria-valuenow',Math.round(p));
+      syncTabs(p);
+    }
+    function tick(){
+      cur+=(target-cur)*0.18;
+      if(Math.abs(target-cur)<0.1){cur=target;paint(cur);raf=null;return;}
+      paint(cur);raf=requestAnimationFrame(tick);
+    }
+    function to(p,instant){
+      target=Math.min(100,Math.max(0,p));
+      if(instant){cur=target;paint(cur);return;}
+      if(!raf)raf=requestAnimationFrame(tick);
+    }
+    function pctFrom(clientX){
+      var r=slider.getBoundingClientRect();
+      return ((clientX-r.left)/r.width)*100;
+    }
+    if(fine){
+      slider.addEventListener('pointermove',function(e){if(!dragging)to(pctFrom(e.clientX));});
+      slider.addEventListener('pointerleave',function(){if(!dragging)to(REST);});
+    }
+    slider.addEventListener('pointerdown',function(e){
+      dragging=true;touched=true;slider.classList.add('is-dragging');
+      slider.setPointerCapture(e.pointerId);
+      to(pctFrom(e.clientX),true);
+    });
+    slider.addEventListener('pointermove',function(e){if(dragging)to(pctFrom(e.clientX),true);});
+    slider.addEventListener('pointerup',function(){dragging=false;slider.classList.remove('is-dragging');});
+    slider.addEventListener('pointercancel',function(){dragging=false;slider.classList.remove('is-dragging');});
+    slider.setAttribute('tabindex','0');
+    slider.setAttribute('role','slider');
+    slider.setAttribute('aria-label','Compare the old Trade app with the Version 2 concept, which was not shipped');
+    slider.setAttribute('aria-valuemin','0');
+    slider.setAttribute('aria-valuemax','100');
+    slider.addEventListener('keydown',function(e){
+      if(e.key==='ArrowLeft'){to(target-4);e.preventDefault();}
+      if(e.key==='ArrowRight'){to(target+4);e.preventDefault();}
+      if(e.key==='Home'){to(0);e.preventDefault();}
+      if(e.key==='End'){to(100);e.preventDefault();}
+    });
+    var baTabs=document.querySelectorAll('.balabels [data-ba]');
+    function syncTabs(p){
+      baTabs.forEach(function(b){
+        var on=b.getAttribute('data-ba')==='100'?p>50:p<=50;
+        b.setAttribute('aria-pressed',on?'true':'false');
+      });
+    }
+    baTabs.forEach(function(b){
+      b.addEventListener('click',function(){touched=true;REST=Number(b.getAttribute('data-ba'));to(REST);});
+    });
+    if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+      var nio=new IntersectionObserver(function(es){
+        if(!es[0].isIntersecting)return;
+        nio.disconnect();
+        [[350,66],[1050,22],[1750,REST]].forEach(function(s){setTimeout(function(){if(!touched)to(s[1]);},s[0]);});
+      },{threshold:0.6});
+      nio.observe(slider);
+    }
+    paint(REST);
+  }
+
+  // two-axis demo — ported verbatim from the live app-merge.html .axisdemo
+  (function(){
+    var wrap=document.querySelector('.axisdemo'); if(!wrap) return;
+    var prods=['Stocks','F&O','Mutual funds'], jour=['Home','Explore','Tools','Orders','Portfolio'];
+    var ICONS={
+      Home:{
+        active:'<svg width="18" height="18" viewBox="25.49 6.69 24.02 24.31" fill="none" aria-hidden="true"><path d="M45.5402 13.8197L39.7802 9.78969C38.2102 8.68969 35.8002 8.74969 34.2902 9.91969L29.2802 13.8297C28.2802 14.6097 27.4902 16.2097 27.4902 17.4697V24.3697C27.4902 26.9197 29.5602 28.9997 32.1102 28.9997H42.8902C45.4402 28.9997 47.5102 26.9297 47.5102 24.3797V17.5997C47.5102 16.2497 46.6402 14.5897 45.5402 13.8197ZM38.2502 24.9997C38.2502 25.4097 37.9102 25.7497 37.5002 25.7497C37.0902 25.7497 36.7502 25.4097 36.7502 24.9997V21.9997C36.7502 21.5897 37.0902 21.2497 37.5002 21.2497C37.9102 21.2497 38.2502 21.5897 38.2502 21.9997V24.9997Z" fill="currentColor"/></svg>',
+        inactive:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.02 2.84016L3.63 7.04016C2.73 7.74016 2 9.23016 2 10.3602V17.7702C2 20.0902 3.89 21.9902 6.21 21.9902H17.79C20.11 21.9902 22 20.0902 22 17.7802V10.5002C22 9.29016 21.19 7.74016 20.2 7.05016L14.02 2.72016C12.62 1.74016 10.37 1.79016 9.02 2.84016Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 17.9902V14.9902" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      },
+      Explore:'<svg width="18" height="18" viewBox="100.50 7.00 24.00 24.00" fill="none" aria-hidden="true"><path d="M111.5 27C116.471 27 120.5 22.9706 120.5 18C120.5 13.0294 116.471 9 111.5 9C106.529 9 102.5 13.0294 102.5 18C102.5 22.9706 106.529 27 111.5 27Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M122.5 29L118.5 25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      Tools:'<svg width="18" height="18" viewBox="175.50 7.00 24.00 24.00" fill="none" aria-hidden="true"><path d="M197.5 15.52V10.98C197.5 9.57 196.86 9 195.27 9H191.23C189.64 9 189 9.57 189 10.98V15.51C189 16.93 189.64 17.49 191.23 17.49H195.27C196.86 17.5 197.5 16.93 197.5 15.52Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M197.5 26.77V22.73C197.5 21.14 196.86 20.5 195.27 20.5H191.23C189.64 20.5 189 21.14 189 22.73V26.77C189 28.36 189.64 29 191.23 29H195.27C196.86 29 197.5 28.36 197.5 26.77Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M186 15.52V10.98C186 9.57 185.36 9 183.77 9H179.73C178.14 9 177.5 9.57 177.5 10.98V15.51C177.5 16.93 178.14 17.49 179.73 17.49H183.77C185.36 17.5 186 16.93 186 15.52Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M186 26.77V22.73C186 21.14 185.36 20.5 183.77 20.5H179.73C178.14 20.5 177.5 21.14 177.5 22.73V26.77C177.5 28.36 178.14 29 179.73 29H183.77C185.36 29 186 28.36 186 26.77Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      Orders:'<svg width="18" height="18" viewBox="250.50 7.00 24.00 24.00" fill="none" aria-hidden="true"><path d="M257.5 17.7402V20.9402" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M262.5 16V22.68" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M267.5 17.7402V20.9402" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M259.5 29H265.5C270.5 29 272.5 27 272.5 22V16C272.5 11 270.5 9 265.5 9H259.5C254.5 9 252.5 11 252.5 16V22C252.5 27 254.5 29 259.5 29Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      Portfolio:'<svg width="18" height="18" viewBox="326.53 6.77 21.94 24.23" fill="none" aria-hidden="true"><path d="M333 14.6695V13.6995C333 11.4495 334.81 9.23952 337.06 9.02952C339.74 8.76952 342 10.8795 342 13.5095V14.8895" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M334.5 29H340.5C344.52 29 345.24 27.39 345.45 25.43L346.2 19.43C346.47 16.99 345.77 15 341.5 15H333.5C329.23 15 328.53 16.99 328.8 19.43L329.55 25.43C329.76 27.39 330.48 29 334.5 29Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M340.995 19H341.004" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M333.995 19H334.003" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    };
+    var p=0,j=4,last='';
+    var tabs=document.getElementById('adTabs'), nav=document.getElementById('adNav');
+    var coord=document.getElementById('adCoord');
+    var help=document.getElementById('adHelp');
+    function row(host,items,active,cb,icons){
+      host.innerHTML='';
+      items.forEach(function(n,i){
+        var b=document.createElement('button');
+        b.type='button';
+        if(icons && ICONS[n]){
+          var icon=ICONS[n];
+          var svg=typeof icon==='string' ? icon : (i===active ? icon.active : icon.inactive);
+          b.innerHTML=svg+'<span>'+n+'</span>';
+        }
+        else b.textContent=n;
+        b.setAttribute('aria-selected', i===active ? 'true':'false');
+        b.onclick=function(){cb(i);};
+        host.appendChild(b);
+      });
+    }
+    function render(){
+      row(tabs,prods,p,function(i){stop();p=i;last='p';render();});
+      row(nav,jour,j,function(i){stop();j=i;last='j';render();},true);
+      coord.innerHTML=prods[p]+'<span class="ad-coord-sep"> · </span>'+jour[j];
+      if(!last){
+        help.textContent='Tap either layer above or below to see what moves.';
+        return;
+      }
+      help.textContent = last==='p'
+        ? 'The product changed. The journey holds still, still in '+jour[j]+'.'
+        : 'The journey changed. The product holds still, still in '+prods[p]+'.';
+    }
+    /* show it working instead of pointing at it: once in view, change the
+       product, then the task, then hand over. Any tap stops it. */
+    var timers=[],played=false;
+    function stop(){timers.forEach(clearTimeout);timers=[];}
+    function play(){
+      if(played) return; played=true;
+      [[900,function(){p=1;last='p';}],[3300,function(){p=2;last='p';}],[5700,function(){j=1;last='j';}],[8100,function(){j=4;last='j';}]]
+        .forEach(function(s){timers.push(setTimeout(function(){s[1]();render();},s[0]));});
+    }
+    render();
+    if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+      var dio=new IntersectionObserver(function(es){if(es[0].isIntersecting){dio.disconnect();play();}},{threshold:0.7});
+      dio.observe(wrap);
+    }
+  })();
+
   // TOC scroll-spy: active link darkens as its section comes into view
-  var tocLinks=[].slice.call(document.querySelectorAll('.toc a:not(.cx-rail-back)'));
+  var tocLinks=[]; /* this page uses its own grouped spy below */
   var sections=tocLinks.map(function(a){return document.querySelector(a.getAttribute('href'));});
   if('IntersectionObserver' in window && tocLinks.length){
     var io=new IntersectionObserver(function(entries){
@@ -1077,5 +2048,135 @@ h3.say.sub{font-size:clamp(17px,2vw,19px);font-weight:500;line-height:1.3;letter
   f();
 })();
 </script>
+<script>
+/* App Merge card: fluid phone (entrance, scroll drift, cursor lean) */
+(function(){
+  var frame = document.querySelector(".cardframe.merge2"), img = frame && frame.querySelector(".mgphone-wrap");
+  if (!img || !window.requestAnimationFrame) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var row = frame.closest(".workrow") || frame;
+  var fine = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  frame.classList.add("is-fluid");
+  // current and target values; each frame current moves a fraction of the way to target
+  var cur = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 }, tgt = { enter: 1, drift: 0, lift: 0, rx: 0, ry: 0 };
+  var inView = false, entered = false, raf = 0, last = 0, counted = false;
+  // Current Value rolls in like an odometer once the phone has landed:
+  // each digit is a strip of 0-9 twice over that scrolls to its place, the
+  // left digits travelling furthest, all settling together.
+  var val = frame.querySelector(".mgval-n"), FINAL = "₹12,570.45", strips = [];
+  if (val){
+    val.textContent = "";
+    FINAL.split("").forEach(function(ch){
+      if (/\d/.test(ch)){
+        var col = document.createElement("span"); col.className = "od-d";
+        var st = document.createElement("span"); st.className = "od-strip";
+        for (var k = 0; k < 20; k++){ var i = document.createElement("span"); i.textContent = k % 10; st.appendChild(i); }
+        var sz = document.createElement("span"); sz.className = "od-sz"; sz.textContent = ch;
+        col.appendChild(sz); col.appendChild(st); val.appendChild(col); strips.push({ el: st, d: +ch });
+      } else {
+        var c = document.createElement("span"); c.className = "od-s"; c.textContent = ch; val.appendChild(c);
+      }
+    });
+  }
+  function odoReset(){
+    strips.forEach(function(s){ s.el.style.transition = "none"; s.el.style.transform = "translateY(0)"; });
+  }
+  function odoRoll(){
+    var n = strips.length;
+    strips.forEach(function(s, i){
+      void s.el.offsetHeight;
+      s.el.style.transition = "transform " + (1700 - i * 60) + "ms cubic-bezier(.33,1,.68,1) " + (i * 45) + "ms";
+      s.el.style.transform = "translateY(" + (-(10 + s.d) * 1.1) + "em)";
+    });
+  }
+  odoReset();
+  function countUp(){ odoRoll(); }
+  // leaving the screen resets the phone and the number, so it plays again
+  function replayReset(){
+    if (!entered) return;
+    entered = false; counted = false;
+    tgt.enter = 1; cur.enter = 1; apply(); odoReset();
+  }
+
+  function measure(){
+    var r = frame.getBoundingClientRect(), vh = window.innerHeight || 1;
+    var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2); // -1 above … 1 below
+    tgt.drift = Math.max(-1, Math.min(1, p));
+    if (!entered && r.top < vh * 0.85 && r.bottom > 0){ entered = true; tgt.enter = 0; }
+  }
+  function apply(){
+    var h = frame.clientHeight || 1;
+    var y = cur.enter * h * 0.7 + cur.drift * h * 0.045 - cur.lift * 10;
+    var sc = 1 + cur.lift * 0.018;
+    img.style.transform = "translate3d(0," + y.toFixed(2) + "px,0) rotateX(" + cur.rx.toFixed(3) + "deg) rotateY(" + cur.ry.toFixed(3) + "deg) scale(" + sc.toFixed(4) + ")";
+    img.style.opacity = (1 - cur.enter * 0.9).toFixed(3);
+    if (!counted && entered && cur.enter < 0.12){ counted = true; countUp(); }
+  }
+  function tick(now){
+    raf = 0;
+    var dt = last ? Math.min(64, now - last) : 16; last = now;
+    measure();
+    var moving = false;
+    // frame-rate independent smoothing: slower for the entrance, quicker for the hand
+    var rates = { enter: 0.045, drift: 0.09, lift: 0.1, rx: 0.1, ry: 0.1 };
+    for (var k in cur){
+      var a = 1 - Math.pow(1 - rates[k], dt / 16.67);
+      cur[k] += (tgt[k] - cur[k]) * a;
+      if (Math.abs(tgt[k] - cur[k]) > 0.0005) moving = true; else cur[k] = tgt[k];
+    }
+    apply();
+    if (moving || inView) raf = requestAnimationFrame(tick); else last = 0;
+  }
+  function kick(){ if (!raf) raf = requestAnimationFrame(tick); }
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){ inView = es[es.length - 1].isIntersecting; if (inView) kick(); else replayReset(); }, { rootMargin: "80px 0px" }).observe(frame);
+  } else { inView = true; }
+  window.addEventListener("scroll", kick, { passive: true });
+  window.addEventListener("resize", kick);
+  if (fine){
+    row.addEventListener("pointermove", function(e){
+      var r = frame.getBoundingClientRect();
+      var mx = (e.clientX - r.left) / r.width - 0.5, my = (e.clientY - r.top) / r.height - 0.5;
+      tgt.lift = 1; tgt.ry = Math.max(-1, Math.min(1, mx)) * 7; tgt.rx = -Math.max(-1, Math.min(1, my)) * 5;
+      kick();
+    });
+    row.addEventListener("pointerleave", function(){ tgt.lift = 0; tgt.rx = 0; tgt.ry = 0; kick(); });
+  }
+  row.addEventListener("focusin", function(){ tgt.lift = 1; kick(); });
+  row.addEventListener("focusout", function(){ tgt.lift = 0; kick(); });
+  apply(); kick();
+})();
+</script>
+<script>
+/* rail: the active entry is the last section whose top has passed a third of the way down */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc > a[href^="#"]'));var subl=[].slice.call(document.querySelectorAll('.toc a.toc-sub'));var subs=subl.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  var secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  var t=false;
+  function f(){ t=false; var line=innerHeight*0.35, k=0;
+    secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top<=line) k=i; });
+    if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) k=secs.length-1;
+    links.forEach(function(a,i){ a.classList.toggle('active',i===k); if(i===k) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); }); var j=-1; subs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top<=line) j=i; }); var inSol=links[k]&&links[k].getAttribute('href')==='#solution'; subl.forEach(function(a,i){ a.classList.toggle('active',inSol&&i===j); });
+  }
+  addEventListener('scroll',f,{passive:true});
+  addEventListener('resize',f); f();
+})();
+</script>
 <script src="./aitwin.js?v=8" defer></script>
+<script>
+(function(){var r=document.getElementById('srail');if(!r)return;var t=document.getElementById('srailT'),P=document.getElementById('srailP'),C=document.getElementById('srailC'),X=document.getElementById('srailX');
+var links=[].slice.call(r.querySelectorAll('a:not(.sub)'));var subs=[].slice.call(r.querySelectorAll('a.sub'));var secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))});
+function pad(i){return ('0'+i).slice(-2)}
+function f(){var line=innerHeight*0.35,k=0;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<=line)k=i});
+if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)k=secs.length-1;
+P.textContent=k>0?pad(k):'';C.textContent=pad(k+1);X.textContent=k<secs.length-1?pad(k+2):'';
+links.forEach(function(a,i){if(i===k)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})}
+function open(v){r.classList.toggle('open',v);t.setAttribute('aria-expanded',v?'true':'false')}
+t.addEventListener('click',function(e){e.stopPropagation();open(!r.classList.contains('open'))});
+links.concat(subs).forEach(function(a){a.addEventListener('click',function(){open(false)})});
+document.addEventListener('click',function(e){if(!r.contains(e.target))open(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&r.classList.contains('open')){open(false);t.focus()}});
+addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
+})();
+</script>
 </body></html>
