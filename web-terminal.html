@@ -489,6 +489,48 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
 .toc a{font-size:14.5px;line-height:20px}
 .toc .cx-rail-back{margin-bottom:34px;font:500 11px/20px var(--mono);letter-spacing:.09em;text-transform:uppercase}
 .toc .cx-rail-back:before{content:"\2190";margin-right:8px;font-family:var(--sans)}
+
+/* ══ ONE SYSTEM: snapped to App Merge / Rise Portal (2026-10-13) ══ */
+:root{--bg:#FBFCFD;--ink:#1E2229;--muted:#6C727C;--faint:#A8AEB7;--line:rgba(30,34,41,.10);--surface:#F3F5F8;--s4:32px;--s5:120px}
+:root[data-theme="dark"]{--bg:#0E1013;--ink:#EEF1F5;--muted:#9AA1AB;--faint:#646B75;--line:rgba(255,255,255,.10);--surface:#181B1F}
+@media(max-width:860px){:root{--s4:28px;--s5:88px}}
+@media(min-width:1140px){.col,.wide,#next,#contact{margin-left:auto!important;margin-right:auto!important}}
+html body div.shell:not(#_) h1{font:400 clamp(30px,4vw,40px)/1.2 var(--serif)!important;letter-spacing:-.02em!important;color:var(--ink)}
+html body div.shell:not(#_) h2.say{font:400 clamp(22px,2.6vw,26px)/1.3 var(--serif)!important;letter-spacing:-.01em!important;color:var(--ink);margin:0 0 20px!important}
+html body div.shell:not(#_) p.eyebrow{font:400 16px/1.5 var(--sans)!important;letter-spacing:0!important;text-transform:none!important;color:var(--faint)!important;margin:0 0 20px!important}
+html body div.shell:not(#_) :is(p.body,p.dek){font-size:16px!important;line-height:1.5!important;letter-spacing:-.01em!important;color:var(--muted)}
+html body div.shell:not(#_) p.body b{font-weight:400!important;color:var(--ink)}
+html body div.shell:not(#_) :is(p.cap,p.livecaveat){font-size:14px!important;line-height:1.5!important;letter-spacing:0!important}
+html body div.shell:not(#_) .nextlbl{font:400 14px/1.6 var(--sans)!important;letter-spacing:0!important;text-transform:none!important}
+/* rail */
+html body div.shell:not(#_) .toc{top:112px!important;left:48px!important;width:240px!important;gap:6px!important}
+html body div.shell:not(#_) .toc a{font:400 13.5px/20px var(--sans)!important;letter-spacing:0!important;color:var(--faint);white-space:nowrap}
+html body div.shell:not(#_) .toc a.active{color:var(--ink)}
+html body div.shell:not(#_) .toc a.active:before{content:none!important}
+html body div.shell:not(#_) .toc .cx-rail-back{margin-bottom:32px!important;text-transform:none!important}
+html body div.shell:not(#_) .toc .cx-rail-back:before{content:none!important}
+html body div.shell:not(#_) .toc .toc-lbl{margin:0 0 10px;font:400 12px/1.4 var(--sans);color:var(--faint)}
+html body div.shell:not(#_) .toc .toc-n{display:inline-block;width:22px;font:400 11px/20px var(--sans);color:var(--faint);font-variant-numeric:tabular-nums}
+html body div.shell:not(#_) .toc a.active .toc-n{color:var(--ink)}
+/* small screens: a number rail in the left margin; hover or tap shows every section */
+.srail{display:none}
+@media(max-width:980px){
+  .srail{display:block;position:fixed;left:10px;top:50%;transform:translateY(-50%);z-index:40;font-family:var(--sans)}
+  .srail-t{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 2px;border:0;background:none;cursor:pointer;font:400 12px/1.5 var(--sans);color:var(--faint)}
+  .srail-c{color:var(--ink)}
+  .srail-p,.srail-x{min-height:18px}
+  .srail-t:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:4px}
+  .srail-l{list-style:none;position:absolute;left:0;top:50%;transform:translateY(-50%);margin:0;padding:6px;width:236px;max-height:80vh;overflow:auto;border-radius:12px;background:var(--bg);box-shadow:0 0 0 1px var(--line),0 16px 40px -12px rgba(20,24,40,.25);opacity:0;visibility:hidden;transition:opacity .15s,visibility 0s linear .15s}
+  .srail:hover .srail-l,.srail.open .srail-l,.srail:focus-within .srail-l{opacity:1;visibility:visible;transition:opacity .15s}
+  .srail-l a{display:flex;gap:10px;padding:8px 10px;border-radius:8px;font-size:14px;line-height:1.5;color:var(--muted);text-decoration:none}
+  .srail-l a span{min-width:18px;font-size:12px;color:var(--faint)}
+  .srail-l a:hover{background:var(--l-panel);color:var(--ink)}
+  .srail-l a[aria-current]{color:var(--ink);background:var(--l-panel)}
+}
+@media(max-width:640px){.shell{padding-left:40px!important}.srail{left:6px}}
+@media(prefers-reduced-motion:reduce){.srail-l{transition:none!important}}
+
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style><script defer src="./analytics.js?v=5"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
 </head>
@@ -536,12 +578,15 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
 
 <div class="shell">
   <nav class="toc" aria-label="Sections"><a class="cx-rail-back" href="./index.html#work">Back</a>
-    <a href="#s1">Layout</a>
-    <a href="#s2">Foundations</a>
-    <a href="#s3">States</a>
-    <a href="#s4">Handoff</a>
-    <a href="#s5">What&rsquo;s next</a>
+    <p class="toc-lbl">On this page</p>
+    <a href="#s1"><span class="toc-n">01</span>Layout</a>
+    <a href="#s2"><span class="toc-n">02</span>Foundations</a>
+    <a href="#s3"><span class="toc-n">03</span>States</a>
+    <a href="#s4"><span class="toc-n">04</span>Handoff</a>
+    <a href="#s5"><span class="toc-n">05</span>What&rsquo;s next</a>
   </nav>
+<nav class="srail" id="srail" aria-label="Sections"><button type="button" class="srail-t" id="srailT" aria-expanded="false" aria-controls="srailL"><span class="srail-p" id="srailP"></span><span class="srail-c" id="srailC">01</span><span class="srail-x" id="srailX">02</span><span class="vh">Show all sections</span></button><ol class="srail-l" id="srailL"><li><a href="#s1"><span>01</span>Layout</a></li><li><a href="#s2"><span>02</span>Foundations</a></li><li><a href="#s3"><span>03</span>States</a></li><li><a href="#s4"><span>04</span>Handoff</a></li><li><a href="#s5"><span>05</span>What&rsquo;s next</a></li></ol></nav>
+
 
   <div class="wide beat" data-reveal>
     <div class="shot card c-sky hero-shot">
@@ -913,6 +958,22 @@ h2.say{font-size:clamp(20px,2.6vw,24px);font-weight:500;line-height:1.3;letter-s
     var d=e.data; if(!d||d.type!=='rupeezy-embed'||typeof d.height!=='number') return;
     for(var i=0;i<frames.length;i++) if(frames[i].contentWindow===e.source){ frames[i].style.aspectRatio='auto'; frames[i].style.height=d.height+'px'; }
   });
+})();
+</script>
+<script>
+(function(){var r=document.getElementById('srail');if(!r)return;var t=document.getElementById('srailT'),P=document.getElementById('srailP'),C=document.getElementById('srailC'),X=document.getElementById('srailX');
+var links=[].slice.call(r.querySelectorAll('a:not(.sub)'));var subs=[].slice.call(r.querySelectorAll('a.sub'));var secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))});
+function pad(i){return ('0'+i).slice(-2)}
+function f(){var line=innerHeight*0.35,k=0;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<=line)k=i});
+if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)k=secs.length-1;
+P.textContent=k>0?pad(k):'';C.textContent=pad(k+1);X.textContent=k<secs.length-1?pad(k+2):'';
+links.forEach(function(a,i){if(i===k)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})}
+function open(v){r.classList.toggle('open',v);t.setAttribute('aria-expanded',v?'true':'false')}
+t.addEventListener('click',function(e){e.stopPropagation();open(!r.classList.contains('open'))});
+links.concat(subs).forEach(function(a){a.addEventListener('click',function(){open(false)})});
+document.addEventListener('click',function(e){if(!r.contains(e.target))open(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&r.classList.contains('open')){open(false);t.focus()}});
+addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
 })();
 </script>
 </body></html>
