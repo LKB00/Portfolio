@@ -3775,7 +3775,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
 /* touch: bigger tap areas on phones, nothing moves (the pseudo-element only widens the hit box) */
 @media (hover:none),(max-width:860px){
-  .navlinks .navlink,.navlinks #navAsk{position:relative}
+  .navlinks .navlink,.navlinks #navAsk,.navlinks #themeToggle{position:relative}
+  .rec-src{position:relative}.rec-src::after{content:"";position:absolute;inset:-12px -6px}
   .navlinks .navlink::after,.navlinks #navAsk::after,.navlinks #themeToggle::after{content:"";position:absolute;inset:-7px -4px}
 }
 
@@ -3837,6 +3838,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 <script defer src="./analytics.js?v=5"></script>
 <script defer src="./readpill.js?v=11"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
+<noscript><style>/* no JavaScript: show every section at once; nothing is left waiting for a fade-in */[data-reveal]{opacity:1!important;transform:none!important}#loader{display:none!important}</style></noscript>
 </head>
 <body>
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter></svg>
@@ -4500,19 +4502,23 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var hero = document.getElementById("top");
     if (hero) hero.classList.add("shown");
     if (!("IntersectionObserver" in window)){ showAllReveals(); return; }
-    var io = new IntersectionObserver(function(entries){
+    function onSeen(entries){
       entries.forEach(function(en){
         if (en.isIntersecting){
           revealed = true;
           var el = en.target, im = el.querySelector("img");
           if (im && !im.complete){ im.addEventListener("load", function(){ el.classList.add("shown"); fixMacframes(el); }, { once: true }); im.addEventListener("error", function(){ el.classList.add("shown"); fixMacframes(el); }, { once: true }); }
           else { el.classList.add("shown"); fixMacframes(el); }
-          io.unobserve(el);
+          io.unobserve(el); ioEnd.unobserve(el);
         }
       });
-    }, { threshold: 0, rootMargin: "0px 0px -10% 0px" });
+    }
+    var io = new IntersectionObserver(onSeen, { threshold: 0, rootMargin: "0px 0px -10% 0px" });
+    /* the footer is shorter than that bottom 10% band and sits at the very end of the page,
+       so it can never cross it: it reveals as soon as any of it is on screen */
+    var ioEnd = new IntersectionObserver(onSeen, { threshold: 0 });
     for (var i = 0; i < revealEls.length; i++){
-      if (revealEls[i] !== hero) io.observe(revealEls[i]);
+      if (revealEls[i] !== hero) (revealEls[i].tagName === "FOOTER" ? ioEnd : io).observe(revealEls[i]);
     }
     /* Unconditional. `revealed` flips as soon as ANY section intersects, so
        one visible section used to disarm the catch-all and leave everything
