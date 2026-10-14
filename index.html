@@ -3592,7 +3592,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 }
 /* in the dialog, the same composition as a square in the middle of the media box */
 .exp-compslot{position:absolute;top:0;bottom:0;left:50%;aspect-ratio:1;transform:translateX(-50%)}
-.exp-media[data-dev="phone"] .exp-compslot,.exp-media[data-dev="comp"] .exp-fit{display:none}
+.exp-media[data-dev="phone"] .exp-compslot,.exp-media[data-dev="win"] .exp-compslot,.exp-media[data-dev="comp"] .exp-fit{display:none}
 /* device frames, flat on the tint like the case-study cards — no shadow.
    phone: the App merge iPhone mockup, its screen inset at the exact
    percentages of its transparent hole.
@@ -3607,13 +3607,117 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-device{display:none}
 [data-dev="phone"] .exp-rig{height:100%;aspect-ratio:1608/3316;max-width:100%}
 [data-dev="phone"] .exp-screen{position:absolute;left:4.29%;top:1.78%;right:4.35%;bottom:1.81%;border-radius:12.3%/5.7%;background:#000}
+/* win: a tool window captured from Tattva's site (Figma plugin, Claude Code with the MCP), its own border and corners baked in */
+[data-dev="win"] .exp-rig{height:100%;aspect-ratio:508/514;max-width:100%}
+[data-dev="win"] .exp-screen{position:absolute;inset:0}
+/* Tattva for Figma: the plugin at work on a canvas, live (not a recording). Its three real tabs, in order:
+   Theme (pick Plum, the screen re-colours, Add to file), Parts (drag Approval onto the screen; it lands with
+   Figma's purple component outline), Check (a 2.8:1 helper line is flagged, one click, fixed to 4.6:1).
+   Everything is placed in container units on one 100×100 grid, so the cursor hits what it means to. */
+.figx{container-type:size;--fx-cv:#F5F5F5;--fx-pn:#FFFFFF;--fx-tx:#1E1E1E;--fx-mu:#8A8A8A;--fx-ln:rgba(0,0,0,.09);--fx-fill:#F2F2F2;--acc:#C5EB7A;--acc2:#8DBF2E}
+:root[data-theme="dark"] .figx{--fx-cv:#1E1E1E;--fx-pn:#2C2C2C;--fx-tx:#F0F0F0;--fx-mu:#A0A0A0;--fx-ln:rgba(255,255,255,.09);--fx-fill:#383838}
+@media (prefers-color-scheme:dark){:root:not([data-theme]) .figx{--fx-cv:#1E1E1E;--fx-pn:#2C2C2C;--fx-tx:#F0F0F0;--fx-mu:#A0A0A0;--fx-ln:rgba(255,255,255,.09);--fx-fill:#383838}}
+.figx>*,.figx .fx-b>*,.fx-bar>*,.fx-head>*{position:absolute;display:block}
+.figx .fx-b,.figx .fx-head,.figx .fx-bar{left:0;top:0;width:100cqw;height:100cqw}
+.figx b{font-weight:inherit}
+.fx-win{left:4cqw;top:6cqw;width:92cqw;height:88cqw;border-radius:2.6cqw;background:var(--fx-cv);box-shadow:0 0 0 1px var(--fx-ln)}
+.fx-bar:before{content:"";position:absolute;left:4cqw;top:6cqw;width:92cqw;height:8cqw;border-radius:2.6cqw 2.6cqw 0 0;background:var(--fx-pn);box-shadow:inset 0 -1px 0 var(--fx-ln)}
+.fx-flogo{left:7.4cqw;top:8.2cqw;width:3.6cqw;height:3.6cqw}
+.fx-file{left:12.6cqw;top:7.9cqw;font-size:3.3cqw;line-height:4.2cqw;font-weight:500;color:var(--fx-tx)}
+.fx-lab{left:9cqw;top:17.2cqw;font-size:2.9cqw;line-height:3.4cqw;color:#0D99FF}
+.fx-frame{left:9cqw;top:21cqw;width:41cqw;height:69cqw;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.fx-ub{left:31cqw;top:25cqw;width:15.5cqw;height:5cqw;border-radius:2cqw;background:#EFEFEF}
+.fx-av{left:12cqw;top:33cqw;width:3.2cqw;height:3.2cqw;border-radius:50%;background:var(--acc)}
+.fx-l1{left:17cqw;top:33.5cqw;width:26cqw;height:1.8cqw;border-radius:1cqw;background:#E6E6E6}
+.fx-l2{left:17cqw;top:37cqw;width:18cqw;height:1.8cqw;border-radius:1cqw;background:#E6E6E6}
+.fx-part{left:12cqw;top:43cqw;width:35cqw;height:17cqw;border-radius:2cqw;background:#fff;box-shadow:inset 0 0 0 1px #E6E6E6;opacity:0}
+.fx-part>i{position:absolute;display:block;border-radius:1cqw}
+.fx-pt{left:2.6cqw;top:3cqw;width:16cqw;height:1.8cqw;background:#CFCFCF}
+.fx-pl{left:2.6cqw;top:6.4cqw;width:27cqw;height:1.4cqw;background:#E8E8E8}
+.fx-pb1{left:2.6cqw;top:10.4cqw;width:12cqw;height:4.2cqw}
+.fx-pb2{left:16cqw;top:10.4cqw;width:10cqw;height:4.2cqw;box-shadow:inset 0 0 0 1px #D9D9D9}
+.fx-acc2{background:var(--acc2)!important}
+.fx-help{left:12cqw;top:65cqw;width:21cqw;height:1.8cqw;border-radius:1cqw;background:#DADADA}
+.fx-flag{left:35cqw;top:63.6cqw;height:4.6cqw;padding:0 1.3cqw;border-radius:1.2cqw;background:#F24822;color:#fff;font-size:2.8cqw;line-height:4.6cqw;font-weight:500;opacity:0}
+.fx-flag b{display:inline-block}
+.fx-flag b+b{position:absolute;left:1.3cqw;top:0;opacity:0}
+.fx-cmp{left:12cqw;top:80cqw;width:35cqw;height:6.6cqw;border-radius:2cqw;box-shadow:inset 0 0 0 1px #E3E3E3}
+.fx-send{position:absolute;right:1.3cqw;top:1.3cqw;width:4cqw;height:4cqw;border-radius:50%}
+.fx-toast{left:15cqw;top:83.6cqw;height:6cqw;padding:0 2.4cqw;border-radius:1.6cqw;background:#1E1E1E;color:#fff;font-size:2.9cqw;line-height:6cqw;white-space:nowrap;opacity:0}
+.fx-panel{left:56cqw;top:14cqw;width:40cqw;height:80cqw;border-radius:0 0 2.6cqw 0;background:var(--fx-pn);box-shadow:-1px 0 0 var(--fx-ln)}
+.fx-head:after{content:"";position:absolute;left:56cqw;top:23cqw;width:40cqw;height:1px;background:var(--fx-ln)}
+.fx-tabs{left:59.5cqw;top:16.6cqw;display:flex!important;gap:3.6cqw}
+.fx-tab{font-weight:500;font-size:3.2cqw;line-height:4cqw;color:var(--fx-mu);white-space:nowrap}
+.fx-ul{top:22.4cqw;height:.6cqw;border-radius:.3cqw;background:var(--fx-tx)}
+.fx-b{opacity:0}
+.fx-sw{width:5cqw;height:5cqw;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.fx-ring{left:0;top:0;width:7cqw;height:7cqw;border-radius:50%;box-shadow:0 0 0 .5cqw var(--fx-tx);margin:-1cqw 0 0 -1cqw}
+.fx-sname{left:59.6cqw;top:44cqw;font-size:3.3cqw;line-height:4cqw;font-weight:500;color:var(--fx-tx)}
+.fx-sname b,.fx-big b,.fx-rv b{position:absolute;left:0;top:0;white-space:nowrap}
+.fx-btn{left:59cqw;top:82.4cqw;width:34cqw;height:7.4cqw;border-radius:1.6cqw;background:#0D99FF;color:#fff;font-size:3.1cqw;line-height:7.4cqw;font-weight:500;text-align:center}
+.fx-search{left:59cqw;top:26cqw;width:34cqw;height:5.4cqw;padding-left:2cqw;border-radius:1.2cqw;background:var(--fx-fill);color:var(--fx-mu);font-size:2.9cqw;line-height:5.4cqw}
+.fx-th{width:16cqw;height:14cqw;border-radius:1.4cqw;background:#fff;box-shadow:inset 0 0 0 1px var(--fx-ln)}
+.fx-th i{position:absolute;display:block;border-radius:2px;background:#D6D6D6}
+.fx-tl{font-size:2.8cqw;line-height:3.4cqw;color:var(--fx-tx)}
+.fx-ghost{left:0;top:0;opacity:0;box-shadow:inset 0 0 0 1px #9747FF}
+.fx-big{left:59cqw;top:25.5cqw;width:6cqw;height:10cqw;font-size:8.6cqw;line-height:10cqw;font-weight:500;color:var(--fx-tx)}
+.fx-sub{left:65.6cqw;top:29.6cqw;font-size:3.3cqw;line-height:4cqw;color:var(--fx-mu)}
+.fx-row{left:58cqw;top:39.5cqw;width:36cqw;height:8cqw;border-radius:1.4cqw}
+.fx-dot{position:absolute;left:2.2cqw;top:3cqw;width:2cqw;height:2cqw;border-radius:50%;background:#F24822}
+.fx-rn{position:absolute;left:5.6cqw;top:2cqw;font-size:3.2cqw;line-height:4cqw;color:var(--fx-tx)}
+.fx-rv{position:absolute;left:24cqw;top:2cqw;width:10cqw;font-size:3.2cqw;line-height:4cqw;color:var(--fx-mu)}
+.fx-cur{left:0;top:0;width:4.6cqw;height:4.6cqw;z-index:3;transform-origin:20% 12%}
+.fx-rip{left:0;top:0;width:8cqw;height:8cqw;margin:-4cqw 0 0 -4cqw;border-radius:50%;box-shadow:0 0 0 .5cqw rgba(13,153,255,.55);opacity:0;z-index:2}
+/* Tattva MCP: a live lockup, not a recording, so it runs at the screen's own frame rate.
+   Tattva × a tool: the tool's tile is a reel that rolls to the next logo on a soft spring, the × turns a quarter,
+   and the name below rolls letter by letter. The last stop is a 2×2 of all three plus "+" for any MCP tool.
+   Sized in container units so the card and the dialog are the same drawing at two sizes. */
+.mcpx{display:flex;flex-direction:column;align-items:center;justify-content:center;container-type:size;color:var(--ink)}
+.mx-row{display:flex;align-items:center;gap:4.6cqw}
+/* iOS app icons: a true superellipse (n=5, the continuous corner iOS draws), a lit edge that is brighter on top,
+   a soft vertical fill and a faint sheen. Layers: the tile is the edge; :before is the fill; :after the sheen. No drop shadow. */
+.mcpx{--sq:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M100.00 50.00 L99.99 63.06 L99.95 67.23 L99.89 70.26 L99.80 72.72 L99.69 74.82 L99.56 76.68 L99.40 78.34 L99.22 79.86 L99.01 81.26 L98.77 82.55 L98.51 83.76 L98.22 84.89 L97.91 85.95 L97.57 86.95 L97.20 87.89 L96.81 88.78 L96.39 89.63 L95.94 90.43 L95.46 91.18 L94.94 91.90 L94.40 92.58 L93.83 93.22 L93.22 93.83 L92.58 94.40 L91.90 94.94 L91.18 95.46 L90.43 95.94 L89.63 96.39 L88.78 96.81 L87.89 97.20 L86.95 97.57 L85.95 97.91 L84.89 98.22 L83.76 98.51 L82.55 98.77 L81.26 99.01 L79.86 99.22 L78.34 99.40 L76.68 99.56 L74.82 99.69 L72.72 99.80 L70.26 99.89 L67.23 99.95 L63.06 99.99 L50.00 100.00 L36.94 99.99 L32.77 99.95 L29.74 99.89 L27.28 99.80 L25.18 99.69 L23.32 99.56 L21.66 99.40 L20.14 99.22 L18.74 99.01 L17.45 98.77 L16.24 98.51 L15.11 98.22 L14.05 97.91 L13.05 97.57 L12.11 97.20 L11.22 96.81 L10.37 96.39 L9.57 95.94 L8.82 95.46 L8.10 94.94 L7.42 94.40 L6.78 93.83 L6.17 93.22 L5.60 92.58 L5.06 91.90 L4.54 91.18 L4.06 90.43 L3.61 89.63 L3.19 88.78 L2.80 87.89 L2.43 86.95 L2.09 85.95 L1.78 84.89 L1.49 83.76 L1.23 82.55 L0.99 81.26 L0.78 79.86 L0.60 78.34 L0.44 76.68 L0.31 74.82 L0.20 72.72 L0.11 70.26 L0.05 67.23 L0.01 63.06 L0.00 50.00 L0.01 36.94 L0.05 32.77 L0.11 29.74 L0.20 27.28 L0.31 25.18 L0.44 23.32 L0.60 21.66 L0.78 20.14 L0.99 18.74 L1.23 17.45 L1.49 16.24 L1.78 15.11 L2.09 14.05 L2.43 13.05 L2.80 12.11 L3.19 11.22 L3.61 10.37 L4.06 9.57 L4.54 8.82 L5.06 8.10 L5.60 7.42 L6.17 6.78 L6.78 6.17 L7.42 5.60 L8.10 5.06 L8.82 4.54 L9.57 4.06 L10.37 3.61 L11.22 3.19 L12.11 2.80 L13.05 2.43 L14.05 2.09 L15.11 1.78 L16.24 1.49 L17.45 1.23 L18.74 0.99 L20.14 0.78 L21.66 0.60 L23.32 0.44 L25.18 0.31 L27.28 0.20 L29.74 0.11 L32.77 0.05 L36.94 0.01 L50.00 0.00 L63.06 0.01 L67.23 0.05 L70.26 0.11 L72.72 0.20 L74.82 0.31 L76.68 0.44 L78.34 0.60 L79.86 0.78 L81.26 0.99 L82.55 1.23 L83.76 1.49 L84.89 1.78 L85.95 2.09 L86.95 2.43 L87.89 2.80 L88.78 3.19 L89.63 3.61 L90.43 4.06 L91.18 4.54 L91.90 5.06 L92.58 5.60 L93.22 6.17 L93.83 6.78 L94.40 7.42 L94.94 8.10 L95.46 8.82 L95.94 9.57 L96.39 10.37 L96.81 11.22 L97.20 12.11 L97.57 13.05 L97.91 14.05 L98.22 15.11 L98.51 16.24 L98.77 17.45 L99.01 18.74 L99.22 20.14 L99.40 21.66 L99.56 23.32 L99.69 25.18 L99.80 27.28 L99.89 29.74 L99.95 32.77 L99.99 36.94Z'/%3E%3C/svg%3E")}
+.mx-tile{position:relative;width:21cqw;height:21cqw;display:grid;place-items:center;overflow:hidden;
+  -webkit-mask:var(--sq) center/100% 100% no-repeat;mask:var(--sq) center/100% 100% no-repeat;
+  background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.15))}
+.mx-tile:before,.mx-tile:after{content:"";position:absolute;inset:.3cqw;-webkit-mask:var(--sq) center/100% 100% no-repeat;mask:var(--sq) center/100% 100% no-repeat;pointer-events:none}
+.mx-tile:before{background:linear-gradient(180deg,#FFFFFF 0%,#F7F7F9 55%,#EEEEF2 100%)}
+.mx-tile:after{background:radial-gradient(120% 70% at 50% -12%,rgba(255,255,255,.95),rgba(255,255,255,0) 62%);mix-blend-mode:screen}
+.mx-tile>*{position:relative;z-index:1}
+.mx-tile>svg,.mx-l>svg{filter:drop-shadow(0 .25cqw .35cqw rgba(0,0,0,.10))}
+:root[data-theme="dark"] .mx-tile{background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(255,255,255,.05))}
+:root[data-theme="dark"] .mx-tile:before{background:linear-gradient(180deg,#2E2E31 0%,#242426 55%,#1C1C1E 100%)}
+:root[data-theme="dark"] .mx-tile:after{background:radial-gradient(120% 70% at 50% -12%,rgba(255,255,255,.10),rgba(255,255,255,0) 62%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme]) .mx-tile{background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(255,255,255,.05))}
+  :root:not([data-theme]) .mx-tile:before{background:linear-gradient(180deg,#2E2E31 0%,#242426 55%,#1C1C1E 100%)}
+  :root:not([data-theme]) .mx-tile:after{background:radial-gradient(120% 70% at 50% -12%,rgba(255,255,255,.10),rgba(255,255,255,0) 62%)}}
+.mx-tv{color:var(--ink)}
+.mx-tv svg{width:10cqw;height:10cqw}
+.mx-x{font-size:6.4cqw;line-height:1;color:var(--faint);transition:transform .9s cubic-bezier(.22,1,.36,1)}
+.mx-tool{}
+.mx-reel{position:absolute!important;left:0;top:0;width:100%;transform:translate3d(0,calc(var(--i,0) * -21cqw),0);transition:transform .9s cubic-bezier(.22,1,.36,1);will-change:transform}
+.mx-reel.snap{transition:none}
+.mx-l{display:grid;place-items:center;width:21cqw;height:21cqw}
+.mx-l>svg{width:10cqw;height:10cqw}
+.mx-grid{display:grid;grid-template-columns:repeat(2,5.4cqw);gap:1.6cqw}
+.mx-grid i{display:grid;place-items:center;width:5.4cqw;height:5.4cqw;font-style:normal}
+.mx-grid svg{width:5.4cqw;height:5.4cqw}
+.mx-plus{font-size:6cqw;line-height:1;font-weight:300;color:var(--muted)}
+:root[data-theme="dark"] .mcpx .cur{filter:invert(1) hue-rotate(180deg)}
+@media (prefers-color-scheme:dark){:root:not([data-theme]) .mcpx .cur{filter:invert(1) hue-rotate(180deg)}}
+.mx-lead{margin-top:7.4cqw;font-size:5.4cqw;line-height:1.3;color:var(--muted)}
+.mx-name{position:relative;width:100%;height:11cqw;margin-top:.8cqw;overflow:hidden;font-size:8.6cqw;font-weight:500;letter-spacing:-.02em;line-height:11cqw}
+.mx-line{position:absolute;inset:0;display:flex;justify-content:center;white-space:pre}
+.mx-line b{display:inline-block;font-weight:inherit;transform:translate3d(0,0,0);transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .5s ease}
+.mx-line.pre b{transform:translate3d(0,135%,0);opacity:0}
+.mx-line.gone b{transform:translate3d(0,-135%,0);opacity:0;transition-duration:.45s,.3s}
 [data-dev="phone"] .exp-device{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;z-index:2}
 
 @media (hover:hover){
   .exp-card:hover .exp-rig{transform:translateY(-8px)}
   
 }
-@media (hover:hover){.exp-card:hover .exp-fit video{transform:scale(1.03)}}
+@media (hover:hover){.exp-card:hover .exp-fit:not([data-dev="win"]) video{transform:scale(1.03)}}
 .exp-ov{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(15,15,15,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
   opacity:0;transition:opacity .22s var(--ease)}
 .exp-ov.on{opacity:1}
@@ -3635,7 +3739,13 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-dtext{margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--muted,#7A7676)}
 .exp-facts{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;padding:0}
 .exp-facts li{display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:2px;background:var(--surface);font-size:12px;color:var(--ink)}
-.exp-acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;margin-top:22px}
+.exp-acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
+/* the second action: same size as the first, quiet, outlined in the hairline */
+.exp-sec[hidden]{display:none}
+.exp-sec{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+#expOv .exp-sec:visited{color:var(--ink)}
+#expOv .exp-sec:hover{background:var(--surface);color:var(--ink)}
+.exp-sec:focus-visible{outline:2px solid #0D99FF;outline-offset:2px}
 
 #expOv .exp-live,#expOv .exp-live:visited{color:var(--bg,#FAFAFA)}
 .exp-live{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none}
@@ -3677,12 +3787,19 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 .exp-card .desc.exp-line{margin-top:0;color:var(--ink)}
 
 /* Experiments header: the site's own sparkle (the "AI that argued back" mark in the footer), turning slowly,
-   and a verb typed out, held, and erased: experimenting, building, thinking, prototyping */
+   and a verb typed out, held, and erased: typed as terminal commands, one per experiment */
 .exp-pulse{display:flex;align-items:center;gap:8px;height:24px;margin:0;font-family:inherit;font-size:20px;font-weight:400;line-height:24px;letter-spacing:-.01em;color:var(--ink)}
 .exp-mark{flex:none;display:block;width:20px;height:20px}
 
 .exp-type{display:inline-flex;align-items:center;height:24px;white-space:nowrap}
 .exp-typed:empty::before{content:"\200b"}
+/* a terminal prompt: the command typed is one of the experiments below */
+.exp-type{font-family:'Geist Mono',ui-monospace,monospace;font-size:17px;letter-spacing:0}
+/* Lucide chevron-right as the prompt. Gaps are set on the ink, not the boxes: hand, ~, chevron and command
+   sit 10.25px apart (the chevron's box has 5.25px of air each side), all centred on the hand's middle */
+.exp-pr{display:inline-flex;align-items:center;margin:0 3.5px 0 -4.5px;color:var(--muted)}
+.exp-chev{display:block;flex:none;width:16px;height:16px;transform:translateY(.5px)}
+.exp-typed{white-space:pre}
 .exp-caret{display:inline-block;width:1.5px;height:1.05em;margin-left:2px;border-radius:1px;background:currentColor;animation:expCaret 1.1s ease-in-out infinite}
 .exp-type.is-typing .exp-caret{animation:none;opacity:1}
 @keyframes expCaret{0%,40%{opacity:1}55%,90%{opacity:0}100%{opacity:1}}
@@ -3948,20 +4065,28 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="experiments" data-section="Experiments" aria-labelledby="expHead">
     <div class="exp-head" data-reveal>
-      <h2 id="expHead" class="exp-pulse"><canvas class="askhand exp-mark" width="20" height="20" aria-hidden="true"></canvas><span class="vh-exp">Experiments</span><span class="exp-type" aria-hidden="true"><span class="exp-typed">Experimenting&hellip;</span><i class="exp-caret"></i></span></h2>
+      <h2 id="expHead" class="exp-pulse"><canvas class="askhand exp-mark" width="20" height="20" aria-hidden="true"></canvas><span class="vh-exp">Experiments</span><span class="exp-type" aria-hidden="true"><span class="exp-pr"><svg class="exp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span><span class="exp-typed">vibe-code chunav</span><i class="exp-caret"></i></span></h2>
     </div>
     <div class="exp-grid">
       <button type="button" class="exp-card" data-exp="chunav" data-reveal aria-haspopup="dialog">
         <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-fit" data-dev="phone"><span class="exp-rig"><span class="exp-screen"><video class="exp-vid" data-clip="chunav" muted loop playsinline preload="none" width="442" height="962" poster="./assets/exp/chunav-light.webp"></video></span><img class="exp-device" src="./assets/iphone-mockup.webp" width="1608" height="3316" alt="" loading="lazy" decoding="async"></span></span></span>
-        <span class="worktext"><span class="exp-name">Chunav</span><span class="desc exp-line">Quick polls for friends, shared as a link</span></span>
+        <span class="worktext"><span class="exp-name">Chunav</span><span class="desc exp-line">A polling app for group chats</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="gb3" data-reveal aria-haspopup="dialog">
         <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-comp gbl"><span class="gbl-box"></span></span></span>
-        <span class="worktext"><span class="exp-name">Good Bot, Bad Bot</span><span class="desc exp-line">A playground for spotting good AI design</span></span>
+        <span class="worktext"><span class="exp-name">Good Bot, Bad Bot</span><span class="desc exp-line">A game for learning AI design</span></span>
       </button>
       <button type="button" class="exp-card" data-exp="tattva" data-reveal aria-haspopup="dialog">
         <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-comp gbl tvl"><span class="gbl-box" data-src="./assets/exp/tattva-showreel.json"></span></span></span>
         <span class="worktext"><span class="exp-name">Tattva</span><span class="desc exp-line">A design system for AI products</span></span>
+      </button>
+      <button type="button" class="exp-card" data-exp="figma" data-reveal aria-haspopup="dialog">
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-comp figx"><span class="fx-win"></span><span class="fx-bar"><svg class="fx-flogo" viewBox="0 0 128 128" aria-hidden="true"><path fill="#0acf83" d="M45.5 129c11.9 0 21.5-9.6 21.5-21.5V86H45.5C33.6 86 24 95.6 24 107.5S33.6 129 45.5 129zm0 0"/><path fill="#a259ff" d="M24 64.5C24 52.6 33.6 43 45.5 43H67v43H45.5C33.6 86 24 76.4 24 64.5zm0 0"/><path fill="#f24e1e" d="M24 21.5C24 9.6 33.6 0 45.5 0H67v43H45.5C33.6 43 24 33.4 24 21.5zm0 0"/><path fill="#ff7262" d="M67 0h21.5C100.4 0 110 9.6 110 21.5S100.4 43 88.5 43H67zm0 0"/><path fill="#1abcfe" d="M110 64.5c0 11.9-9.6 21.5-21.5 21.5S67 76.4 67 64.5 76.6 43 88.5 43 110 52.6 110 64.5zm0 0"/></svg><span class="fx-file">Chat app</span></span><span class="fx-lab">Chat screen</span><span class="fx-frame"></span><i class="fx-ub"></i><i class="fx-av"></i><i class="fx-l1"></i><i class="fx-l2"></i><span class="fx-part"><i class="fx-pt"></i><i class="fx-pl"></i><i class="fx-pb1 fx-acc2"></i><i class="fx-pb2"></i></span><i class="fx-help"></i><span class="fx-flag"><b>2.8:1</b><b>4.6:1</b></span><span class="fx-cmp"><i class="fx-send fx-acc2"></i></span><span class="fx-toast">Theme added</span><span class="fx-panel"></span><span class="fx-head"><span class="fx-tabs"><span class="fx-tab">Theme</span><span class="fx-tab">Parts</span><span class="fx-tab">Check</span></span><i class="fx-ul"></i></span><span class="fx-b fx-b0"><i class="fx-sw" style="left:60cqw;top:27cqw;background:#C5EB7A"></i><i class="fx-sw" style="left:67.5cqw;top:27cqw;background:#7EE3DB"></i><i class="fx-sw" style="left:75cqw;top:27cqw;background:#B7B9F5"></i><i class="fx-sw" style="left:82.5cqw;top:27cqw;background:#A9CFF7"></i><i class="fx-sw" style="left:60cqw;top:35cqw;background:#F1B5E8"></i><i class="fx-sw" style="left:67.5cqw;top:35cqw;background:#DCDAD5"></i><i class="fx-sw" style="left:75cqw;top:35cqw;background:#7DB8F7"></i><i class="fx-ring"></i><span class="fx-sname"><b>Lime</b><b>Plum</b></span><span class="fx-btn">Add to file</span></span><span class="fx-b fx-b1"><span class="fx-search">Find a part</span><span class="fx-th" style="left:59cqw;top:33cqw"><i style="left:22%;top:30%;width:56%;height:12%"></i><i style="left:22%;top:52%;width:40%;height:10%"></i></span><span class="fx-th" style="left:77cqw;top:33cqw"><i style="left:14%;top:56%;width:72%;height:22%;background:none;box-shadow:inset 0 0 0 1px #D9D9D9;border-radius:3px"></i></span><span class="fx-th fx-th-ap" style="left:59cqw;top:54cqw"><i style="left:14%;top:22%;width:50%;height:9%"></i><i style="left:14%;top:40%;width:70%;height:7%;background:#EBEBEB"></i><i class="fx-acc2" style="left:14%;top:60%;width:34%;height:18%"></i><i style="left:54%;top:60%;width:30%;height:18%;background:none;box-shadow:inset 0 0 0 1px #D9D9D9"></i></span><span class="fx-th" style="left:77cqw;top:54cqw"><i style="left:14%;top:24%;width:9%;height:11%;border-radius:50%"></i><i style="left:28%;top:26%;width:50%;height:7%"></i><i style="left:14%;top:46%;width:9%;height:11%;border-radius:50%"></i><i style="left:28%;top:48%;width:40%;height:7%"></i></span><span class="fx-tl" style="left:59cqw;top:48.4cqw">Message</span><span class="fx-tl" style="left:77cqw;top:48.4cqw">Composer</span><span class="fx-tl" style="left:59cqw;top:69.4cqw">Approval</span><span class="fx-tl" style="left:77cqw;top:69.4cqw">Sources</span></span><span class="fx-b fx-b2"><span class="fx-big"><b>1</b><b>0</b></span><span class="fx-sub">to fix</span><span class="fx-row"><i class="fx-dot"></i><span class="fx-rn">Contrast</span><span class="fx-rv"><b>2.8:1</b><b>4.6:1</b></span></span><span class="fx-btn">Check again</span></span><span class="fx-ghost fx-th fx-th-ap"><i style="left:14%;top:22%;width:50%;height:9%"></i><i style="left:14%;top:40%;width:70%;height:7%;background:#EBEBEB"></i><i class="fx-acc2" style="left:14%;top:60%;width:34%;height:18%"></i><i style="left:54%;top:60%;width:30%;height:18%;background:none;box-shadow:inset 0 0 0 1px #D9D9D9"></i></span><i class="fx-rip"></i><svg class="fx-cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l13.5 7.2-5.9 1.4 3.5 6.9-2.6 1.3-3.5-6.9L5 17.3z" fill="#1E1E1E" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></span></span>
+        <span class="worktext"><span class="exp-name">Tattva for Figma</span><span class="desc exp-line">A Figma plugin for Tattva</span></span>
+      </button>
+      <button type="button" class="exp-card" data-exp="mcp" data-reveal aria-haspopup="dialog">
+        <span class="cardframe exp-frame" aria-hidden="true"><span class="exp-comp mcpx" data-names="Claude|Cursor|GitHub Copilot|any MCP tool"><span class="mx-row"><span class="mx-tile mx-tv"><svg viewBox="0 0 64 64"><circle cx="18" cy="18" r="13.6" fill="currentColor"/><rect x="34" y="5" width="25" height="25" rx="6.5" fill="currentColor"/><rect x="5" y="34" width="25" height="25" fill="currentColor"/><path d="M46.5 32.5 50.3 42.7 60.5 46.5 50.3 50.3 46.5 60.5 42.7 50.3 32.5 46.5 42.7 42.7Z" fill="#C1C5FF"/></svg></span><span class="mx-x">&times;</span><span class="mx-tile mx-tool"><span class="mx-reel"><span class="mx-l"><svg viewBox="0 0 24 24"><path fill="#D97757" d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></span><span class="mx-l"><svg viewBox="0 0 24 24" class="cur"><path d="M11.925 24l10.425-6-10.425-6L1.5 18l10.425 6z" fill="url(#cR-fill-0)"></path><path d="M22.35 18V6L11.925 0v12l10.425 6z" fill="url(#cR-fill-1)"></path><path d="M11.925 0L1.5 6v12l10.425-6V0z" fill="url(#cR-fill-2)"></path><path d="M22.35 6L11.925 24V12L22.35 6z" fill="#555"></path><path d="M22.35 6l-10.425 6L1.5 6h20.85z" fill="#000"></path><defs><linearGradient gradientUnits="userSpaceOnUse" id="cR-fill-0" x1="11.925" x2="11.925" y1="12" y2="24"><stop offset=".16" stop-color="#000" stop-opacity=".39"></stop><stop offset=".658" stop-color="#000" stop-opacity=".8"></stop></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="cR-fill-1" x1="22.35" x2="11.925" y1="6.037" y2="12.15"><stop offset=".182" stop-color="#000" stop-opacity=".31"></stop><stop offset=".715" stop-color="#000" stop-opacity="0"></stop></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="cR-fill-2" x1="11.925" x2="1.5" y1="0" y2="18"><stop stop-color="#000" stop-opacity=".6"></stop><stop offset=".667" stop-color="#000" stop-opacity=".22"></stop></linearGradient></defs></svg></span><span class="mx-l"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd"><path d="M19.245 5.364c1.322 1.36 1.877 3.216 2.11 5.817.622 0 1.2.135 1.592.654l.73.964c.21.278.323.61.323.955v2.62c0 .339-.173.669-.453.868C20.239 19.602 16.157 21.5 12 21.5c-4.6 0-9.205-2.583-11.547-4.258-.28-.2-.452-.53-.453-.868v-2.62c0-.345.113-.679.321-.956l.73-.963c.392-.517.974-.654 1.593-.654l.029-.297c.25-2.446.81-4.213 2.082-5.52 2.461-2.54 5.71-2.851 7.146-2.864h.198c1.436.013 4.685.323 7.146 2.864zm-7.244 4.328c-.284 0-.613.016-.962.05-.123.447-.305.85-.57 1.108-1.05 1.023-2.316 1.18-2.994 1.18-.638 0-1.306-.13-1.851-.464-.516.165-1.012.403-1.044.996a65.882 65.882 0 00-.063 2.884l-.002.48c-.002.563-.005 1.126-.013 1.69.002.326.204.63.51.765 2.482 1.102 4.83 1.657 6.99 1.657 2.156 0 4.504-.555 6.985-1.657a.854.854 0 00.51-.766c.03-1.682.006-3.372-.076-5.053-.031-.596-.528-.83-1.046-.996-.546.333-1.212.464-1.85.464-.677 0-1.942-.157-2.993-1.18-.266-.258-.447-.661-.57-1.108-.32-.032-.64-.049-.96-.05zm-2.525 4.013c.539 0 .976.426.976.95v1.753c0 .525-.437.95-.976.95a.964.964 0 01-.976-.95v-1.752c0-.525.437-.951.976-.951zm5 0c.539 0 .976.426.976.95v1.753c0 .525-.437.95-.976.95a.964.964 0 01-.976-.95v-1.752c0-.525.437-.951.976-.951zM7.635 5.087c-1.05.102-1.935.438-2.385.906-.975 1.037-.765 3.668-.21 4.224.405.394 1.17.657 1.995.657h.09c.649-.013 1.785-.176 2.73-1.11.435-.41.705-1.433.675-2.47-.03-.834-.27-1.52-.63-1.813-.39-.336-1.275-.482-2.265-.394zm6.465.394c-.36.292-.6.98-.63 1.813-.03 1.037.24 2.06.675 2.47.968.957 2.136 1.104 2.776 1.11h.044c.825 0 1.59-.263 1.995-.657.555-.556.765-3.187-.21-4.224-.45-.468-1.335-.804-2.385-.906-.99-.088-1.875.058-2.265.394zM12 7.615c-.24 0-.525.015-.84.044.03.16.045.336.06.526l-.001.159a2.94 2.94 0 01-.014.25c.225-.022.425-.027.612-.028h.366c.187 0 .387.006.612.028-.015-.146-.015-.277-.015-.409.015-.19.03-.365.06-.526a9.29 9.29 0 00-.84-.044z"></path></svg></span><span class="mx-l"><span class="mx-grid"><i><svg viewBox="0 0 24 24"><path fill="#D97757" d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></i><i><svg viewBox="0 0 24 24" class="cur"><path d="M11.925 24l10.425-6-10.425-6L1.5 18l10.425 6z" fill="url(#cG-fill-0)"></path><path d="M22.35 18V6L11.925 0v12l10.425 6z" fill="url(#cG-fill-1)"></path><path d="M11.925 0L1.5 6v12l10.425-6V0z" fill="url(#cG-fill-2)"></path><path d="M22.35 6L11.925 24V12L22.35 6z" fill="#555"></path><path d="M22.35 6l-10.425 6L1.5 6h20.85z" fill="#000"></path><defs><linearGradient gradientUnits="userSpaceOnUse" id="cG-fill-0" x1="11.925" x2="11.925" y1="12" y2="24"><stop offset=".16" stop-color="#000" stop-opacity=".39"></stop><stop offset=".658" stop-color="#000" stop-opacity=".8"></stop></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="cG-fill-1" x1="22.35" x2="11.925" y1="6.037" y2="12.15"><stop offset=".182" stop-color="#000" stop-opacity=".31"></stop><stop offset=".715" stop-color="#000" stop-opacity="0"></stop></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="cG-fill-2" x1="11.925" x2="1.5" y1="0" y2="18"><stop stop-color="#000" stop-opacity=".6"></stop><stop offset=".667" stop-color="#000" stop-opacity=".22"></stop></linearGradient></defs></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd"><path d="M19.245 5.364c1.322 1.36 1.877 3.216 2.11 5.817.622 0 1.2.135 1.592.654l.73.964c.21.278.323.61.323.955v2.62c0 .339-.173.669-.453.868C20.239 19.602 16.157 21.5 12 21.5c-4.6 0-9.205-2.583-11.547-4.258-.28-.2-.452-.53-.453-.868v-2.62c0-.345.113-.679.321-.956l.73-.963c.392-.517.974-.654 1.593-.654l.029-.297c.25-2.446.81-4.213 2.082-5.52 2.461-2.54 5.71-2.851 7.146-2.864h.198c1.436.013 4.685.323 7.146 2.864zm-7.244 4.328c-.284 0-.613.016-.962.05-.123.447-.305.85-.57 1.108-1.05 1.023-2.316 1.18-2.994 1.18-.638 0-1.306-.13-1.851-.464-.516.165-1.012.403-1.044.996a65.882 65.882 0 00-.063 2.884l-.002.48c-.002.563-.005 1.126-.013 1.69.002.326.204.63.51.765 2.482 1.102 4.83 1.657 6.99 1.657 2.156 0 4.504-.555 6.985-1.657a.854.854 0 00.51-.766c.03-1.682.006-3.372-.076-5.053-.031-.596-.528-.83-1.046-.996-.546.333-1.212.464-1.85.464-.677 0-1.942-.157-2.993-1.18-.266-.258-.447-.661-.57-1.108-.32-.032-.64-.049-.96-.05zm-2.525 4.013c.539 0 .976.426.976.95v1.753c0 .525-.437.95-.976.95a.964.964 0 01-.976-.95v-1.752c0-.525.437-.951.976-.951zm5 0c.539 0 .976.426.976.95v1.753c0 .525-.437.95-.976.95a.964.964 0 01-.976-.95v-1.752c0-.525.437-.951.976-.951zM7.635 5.087c-1.05.102-1.935.438-2.385.906-.975 1.037-.765 3.668-.21 4.224.405.394 1.17.657 1.995.657h.09c.649-.013 1.785-.176 2.73-1.11.435-.41.705-1.433.675-2.47-.03-.834-.27-1.52-.63-1.813-.39-.336-1.275-.482-2.265-.394zm6.465.394c-.36.292-.6.98-.63 1.813-.03 1.037.24 2.06.675 2.47.968.957 2.136 1.104 2.776 1.11h.044c.825 0 1.59-.263 1.995-.657.555-.556.765-3.187-.21-4.224-.45-.468-1.335-.804-2.385-.906-.99-.088-1.875.058-2.265.394zM12 7.615c-.24 0-.525.015-.84.044.03.16.045.336.06.526l-.001.159a2.94 2.94 0 01-.014.25c.225-.022.425-.027.612-.028h.366c.187 0 .387.006.612.028-.015-.146-.015-.277-.015-.409.015-.19.03-.365.06-.526a9.29 9.29 0 00-.84-.044z"></path></svg></i><i class="mx-plus">+</i></span></span><span class="mx-l"><svg viewBox="0 0 24 24"><path fill="#D97757" d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></span></span></span></span><span class="mx-lead">MCP server for</span><span class="mx-name" aria-hidden="true"></span></span></span>
+        <span class="worktext"><span class="exp-name">Tattva MCP</span><span class="desc exp-line">An MCP server for AI coding tools</span></span>
       </button>
     </div>
   </section>
@@ -5531,7 +5656,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         <p class="exp-dtext" id="expText"></p>
         <ul class="exp-facts" id="expFacts"></ul>
         <div class="exp-acts">
-        <a class="exp-live" id="expLive" href="#" target="_blank" rel="noopener">View it live <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="exp-live" id="expLive" href="#" target="_blank" rel="noopener"><span id="expLiveT">View it live</span> <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="exp-sec" id="expSec" href="#" target="_blank" rel="noopener"></a>
         </div>
       </div>
     </div>
@@ -5541,24 +5667,32 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 /* Experiments: a card opens its overlay; the text and links live here, once */
 (function(){
   var P={
-    chunav:{name:"Chunav",kind:"Side project \u00b7 Web app",tag:"Quick polls you share as a link.",
-      text:"Start a poll between two or more choices, like Virat, Rohit or Dhoni, or pizza or biryani. Send it on WhatsApp and watch the votes come in. Made for fun among friends, not for real elections.",
-      facts:["English, \u0939\u093f\u0902\u0926\u0940, Hinglish","No sign-up to vote","Results open after you vote"],pos:"50% 58%",
-      live:"https://election-lkb2.vercel.app"},
-    gb3:{name:"Good Bot, Bad Bot",kind:"Side project \u00b7 Learning game",tag:"Can you spot good AI design?",
-      text:"Short games about the patterns behind ChatGPT, Copilot and Perplexity. Pick the better screen, find the flaw, and collect a card for every pattern you learn.",
-      facts:["37 pattern cards","A daily challenge","XP and levels"],pos:"50% 30%",
-      live:"https://lkb00.github.io/gb3/"},
-    tattva:{name:"Tattva",kind:"Side project \u00b7 Design system",tag:"React parts for AI products people can trust.",
-      text:"Components and patterns for assistants that answer, act and create, with trust built in: sources, confidence, approvals and undo.",
-      facts:["211 parts, 15 patterns","WCAG 2.2 AA in every theme","7 themes, light and dark"],pos:"50% 0%",
-      live:"https://lkb00.github.io/tattva/"}
+    chunav:{name:"Chunav",kind:"Side project \u00b7 Web app",tag:"Settle the group-chat debate with one link.",
+      text:"Group chats argue, nobody counts. Chunav turns any question, Virat or Dhoni, pizza or biryani, into a poll you drop on WhatsApp. Voting takes one tap and no sign-up, and results open only after you vote, so every vote is your own.",
+      facts:["No sign-up to vote","Results after you vote","English, \u0939\u093f\u0902\u0926\u0940, Hinglish"],
+      cta:["Start a poll","https://election-lkb2.vercel.app"]},
+    gb3:{name:"Good Bot, Bad Bot (GB3)",kind:"Side project \u00b7 Learning game",tag:"Learn AI design by playing, not reading.",
+      text:"Short games built on the patterns behind ChatGPT, Copilot and Perplexity. Pick the better screen, spot the flaw, and collect a card for every pattern you learn, so good AI design becomes something you can see, not a list you memorise.",
+      facts:["37 pattern cards","A daily challenge","XP and levels"],
+      cta:["Play a round","https://lkb00.github.io/gb3/"]},
+    tattva:{name:"Tattva",kind:"Side project \u00b7 Design system",tag:"A design system for the moments AI products get wrong.",
+      text:"Where did this answer come from? How sure is it? Can I undo that? Tattva gives each of those moments a ready part, sources, confidence, approvals and undo, in React and in Figma, so trust is built in rather than bolted on.",
+      facts:["211 parts, 15 patterns","WCAG 2.2 AA in every theme","7 themes, light and dark"],
+      cta:["Explore Tattva","https://lkb00.github.io/tattva/"],sec:["Browse the parts","https://lkb00.github.io/tattva/#components"]},
+    figma:{name:"Tattva for Figma",kind:"Side project \u00b7 Figma plugin",tag:"Design with the parts the code ships.",
+      text:"Handoff breaks when the file and the code drift apart. The plugin brings Tattva\u2019s themes and parts into Figma as variables and components, then checks the page for low contrast, small text and tiny tap targets before it reaches a developer.",
+      facts:["Theme, Parts and Check","63 free parts as components","Click an issue to jump to it"],
+      cta:["Open in Figma","https://www.figma.com/community/plugin/1691808096616619227"],sec:["Read about the plugin","https://lkb00.github.io/tattva/#plugins"]},
+    mcp:{name:"Tattva MCP",kind:"Side project \u00b7 MCP server",tag:"AI coding tools that build with the right parts.",
+      text:"Left alone, AI tools guess at UI. Connect the Tattva MCP server and Claude, Cursor or GitHub Copilot look up the right part, plan the build and check their own code against Tattva\u2019s rules, so what they ship matches the system.",
+      facts:["Claude, Cursor, GitHub Copilot","One line to connect","Finds parts, checks rules"],
+      cta:["Connect your AI tool","https://lkb00.github.io/tattva/#connect-ai"],sec:["View on GitHub","https://github.com/LKB00/tattva"]}
   };
 
   /* recordings: the clip that matches the site's theme, playing only while on screen */
   var vids=[].slice.call(document.querySelectorAll(".exp-vid")), still=matchMedia("(prefers-reduced-motion: reduce)");
   function mode(){ var t=document.documentElement.getAttribute("data-theme"); return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light" }
-  var DIM={"chunav-light":[442,962],"chunav-dark":[442,962],"x":[0,0]};
+  var DIM={"chunav-light":[442,962],"chunav-dark":[442,962]};
   function size(v,k){ var d=DIM[k]; if(d){ v.width=d[0]; v.height=d[1] } }
   function load(v){ var m=mode(), c=v.dataset.clip; if(v.dataset.mode===m) return; v.dataset.mode=m; size(v,c+"-"+m);
     v.poster="./assets/exp/"+c+"-"+m+".webp";
@@ -5583,15 +5717,16 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var comp=btn.querySelector(".exp-comp");
     slot.innerHTML="";
     if(comp){ md.dataset.dev="comp"; v.pause(); v.removeAttribute("src"); var c=comp.cloneNode(true); c.classList.add("is-on"); slot.appendChild(c) }
-    else{ md.dataset.dev="phone"; v.poster="./assets/exp/"+key+"-"+m+".webp"; size(v,key+"-"+m);
+    else{ var dev=(btn.querySelector(".exp-fit")||{dataset:{dev:"phone"}}).dataset.dev; md.dataset.dev=dev; md.querySelector(".exp-fit").dataset.dev=dev; v.poster="./assets/exp/"+key+"-"+m+".webp"; size(v,key+"-"+m);
       if(!still.matches){ v.src="./assets/exp/"+key+"-"+m+".mp4"; v.currentTime=0 } else v.removeAttribute("src") }
     document.getElementById("expKick").textContent=d.kind;
     document.getElementById("expDlgTitle").textContent=d.name;
     document.getElementById("expTag").textContent=d.tag;
     document.getElementById("expText").textContent=d.text;
     document.getElementById("expFacts").innerHTML=d.facts.map(function(f){ return "<li>"+f+"</li>" }).join("");
-    var l=document.getElementById("expLive");
-    l.href=d.live; l.setAttribute("aria-label",d.name+" (opens in a new tab)");
+    var l=document.getElementById("expLive"), sc=document.getElementById("expSec");
+    document.getElementById("expLiveT").textContent=d.cta[0]; l.href=d.cta[1]; l.setAttribute("aria-label",d.cta[0]+": "+d.name+" (opens in a new tab)");
+    sc.hidden=!d.sec; if(d.sec){ sc.textContent=d.sec[0]; sc.href=d.sec[1]; sc.setAttribute("aria-label",d.sec[0]+": "+d.name+" (opens in a new tab)") }
     ov.hidden=false; requestAnimationFrame(function(){ ov.classList.add("on"); dlg.focus({preventScroll:true}); if(!still.matches&&v.getAttribute("src")) v.play().catch(function(){}) });
     document.documentElement.style.overflow="hidden";
   }
@@ -5608,7 +5743,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     if(ov.hidden) return;
     if(e.key==="Escape"){ e.preventDefault(); close(); return }
     if(e.key==="Tab"){   /* keep focus inside the dialog while it is open */
-      var f=[].slice.call(dlg.querySelectorAll("a[href],button")), first=f[0], last=f[f.length-1];
+      var f=[].slice.call(dlg.querySelectorAll("a[href],button")).filter(function(e){ return !e.hidden }), first=f[0], last=f[f.length-1];
       if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus() }
       else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus() }
     }
@@ -5639,10 +5774,115 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 })();
 </script>
 <script>
+/* Tattva for Figma: one timeline, sampled every frame while the card (or its dialog copy) is on screen */
+(function(){
+  var still=matchMedia("(prefers-reduced-motion: reduce)"), LOOP=10.6;
+  function cl(v){ return v<0?0:v>1?1:v }
+  function eio(v){ v=cl(v); return v<.5?4*v*v*v:1-Math.pow(-2*v+2,3)/2 }
+  function seg(t,a,b){ return eio((t-a)/(b-a)) }
+  function hx(h){ return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)] }
+  function mix(a,b,k){ a=hx(a); b=hx(b); return "rgb("+a.map(function(v,i){ return Math.round(v+(b[i]-v)*k) }).join(",")+")" }
+  // cursor: [time, x, y] in the 100-unit grid; between keys it eases, on equal keys it rests
+  var K=[[0,88,70],[.5,88,70],[1.2,62.5,37.5],[1.6,62.5,37.5],[2.2,76,85.5],[2.8,76,85.5],[3.3,77.4,18.4],[3.7,77.4,18.4],[4.25,67,61],[4.45,67,61],[5.4,29.5,51.5],[6,29.5,51.5],[6.5,86.4,18.4],[7,86.4,18.4],[7.5,72,43.5],[8.9,72,43.5],[9.7,88,70],[LOOP,88,70]];
+  var CLK=[1.28,2.3,3.38,4.38,5.48,6.58,7.58];
+  function q(el,s){ return el.querySelector(s) }
+  function init(el){
+    if(el._fx) cancelAnimationFrame(el._fx);
+    var R={cur:q(el,".fx-cur"),rip:q(el,".fx-rip"),ring:q(el,".fx-ring"),sn:el.querySelectorAll(".fx-sname b"),btn0:q(el,".fx-b0 .fx-btn"),toast:q(el,".fx-toast"),ul:q(el,".fx-ul"),tabs:el.querySelectorAll(".fx-tab"),
+      b:el.querySelectorAll(".fx-b"),ghost:q(el,".fx-ghost"),ap:q(el,".fx-b1 .fx-th-ap"),part:q(el,".fx-part"),help:q(el,".fx-help"),flag:q(el,".fx-flag"),fb:el.querySelectorAll(".fx-flag b"),
+      row:q(el,".fx-row"),dot:q(el,".fx-dot"),rv:el.querySelectorAll(".fx-rv b"),big:el.querySelectorAll(".fx-big b")};
+    var t0=null, acc=0, last=null;
+    function draw(t){
+      var u=el.clientWidth/100;
+      // theme: Lime to Plum, and back at the loop
+      var th=seg(t,1.34,1.9)*(1-seg(t,9.7,10.4));
+      el.style.setProperty("--acc",mix("#C5EB7A","#F1B5E8",th)); el.style.setProperty("--acc2",mix("#8DBF2E","#D77BC8",th));
+      R.ring.style.transform="translate3d("+60*u+"px,"+(27+8*th)*u+"px,0)";
+      R.sn[0].style.opacity=1-th; R.sn[1].style.opacity=th;
+      R.btn0.style.transform="scale("+(1-.04*Math.sin(Math.PI*cl((t-2.3)/.22)))+")";
+      var to=Math.min(seg(t,2.42,2.7),1-seg(t,3.5,3.85)); R.toast.style.opacity=to; R.toast.style.transform="translate3d(0,"+(1-to)*1.4*u+"px,0)";
+      // tabs: Theme, Parts, Check, back to Theme
+      var TABS=[].map.call(R.tabs,function(e){ return [59.5+e.offsetLeft/u, e.offsetWidth/u] });
+      var p1=seg(t,3.4,3.78), p2=seg(t,6.6,6.98), p0=seg(t,9.7,10.2), x=TABS[0][0], w=TABS[0][1];
+      [[p1,1],[p2,2],[p0,0]].forEach(function(s){ var a=s[0]; x+= (TABS[s[1]][0]-x)*a; w+=(TABS[s[1]][1]-w)*a });
+      R.ul.style.left=x+"cqw"; R.ul.style.width=w+"cqw";
+      var act=t<3.55?0:t<6.75?1:t<9.9?2:0;
+      R.tabs.forEach(function(e,i){ e.style.color=i===act?"var(--fx-tx)":"var(--fx-mu)" });
+      var o0=Math.max(1-seg(t,3.4,3.62),seg(t,9.85,10.3)), o1=Math.min(seg(t,3.55,3.85),1-seg(t,6.6,6.82)), o2=Math.min(seg(t,6.72,7.02),1-seg(t,9.7,9.92));
+      [o0,o1,o2].forEach(function(o,i){ R.b[i].style.opacity=o; R.b[i].style.transform="translate3d("+(1-o)*(i===0&&t>9?-1.5:1.5)*u+"px,0,0)" });
+      // cursor
+      var i=0; while(i<K.length-2&&t>=K[i+1][0]) i++;
+      var a=K[i], b=K[i+1], k=eio((t-a[0])/(b[0]-a[0]||1)), cx=a[1]+(b[1]-a[1])*k, cy=a[2]+(b[2]-a[2])*k;
+      var press=0, rp=-1;
+      CLK.forEach(function(c){ var d=t-c; if(d>-.08&&d<.16) press=Math.max(press,1-Math.abs(d-.04)/.12); if(d>=0&&d<.5) rp=d/.5 });
+      if(t>4.38&&t<5.48) press=Math.max(press,.6);
+      R.cur.style.transform="translate3d("+cx*u+"px,"+cy*u+"px,0) scale("+(1-.14*press)+")";
+      R.rip.style.opacity=rp<0?0:(1-rp)*.9; R.rip.style.transform="translate3d("+cx*u+"px,"+cy*u+"px,0) scale("+(.3+.9*eio(rp))+")";
+      // drag: a copy of Approval follows the cursor from the panel to the screen
+      var dg=t>=4.38&&t<5.62, gx=cx-8, gy=cy-7;
+      R.ghost.style.opacity=dg?Math.min(seg(t,4.38,4.5),1-seg(t,5.48,5.62))*.92:0;
+      R.ghost.style.transform="translate3d("+gx*u+"px,"+gy*u+"px,0) scale(.94)";
+      R.ap.style.opacity=t>4.38&&t<9.9?(t<5.5?.35:.35+.65*seg(t,5.5,5.9)):1;
+      var pa=seg(t,5.48,5.82)*(1-seg(t,9.7,10.2));
+      R.part.style.opacity=pa; R.part.style.transform="scale("+(.97+.03*pa)+")";
+      var po=Math.min(seg(t,5.48,5.6),1-seg(t,6.3,6.9));
+      R.part.style.boxShadow="inset 0 0 0 1px #E6E6E6"+(po>0?",0 0 0 "+(.45*u)+"px rgba(151,71,255,"+po+")":"");
+      // check: the helper line is flagged, clicked, fixed
+      var fl=Math.min(seg(t,6.9,7.2),1-seg(t,9,9.4)), fx=seg(t,7.95,8.5);
+      R.help.style.background=mix("#DADADA","#6E6E6E",fx*(1-seg(t,9.7,10.3)));
+      R.help.style.boxShadow=fl>0?"0 0 0 "+(.4*u)+"px "+(fx>.5?"rgba(20,174,92,"+fl+")":"rgba(242,72,34,"+fl+")")+",0 0 0 "+(.9*u)+"px rgba(255,255,255,"+fl+")":"none";
+      R.flag.style.opacity=fl; R.flag.style.background=mix("#F24822","#14AE5C",fx); R.fb[0].style.opacity=1-fx; R.fb[1].style.opacity=fx;
+      R.row.style.background=t>7.58&&t<9.6?"rgba(13,153,255,"+(.12*Math.min(seg(t,7.58,7.75),1-seg(t,9.2,9.6)))+")":"transparent";
+      R.dot.style.background=mix("#F24822","#14AE5C",fx);
+      R.rv[0].style.opacity=1-fx; R.rv[1].style.opacity=fx; R.big[0].style.opacity=1-fx; R.big[1].style.opacity=fx;
+    }
+    function frame(now){
+      el._fx=0;
+      if(!el.classList.contains("is-on")||document.hidden){ last=null; return }
+      if(last!==null) acc+=(now-last)/1000; last=now;
+      draw(acc%LOOP); el._fx=requestAnimationFrame(frame);
+    }
+    draw(still.matches?8.7:0);
+    if(still.matches) return;
+    function kick(){ if(!el._fx&&el.classList.contains("is-on")&&!document.hidden) el._fx=requestAnimationFrame(frame) }
+    new MutationObserver(kick).observe(el,{attributes:true,attributeFilter:["class"]});
+    document.addEventListener("visibilitychange",kick);
+    new ResizeObserver(function(){ draw(acc%LOOP) }).observe(el);
+    kick();
+  }
+  document.querySelectorAll(".exp-card .figx").forEach(init);
+  var slot=document.getElementById("expComp");
+  if(slot) new MutationObserver(function(){ slot.querySelectorAll(".figx").forEach(init) }).observe(slot,{childList:true});
+})();
+/* Tattva MCP lockup: one stop every 2.4s, only while the card (or its dialog copy) is on screen */
+(function(){
+  var still=matchMedia("(prefers-reduced-motion: reduce)");
+  function line(name,cls){ var l=document.createElement("span"); l.className="mx-line"+(cls?" "+cls:"");
+    name.split("").forEach(function(c,k){ var b=document.createElement("b"); b.textContent=c; b.style.transitionDelay=(k*22)+"ms"; l.appendChild(b) }); return l }
+  function init(el){
+    if(el._mx) clearInterval(el._mx);
+    var names=el.dataset.names.split("|"), reel=el.querySelector(".mx-reel"), nm=el.querySelector(".mx-name"), x=el.querySelector(".mx-x"), i=0, turns=0;
+    reel.classList.add("snap"); reel.style.setProperty("--i",0); void reel.offsetWidth; reel.classList.remove("snap");
+    nm.innerHTML=""; nm.appendChild(line(names[0])); x.style.transform="";
+    if(still.matches) return;
+    el._mx=setInterval(function(){
+      if(document.hidden||!el.classList.contains("is-on")) return;
+      i++; turns++;
+      reel.style.setProperty("--i",i);
+      x.style.transform="rotate("+(turns*90)+"deg)";
+      var old=nm.querySelectorAll(".mx-line"); old.forEach(function(o){ o.querySelectorAll("b").forEach(function(b,k){ b.style.transitionDelay=(k*12)+"ms" }); o.classList.add("gone"); setTimeout(function(){ o.remove() },900) });
+      var n=line(names[i%names.length],"pre"); nm.appendChild(n); void n.offsetWidth; n.classList.remove("pre");
+      if(i===names.length){ setTimeout(function(){ reel.classList.add("snap"); i=0; reel.style.setProperty("--i",0); void reel.offsetWidth; reel.classList.remove("snap") },950) }
+    },2400);
+  }
+  document.querySelectorAll(".exp-card .mcpx").forEach(init);
+  var slot=document.getElementById("expComp");
+  if(slot) new MutationObserver(function(){ slot.querySelectorAll(".mcpx").forEach(init) }).observe(slot,{childList:true});
+})();
 /* Experiments header: type a verb, hold it, erase it, type the next; only while on screen */
 (function(){var box=document.querySelector('.exp-type'),out=box&&box.querySelector('.exp-typed'),head=document.getElementById('expHead');
 if(!out||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-var words=['Experimenting\u2026','Building\u2026','Thinking\u2026','Prototyping\u2026'],w=0,n=words[0].length,dir=-1,timer=null,on=false;
+var words=['vibe-code chunav','prototype gb3','build tattva','experiment --with-ai'],w=0,n=words[0].length,dir=-1,timer=null,on=false;
 function tick(){var word=words[w],delay;
   if(dir>0){n++;out.textContent=word.slice(0,n);box.classList.add('is-typing');delay=55+Math.random()*45;if(n>=word.length){dir=-1;box.classList.remove('is-typing');delay=1700}}
   else{n--;out.textContent=word.slice(0,Math.max(n,0));box.classList.add('is-typing');delay=32;if(n<=0){w=(w+1)%words.length;dir=1;delay=420}}
