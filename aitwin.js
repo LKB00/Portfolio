@@ -492,6 +492,11 @@
     }
     if (reduce){ seed(); draw(SCATTER_AT - 1); return; }
     function kick(){ if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame); }
+    // The homepage intro's hand flies into this button and becomes this
+    // hand. On landing the cycle restarts already gathered, so the hand is
+    // whole when it takes over, waves a moment later, and doesn't scatter
+    // straight after; the ring sweeps once to mark the arrival.
+    cv.__lpLand = function(){ if (!P.length) seed(); t0 = performance.now() - (GATHER + 500); if (onCycle) onCycle(); kick(); };
     if ("IntersectionObserver" in window){
       new IntersectionObserver(function(es){ visible = es[es.length - 1].isIntersecting; if (visible) kick(); }).observe(cv);
     }

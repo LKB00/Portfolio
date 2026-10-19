@@ -3838,17 +3838,172 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 <script defer src="./analytics.js?v=5"></script>
 <script defer src="./readpill.js?v=11"></script>
 <script defer src="https://umami-swart-five.vercel.app/script.js" data-website-id="5a59e8a0-e996-42f4-a248-fcf582413c76" data-domains="lokeshbhatia.com,www.lokeshbhatia.com" data-exclude-hash="true" data-before-send="pfBeforeSend"></script>
+<style>
+/* ══ INTRO: a wave at the door ══════════════════════════════════════
+   Layout for the greeting; the hand itself is drawn by the WV script on
+   its own canvas, above the loader, so it can fly on past the loader's
+   fade and land in the "Ask my AI twin" button. */
+#loader .wv-stage{position:relative;display:grid;justify-items:center;gap:clamp(14px,2.4vw,22px);
+  transform:translateY(-4vh)}
+#loader .wv-spot{width:clamp(112px,15vw,164px);aspect-ratio:1}
+#loader .wv-hi{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,36px);
+  letter-spacing:-.02em;line-height:1.1;color:var(--ink);white-space:nowrap}
+#loader .wv-sub{font-family:var(--display);font-size:clamp(13px,1.3vw,15px);color:var(--muted);white-space:nowrap;margin-top:-6px}
+#loader .wv-hi span,#loader .wv-sub span{display:inline-block;opacity:0;white-space:pre}
+#loader.hide .wv-stage{transform:translateY(calc(-4vh - 10px));opacity:0;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .35s}
+.wv-hand{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:95;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.wv-hand{display:none}}
+</style>
 <noscript><style>/* no JavaScript: show every section at once; nothing is left waiting for a fade-in */[data-reveal]{opacity:1!important;transform:none!important}#loader{display:none!important}</style></noscript>
 </head>
 <body>
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter></svg>
 <div id="loader" aria-hidden="true">
-  <div class="box">
-    <span class="sel" aria-hidden="true"><span class="dot tl"></span><span class="dot tr"></span><span class="dot bl"></span><span class="dot br"></span></span>
-    <span class="tag top">Product Designer</span>
-    <span class="name"><span>Lokesh Bhatia</span></span>
+  <div class="wv-stage">
+    <div class="wv-spot"></div>
+    <div class="wv-hi"></div>
+    <div class="wv-sub"></div>
   </div>
 </div>
+<script>
+/* ══ The intro: a wave at the door ════════════════════════════════════
+   The AI twin's own hand (the same dots, the same four hues) gathers,
+   waves at the visitor and greets them in their own time of day, then
+   flies into the "Ask my AI twin" button as the hero arrives: the hand
+   that greeted you is the one you can talk to.
+
+   It is drawn live on a canvas rather than shipped as video or Lottie:
+   ~4KB, sharp at any pixel ratio, at the screen's own frame rate, and it
+   starts before anything else has loaded, which is the whole job of an
+   intro. WV.play() runs it on a loader element; Figma view's "back to
+   the website" calls it again on a fresh copy. */
+(function(){
+  var HAND=["M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2","M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2",
+    "M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8",
+    "M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"];
+  var ARCS=["M20.2 1.2a3.2 3.2 0 0 1 2.6 2.6","M20.6 -1a5.6 5.6 0 0 1 4.4 4.4"];
+  var HUES=[[108,155,255],[177,124,255],[255,134,183],[255,176,112]];
+  var SPR='linear(0,.06,.22,.44,.66,.84,.96,1.03,1.05,1.04,1.02,1.005,1)';
+  var cache=null;
+  function sample(list,gap){var ns="http://www.w3.org/2000/svg",s=document.createElementNS(ns,"svg"),o=[];
+    s.setAttribute("style","position:absolute;width:0;height:0;visibility:hidden");document.body.appendChild(s);
+    list.forEach(function(d){var p=document.createElementNS(ns,"path");p.setAttribute("d",d);s.appendChild(p);
+      var len=p.getTotalLength(),n=Math.max(2,Math.round(len/gap));
+      for(var i=0;i<=n;i++){var q=p.getPointAtLength(len*i/n);o.push({x:q.x,y:q.y})}});
+    s.remove();
+    return o.filter(function(p,i){for(var j=0;j<i;j++){var q=o[j];if((p.x-q.x)*(p.x-q.x)+(p.y-q.y)*(p.y-q.y)<gap*gap*.35)return false}return true})}
+  function mix(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]}
+  function hue(t){t=Math.max(0,Math.min(.999,t))*(HUES.length-1);var i=Math.floor(t);return mix(HUES[i],HUES[i+1],t-i)}
+  function outC(t){return t<=0?0:t>=1?1:1-Math.pow(1-t,3)}
+  function inOut(t){return t<=0?0:t>=1?1:t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+  function rnd(i){var x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+  /* the greeting, by the visitor's own clock and where they came from.
+     The second line opens the door: "thanks for stopping by" is what you
+     say as someone leaves. */
+  function greeting(){var h=new Date().getHours(),
+      g=h<5?'Up late?':h<12?'Good morning':h<17?'Good afternoon':'Good evening',from='';
+    try{var r=document.referrer?new URL(document.referrer).hostname:'';
+      from=/linkedin|lnkd/.test(r)?'Welcome over from LinkedIn':/google|bing|duckduckgo/.test(r)?'Glad you found me':''}catch(e){}
+    return[g,from||'Come on in']}
+  function letters(el,s){el.textContent='';return Array.from(s).map(function(ch){var sp=document.createElement('span');sp.textContent=ch;el.appendChild(sp);return sp})}
+
+  /* play(loader, handOff, z): handOff runs once, as the hand sets off for the
+     button (or at once on a skip), and is where the page starts arriving */
+  function play(L,handOff,z){
+    var spot=L.querySelector('.wv-spot'),hi=L.querySelector('.wv-hi'),sb=L.querySelector('.wv-sub');
+    var cv=document.createElement('canvas');cv.className='wv-hand';cv.setAttribute('aria-hidden','true');
+    if(z)cv.style.zIndex=z;document.body.appendChild(cv);
+    if(!cache){var pts=sample(HAND,.95),arcs=sample(ARCS,.9),N=pts.length;
+      cache={P:pts.map(function(p,i){return{x:p.x,y:p.y,a:rnd(i)*6.2832,r:.55+rnd(i+9)*.75,b:(rnd(i+3)-.5)*1.4,
+          d:(i/N)*380+rnd(i+5)*220,c:hue(i/N),ph:rnd(i+7)*6.28}}),
+        A:arcs.map(function(p,i){return{x:p.x,y:p.y,c:hue(.9+i/arcs.length*.1)}})}}
+    var P=cache.P,A=cache.A,N=P.length,gr=greeting(),G=letters(hi,gr[0]),F=letters(sb,gr[1]);
+    var dpr=Math.min(devicePixelRatio||1,2.5),W,H,ctx=cv.getContext('2d');
+    function size(){W=innerWidth;H=innerHeight;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
+    size();addEventListener('resize',size);
+    var t0=0,done=false,raf=0,handed=false,flyFrom=null,flyTo=null,btn=null,ink=null,landed=false,FLY_AT=2450,FLY=980,END=FLY_AT+FLY+160;
+    function hand(){if(handed)return;handed=true;handOff&&handOff()}
+    function spotBox(){var r=spot.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2,s:r.width}}
+    function target(){var c=document.querySelector('#top .heroask canvas.askhand');if(!c)return null;
+      var r=c.getBoundingClientRect();return r.width&&r.bottom>0&&r.top<innerHeight?{x:r.left+r.width/2,y:r.top+r.height/2,s:r.width}:null}
+    function frame(now){raf=0;if(done)return;if(!t0)t0=now;var t=now-t0;
+      ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+      var B=spotBox(),cx=B.x,cy=B.y,s=B.s,alpha=1;
+      /* the flight: centre and size travel together on an arc; the size
+         lags the travel, so it is still a hand while it moves */
+      var mixK=0;
+      if(t>=FLY_AT){if(!flyFrom){flyFrom=B;
+          /* the button's own hand steps aside, so there is only ever one hand on screen */
+          btn=document.querySelector('#top .heroask canvas.askhand');if(btn)btn.style.opacity='0';
+          var m=getComputedStyle(document.getElementById('aiHero')||document.body).color.match(/\d+/g);ink=m?[+m[0],+m[1],+m[2]]:[36,32,32]}
+        /* tracked every frame, so the hand follows the button as it rises into place */
+        flyTo=target()||flyTo||{x:B.x,y:B.y-B.s*.6,s:B.s*.2};
+        var raw=(t-FLY_AT)/FLY,k=inOut(raw),ks=inOut(Math.max(0,(raw-.12)/.88)),
+            bend=Math.min(140,Math.hypot(flyTo.x-flyFrom.x,flyTo.y-flyFrom.y)*.28);
+        cx=flyFrom.x+(flyTo.x-flyFrom.x)*k+Math.sin(k*Math.PI)*bend*(flyTo.x>flyFrom.x?-.35:.35);
+        cy=flyFrom.y+(flyTo.y-flyFrom.y)*k-Math.sin(k*Math.PI)*bend*.5;
+        s=flyFrom.s+(flyTo.s-flyFrom.s)*ks;
+        /* the page starts arriving as the hand sets off, so the button is there when it lands */
+        hand();
+        /* on the way in the dots take the button's ink, then the real hand
+           fades up in exactly the same place as this one fades out */
+        mixK=inOut(Math.max(0,(raw-.5)/.4));
+        var x=Math.max(0,Math.min(1,(raw-.8)/.2));
+        if(x>0&&!landed){landed=true;if(btn&&btn.__lpLand)btn.__lpLand()}
+        if(btn)btn.style.opacity=String(outC(x));
+        alpha=1-x}
+      var S=s/26,ox=cx-12*S,oy=cy-11.5*S,R=Math.max(.75,S*.5),px=ox+12*S,py=oy+22*S;
+      /* the wave: a damped swing about the wrist, three and a half beats */
+      var w=(t-1050)/1350,ang=w>0&&w<1?Math.sin(w*Math.PI*7)*Math.pow(1-w,1.15)*.36:0,
+          lift=w>0&&w<1?Math.sin(w*Math.PI)*S*.6:0;
+      ctx.save();ctx.translate(px,py-lift);ctx.rotate(ang);ctx.translate(-px,-py);
+      for(var i=0;i<N;i++){var p=P[i],tx=ox+p.x*S,ty=oy+p.y*S,x,y,c=mixK?mix(p.c,ink,mixK):p.c,al=alpha,e=outC((t-p.d)/950);
+        /* each dot swirls in on its own curve, from a loose cloud */
+        if(e<1){var sx=cx+Math.cos(p.a)*p.r*s*.62,sy=cy+Math.sin(p.a)*p.r*s*.55,
+            mx=(sx+tx)/2-(ty-sy)*p.b*.5,my=(sy+ty)/2+(tx-sx)*p.b*.5,u=1-e;
+          x=u*u*sx+2*u*e*mx+e*e*tx;y=u*u*sy+2*u*e*my+e*e*ty;al*=Math.min(1,(t-p.d)/260)}
+        else{x=tx+Math.sin(t/620+p.ph)*S*.05;y=ty+Math.cos(t/540+p.ph)*S*.05}
+        if(al<=.01)continue;
+        ctx.fillStyle='rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+','+al.toFixed(3)+')';
+        ctx.beginPath();ctx.arc(x,y,R,0,6.2832);ctx.fill()}
+      /* the motion arcs flick at the top of each swing */
+      if(w>0&&w<1){var fl=Math.max(0,Math.sin(w*Math.PI*7))*Math.pow(1-w,.8);
+        for(var j=0;j<A.length;j++){var q=A[j];ctx.fillStyle='rgba('+(q.c[0]|0)+','+(q.c[1]|0)+','+(q.c[2]|0)+','+(fl*alpha).toFixed(3)+')';
+          ctx.beginPath();ctx.arc(ox+q.x*S,oy+q.y*S,R*.9,0,6.2832);ctx.fill()}}
+      ctx.restore();
+      if(t>=END){stop(false);return}
+      raf=requestAnimationFrame(frame)}
+    /* the greeting rises a letter at a time on a soft spring, then the second line */
+    G.forEach(function(sp,i){sp.animate([{opacity:0,transform:'translateY(.45em)',filter:'blur(4px)'},{opacity:1,transform:'none',filter:'blur(0)'}],
+      {duration:620,delay:640+i*28,easing:SPR,fill:'forwards'})});
+    F.forEach(function(sp,i){sp.animate([{opacity:0,transform:'translateY(.4em)'},{opacity:1,transform:'none'}],
+      {duration:520,delay:1080+G.length*14+i*12,easing:SPR,fill:'forwards'})});
+    function stop(instant){if(done)return;done=true;cancelAnimationFrame(raf);removeEventListener('resize',size);
+      if(btn){btn.style.opacity='';if(!landed&&btn.__lpLand)btn.__lpLand()}
+      if(instant)cv.remove();
+      else{cv.animate([{opacity:1},{opacity:0}],{duration:200,fill:'forwards'});setTimeout(function(){cv.remove()},240)}
+      hand()}
+    raf=requestAnimationFrame(frame);
+    return{skip:function(){stop(false)},cancel:function(){stop(true)},handed:function(){return handed}};
+  }
+  window.WV={play:play};
+
+  /* first visit of the session: play on the page's own loader. A returning
+     visitor (same session, or arriving from another page of the site) gets
+     no intro, the same rule the loader logic below applies. */
+  var L=document.getElementById('loader');
+  if(!L||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var seen=false;
+  try{seen=!!document.referrer&&new URL(document.referrer).origin===location.origin&&new URL(document.referrer).pathname!==location.pathname}catch(e){}
+  try{if(sessionStorage.getItem('lb-intro')==='1')seen=true}catch(e){}
+  if(seen)return;
+  var run=play(L,function(){window.__lpHide&&window.__lpHide()});
+  /* the loader logic calls LP.finish() when the visitor skips (tap, key)
+     and LP.cancel() when it decides there is no intro at all */
+  window.LP={finish:function(){if(!run.handed())run.skip()},cancel:function(){run.cancel()}};
+})();
+</script>
+
 <div id="palette" role="dialog" aria-modal="true" aria-label="Command palette">
   <div class="box">
     <input id="paletteInput" type="text" placeholder="Jump to…" aria-label="Search sections">
@@ -4444,17 +4599,22 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
      backwards holding the start state through it. The hero is therefore
      never painted settled before it animates: it is held at frame zero,
      under the fading loader, and released once the loader has gone. */
-  function hideLoader(){ if (hidden) return; hidden = true;
+  function hideLoader(){ if (hidden) return; hidden = true; if (window.LP) LP.finish();
     loader.classList.add("hide"); startHero(); }
   if (seen){
     loader.style.transition = "none";
     loader.classList.add("hide");
+    if (window.LP) LP.cancel();
     startHero();
   } else {
     /* the sequence now lands at ~1.48s; 1750 left barely a quarter-second
        on the finished frame, which is the one still image worth reading */
-    window.addEventListener("load", function(){ setTimeout(hideLoader, 2150); });
-    setTimeout(hideLoader, 2950);
+    /* the wave intro hands over itself, as its hand sets off for the AI twin
+       button (window.__lpHide); the timer is only a backstop. Without it
+       (reduced motion) the loader is never shown and the old timing stands. */
+    if (window.LP) window.__lpHide = hideLoader;
+    else window.addEventListener("load", function(){ setTimeout(hideLoader, 2150); });
+    setTimeout(hideLoader, window.LP ? 6000 : 2950);
     ["click","keydown","touchstart"].forEach(function(ev){
       document.addEventListener(ev, function(){ hideLoader(); }, { once: true });
     });
@@ -5343,7 +5503,7 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   }
 })();
 </script>
-<script src="./aitwin.js?v=9"></script>
+<script src="./aitwin.js?v=10"></script>
 <script>
 /* ═══ Figma view, opened in place ═══
    The pill opens the file in a layer over the page, with Figma's loading
@@ -5376,15 +5536,16 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     var L=document.getElementById("loader"), old=lay; lay=null; opening++;
     function done(){ old.remove(); document.documentElement.classList.remove("fv-open"); try{ pill.focus({preventScroll:true}) }catch(e){} }
     if(reduce||!L){ done(); return }
-    /* a fresh copy of the intro loader, so its sequence plays from the top */
+    /* a fresh copy of the intro loader, and the wave played on it from the top */
     var c=L.cloneNode(true); c.style.transition=""; c.classList.remove("hide"); c.style.zIndex="210";
     L.parentNode.replaceChild(c,L);
     setTimeout(done,60);
-    setTimeout(function(){
+    function arrive(){
       c.classList.add("hide");
       var b=document.body; b.classList.remove("heroin","arriving"); void b.offsetWidth; b.classList.add("heroin","arriving");
       setTimeout(function(){ b.classList.remove("arriving") },1500);
-    },1700);
+    }
+    if(window.WV) WV.play(c,arrive,215); else setTimeout(arrive,1700);
   }
   function leave(){ if(pushed){ pushed=false; history.back() } else { close(); try{ history.replaceState(null,"",location.pathname+location.search) }catch(e){} } }
   pill.addEventListener("click",function(e){
