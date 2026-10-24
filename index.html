@@ -2960,6 +2960,17 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 @media (prefers-reduced-motion:reduce){ #work .worktext{transform:none;filter:none} }
 @media (max-width:684px){ #work .workgrid{row-gap:24px} #work .workrow + .workrow{padding-top:0} }
 
+/* "Self-initiated" tag on the Getbaq card: a Figma multiplayer cursor with a
+   name chip, so it reads as "someone put this here" and not as a status badge.
+   Sits above the hover fade (z 4) and never takes the click from the card. */
+.gbframe{position:relative}
+.wtag{position:absolute;top:18px;left:20px;z-index:6;pointer-events:none;color:var(--dark)}
+.wtag span{display:inline-block;padding:4px 9px 5px;border-radius:4px 10px 10px 10px;
+  background:var(--dark);color:var(--onDark);font:500 12px/1.2 var(--display);letter-spacing:-.005em;
+  box-shadow:0 2px 8px -2px rgba(0,0,0,.3)}
+/* the Getbaq card stays light in dark mode, so the tag stays black in both themes */
+@media (max-width:684px){ .wtag{top:14px;left:16px} }
+
 #top .hero-sub{line-height:1.55;letter-spacing:var(--tr-body)}
 
 .padtriggertext{font-size:15px;line-height:1.45;letter-spacing:var(--tr-body)}
@@ -4043,8 +4054,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
       </nav>
       <div class="mcases">
         <p class="mgroup">Case studies</p>
-        <a class="mcase" href="./getbaq.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Designing an AI agent that follows through on refunds</span><span class="mcase-m">Getbaq &#183; AI agent</span></span></a>
-        <a class="mcase" href="./app-merge.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">Unifying two investing apps without disrupting familiar workflows</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
+        <a class="mcase" href="./app-merge.html"><span class="mcase-num">01</span><span class="mcase-x"><span class="mcase-t">Unifying two investing apps without disrupting familiar workflows</span><span class="mcase-m">Rupeezy &#183; Consumer app</span></span></a>
+        <a class="mcase" href="./getbaq.html"><span class="mcase-num">02</span><span class="mcase-x"><span class="mcase-t">Designing an AI agent that follows through on refunds</span><span class="mcase-m">Getbaq &#183; AI agent</span></span></a>
         <a class="mcase" href="./rise-portal.html"><span class="mcase-num">03</span><span class="mcase-x"><span class="mcase-t">Making partner progress and earnings visible in one place</span><span class="mcase-m">Rupeezy &#183; B2B platform</span></span></a>
         <a class="mcase" href="./web-terminal.html"><span class="mcase-num">04</span><span class="mcase-x"><span class="mcase-t">Designing the desktop trading experience</span><span class="mcase-m">Rupeezy &#183; Web trading terminal</span></span></a>
       </div>
@@ -4141,9 +4152,20 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
 
   <section id="work" data-section="Selected work">
     <div class="workgrid">
+      <a href="./app-merge.html" class="workrow" data-reveal>
+        <div style="grid-row:1;grid-column:1;min-width:0">
+          <div class="cardframe merge2" style="background:var(--card-tint-01)">
+            <div class="mgphone-wrap"><img class="mgphone-single" src="./assets/am-home-after-framed.webp" width="1600" height="3299" loading="eager" decoding="async" alt="The merged app&#8217;s home screen, with one overall portfolio card and IPO and NFO entry points side by side"><span class="mgval" aria-hidden="true"><span class="mgval-n">₹12,570.45</span></span></div>
+          </div>
+        </div>
+        <div class="worktext">
+          <h3>Unifying two investing apps without disrupting familiar workflows</h3>
+        </div>
+      </a>
+
       <a href="./getbaq.html" class="workrow gbrow" data-reveal>
         <div style="grid-row:1;grid-column:1;min-width:0">
-          <div class="cardframe gbframe">
+          <div class="cardframe gbframe"><span class="wtag" aria-label="Self-initiated project, not shipped"><span>Self-initiated</span></span>
             <div class="gbdemo" role="img" aria-label="Getbaq in use: someone types that Flipkart rejected the replacement for a rusted mixer grinder, sends it, and the agent reads the message, finds the company, the amount, the rule that fits and Flipkart's deadline">
               <div class="gbd-stage" aria-hidden="true">
                 <div class="gbd-cam">
@@ -4177,17 +4199,6 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
         </div>
         <div class="worktext">
           <h3>Designing an AI agent that follows through on refunds</h3>
-        </div>
-      </a>
-
-      <a href="./app-merge.html" class="workrow" data-reveal>
-        <div style="grid-row:1;grid-column:1;min-width:0">
-          <div class="cardframe merge2" style="background:var(--card-tint-01)">
-            <div class="mgphone-wrap"><img class="mgphone-single" src="./assets/am-home-after-framed.webp" width="1600" height="3299" loading="eager" decoding="async" alt="The merged app&#8217;s home screen, with one overall portfolio card and IPO and NFO entry points side by side"><span class="mgval" aria-hidden="true"><span class="mgval-n">₹12,570.45</span></span></div>
-          </div>
-        </div>
-        <div class="worktext">
-          <h3>Unifying two investing apps without disrupting familiar workflows</h3>
         </div>
       </a>
 
@@ -4714,8 +4725,8 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
     { label: "Experience", href: "./about.html#experience" },
     { label: "Contact", href: "#contact" },
     { label: "About", href: "./about.html" },
-    { label: "Getbaq case study", href: "./getbaq.html" },
     { label: "App Merge case study", href: "./app-merge.html" },
+    { label: "Getbaq case study", href: "./getbaq.html" },
     { label: "Rise Portal case study", href: "./rise-portal.html" },
     { label: "Web Terminal case study", href: "./web-terminal.html" },
     { label: "Resume", href: "./resume.html" }
