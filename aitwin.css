@@ -590,3 +590,9 @@ body.chat-open .askdock{opacity:0!important;pointer-events:none!important}
   .navask{display:inline-grid;place-items:center;width:28px;height:28px;margin-left:2px;padding:0;border:0;border-radius:1000px;background:transparent;cursor:pointer}
   .navask canvas{display:block;width:22px;height:22px}
 }
+
+/* Pages with a global `section{margin-top:…}` (the case studies) were adding
+   it to the chat's own sections too: the whole panel body dropped ~120px, so
+   the header hung in the middle and each answer block was pushed down. The
+   chat owns its spacing, so its sections take no outside margin. */
+.aichat section{margin-top:0}
